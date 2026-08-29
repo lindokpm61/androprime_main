@@ -150,6 +150,7 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `lib/flags.ts` | Feature flags (`BUNDLES_ENABLED`, `RETEST_REMINDER_ENABLED`, etc.). |
 | `lib/content/kitCTA.ts` | Pillar → CTA routing for kit/content pages. |
 | `lib/kits/names.ts` | Kit slug ↔ display-name mapping. |
+| `lib/kits/panel.ts` | **WHICH MARKERS EACH KIT MEASURES, and the customer-facing copy for each.** The single source of truth for every surface that lists a panel: `/`, `/kits`, `/how-it-works`, `/faq`, the test-selector quiz and the pre-results dashboard card all render from it. Added 2026-08-29 after the list, hand-written on six surfaces, had drifted on four: `/how-it-works` said three markers for Kit 1, `/faq`'s table said seven and committed to "the seven", the quiz said three and the dashboard said **two**, all while the commerce pages said five and nine. FAI and Albumin were the two missing everywhere. The panel itself is owned by `../04_products/kits/kit-1-testosterone-health-check.md` and `kit-3-hormone-recovery-check.md`; do not change a marker set here without changing it there. **The FAI copy is constrained by a clinical ruling** (report-only, not banded in men: `../04_products/results-engine/thresholds.md` item 8, re-sourced 2026-07-30), so it must not be reworded into a stand-in for free testosterone. `scripts/test-quiz-routing.ts` asserts the Kit 1 and Kit 2 marker sentences. |
 | `lib/orders/{orderRef,getOrderRefForCheckoutSession}.ts` | Customer-facing order reference. `orderRef` renders `AP-{kit_orders.order_seq}` and parses one back for support lookup (the `AP-` prefix lives in code, not the DB, so it can change without a migration); `getOrderRefForCheckoutSession` resolves the reference for a Stripe Checkout session, retrying past the webhook-insert race. |
 | `lib/site-url.ts` | `SITE_URL` + `siteUrl(path)`: the single definition of the public origin. Import it instead of restating `process.env.NEXT_PUBLIC_SITE_URL ?? 'https://andro-prime.com'`. The two request-aware resolvers (`app/auth/callback`, `lib/auth/actions`) use it only as their fallback, by design. |
 | `lib/date/age.ts` · `lib/slug.ts` | Age-from-DOB helper; slugify helper. |
@@ -482,7 +483,7 @@ path in `03_compliance/CONTEXT.md`.
 
 ## Platform Notes
 
-- Aesthetic: light editorial; white backgrounds, black type, no border-radius, no gradients. Blog has its own scoped `.blog-skin` editorial category (cream bg, charcoal block-shadows); see brand guidelines + blog-skin memory.
+- Aesthetic: light editorial; white backgrounds, black type, no border-radius, no gradients. 🔴 **The blog's scoped exception is superseded in direction (2026-08-29, `blog-F.html` approved): the blog adopts Direction F and `.blog-skin` retires with the rebuild.** Until then, blog has its own scoped `.blog-skin` editorial category (cream bg, charcoal block-shadows); see brand guidelines + blog-skin memory.
 - Mobile-first throughout.
 - This workspace does not own: strategy (`/01_strategy`), compliance approval as a primary task (`/03_compliance`), product threshold logic unless translating approved rules into code (`/04_products`), content strategy detached from the site (`/06_marketing`).
 

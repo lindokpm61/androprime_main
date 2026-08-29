@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { panelShortLabels } from '@/lib/kits/panel'
 import { JsonLd } from '@/components/shared/JsonLd'
 
 const BASE_URL = 'https://andro-prime.com'
@@ -115,7 +116,7 @@ export default function KitsPage() {
                 <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                   <div>
                     <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Testosterone Health Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">Total T · SHBG · FAI · Albumin · Free T</p>
+                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">{panelShortLabels('testosterone').join(' · ')}</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="font-sans font-black text-xl text-black">£99</span>
@@ -125,7 +126,7 @@ export default function KitsPage() {
                 <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
                   <div>
                     <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Energy &amp; Recovery Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">Vit D · Active B12 · hs-CRP · Ferritin</p>
+                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">{panelShortLabels('energy-recovery').join(' · ')}</p>
                   </div>
                   <div className="shrink-0 text-right">
                     <span className="font-sans font-black text-xl text-black">£119</span>
@@ -215,7 +216,7 @@ export default function KitsPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Markers tested</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Total T · SHBG · FAI · Albumin · Free T</div>
+                        <div className="font-sans font-black text-black text-sm leading-snug">{panelShortLabels('testosterone').join(' · ')}</div>
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Turnaround</div>
@@ -290,7 +291,7 @@ export default function KitsPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Markers tested</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Vit D · Active B12 · hs-CRP · Ferritin</div>
+                        <div className="font-sans font-black text-black text-sm leading-snug">{panelShortLabels('energy-recovery').join(' · ')}</div>
                       </div>
                       <div className="border-2 border-black p-4">
                         <div className="data-label mb-2">Turnaround</div>
@@ -365,7 +366,7 @@ export default function KitsPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                       <div className="border-2 border-gray-600 p-4">
                         <div className="data-label mb-2 !text-gray-400">Markers tested</div>
-                        <div className="font-sans font-black text-white text-sm leading-snug">Total T · SHBG · FAI · Albumin · Free T · Vit D · Active B12 · hs-CRP · Ferritin</div>
+                        <div className="font-sans font-black text-white text-sm leading-snug">{panelShortLabels('hormone-recovery').join(' · ')}</div>
                       </div>
                       <div className="border-2 border-gray-600 p-4">
                         <div className="data-label mb-2 !text-gray-400">Turnaround</div>

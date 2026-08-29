@@ -40,7 +40,7 @@
        06 kit scope note (flag-gated) ................... placed
        07 GP handoff block, shown only when a marker
           routes to a GP referral ....................... placed
-       08 footer with mono links ........................ placed
+       08 footer with mono links ........................ PROPOSED, see below
        09 DevFixtureBar ................................. DROPPED, dev-only
        10 PrintButton ................................... placed in the handoff block
 
@@ -456,6 +456,22 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
   font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
 }
 .foot a{color:var(--ink-3);text-decoration:none;border-bottom:1px solid var(--hair)}
+/* A link with no page behind it is drawn differently from one that resolves,
+   so the frame cannot be read as a record of four working links. */
+.foot a.new{border-bottom:1px dashed var(--flag);color:var(--ink-2)}
+
+/* Annotation vocabulary, matching the later files in the set. Added 2026-08-29
+   with the footer note: this file predates .note/.m and had carried all its
+   commentary in the header comment, which is fine for a whole-file caveat and
+   wrong for one attached to a single block. */
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+.m{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;font-size:.94em;color:var(--ink)}
 
 /* one-shot load reveal, the second sanctioned motion */
 .js .rise{opacity:0;transform:translate3d(0,18px,0);
@@ -723,14 +739,26 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
       <a class="btn" href="#">Print the summary <span>&#8594;</span></a>
     </div></div>
 
-    <!-- 08. FOOTER -->
+    <!-- 08. FOOTER: A PROPOSAL, NOT A RECORD. See the note below. -->
     <div class="foot"><div class="in">
-      <a href="#">How we set our ranges</a>
-      <a href="#">What we do not test</a>
+      <a class="new" href="#">How we set our ranges</a>
+      <a class="new" href="#">What we do not test</a>
       <a href="#">Your data</a>
-      <a href="#">Delete my results</a>
-      <span>Nothing here is a diagnosis</span>
+      <a href="#">Request erasure</a>
+      <span>This is not a diagnosis</span>
     </div></div>
+
+    <div style="padding-bottom:46px">
+      <p class="note hot"><b>&#128308; THIS FOOTER IS A PROPOSAL AND WAS NOT MARKED AS ONE.</b> Keith kept it on 2026-08-29 after the chrome audit found it, so it stays, but the frame has to say what it is. <b><span class="m">app/(app)/layout.tsx</span> renders no footer at all</b>, so nothing here is a redraw of a live surface: <b>all six authenticated routes currently end with the page and nothing under it.</b> Building this is net-new work, and it belongs in the layout rather than on the dashboard page, for the reason <span class="m">app/lp/layout.tsx</span> already demonstrates: <b>a fact that lives in one file cannot drift</b>, and every duplication this journey set has found is a case of that discipline not being applied.</p>
+
+      <p class="note hot"><b>&#128308; ONE LABEL WAS A PROMISE THE PRODUCT DOES NOT KEEP, AND IT IS THE ONE ON SPECIAL-CATEGORY DATA.</b> It read <b>"Delete my results"</b>. The live control behind it, <span class="m">components/account/DataPrivacySection.tsx</span>, <b>records an erasure REQUEST and does not delete</b>: its own source comment says so, and CA-024's approved wording is deliberately written as <i>"Request that we erase your account data. We will action your..."</i>. A footer link reading "Delete my results" on a page of health data states an immediacy and a certainty that the approved copy is careful not to state. <b>Changed to "Request erasure"</b>, which is a claim reduction back onto approved language and needs no fresh sign-off, on the CA-001 / CA-003 precedent.</p>
+
+      <p class="note"><b>Two of the four links have a page behind them and two do not.</b> Drawn with a dashed accent underline so the difference is visible in the frame rather than discovered during the build. <b>"Your data" and "Request erasure"</b> both resolve to the <span class="m">Data &amp; privacy</span> section of <span class="m">/account</span>, which is real, approved under CA-024, and <b>dark behind <span class="m">ACCOUNT_DATA_CONTROLS_ENABLED</span></b>, so the footer would link to a section that does not render until the flag is flipped. <b>"How we set our ranges" and "What we do not test" exist nowhere in the codebase</b> and are new pages, not new links.</p>
+
+      <p class="note"><b>The closing statement is worded "This is not a diagnosis" rather than "Nothing here is a diagnosis", and the difference is not stylistic.</b> The compliance scanner treats the word <i>diagnosis</i> as a HARD hit unless it is negated, and its negation handling covers <span class="m">not</span>-forms but <b>not negative-quantifier subjects</b>: "This is not a diagnosis", "We do not diagnose" and the live footer's "They do not diagnose conditions" all pass, while <b>"Nothing here is a diagnosis" fails</b>, despite meaning the same thing. Reworded to the form the rest of the site already uses. The scanner gap is logged rather than worked around silently, because the next person to write a disclaimer in that shape will hit it too.</p>
+
+      <p class="note"><b>The second is the more interesting of the two, and it is a positioning asset rather than a chore.</b> "What we do not test" is the only place in the whole journey where the product would state its own limits unprompted, and the CA-026 conflict-free positioning set is built on exactly that move: a business with no stake in your result coming back low. It also pre-answers the question the panel audit raised, since a reader who has just been told the panel is five markers and not three will ask what the other markers would have been.</p>
+    </div>
   </div>
 </div>
 </div>

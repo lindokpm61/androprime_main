@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: the shared chrome in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE SHARED CHROME IN DIRECTION F'S LANGUAGE
+   Footer, Nav in three variants, the mobile drawer, the cookie
+   banner, the 404, the three error boundaries, the skip link.
+
+   CONCEPT ONLY. NOT BUILT. Eleventh file in the journey set, and the
+   one the other ten assumed.
+
+   ▶ 🔴 WHY THIS FILE EXISTS, AND WHY IT WAS NOT WRITTEN FIRST.
+   The spine was called complete on 2026-08-29: ten files, forty frames,
+   every screen a customer walks through. Keith read it and asked one
+   question, "we dont appear to have the footers". He was right, and the
+   sweep that followed found eleven missing surfaces, one drawn surface
+   that does not exist, and one page that had never been built at all.
+
+   ONE BLIND SPOT PRODUCED ALL OF IT. `design/journey-inventory.md` was
+   derived from the route tree: every page a customer can reach became a
+   frame. That is mechanical and defensible and it has exactly one hole.
+   **Shared chrome is rendered by a LAYOUT, not a page, so it has no
+   route and could never enter a route-derived list.** Every surface in
+   this file is on the other side of that line.
+
+   `results-F.html` shows the same failure in miniature and is worth
+   reading as the cautionary case: it enumerated TWENTY items of page
+   chrome from `results-dashboard/page.tsx` and its fifteen components,
+   which is thorough by any standard, and still missed the nav, because
+   the nav is in the layout one level above the page it was reading.
+
+   THE RULE THIS ADDS: enumerate the LAYOUTS, not only the pages, and
+   take the layout list from the framework's own composition mechanism
+   rather than from the route list. The number worth writing down is
+   LAYOUT TO ROUTE-COUNT, because that is what says how load-bearing a
+   single frame is. One footer frame carries 25 routes.
+
+   THE FRAMES
+
+     the site footer, 25 routes ................... Frame AE
+     the nav, three variants as a row ............. Frame AF
+     the mobile drawer and the scrolled state ..... Frame AG
+     the cookie banner, every route ............... Frame AH
+     the 404, built today ......................... Frame AI
+     the three error boundaries ................... Frame AJ
+     the skip link ................................ Frame AK
+
+   ▶ 🔴 ONE OF THESE WAS NOT A MISSING FRAME, IT WAS A MISSING PAGE.
+   There was no `not-found.tsx` anywhere in the codebase, so every
+   mistyped URL, dead inbound link and expired share served Next's own
+   default 404: no logo, no nav, no footer, no route back into the site.
+   It was built on 2026-08-29 before this file was drawn, which is why
+   Frame AI is a record rather than a proposal. It is the only frame in
+   the whole journey set that documents something the audit caused.
+
+   ▶ 🔴 AND ONE DRAWN FRAME SHOWS SOMETHING THAT DOES NOT EXIST.
+   `results-F.html` section 08 renders a footer with four links: "How we
+   set our ranges", "What we do not test", "Your data", "Delete my
+   results". **None of those strings appears anywhere in `app/`,
+   `components/` or `lib/`, and `app/(app)/layout.tsx` renders no footer
+   at all.** So the one journey file that drew a footer invented one, on
+   the one stage that has none. That is the `/activate` lesson running
+   backwards: a lifecycle check catches a route that is drawn and dying,
+   and it cannot catch a COMPONENT that is drawn and was never real.
+
+   ✅ RESOLVED 2026-08-29: KEITH KEPT IT. So the authenticated area gains a
+   footer it does not have today, and `results-F.html` now marks it as a
+   PROPOSAL rather than a record, draws the two links that have no page
+   behind them differently from the two that resolve, and changes one
+   label. **"Delete my results" became "Request erasure"**, because the
+   control behind it records a request and does not delete, and a footer
+   promising deletion on special-category health data claims an immediacy
+   the CA-024 approved copy is deliberately careful not to claim. When it
+   is built it belongs in `app/(app)/layout.tsx`, one file for six routes,
+   for the reason `app/lp/layout.tsx` already demonstrates.
+
+   ▶ THE AUTH ROUTES HAVE NO CHROME AT ALL, AND NO FRAME SAYS SO.
+   There is no `app/auth/layout.tsx`, so the five auth routes render
+   under the ROOT layout alone: the AuthCard on an otherwise empty page,
+   with no nav, no footer and no way back into the site except the
+   browser's back button. `auth-F.html` draws the card correctly and is
+   silent on this, so a rebuild reading it would most likely add chrome
+   that is currently absent. Noted here rather than drawn, because
+   whether the absence is deliberate is Keith's call, not a design one.
+
+   COLOUR. Chrome is not a stage and carries no status colour. One
+   accent, --flag, on the thing each frame is pointing at.
+
+   MOTION. Reader-caused response only. The nav's scrolled state is a
+   border weight change and is drawn as two stills rather than animated,
+   because the frame is about what the two states ARE.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF; --tray:#F1F2F4; --core:#FFFFFF; --sunk:#E7E9EC;
+  --ink:#0A0B0D; --ink-2:#4A4F57; --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10); --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458; --flag-f:rgba(224,164,88,.14); --flag-f2:rgba(224,164,88,.26);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1); --r:28px; --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:32px 30px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 14px;margin-bottom:18px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow i{width:5px;height:5px;border-radius:999px;background:var(--flag);display:block}
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:60ch}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:70ch;
+}
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+.m{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;font-size:.94em;color:var(--ink)}
+
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:13px 22px;font-size:14.5px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+
+/* ---------- THE FOOTER ---------- */
+.foot{display:grid;gap:30px;grid-template-columns:1fr}
+@media (min-width:900px){ .foot{grid-template-columns:6fr 3fr 3fr;gap:40px} }
+.foot .mark{
+  display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;
+  font-weight:800;letter-spacing:-.04em;font-size:19px;
+}
+.foot .mark i{
+  width:26px;height:26px;border-radius:9px;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-size:11px;font-weight:800;letter-spacing:0;font-style:normal;
+}
+.foot .legal{font-size:14.5px;line-height:1.62;color:var(--ink-2);max-width:44ch}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair-2);border-radius:999px;
+  padding:7px 13px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+}
+.chip i{width:5px;height:5px;border-radius:999px;background:var(--flag);display:block}
+.foot h4{
+  font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;margin-bottom:14px;
+}
+.foot ul{list-style:none;display:grid;gap:10px}
+.foot ul a{color:var(--ink-2);text-decoration:none;font-size:14.5px}
+.foot ul a:hover{color:var(--ink)}
+.footbar{
+  margin-top:30px;padding-top:20px;border-top:1px solid var(--hair);
+  display:flex;gap:18px 30px;flex-wrap:wrap;justify-content:space-between;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+}
+.footbar .stat{display:flex;gap:18px;flex-wrap:wrap}
+
+/* ---------- THE NAV ---------- */
+.navshell{
+  border-radius:18px;background:var(--core);box-shadow:inset 0 0 0 1px var(--hair);
+  padding:0 18px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:14px;
+}
+.navshell.scrolled{box-shadow:inset 0 0 0 1px var(--hair), 0 10px 24px -16px rgba(10,11,13,.5)}
+.navshell.scrolled::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--ink);border-radius:0 0 18px 18px;
+}
+.navwrap{position:relative}
+.brandmark{display:inline-flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.04em;font-size:15px;white-space:nowrap}
+.brandmark i{
+  width:22px;height:22px;border-radius:7px;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-size:9.5px;font-weight:800;letter-spacing:0;font-style:normal;
+}
+.navlinks{display:flex;gap:18px;align-items:center}
+.navlinks a{
+  text-decoration:none;color:var(--ink-2);font-size:12px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+}
+.navright{display:flex;gap:12px;align-items:center}
+.navstat{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap;
+}
+.navstat i{width:5px;height:5px;border-radius:999px;background:var(--flag);display:block}
+.navcta{
+  background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 16px;
+  font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;white-space:nowrap;
+}
+.burger{display:grid;gap:4px;padding:8px;border-radius:10px;box-shadow:inset 0 0 0 1px var(--hair)}
+.burger span{display:block;width:17px;height:1.5px;background:var(--ink)}
+
+.variants{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:1000px){ .variants{grid-template-columns:repeat(3,1fr)} }
+.vcard{background:var(--core);border-radius:var(--r-in);padding:20px 18px;box-shadow:inset 0 0 0 1px var(--hair);display:flex;flex-direction:column}
+.vcard .r{
+  display:block;margin-bottom:12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.vcard h4{font-size:16px;letter-spacing:-.03em;margin-bottom:8px}
+.vcard p{font-size:13.5px;line-height:1.55;color:var(--ink-2);margin-bottom:14px}
+.vcard .has{display:grid;gap:5px;margin-top:auto;padding-top:14px;border-top:1px solid var(--hair)}
+.vcard .has span{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);
+}
+.vcard .has span.no{color:var(--ink-3);text-decoration:line-through}
+
+/* ---------- THE MOBILE DRAWER ---------- */
+.phone{
+  max-width:340px;border-radius:26px;background:var(--core);box-shadow:inset 0 0 0 1px var(--hair), var(--amb);
+  overflow:hidden;
+}
+.phone .bar{
+  height:56px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:2px solid var(--ink);
+}
+.drawer{padding:22px 16px;display:grid;gap:18px;border-bottom:1px solid var(--hair)}
+.drawer a{
+  text-decoration:none;color:var(--ink);font-size:17px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.drawer .cta{
+  background:var(--ink);color:var(--paper);border-radius:999px;padding:12px;text-align:center;
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;
+}
+.phone .body{padding:20px 16px;color:var(--ink-3);font-size:13px}
+
+/* ---------- THE COOKIE BANNER ---------- */
+.cookie{
+  border-radius:var(--r-in);background:var(--core);box-shadow:inset 0 0 0 1px var(--hair), var(--amb);
+  padding:22px;display:grid;gap:20px;
+}
+@media (min-width:900px){ .cookie{grid-template-columns:1fr auto;align-items:center} }
+.cookie h4{font-size:15px;letter-spacing:-.02em;margin-bottom:8px}
+.cookie p{font-size:14.5px;line-height:1.6;color:var(--ink-2);max-width:62ch}
+.cookie .acts{display:flex;gap:10px;flex-wrap:wrap}
+/* Identical size, identical hit area, no wrap on either. The ICO point this
+   frame makes is about equal weight, so a frame whose Accept button wrapped
+   to two lines while Reject did not would be arguing against itself. */
+.cookie .acts .btn{flex:1 0 auto;min-width:178px;white-space:nowrap}
+
+/* ---------- ERROR + 404 ---------- */
+.states{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:940px){ .states{grid-template-columns:repeat(3,1fr)} }
+.state{background:var(--core);border-radius:var(--r-in);padding:22px 20px;box-shadow:inset 0 0 0 1px var(--hair);display:flex;flex-direction:column}
+.state.bare{background:var(--sunk);box-shadow:inset 0 0 0 1px var(--hair-2)}
+.state .r{
+  display:block;margin-bottom:12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.state h4{font-size:17px;letter-spacing:-.03em;margin-bottom:9px}
+.state p{font-size:14px;line-height:1.58;color:var(--ink-2);margin-bottom:14px}
+.state .acts{display:flex;gap:9px;flex-wrap:wrap;margin-top:auto}
+.state .acts .btn{font-size:12.5px;padding:10px 16px}
+
+.linkcol{display:grid;gap:11px;margin-top:6px;list-style:none}
+.linkcol a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;font-size:14.5px}
+
+.skip{
+  display:inline-flex;align-items:center;background:var(--ink);color:var(--paper);
+  border-radius:10px;padding:9px 15px;
+  font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  box-shadow:0 0 0 2px var(--flag);
+}
+
+.sec{padding:34px 0 6px}
+.sec h2{font-size:clamp(1.5rem,3.2vw,2.2rem);letter-spacing:-.045em;max-width:26ch}
+.sec .grey{color:var(--ink-3)}
+
+.cov{width:100%;border-collapse:collapse;margin-top:16px;font-size:13.5px}
+.cov th,.cov td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--hair);vertical-align:top}
+.cov th{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:600;
+}
+.cov td{color:var(--ink-2)}
+.cov td b{color:var(--ink)}
+.cov .n{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12px;color:var(--ink);white-space:nowrap;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .navlinks a,.foot ul a{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ OPENING ============ -->
+<div class="flabel"><div class="in">
+  <b>Chrome</b><span>the eleventh file, and the one the other ten assumed</span>
+  <span class="hot">frames AE to AK</span>
+</div></div>
+
+<div class="wrap sec">
+  <div class="eyebrow"><i></i> The surfaces with no route</div>
+  <h2>Every page was drawn. <span class="grey">The things on every page were not.</span></h2>
+  <p class="sub" style="margin-top:16px">Ten files, forty frames, and one blind spot that produced all eleven gaps at once: the frame list came from the route tree, and shared chrome is rendered by a layout, so it has no route and could never enter that list.</p>
+
+  <table class="cov">
+    <thead>
+      <tr><th>Surface</th><th>Rendered by</th><th>Reach</th><th>Frame</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><b>The site footer</b></td><td class="m">(marketing)/layout.tsx</td><td class="n">25 routes</td><td class="n">AE</td></tr>
+      <tr><td><b>Nav, marketing</b></td><td class="m">(marketing)/layout.tsx</td><td class="n">25 routes</td><td class="n">AF</td></tr>
+      <tr><td><b>Nav, app</b></td><td class="m">(app)/layout.tsx</td><td class="n">6 routes</td><td class="n">AF</td></tr>
+      <tr><td><b>Nav, lp</b></td><td class="m">lp/layout.tsx</td><td class="n">5 routes</td><td class="n">AF</td></tr>
+      <tr><td><b>The mobile drawer</b></td><td class="m">Nav.tsx, menuOpen</td><td class="n">every route under 768px</td><td class="n">AG</td></tr>
+      <tr><td><b>The cookie banner</b></td><td class="m">app/layout.tsx</td><td class="n">every route</td><td class="n">AH</td></tr>
+      <tr><td><b>The 404</b></td><td class="m">app/not-found.tsx</td><td class="n">every bad URL</td><td class="n">AI</td></tr>
+      <tr><td><b>Three error boundaries</b></td><td class="m">error.tsx x3</td><td class="n">every route</td><td class="n">AJ</td></tr>
+      <tr><td><b>The skip link</b></td><td class="m">app/layout.tsx</td><td class="n">every route</td><td class="n">AK</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note hot"><b>🔴 THE 404 WAS NOT A MISSING FRAME. IT WAS A MISSING PAGE.</b> There was no <span class="m">not-found.tsx</span> anywhere in the codebase, so every mistyped URL, dead inbound link and expired share served Next's own default 404: no logo, no nav, no footer, no route back in. It was <b>built on 2026-08-29</b>, before this file was drawn, which is why Frame AI is a record of what ships rather than a proposal. It is the only frame in the journey set that documents something the audit itself caused.</p>
+
+  <p class="note"><b><span class="m">results-F.html</span> shows the same blind spot in miniature, and it is the useful case.</b> It enumerated <b>twenty</b> items of page chrome from <span class="m">results-dashboard/page.tsx</span> and its fifteen components, which is thorough by any standard, and still missed the nav, because the nav sits in the layout one level above the file it was reading. Thoroughness inside the wrong boundary does not find the boundary.</p>
+</div>
+
+<!-- ============ FRAME AE: THE SITE FOOTER ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AE</b><span>components/shared/Footer.tsx</span><span>111 lines, one file, 25 routes</span>
+  <span class="hot">the densest compliance block on the site</span>
+</div></div>
+
+<div class="wrap" style="padding-top:40px">
+  <div class="tray">
+    <div class="core">
+      <div class="foot">
+        <div>
+          <div class="mark"><i>AP</i> Andro Prime</div>
+          <p class="legal">Andro Prime is a wellness information service. Our kits show you your numbers. They don't diagnose conditions, replace your GP, or constitute medical advice. If you have a health concern, talk to a doctor.</p>
+          <div class="chips">
+            <span class="chip"><i></i> UKAS ISO 15189</span>
+            <span class="chip"><i></i> EFSA-approved claims</span>
+          </div>
+        </div>
+
+        <div>
+          <h4>Diagnostics</h4>
+          <ul>
+            <li><a href="#">Testosterone Health Check</a></li>
+            <li><a href="#">Energy &amp; Recovery Check</a></li>
+            <li><a href="#">Hormone &amp; Recovery Check</a></li>
+            <li><a href="#">Diagnostic Quiz</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">How It Works</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie settings</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footbar">
+        <span style="flex:1 1 auto;max-width:74ch">&copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing carried out by a UKAS ISO 15189 accredited laboratory. Supplement claims are EFSA-approved.</span>
+        <span class="stat" style="flex:0 0 auto"><span>Sys.stat: online</span><span>Sec: AES-256</span></span>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 THIS IS THE FRAME KEITH ASKED FOR, AND IT IS THE BIGGEST SINGLE OMISSION IN THE SET.</b> One file, <b>25 routes</b>: the homepage, <span class="m">/kits</span> and the three kit pages, <span class="m">/how-it-works</span>, <span class="m">/about</span>, <span class="m">/faq</span>, the blog and its article and author routes, <span class="m">/test-selector</span>, <span class="m">/checkout/details</span>, <span class="m">/order/confirmed</span>, the supplement pages, <span class="m">/contact</span>, <span class="m">/privacy</span>, <span class="m">/terms</span>, <span class="m">/waitlist</span>. It was in none of the ten journey files, <b>and not in <span class="m">F-field.html</span> either</b>, so the chosen direction never stated what its own footer looks like.</p>
+
+  <p class="note"><b>It is not decoration, it is the compliance surface.</b> The medical-disclaimer paragraph, two accreditation chips, eleven navigation links and the registered-company line all live here and nowhere else. <b>And per <span class="m">learn-F.html</span> it is the only inbound path to <span class="m">/about</span> and <span class="m">/faq</span></b>: nothing in <span class="m">app/</span> or <span class="m">components/</span> links to either except this file. Two pages that were drawn as ordinary marketing pages are reachable only through a surface that was not drawn at all.</p>
+
+  <p class="note"><b>Two decisions this frame takes, both reversible.</b> The eight Company links keep their live order rather than being regrouped, because the order is what a returning reader's muscle memory is built on. And <b>Cookie settings stays in the list rather than moving to the bar</b>: it is the only control in the footer, and burying a consent reopener in small print is the pattern the ICO wording exists to prevent.</p>
+</div>
+
+<!-- ============ FRAME AF: THE NAV, THREE VARIANTS ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AF</b><span>components/shared/Nav.tsx</span><span>312 lines, one component, three variants</span>
+  <span class="hot">the app variant was in no frame</span>
+</div></div>
+
+<div class="wrap" style="padding-top:40px">
+  <div class="tray">
+    <div class="core">
+      <p class="blab">Marketing, 25 routes</p>
+      <div class="navwrap"><div class="navshell">
+        <span class="brandmark"><i>AP</i> Andro Prime</span>
+        <span class="navlinks"><a href="#">Tests</a><a href="#">Supplements</a><a href="#">Blog</a></span>
+        <span class="navright">
+          <span class="navstat"><i></i> UKAS lab online</span>
+          <a href="#" style="text-decoration:none;color:var(--ink-2);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase">Log in</a>
+          <a class="navcta" href="#">Choose your test</a>
+        </span>
+      </div></div>
+
+      <p class="blab" style="margin-top:26px">App, 6 routes</p>
+      <div class="navwrap"><div class="navshell">
+        <span class="brandmark"><i>AP</i> Andro Prime</span>
+        <span class="navlinks"><a href="#">Results</a><a href="#">Subscriptions</a><a href="#">Account</a><a href="#" style="color:var(--flag)">Membership</a></span>
+        <span class="navright"><a class="navcta" href="#">Log out</a></span>
+      </div></div>
+
+      <p class="blab" style="margin-top:26px">LP, 5 routes</p>
+      <div class="navwrap"><div class="navshell">
+        <span class="brandmark"><i>AP</i> Andro Prime</span>
+        <span class="navright"><a class="navcta" href="#">Order now</a></span>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="variants">
+    <div class="vcard">
+      <span class="r">variant="marketing"</span>
+      <h4>Three links, a status dot, a log-in and a CTA</h4>
+      <p>Logo goes to <span class="m">/</span>. The CTA is "Choose your test" pointing at <span class="m">/kits</span>.</p>
+      <div class="has">
+        <span>Tests, Supplements, Blog</span>
+        <span>UKAS status dot, xl and up ONLY</span>
+        <span>Log in, md and up</span>
+      </div>
+    </div>
+    <div class="vcard">
+      <span class="r">variant="app"</span>
+      <h4>Different links, different home, a log-out</h4>
+      <p>Logo goes to <span class="m">/results-dashboard</span>, not <span class="m">/</span>. A fourth link appears only when <span class="m">MEMBERSHIP_ENABLED</span> is on.</p>
+      <div class="has">
+        <span>Results, Subscriptions, Account</span>
+        <span>Membership, flag-gated</span>
+        <span class="no">status dot</span>
+      </div>
+    </div>
+    <div class="vcard">
+      <span class="r">variant="lp"</span>
+      <h4>No links at all</h4>
+      <p>A stripped bar: mark and one CTA whose text and target are passed in per page, defaulting to "Order now".</p>
+      <div class="has">
+        <span class="no">nav links</span>
+        <span class="no">log in</span>
+        <span>CTA text and href are props</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 THE APP VARIANT APPEARS IN NO FRAME IN THE JOURNEY SET.</b> Four files draw the authenticated area (<span class="m">results-F</span>, <span class="m">results-states-F</span>, <span class="m">membership-F</span>, <span class="m">account-F</span>) and none of them shows the bar at the top of all six of those routes. It is not a cosmetic omission: <b>the app nav is the one variant whose logo does NOT go home</b>, it points at <span class="m">/results-dashboard</span>, and its CTA is a log-out rather than a purchase.</p>
+
+  <p class="note hot"><b>🔴 THE LOG-OUT IS A POST FORM, NEVER A LINK, AND THAT IS LOAD-BEARING.</b> The source records why: Next prefetches links that enter the viewport, this nav is <span class="m">fixed</span>, so a GET log-out <b>signed users out with no click at all</b>. Drawn as a button rather than a link because the distinction is invisible in a picture and expensive to rediscover. A rebuild that redraws this bar and reaches for a link reintroduces the bug.</p>
+
+  <p class="note"><b>The status dot is the site's only xl-and-up element</b>, hidden below 1280px, so the marketing bar has three distinct widths rather than two. Worth stating because a two-breakpoint mockup would quietly delete a trust signal on every laptop between 768 and 1280.</p>
+</div>
+
+<!-- ============ FRAME AG: THE MOBILE DRAWER ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AG</b><span>Nav.tsx menuOpen, and the scrolled state</span><span>every route under 768px</span>
+  <span class="hot">no mockup showed the mobile nav, in any variant</span>
+</div></div>
+
+<div class="wrap" style="padding-top:40px">
+  <div class="tray">
+    <div class="core">
+      <div style="display:grid;gap:22px;grid-template-columns:1fr">
+        <div style="display:flex;gap:22px;flex-wrap:wrap">
+          <div>
+            <p class="blab">Closed</p>
+            <div class="phone">
+              <div class="bar">
+                <span class="brandmark"><i>AP</i> Andro Prime</span>
+                <span class="burger"><span></span><span></span><span></span></span>
+              </div>
+              <div class="body">the page, scrolled to the top</div>
+            </div>
+          </div>
+
+          <div>
+            <p class="blab">Open</p>
+            <div class="phone">
+              <div class="bar">
+                <span class="brandmark"><i>AP</i> Andro Prime</span>
+                <span class="burger" style="box-shadow:inset 0 0 0 1.5px var(--flag)"><span style="transform:rotate(45deg) translate(2px,2px)"></span><span style="opacity:0"></span><span style="transform:rotate(-45deg) translate(2px,-2px)"></span></span>
+              </div>
+              <div class="drawer">
+                <a href="#">Tests</a>
+                <a href="#">Supplements</a>
+                <a href="#">Blog</a>
+                <a href="#">Log in</a>
+                <span class="cta">Choose your test</span>
+              </div>
+              <div class="body">the page, pushed down</div>
+            </div>
+          </div>
+
+          <div style="flex:1;min-width:280px">
+            <p class="blab">The scrolled state, both widths</p>
+            <div class="navwrap" style="margin-bottom:14px"><div class="navshell" style="height:54px">
+              <span class="brandmark"><i>AP</i> Andro Prime</span>
+              <span class="navright"><a class="navcta" href="#">Choose your test</a></span>
+            </div></div>
+            <p class="fine" style="margin-bottom:20px">At the top of the page: a 1px hairline under the bar.</p>
+
+            <div class="navwrap"><div class="navshell scrolled" style="height:54px">
+              <span class="brandmark"><i>AP</i> Andro Prime</span>
+              <span class="navright"><a class="navcta" href="#">Choose your test</a></span>
+            </div></div>
+            <p class="fine" style="margin-top:14px">Once the page moves: a 4px rule and a cast shadow. One line in the source, and the only thing separating a floating bar from a docked one.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 THE MOBILE NAV HAS NO FRAME ANYWHERE IN THE SET, IN ANY VARIANT.</b> Every journey file was verified at a true 390 and every one of them was verified with the bar in its <b>closed</b> state, so the drawer has never been looked at. It is not a small surface: it is the whole navigation for the majority of a men's-health audience, it carries the same links plus the log-in, and in the app variant it carries the log-out POST.</p>
+
+  <p class="note"><b>It pushes rather than overlays, and that is the live behaviour rather than a choice made here.</b> The drawer renders as a sibling below the bar inside the same <span class="m">nav</span>, so the page content moves down instead of being covered. Drawn as it is. Whether F wants an overlay is a real question and it is deliberately not answered in this frame, because answering it silently would hide that the current behaviour was never designed, only inherited.</p>
+
+  <p class="note"><b>The scrolled state is the second undrawn state.</b> The bar swaps a 1px bottom border for a 4px one once the page moves, on every route. It is one line in the source and it is the only thing separating a floating bar from a docked one, so a token pass that misses it flattens the whole site's sense of depth.</p>
+</div>
+
+<!-- ============ FRAME AH: THE COOKIE BANNER ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AH</b><span>components/analytics/CookieConsent.tsx</span><span>every route, every new visitor</span>
+  <span class="hot">an ICO rule that lives only in a code comment</span>
+</div></div>
+
+<div class="wrap" style="padding-top:40px">
+  <div class="tray">
+    <div class="core">
+      <div class="cookie">
+        <div>
+          <h4>Cookies</h4>
+          <p>We use essential cookies to run this site. With your permission we also use Google Analytics cookies to understand how the site is used so we can improve it. You can change your choice any time from the footer. See our <a href="#" style="color:var(--ink)">Privacy &amp; Cookie Policy</a>.</p>
+        </div>
+        <div class="acts">
+          <span class="btn ghost">Reject analytics</span>
+          <span class="btn">Accept analytics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 THE FIRST THING EVERY NEW VISITOR SEES, ON EVERY PAGE, AND IT WAS DRAWN NOWHERE.</b> It is fixed to the bottom of the viewport above everything else, so it sits over the hero of the homepage, over the Kit 1 card on <span class="m">/kits</span>, and over the first fold of every landing page an ad points at. <b>It is visible in the screenshots taken to verify the other frames</b>, which is the sharpest version of the blind spot: it was in the picture every time and never in the drawing.</p>
+
+  <p class="note hot"><b>🔴 ITS MOST IMPORTANT DESIGN CONSTRAINT EXISTS ONLY AS A COMMENT IN THE SOURCE.</b> Verbatim: <i>"Accept and Reject are given equal visual weight: the ICO requires rejecting non-essential cookies to be as easy as accepting them."</i> That is a <b>visual</b> requirement with a <b>regulatory</b> basis, and the only place it is written down is a TypeScript file that no design pass reads. Drawn here with the two buttons at matched size and matched hit area, one filled and one outlined, so the requirement lives in the design record too. <b>A rebuild that makes Reject a text link breaks a rule nobody would know it was breaking.</b></p>
+
+  <p class="note"><b>It renders nothing when analytics is not configured</b>, and it is reopened from the footer's "Cookie settings" link, which is the dependency running the other way: <b>Frame AE and this frame need each other</b>, and both were missing. With the footer undrawn there was no route to reopen consent, and with the banner undrawn there was nothing to reopen.</p>
+</div>
+
+<!-- ============ FRAME AI: THE 404 ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AI</b><span>app/not-found.tsx</span><span>built 2026-08-29, this is a record not a proposal</span>
+  <span class="hot">it did not exist until the audit</span>
+</div></div>
+
+<div class="wrap" style="padding-top:40px">
+  <div class="tray">
+    <div class="core">
+      <div class="navwrap" style="margin-bottom:26px"><div class="navshell">
+        <span class="brandmark"><i>AP</i> Andro Prime</span>
+        <span class="navlinks"><a href="#">Tests</a><a href="#">Supplements</a><a href="#">Blog</a></span>
+        <span class="navright"><a class="navcta" href="#">Choose your test</a></span>
+      </div></div>
+
+      <div style="max-width:560px">
+        <p class="blab">Error 404</p>
+        <h2 style="font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.045em;margin-bottom:14px">This page doesn't exist.</h2>
+        <p class="sub" style="margin-bottom:22px">The link may be broken, or the page may have moved. Nothing has gone wrong on our side, and there is nothing you need to do.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px">
+          <span class="btn">Choose your test</span>
+          <span class="btn ghost">Back to home</span>
+        </div>
+        <div style="border-top:1px solid var(--hair);padding-top:18px">
+          <p class="blab">Or go straight to</p>
+          <ul class="linkcol">
+            <li><a href="#">How it works</a></li>
+            <li><a href="#">The three kits</a></li>
+            <li><a href="#">Take the quiz</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Sign in to your results</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 UNTIL 2026-08-29 THERE WAS NO 404 PAGE IN THIS CODEBASE.</b> <span class="m">find app -name "not-found*"</span> returned nothing, so every mistyped URL, every dead inbound link and every expired share served <b>Next's own default 404</b>: a bare white page, no logo, no nav, no footer and no route back into the site. On a site whose acquisition is paid and social, that is where a mistyped or truncated ad link landed.</p>
+
+  <p class="note"><b>The nav and footer are rendered by this page rather than inherited</b>, and that is the same lesson as the rest of this file arriving from the other side. An unmatched URL matched no route in any group, so <span class="m">(marketing)/layout.tsx</span> never runs and its chrome never arrives. <b>The doubling risk runs the other way too</b>: <span class="m">notFound()</span> is thrown from six places inside route groups, and if those rendered this page inside their group layout there would be two navs and two footers. Verified in a real browser on a production build, on <span class="m">/nonsense</span>, <span class="m">/blog/&lt;missing&gt;</span> and <span class="m">/authors/&lt;missing&gt;</span>: one of each, and a 404 status on all of them.</p>
+
+  <p class="note"><b>It offers a commerce route, not just an apology.</b> The primary action is "Choose your test" rather than "Back to home", because the most likely arrival is a broken inbound link from an ad or a share rather than a customer who mistyped. The sign-in link is the one cross-host link on the page and is a plain anchor to an absolute URL, following the same rule the nav follows.</p>
+</div>
+
+<!-- ============ FRAME AJ: THE THREE ERROR BOUNDARIES ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AJ</b><span>error.tsx x2 plus global-error.tsx</span><span>three screens, three audiences</span>
+  <span class="hot">one of them is unstyled on purpose</span>
+</div></div>
+
+<div class="wrap" style="padding-top:40px">
+  <div class="states">
+    <div class="state">
+      <span class="r">app/error.tsx, 62 lines</span>
+      <h4>Something went wrong.</h4>
+      <p>Sorry, this page failed to load. It has been logged and we will look into it. Need help? Email support and quote the reference.</p>
+      <div class="acts"><span class="btn">Try again</span><span class="btn ghost">Back to site</span></div>
+    </div>
+
+    <div class="state">
+      <span class="r">app/(app)/error.tsx, 75 lines</span>
+      <h4>We could not load this page.</h4>
+      <p>This is usually because you have been signed out. Your results are safe and nothing has been lost. Signing back in usually sorts it.</p>
+      <div class="acts"><span class="btn">Sign in again</span><span class="btn ghost">Try again</span></div>
+    </div>
+
+    <div class="state bare">
+      <span class="r">app/global-error.tsx, 23 lines</span>
+      <h4 style="font-weight:400;letter-spacing:0">Something went wrong</h4>
+      <p style="color:var(--ink-3)">Our team has been notified. Please try again or refresh the page.</p>
+      <div class="acts"><span class="fine">no styling, no branding, no navigation, by design</span></div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>The third one is deliberately unstyled and the frame set should say so rather than be silent.</b> <span class="m">global-error.tsx</span> renders its own bare <span class="m">&lt;html&gt;</span> because it is the last resort for a failure in the ROOT LAYOUT ITSELF: at that point the fonts, the tokens and the nav are all suspect, so it can rely on none of them. Drawn here as an unstyled block rather than restyled into F, because <b>making it look designed would be a bug in the mockup</b>: it would specify a screen that cannot render.</p>
+
+  <p class="note"><b>The first two differ because their readers differ, and the split is recent.</b> Until 2026-08-04 there was no <span class="m">error.tsx</span> at all and every error anywhere fell through to the bare page above. The marketing one apologises and offers the site; the app one leads with <i>"your results are safe and nothing has been lost"</i> and offers sign-in first, because in the authenticated area the most common cause is an expired session and the most common fear is lost data. <b>Both quote the Sentry digest as a support reference</b>, which is the only place in the product where a customer is asked to read out an identifier.</p>
+</div>
+
+<!-- ============ FRAME AK: THE SKIP LINK ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AK</b><span>components/shared/SkipToContent.tsx</span><span>every route, on first keyboard tab</span>
+  <span class="hot">small, and still a designed surface</span>
+</div></div>
+
+<div class="wrap" style="padding-top:40px">
+  <div class="tray">
+    <div class="core">
+      <p class="blab">Hidden until focused, then top left, above everything</p>
+      <span class="skip">Skip to content</span>
+      <p class="fine" style="margin-top:18px">Rendered first in the root body, before any route group's nav mounts, so it is the first focusable element in the document.</p>
+    </div>
+  </div>
+
+  <p class="note"><b>It is one element and it earns a frame for one reason: it is the only part of the interface that is invisible until it is the most important thing on screen.</b> A token pass that never renders it cannot check its contrast, its offset or whether it clears the fixed nav, and those are exactly the three things that make a skip link work or not. Drawn against the accent so the focus ring is part of the record rather than left to a default.</p>
+</div>
+
+<!-- ============ CLOSE ============ -->
+<div class="flabel"><div class="in">
+  <b>End of the chrome frames</b><span>Frames AE, AF, AG, AH, AI, AJ, AK</span>
+  <span class="hot">the spine is now actually complete</span>
+</div></div>
+
+<div class="wrap" style="padding:26px 20px 60px">
+  <p class="note hot"><b>What this file settles, and the three things it hands back.</b> It closes the gap Keith found and the ten more the sweep behind it turned up, so the journey record now covers the pages AND the things on every page. It hands back three items that are not design questions. <b>One is now answered:</b> <span class="m">results-F.html</span> section 08 drew a footer with four links on a layout that renders no footer, and <b>Keith kept it (2026-08-29)</b>, so the authenticated area gains a footer it does not have today and that file now marks it as a proposal, distinguishes the two links with no page behind them, and reduces "Delete my results" to "Request erasure". <b>Two:</b> the <span class="m">/auth/*</span> routes have no nav and no footer at all, and no frame states it, so a rebuild would probably add chrome that is currently absent. <b>And three:</b> five components have zero references anywhere (<span class="m">TrustBar</span>, <span class="m">BiomarkerPanel</span>, <span class="m">KitCard</span>, <span class="m">SubscribeButton</span>, <span class="m">AppPlaceholder</span>) plus an empty <span class="m">components/lp/</span>, which is a cleanup commit rather than a frame.</p>
+
+  <p class="note"><b>And one rule, which is the only thing here worth carrying to the next inventory.</b> Enumerate the LAYOUTS, not only the pages, and take the layout list from the framework's own composition mechanism rather than from the route list. Each distinct layout is at least one frame, and the number worth writing down is <b>layout to route-count</b>: one footer frame carries 25 routes, which is more reach than any page frame in the entire set. Then run it backwards as well: <b>for every frame drawn, confirm the component it depicts exists</b>, because a route-based lifecycle check says nothing about a component that was drawn and was never real.</p>
+</div>
+</body>
+</html>

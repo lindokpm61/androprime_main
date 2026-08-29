@@ -52,6 +52,16 @@ const fatigue = getResult('d', 'b', 'a')
 check('fatigue result names the Kit 2 markers', /Vitamin D, Active B12, hs-CRP, and Ferritin/.test(fatigue.reason))
 check('fatigue result links to the Kit 2 page', fatigue.href === '/kits/energy-recovery')
 
+// The same guard for Kit 1, which is the one that failed: on 2026-08-29 this
+// reason line named three of the five markers and had omitted FAI and Albumin
+// since they joined the panel. The marker copy now comes from lib/kits/panel.ts;
+// assert the whole panel appears so a change there cannot understate the kit.
+const hormonal = getResult('a', 'b', 'a')
+check(
+  'hormonal result names all five Kit 1 markers',
+  /Total Testosterone, SHBG, Free Androgen Index, Albumin, and Free Testosterone/.test(hormonal.reason),
+)
+
 /* ------------------------------------------- the approved map, unchanged --- */
 
 // Splitting option (a) must not have moved anyone else. These are the outcomes

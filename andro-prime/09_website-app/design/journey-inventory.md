@@ -57,8 +57,8 @@ are one frame plus a note.
 |---|---|---|---|
 | Home | `/` | Brand | **Direction F is already drawn.** Reuse, do not redraw. |
 | ~~Landing page template~~ **Five hand-written pages** | `/lp/*` | Brand | 🔴 **No `[product]` route.** 246 / 266 / 412 / 505 / **723** lines, five different section lists. A real shared `layout.tsx` (stripped nav + one compliance line) and no template |
-| ~~Blog index~~ | `/blog` | **Blog skin** | ✅ **OFF THE BOARD.** Keith 2026-08-27: the blog keeps `blog-skin.css`. F lost that frame; `blog-F.html` stands as the record |
-| ~~Blog article~~ | `/blog/[slug]` | **Blog skin** | ✅ **OFF THE BOARD**, same ruling |
+| Blog index | `/blog` | **Blog skin, under review** | 🔄 **BACK ON THE BOARD 2026-08-29.** Keith asked for a complete `blog-F.html` rebuild with the missing elements. Drawn as Frame AP. The 2026-08-27 ruling stands until he rules again |
+| Blog article | `/blog/[slug]` | **Blog skin, under review** | 🔄 **BACK ON THE BOARD 2026-08-29.** Frames AL (the article), AM (**the twelve MDX components**, none of which the first draft drew), AN (the two emphasis ladders), AO (the tail). Plus AQ for `/authors/[slug]` |
 
 ✅ **DRAWN 2026-08-29: `design/mockups/journey/lp-sample-F.html`**, Frame AC (the LP shell plus a
 variance table across the five) and Frame AD (`/how-to-sample`). Verified at 1440 and a true 390,
@@ -374,7 +374,191 @@ Stripe, which is the one place in the signed-in app where the design system stop
 | Results | 5 + 5 card variants |
 | Act | 5, **all drawn**: the index, the two product pages as one skeleton, the form's five states, the waitlist, the status route |
 | Stay | 5 (the sixth was a retired route) |
-| **Total** | **≈ 45 frames** (45, then 41 when `/activate` was found deprecated, then 40 when `/founding-member-status` was found retired, then up to 44 when the quiz turned out to be five steps and the kit pages turned out not to share a template, then **45** when the kit pages turned out to have a second state behind `BUNDLES_ENABLED`). ✅ **ALL 40 FRAMES PLUS THE 5 MARKER-CARD VARIANTS ARE DRAWN. THE JOURNEY SPINE IS COMPLETE (2026-08-29).** The two blog frames came off the board rather than being drawn, because the blog keeps its own language by Keith's 2026-08-27 ruling. |
+| **Total** | **≈ 45 frames** (45, then 41 when `/activate` was found deprecated, then 40 when `/founding-member-status` was found retired, then up to 44 when the quiz turned out to be five steps and the kit pages turned out not to share a template, then **45** when the kit pages turned out to have a second state behind `BUNDLES_ENABLED`). ⚠ **ALL 40 PAGE FRAMES, THE 5 MARKER-CARD VARIANTS, AND THE 7 CHROME FRAMES ARE DRAWN. TWO SURFACES REMAIN: the OG share cards (section C).** A full sweep on 2026-08-29 (triggered by Keith spotting the missing footer) found **eleven missing surfaces** and **no 404 page anywhere in the codebase**. The 404 was built the same day; the other ten are drawn in `chrome-F.html` as frames AE to AK. **The spine now covers the pages AND the things on every page.** See the block below this table. The two blog frames came off the board rather than being drawn, because the blog keeps its own language by Keith's 2026-08-27 ruling. |
+
+### ✅ CLOSED 2026-08-29: THE SWEEP FOUND ELEVEN MISSING SURFACES. THE 404 IS BUILT, THE REST ARE DRAWN
+
+**Keith caught the first one after the spine was called complete** ("we dont appear to have the
+footers"), then asked for a complete check. This section is that check. The method was to stop
+enumerating routes and instead enumerate **every file in `app/` that renders**, every component in
+`components/`, and every layout, then diff each against the ten journey files.
+
+**Why the original count missed all of it in one stroke:** the inventory was derived from the route
+tree. Every page a customer can reach became a frame, which is mechanical and defensible and has
+exactly one blind spot: **shared chrome is rendered by a layout, not a page, so it has no route and
+never enters a route-derived list.** Every gap below except the 404 and the share cards is on the
+other side of that line. `results-F.html` shows the same failure in miniature: it enumerated twenty
+items of page chrome from `results-dashboard/page.tsx` *and its components*, which is thorough, and
+still missed the nav, because the nav is in the layout above it.
+
+**All 46 routes are accounted for.** The gaps are entirely in the non-route layer.
+
+✅ **RESOLVED THE SAME DAY.** The 404 was **built** (`app/not-found.tsx`, verified in a real browser
+on a production build: 404 status and exactly one nav and one footer on `/nonsense`,
+`/blog/<missing>`, `/authors/<missing>` and `/kits/<missing>`). Sections **A and B are drawn**, in
+`design/mockups/journey/chrome-F.html`, frames AE to AK. The three items in sections D, E and F are
+handed back rather than closed, because none of them is a design decision. The tables below are kept
+as the record of what was missing and why.
+
+🔴 **SECTION C IS STILL OPEN, AND THIS LINE PREVIOUSLY SAID OTHERWISE.** It read "everything
+else in sections A, B and C is drawn". **The two OG share cards are not drawn**, in `chrome-F.html`
+or anywhere else, and the claim was written in the same pass that drew the frames rather than after
+checking them. Corrected when Keith asked whether the journey was now complete, which is the third
+time in one day that a completeness claim about this set has been wrong, and the second time the
+error was mine rather than inherited. **A completeness claim written from intent rather than from a
+re-run of the check is not evidence**, and the cost of re-running it here was one grep.
+
+#### A. Shared chrome that is not drawn
+
+| Surface | Where it lives | Reach | Note |
+|---|---|---|---|
+| **The site footer** | `components/shared/Footer.tsx`, 111 lines, via `app/(marketing)/layout.tsx:28` | **25 routes** | Brand column with the *"wellness information service ... they don't diagnose conditions, replace your GP, or constitute medical advice"* paragraph, **UKAS ISO 15189** and **EFSA-Approved Claims** chips, a 4-link Diagnostics column, a 7-link Company column plus the cookie-settings trigger, and a copyright bar with the registered-company line and the `SYS.STAT` / `SEC` mono strings. **The densest block of compliance and legal linkage on the site**, and per `learn-F.html` the only inbound path to `/about` and `/faq`. Not in any journey file, and not in `F-field.html` either, so the chosen direction never stated what its footer looks like |
+| **The cookie-consent banner** | `components/analytics/CookieConsent.tsx`, 81 lines, via the ROOT layout | **every route** | The first thing every new visitor sees, over the hero, on every page. PECR / UK GDPR, and the source notes **Accept and Reject are deliberately equal-weight because the ICO requires rejecting to be as easy as accepting** ... which is a visual-design requirement recorded only in a code comment. It is visible in this session's own screenshots of `/faq` and `/how-it-works` and was never drawn |
+| **`Nav variant="app"`** | `components/shared/Nav.tsx` via `app/(app)/layout.tsx` | 6 app routes | The authenticated top bar. Logo links to `/results-dashboard` rather than `/`, and the CTA is a log-out. None of the four `(app)` frames shows it |
+| **The nav mobile drawer** | `Nav.tsx:219-301`, `menuOpen` state | **every route under 768px** | A hamburger toggle and a full drawer with its own link list and close behaviour. No mockup shows it in any variant, so the mobile nav has no frame at all |
+| **`SkipToContent`** | `components/shared/SkipToContent.tsx` via the ROOT layout | every route | Small, but a genuinely visible state: it appears on first keyboard tab. Undrawn means undesigned |
+
+#### B. Failure surfaces that are not drawn, and one that does not exist
+
+| Surface | Lines | Note |
+|---|---|---|
+| `app/error.tsx` | 62 | The marketing error boundary. "Something went wrong.", a **Try again** button, **Back to site**, a support email, and the Sentry `digest` quoted as a reference. Added 2026-08-04 precisely so errors stop falling through to the unstyled last resort. Not drawn |
+| `app/(app)/error.tsx` | 75 | The authenticated error boundary. Not drawn |
+| `app/global-error.tsx` | 23 | The last resort: renders its own bare `<html>`, no styling, no branding, no navigation. **Deliberately unstyled**, but the frame set should say so rather than be silent |
+| **`not-found.tsx`** | **0** | 🔴🔴 **THERE IS NO 404 PAGE ANYWHERE IN THE CODEBASE.** `find app -name "not-found*"` returns nothing, so every mistyped URL, dead inbound link and expired share serves **Next.js's default black-and-white 404**: no logo, no nav, no footer, no route back into the site. This is the one item in this audit that is not a missing frame, it is a **missing page, live right now** |
+
+#### C. Off-site brand surfaces that are not drawn
+
+| Surface | Lines | Note |
+|---|---|---|
+| `app/opengraph-image.tsx` | 107 | The default 1200x630 share card: how every non-article link renders in WhatsApp, iMessage, Slack, LinkedIn and X. For a business whose acquisition is social and paid, this is a first-impression surface with no frame |
+| `app/api/og/blog/[slug]/route.tsx` | 331 | Per-article share cards, `card` and `social` variants. Off the board only if the blog's off-board ruling is read to cover its share cards too, which it does not obviously do: the ruling was about the blog keeping `blog-skin.css`, and a share card is not the blog's skin |
+
+#### D. One frame that was drawn and was not marked as a proposal ✅ RESOLVED 2026-08-29
+
+🔴 **`results-F.html` section 08 draws a footer that does not exist.** Four links, *"How we set
+our ranges"*, *"What we do not test"*, *"Your data"*, *"Delete my results"*, plus *"Nothing here is a
+diagnosis"*. **None of those strings appears anywhere in `app/`, `components/` or `lib/`, and
+`app/(app)/layout.tsx` renders no footer at all.** So the one journey file that drew a footer invented
+one, on the one stage that has none. That is the `/activate` lesson running backwards: a lifecycle
+check catches a route that is drawn and dying; it cannot catch a **component that is drawn and never
+existed**.
+
+✅ **KEITH KEPT IT, 2026-08-29.** So this is now a decision rather than an accident: **the
+authenticated area gains a footer it does not have today**, and `results-F.html` records it as a
+PROPOSAL. Three changes went with keeping it. The two links with no page behind them
+(*"How we set our ranges"*, *"What we do not test"*) are **drawn differently** from the two that
+resolve, so the frame cannot be misread as four working links. The two that resolve
+(*"Your data"*, *"Request erasure"*) point at the `Data & privacy` section of `/account`, which is
+real and CA-024 approved but **dark behind `ACCOUNT_DATA_CONTROLS_ENABLED`**. And 🔴 **one label was
+reduced**: *"Delete my results"* became *"Request erasure"*, because
+`components/account/DataPrivacySection.tsx` **records an erasure request and does not delete**, so a
+footer promising deletion on special-category health data claimed an immediacy the approved copy is
+careful not to claim. That is a claim reduction back onto approved language and needs no fresh
+sign-off, on the CA-001 / CA-003 precedent.
+
+**When it is built it belongs in `app/(app)/layout.tsx`**, one file for six routes, for the reason
+`app/lp/layout.tsx` already demonstrates: a fact that lives in one file cannot drift.
+
+#### E. One fact no frame states
+
+**The `/auth/*` routes have no nav and no footer.** There is no `app/auth/layout.tsx`, so those five
+pages render under the ROOT layout alone: the AuthCard on an otherwise empty page, with no way back
+into the site except the browser's back button. `auth-F.html` draws the card correctly and never says
+this, so a rebuild reading it would most likely add chrome that is currently absent. Whether that
+absence is deliberate is worth one line from Keith.
+
+#### F. Dead code the sweep turned up
+
+Not frames, but found by the same pass and worth a cleanup commit: **five components with zero
+references anywhere in `app/`, `components/`, `lib/`, `content/` or `scripts/`** ...
+`components/marketing/TrustBar.tsx`, `BiomarkerPanel.tsx`, `KitCard.tsx`,
+`components/commerce/SubscribeButton.tsx`, `components/app/AppPlaceholder.tsx` ... plus an **empty
+`components/lp/` directory**.
+
+#### Confirmed clean (checked, and genuinely covered)
+
+- **All 46 routes** appear in this inventory, including the five `/lp/*` pages under the `/lp/*` row.
+- **The printed GP handoff IS drawn**, as Frame G in `results-states-F.html`, explicitly as a print
+  artefact that leaves F's language on purpose. It is implemented with Tailwind `print:` variants,
+  not an `@media print` block, which is why a stylesheet grep finds nothing.
+- **The Google OAuth button IS drawn** in `auth-F.html`, with a note explaining that Microsoft is
+  withheld rather than forgotten.
+- **`PasswordBanner` is drawn** (`results-F` item 01); **`DevFixtureBar` was deliberately dropped** as
+  dev-only.
+- **~20 blog components** (`ArticleLayout`, `ArticleToc`, `PullQuote`, `EvidenceBox`, `References`,
+  `SystemAlert`, `BackToTop`, `NewsletterForm` and the rest) are correctly out of scope: the blog
+  came off the board on 2026-08-27.
+- **The activate components** are attached to the deprecated route.
+
+#### What closed this, and what is still open
+
+`design/mockups/journey/chrome-F.html` is the eleventh file in the journey set and the one the other
+ten assumed. Seven frames:
+
+| Frame | Surface | Note |
+|---|---|---|
+| **AE** | The site footer | The frame Keith asked for. Its two dependencies on Frame AH run both ways: the footer holds the only control that reopens consent |
+| **AF** | The nav, three variants as a row | Records that the app variant's logo does **not** go home, and that **the log-out is a POST form and never a link** because Next prefetches links in a fixed nav and a GET log-out signed users out with no click |
+| **AG** | The mobile drawer, plus the scrolled state | The drawer pushes rather than overlays, drawn as the live behaviour with the overlay question left open on purpose |
+| **AH** | The cookie banner | Draws the equal-weight Accept/Reject that the ICO requires, so the rule stops living only in a code comment |
+| **AI** | The 404 | A record, not a proposal: it was built first |
+| **AJ** | The three error boundaries | Including `global-error.tsx` drawn **unstyled**, because restyling it into F would specify a screen that cannot render |
+| **AK** | The skip link | The only part of the interface that is invisible until it is the most important thing on screen |
+
+**What `chrome-F.html` does NOT cover**, and the frame list above is the whole of it: the two OG
+share cards in section C, and `app/activate/layout.tsx`, whose centred-logo header belongs to the
+deprecated route and dies with it. Two further absences are worth a decision but are not undrawn
+surfaces, because there is nothing to draw: **there is no `loading.tsx` anywhere in the app**, so no
+route has a loading state and every navigation to a dynamic route holds the previous screen until the
+server answers; and **`/how-to-sample` is drawn (Frame AD) but has never been built**, which is the
+404 situation in reverse.
+
+Verified at 1440 and a true 390, in both themes, zero em dashes.
+
+**Still open, and both are Keith's:** the unstated absence of chrome on `/auth/*` (section E) and the
+dead-code cleanup (section F). Section D was answered on 2026-08-29: the footer stays, as a proposal.
+
+#### The blog rebuild, 2026-08-29
+
+The first F blog draft lost on 2026-08-27 with a verdict that named its own condition: *"There's a
+lot of detail missing from the F blog you created, which at the moment I don't know if you can
+capture."* Keith asked for the rebuild on 2026-08-29, so the useful move was to find the detail
+rather than re-argue the texture.
+
+🔴 **The detail is a twelve-piece editorial component system**, and eleven of the twelve were in
+no frame: `Caveat`, `Note`, `PullQuote`, `Punchline`, `PublishedEvidence`, `StatBox`, `SystemAlert`,
+`ClinicalInsight`, `InlineKitCTA`, `EvidenceBox`, `SysHeading`, `NumberedHeading` (which has its own
+inverted `feature` variant). Read the live left-rule weights in order: **4px grey, 4px black, 6px,
+8px.** That is a four-step emphasis ladder built by a writer who needed four volumes of aside, and
+the first draft collapsed all four into one. It was never a cream-versus-wash question.
+
+The rebuild gives F a ladder of its own, spent on **ground** rather than border weight: nothing,
+sunk, sunk-with-accent, core, core-with-ring, tray, tray-with-wash, inverted. **Two things F cannot
+reproduce and the file says so**: the dot pattern has no F equivalent, and the hard offset
+block-shadow is a statement of flatness that F's ambient shadow contradicts by design. Against that,
+**the live blog has no dark mode and cannot easily get one**, since the cream ground and the hard
+black shadow are both light-only decisions.
+
+⚠ **One rung collapsed on the first render of the specimen sheet** (`Note` and `PublishedEvidence`
+drawn with the same ground and rule) and was caught by looking at the picture rather than the markup:
+the source was symmetric and reasonable, and the eye is what notices two rungs landing in the same
+place. Separated, and recorded in the frame.
+
+**Owed either way, independent of the ruling:** `blog-skin.css` is a written, namespaced, deliberate
+exception to two brand non-negotiables and it is documented only in its own header. **It is not
+referenced in `02_brand`**, so the next reader meets the rule without the exception.
+
+#### The rule this adds
+
+**Enumerate the LAYOUTS, not only the pages, and take the layout list from the framework's own
+composition mechanism** (`layout.tsx`, `_app`, base templates), never from the route list. Each
+distinct layout is at least one frame, and the number worth writing down is **layout to route-count**,
+because that is what says how load-bearing a single frame is. Add the inverse check too: **for every
+frame drawn, confirm the component it depicts exists**, since a route-based lifecycle check says
+nothing about a drawn component that was never real.
+
+---
 
 **Light and dark is a token flip, not a redraw**, so it does not double the number. It does mean every
 frame has to be checked in both, which is exactly what an HTML canvas makes cheap and a static

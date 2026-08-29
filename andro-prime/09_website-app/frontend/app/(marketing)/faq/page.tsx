@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import {
+  ALL_PANEL_MARKER_IDS, KIT_PANELS, PANEL_MARKERS, kitsIncluding, numberWord,
+  type PanelMarkerId,
+} from '@/lib/kits/panel'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { JsonLd } from '@/components/shared/JsonLd'
 
@@ -57,15 +61,28 @@ const XSvg = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="flex-shrink-0 mt-1 text-gray-500"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
 )
 
-const markerRows = [
-  { marker: 'Total Testosterone', measures: 'Total circulating testosterone in the blood', why: 'The primary male sex hormone. Affects energy, libido, muscle mass, mood, and drive.', kit: 'Kit 1 & Kit 3', alt: false },
-  { marker: 'SHBG', measures: 'Sex hormone-binding globulin', why: 'Binds to testosterone and renders it inactive. High SHBG means less testosterone available to your cells regardless of total T.', kit: 'Kit 1 & Kit 3', alt: true },
-  { marker: 'Free Testosterone', measures: 'Calculated from Total T and SHBG', why: 'The biologically active fraction. This is what your body actually uses. The full picture requires both Total T and SHBG.', kit: 'Kit 1 & Kit 3', alt: false },
-  { marker: 'Vitamin D', measures: '25-hydroxyvitamin D (total)', why: 'Supports muscle function, immune response, and energy. Most UK men are below optimal between October and April.', kit: 'Kit 2 & Kit 3', alt: true },
-  { marker: 'Active B12', measures: 'Holotranscobalamin (active form)', why: 'The form of B12 your cells can actually use. Standard B12 tests measure total serum B12 which includes inactive fractions. Active B12 shows what is truly available. Deficiency is more common in men over 40 and those on plant-based diets.', kit: 'Kit 2 & Kit 3', alt: false },
-  { marker: 'hs-CRP', measures: 'High-sensitivity C-reactive protein', why: 'Systemic inflammation marker. Elevated hs-CRP is directly associated with slower recovery, joint soreness, and reduced training adaptation.', kit: 'Kit 2 & Kit 3', alt: true },
-  { marker: 'Ferritin', measures: 'Iron storage marker', why: 'Low ferritin limits oxygen delivery to muscles and tissues. Causes fatigue and stamina decline that is often mistaken for overtraining or low testosterone.', kit: 'Kit 2 & Kit 3', alt: false },
-]
+// The rest of the Kit 1 panel, in canonical order. Membership comes from the
+// panel so a new marker cannot be missed here; the prose is this page's own.
+const alsoTestedWithTestosterone = KIT_PANELS['testosterone'].filter(
+  (id) => id !== 'total-testosterone',
+)
+
+const ALSO_TESTED_COPY: Partial<Record<PanelMarkerId, string>> = {
+  'shbg': 'Sex hormone-binding globulin. SHBG binds to testosterone and makes it inactive. A high SHBG can leave a man with technically “normal” total T but very low free T, the form that actually matters.',
+  'fai': 'Your total testosterone as a percentage of your SHBG. It is on the panel and it is on your report, but in men we draw no conclusion from it: it tracks calculated free testosterone poorly, and it reads high exactly when SHBG is low. Read your Free T instead.',
+  'albumin': 'The most abundant transport protein in your blood, and the second input to the free testosterone calculation after SHBG. Measuring it is what makes your Free T a calculated figure rather than an estimate.',
+  'free-testosterone': 'Calculated from Total T, SHBG and Albumin. This is what your body can actually use. Two men can have identical total testosterone but very different free testosterone. Total T alone is an incomplete picture.',
+}
+
+// Every marker on the panel, in canonical order, straight from the source of
+// truth. Hand-written, this table listed seven rows and omitted FAI and
+// Albumin while the CA-026 block further down this same page named FAI.
+const markerRows = ALL_PANEL_MARKER_IDS.map((id, i) => ({
+  id,
+  ...PANEL_MARKERS[id],
+  kit: kitsIncluding(id),
+  alt: i % 2 === 1,
+}))
 
 export default function FaqPage() {
   return (
@@ -165,14 +182,12 @@ export default function FaqPage() {
               <div className="glass-panel p-8">
                 <div className="data-label mb-4">Also tested with testosterone</div>
                 <ul className="space-y-4 font-serif text-base">
-                  <li className="flex items-start gap-3">
-                    <span className="font-sans font-black uppercase tracking-tight text-sm block mt-0.5 flex-shrink-0">SHBG</span>
-                    <p className="text-gray-600">Sex hormone-binding globulin. SHBG binds to testosterone and makes it inactive. A high SHBG can leave a man with technically &ldquo;normal&rdquo; total T but very low free T, the form that actually matters.</p>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="font-sans font-black uppercase tracking-tight text-sm block mt-0.5 flex-shrink-0">Free T</span>
-                    <p className="text-gray-600">Calculated from Total T and SHBG. This is what your body can actually use. Two men can have identical total testosterone but very different free testosterone. Total T alone is an incomplete picture.</p>
-                  </li>
+                  {alsoTestedWithTestosterone.map((id) => (
+                    <li key={id} className="flex items-start gap-3">
+                      <span className="font-sans font-black uppercase tracking-tight text-sm block mt-0.5 flex-shrink-0 w-20">{PANEL_MARKERS[id].short}</span>
+                      <p className="text-gray-600">{ALSO_TESTED_COPY[id]}</p>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -379,9 +394,9 @@ export default function FaqPage() {
                 </tr>
               </thead>
               <tbody className="bg-white">
-                {markerRows.map(({ marker, measures, why, kit, alt }) => (
-                  <tr key={marker} className={`border-b-2 border-gray-200 hover:bg-gray-50 ${alt ? 'bg-gray-50' : ''}`}>
-                    <td className="p-4 border-r-2 border-gray-200 font-sans font-black">{marker}</td>
+                {markerRows.map(({ id, name, measures, why, kit, alt }) => (
+                  <tr key={id} className={`border-b-2 border-gray-200 hover:bg-gray-50 ${alt ? 'bg-gray-50' : ''}`}>
+                    <td className="p-4 border-r-2 border-gray-200 font-sans font-black">{name}</td>
                     <td className="p-4 border-r-2 border-gray-200">{measures}</td>
                     <td className="p-4 border-r-2 border-gray-200">{why}</td>
                     <td className="p-4"><span className="data-label bg-gray-100 px-2 py-1 border border-black">{kit}</span></td>
@@ -393,7 +408,7 @@ export default function FaqPage() {
 
           <div className="flex items-start gap-4 p-6 border-2 border-black bg-gray-50 max-w-4xl">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="mt-1 flex-shrink-0"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
-            <p className="font-serif text-base leading-relaxed">These markers were chosen because they are the most clinically relevant indicators of the specific symptoms this cohort presents with: fatigue, slow recovery, low drive. We don&rsquo;t test 30 markers to make the panel look impressive. We test the seven that actually answer the question.</p>
+            <p className="font-serif text-base leading-relaxed">These markers were chosen because they are the most clinically relevant indicators of the specific symptoms this cohort presents with: fatigue, slow recovery, low drive. We don&rsquo;t test 30 markers to make the panel look impressive. We test the {numberWord(markerRows.length)} that actually answer the question.</p>
           </div>
         </div>
       </section>

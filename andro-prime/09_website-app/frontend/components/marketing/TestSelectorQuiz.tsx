@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { PRICING } from '@/lib/pricing'
+import { panelSentenceList } from '@/lib/kits/panel'
 import { getPageAttribution } from '@/lib/analytics/page-attribution'
 import {
   AGE_BANDS,
@@ -36,7 +37,7 @@ const RESULTS: Record<string, QuizResult> = {
     title: 'Start with the Testosterone Health Check.',
     href: '/kits/testosterone',
     price: `£${PRICING.KIT_1.rrp}`,
-    reason: 'Your answers point most strongly at hormonal health. Kit 1 tests Total T, SHBG, and Free Testosterone so you can see not just what your level is, but how much of that testosterone your body can actually use.',
+    reason: `Your answers point most strongly at hormonal health. Kit 1 tests ${panelSentenceList('testosterone')} so you can see not just what your level is, but how much of that testosterone your body can actually use.`,
     wtpConcept: 'the Testosterone Health Check now, plus the same testosterone retest later, as one order',
   },
   kit2: {
@@ -46,7 +47,7 @@ const RESULTS: Record<string, QuizResult> = {
     title: 'Start with the Energy and Recovery Check.',
     href: '/kits/energy-recovery',
     price: `£${PRICING.KIT_2.rrp}`,
-    reason: 'Your answers point toward recovery, inflammation, and common deficiencies. Kit 2 tests Vitamin D, Active B12, hs-CRP, and Ferritin.',
+    reason: `Your answers point toward recovery, inflammation, and common deficiencies. Kit 2 tests ${panelSentenceList('energy-recovery')}.`,
     wtpConcept: 'the Energy and Recovery Check now, plus the same retest later, as one order',
   },
   kit3: {

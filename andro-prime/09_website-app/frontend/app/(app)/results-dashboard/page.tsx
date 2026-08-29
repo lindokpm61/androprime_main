@@ -9,6 +9,7 @@ import { PasswordBanner } from '@/components/app/PasswordBanner'
 import { Logo } from '@/components/shared/Logo'
 import type { PreResultsOrderStatus, KitType } from '@/lib/results/types'
 import { urlFor } from '@/lib/hosts'
+import { numberWord, panelCount, panelSentenceList } from '@/lib/kits/panel'
 
 export const metadata: Metadata = {
   title: 'Your Results',
@@ -51,9 +52,9 @@ const STATUS_COPY: Record<PreResultsOrderStatus, { heading: string; subtext: str
 
 const KIT_CARD_BODY: Record<KitType, string> = {
   'testosterone':
-    "Your kit tests Total Testosterone and Sex Hormone Binding Globulin. These are the two markers that tell you where your testosterone actually stands, not just whether you're 'in range'.",
+    `Your kit tests ${panelSentenceList('testosterone')}. These are the ${numberWord(panelCount('testosterone'))} markers that tell you where your testosterone actually stands, not just whether you're 'in range'.`,
   'energy-recovery':
-    'Your kit tests Vitamin D, Active B12, hs-CRP, and Ferritin, the four markers most directly linked to energy, recovery, and inflammation in active men.',
+    `Your kit tests ${panelSentenceList('energy-recovery')}, the ${numberWord(panelCount('energy-recovery'))} markers most directly linked to energy, recovery, and inflammation in active men.`,
   'hormone-recovery':
     'Your kit tests a full hormone and recovery panel including testosterone, free testosterone, and key nutrient and inflammation markers linked to fatigue and recovery.',
 }

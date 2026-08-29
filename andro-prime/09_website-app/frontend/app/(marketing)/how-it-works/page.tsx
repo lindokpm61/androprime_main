@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { panelCardLabels, panelShortLabels } from '@/lib/kits/panel'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { JsonLd } from '@/components/shared/JsonLd'
 
@@ -293,7 +294,7 @@ export default function HowItWorksPage() {
                 <p className="font-serif text-base leading-relaxed mb-8 text-gray-600">For men who suspect testosterone might be behind the fatigue, the flat mood, and the loss of drive. GP said normal. Find out if that&rsquo;s the full picture.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
-                  {['Total Testosterone', 'SHBG', 'Free Testosterone (Calc)'].map(m => (
+                  {panelCardLabels('testosterone').map(m => (
                     <div key={m} className="flex items-center gap-3 font-serif text-base"><CheckSvg />{m}</div>
                   ))}
                 </div>
@@ -313,7 +314,7 @@ export default function HowItWorksPage() {
                 <p className="font-serif text-base leading-relaxed mb-8 text-gray-600">For active men who are training right, eating right, sleeping right, and still not recovering. This tests the four markers that most directly explain why.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
-                  {['Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin (Iron Storage)'].map(m => (
+                  {panelCardLabels('energy-recovery').map(m => (
                     <div key={m} className="flex items-center gap-3 font-serif text-base"><CheckSvg />{m}</div>
                   ))}
                 </div>
@@ -334,7 +335,7 @@ export default function HowItWorksPage() {
                 <p className="font-serif text-base leading-relaxed mb-8 text-gray-600">Tired, slow to recover, and you don&rsquo;t know if it&rsquo;s hormones, nutrition, or inflammation. This one checks all of them. Nine markers.</p>
                 <div className="border-t-2 border-black pt-6 space-y-3">
                   <div className="data-label mb-4">Markers tested</div>
-                  {['Total Testosterone, SHBG, Free T', 'Vitamin D', 'Active B12', 'hs-CRP (Inflammation)', 'Ferritin'].map(m => (
+                  {[panelShortLabels('testosterone').join(', '), ...panelCardLabels('energy-recovery')].map(m => (
                     <div key={m} className="flex items-center gap-3 font-serif text-base"><CheckSvg />{m}</div>
                   ))}
                 </div>

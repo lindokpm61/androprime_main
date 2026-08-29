@@ -3,10 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Journey: the blog in direction F's language</title>
+<title>Journey: the blog rebuilt in direction F's language</title>
 <script>
-/* Same conventions as the direction mockups: ?t=light / ?t=dark locks the
-   theme, ?still=1 settles the page for screenshot verification. */
 (function(){
   var q=new URLSearchParams(location.search);
   var t=q.get('t');
@@ -19,119 +17,165 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   THE BLOG, REDRAWN IN DIRECTION F'S LANGUAGE
+   THE BLOG, REBUILT IN DIRECTION F'S LANGUAGE
+   Second attempt. Frames AL to AQ.
 
-   *** NOT ADOPTED. KEITH RULED FOR THE LIVE BLOG STYLE, 2026-08-27. ***
-   His words: "I think the old or the live blog style wins. There's a lot of
-   detail missing from the F blog you created, which at the moment I don't
-   know if you can capture." The blog KEEPS its scoped editorial language and
-   blog-skin.css is NOT deleted. This file is kept as the record of what was
-   tried and why it lost, not as a work item. Revisit when there is time to
-   work out the detail this draft flattened.
+   ▶ WHY THERE IS A SECOND ATTEMPT, AND WHAT CHANGED.
+   The first draft LOST on 2026-08-27. Keith's words, recorded in the
+   file it replaced: "I think the old or the live blog style wins.
+   There's a lot of detail missing from the F blog you created, which
+   at the moment I don't know if you can capture."
 
-   WHY THIS FILE EXISTS. Keith decided on 2026-08-27 that the redesign is
-   app-wide and that F's language becomes the system. The blog is the one
-   surface that currently holds a WRITTEN LICENCE to break the brand rules
-   (styles/base/blog-skin.css: cream ground, hard offset block-shadow, both
-   deliberate, both namespaced so they cannot leak). The open question is
-   whether it gives that up. It cannot be answered on paper, because what
-   is at stake is READING, so this draws it.
+   That is a conditional verdict, not a preference, and it names its own
+   condition: DETAIL. Keith asked for this rebuild on 2026-08-29 with
+   the missing elements included, so this file is an answer to that
+   sentence rather than a re-run of the same argument.
 
-   THE TOKENS ARE F'S, COPIED NOT APPROXIMATED. Same values, same names,
-   same dark set. If it looks different from F it is because of what is
-   built ON the tokens, which is the thing being judged.
+   ▶ 🔴 WHAT THE FIRST DRAFT ACTUALLY MISSED, ENUMERATED THIS TIME.
+   It drew two frames, an article and an index, and it drew them as
+   PROSE. The live blog is not prose with a skin on it. It is a
+   **twelve-piece editorial component system**, and eleven of the twelve
+   never appeared in the draft at all:
 
-   THE ONE JUDGEMENT CALL MADE HERE, stated so it can be overruled.
-   F's grammar is trays: a 28px squircle shell with a 22px concentric core
-   and a large ambient shadow, holding DATA. Long-form prose is not data.
-   Putting 2000 words inside a tray makes a document look like a widget and
-   costs the measure real width on a phone. So prose sits directly on the
-   ground, and trays are kept for the things that interrupt prose: the stat
-   panel, the pull quote's companion, the FAQ, the card grid on the index.
-   That is the honest translation of F rather than the literal one, and it
-   is what is drawn here: the article header and body sit on the ground, and
-   every tray in the article holds something that is not prose.
+     Caveat ............. 4px GREY rule, italic, grey text ..... quietest
+     Note ............... 4px black rule, grey-100 fill
+     PullQuote .......... 6px black rule, grey-50, serif italic
+     Punchline .......... 8px black rule, grey-100, uppercase black
+     PublishedEvidence .. 8px black rule + a cited-source foot
+     StatBox ............ 2px black border all round, grey-50
+     SystemAlert ........ 4px black border + a solid black action bar
+     ClinicalInsight .... 4px border + BRUTAL-SHADOW + dot pattern
+     InlineKitCTA ....... 4px border + brutal-shadow + dot corner
+     EvidenceBox ........ SOLID BLACK, inverted .............. loudest
+     SysHeading ......... mono chip, white on black
+     NumberedHeading .... numbered badge, plus an inverted `feature`
 
-   WHAT THE CURRENT BLOG DOES INSTEAD, for the comparison:
-     - cream surface (#FBF9F4-ish) rather than white or the wash
-     - hard offset block-shadow, no blur, the opposite of F's ambient
-     - Merriweather serif body
-     - no dark mode at all
-     - black underline / black highlight for emphasis, never the accent red,
-       because red is reserved for the results dashboard critical state
+   Read the left-rule weights in order: **4px grey, 4px black, 6px, 8px.**
+   That is a deliberate ladder, built by a writer who needed four
+   different volumes of aside in one article, and the draft collapsed all
+   four into one. THAT is the missing detail. It was never a texture
+   problem, and arguing about cream versus wash was arguing about the
+   wrong thing.
 
-   COMPLIANCE. Copy is verbatim from the PUBLISHED article
-   frontend/content/blog/myth-of-normal-range.mdx, so nothing here is a new
-   claim. Zero em dashes, including in these comments.
+   ▶ SO THE REBUILD'S ONE JOB: GIVE F A LADDER DEEP ENOUGH.
+   F's grammar as drawn everywhere else is trays plus hairlines plus one
+   accent, which is roughly TWO levels of emphasis. Twelve pieces will not
+   fit in two levels, and flattening them is exactly what lost the first
+   round. F does have the range, but it has to be spent deliberately, and
+   it spends it on GROUND rather than on borders:
+
+     no fill, hairline rule ....... Caveat
+     --sunk fill .................. Note
+     --sunk + heavier rule ........ PullQuote
+     --sunk + ACCENT rule ......... Punchline
+     --sunk + accent foot ......... PublishedEvidence
+     --core + inset hairline ...... StatBox
+     --core + accent ring ......... SystemAlert
+     full tray, ambient shadow .... ClinicalInsight
+     tray + accent wash ........... InlineKitCTA
+     INVERTED, --ink ground ....... EvidenceBox
+     mono chip on --ink ........... SysHeading
+     accent numeral / inverted .... NumberedHeading
+
+   Eight distinct grounds plus type weight, against the live blog's
+   borders-and-shadow. **That is the claim this file makes and the thing
+   to judge it on**, and Frame AN puts the two ladders side by side so
+   the comparison is a comparison rather than an impression.
+
+   ▶ THE JUDGEMENT CALL FROM THE FIRST DRAFT SURVIVES, AND IT WAS RIGHT.
+   Prose sits on the ground, not inside a tray: 2000 words in a widget
+   reads as a widget and costs measure on a phone. Trays are kept for the
+   things that INTERRUPT prose. Nothing about the first draft's failure
+   argues against that, because the failure was too few interrupt styles,
+   not too few trays.
+
+   ▶ WHAT THE LIVE BLOG DOES, KEPT FOR THE COMPARISON.
+   Cream ground #f4f4f0, hard 8px offset block-shadow with no blur, dot
+   pattern, Merriweather serif body, no dark mode at all, black underline
+   and black highlight for emphasis. `styles/base/blog-skin.css` is 80
+   lines and it is a WRITTEN, NAMESPACED licence to break two brand
+   non-negotiables (the global box-shadow ban and the white-only
+   marketing ground). It is deliberate, it is documented, and **the
+   accent red is deliberately NOT adopted there** because red is reserved
+   for the results dashboard's critical state. Any replacement has to be
+   better than something that careful, not merely newer.
+
+   ▶ THE FRAMES
+     the article, header to body .................. Frame AL
+     the twelve MDX pieces, specimen sheet ........ Frame AM
+     the two emphasis ladders, side by side ....... Frame AN
+     the tail: ToC, FAQ, related, newsletter ...... Frame AO
+     the index ..................................... Frame AP
+     the author page ............................... Frame AQ
+
+   ▶ WHAT IS NOT DRAWN, AND WHY.
+   `/blog/preview/[slug]` is the same article behind a token check, so it
+   is the article frame with a banner and not a frame of its own. The nav,
+   footer and cookie banner come from `(marketing)/layout.tsx` and are
+   drawn in `chrome-F.html`, not restated here.
+
+   ▶ STATUS. This does NOT overturn the 2026-08-27 ruling on its own.
+   That ruling stands until Keith rules again, and this file exists so
+   that the second ruling can be made against the detail rather than
+   against a draft that was missing it.
+
+   COMPLIANCE. Body copy is verbatim from the PUBLISHED article
+   frontend/content/blog/myth-of-normal-range.mdx, so nothing here is a
+   new claim. Zero em dashes, including in these comments.
    ============================================================ */
 
-/* ---------- tokens: F's, unchanged ---------- */
 :root{
-  --paper:#FFFFFF;
-  --tray:#F1F2F4;
-  --core:#FFFFFF;
-  --sunk:#E7E9EC;
-  --ink:#0A0B0D;
-  --ink-2:#4A4F57;
-  --ink-3:#6B7078;
-  --hair:rgba(10,11,13,.10);
-  --hair-2:rgba(10,11,13,.16);
-  --flag:#E0A458;
+  --paper:#FFFFFF; --tray:#F1F2F4; --core:#FFFFFF; --sunk:#E7E9EC;
+  --ink:#0A0B0D; --ink-2:#4A4F57; --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10); --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458; --flag-f:rgba(224,164,88,.14); --flag-f2:rgba(224,164,88,.26);
   --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
-  --amb-lift:0 40px 90px -24px rgba(10,11,13,.22), 0 10px 26px -14px rgba(10,11,13,.12);
-  --ease:cubic-bezier(.32,.72,0,1);
-  --r:28px;
-  --r-in:22px;
+  --ease:cubic-bezier(.32,.72,0,1); --r:28px; --r-in:22px;
 }
 :root[data-theme="dark"]{
   --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
   --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
   --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
   --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
-  --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
     --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
     --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
     --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
-    --amb-lift:0 40px 90px -24px rgba(0,0,0,.8), 0 10px 26px -14px rgba(0,0,0,.6);
   }
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%}
 body{
   background:var(--paper);color:var(--ink);
   font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
   font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
 }
-img{max-width:100%;display:block}
-h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.04}
-.mono{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,"SFMono-Regular",Menlo,monospace;font-variant-numeric:tabular-nums}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.read{max-width:720px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
 
-/* .wrap owns horizontal padding ONLY, per F's guardrail. */
-.wrap{max-width:1180px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
-.narrow{max-width:760px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
-
-/* ---------- ground: F's luminance wash plus fixed grain ---------- */
 .wash{
   position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(1100px 700px at 18% -8%, rgba(10,11,13,.055), transparent 62%),
-    radial-gradient(900px 620px at 92% 12%, rgba(10,11,13,.038), transparent 60%);
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
 }
 :root[data-theme="dark"] .wash{
   background:
-    radial-gradient(1100px 700px at 18% -8%, rgba(255,255,255,.045), transparent 62%),
-    radial-gradient(900px 620px at 92% 12%, rgba(255,255,255,.030), transparent 60%);
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .wash{
     background:
-      radial-gradient(1100px 700px at 18% -8%, rgba(255,255,255,.045), transparent 62%),
-      radial-gradient(900px 620px at 92% 12%, rgba(255,255,255,.030), transparent 60%);
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
   }
 }
 .grain{
@@ -141,366 +185,579 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.04}
 :root[data-theme="dark"] .grain{opacity:.07}
 @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
 
-/* ---------- frame labels. Chrome for the review, NOT part of the design.
-     Deliberately ugly-plain so it cannot be mistaken for the mockup. ---------- */
-.flabel{
-  border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);
-  background:var(--tray);
-}
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:32px 30px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
 .flabel .in{
-  max-width:1180px;margin:0 auto;padding:10px 20px;
-  display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
   font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
 }
-.flabel b{color:var(--ink);font-weight:600;letter-spacing:.1em}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
 
-/* ---------- nav island, carried over from F for continuity ---------- */
-.nav{position:sticky;top:0;z-index:30;padding-top:14px;padding-bottom:2px}
-.island{
-  display:flex;align-items:center;gap:14px;
-  background:color-mix(in srgb, var(--paper) 82%, transparent);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1px solid var(--hair);border-radius:999px;
-  padding:8px 10px 8px 16px;box-shadow:var(--amb);
-  max-width:640px;margin:0 auto;
-}
-.mark{
-  width:30px;height:30px;border-radius:999px;background:var(--ink);color:var(--paper);
-  display:grid;place-items:center;font-size:11px;font-weight:800;letter-spacing:.02em;flex:none;
-}
-.wm{font-weight:600;letter-spacing:-.02em;font-size:15px}
-.navcta{
-  margin-left:auto;background:var(--ink);color:var(--paper);text-decoration:none;
-  border-radius:999px;padding:9px 15px;font-size:13.5px;font-weight:600;white-space:nowrap;
-}
-
-/* ---------- the tray: F's double-bezel, used only for non-prose ---------- */
-.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb)}
-.core{background:var(--core);border-radius:var(--r-in);padding:28px 26px}
-@media (min-width:800px){ .core{padding:34px 32px} }
-
-.sec{padding-top:64px;padding-bottom:64px}
-@media (min-width:900px){ .sec{padding-top:96px;padding-bottom:96px} }
-
-/* ---------- eyebrow / meta ---------- */
-.eyebrow{
+.blab{
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
-  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
 }
-.metarow{
-  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:60ch}
+.fine{
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
-  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:70ch;
 }
-.metarow .dot{width:3px;height:3px;border-radius:999px;background:var(--ink-3);flex:none}
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+.m{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;font-size:.94em;color:var(--ink)}
 
-/* ============================================================
-   FRAME A: THE ARTICLE
-   ============================================================ */
+/* ---------- ARTICLE ---------- */
+.metabar{
+  display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;align-items:center;
+  padding:14px 0;border-bottom:1px solid var(--hair);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.crumb{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.crumb a{color:var(--ink-3);text-decoration:none}
+.crumb .now{color:var(--ink)}
+.mchips{display:flex;gap:8px;flex-wrap:wrap}
+.mchip{border-radius:999px;padding:5px 11px;background:var(--ink);color:var(--paper)}
+.mchip.q{background:transparent;color:var(--ink-2);box-shadow:inset 0 0 0 1px var(--hair-2)}
 
-/* The header block IS a tray. This is the literal reading of F, kept on
-   purpose so the commitment is visible before it is accepted or rejected. */
-.ahead{padding-top:34px}
-.ahead .cat{margin-bottom:16px}
-.ahead h1{
-  font-size:clamp(2.05rem,5.2vw,3.5rem);letter-spacing:-.04em;line-height:1.02;
-  margin-bottom:18px;
+.arthead{padding:44px 0 28px}
+.arthead h1{font-size:clamp(2rem,5.2vw,3.4rem);letter-spacing:-.05em;margin-bottom:20px}
+.stand{
+  font-family:Geist,system-ui,sans-serif;font-size:clamp(1.05rem,2.1vw,1.3rem);line-height:1.5;
+  color:var(--ink-2);padding-left:18px;border-left:3px solid var(--flag);
 }
-.ahead .dek{
-  font-size:clamp(1.05rem,2.1vw,1.28rem);line-height:1.55;color:var(--ink-2);
-  max-width:60ch;margin-bottom:26px;font-weight:400;
-}
-.byline{
-  display:flex;flex-wrap:wrap;gap:20px 40px;padding-top:20px;
-  border-top:1px solid var(--hair);
-}
-.who-col{display:flex;align-items:flex-start;gap:12px}
-.who-col .eyebrow{margin-bottom:3px}
-.who-col.rev{padding-left:40px;border-left:1px solid var(--hair)}
-@media (max-width:640px){ .who-col.rev{padding-left:0;border-left:0} }
-.avatar.rev-av{background:var(--tray);color:var(--ink);border:1px solid var(--hair-2)}
-.avatar{
-  width:38px;height:38px;border-radius:999px;background:var(--ink);color:var(--paper);
-  display:grid;place-items:center;font-size:12px;font-weight:700;flex:none;
-}
-.byline .who{font-size:14px;font-weight:600;letter-spacing:-.01em}
-.byline .when{margin-top:2px}
 
-/* PROSE. The measure, size and rhythm are the whole question. 19px at 1.72
-   over roughly 68 characters is the comfortable end of what Geist does at
-   length; the current blog runs Merriweather, which is a serif built for
-   exactly this and gets there more easily. */
-.prose{padding-top:44px;padding-bottom:8px}
-.prose p{
-  font-size:19px;line-height:1.72;color:var(--ink-2);
-  max-width:68ch;margin-bottom:26px;
+/* the author + reviewer card. On the live blog it OVERLAPS the headline
+   block and carries the brutal-shadow. In F it is a tray that breaks the
+   measure, which is the same gesture with F's materials. */
+.bylines{display:grid;gap:1px;grid-template-columns:1fr;background:var(--hair);border-radius:var(--r-in);overflow:hidden}
+@media (min-width:720px){ .bylines{grid-template-columns:1fr 1fr} }
+.byline{background:var(--core);padding:20px 20px;display:flex;gap:14px;align-items:flex-start}
+.byline .av{
+  width:44px;height:44px;border-radius:13px;background:var(--ink);color:var(--paper);flex:none;
+  display:grid;place-items:center;font-weight:800;font-size:15px;letter-spacing:-.02em;
 }
+.byline .r{
+  display:block;margin-bottom:5px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.byline b{font-size:15px;letter-spacing:-.02em;display:block}
+.byline span.role{font-size:13px;color:var(--ink-2);display:block;margin-top:2px}
+
+.prose{padding-top:30px}
+.prose p{font-size:17.5px;line-height:1.72;color:var(--ink-2);margin-bottom:22px}
 .prose p b,.prose p strong{color:var(--ink);font-weight:600}
-.prose h2{
-  font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.035em;color:var(--ink);
-  margin-top:56px;margin-bottom:18px;max-width:26ch;
-}
-.prose h3{
-  font-size:1.16rem;letter-spacing:-.02em;color:var(--ink);
-  margin-top:38px;margin-bottom:12px;
-}
-/* Short paragraphs are this writer's rhythm. Tighten the gap between
-   consecutive one-liners so they read as a beat rather than as sections. */
-.prose p.beat{margin-bottom:14px;color:var(--ink)}
+.prose h2{font-size:clamp(1.4rem,3vw,1.9rem);letter-spacing:-.04em;margin:38px 0 16px}
 
-/* The rule that carries the section number. F's measurement rule, reused as
-   editorial furniture rather than as decoration. */
-.hrule{
-  display:flex;align-items:center;gap:14px;margin-top:56px;
+/* ---------- THE EMPHASIS LADDER: twelve pieces, eight grounds ---------- */
+.mx{margin:26px 0}
+
+.mx-caveat{
+  padding-left:16px;border-left:2px solid var(--hair-2);
+  font-style:italic;font-size:16.5px;line-height:1.65;color:var(--ink-3);
+}
+.mx-note{
+  background:var(--sunk);border-radius:0 14px 14px 0;border-left:3px solid var(--ink);
+  padding:18px 20px;font-size:16.5px;line-height:1.65;color:var(--ink-2);
+}
+.mx-quote{
+  background:var(--sunk);border-radius:0 14px 14px 0;border-left:5px solid var(--ink);
+  padding:20px 22px;font-size:20px;line-height:1.42;font-style:italic;font-weight:600;color:var(--ink);
+}
+.mx-punch{
+  background:var(--sunk);border-radius:0 14px 14px 0;border-left:5px solid var(--flag);
+  padding:20px 22px;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.16;
+  font-weight:800;letter-spacing:-.04em;text-transform:uppercase;color:var(--ink);
+}
+.mx-pub{
+  background:var(--sunk);border-radius:0 14px 14px 0;border-left:5px solid var(--ink);padding:20px 22px;
+}
+.mx-pub p{font-size:16.5px;line-height:1.62;color:var(--ink-2);margin-bottom:0}
+.mx-pub .src{
+  margin-top:14px;padding-top:12px;border-top:2px solid var(--flag);
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
-  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+  font-size:11px;letter-spacing:.06em;color:var(--ink-3);
 }
-.hrule::after{content:"";flex:1;height:1px;background:var(--hair-2)}
-
-/* STAT PANEL: the clearest case for a tray inside prose. It is data, it
-   interrupts, and it is exactly what F's grammar was built to hold. */
-.stat{margin-top:34px;margin-bottom:38px;max-width:68ch}
-.stat .lab{margin-bottom:12px}
-.stat p{font-size:16.5px;line-height:1.66;margin-bottom:14px;max-width:none}
-.stat p:last-child{margin-bottom:0}
-
-/* PULL QUOTE: hairlines and scale, no block-shadow. This is the deliberate
-   replacement for the blog skin's hard offset shadow. */
-.pull{
-  margin-top:40px;margin-bottom:40px;padding-top:26px;padding-bottom:26px;
-  border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair-2);
-  max-width:68ch;
+.mx-stat{
+  background:var(--core);border-radius:18px;box-shadow:inset 0 0 0 1px var(--hair-2);padding:22px 22px;
 }
-.pull p{
-  font-size:clamp(1.28rem,2.6vw,1.62rem);line-height:1.34;letter-spacing:-.03em;
-  color:var(--ink);font-weight:600;margin-bottom:0;max-width:none;
+.mx-stat .k{
+  display:block;margin-bottom:10px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.mx-stat .big{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;letter-spacing:-.05em;line-height:1}
+.mx-stat p{font-size:15.5px;line-height:1.6;color:var(--ink-2);margin:10px 0 0}
+.mx-alert{
+  background:var(--core);border-radius:18px;box-shadow:inset 0 0 0 1.5px var(--flag);overflow:hidden;
+}
+.mx-alert .bd{padding:22px 22px 20px}
+.mx-alert h4{font-size:19px;letter-spacing:-.035em;margin-bottom:9px}
+.mx-alert p{font-size:15.5px;line-height:1.6;color:var(--ink-2);margin:0}
+.mx-alert .act{
+  background:var(--ink);color:var(--paper);padding:13px;text-align:center;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+}
+.mx-clin{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb)}
+.mx-clin .in{background:var(--core);border-radius:var(--r-in);padding:24px 22px}
+.mx-clin h4{font-size:19px;letter-spacing:-.035em;margin-bottom:9px}
+.mx-clin p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0}
+.mx-cta{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb)}
+.mx-cta .in{
+  background:var(--flag-f);border-radius:var(--r-in);padding:24px 22px;
+  display:flex;gap:18px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+}
+.mx-cta h4{font-size:18px;letter-spacing:-.035em;margin-bottom:6px}
+.mx-cta p{font-size:15px;color:var(--ink-2);margin:0;max-width:44ch}
+.mx-ev{
+  background:var(--ink);color:var(--paper);border-radius:18px;padding:24px 22px;
+}
+.mx-ev .k{
+  display:block;margin-bottom:12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.62;
+}
+.mx-ev p{font-size:16px;line-height:1.62;margin:0;opacity:.92}
+.mx-sys{margin:38px 0 16px}
+.mx-sys span{
+  display:inline-block;background:var(--ink);color:var(--paper);border-radius:9px;padding:7px 13px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:13px;font-weight:600;letter-spacing:.06em;
+}
+.mx-num{display:flex;gap:14px;align-items:baseline;margin:36px 0 14px}
+.mx-num .n{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:13px;font-weight:600;color:var(--flag);letter-spacing:.1em;flex:none;
+}
+.mx-num h3{font-size:clamp(1.25rem,2.6vw,1.6rem);letter-spacing:-.04em}
+.mx-num.feat{
+  background:var(--ink);color:var(--paper);border-radius:18px;padding:20px 22px;align-items:center;
+}
+.mx-num.feat .n{color:var(--flag)}
+.mx-num.feat h3{color:var(--paper)}
+
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:12px 20px;font-size:14px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;white-space:nowrap;
 }
 
-/* FAQ: trays, because a question list is structure rather than prose. */
-.faq{margin-top:20px}
-.faq .q{
-  font-size:16.5px;font-weight:600;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px;
+/* ---------- LADDER COMPARISON ---------- */
+.lad{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+.lad th,.lad td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--hair);vertical-align:middle}
+.lad th{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:600;
 }
-.faq .a{font-size:16px;line-height:1.68;color:var(--ink-2);margin-bottom:0}
-.faq .tray{margin-bottom:12px}
-.faq .core{padding:22px 24px}
+.lad td{color:var(--ink-2)}
+.lad td b{color:var(--ink)}
+.lad .sw{width:56px}
+.lad .sw i{display:block;height:26px;border-radius:6px}
 
-/* ============================================================
-   FRAME B: THE INDEX
-   ============================================================ */
-.ihead h2{font-size:clamp(1.9rem,4.4vw,3rem);letter-spacing:-.04em;margin-bottom:14px}
-.ihead p{font-size:1.05rem;color:var(--ink-2);max-width:56ch}
-
-.rail{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px;margin-bottom:34px}
-.chip{
-  border:1px solid var(--hair-2);border-radius:999px;padding:7px 14px;
-  font-size:12.5px;font-weight:500;color:var(--ink-2);white-space:nowrap;
+/* ---------- TAIL: TOC, FAQ, RELATED, NEWSLETTER ---------- */
+.toc{background:var(--core);border-radius:18px;box-shadow:inset 0 0 0 1px var(--hair);padding:20px 22px}
+.toc ol{list-style:none;counter-reset:t;display:grid;gap:9px;margin-top:12px}
+.toc li{counter-increment:t;display:flex;gap:11px;font-size:15px;color:var(--ink-2)}
+.toc li::before{
+  content:counter(t,decimal-leading-zero);flex:none;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;color:var(--ink-3);padding-top:3px;
 }
-.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-
-.lead{margin-bottom:20px}
-.lead .core{padding:0;overflow:hidden;display:grid;grid-template-columns:1fr}
-@media (min-width:820px){ .lead .core{grid-template-columns:1.05fr .95fr} }
-.lead .plate{
-  min-height:210px;background:var(--sunk);position:relative;overflow:hidden;
+.faq{display:grid;gap:1px;background:var(--hair);border-radius:18px;overflow:hidden;margin-top:14px}
+.faq .q{background:var(--core);padding:17px 20px;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.faq .q b{font-size:15.5px;letter-spacing:-.02em}
+.faq .q i{color:var(--ink-3);font-style:normal;font-size:18px}
+.rel{display:grid;gap:12px;grid-template-columns:1fr;margin-top:14px}
+@media (min-width:820px){ .rel{grid-template-columns:repeat(3,1fr)} }
+.rcard{background:var(--core);border-radius:18px;box-shadow:inset 0 0 0 1px var(--hair);padding:18px 18px;display:flex;flex-direction:column;gap:9px}
+.rcard .k{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
 }
-/* Stand-in for the article's OG image. Drawn, not photographic, so nothing
-   here implies a claim and nothing needs a CA gate. */
-.lead .plate::after{
-  content:"";position:absolute;inset:0;
-  background:
-    repeating-linear-gradient(90deg, var(--hair) 0 1px, transparent 1px 34px),
-    repeating-linear-gradient(0deg, var(--hair) 0 1px, transparent 1px 34px);
+.rcard h4{font-size:16px;letter-spacing:-.03em;line-height:1.22}
+.rcard p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.news{background:var(--ink);color:var(--paper);border-radius:var(--r-in);padding:26px 24px}
+.news h4{font-size:20px;letter-spacing:-.04em;margin-bottom:8px}
+.news p{font-size:15px;opacity:.8;margin-bottom:16px;max-width:52ch}
+.news .row{display:flex;gap:10px;flex-wrap:wrap}
+.news .inp{
+  flex:1;min-width:200px;border-radius:999px;border:0;padding:12px 17px;font:inherit;font-size:14.5px;
+  background:rgba(255,255,255,.1);color:var(--paper);
 }
-.lead .body{padding:28px 26px}
-@media (min-width:820px){ .lead .body{padding:34px 32px} }
-.lead h3{font-size:clamp(1.35rem,2.6vw,1.75rem);letter-spacing:-.035em;margin-top:14px;margin-bottom:12px}
-.lead p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin-bottom:20px}
+.news .go{background:var(--paper);color:var(--ink);border-radius:999px;padding:12px 20px;font-size:14px;font-weight:600}
 
-.grid{display:grid;gap:20px;grid-template-columns:1fr}
-@media (min-width:700px){ .grid{grid-template-columns:1fr 1fr} }
-@media (min-width:1000px){ .grid{grid-template-columns:1fr 1fr 1fr} }
-.card .core{display:flex;flex-direction:column;height:100%;padding:24px 22px}
-.card h4{font-size:1.12rem;letter-spacing:-.025em;margin-top:12px;margin-bottom:10px;line-height:1.2}
-.card p{font-size:14.5px;line-height:1.6;color:var(--ink-2);margin-bottom:18px}
-.card .foot{margin-top:auto}
-
-.readlink{
-  display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);
-  font-size:13.5px;font-weight:600;letter-spacing:-.01em;
+/* ---------- INDEX ---------- */
+.grid{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:760px){ .grid{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1080px){ .grid{grid-template-columns:repeat(3,1fr)} }
+.pcard{background:var(--core);border-radius:var(--r-in);box-shadow:inset 0 0 0 1px var(--hair);padding:22px 20px;display:flex;flex-direction:column;gap:11px}
+.pcard.lead{grid-column:1/-1;box-shadow:inset 0 0 0 1.5px var(--flag)}
+.pcard .k{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.pcard h3{font-size:18px;letter-spacing:-.035em;line-height:1.18}
+.pcard.lead h3{font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.045em}
+.pcard p{font-size:14.5px;line-height:1.58;color:var(--ink-2)}
+.pcard .foot{
+  margin-top:auto;padding-top:12px;border-top:1px solid var(--hair);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
 }
-.readlink .pip{transition:transform .4s var(--ease)}
-
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filters span{
+  border-radius:999px;padding:7px 14px;box-shadow:inset 0 0 0 1px var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
 }
+.filters span.on{background:var(--ink);color:var(--paper);box-shadow:none}
+
+/* ---------- AUTHOR ---------- */
+.auth{display:grid;gap:22px;grid-template-columns:1fr}
+@media (min-width:820px){ .auth{grid-template-columns:auto 1fr;align-items:start} }
+.auth .por{
+  width:104px;height:104px;border-radius:26px;background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;font-size:32px;font-weight:800;letter-spacing:-.03em;
+}
+.auth h2{font-size:clamp(1.6rem,3.4vw,2.2rem);letter-spacing:-.045em;margin-bottom:8px}
+.creds{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 16px}
+.creds span{
+  border-radius:999px;padding:6px 13px;box-shadow:inset 0 0 0 1px var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+}
+
+.sec{padding:34px 0 6px}
+.sec h2{font-size:clamp(1.5rem,3.2vw,2.2rem);letter-spacing:-.045em;max-width:26ch}
+.sec .grey{color:var(--ink-3)}
+
+@media (prefers-reduced-motion:reduce){ *{transition:none !important} }
 </style>
 </head>
 <body>
 <div class="wash"></div>
 <div class="grain"></div>
 
-<div class="nav">
-  <div class="wrap">
-    <div class="island">
-      <div class="mark">AP</div>
-      <div class="wm">Androprime</div>
-      <a class="navcta" href="#">Find your test</a>
-    </div>
-  </div>
-</div>
-
-<!-- ============ FRAME A: ARTICLE ============ -->
+<!-- ============ OPENING ============ -->
 <div class="flabel"><div class="in">
-  <b>Frame A</b><span>/blog/[slug]</span><span>Article</span>
-  <span>speaks today: blog skin (cream + block shadow + Merriweather)</span>
-</div></div>
-
-<div class="narrow ahead">
-  <div class="eyebrow cat">Testosterone</div>
-  <h1>Normal Testosterone Levels by Age: what &ldquo;within range&rdquo; actually means</h1>
-  <p class="dek">The NHS &ldquo;normal&rdquo; testosterone range was built to flag illness, not to define wellness. Here&rsquo;s why &ldquo;within range&rdquo; doesn&rsquo;t mean &ldquo;well&rdquo;, and what to actually do with the result.</p>
-  <!-- BOTH names, deliberately. The live page carries a "reviewed by" block
-       naming the GMC-registered GP who read the piece, and it is doing real
-       work: it is the E-E-A-T signal, and it is the visible half of the
-       sign-off process every article goes through. A restyle that quietly
-       dropped it would be a regression dressed as a simplification. -->
-  <div class="byline">
-    <div class="who-col">
-      <div class="avatar">KA</div>
-      <div>
-        <div class="eyebrow">Written by</div>
-        <div class="who">Keith Antony</div>
-        <div class="metarow when"><span>18 June 2026</span><span class="dot"></span><span>10 min read</span></div>
-      </div>
-    </div>
-    <div class="who-col rev">
-      <div class="avatar rev-av">EL</div>
-      <div>
-        <div class="eyebrow">Reviewed by</div>
-        <div class="who">Dr Ewa Lindo</div>
-        <div class="metarow when"><span>GMC-registered GP</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="narrow prose">
-  <p>The NHS &ldquo;normal&rdquo; testosterone range, roughly <b>8 to 29 nmol/L</b>, wasn&rsquo;t built to tell you whether you&rsquo;re functioning well. It was built to flag clinical illness. If your GP says your level is &ldquo;within range&rdquo; but you feel materially worse than you did five years ago, the range isn&rsquo;t lying. It just isn&rsquo;t answering your question.</p>
-
-  <div class="hrule">01</div>
-  <h2>What &ldquo;normal&rdquo; actually means, without the textbook</h2>
-
-  <p>A man brought me his GP results recently. Total testosterone 12 nmol/L. &ldquo;Within normal range.&rdquo; His GP had told him so.</p>
-  <p>So I asked him the one thing his GP hadn&rsquo;t.</p>
-  <p class="beat">What&rsquo;s the range?</p>
-  <p class="beat">8 to 29 nmol/L.</p>
-  <p>Most men assume that&rsquo;s a healthy band. It isn&rsquo;t. It&rsquo;s a statistical band: the spread you&rsquo;d get if you took blood from every adult man between 18 and 70 and drew a line at the 2.5th and 97.5th percentile.</p>
-  <p class="beat">Athletes. Sedentary. Lean. Overweight. 22-year-olds. 68-year-olds. All in one pot.</p>
-
-  <div class="pull">
-    <p>The range was built to answer one question: is this man clinically ill? It wasn&rsquo;t built to answer: is this man well?</p>
-  </div>
-
-  <p><b>Those are two different questions.</b> The NHS test answers one of them. Most symptomatic men are asking the other.</p>
-
-  <!-- The stat panel is the clearest case for a tray inside prose: it is
-       data, it interrupts, and holding data is what F's grammar is for. -->
-  <div class="tray stat"><div class="core">
-    <div class="eyebrow lab">The statistical reality</div>
-    <p>The NHS range of 8 to 29 nmol/L spans roughly a 260% difference between the low end and the high end. Two men, one at 9 nmol/L, one at 25 nmol/L, both receive the same result: &ldquo;within normal range.&rdquo;</p>
-    <p>Clinically, they are not the same. The man at 9 nmol/L is statistically far more likely to report fatigue, low libido, and slow recovery. The man at 25 nmol/L is unlikely to report any of those. Both are categorised as normal.</p>
-  </div></div>
-
-  <div class="hrule">02</div>
-  <h2>Why the range is so wide</h2>
-
-  <p>Three things make the reference range as wide as it is. None of them are about whether UK men are healthy.</p>
-
-  <h3>Age: the biggest single driver</h3>
-  <p>Testosterone peaks in men in their early 20s. From the age of 30, it drops by roughly 1 to 2% per year.</p>
-  <p class="beat">By 45, the average man has lost 15 to 30% of his peak T.</p>
-  <p class="beat">By 60, more than 40%.</p>
-  <p>That decline is baked into the reference range. The sample includes 18-year-olds at peak and 70-year-olds in slow decline. When you draw a line at the 2.5th and 97.5th percentile across that whole pot, what you get is a span that accommodates physiology decades apart.</p>
-  <p>That&rsquo;s why the range is wide. It&rsquo;s not because UK men are healthy. It&rsquo;s because the range was built to fit men of all ages.</p>
-
-  <div class="hrule">Common questions</div>
-  <div class="faq">
-    <div class="tray"><div class="core">
-      <p class="q">What does &ldquo;within normal range&rdquo; mean for testosterone?</p>
-      <p class="a">The NHS testosterone reference range, roughly 8 to 29 nmol/L, is a statistical band, not a health band. It&rsquo;s the spread you&rsquo;d get if you sampled men from age 18 to 70 and drew a line at the 2.5th and 97.5th percentile. &ldquo;Within range&rdquo; means you&rsquo;re not clinically ill. It doesn&rsquo;t mean you&rsquo;re well.</p>
-    </div></div>
-    <div class="tray"><div class="core">
-      <p class="q">Is normal testosterone the same as healthy testosterone?</p>
-      <p class="a">No. &ldquo;Normal&rdquo; answers &ldquo;are you ill?&rdquo;: a binary clinical question. &ldquo;Healthy&rdquo; answers &ldquo;are you well?&rdquo;: a question about function and how you feel. The reference range was built for the first. Most symptomatic men are asking the second.</p>
-    </div></div>
-    <div class="tray"><div class="core">
-      <p class="q">Why is the testosterone reference range so wide?</p>
-      <p class="a">Because the reference population is genuinely diverse. The sample includes 18-year-olds at peak T, 70-year-olds in slow decline, lean athletes, men with metabolic syndrome. All in one pot. To capture &ldquo;most men,&rdquo; the range has to accommodate physiology that&rsquo;s literally decades apart.</p>
-    </div></div>
-  </div>
-</div>
-
-<div class="sec"></div>
-
-<!-- ============ FRAME B: INDEX ============ -->
-<div class="flabel"><div class="in">
-  <b>Frame B</b><span>/blog</span><span>Index</span>
-  <span>speaks today: blog skin</span>
+  <b>Blog, second attempt</b><span>frames AL to AQ</span>
+  <span class="hot">the first draft lost on missing detail</span>
 </div></div>
 
 <div class="wrap sec">
-  <div class="ihead">
-    <div class="eyebrow">The library</div>
-    <h2>What your bloods actually say</h2>
-    <p>Written by the person who built the tests, and read by a GP before it goes up.</p>
+  <h2>Twelve pieces, not two. <span class="grey">That is what the first draft missed.</span></h2>
+  <p class="sub" style="margin-top:16px">The blog is not prose with a skin on it. It is an editorial component system with a deliberate emphasis ladder, and the first F draft drew one rung of it.</p>
+  <p class="note hot"><b>The verdict that produced this file named its own condition.</b> Keith, 2026-08-27: <i>"I think the old or the live blog style wins. There's a lot of detail missing from the F blog you created, which at the moment I don't know if you can capture."</i> <b>Detail, not preference.</b> So the useful response is not to argue cream against wash again, it is to find the detail and show whether F can hold it. Read the live blog's left-rule weights in order: <b>4px grey, 4px black, 6px black, 8px black</b>. Four volumes of aside, chosen by a writer who needed four. The draft had one.</p>
+</div>
+
+<!-- ============ FRAME AL: THE ARTICLE ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AL</b><span>/blog/[slug]</span><span>meta bar, headline, the two bylines, body</span>
+  <span class="hot">prose on the ground, trays only for interruptions</span>
+</div></div>
+
+<div class="read" style="padding-top:34px">
+  <div class="metabar">
+    <span class="crumb"><a href="#">Home</a> / <a href="#">Blog</a> / <span class="now">The myth of the normal range</span></span>
+    <span class="mchips"><span class="mchip">Testosterone</span><span class="mchip q">9 min read</span></span>
   </div>
 
-  <div class="rail">
-    <span class="chip on">All</span>
-    <span class="chip">Testosterone</span>
-    <span class="chip">Vitamin D</span>
-    <span class="chip">Iron</span>
-    <span class="chip">Thyroid</span>
-    <span class="chip">Inflammation</span>
-    <span class="chip">Reading results</span>
+  <div class="arthead">
+    <h1>The myth of the &ldquo;normal&rdquo; range</h1>
+    <p class="stand">Your GP said your testosterone was normal. That is not the same as good, and the difference is the whole point of this article.</p>
   </div>
 
-  <div class="tray lead"><div class="core">
-    <div class="plate"></div>
-    <div class="body">
-      <div class="metarow"><span>Testosterone</span><span class="dot"></span><span>10 min read</span></div>
-      <h3>Normal Testosterone Levels by Age: what &ldquo;within range&rdquo; actually means</h3>
-      <p>The NHS &ldquo;normal&rdquo; testosterone range was built to flag illness, not to define wellness. Here&rsquo;s why &ldquo;within range&rdquo; doesn&rsquo;t mean &ldquo;well&rdquo;, and what to actually do with the result.</p>
-      <a class="readlink" href="#">Read the piece <span class="pip">&#8594;</span></a>
+  <div class="bylines">
+    <div class="byline">
+      <span class="av">KA</span>
+      <span>
+        <span class="r">Written by</span>
+        <b>Keith Antony</b>
+        <span class="role">Founder, Andro Prime</span>
+      </span>
     </div>
-  </div></div>
+    <div class="byline">
+      <span class="av">EL</span>
+      <span>
+        <span class="r">Reviewed by</span>
+        <b>Dr Ewa Lindo</b>
+        <span class="role">GMC-registered GP &middot; reviewed 12 Aug 2026</span>
+      </span>
+    </div>
+  </div>
 
-  <div class="grid">
-    <div class="tray card"><div class="core">
-      <div class="metarow"><span>Vitamin D</span><span class="dot"></span><span>8 min read</span></div>
-      <h4>14 signs of vitamin D deficiency</h4>
-      <p>The symptoms are vague enough to be blamed on almost anything, which is exactly why the marker is worth measuring rather than guessing.</p>
-      <div class="foot"><a class="readlink" href="#">Read the piece <span class="pip">&#8594;</span></a></div>
+  <div class="prose">
+    <p>The NHS reference range for testosterone in men is roughly 8 to 30 nmol/L. That range was built to identify clinical hypogonadism: the level at which a man is medically deficient. A man at 8.5 nmol/L and a man at 24 nmol/L both get the same result from their GP: normal.</p>
+
+    <div class="mx mx-punch">They are not the same. Not in how they feel.</div>
+
+    <p>The range exists to identify illness, not to optimise performance. It answers one question, correctly, and it is the wrong question for a man who feels flat and wants to know why.</p>
+
+    <div class="mx mx-note"><b>Worth knowing.</b> A reference range is a population statistic, not a target. It is built so that 95% of a reference population falls inside it, which means it moves with the population it was drawn from.</div>
+
+    <div class="mx-sys"><span>What the evidence says</span></div>
+
+    <p>Research consistently shows that men with testosterone in the lower third of the normal range report significantly higher rates of fatigue, reduced libido, slower recovery and mood changes than men in the upper third, despite both being technically not ill.</p>
+
+    <div class="mx mx-ev">
+      <span class="k">The evidence</span>
+      <p>The Society for Endocrinology and the Association for Clinical Biochemistry describe their figures as action cutoffs rather than reference ranges: below 8 nmol/L likely hypogonadism, 8 to 12 equivocal, above 12 unlikely. Cutoffs for a decision, not a definition of good.</p>
+    </div>
+
+    <div class="mx mx-quote">Technically normal. Functionally below par. Those are two different sentences about the same number.</div>
+
+    <div class="mx mx-stat">
+      <span class="k">Where most symptomatic men sit</span>
+      <span class="big">12 to 20</span>
+      <p>nmol/L. Inside the range on every NHS printout, and the band where the majority of men presenting with symptoms are found.</p>
+    </div>
+
+    <div class="mx-num"><span class="n">01</span><h3>The range answers a different question</h3></div>
+    <p>It was drawn to find disease. Asking it whether you feel well is asking a smoke alarm whether the room is comfortable.</p>
+
+    <div class="mx mx-pub">
+      <p>North Bristol NHS Trust reports calculated free testosterone for men and the free androgen index for women, which is the same distinction this article is making, made by a laboratory rather than by us.</p>
+      <div class="src">Severn Pathology, SHBG test information, retrieved 2026-07-30</div>
+    </div>
+
+    <div class="mx mx-clin"><div class="in">
+      <h4>Clinical insight</h4>
+      <p>A single testosterone reading is a snapshot taken at one hour of one day. Levels move diurnally and seasonally, which is why a borderline result is a reason to retest rather than a reason to conclude.</p>
     </div></div>
 
-    <div class="tray card"><div class="core">
-      <div class="metarow"><span>Reading results</span><span class="dot"></span><span>9 min read</span></div>
-      <h4>How to read blood test results</h4>
-      <p>What the columns mean, why the reference range is not a target, and the three questions worth asking about any number on the sheet.</p>
-      <div class="foot"><a class="readlink" href="#">Read the piece <span class="pip">&#8594;</span></a></div>
-    </div></div>
+    <div class="mx mx-caveat">This article is about how a range is built and read. It is not a substitute for a conversation with your GP, and no number on this page is a diagnosis.</div>
 
-    <div class="tray card"><div class="core">
-      <div class="metarow"><span>Energy</span><span class="dot"></span><span>11 min read</span></div>
-      <h4>Why am I always tired?</h4>
-      <p>Tiredness is a symptom with a long list of causes. A blood panel does not shorten the list by guessing, it shortens it by measuring.</p>
-      <div class="foot"><a class="readlink" href="#">Read the piece <span class="pip">&#8594;</span></a></div>
+    <div class="mx mx-alert">
+      <div class="bd">
+        <h4>If your result is below 12 nmol/L</h4>
+        <p>That is the band where a GP conversation is worth having, and your dashboard will tell you so directly rather than leaving you to work it out.</p>
+      </div>
+      <div class="act">What to say to your GP</div>
+    </div>
+
+    <div class="mx-num feat"><span class="n">04</span><h3>Normal was never the goal</h3></div>
+    <p>The useful question is not whether you are ill. It is whether you are where you want to be, and that is a question a range cannot answer for you.</p>
+
+    <div class="mx mx-cta"><div class="in">
+      <div>
+        <h4>Find out where yours actually sits</h4>
+        <p>Total T, SHBG, FAI, Albumin and Free T. A UKAS ISO 15189 accredited lab, results in 2 to 5 working days.</p>
+      </div>
+      <span class="btn">Choose your test <span>&#8594;</span></span>
     </div></div>
   </div>
 </div>
 
-<div class="sec"></div>
+<div class="wrap">
+  <p class="note hot"><b>&#128308; EVERY INTERRUPTION ABOVE IS A DIFFERENT COMPONENT, AND THAT IS THE POINT.</b> Punchline, Note, SysHeading, EvidenceBox, PullQuote, StatBox, NumberedHeading, PublishedEvidence, ClinicalInsight, Caveat, SystemAlert, InlineKitCTA and the feature variant. <b>Twelve pieces in one article</b>, which is what a real article on this blog actually contains. The first draft rendered prose and three of them.</p>
+  <p class="note"><b>The judgement call from the first draft survives and is unchanged:</b> prose sits directly on the ground and never inside a tray, because 2000 words in a squircle reads as a widget and costs measure on a phone. <b>Trays are spent only on things that interrupt prose</b>, and here that is exactly two of the twelve: ClinicalInsight and InlineKitCTA, the two the live blog gives its brutal-shadow to. That correspondence is not a coincidence; both systems are reaching for "this one lifts off the page".</p>
+</div>
+
+<!-- ============ FRAME AM: THE SPECIMEN SHEET ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AM</b><span>components/marketing/articleMdx.tsx</span><span>the twelve, out of context, in order of volume</span>
+  <span class="hot">eleven of these were in no frame</span>
+</div></div>
+
+<div class="wrap" style="padding-top:34px">
+  <div class="tray"><div class="core">
+    <p class="blab">Quietest to loudest</p>
+
+    <p class="fine" style="margin-bottom:8px">01 &nbsp;Caveat &middot; no fill, hairline rule</p>
+    <div class="mx mx-caveat">The quietest aside. Qualifies without interrupting, and never carries a claim.</div>
+
+    <p class="fine" style="margin-bottom:8px">02 &nbsp;Note &middot; sunk ground, ink rule</p>
+    <div class="mx mx-note">A parenthesis with weight. The reader may skip it and lose nothing structural.</div>
+
+    <p class="fine" style="margin-bottom:8px">03 &nbsp;PullQuote &middot; sunk, heavier rule, serif italic</p>
+    <div class="mx mx-quote">A sentence from the body, lifted because it carries the argument.</div>
+
+    <p class="fine" style="margin-bottom:8px">04 &nbsp;Punchline &middot; sunk, ACCENT rule, uppercase</p>
+    <div class="mx mx-punch">The line the article turns on.</div>
+
+    <p class="fine" style="margin-bottom:8px">05 &nbsp;PublishedEvidence &middot; sunk, cited foot</p>
+    <div class="mx mx-pub"><p>A claim that belongs to somebody else, carrying its source where the reader can see it.</p><div class="src">Publication, title, retrieved date</div></div>
+
+    <p class="fine" style="margin-bottom:8px">06 &nbsp;StatBox &middot; core, inset hairline</p>
+    <div class="mx mx-stat"><span class="k">The figure</span><span class="big">56%</span><p>One number, given room, with its unit and its meaning under it.</p></div>
+
+    <p class="fine" style="margin-bottom:8px">07 &nbsp;SystemAlert &middot; core, accent ring, action bar</p>
+    <div class="mx mx-alert"><div class="bd"><h4>Something that needs a decision</h4><p>The only piece in the set that ends in an action bar, because it is the only one that asks for one.</p></div><div class="act">The action</div></div>
+
+    <p class="fine" style="margin-bottom:8px">08 &nbsp;ClinicalInsight &middot; full tray, ambient shadow</p>
+    <div class="mx mx-clin"><div class="in"><h4>Clinical insight</h4><p>Lifts off the page. On the live blog this is one of the two pieces given the brutal-shadow.</p></div></div>
+
+    <p class="fine" style="margin-bottom:8px">09 &nbsp;InlineKitCTA &middot; tray, accent wash</p>
+    <div class="mx mx-cta"><div class="in"><div><h4>The commerce interruption</h4><p>The only accent-filled ground in the article, so it cannot be mistaken for editorial.</p></div><span class="btn">Choose your test <span>&#8594;</span></span></div></div>
+
+    <p class="fine" style="margin-bottom:8px">10 &nbsp;EvidenceBox &middot; INVERTED, ink ground</p>
+    <div class="mx mx-ev"><span class="k">The evidence</span><p>The loudest ground available. Reserved for what the literature says, so the inversion means one thing.</p></div>
+
+    <p class="fine" style="margin-bottom:8px">11 &nbsp;SysHeading &middot; mono chip on ink</p>
+    <div class="mx-sys"><span>A section marker</span></div>
+
+    <p class="fine" style="margin-bottom:8px">12 &nbsp;NumberedHeading, plain and feature</p>
+    <div class="mx-num"><span class="n">02</span><h3>The ordinary rung</h3></div>
+    <div class="mx-num feat"><span class="n">04</span><h3>The feature rung, inverted</h3></div>
+  </div></div>
+
+  <p class="note hot"><b>&#128308; ONE RUNG COLLAPSED ON THE FIRST RENDER OF THIS SHEET, AND THAT IS THE WHOLE RISK IN MINIATURE.</b> Note (02) and PublishedEvidence (05) were drawn with the same ground and the same 3px rule, so they were one rung wearing two names. On the live blog they are <b>4px and 8px</b>, deliberately far apart, because one is an aside the reader may skip and the other is somebody else's claim. Fixed by raising the rule to 5px and marking the citation foot with the accent, so the piece is identified by the thing that makes it different. <b>It was caught by looking at the render rather than the markup</b>, which is the only way this class of error is ever caught: the source was symmetric and reasonable, and the eye is what notices two rungs landing in the same place.</p>
+
+  <p class="note hot"><b>&#128308; THIS SHEET IS THE FILE.</b> Everything else here is context. The question Keith asked on 2026-08-27 was whether F can capture the detail, and the detail is twelve differentiated pieces that have to stay distinguishable when a reader meets three of them on one screen. <b>Judge this frame, not the article frame</b>: if two rungs collapse into each other here, they will collapse in an article too.</p>
+</div>
+
+<!-- ============ FRAME AN: THE TWO LADDERS ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AN</b><span>blog-skin.css against F</span><span>what each system spends to make a rung</span>
+  <span class="hot">borders and shadow, against ground</span>
+</div></div>
+
+<div class="wrap" style="padding-top:34px">
+  <div class="tray"><div class="core">
+    <table class="lad">
+      <thead><tr><th>Piece</th><th>Live blog</th><th class="sw">F</th><th>F spends</th></tr></thead>
+      <tbody>
+        <tr><td><b>Caveat</b></td><td>4px GREY left rule, italic, grey text</td><td class="sw"><i style="background:transparent;box-shadow:inset 2px 0 0 var(--hair-2)"></i></td><td>no fill, hairline rule</td></tr>
+        <tr><td><b>Note</b></td><td>4px black rule, grey-100 fill</td><td class="sw"><i style="background:var(--sunk);box-shadow:inset 3px 0 0 var(--ink)"></i></td><td>sunk ground</td></tr>
+        <tr><td><b>PullQuote</b></td><td>6px black rule, grey-50</td><td class="sw"><i style="background:var(--sunk);box-shadow:inset 5px 0 0 var(--ink)"></i></td><td>sunk, heavier rule</td></tr>
+        <tr><td><b>Punchline</b></td><td>8px black rule, grey-100, uppercase</td><td class="sw"><i style="background:var(--sunk);box-shadow:inset 5px 0 0 var(--flag)"></i></td><td>sunk, ACCENT rule</td></tr>
+        <tr><td><b>PublishedEvidence</b></td><td>8px black rule + source foot</td><td class="sw"><i style="background:var(--sunk);box-shadow:inset 5px 0 0 var(--ink)"></i></td><td>sunk, heavy rule, ACCENT foot</td></tr>
+        <tr><td><b>StatBox</b></td><td>2px black border all round, grey-50</td><td class="sw"><i style="background:var(--core);box-shadow:inset 0 0 0 1px var(--hair-2)"></i></td><td>core, inset hairline</td></tr>
+        <tr><td><b>SystemAlert</b></td><td>4px border + black action bar</td><td class="sw"><i style="background:var(--core);box-shadow:inset 0 0 0 1.5px var(--flag)"></i></td><td>core, accent ring</td></tr>
+        <tr><td><b>ClinicalInsight</b></td><td>4px border + BRUTAL-SHADOW + dots</td><td class="sw"><i style="background:var(--tray);box-shadow:var(--amb)"></i></td><td>full tray, ambient</td></tr>
+        <tr><td><b>InlineKitCTA</b></td><td>4px border + brutal-shadow + dot corner</td><td class="sw"><i style="background:var(--flag-f);box-shadow:var(--amb)"></i></td><td>tray + accent wash</td></tr>
+        <tr><td><b>EvidenceBox</b></td><td>solid black, inverted</td><td class="sw"><i style="background:var(--ink)"></i></td><td>inverted, ink ground</td></tr>
+        <tr><td><b>SysHeading</b></td><td>mono chip, white on black</td><td class="sw"><i style="background:var(--ink);border-radius:9px"></i></td><td>mono chip on ink</td></tr>
+        <tr><td><b>NumberedHeading</b></td><td>badge, plus inverted feature card</td><td class="sw"><i style="background:linear-gradient(90deg,var(--flag) 0 18%,transparent 18%)"></i></td><td>accent numeral / inverted</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <p class="note hot"><b>&#128308; THE TWO SYSTEMS BUY THEIR RUNGS WITH DIFFERENT CURRENCY, AND THAT IS THE REAL CHOICE.</b> The live blog spends <b>border weight and one hard shadow</b>: 2px, 4px, 6px, 8px, plus an 8px offset block. F spends <b>ground</b>: nothing, sunk, core, tray, inverted, plus one accent. Border weight is a fine ladder and it has a ceiling, because 10px is not a fourth of 8px and the eye stops counting. <b>Ground has more rungs available and reads faster</b>, since a reader identifies a surface before measuring an edge.</p>
+
+  <p class="note"><b>Two things F genuinely does NOT have, stated plainly rather than glossed.</b> The <b>dot pattern</b>, which the live blog uses as a texture behind the headline and in the corner of the CTA, has no F equivalent and is not reproduced here; F's grain is a global film, not a placeable motif. And the <b>hard offset block-shadow</b> is not just a shadow, it is a statement of flatness that F's ambient shadow contradicts by design. <b>If either is load-bearing for the blog's character, F cannot have it without stopping being F</b>, and that is a legitimate reason to keep `blog-skin.css`. It is a real trade and this frame is not going to pretend otherwise.</p>
+
+  <p class="note"><b>What F gains, since the trade runs both ways.</b> The live blog has <b>no dark mode at all</b> and cannot easily get one: the cream ground and the hard black shadow are both light-only decisions. Every rung above is drawn in both themes on this page. For a blog that is read on phones at night, that is not a small thing.</p>
+</div>
+
+<!-- ============ FRAME AO: THE TAIL ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AO</b><span>ArticleToc, ArticleFaq, RelatedArticles, NewsletterForm</span><span>everything after the body</span>
+  <span class="hot">none of it was in the first draft</span>
+</div></div>
+
+<div class="read" style="padding-top:34px">
+  <p class="blab">On this page</p>
+  <div class="toc">
+    <b style="font-size:15.5px">Contents</b>
+    <ol>
+      <li>The range answers a different question</li>
+      <li>What the evidence actually says</li>
+      <li>Where most symptomatic men sit</li>
+      <li>Normal was never the goal</li>
+    </ol>
+  </div>
+
+  <p class="blab" style="margin-top:34px">Common questions</p>
+  <div class="faq">
+    <div class="q"><b>Is a normal result the same as a good result?</b><i>+</i></div>
+    <div class="q"><b>What is the range actually measuring?</b><i>+</i></div>
+    <div class="q"><b>Should I retest, and when?</b><i>+</i></div>
+  </div>
+
+  <p class="blab" style="margin-top:34px">Related reading</p>
+  <div class="rel">
+    <div class="rcard"><span class="k">Testosterone</span><h4>What SHBG does to your free testosterone</h4><p>Why a normal total T can sit above a low free T.</p></div>
+    <div class="rcard"><span class="k">Testing</span><h4>Reading a blood test without a medical degree</h4><p>What the columns on a lab report mean.</p></div>
+    <div class="rcard"><span class="k">Recovery</span><h4>Ferritin, and the tiredness it explains</h4><p>The marker most often missed in active men.</p></div>
+  </div>
+
+  <div class="news" style="margin-top:34px">
+    <h4>One email, when there is something worth saying</h4>
+    <p>The lowest-commitment rung of the bridge: no kit, no account, no obligation. Unsubscribe whenever.</p>
+    <div class="row"><span class="inp">you@example.com</span><span class="go">Subscribe</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <p class="note"><b>The tail is four components and the first draft drew none of them.</b> The ToC is <b>mobile-only on the live blog</b> (`lg:hidden`, collapsed by default) with a sidebar taking over on large screens, which is a real responsive behaviour rather than a style. The newsletter block carries a comment in the source naming it <i>"the lowest-commitment rung of the cold-to-warm bridge"</i>, so it is a funnel position, not decoration, and moving it would change what it does.</p>
+</div>
+
+<!-- ============ FRAME AP: THE INDEX ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AP</b><span>/blog</span><span>BlogListings, 233 lines</span>
+  <span class="hot">filters, a lead card, then the grid</span>
+</div></div>
+
+<div class="wrap" style="padding-top:34px">
+  <div class="tray"><div class="core">
+    <div class="filters"><span class="on">All</span><span>Testosterone</span><span>Energy</span><span>Recovery</span><span>Testing</span><span>Supplements</span></div>
+    <div class="grid">
+      <div class="pcard lead">
+        <span class="k"><span class="mchip">Testosterone</span><span class="mchip q">9 min read</span></span>
+        <h3>The myth of the &ldquo;normal&rdquo; range</h3>
+        <p>Your GP said your testosterone was normal. That is not the same as good, and the difference is the whole point of this article.</p>
+        <span class="foot">Keith Antony &middot; reviewed by Dr Ewa Lindo &middot; 12 Aug 2026</span>
+      </div>
+      <div class="pcard"><span class="k"><span class="mchip q">Testosterone</span></span><h3>What SHBG does to your free testosterone</h3><p>Why a normal total T can sit above a low free T, and what to read instead.</p><span class="foot">7 min &middot; 04 Aug 2026</span></div>
+      <div class="pcard"><span class="k"><span class="mchip q">Testing</span></span><h3>Reading a blood test without a medical degree</h3><p>What each column on a lab report means, in the order you meet them.</p><span class="foot">6 min &middot; 28 Jul 2026</span></div>
+      <div class="pcard"><span class="k"><span class="mchip q">Recovery</span></span><h3>Ferritin, and the tiredness it explains</h3><p>The marker most often missed in men who train and still feel flat.</p><span class="foot">8 min &middot; 21 Jul 2026</span></div>
+    </div>
+  </div></div>
+
+  <p class="note"><b>The lead card is the index's only structural decision and it is worth keeping.</b> The newest article takes the full width and the accent ring; everything after it is an equal grid. That is the one place the index expresses editorial judgement, and a flat grid would throw it away.</p>
+</div>
+
+<!-- ============ FRAME AQ: THE AUTHOR PAGE ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AQ</b><span>/authors/[slug]</span><span>166 lines, and it carries CA-029 approved copy</span>
+  <span class="hot">reached only from a byline</span>
+</div></div>
+
+<div class="wrap" style="padding-top:34px">
+  <div class="tray"><div class="core">
+    <div class="auth">
+      <span class="por">EL</span>
+      <div>
+        <p class="blab">Reviewer</p>
+        <h2>Dr Ewa Lindo</h2>
+        <p class="sub">GP, GMC-registered, Harley Street TRT-trained. She signs off the recommendation logic behind every result this site returns, and reviews the clinical content on this blog.</p>
+        <div class="creds"><span>GMC-registered</span><span>Clinical reviewer</span><span>Results-engine sign-off</span></div>
+        <p class="blab" style="margin-top:22px">Reviewed on this blog</p>
+        <div class="rel" style="grid-template-columns:1fr">
+          <div class="rcard"><span class="k">Testosterone</span><h4>The myth of the &ldquo;normal&rdquo; range</h4><p>Reviewed 12 Aug 2026</p></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <p class="note hot"><b>&#128308; THE BIO ON THIS PAGE IS APPROVED COPY, AND A REDESIGN MUST NOT REWRITE IT.</b> CA-029, signed off by Ewa from her own address on 2026-07-28. The frame above is a LAYOUT proposal only, and the words in it are placeholders standing in for the approved text, not a redraft of it. <b>This is the same boundary every approval in this set has carried</b>, and it matters more here because the copy sits next to the name of the person who signed it.</p>
+
+  <p class="note"><b>Reached only from a byline.</b> Nothing in the nav or the footer links to an author page: the only route in is the "Written by" or "Reviewed by" link on an article, which is the same footer-only exposure `learn-F.html` found for `/about` and `/faq`. Worth knowing before the rebuild budgets it.</p>
+</div>
+
+<!-- ============ CLOSE ============ -->
+<div class="flabel"><div class="in">
+  <b>End of the blog frames</b><span>Frames AL, AM, AN, AO, AP, AQ</span>
+  <span class="hot">a second ruling is owed, and this time against the detail</span>
+</div></div>
+
+<div class="wrap" style="padding:26px 20px 60px">
+  <p class="note hot"><b>WHAT THIS FILE ASKS FOR, AND WHAT IT DOES NOT CLAIM.</b> It does not overturn the 2026-08-27 ruling; that stands until Keith rules again. What it does is remove the reason the first draft lost. The verdict was <i>"a lot of detail missing ... I don't know if you can capture"</i>, and the detail turned out to be nameable: <b>twelve editorial components and a four-step emphasis ladder</b>. All twelve are drawn, the ladder is drawn against the live one, and the two things F genuinely cannot reproduce are named rather than hidden.</p>
+
+  <p class="note"><b>The honest summary of the trade, in three lines.</b> <b>F gains</b> a deeper ladder built on ground rather than border weight, and a real dark mode the live blog cannot easily have. <b>F loses</b> the dot pattern and the hard offset block-shadow, and the second of those is a statement of flatness that F contradicts by design. <b>F is neutral</b> on measure, rhythm and the tail, which translate cleanly. If the block-shadow is the blog's character rather than its decoration, keeping `blog-skin.css` remains the right answer and this file is the record of a fair second attempt.</p>
+
+  <p class="note"><b>One thing to fix either way, independent of the ruling.</b> `blog-skin.css` is a written, namespaced, deliberate exception to two brand non-negotiables, and it is documented only in its own header. <b>It is not referenced in `02_brand`</b>. Whichever way the blog goes, an exception to a non-negotiable should be recorded where the non-negotiable lives, or the next reader meets the rule without the exception.</p>
+</div>
 </body>
 </html>
