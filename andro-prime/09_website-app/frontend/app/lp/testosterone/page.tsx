@@ -4,6 +4,7 @@ import { FaqAccordion } from '@/components/marketing/FaqAccordion'
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { FAI_REPORT_ONLY } from '@/lib/kits/panel'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -182,7 +183,7 @@ export default function TestosteroneLpPage() {
                           stand-in framing the results engine explicitly refuses for
                           men (biomarker-copy.ts `fai-reported`). Stated as the
                           arithmetic instead, which is true and claims nothing. */}
-                      <div className="text-[10px] font-serif text-gray-500 italic">Ratio of total T to SHBG</div>
+                      <div className="text-[10px] font-serif text-gray-500 italic">{FAI_REPORT_ONLY.sub}</div>
                     </div>
                     <div className="text-right">
                       <div className="data-value">36.9</div>
@@ -195,10 +196,19 @@ export default function TestosteroneLpPage() {
                           to give, on a value sitting just above the lab floor of 35.0.
                           Styled grey and dashed so it cannot be mistaken for the
                           Normal/Borderline verdicts its siblings carry. */}
-                      <div className="data-label !text-[10px] border border-dashed border-gray-400 text-gray-500 px-1 mt-1">Not interpreted</div>
+                      {/* `!text-gray-500`: the data-label component class sets its own colour
+                          and wins against a plain utility, so the unprefixed form rendered this
+                          badge black, indistinguishable from its verdict-carrying siblings. */}
+                      <div className="data-label !text-[10px] border border-dashed border-gray-400 !text-gray-500 px-1 mt-1">{FAI_REPORT_ONLY.badge}</div>
                     </div>
                   </div>
-                  <div className="h-1.5 w-full bg-gray-200 flex"><div className="h-full bg-statusWarning w-[20%]" /></div>
+                  {/* No bar. Found 2026-08-29: the 2026-08-12 fix above removed the word
+                      "Borderline" and left `bg-statusWarning w-[20%]` rendering directly
+                      underneath it, so this card went on grading FAI in colour while the
+                      comment three lines up said it could not be mistaken for a verdict.
+                      resolveBarZones returns [] for FAI precisely because a coloured bar IS
+                      a verdict; the badge and the bar are two halves of one rule and only
+                      one half was swept. The other three sample cards render no bar here. */}
                 </div>
 
                 {/* Albumin */}

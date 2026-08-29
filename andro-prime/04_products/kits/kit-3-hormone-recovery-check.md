@@ -72,7 +72,7 @@ Combines full Kit 1 panel + full Kit 2 panel:
 |---|---|---|---|
 | Total Testosterone | nmol/L | Kit 1 | Primary hormone measure |
 | SHBG | nmol/L | Kit 1 | Required for Free T calculation |
-| Free Androgen Index (FAI) | calculated | Kit 1 | Clinical picture beyond Total T |
+| Free Androgen Index (FAI) | returned by the lab, not calculated by us | Kit 1 | Ratio of total T to SHBG. **Reported for reference, not interpreted**: the results engine maps it to `fai-reported` and draws no conclusion from it, because in men it is not a reliable stand-in for free testosterone. Read Free Testosterone instead. (Was "calculated" and "Clinical picture beyond Total T", **corrected 2026-08-29**: both halves were wrong in exactly the two ways the Kit 1 row was, which ruling C corrected on 2026-07-30 and which was swept into `kit-1-testosterone-health-check.md` on 2026-08-12 and never into this file. Authority: `results-engine/thresholds.md` item 8.) |
 | Albumin | g/L | Kit 1 | Required for Free T calculation |
 | Free Testosterone | calculated (nmol/L) | Kit 1 | Bioavailable testosterone |
 | Vitamin D (25-OH) | nmol/L | Kit 2 | Energy + recovery driver |
@@ -80,7 +80,7 @@ Combines full Kit 1 panel + full Kit 2 panel:
 | hs-CRP | mg/L | Kit 2 | Inflammation marker |
 | Ferritin | µg/L | Kit 2 | Iron stores |
 
-**Threshold values:** Same as Kit 1 and Kit 2 individually. See `results-engine/thresholds.md` (currently placeholder).
+**Threshold values:** Same as Kit 1 and Kit 2 individually. **Authoritative source: `results-engine/thresholds.md`** (Ewa-APPROVED 2026-06-16, re-ratified 2026-08-07, reconciled into `classifier.ts`). Do not hardcode bands here. (Was "currently placeholder", corrected 2026-08-29: that has not been true since the 2026-06-16 sign-off, and it invited readers to treat this file as the band source.)
 
 ---
 

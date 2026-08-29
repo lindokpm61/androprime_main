@@ -4,6 +4,7 @@ import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { PRICING } from '@/lib/pricing'
+import { FAI_REPORT_ONLY, PANEL_MARKERS } from '@/lib/kits/panel'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -122,8 +123,11 @@ const biomarkers = [
     category: 'Hormones',
     icon: <><circle cx="12" cy="12" r="10" /><path d="M8 12h8" /></>,
     iconBg: false,
-    title: 'Free Androgen Index',
-    body: 'The ratio of total testosterone to SHBG. A more sensitive indicator of testosterone availability than Total T alone, particularly useful when SHBG is high or shifting.',
+    title: PANEL_MARKERS.fai.name,
+    // Clinically ruled copy, read from the panel rather than written here. This said FAI
+    // was "a more sensitive indicator of testosterone availability than Total T alone",
+    // the free-T stand-in framing thresholds.md item 8 refuses in men.
+    body: `${PANEL_MARKERS.fai.measures}. ${PANEL_MARKERS.fai.why}`,
   },
   {
     num: '04',
@@ -239,14 +243,18 @@ export default function HormoneRecoveryLpPage() {
                 {[
                   { name: 'Total Testosterone', sub: 'Hormone baseline', value: '13.8', unit: 'nmol/L', status: 'Borderline', dark: true },
                   { name: 'SHBG', sub: 'Binding globulin', value: '41.2', unit: 'nmol/L', status: 'Normal', dark: false },
-                  { name: 'Free Androgen Index', sub: 'Bioavailable T ratio', value: '33.5', unit: '%', status: 'Borderline', dark: true },
+                  // Report-only: no verdict badge. This read "Borderline" under the subtitle
+                  // "Bioavailable T ratio", which both grades a marker the engine refuses to
+                  // grade and restates the free-T stand-in framing. badgeShort, not badge,
+                  // because this badge column is a fixed w-24 and the long form wraps.
+                  { name: 'Free Androgen Index', sub: FAI_REPORT_ONLY.sub, value: '33.5', unit: '%', status: FAI_REPORT_ONLY.badgeShort, dark: false, reported: true },
                   { name: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', dark: false },
                   { name: 'Free Testosterone', sub: 'Usable hormone', value: '0.231', unit: 'nmol/L', status: 'Low', dark: true },
                   { name: 'Vitamin D', sub: 'Muscle & recovery', value: '35', unit: 'nmol/L', status: 'Low', dark: true },
                   { name: 'Active B12', sub: 'Cellular B12', value: '31.2', unit: 'pmol/L', status: 'Low', dark: true },
                   { name: 'hs-CRP', sub: 'Inflammation marker', value: '3.6', unit: 'mg/L', status: 'Elevated', dark: true },
                   { name: 'Ferritin', sub: 'Iron stores', value: '62', unit: 'ug/L', status: 'Normal', dark: false },
-                ].map(({ name, sub, value, unit, status, dark }) => (
+                ].map(({ name, sub, value, unit, status, dark, reported }) => (
                   <div key={name} className="py-3 flex justify-between items-center">
                     <div>
                       <div className="font-sans font-black uppercase text-base tracking-tight">{name}</div>
@@ -254,7 +262,7 @@ export default function HormoneRecoveryLpPage() {
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="font-mono text-xl font-black">{value} <span className="text-xs font-normal">{unit}</span></div>
-                      <div className={`data-label px-2 py-1 w-24 text-center border ${dark ? 'bg-black !text-white border-black' : 'bg-white text-black border-black'}`}>{status}</div>
+                      <div className={`data-label px-2 py-1 w-24 text-center border ${reported ? 'bg-white !text-gray-500 border-dashed border-gray-400' : dark ? 'bg-black !text-white border-black' : 'bg-white text-black border-black'}`}>{status}</div>
                     </div>
                   </div>
                 ))}

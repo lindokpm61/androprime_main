@@ -943,6 +943,25 @@ An outside review of the live site reported that Ewa is credited with signing of
 - **Third-party confirmation, from Keith's own NHS results (Nov 2025):** his GP ordered an FAI panel and the lab printed "Test not vaild [sic] in men due to variation in testosterone levels over the course of the day." Different reasoning to SfE's (diurnal variation rather than poor correlation), same conclusion. It also makes the article title wrong in his case: his GP did measure it, and the lab declined to validate it.
 - **The product is NOT affected and this is the reason it is fixable.** The results engine reports FAI without banding it and uses calculated free testosterone as the preferred metric, exactly as Ewa set. No customer recommendation is driven by FAI. This is a content overstatement, not a clinical-logic fault.
 - **Blast radius:** the article; its live Substack republish; the live LinkedIn post `instrumentation-problem`, which inherits its claims; a passing "FAI in the lowest decile" reference in `myth-of-normal-range`; the X-07 queue row; and `kits/kit-1-testosterone-health-check.md` line 72, which calls FAI "clinical picture beyond Total T alone" and contradicts thresholds.md.
+  - ✅ **The kit-1 line was corrected 2026-08-12** (CA-034 item K1). **The blast radius was understated on the code side**, found 2026-08-29: `kit-3-hormone-recovery-check.md:75` carried the identical wording, and five defects sat on three live commerce pages, two of them rendering FAI with a **"Borderline" verdict badge** rather than merely describing it wrongly. All corrected 2026-08-29 behind `lib/kits/panel.ts`; see `09_website-app/STATE.md`.
+  - 🔴 **OPEN, and it is a CA-026 amendment, not a code fix.** `/faq` sells the price with
+    *"the markers that matter for men, including **free testosterone via FAI**"*, live in the rendered
+    copy (`faq/page.tsx:467`) and in the FAQPage schema (`:31`). That makes FAI the delivery mechanism
+    for free testosterone, which is the stand-in framing this ruling refuses in men, and it misdescribes
+    the panel: Free Testosterone is calculated from Total T, SHBG and Albumin, and FAI is a separate
+    report-only marker. **Left unedited on purpose**: it is CA-026-approved wording (2026-07-22, §C2),
+    and approved copy is not silently amended. It approved a week BEFORE the FAI contradiction surfaced,
+    which is why the sweep never reached it.
+    **Drafted replacement, claim-reducing and adding nothing: "including calculated free testosterone".**
+    Four places move together: `faq/page.tsx:31` and `:467`, the source pack
+    `02_brand/2026-07-22-conflict-free-wording-pack.md:62`, and the mockup
+    `09_website-app/design/mockups/journey/learn-F.html:915`. **Owners: Keith (his approved pack) and
+    Ewa (the clinical framing).** Precedent for amending in place rather than pulling it: ruling B of
+    2026-07-29, *"Leave it up while you make the changes"*, given on this same FAI contradiction.
+  - ✅ The article brief that produced the offending article,
+    `06_marketing/seo-ai-search/article-briefs/pillar-C-hub-free-androgen-index-shbg.md`, had no
+    correction banner and would have overridden the ruling on any redraft (`/article`: the brief wins).
+    SUPERSEDED-bannered 2026-08-29.
 - **Proposed fix, subject to Ewa:** do not retract. The substance (SHBG binding, bound versus free, why a normal total can mislead) is sound. Reframe so calculated free testosterone is the answer and FAI appears as a rough proxy with a documented limitation in men. Keeps the SEO asset and improves its evidence.
 - **Held pending her ruling:** a planned founder video on the FAI angle. **The reframed version is the better story** and Keith's lab screenshot is the proof, but it touches a published article so it does not move before she rules.
 - **Process note:** this is a decision-sweep case in reverse. The correct position was recorded in the product layer and the content layer shipped the opposite a month later, which means the sweep runs from `thresholds.md` outward rather than from a new decision.

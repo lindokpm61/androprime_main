@@ -5,6 +5,7 @@ import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
+import { FAI_REPORT_ONLY, PANEL_MARKERS } from '@/lib/kits/panel'
 
 // Render per-request so isBundlesEnabled() reads BUNDLES_ENABLED from the live
 // runtime env. Without this the page is statically pre-rendered and the flag is
@@ -220,7 +221,7 @@ export default function KitHormoneRecoveryPage() {
                   // resolveBarZones returns [] because a coloured bar IS a verdict. K1 (Keith,
                   // CA-034, 2026-08-12) settled this for Kit 1; this page was never swept and
                   // graded it Normal with a green bar until 2026-08-17.
-                  { label: 'Free Androgen Index', value: '41.0', status: 'Reported', filled: false, barW: null, barColor: null },
+                  { label: 'Free Androgen Index', value: '41.0', status: FAI_REPORT_ONLY.badge, filled: false, barW: null, barColor: null, reported: true },
                   { label: 'Albumin', value: '44.0', status: 'In range', filled: false, barW: '64%', barColor: 'bg-statusOptimal' },
                   // 0.31 is the correct Vermeulen result for the total T, SHBG and albumin above, so
                   // it cannot move without them. Free T has exactly two states, split on the LAB's
@@ -237,7 +238,7 @@ export default function KitHormoneRecoveryPage() {
                   { label: 'hs-CRP', value: '2.1', status: 'Monitor', filled: true, barW: '62%', barColor: 'bg-statusWarning' },
                   // 30 to 100 is `suboptimal-ferritin`, badged Monitor.
                   { label: 'Ferritin', value: '39', status: 'Monitor', filled: true, barW: '24%', barColor: 'bg-statusWarning' },
-                ].map(({ label, value, status, filled, barW, barColor }) => (
+                ].map(({ label, value, status, filled, barW, barColor, reported }) => (
                   <div key={label}>
                     <div className="flex justify-between items-center mb-1.5">
                       <span className="data-label">{label}</span>
@@ -248,8 +249,15 @@ export default function KitHormoneRecoveryPage() {
                           // its own colour and wins against a plain utility, which rendered every
                           // filled badge as a solid black box with black text on it. Caught only by
                           // screenshotting the page; tsc and the copy scan both passed.
-                          className={`data-label !text-[9px] px-1 border border-black ${
-                            filled ? 'bg-black !text-white' : 'bg-white !text-black'
+                          // A report-only marker must not wear the same box as a verdict.
+                          // Dashed grey, matching /kits/testosterone, /lp/testosterone and
+                          // /lp/hormone-recovery, so the one badge that grades nothing is
+                          // visually distinct from the ones that do. Same reason resolveBarZones
+                          // returns [] for FAI: the styling IS part of the claim.
+                          className={`data-label !text-[9px] px-1 border ${
+                            reported
+                              ? 'border-dashed border-gray-400 bg-white !text-gray-500'
+                              : `border-black ${filled ? 'bg-black !text-white' : 'bg-white !text-black'}`
                           }`}
                         >
                           {status}
@@ -335,7 +343,12 @@ export default function KitHormoneRecoveryPage() {
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">
               <div className="absolute top-4 right-4 data-label text-gray-400">03</div>
               <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 pr-8">Free Androgen Index</h3>
-              <p className="text-black font-serif leading-relaxed">The ratio of total testosterone to SHBG. A more sensitive indicator of testosterone availability than Total T alone, particularly useful when SHBG is high or shifting.</p>
+              {/* Clinically ruled copy, read from the panel rather than written here. This
+                  said FAI was "a more sensitive indicator of testosterone availability than
+                  Total T alone", the free-T stand-in framing thresholds.md item 8 refuses in
+                  men. The sample card higher up this same page already carried the ruling;
+                  this paragraph still contradicted it. */}
+              <p className="text-black font-serif leading-relaxed">{PANEL_MARKERS.fai.measures}. {PANEL_MARKERS.fai.why}</p>
             </div>
 
             <div className="glass-panel p-8 flex flex-col hover:bg-gray-50 transition-colors relative">

@@ -112,6 +112,31 @@ export const PANEL_MARKERS: Record<PanelMarkerId, PanelMarker> = {
   },
 }
 
+/**
+ * The two compressed forms of the FAI verdict, for sample-result cards.
+ *
+ * FAI is the one marker on the panel the engine deliberately does not grade:
+ * `classifier.ts` maps it to `fai-reported`, whose stateLabel is "Reported for
+ * reference, not interpreted", and `resolveBarZones` returns [] for it because a
+ * coloured bar IS a verdict. Ewa ruled it report-only and not banded in men
+ * (`04_products/results-engine/thresholds.md` item 8, re-sourced 2026-07-30).
+ *
+ * These live here because four sample cards render them and, before 2026-08-29,
+ * two of the four badged FAI "Borderline" behind an amber bar, which promises an
+ * interpretation the product refuses to give. `sub` states the arithmetic, which
+ * is true and claims nothing; never restore "Bioavailable testosterone ratio",
+ * which is the free-T stand-in framing the ruling refuses.
+ *
+ * `badgeShort` exists only for the one card whose badge column is a fixed `w-24`
+ * (`/lp/hormone-recovery`), where the long form wraps. Both are compressions of
+ * the same engine stateLabel; neither carries a verdict.
+ */
+export const FAI_REPORT_ONLY = {
+  sub: 'Ratio of total T to SHBG',
+  badge: 'Not interpreted',
+  badgeShort: 'Reported',
+} as const
+
 /** The markers each kit measures, in the order every surface presents them. */
 export const KIT_PANELS: Record<KitType, readonly PanelMarkerId[]> = {
   'testosterone': ['total-testosterone', 'shbg', 'fai', 'albumin', 'free-testosterone'],

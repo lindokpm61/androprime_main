@@ -26,6 +26,27 @@ keyword_coverage:
   csv_source: andro-prime/06_marketing/seo-ai-search/keywords.csv
 ---
 
+> 🔴 **SUPERSEDED IN FRAMING (2026-08-29). Do not draft or re-opt from this brief as written.**
+> This brief predates the FAI ruling by two weeks (`last_updated: 2026-07-14`) and its central frame is
+> the one that ruling retracted. It repeatedly makes FAI the measure of *usable* testosterone: the
+> wedge line ("the 'usable testosterone your GP didn't measure' frame"), the plain-English definition
+> ("estimates how much of your testosterone is actually usable"), the Ewa pull-quote, and the title tag
+> `Free Androgen Index: Your Usable Testosterone`. **In men, FAI is report-only and is not a reliable
+> stand-in for free testosterone** (`04_products/results-engine/thresholds.md` item 8; sources re-verified
+> 2026-07-30, [S5] Ho 2006 and [S3] North Bristol). The correct frame is: calculated free testosterone is
+> the answer, and FAI appears as a rough proxy with a documented limitation in men.
+>
+> **This banner exists because the brief outranks the skill.** `/article`'s first hard invariant is *if
+> brief and skill disagree, the brief wins*, so an unbannered brief would silently reinstate the retracted
+> framing on any redraft, which is how the framing reached the live article in the first place.
+> **The published article itself is already corrected** (DB body and FAQ, 2026-08-12; served title is now
+> "Free Androgen Index: what your number means, and the figure UK labs use instead"). Only this brief, and
+> the repo MDX mirror's frontmatter, still carry the old version.
+>
+> Decision record: `03_compliance/correspondence/2026-07-30-keith-ewa-fai-rulings-a-to-d.md` (rulings A to D)
+> and `03_compliance/STATE.md`. Rewriting this brief needs Keith, and the reframed angle stays HIGH
+> compliance gate, so Ewa reviews the redraft as the frontmatter already requires.
+
 # Pillar C hub: "Free androgen index + SHBG"
 
 > Hub brief following the 21-section structure established by [`pillar-D-hub-crp-blood-test.md`](./pillar-D-hub-crp-blood-test.md). Section deltas vs. that template are flagged inline where Pillar C's audience, SERP, or compliance profile diverges. This is the **Kit 1 differentiator hub**: it turns the man whose GP called his total testosterone "normal" into a Kit 1 buyer by explaining that his *usable* testosterone (free T / free androgen index) can be low because SHBG traps it.

@@ -1019,10 +1019,18 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
           </div>
           <div class="row">
             <div class="top">
-              <div><span class="lab">Free androgen index</span><div class="sub2">Bioavailable testosterone ratio</div></div>
-              <div><div class="val">36.9 <span style="font-size:12px;color:var(--ink-3)">%</span></div><span class="st hot">Borderline</span></div>
+              <!-- Report-only. Was "Bioavailable testosterone ratio" with a Borderline verdict,
+                   which is the free-T stand-in framing thresholds.md item 8 refuses in men.
+                   Corrected 2026-08-29 with the live page; a rebuild reading this frame would
+                   otherwise put the retracted claim straight back. Source: lib/kits/panel.ts. -->
+              <div><span class="lab">Free androgen index</span><div class="sub2">Ratio of total T to SHBG</div></div>
+              <div><div class="val">36.9 <span style="font-size:12px;color:var(--ink-3)">%</span></div><span class="st">Not interpreted</span></div>
             </div>
-            <div class="bar"><i style="width:20%"></i></div>
+            <!-- `bar none` renders the "not banded" label and no coloured track, matching the
+                 Kit 3 sample card lower down this same file, which already had this treatment.
+                 This card kept `st hot` (a verdict chip) and a 20% amber fill until 2026-08-29:
+                 one file, two sample cards, one swept and one not. A coloured bar IS a verdict. -->
+            <div class="bar none"></div>
           </div>
           <div class="row">
             <div class="top">
@@ -1127,7 +1135,10 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
   <div class="bios">
     <div class="bio rise"><span class="kchip">Biomarker 01</span><h4>Total testosterone</h4><p>The total amount of testosterone in your blood. Your baseline. The number most GPs test, if they test anything at all.</p></div>
     <div class="bio rise"><span class="kchip">Biomarker 02</span><h4>SHBG</h4><p>Sex Hormone Binding Globulin. It binds to testosterone and makes it unusable. High SHBG means your total T might look fine on paper while you still feel terrible.</p></div>
-    <div class="bio rise"><span class="kchip">Biomarker 03</span><h4>Free androgen index</h4><p>The ratio of total testosterone to SHBG, expressed as a percentage. A more sensitive indicator of testosterone availability than Total T alone, especially when SHBG is elevated.</p></div>
+    <!-- Clinically ruled copy. Was "a more sensitive indicator of testosterone availability
+         than Total T alone", the framing thresholds.md item 8 refuses in men. Corrected
+         2026-08-29 with the live page. Source of truth: lib/kits/panel.ts PANEL_MARKERS.fai. -->
+    <div class="bio rise"><span class="kchip">Biomarker 03</span><h4>Free androgen index</h4><p>Your total testosterone expressed as a percentage of your SHBG. Reported for completeness, because it appears on lab reports you may be given elsewhere. In men we draw no conclusion from it: it tracks calculated free testosterone poorly. Your Free Testosterone result is the figure to work from.</p></div>
     <div class="bio rise"><span class="kchip">Biomarker 04</span><h4>Albumin</h4><p>The main carrier protein in your blood. Albumin-bound testosterone is considered weakly bioavailable. Testing it allows accurate calculation of your Free Testosterone. Without it, the number is an estimate.</p></div>
     <div class="bio rise"><span class="kchip">Biomarker 05</span><h4>Free testosterone</h4><p>The testosterone your body can actually use. Calculated from your Total T, SHBG, and Albumin. This is the number that matters most for how you feel day to day.</p></div>
   </div>

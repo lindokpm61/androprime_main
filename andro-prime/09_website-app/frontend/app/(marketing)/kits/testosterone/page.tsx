@@ -6,6 +6,7 @@ import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
+import { FAI_REPORT_ONLY, PANEL_MARKERS } from '@/lib/kits/panel'
 
 // Render per-request so isBundlesEnabled() reads BUNDLES_ENABLED from the live
 // runtime env. Without this the page is statically pre-rendered and the flag is
@@ -216,10 +217,15 @@ export default function KitTestosteronePage() {
                 {[
                   { label: 'Total Testosterone', sub: 'Your baseline level', value: '14.2', unit: 'nmol/L', status: 'Borderline', barW: '35%', barColor: 'bg-statusWarning' },
                   { label: 'SHBG', sub: 'Binding globulin', value: '38.5', unit: 'nmol/L', status: 'Normal', barW: '55%', statusBg: true, barColor: 'bg-statusOptimal' },
-                  { label: 'Free Androgen Index', sub: 'Bioavailable testosterone ratio', value: '36.9', unit: '%', status: 'Borderline', barW: '20%', barColor: 'bg-statusWarning' },
+                  // Report-only, so this card carries no verdict and no bar. It badged FAI
+                  // "Borderline" behind an amber bar on a value sitting just above the lab
+                  // floor of 35.0, which is the engine's report-only ruling inverted on a
+                  // public page. Strings come from the panel so the four sample cards that
+                  // render them cannot drift apart again.
+                  { label: 'Free Androgen Index', sub: FAI_REPORT_ONLY.sub, value: '36.9', unit: '%', status: FAI_REPORT_ONLY.badge, barW: null, barColor: null, reported: true },
                   { label: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', barW: '65%', statusBg: true, barColor: 'bg-statusOptimal' },
                   { label: 'Free Testosterone', sub: 'What your body can actually use', value: '0.244', unit: 'nmol/L', status: 'Low', barW: '15%', statusBold: true, barColor: 'bg-statusWarning' },
-                ].map(({ label, sub, value, unit, status, barW, statusBg, statusBold, barColor }) => (
+                ].map(({ label, sub, value, unit, status, barW, statusBg, statusBold, barColor, reported }) => (
                   <div key={label}>
                     <div className="flex justify-between items-end mb-1">
                       <div>
@@ -228,12 +234,16 @@ export default function KitTestosteronePage() {
                       </div>
                       <div className="text-right">
                         <div className="data-value">{value}</div>
-                        <div className={`data-label !text-[10px] mt-1 px-1 ${statusBg ? 'bg-black !text-white' : 'border border-black'} ${statusBold ? 'border-2 border-black font-black' : ''}`}>{status}</div>
+                        <div className={`data-label !text-[10px] mt-1 px-1 ${reported ? 'border border-dashed border-gray-400 !text-gray-500' : statusBg ? 'bg-black !text-white' : 'border border-black'} ${statusBold ? 'border-2 border-black font-black' : ''}`}>{status}</div>
                       </div>
                     </div>
-                    <div className="h-1.5 w-full bg-gray-200 flex">
-                      <div className={`h-full ${barColor || 'bg-black'}`} style={{ width: barW }} />
-                    </div>
+                    {/* No bar for a report-only marker: a coloured bar IS a verdict, and an
+                        empty track still reads as one. resolveBarZones returns [] for FAI. */}
+                    {barColor && (
+                      <div className="h-1.5 w-full bg-gray-200 flex">
+                        <div className={`h-full ${barColor}`} style={{ width: barW ?? '0%' }} />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -385,7 +395,11 @@ export default function KitTestosteronePage() {
                 num: '02', title: 'SHBG', body: 'Sex Hormone Binding Globulin. It binds to testosterone and makes it unusable. High SHBG means your total T might look fine on paper while you still feel terrible.',
               },
               {
-                num: '03', title: 'Free Androgen Index', body: 'The ratio of total testosterone to SHBG, expressed as a percentage. A more sensitive indicator of testosterone availability than Total T alone, especially when SHBG is elevated.',
+                // Clinically ruled copy, read from the panel rather than written here. This
+                // said FAI was "a more sensitive indicator of testosterone availability than
+                // Total T alone", which is the free-T stand-in framing thresholds.md item 8
+                // refuses in men.
+                num: '03', title: PANEL_MARKERS.fai.name, body: `${PANEL_MARKERS.fai.measures}. ${PANEL_MARKERS.fai.why}`,
               },
               {
                 num: '04', title: 'Albumin', body: 'The main carrier protein in your blood. Albumin-bound testosterone is considered weakly bioavailable. Testing it allows accurate calculation of your Free Testosterone. Without it, the number is an estimate.',
