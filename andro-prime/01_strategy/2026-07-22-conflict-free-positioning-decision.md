@@ -2,6 +2,8 @@
 
 **Date:** 2026-07-22 | **Decided by:** Keith | **Status:** ADOPTED. One dependency still owed: the exact customer-facing wording is locked with Ewa (see below) before the money-pages rewrite ships.
 
+> **Forward pointer, 2026-08-30 (this document is otherwise unchanged).** Still the governing position. Keith's ruling A2 of 2026-08-30 confirms conflict-free as the lead and promotes the Patient-owned data pillar from "a supporting pillar and a privacy receipt" to the **proof layer** for this position: the record and the app demonstrate conflict-free rather than replacing it. Nothing in the decision, the rails or CA-026 changes. See `2026-08-30-brand-lead-after-the-monitoring-thesis.md`.
+
 ## The decision
 
 Andro Prime's positioning is the **conflict-free men's health testing brand**: a men's-positioned testosterone/health testing company that is deliberately not a treatment funnel. Working articulation (internal): *"the men's testosterone test with no reason to sell you testosterone."* If a result is low, it routes to a GP and we earn nothing from that; we earn the same whether a customer's results are fine or not.

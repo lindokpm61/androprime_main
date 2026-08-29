@@ -12,6 +12,10 @@
 
 ---
 
+> 🔴 **SUPERSEDED AS LEAD, AND NOW TWO LEADS STALE. Rewrite owed by Keith before external reuse.**
+>
+> **Re-stamped 2026-08-30** against Keith's ruling A2 (`../01_strategy/2026-08-30-brand-lead-after-the-monitoring-thesis.md`). The copy below still leads on the **May 2026** patient-owned-data framing. It should have moved to conflict-free on 2026-07-22 and did not; the 2026-08-25 monitoring-thesis sweep did not reach this workspace either, so this file has not been touched since commit `647e91b`. **Write the rewrite once, against A2, not twice.** Under A2: conflict-free leads (speed / no-GP first, money honesty second); the record and the app appear as the **proof** of it and never as the opening claim; the category noun is **"a UK men's health company"**, not a wellness brand and not a testing company. The sweep of 2026-08-30 deliberately did NOT rewrite the long / short / one-liner copy below: it is Keith-owned and needs a `/compliance-preflight` pass. **Original 2026-07-22 banner follows, unchanged.**
+>
 > ⚠️ **SUPERSEDED AS LEAD (2026-07-22): rewrite owed by Keith before external reuse.** Keith adopted the **conflict-free positioning** (`../01_strategy/2026-07-22-conflict-free-positioning-decision.md`); the customer-facing wording is approved as **CA-026** (`2026-07-22-conflict-free-wording-pack.md`). The long / short / one-liner copy below still leads with **patient-owned data ("yours to keep")**, which is now a supporting pillar, not the lead. Do not reissue this copy to affiliates, press, or the About page as-is: the lead must move to the conflict-free frame (speed / no-GP first, money honesty second: one price, any result that needs a doctor goes to a GP and earns us nothing, no result changes what we offer or what it costs). This is a Keith-owned, compliance-pre-flighted copy rewrite against the CA-026 pack, not a silent edit. See ESCALATE in the 2026-07-22 decision sweep.
 
 ## Long version (affiliate briefs, press, About page)

@@ -43,6 +43,8 @@ selling":
 
 **The app is what you market. The kit is what you sell. The membership is what you earn.**
 
+> **Qualified 2026-08-30 (Keith, ruling A2, `../../01_strategy/2026-08-30-brand-lead-after-the-monitoring-thesis.md`): "market the app" is not licence to LEAD on the app.** Conflict-free remains the brand lead; the app is marketed as the *evidence* for it. The reason is on the record: the 2026-07-20 teardown refuted "own interpretation plus tracking plus trust" because Thriva owns that triad and Forth is credible, so leading on the app competes on ground we lose. What a rival cannot copy is what the app visibly refuses to do. Demonstrate it; do not open on it.
+
 The kit-first sequence is not a marketing preference, it is forced: the app cannot hold a
 record until a first result exists. `01_strategy/2026-08-26-membership-offer-window.md` already
 locked the consequence, and it binds every surface in this document: **membership cannot be
@@ -96,6 +98,10 @@ this argument. It is currently below the fold, underneath a convenience hero.
 
 3. **The demo account is a surface, and it does not exist.** It was answered by Keith on
    2026-08-24 as half of the free layer and has no build behind it. See Section 5.
+   **An interactive prototype of it exists as of 2026-08-29**:
+   `09_website-app/design/prototypes/demo-account-interactive.html`, three states and four tabs
+   across all nine Kit 3 markers. It is a drawing of the surface, not the surface, and its copy has
+   had no pre-flight.
 
 ### The article's next step, and why it is not an uploader
 
@@ -217,7 +223,7 @@ Flagged, not answered here: it belongs with gap-analysis decision #5.
 | --- | --- | --- | --- |
 | **Homepage hero argument** | Kit hero: "Know your numbers in days. Five minutes at home." Speed, convenience, postage | **Should establish the record**: the difference between having a number and understanding it (Section 1b). The *"Your results are normal." That's not an answer.* block already carries the argument and is below the fold | **Keith, open.** Copy work, then compliance pre-flight |
 | **Article next-step CTAs** | Mixed. Audited 2026-08-12: some route to the quiz, some to a kit page, some prose-only | Standardise on "start a baseline you can compare against" → quiz or kit page. Highest leverage change in this document | Copy; `06_marketing` owns the articles |
-| **Demo account** | **Does not exist** | Half of the free layer, answered by Keith 2026-08-24. Populated app, sample data, zero ingestion | Build + compliance read on sample-data labelling |
+| **Demo account** | **Does not exist as a product.** An interactive PROTOTYPE now does: `09_website-app/design/prototypes/demo-account-interactive.html` (2026-08-29) | Half of the free layer, answered by Keith 2026-08-24. Populated app, sample data, zero ingestion | Build + compliance read on sample-data labelling. **The prototype's copy is unflighted and unsigned; it is a drawing, not a source of approved copy** |
 | Homepage hero primary CTA | Quiz primary, kits secondary, how-it-works tertiary | As built | **Done 2026-07-25**, commit `03d4bd5`. (`07_sales/STATE.md` recorded this as still pending until 2026-08-27; corrected) |
 | WTP + buyer-profile block | Built per Section 4 | As built, but see the open bundle/membership collision above | ClickUp `869e74w93` closed |
 | Landing pages `lp/*` | Hero → `#order` direct checkout | Unchanged (correct); add one conflict-free receipt line if missing | Copy check |

@@ -135,7 +135,7 @@ Recorded at full strength, because a thesis argued only from its supporting evid
 | Decision | Effect |
 |---|---|
 | **2026-08-22, supplements lead the funnel** | **Partially reversed.** Supplements stay a marketing entry and become a member-priced shop; the kit becomes the first purchase and the app becomes the product. Needs the sweep |
-| **2026-07-22, conflict-free positioning** | **Extended, not replaced.** Conflict-free explains why we can be trusted; pre-vertical explains what we are for. The two-range card is conflict-free made concrete |
+| **2026-07-22, conflict-free positioning** | **Extended, not replaced.** Conflict-free explains why we can be trusted; pre-vertical explains what we are for. The two-range card is conflict-free made concrete. ✅ **RULED 2026-08-30 (Keith, A2): conflict-free stays the LEAD and the record becomes its PROOF.** This row was the closest thing to a ruling that existed and was not one. Decision doc: `2026-08-30-brand-lead-after-the-monitoring-thesis.md` |
 | **2026-07-20, "the results brain is table stakes"** | **Re-scoped, not overruled.** That assessed capability; this asserts commitment |
 | **`09_website-app/docs/2026-08-23-supplement-shop-front-spec.md`** | Superseded in direction. Technical findings stand |
 
