@@ -1,0 +1,1153 @@
+<!-- ============================================================
+     THE DEMO ACCOUNT — interactive prototype
+     Saved 2026-08-29 on Keith's instruction ("save this somewhere so we
+     can refer back to it later"). Open it in a browser; it needs nothing.
+
+     WHAT IT IS. A working mockup of the whole customer-facing app on a
+     phone, built to answer the question the funnel model leaves open:
+     `07_sales/funnel/site-funnel-model.md` lists the demo account as a
+     surface whose state is "Does not exist". This is what it could be.
+     THREE STATES (day 3 waiting, day 14 first result, day 90 member),
+     FOUR TABS (results, plan, record, account), all nine Kit 3 markers,
+     the marker detail, the month-one ask, and the two-point record.
+
+     WHAT IS REAL. Every band is transcribed from the live classifier,
+     `frontend/lib/results/classifier.ts` (resolveState), and matches
+     `04_products/results-engine/thresholds.md`. Laboratory intervals are
+     Vitall's own male ranges, confirmed 2026-08-06. Waiting-state copy is
+     from `../mockups/journey/results-states-F.html`; the plan, the ask and
+     the member screens are from `../mockups/membership-first-cycle.html`;
+     the design language and the token block are Direction F, lifted from
+     `../mockups/journey/results-F.html` rather than re-picked.
+
+     WHAT IS NOT. The result, the account and every interaction are mocked.
+     Nothing is ingested, there is no login and there is no database.
+     🔴 THE COPY HAS HAD NO PRE-FLIGHT AND NO CLINICAL SIGN-OFF. Keith
+     waived it for the mockup on 2026-08-28. Nothing here may be lifted to
+     a live surface without `/compliance-preflight` and Ewa's sight; two of
+     the live GP states already render copy she has not approved, which is
+     open regardless of this file.
+
+     THREE THINGS IT DELIBERATELY DEMONSTRATES, so a later reader does not
+     "tidy" them away:
+       1. The free androgen index has NO band and NO verdict (CA-034 K1).
+          The hollow dashed marker is the point, not an unfinished state.
+       2. The month-one ask gates the plan and the trend and NEVER the
+          numbers: right of access under UK GDPR.
+       3. On the two-point view the marker and the symptom are drawn side
+          by side and never joined. Connecting them is a per-customer
+          interpretation and is post-CQC.
+
+     ALSO PUBLISHED as an artifact, same content, for sharing:
+     https://claude.ai/code/artifact/662f9912-8954-476e-9fa1-20e2ee5cbbe7
+     If you change this file, republish it there too, or the two drift.
+     ============================================================ -->
+<title>The Andro Prime Demo Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:wght@400;700&display=swap">
+
+<style>
+/* ============================================================
+   THE DEMO ACCOUNT — the whole customer-facing app, on a phone.
+   Design language is Direction F; the token block is LIFTED from
+   design/mockups/journey/results-F.html, not re-picked.
+   Bands are the live ones from lib/results/classifier.ts
+   (resolveState) and 04_products/results-engine/thresholds.md.
+   Waiting-state copy is from results-states-F.html; the plan,
+   paywall and member screens are from membership-first-cycle.html.
+   SAMPLE DATA THROUGHOUT. Nothing here ingests anything.
+   ============================================================ */
+:root{
+  --paper:#FFFFFF; --tray:#F1F2F4; --core:#FFFFFF; --sunk:#E7E9EC;
+  --ink:#0A0B0D; --ink-2:#4A4F57; --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10); --hair-2:rgba(10,11,13,.16);
+  --ok:#059669; --warn:#D97706; --crit:#B91C1C;
+  --ok-f:rgba(5,150,105,.18); --ok-f2:rgba(5,150,105,.32);
+  --warn-f:rgba(217,119,6,.30); --crit-f:rgba(185,28,28,.22);
+  --neutral-f:rgba(10,11,13,.07);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --wash-a:rgba(10,11,13,.05); --wash-b:rgba(10,11,13,.035);
+  --bezel:#1C1F24;
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r:28px; --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+  --ok-f:rgba(52,211,153,.20); --ok-f2:rgba(52,211,153,.34);
+  --warn-f:rgba(251,191,36,.30); --crit-f:rgba(248,113,113,.26);
+  --neutral-f:rgba(245,246,247,.09);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  --wash-a:rgba(255,255,255,.045); --wash-b:rgba(255,255,255,.028);
+  --bezel:#2A2E34;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --ok:#34D399; --warn:#FBBF24; --crit:#F87171;
+    --ok-f:rgba(52,211,153,.20); --ok-f2:rgba(52,211,153,.34);
+    --warn-f:rgba(251,191,36,.30); --crit-f:rgba(248,113,113,.26);
+    --neutral-f:rgba(245,246,247,.09);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+    --wash-a:rgba(255,255,255,.045); --wash-b:rgba(255,255,255,.028);
+    --bezel:#2A2E34;
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Segoe UI",system-ui,sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  position:relative;min-height:100vh;
+}
+.wash{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1100px 700px at 14% -8%, var(--wash-a), transparent 62%),
+             radial-gradient(900px 620px at 94% 8%, var(--wash-b), transparent 60%)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.3;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E")}
+.shell{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px 110px}
+
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.lbl{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:var(--paper);
+  border-bottom:1px solid var(--hair);margin-bottom:34px}
+.topin{max-width:1180px;margin:0 auto;padding:13px 24px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brandmark{font-weight:800;letter-spacing:-.03em;font-size:16px}
+.samplechip{display:inline-flex;align-items:center;gap:8px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:700;color:var(--warn);
+  border:1.5px solid var(--warn);border-radius:999px;padding:5px 12px}
+.samplechip i{width:6px;height:6px;border-radius:50%;background:var(--warn);font-style:normal;flex:none}
+.spring{flex:1}
+.themebtn{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:700;color:var(--ink-2);background:var(--tray);
+  border:1px solid var(--hair);border-radius:999px;padding:8px 15px;cursor:pointer}
+.themebtn:hover{color:var(--ink)}
+.themebtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+header.intro{padding:10px 0 38px;max-width:70ch}
+h1{font-size:clamp(29px,4.2vw,44px);font-weight:800;letter-spacing:-.035em;line-height:1.04;text-wrap:balance}
+header.intro p{margin-top:17px;color:var(--ink-2);font-size:16.5px;line-height:1.7}
+header.intro p b{color:var(--ink);font-weight:700}
+
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:38px;align-items:start;justify-items:center}
+.stage > *{min-width:0}
+
+/* ============================================================
+   THE PHONE
+   ============================================================ */
+.phonewrap{position:sticky;top:78px}
+.phone{
+  width:390px;height:812px;background:var(--bezel);border-radius:52px;padding:11px;
+  box-shadow:var(--amb), 0 0 0 2px rgba(255,255,255,.05) inset;
+  position:relative;
+}
+.viewport{
+  width:100%;height:100%;background:var(--tray);border-radius:42px;overflow:hidden;
+  display:flex;flex-direction:column;position:relative;
+}
+.notch{
+  position:absolute;top:11px;left:50%;transform:translateX(-50%);
+  width:112px;height:26px;background:var(--bezel);border-radius:0 0 16px 16px;z-index:12;
+}
+.sbar{
+  flex:none;height:44px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11.5px;
+  font-weight:700;color:var(--ink);letter-spacing:.02em;
+}
+.sbar .icons{display:flex;gap:5px;align-items:center}
+.sbar svg{width:15px;height:11px;fill:currentColor}
+.appbar{
+  flex:none;display:flex;align-items:center;gap:10px;padding:2px 16px 12px;
+}
+.appbar .ttl{font-weight:700;font-size:19px;letter-spacing:-.025em;flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.iconbtn{
+  width:34px;height:34px;flex:none;border-radius:50%;border:1px solid var(--hair);
+  background:var(--core);color:var(--ink);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;padding:0;
+}
+.iconbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.iconbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+/* An author `display` beats the UA sheet's [hidden]{display:none}, so the
+   back arrow stayed on root tabs. Restate it at author level. */
+.iconbtn[hidden],.memberpill[hidden]{display:none}
+.memberpill{
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;letter-spacing:.13em;
+  text-transform:uppercase;font-weight:700;color:var(--ok);border:1.5px solid var(--ok);
+  border-radius:999px;padding:4px 9px;flex:none;
+}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 14px 22px;scrollbar-width:thin}
+.scroll::-webkit-scrollbar{width:5px}
+.scroll::-webkit-scrollbar-thumb{background:var(--hair-2);border-radius:5px}
+
+.tabbar{
+  flex:none;display:flex;background:var(--core);border-top:1px solid var(--hair);
+  padding:8px 6px 14px;gap:2px;
+}
+.tabbtn{
+  flex:1;background:none;border:none;cursor:pointer;padding:6px 2px;border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--ink-3);
+  font-family:Geist,sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.02em;
+}
+.tabbtn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tabbtn[aria-current="true"]{color:var(--ink)}
+.tabbtn[aria-current="true"] svg{stroke-width:2.4}
+.tabbtn:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+
+/* ---------- in-app building blocks ---------- */
+.card{background:var(--core);border-radius:var(--r-in);border:1px solid var(--hair);padding:17px 16px;margin-bottom:11px}
+.card.flush{padding:0;overflow:hidden}
+.ch{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:500;margin-bottom:10px}
+.card p{font-family:Merriweather,Georgia,serif;font-size:13.5px;line-height:1.75;color:var(--ink)}
+.card p b{font-weight:700}
+.card p + p{margin-top:10px}
+.sect{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:18px 4px 9px}
+.sect:first-child{margin-top:4px}
+
+.statusstrip{
+  display:flex;align-items:center;gap:8px;background:var(--core);border:1px solid var(--hair);
+  border-radius:999px;padding:8px 14px;margin-bottom:12px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-2);font-weight:700;
+}
+.statusstrip i{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none;animation:pl 2.6s var(--ease) infinite}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.32}}
+
+/* marker rows */
+.mrow{
+  width:100%;display:grid;grid-template-columns:1fr 76px 16px;gap:9px;align-items:center;
+  background:var(--core);border:1px solid var(--hair);border-radius:16px;
+  padding:13px 14px;margin-bottom:7px;cursor:pointer;text-align:left;
+  font-family:inherit;color:inherit;
+}
+.mrow:hover{border-color:var(--hair-2)}
+.mrow:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.mrow .mn{display:block;font-size:13.5px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.mrow .ms{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;letter-spacing:.1em;
+  text-transform:uppercase;margin-top:4px;font-weight:700}
+.mrow .ms.ok{color:var(--ok)} .mrow .ms.warn{color:var(--warn)}
+.mrow .ms.crit{color:var(--crit)} .mrow .ms.flat{color:var(--ink-3)}
+.mrow .mval{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:16px;font-weight:700;
+  text-align:right;font-variant-numeric:tabular-nums;line-height:1.1}
+.mrow .mval u{text-decoration:none;display:block;font-size:8.5px;color:var(--ink-3);font-weight:400;margin-top:2px}
+.mrow .mval .was{display:block;font-size:9.5px;color:var(--ink-3);font-weight:400;margin-bottom:2px}
+.mrow .chev{color:var(--ink-3);display:flex;justify-content:flex-end}
+.mrow .chev svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* the two-range track */
+.track{position:relative;height:15px;border-radius:5px;background:var(--sunk);overflow:hidden;margin-top:2px}
+.zone{position:absolute;top:0;bottom:0;transition:background .3s var(--ease)}
+.cutline{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--ink);border-radius:2px;transition:left .35s var(--ease)}
+.pin{position:absolute;top:50%;width:16px;height:16px;margin-left:-8px;transform:translateY(-50%);
+  border-radius:50%;background:var(--core);border:4px solid var(--warn);
+  transition:left .35s var(--ease), border-color .3s var(--ease);box-shadow:0 1px 5px rgba(0,0,0,.22)}
+.pin.ok{border-color:var(--ok)} .pin.crit{border-color:var(--crit)} .pin.flat{border-color:var(--ink-2)}
+.pin.hollow{background:transparent;border-style:dashed;border-color:var(--ink-2)}
+.pin.ghost{width:13px;height:13px;margin-left:-6.5px;border-width:3px;border-color:var(--ink-3);opacity:.5;box-shadow:none}
+.conn{position:absolute;top:50%;height:2px;background:var(--ink-3);opacity:.45;transform:translateY(-50%);border-radius:2px}
+.labrow{position:relative;height:11px;margin-top:4px}
+.brk{position:absolute;top:3px;height:6px;border:1.5px solid var(--ink-3);border-top:none}
+.scale{position:relative;height:14px;margin-top:3px}
+.scale s{position:absolute;text-decoration:none;transform:translateX(-50%);
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.scale s.l{transform:none} .scale s.r{transform:translateX(-100%)}
+.scale s.hard{color:var(--ink);font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 13px;margin-top:14px}
+.legend div{display:flex;align-items:center;gap:7px;font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+.sw{width:18px;height:9px;border-radius:2px;flex:none}
+.sw.cut{width:3px;height:12px;background:var(--ink);border-radius:2px}
+.sw.brk{width:18px;height:6px;border:1.5px solid var(--ink-3);border-top:none;border-radius:0}
+.sw.ring{width:12px;height:12px;border-radius:50%;border:2px dashed var(--ink-2);background:transparent}
+.prov{margin-top:13px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9px;line-height:1.7;color:var(--ink-3)}
+
+.bigval{display:flex;align-items:baseline;gap:4px;margin:8px 0 4px}
+.bigval b{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:700;font-size:44px;
+  letter-spacing:-.045em;line-height:1;font-variant-numeric:tabular-nums}
+.bigval span{font-size:13px;color:var(--ink-3)}
+.badge{display:inline-block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;
+  letter-spacing:.1em;text-transform:uppercase;font-weight:700;border-radius:999px;
+  padding:7px 13px;border:1.5px solid currentColor;margin-top:9px}
+.badge.ok{color:var(--ok)} .badge.warn{color:var(--warn)} .badge.crit{color:var(--crit)} .badge.flat{color:var(--ink-3)}
+
+.action{border-radius:16px;padding:15px 15px;margin-top:11px}
+.action.gp{background:var(--crit-f)}
+.action.calm{background:var(--neutral-f)}
+.action h4{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.action.gp h4{color:var(--crit)} .action.calm h4{color:var(--ink-3)}
+.action p{font-family:Merriweather,Georgia,serif;font-size:13px;line-height:1.75}
+.receipt{margin-top:11px;padding-top:10px;border-top:1px solid var(--hair-2);
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-2);line-height:1.75}
+.attrib{margin-top:11px;padding-top:10px;border-top:1px solid var(--hair);
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-3)}
+
+.btn{display:block;width:100%;text-align:center;font-family:Geist,sans-serif;font-weight:700;
+  font-size:12px;letter-spacing:.09em;text-transform:uppercase;background:var(--ink);color:var(--paper);
+  border:none;border-radius:999px;padding:14px;cursor:pointer;margin-top:12px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--hair-2)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* tracker */
+.steps{margin-top:4px}
+.step{display:grid;grid-template-columns:22px 1fr;gap:11px;padding-bottom:16px;position:relative}
+.step:last-child{padding-bottom:0}
+.step .bul{width:13px;height:13px;border-radius:50%;border:2.5px solid var(--hair-2);background:var(--core);margin-top:2px}
+.step.done .bul{background:var(--ink);border-color:var(--ink)}
+.step.now .bul{border-color:var(--ok);background:var(--ok);animation:pl 2.6s var(--ease) infinite}
+.step .line{position:absolute;left:6px;top:17px;bottom:0;width:2px;background:var(--hair)}
+.step:last-child .line{display:none}
+.step .st{font-size:13px;font-weight:600;line-height:1.3}
+.step.now .st{font-weight:700}
+.step .sd{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:4px;line-height:1.6}
+
+/* check-in */
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.chk{display:flex;align-items:center;gap:10px;background:var(--sunk);border:1.5px solid transparent;
+  border-radius:14px;padding:13px 12px;cursor:pointer;font-family:inherit;color:inherit;text-align:left}
+.chk[aria-pressed="true"]{border-color:var(--ok);background:var(--ok-f)}
+.chk:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.chk .bx{width:20px;height:20px;border-radius:6px;border:2px solid var(--ink-3);flex:none;
+  display:flex;align-items:center;justify-content:center;color:transparent}
+.chk[aria-pressed="true"] .bx{background:var(--ok);border-color:var(--ok);color:#fff}
+.chk .bx svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.chk .cl{font-size:12.5px;font-weight:600;line-height:1.25}
+.energy{display:flex;gap:4px;margin-top:9px}
+.ebtn{flex:1;aspect-ratio:1;border-radius:9px;border:1.5px solid var(--hair);background:var(--sunk);
+  cursor:pointer;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;font-weight:700;color:var(--ink-3);padding:0}
+.ebtn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.ebtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:11px}
+.stat{background:var(--core);border:1px solid var(--hair);border-radius:16px;padding:14px 11px;text-align:center}
+.stat b{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:25px;font-weight:700;
+  letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin-top:7px;line-height:1.4}
+
+.bars{display:flex;align-items:flex-end;gap:3px;height:56px;margin-top:4px}
+.bars i{flex:1;background:var(--ok-f2);border-radius:2px;min-height:4px}
+.bars i.miss{background:var(--sunk)}
+.barcap{display:flex;justify-content:space-between;margin-top:7px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
+
+/* movement */
+.move{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.mv{display:flex;flex-direction:column;gap:3px}
+.mv span{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.mv b{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.mv.old b{color:var(--ink-3)}
+.arw{color:var(--ink-3);font-size:15px}
+.dchip{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:700;color:var(--ink-2);border:1.5px solid var(--hair-2);
+  border-radius:999px;padding:6px 11px}
+.crossed{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:10px}
+.plots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.plot{background:var(--sunk);border-radius:14px;padding:11px 11px 6px;color:var(--ink)}
+.plot.sym{color:var(--ink-2)}
+.plot .pt{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;line-height:1.4}
+.plot svg{display:block;width:100%;height:auto}
+.sep{margin-top:13px;padding-top:12px;border-top:1px solid var(--hair);
+  font-family:Merriweather,Georgia,serif;font-size:12.5px;color:var(--ink-2);line-height:1.8}
+
+/* paywall */
+.pay{background:var(--ink);color:var(--paper);border-radius:var(--r-in);padding:20px 17px;margin-bottom:11px}
+.pay h3{font-size:21px;font-weight:800;letter-spacing:-.03em;line-height:1.12;margin-bottom:9px}
+.pay .sub{font-family:Merriweather,Georgia,serif;font-size:13px;line-height:1.7;opacity:.82}
+.pay .price{display:flex;align-items:baseline;gap:6px;margin:17px 0 4px}
+.pay .price b{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:40px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.pay .price span{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;opacity:.7;letter-spacing:.08em;text-transform:uppercase}
+.pay ul{list-style:none;margin-top:16px;padding-top:15px;border-top:1px solid rgba(255,255,255,.18)}
+:root[data-theme="dark"] .pay ul{border-top-color:rgba(0,0,0,.28)}
+.pay li{display:flex;gap:10px;font-size:12.5px;line-height:1.6;margin-bottom:11px;opacity:.9}
+.pay li i{font-style:normal;flex:none;opacity:.55}
+.pay .btn{background:var(--paper);color:var(--ink);margin-top:6px}
+.pay .btn.ghost{background:transparent;color:var(--paper);border-color:rgba(255,255,255,.32);margin-top:8px}
+:root[data-theme="dark"] .pay .btn.ghost{border-color:rgba(0,0,0,.35)}
+.pay .foot{margin-top:14px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;
+  letter-spacing:.09em;text-transform:uppercase;opacity:.62;line-height:1.7}
+
+.rowlink{display:flex;align-items:center;gap:12px;width:100%;background:var(--core);
+  border:1px solid var(--hair);border-radius:16px;padding:14px 15px;margin-bottom:7px;
+  cursor:pointer;font-family:inherit;color:inherit;text-align:left}
+.rowlink:hover{border-color:var(--hair-2)}
+.rowlink:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.rowlink .rt{flex:1;min-width:0}
+.rowlink .rn{font-size:13.5px;font-weight:600;line-height:1.3}
+.rowlink .rd{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:4px;line-height:1.5}
+.rowlink .chev{color:var(--ink-3)}
+.rowlink .chev svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.rowlink .px{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12.5px;font-weight:700;flex:none}
+.rowlink .px u{text-decoration:none;display:block;font-size:8px;color:var(--ink-3);font-weight:400;text-align:right;margin-top:2px}
+
+.empty{text-align:center;padding:38px 20px}
+.empty svg{width:34px;height:34px;stroke:var(--ink-3);fill:none;stroke-width:1.6;margin-bottom:15px}
+.empty h3{font-size:17px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.empty p{font-family:Merriweather,Georgia,serif;font-size:13px;line-height:1.75;color:var(--ink-2)}
+
+/* ============================================================
+   CONTROL RAIL (scaffolding, not product)
+   ============================================================ */
+.rail{position:sticky;top:78px;display:flex;flex-direction:column;gap:13px;width:100%}
+.railcard{background:var(--tray);border:1px dashed var(--hair-2);border-radius:20px;padding:19px}
+.railcard > .lbl{display:block;margin-bottom:6px}
+.railcard .hint{font-size:12.5px;color:var(--ink-3);line-height:1.6;margin-bottom:15px}
+.seg{display:flex;flex-direction:column;gap:5px;background:var(--sunk);padding:4px;border-radius:16px;margin-bottom:14px}
+.seg button{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;letter-spacing:.09em;
+  text-transform:uppercase;font-weight:700;border:none;background:transparent;color:var(--ink-3);
+  border-radius:12px;padding:11px 10px;cursor:pointer;text-align:left}
+.seg button[aria-pressed="true"]{background:var(--core);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.seg button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.slider{width:100%;-webkit-appearance:none;appearance:none;background:transparent;cursor:grab}
+.slider:active{cursor:grabbing}
+.slider::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:var(--sunk)}
+.slider::-moz-range-track{height:6px;border-radius:3px;background:var(--sunk)}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;
+  background:var(--ink);border:3px solid var(--core);margin-top:-9px;box-shadow:0 2px 7px rgba(0,0,0,.3)}
+.slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--ink);border:3px solid var(--core)}
+.slider:focus-visible{outline:2px solid var(--ink);outline-offset:6px;border-radius:4px}
+.sread{display:flex;justify-content:space-between;align-items:baseline;margin-top:11px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:10px;color:var(--ink-3)}
+.sread b{font-size:16px;color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.preset{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9px;letter-spacing:.08em;
+  text-transform:uppercase;font-weight:700;background:var(--core);color:var(--ink-2);
+  border:1px solid var(--hair);border-radius:999px;padding:7px 11px;cursor:pointer}
+.preset:hover{color:var(--ink)}
+.preset.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.preset:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.fixnote{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:10px;line-height:1.65}
+.switch{display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+.switch input{position:absolute;opacity:0;width:0;height:0}
+.knob{width:44px;height:26px;border-radius:999px;background:var(--sunk);flex:none;position:relative;
+  transition:background .22s var(--ease);margin-top:2px}
+.knob::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
+  background:var(--core);box-shadow:0 1px 4px rgba(0,0,0,.3);transition:transform .22s var(--ease)}
+.switch input:checked + .knob{background:var(--crit)}
+.switch input:checked + .knob::after{transform:translateX(18px)}
+.switch input:focus-visible + .knob{outline:2px solid var(--ink);outline-offset:3px}
+.switch .txt{font-size:13px;line-height:1.5}
+.switch .txt small{display:block;color:var(--ink-3);font-size:11.5px;margin-top:4px;line-height:1.55}
+.watch{background:var(--core);border:1px solid var(--hair);border-radius:20px;padding:17px 19px}
+.watch .lbl{display:block;margin-bottom:10px}
+.watch ol{margin:0;padding-left:18px;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+.watch li{margin-bottom:9px}
+.watch li b{color:var(--ink);font-weight:700}
+.watch li:last-child{margin-bottom:0}
+
+/* ---------- notes ---------- */
+.notes{margin-top:58px;border-top:1px solid var(--hair);padding-top:32px}
+.notes h2{font-size:25px;font-weight:700;letter-spacing:-.025em;margin-bottom:20px}
+.ngrid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.ncard{background:var(--tray);border:1px solid var(--hair);border-radius:18px;padding:21px}
+.ncard h3{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:500;margin-bottom:10px}
+.ncard p{font-size:13px;line-height:1.7;color:var(--ink-2)}
+.ncard p b{color:var(--ink);font-weight:700}
+.ncard p + p{margin-top:9px}
+
+/* ---------- responsive: below 960 the bezel comes off ---------- */
+@media (max-width:960px){
+  .stage{grid-template-columns:1fr;gap:26px}
+  .phonewrap,.rail{position:static;width:100%}
+  .phone{width:100%;max-width:430px;height:760px;margin:0 auto}
+}
+@media (max-width:560px){
+  .shell{padding:0 14px 70px}
+  .topin{padding:11px 14px}
+  .ngrid{grid-template-columns:1fr}
+  /* a real phone does not need a picture of a phone */
+  .phone{width:100%;max-width:none;height:78vh;min-height:560px;border-radius:26px;padding:0;box-shadow:var(--amb)}
+  .viewport{border-radius:26px}
+  .notch{display:none}
+  .sbar{height:34px}
+  .plots{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wash"></div>
+<div class="grain"></div>
+
+<div class="topbar">
+  <div class="topin">
+    <span class="brandmark">ANDRO PRIME</span>
+    <span class="samplechip"><i></i>Demo account · sample data</span>
+    <span class="spring"></span>
+    <button class="themebtn" id="themebtn" type="button">Dark</button>
+  </div>
+</div>
+
+<div class="shell">
+
+  <header class="intro">
+    <h1>The whole app, on a phone.</h1>
+    <p>Every screen a customer actually reaches: waiting for the lab, all nine markers, the daily plan, the month-one ask, the record after a retest, and the account. <b>Tap through it as he would.</b> The panel beside it moves him between the three states and is not part of the product.</p>
+  </header>
+
+  <div class="stage">
+
+    <!-- ============ THE PHONE ============ -->
+    <div class="phonewrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="viewport">
+          <div class="sbar">
+            <span id="clock">09:41</span>
+            <span class="icons">
+              <svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".35"/></svg>
+              <svg viewBox="0 0 18 12"><rect x="0" y="2" width="14" height="8" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="1.6" y="3.6" width="9" height="4.8" rx="1.2"/><rect x="15.4" y="4.6" width="1.8" height="2.8" rx=".8"/></svg>
+            </span>
+          </div>
+
+          <div class="appbar">
+            <button class="iconbtn" id="backbtn" type="button" aria-label="Back" hidden>
+              <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <span class="ttl" id="apptitle">Your results</span>
+            <span class="memberpill" id="memberpill" hidden>Member</span>
+          </div>
+
+          <div class="scroll" id="screen"></div>
+
+          <div class="tabbar" id="tabbar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ DEMO CONTROLS ============ -->
+    <div class="rail">
+      <div class="railcard">
+        <span class="lbl">Demo controls</span>
+        <p class="hint">Not part of the product. A real member cannot move his own result, and there is no state switcher in his account. This is here so you can walk the whole journey without waiting eleven weeks.</p>
+
+        <div class="seg" id="stateseg">
+          <button type="button" data-state="waiting" aria-pressed="false">Day 3 · waiting for the lab</button>
+          <button type="button" data-state="result"  aria-pressed="true">Day 14 · first result, not a member</button>
+          <button type="button" data-state="member"  aria-pressed="false">Day 90 · member, retest landed</button>
+        </div>
+
+        <div id="markerctl">
+          <div class="lbl" id="slidercap" style="margin-bottom:9px">Result value</div>
+          <input type="range" class="slider" id="slider" aria-label="Sample result value">
+          <div class="sread"><span id="smin"></span><b id="sval"></b><span id="smax"></span></div>
+          <div class="presets" id="presets"></div>
+          <p class="fixnote" id="fixnote"></p>
+        </div>
+      </div>
+
+      <div class="railcard">
+        <label class="switch">
+          <input type="checkbox" id="compare">
+          <span class="knob"></span>
+          <span class="txt">Show what everyone else shows
+            <small>Strips out our band and the action cutoff, leaving only the laboratory reference range. That is the view your supplier's own portal gives, and what Thriva, Forth and the TRT funnels put in front of the same number.</small>
+          </span>
+        </label>
+      </div>
+
+      <div class="watch">
+        <span class="lbl">What to watch</span>
+        <ol id="watchlist"></ol>
+      </div>
+    </div>
+  </div>
+
+  <section class="notes">
+    <h2>What this is, and what it is not.</h2>
+    <div class="ngrid">
+      <div class="ncard">
+        <h3>Real</h3>
+        <p><b>Every band is the live one</b>, from <b>classifier.ts</b> and the Ewa-approved thresholds. All nine Kit 3 markers are here, including the ones with no verdict.</p>
+        <p>Waiting-state copy, the plan screen and the month-one ask are lifted from the approved mockups, not rewritten.</p>
+      </div>
+      <div class="ncard">
+        <h3>Mocked</h3>
+        <p><b>The result, the account and every interaction.</b> No login, no database, nothing ingested. It recomputes in the browser.</p>
+        <p>The copy <b>has not been through a pre-flight or clinical sign-off.</b> Two live GP states already render copy Ewa has not approved, which is open regardless of this page.</p>
+      </div>
+      <div class="ncard">
+        <h3>Three things to notice</h3>
+        <p><b>The numbers are never gated.</b> Month one locks the plan and the trend; the results stay open, because a person has a right of access to his own health data.</p>
+        <p><b>The free androgen index has no verdict at all</b>, on purpose. <b>And the app never joins the marker to the symptom</b>, on the one screen where it would be easiest.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   DATA. Bands transcribed from lib/results/classifier.ts.
+   `gp` marks the GP-referral set; `report` marks a marker we
+   state and do not interpret.
+   ============================================================ */
+const D1 = '14 Aug', D2 = '22 Oct';
+const SYM = { name:'Energy, self-scored', a:4, b:7, min:0, max:10 };
+
+const MARKERS = [
+  { id:'t', grp:'Hormone', name:'Testosterone', sub:'total', unit:'nmol/L',
+    min:0, max:35, step:0.1, dp:1, base:10.5, r:10.9, lab:[8.64,29], labTxt:'8.64 to 29.00',
+    cut:{at:12,name:'UK clinical action cutoff'},
+    ticks:[{v:0},{v:8.64},{v:12,hard:true},{v:29},{v:35}],
+    prov:'Reference range returned by the laboratory with this result. Action cutoff: BSSM 2023, UK consensus diagnostic cut-point.',
+    means:'A reference range answers one question: where do most men sit? An action cutoff answers a different one: below what number should someone do something? They are built for different purposes, so they give different numbers.',
+    receipt:'A result that goes to a GP earns us nothing. We do not treat testosterone, and nothing on this page changes because of this number.',
+    bands:[
+      {to:5.2,chip:'Severe',k:'crit',gp:true,badge:'Well below the action cutoff',short:'Take to a GP',act:'Take this result to your GP without waiting. A reading this far below the cutoff is worth a same-week appointment, and your account has a printable summary written for them rather than for you.'},
+      {to:8,chip:'Low',k:'crit',gp:true,badge:'Below the action cutoff',short:'Take to a GP',act:'Take this result to your GP. They will want a second morning sample, and your account can supply the summary.'},
+      {to:12,chip:'Equivocal',k:'warn',gp:true,badge:'In range, below the action cutoff',short:'Take to a GP',act:'You are inside the range your laboratory printed and underneath the number your GP acts on. Both are true at once. Take it to your GP, who will want a second morning sample.'},
+      {to:20,chip:'Normal',k:'ok',gp:false,badge:'Normal',short:'No action',act:'Nothing here needs a GP. Worth a repeat in six to twelve months if you want to know which way it is moving.'},
+      {to:29,chip:'Optimal',k:'ok2',gp:false,badge:'Where we would want it',short:'No action',act:'Nothing here needs a GP, and nothing here needs buying. Repeat in six to twelve months if you want a direction of travel.'},
+      {to:35,chip:'Above ceiling',k:'crit',gp:true,badge:'Above the assay ceiling',short:'Take to a GP',act:'This sits above the top of the laboratory assay. That is worth a GP conversation rather than a shrug, particularly if you are taking anything that could raise it.'}
+    ]},
+
+  { id:'s', grp:'Hormone', name:'SHBG', sub:'sex hormone binding globulin', unit:'nmol/L',
+    min:0, max:100, step:0.1, dp:1, base:34.1, r:36.0, lab:[20.6,76.7], labTxt:'20.6 to 76.7',
+    cut:null, ticks:[{v:0},{v:20.6},{v:76.7},{v:100}],
+    prov:'Banded against the range this laboratory returned. SHBG has no UK consensus range: it is assay-specific, so we use the lab’s own interval rather than a fixed number.',
+    means:'SHBG is what testosterone is bound to, so it changes how much is actually available to you. It is why a total testosterone figure on its own can mislead in both directions.',
+    receipt:'A result that goes to a GP earns us nothing, and no product appears on this card because of it.',
+    bands:[
+      {to:20.6,chip:'Low',k:'warn',gp:false,badge:'Below the lab range',short:'Context',act:'Below the range this assay reports. On its own it is not an action; it is read alongside your total testosterone, because low SHBG raises the free fraction.'},
+      {to:76.7,chip:'In range',k:'ok2',gp:false,badge:'In range',short:'No action',act:'Inside the interval this laboratory reports for men. Nothing to do.'},
+      {to:100,chip:'High',k:'warn',gp:false,badge:'Above the lab range',short:'Context',act:'Above the interval this assay reports. Read alongside total testosterone, since high SHBG lowers the free fraction.'}
+    ]},
+
+  { id:'ft', grp:'Hormone', name:'Free testosterone', sub:'calculated, Vermeulen', unit:'nmol/L',
+    min:0, max:1, step:0.005, dp:3, base:0.190, r:0.205, lab:[0.198,0.619], labTxt:'0.198 to 0.619',
+    cut:null, ticks:[{v:0},{v:0.198},{v:0.619},{v:1}],
+    prov:'Calculated from total testosterone, SHBG and albumin by the Vermeulen equation. Banded against the range this laboratory returned.',
+    means:'This is the fraction not bound to SHBG, and it is the figure we act on rather than the free androgen index. It is calculated, not measured, which is why the three inputs are all on your panel.',
+    receipt:'A result that goes to a GP earns us nothing, and no product appears on this card because of it.',
+    bands:[
+      {to:0.198,chip:'Below range',k:'warn',gp:false,badge:'Below the lab range',short:'Context',act:'Below the calculated range this laboratory reports. It travels with your total testosterone rather than being acted on separately.'},
+      {to:1,chip:'In range',k:'ok2',gp:false,badge:'In range',short:'No action',act:'Inside the calculated range for men. Nothing to do here on its own.'}
+    ]},
+
+  { id:'a', grp:'Hormone', name:'Albumin', sub:'measured', unit:'g/L',
+    min:0, max:60, step:0.5, dp:0, base:44, r:45, lab:[35,50], labTxt:'35 to 50',
+    cut:{at:35,name:'GP referral flag'}, ticks:[{v:0},{v:35,hard:true},{v:50},{v:60}],
+    prov:'Reference range returned by the laboratory with this result. Standard UK flag at 35 g/L.',
+    means:'Albumin is here because free testosterone cannot be calculated without it. It is also a general marker in its own right, which is why it carries a flag of its own.',
+    receipt:'A result that goes to a GP earns us nothing, and no product appears on this card because of it.',
+    bands:[
+      {to:35,chip:'Low',k:'crit',gp:true,badge:'Low',short:'Take to a GP',act:'Below 35 goes to your GP. Low albumin has several very different explanations and none of them is ours to settle from one number.'},
+      {to:60,chip:'In range',k:'ok2',gp:false,badge:'In range',short:'No action',act:'Nothing to do. This also means your calculated free testosterone rests on a sound input.'}
+    ]},
+
+  /* Report-only. Drawn faithfully: hollow marker, no band, no conclusion.
+     CA-034 K1. A mock that quietly banded it would be designing
+     something that cannot ship. */
+  { id:'fai', grp:'Hormone', name:'Free androgen index', sub:'total testosterone to SHBG ratio', unit:'%',
+    report:true, min:0, max:120, step:0.1, dp:1, base:30.8, r:31.5, lab:[35,92.6], labTxt:'35.0 to 92.6',
+    cut:null, ticks:[{v:0},{v:35},{v:92.6},{v:120}],
+    prov:'Returned by the laboratory with your result and stated here unchanged.',
+    means:'We report this figure and draw no conclusion from it. In men it tracks calculated free testosterone poorly and overestimates it when SHBG is low, so your free testosterone above is the number we act on instead.',
+    receipt:'',
+    bands:[{to:120,chip:'Reported',k:'flat',gp:false,badge:'Reported, not interpreted',short:'No verdict',
+      act:'There is deliberately no verdict on this row. Reporting a number we do not act on is honest; banding it would tell you something we cannot stand behind.'}]},
+
+  { id:'d', grp:'Energy and recovery', name:'Vitamin D', sub:'25-OH', unit:'nmol/L',
+    min:0, max:300, step:1, dp:0, base:31, r:58, lab:[50,250], labTxt:'50 to 250',
+    cut:{at:25,name:'GP referral flag'}, ticks:[{v:0},{v:25,hard:true},{v:50},{v:250},{v:300}],
+    prov:'Reference range returned by the laboratory with this result. Bands per NICE and SACN; the 250 ceiling was added on clinical ruling, 7 Aug 2026.',
+    means:'The laboratory calls anything from 50 normal. We split the space underneath it, because 24 and 49 are not the same problem and one of them is a GP conversation.',
+    receipt:'A result that goes to a GP earns us nothing. Every supplement recommendation on the account is switched off while this reads out of range.',
+    bands:[
+      {to:25,chip:'Clinically low',k:'crit',gp:true,badge:'Clinically low',short:'Take to a GP',act:'Below 25 is a GP conversation, not a supplement decision. We are not going to sell you anything against this number.'},
+      {to:50,chip:'Below range',k:'warn',gp:false,badge:'Below the range',short:'Support',act:'Under the laboratory floor and a long way under where you want to be through a British winter. This is the band where daily D3 is the ordinary answer.'},
+      {to:250,chip:'In range',k:'ok2',gp:false,badge:'In range',short:'No action',act:'Nothing to do. If you are supplementing, this says it is working, so keep going and retest after the winter.'},
+      {to:300,chip:'Above range',k:'crit',gp:true,badge:'Above the range',short:'Take to a GP',act:'Above 250 is a clinical review flag rather than a technical out-of-range. Every supplement recommendation on this account is switched off while this reads high.'}
+    ]},
+
+  { id:'b', grp:'Energy and recovery', name:'Active B12', sub:'holotranscobalamin', unit:'pmol/L',
+    min:0, max:150, step:1, dp:0, base:44, r:74, lab:[37.5,150], labTxt:'above 37.5',
+    cut:{at:70,name:'NICE NG239 upper cut'}, ticks:[{v:0},{v:25},{v:37.5},{v:70,hard:true},{v:150}],
+    prov:'Laboratory cut-point 37.5 pmol/L. Our bands follow NICE NG239, re-ratified against the assay figure on 7 Aug 2026.',
+    means:'This is the clearest case of the two ranges disagreeing. The assay calls anything above 37.5 normal. NICE treats 25 to 70 as indeterminate, so a man at 44 is fine by the lab and unresolved by the guideline.',
+    receipt:'A result that goes to a GP earns us nothing, and no product appears on this card because of it.',
+    bands:[
+      {to:25,chip:'Low',k:'crit',gp:false,badge:'Low',short:'Support',act:'Below the NICE deficiency cut. Worth acting on, and worth mentioning to your GP if you have symptoms alongside it.'},
+      {to:70,chip:'Indeterminate',k:'warn',gp:false,badge:'Indeterminate',short:'Unresolved',act:'Your laboratory calls this normal. NICE calls it indeterminate, which is an honest way of saying one test cannot settle it. We show you both rather than picking whichever is more convenient.'},
+      {to:150,chip:'In range',k:'ok2',gp:false,badge:'In range',short:'No action',act:'Above the indeterminate zone on both readings. Nothing to do here.'}
+    ]},
+
+  { id:'c', grp:'Energy and recovery', name:'hs-CRP', sub:'inflammation', unit:'mg/L',
+    min:0, max:20, step:0.1, dp:1, base:1.9, r:1.1, lab:[0,1], labTxt:'under 1.00',
+    cut:{at:10,name:'GP referral flag'}, ticks:[{v:0},{v:1},{v:3},{v:10,hard:true},{v:20}],
+    prov:'Reference range returned by the laboratory with this result. Cardiovascular risk bands per AHA and CDC 2003.',
+    means:'A general marker, and deliberately so. It says something is going on without saying what, which is why it is read alongside the rest of the panel rather than on its own.',
+    receipt:'A result that goes to a GP earns us nothing, and no product appears on this card because of it.',
+    bands:[
+      {to:1,chip:'Low',k:'ok2',gp:false,badge:'Low',short:'No action',act:'Nothing here. This is where you want it.'},
+      {to:3,chip:'Slightly raised',k:'ok',gp:false,badge:'Slightly raised',short:'No action',act:'Mildly raised. Common after recent training, a cold, or a poor fortnight of sleep. Worth repeating rather than reacting to.'},
+      {to:10,chip:'Raised',k:'warn',gp:false,badge:'Raised',short:'Repeat',act:'Raised enough to be worth repeating in four to six weeks, when you are well and have not trained hard the day before.'},
+      {to:20,chip:'Markedly raised',k:'crit',gp:true,badge:'Markedly raised',short:'Take to a GP',act:'Above 10 goes to your GP. A single reading this high most often means something acute rather than something chronic, but it is not ours to interpret.'}
+    ]},
+
+  { id:'f', grp:'Energy and recovery', name:'Ferritin', sub:'iron stores', unit:'µg/L',
+    min:0, max:500, step:1, dp:0, base:71, r:96, lab:[30,442], labTxt:'30 to 442',
+    cut:{at:30,name:'GP referral flag'}, ticks:[{v:0},{v:30,hard:true},{v:100},{v:300},{v:500}],
+    prov:'Reference range returned by the laboratory with this result. The 300 ceiling was set on clinical ruling from a stated 300 to 400 window, conservative end chosen.',
+    means:'Ferritin is the tank, not the tap. A full blood count can read normal while stores are running down underneath it, which is the version of tired that sleep does not fix.',
+    receipt:'A result that goes to a GP earns us nothing, and no product appears on this card because of it.',
+    bands:[
+      {to:30,chip:'Low',k:'crit',gp:true,badge:'Low',short:'Take to a GP',act:'Below 30 goes to your GP. Low stores in a man are a question about why, and that question is theirs rather than ours.'},
+      {to:100,chip:'Borderline',k:'warn',gp:false,badge:'Borderline',short:'Repeat',act:'In range and at the bottom of it. Not a problem today; worth watching if fatigue is the reason you tested.'},
+      {to:300,chip:'In range',k:'ok2',gp:false,badge:'In range',short:'No action',act:'Comfortably held. Nothing to do.'},
+      {to:500,chip:'Raised',k:'crit',gp:true,badge:'Raised',short:'Take to a GP',act:'Above 300 goes to your GP. Raised ferritin has several very different explanations and none of them is something we can settle from one number.'}
+    ]}
+];
+
+const ZONE = { crit:'var(--crit-f)', warn:'var(--warn-f)', ok:'var(--ok-f)', ok2:'var(--ok-f2)', flat:'var(--neutral-f)' };
+const TONE = { crit:'crit', warn:'warn', ok:'ok', ok2:'ok', flat:'flat' };
+
+const state = {
+  st:'result', tab:'results', marker:null, compare:false,
+  vals: MARKERS.map(m => m.base),
+  rvals: MARKERS.map(m => m.r),
+  checks:{ d3:true, sun:false }, energy:7
+};
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const isTwo = () => state.st === 'member';
+const valAt = i => isTwo() ? state.rvals[i] : state.vals[i];
+const setCur = v => { const i = state.marker; if (isTwo()) state.rvals[i] = v; else state.vals[i] = v; };
+const pct = (m,v) => ((Math.max(m.min, Math.min(m.max, v)) - m.min) / (m.max - m.min)) * 100;
+const fmt = (m,v) => v.toFixed(m.dp);
+
+function bandOf(m,v){ for (const b of m.bands) if (v < b.to) return b; return m.bands[m.bands.length-1]; }
+function labVerdict(m,v){
+  if (v < m.lab[0]) return { badge:'Below the reference range', k:'crit' };
+  if (v > m.lab[1]) return { badge:'Above the reference range', k:'crit' };
+  return { badge:'Within the normal range', k:'flat' };
+}
+function toneOf(m,v){
+  if (m.report) return 'flat';
+  if (state.compare) { const lv = labVerdict(m,v); return lv.k === 'flat' ? 'flat' : 'crit'; }
+  return TONE[bandOf(m,v).k];
+}
+
+/* ---------- the two-range track ---------- */
+function trackHTML(m, v, opts){
+  opts = opts || {};
+  let zones = '', prev = m.min;
+  for (const b of m.bands){
+    const l = pct(m,prev), w = pct(m, Math.min(b.to, m.max)) - l;
+    zones += '<div class="zone" style="left:' + l + '%;width:' + w + '%;background:' +
+             ((state.compare || m.report) ? 'transparent' : ZONE[b.k]) + '"></div>';
+    prev = b.to;
+  }
+  const tone = toneOf(m,v);
+  let ghost = '';
+  if (opts.two){
+    const a = pct(m, state.vals[state.marker !== null ? state.marker : 0]);
+    const av = pct(m, opts.baseVal), cv = pct(m, v);
+    ghost = '<div class="conn" style="left:' + Math.min(av,cv) + '%;width:' + Math.abs(cv-av) + '%"></div>' +
+            '<div class="pin ghost" style="left:' + av + '%"></div>';
+  }
+  const cut = (m.cut && !state.compare && !m.report)
+    ? '<div class="cutline" style="left:' + pct(m,m.cut.at) + '%"></div>' : '';
+  const ticks = m.ticks.map((t,i) => {
+    const cls = (i===0 ? 'l ' : i===m.ticks.length-1 ? 'r ' : '') + (t.hard && !state.compare && !m.report ? 'hard' : '');
+    return '<s class="' + cls.trim() + '" style="left:' + pct(m,t.v) + '%">' + t.v + '</s>';
+  }).join('');
+  return '<div class="track">' + zones + cut + ghost +
+    '<div class="pin ' + tone + (m.report ? ' hollow' : '') + '" style="left:' + pct(m,v) + '%"></div></div>' +
+    '<div class="labrow"><span class="brk" style="left:' + pct(m,m.lab[0]) + '%;width:' + (pct(m,m.lab[1])-pct(m,m.lab[0])) + '%"></span></div>' +
+    '<div class="scale">' + ticks + '</div>';
+}
+
+function legendHTML(m){
+  if (m.report) return '<div class="legend"><div><span class="sw brk"></span> Your lab’s male reference range</div>' +
+    '<div><span class="sw ring"></span> Reported, no verdict</div></div>';
+  if (state.compare) return '<div class="legend"><div><span class="sw brk"></span> Your lab’s male reference range</div></div>';
+  const keys = [];
+  m.bands.forEach(b => { if (!keys.includes(b.k)) keys.push(b.k); });
+  const label = { crit:'Outside our band', warn:'Between the two ranges', ok:'In range', ok2:'Where we would want it', flat:'Reported' };
+  return '<div class="legend">' +
+    keys.map(k => '<div><span class="sw" style="background:' + ZONE[k] + '"></span> ' + label[k] + '</div>').join('') +
+    (m.cut ? '<div><span class="sw cut"></span> ' + m.cut.name + '</div>' : '') +
+    '<div><span class="sw brk"></span> Your lab’s male reference range</div></div>';
+}
+
+function plot(title, a, b, min, max, dp, cls){
+  const y = v => 72 - ((Math.max(min, Math.min(max, v)) - min) / (max - min)) * 54;
+  const ya = y(a), yb = y(b);
+  return '<div class="plot ' + (cls||'') + '"><div class="pt">' + title + '</div>' +
+    '<svg viewBox="0 0 200 96" role="img" aria-label="' + esc(title) + ': ' + a.toFixed(dp) + ' on ' + D1 + ', ' + b.toFixed(dp) + ' on ' + D2 + '">' +
+    '<line x1="38" y1="' + ya + '" x2="162" y2="' + yb + '" stroke="currentColor" stroke-width="2" opacity=".38"/>' +
+    '<circle cx="38" cy="' + ya + '" r="5" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".55"/>' +
+    '<circle cx="162" cy="' + yb + '" r="6.5" fill="currentColor"/>' +
+    '<text x="38" y="' + (ya-12) + '" text-anchor="middle" font-size="12" font-family="JetBrains Mono, monospace" fill="currentColor" opacity=".6">' + a.toFixed(dp) + '</text>' +
+    '<text x="162" y="' + (yb-14) + '" text-anchor="middle" font-size="15" font-weight="700" font-family="JetBrains Mono, monospace" fill="currentColor">' + b.toFixed(dp) + '</text>' +
+    '<text x="38" y="92" text-anchor="middle" font-size="10" font-family="JetBrains Mono, monospace" fill="currentColor" opacity=".55">' + D1 + '</text>' +
+    '<text x="162" y="92" text-anchor="middle" font-size="10" font-family="JetBrains Mono, monospace" fill="currentColor" opacity=".55">' + D2 + '</text>' +
+    '</svg></div>';
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+const CHEV = '<span class="chev"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>';
+
+function screenResults(){
+  if (state.st === 'waiting') return screenWaiting();
+  let out = '<div class="statusstrip"><i></i>' +
+    (isTwo() ? 'Retest complete · 22 Oct 2026' : 'Result complete · 18 Aug 2026') + '</div>';
+  if (isTwo())
+    out += '<div class="card"><p><b>Nine markers, two purchases, one picture.</b> The panel a number came from is a detail on the row, not a place you have to navigate to.</p></div>';
+
+  let grp = '';
+  MARKERS.forEach((m,i) => {
+    if (m.grp !== grp){ grp = m.grp; out += '<div class="sect">' + grp + '</div>'; }
+    const v = valAt(i), tone = toneOf(m,v);
+    const txt = m.report ? 'No verdict'
+      : state.compare ? (labVerdict(m,v).k === 'flat' ? 'In range' : 'Out of range')
+      : bandOf(m,v).short;
+    out += '<button class="mrow" type="button" data-marker="' + i + '">' +
+      '<span><span class="mn">' + m.name + '</span><span class="ms ' + tone + '">' + txt + '</span></span>' +
+      '<span class="mval">' + (isTwo() ? '<span class="was">' + fmt(m,state.vals[i]) + ' →</span>' : '') +
+        fmt(m,v) + '<u>' + m.unit + '</u></span>' + CHEV + '</button>';
+  });
+  out += '<div class="card" style="margin-top:14px"><div class="ch">Your data</div>' +
+    '<p>Your numbers are yours. Download them whenever you like, member or not.</p>' +
+    '<button class="btn ghost" type="button">Download my results</button></div>';
+  return out;
+}
+
+function screenWaiting(){
+  const steps = [
+    { t:'Kit dispatched', d:'11 Aug, 16:40', s:'done' },
+    { t:'Sample received', d:'14 Aug, 09:12', s:'done' },
+    { t:'Analysing', d:'Since 15 Aug, 08:05 · expected by Thu 18 Aug', s:'now' },
+    { t:'Results ready', d:'No date yet', s:'' }
+  ];
+  return '<div class="statusstrip"><i></i>Status · analysing</div>' +
+    '<div class="card"><div class="ch">Where your sample is</div>' +
+    '<p style="font-family:Geist,sans-serif;font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:9px">Your sample is being analysed.</p>' +
+    '<p>The lab has had your sample for three days and is analysing it now. You will get an email the moment it is done, and you do not need to check back.</p>' +
+    '<div class="steps" style="margin-top:17px">' +
+    steps.map(s => '<div class="step ' + s.s + '"><span class="line"></span><span class="bul"></span>' +
+      '<span><span class="st">' + s.t + '</span><span class="sd">' + s.d + '</span></span></div>').join('') +
+    '</div></div>' +
+    '<div class="sect">Ready for when it lands</div>' +
+    '<div class="card"><div class="ch">Why analysis takes days, not hours</div>' +
+    '<p>Your sample is run in a batch against calibrated controls, and a result that fails its control is run again rather than sent out. The wait is the second run you hope you do not need.</p></div>' +
+    '<div class="card"><div class="ch">What a reference range is, and is not</div>' +
+    '<p>A reference range describes where most men sit. It was built to flag illness, not to define wellness, which is why we will show ours beside it.</p></div>';
+}
+
+function screenMarker(){
+  const i = state.marker, m = MARKERS[i], v = valAt(i);
+  const b = bandOf(m,v), lv = labVerdict(m,v), tone = toneOf(m,v);
+  const badge = m.report ? b.badge : state.compare ? lv.badge : b.badge;
+
+  let out = '<div class="card"><div class="ch">' + m.sub + '</div>' +
+    '<div class="bigval"><b>' + fmt(m,v) + '</b><span>' + m.unit + '</span></div>' +
+    '<span class="badge ' + tone + '">' + badge + '</span>' +
+    '<div style="margin-top:17px">' + trackHTML(m, v, isTwo() ? { two:true, baseVal:state.vals[i] } : {}) + '</div>' +
+    legendHTML(m) + '<p class="prov">' + m.prov + '</p></div>';
+
+  if (isTwo()){
+    const a = state.vals[i], d = v - a, ba = bandOf(m,a), bb = bandOf(m,v);
+    /* Descriptive, never evaluative: a rise is not good on every marker, and
+       hs-CRP is the counter-example two rows away. */
+    const word = Math.abs(d) < m.step/2 ? 'Unchanged'
+      : (d > 0 ? 'Risen ' : 'Fallen ') + Math.abs(d).toFixed(m.dp) + ' ' + m.unit;
+    out += '<div class="card"><div class="ch">Movement · two points, 69 days apart</div>' +
+      '<div class="move"><div class="mv old"><span>' + D1 + '</span><b>' + fmt(m,a) + '</b></div>' +
+      '<span class="arw">→</span><div class="mv"><span>' + D2 + '</span><b>' + fmt(m,v) + '</b></div>' +
+      '<span class="dchip">' + word + '</span></div>' +
+      (m.report ? '' : '<p class="crossed">' + (ba !== bb ? 'Moved from “' + ba.badge + '” into “' + bb.badge + '”' : 'Same band as ' + D1) + '</p>') +
+      '<div class="plots">' + plot(m.name, a, v, m.min, m.max, m.dp, '') +
+        plot(SYM.name, SYM.a, SYM.b, SYM.min, SYM.max, 0, 'sym') + '</div>' +
+      '<p class="sep">' + (state.compare
+        ? 'A trend line is not what makes this different. Thriva, Forth and Medichecks all draw one. The second range is the part they do not.'
+        : 'Two lines, shown next to each other. We do not tell you that one caused the other, because that is an interpretation of your result and it is not ours to make.') + '</p>' +
+      '<p class="sep" style="border-top:none;padding-top:0;margin-top:8px">Two points is not a trend. It is the smallest number that can answer whether anything moved. Both samples are ours, taken the same way: we do not chart a number we did not produce.</p></div>';
+  }
+
+  out += '<div class="card"><div class="ch">' + (state.compare && !m.report ? 'What this means' : 'What the difference means') + '</div>' +
+    '<p>' + (state.compare && !m.report
+      ? 'Your result is within the laboratory reference range of ' + m.labTxt + ' ' + m.unit + '.'
+      : m.means) + '</p>' +
+    (state.compare && !m.report ? '' : '<div class="attrib">Andro Prime clinical logic · signed by Dr Ewa Lindo</div>') +
+    (state.compare && !m.report
+      ? '<div class="action calm"><h4>What happens now</h4><p>No action indicated.</p></div>'
+      : '<div class="action ' + (b.gp ? 'gp' : 'calm') + '">' +
+        '<h4>' + (b.gp ? 'This one goes to your GP' : 'What happens now') + '</h4><p>' + b.act + '</p>' +
+        (b.gp ? '<div class="receipt">' + m.receipt + '</div><button class="btn" type="button">Download the GP summary</button>' : '') +
+        '</div>') +
+    '</div>';
+  return out;
+}
+
+function screenPlan(){
+  if (state.st === 'waiting') return emptyState('clock',
+    'Your plan starts when your result does.',
+    'There is nothing to work on yet, because there is no number to move. This fills in the moment your result lands.');
+
+  if (state.st === 'result') return '' +
+    '<div class="pay"><h3>Your first month ends today.</h3>' +
+    '<p class="sub">You have one number to move and 60 days to move it.</p>' +
+    '<div class="price"><b>£47</b><span>/ month</span></div>' +
+    '<ul>' +
+      '<li><i>+</i><span><b>Your retest on 22 October.</b> Included while you are a member. You need to be a member on that date. It is not a credit, it does not expire, and there is no balance to keep track of.</span></li>' +
+      '<li><i>+</i><span>Your plan, your streak and your daily data, kept running.</span></li>' +
+      '<li><i>+</i><span>Every marker explained against both ranges, ours and your lab’s.</span></li>' +
+      '<li><i>+</i><span>Ask the clinician. Questions answered every month, published for all members.</span></li>' +
+      '<li><i>+</i><span>Supplements at member price, only where we test the marker.</span></li>' +
+    '</ul>' +
+    '<button class="btn" type="button">Keep going</button>' +
+    '<button class="btn ghost" type="button">Not right now</button>' +
+    '<p class="foot">Your results are yours either way. Download them whenever you want, member or not.</p></div>' +
+    '<div class="card"><div class="ch">What is locked, and what is not</div>' +
+    '<p>Month one gates the <b>plan</b> and the <b>trend</b>. It never gates your numbers: under UK data protection law you have a right of access to your own health data, so the results tab stays open whatever you decide here.</p></div>';
+
+  /* member */
+  const days = 22;
+  const bars = Array.from({length:days}, (_,i) => (i===4||i===11||i===17) ? '<i class="miss" style="height:18%"></i>'
+    : '<i style="height:' + (58 + ((i*37)%42)) + '%"></i>').join('');
+  return '<div class="card"><div class="ch">Today · three taps</div>' +
+    '<div class="checks">' +
+      '<button class="chk" type="button" data-check="d3" aria-pressed="' + state.checks.d3 + '">' +
+        '<span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="cl">D3 capsule</span></button>' +
+      '<button class="chk" type="button" data-check="sun" aria-pressed="' + state.checks.sun + '">' +
+        '<span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="cl">20 min daylight</span></button>' +
+    '</div>' +
+    '<div class="ch" style="margin:16px 0 0">Energy today</div>' +
+    '<div class="energy">' + Array.from({length:10},(_,i) =>
+      '<button class="ebtn" type="button" data-energy="' + (i+1) + '" aria-pressed="' + (state.energy===i+1) + '">' + (i+1) + '</button>').join('') + '</div>' +
+    '<p style="font-family:Merriweather,serif;font-size:12px;line-height:1.7;color:var(--ink-3);margin-top:13px">Three taps, all connected to the one marker you are moving. A member moving ferritin would be asked for different things.</p>' +
+    '</div>' +
+    '<div class="stats"><div class="stat"><b>22</b><span>Days logged</span></div>' +
+    '<div class="stat"><b>16</b><span>Day streak</span></div>' +
+    '<div class="stat"><b>1</b><span>Marker to move</span></div></div>' +
+    '<div class="card"><div class="ch">Adherence, 22 days</div>' +
+    '<div class="bars">' + bars + '</div>' +
+    '<div class="barcap"><span>Day 1</span><span>Day 22</span></div>' +
+    '<p style="font-family:Merriweather,serif;font-size:12px;line-height:1.7;color:var(--ink-3);margin-top:12px">This chart is about behaviour, not blood. Nothing here claims your result has changed.</p></div>' +
+    '<div class="card"><div class="ch">Your one number to move</div>' +
+    '<div class="bigval"><b>58</b><span>nmol/L vitamin D</span></div>' +
+    '<p style="margin-top:8px">Your last reading was 31. Your retest on 22 October is what says whether it moved, and it did.</p></div>';
+}
+
+function screenRecord(){
+  if (state.st === 'waiting') return emptyState('chart',
+    'Nothing to compare yet.',
+    'A record needs two points. Your first result is the first of them, and it is on its way.');
+
+  if (state.st === 'result') return '' +
+    '<div class="card"><div class="ch">Your record so far</div>' +
+    '<p><b>One point.</b> That is a fact about today, and it is genuinely useful: nine markers, one date, one set of standards. What it cannot tell you is which direction you are going.</p>' +
+    '<p>Your next test is what turns this into a record. Two points is the smallest number that can answer whether anything moved.</p></div>' +
+    MARKERS.map((m,i) => '<div class="card" style="padding:14px 15px"><div class="ch" style="margin-bottom:8px">' + m.name + '</div>' +
+      '<div class="move"><div class="mv"><span>' + D1 + '</span><b>' + fmt(m,state.vals[i]) + '</b></div>' +
+      '<span class="arw">→</span><div class="mv old"><span>Next test</span><b>?</b></div></div></div>').join('') +
+    '<div class="card"><div class="ch">Only our own kits feed this</div>' +
+    '<p>We do not chart a result from another provider. A number typed in from a photo has no assay identity and no collection time, and a line drawn between two different assays is an artefact that looks like information. <b>We only chart what we can stand behind.</b></p></div>';
+
+  return '<div class="card"><div class="ch">Two purchases, one picture</div>' +
+    '<p><b>Nine markers, two dates.</b> Which kit a number came from is a detail on the row, not something you have to navigate.</p></div>' +
+    MARKERS.map((m,i) => {
+      const a = state.vals[i], v = state.rvals[i], d = v - a;
+      const word = Math.abs(d) < m.step/2 ? 'Unchanged' : (d>0?'Risen ':'Fallen ') + Math.abs(d).toFixed(m.dp);
+      return '<button class="mrow" type="button" data-marker="' + i + '" style="grid-template-columns:1fr auto 16px">' +
+        '<span><span class="mn">' + m.name + '</span><span class="ms flat">' + word + '</span></span>' +
+        '<span class="mval"><span class="was">' + fmt(m,a) + ' →</span>' + fmt(m,v) + '<u>' + m.unit + '</u></span>' +
+        CHEV + '</button>';
+    }).join('') +
+    '<div class="card" style="margin-top:12px"><div class="ch">Your purchases</div>' +
+    '<p><b>14 Aug 2026</b> · Hormone &amp; Recovery, nine markers.<br><b>22 Oct 2026</b> · Retest, included with membership.</p></div>';
+}
+
+function screenYou(){
+  const member = isTwo();
+  let out = '<div class="card"><div class="ch">Account</div>' +
+    '<p style="font-family:Geist,sans-serif;font-size:17px;font-weight:700;letter-spacing:-.02em">Mark Ellison</p>' +
+    '<p style="font-size:12.5px;color:var(--ink-3);margin-top:4px">mark@example.com</p></div>';
+
+  if (member) out += '<div class="card"><div class="ch">Membership</div>' +
+    '<div class="bigval"><b>£47</b><span>/ month</span></div>' +
+    '<p style="margin-top:9px">Member since 13 September. Your next included retest is <b>22 October 2027</b>.</p>' +
+    '<button class="btn ghost" type="button">Manage membership</button></div>';
+
+  if (state.st !== 'waiting'){
+    const gp = MARKERS.some((m,i) => !m.report && bandOf(m, valAt(i)).gp);
+    if (gp) out += '<button class="rowlink" type="button"><span class="rt"><span class="rn">GP handoff summary</span>' +
+      '<span class="rd">One page, written for a clinician · ready</span></span>' + CHEV + '</button>';
+    out += '<button class="rowlink" type="button"><span class="rt"><span class="rn">Download my results</span>' +
+      '<span class="rd">Yours whatever you decide about membership</span></span>' + CHEV + '</button>';
+  }
+
+  if (member) out += '<button class="rowlink" type="button"><span class="rt"><span class="rn">Ask the clinician</span>' +
+    '<span class="rd">Answered generally, published for all members</span></span>' + CHEV + '</button>' +
+    '<div class="sect">Member shop</div>' +
+    '<button class="rowlink" type="button"><span class="rt"><span class="rn">Vitamin D3 + K2</span>' +
+    '<span class="rd">We test this marker</span></span><span class="px">£18.95<u>member price</u></span></button>' +
+    '<div class="card" style="margin-top:8px"><p style="font-size:12px;color:var(--ink-3);font-family:Merriweather,serif">Only where we test the marker. Nothing is offered against a result we have routed to a GP.</p></div>';
+
+  out += '<div class="card" style="margin-top:12px"><div class="ch">Your data</div>' +
+    '<p>One UK data controller. Your results are never sold. You can export or delete everything from here at any time.</p>' +
+    '<button class="btn ghost" type="button">Export everything</button></div>';
+  return out;
+}
+
+function emptyState(icon, h, p){
+  const paths = {
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>'
+  };
+  return '<div class="empty"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">' + paths[icon] + '</svg>' +
+    '<h3>' + h + '</h3><p>' + p + '</p></div>';
+}
+
+/* ============================================================
+   CHROME
+   ============================================================ */
+const TABS = [
+  { id:'results', label:'Results', icon:'<path d="M4 19V5"/><path d="M4 12h5l2-5 3 10 2-5h4"/>' },
+  { id:'plan',    label:'Plan',    icon:'<rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="M8.5 15.5l2 2 4-4"/>' },
+  { id:'record',  label:'Record',  icon:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>' },
+  { id:'you',     label:'You',     icon:'<circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/>' }
+];
+const TITLES = { results:'Your results', plan:'Your plan', record:'Your record', you:'Account' };
+
+function render(){
+  const member = isTwo();
+  $('memberpill').hidden = !member;
+
+  $('tabbar').innerHTML = TABS.map(t =>
+    '<button class="tabbtn" type="button" data-tab="' + t.id + '" aria-current="' + (state.tab === t.id && state.marker === null) + '">' +
+    '<svg viewBox="0 0 24 24">' + t.icon + '</svg>' + t.label + '</button>').join('');
+
+  if (state.marker !== null){
+    $('backbtn').hidden = false;
+    $('apptitle').textContent = MARKERS[state.marker].name;
+    $('screen').innerHTML = screenMarker();
+  } else {
+    $('backbtn').hidden = true;
+    $('apptitle').textContent = TITLES[state.tab];
+    $('screen').innerHTML =
+      state.tab === 'results' ? screenResults() :
+      state.tab === 'plan'    ? screenPlan()    :
+      state.tab === 'record'  ? screenRecord()  : screenYou();
+  }
+  renderRail();
+  renderWatch();
+}
+
+function renderRail(){
+  const on = state.marker !== null;
+  $('markerctl').style.display = on ? '' : 'none';
+  if (!on) return;
+  const m = MARKERS[state.marker], v = valAt(state.marker), s = $('slider');
+  s.min = m.min; s.max = m.max; s.step = m.step; s.value = v;
+  $('smin').textContent = m.min + ' ' + m.unit;
+  $('smax').textContent = m.max + ' ' + m.unit;
+  $('sval').textContent = fmt(m,v);
+  $('slidercap').textContent = isTwo() ? 'Retest value · ' + D2 : 'Result value · ' + m.name;
+  $('fixnote').textContent = isTwo()
+    ? 'The ' + D1 + ' baseline is fixed. History does not move, so the slider only drives the retest.'
+    : '';
+  $('presets').innerHTML = m.bands.map((b,i) => {
+    const lo = i === 0 ? m.min : m.bands[i-1].to;
+    const mid = Math.round(((lo + Math.min(b.to, m.max)) / 2) * 1000) / 1000;
+    return '<button class="preset' + (bandOf(m,v) === b ? ' on' : '') + '" type="button" data-v="' + mid + '">' + b.chip + '</button>';
+  }).join('');
+}
+
+const WATCH = {
+  waiting: [
+    'The tracker <b>dates every completed step</b> and refuses to date the one it cannot know.',
+    'No percentage and no progress bar, because a number stuck at 60% for two days is worse than no number.',
+    'The two cards change with the step, so a man who checks back tomorrow <b>finds something he has not read.</b>'
+  ],
+  result: [
+    'Open <b>Testosterone</b>. He is inside his lab’s range and under the cutoff, and the card routes him out of the business.',
+    'Open <b>Free androgen index</b>. It has a hollow marker and <b>no verdict at all</b>, on purpose.',
+    'Go to <b>Plan</b>. Month one is the ask. Note what it does not lock: <b>the numbers stay open.</b>',
+    'Flip the compare switch, then reopen testosterone. It becomes "within the normal range" and the page has nothing to say.'
+  ],
+  member: [
+    'Open <b>Vitamin D</b>. 31 to 58, crossed out of the low band. That is the retest paying out.',
+    'Open <b>Testosterone</b>. Barely moved, because it does not move on anything we sell. <b>The demo shows that rather than hiding it.</b>',
+    'On any marker, look at the two plots. His energy rose too, and <b>the app never says one caused the other.</b>',
+    'Go to <b>Plan</b> for the daily loop, and <b>Record</b> for all nine markers across both dates.'
+  ]
+};
+function renderWatch(){
+  $('watchlist').innerHTML = WATCH[state.st].map(t => '<li>' + t + '</li>').join('');
+}
+
+/* ---------- events ---------- */
+$('tabbar').addEventListener('click', e => {
+  const b = e.target.closest('[data-tab]'); if (!b) return;
+  state.tab = b.dataset.tab; state.marker = null; $('screen').scrollTop = 0; render();
+});
+$('backbtn').addEventListener('click', () => { state.marker = null; $('screen').scrollTop = 0; render(); });
+$('screen').addEventListener('click', e => {
+  const mk = e.target.closest('[data-marker]');
+  if (mk){ state.marker = +mk.dataset.marker; $('screen').scrollTop = 0; render(); return; }
+  const ck = e.target.closest('[data-check]');
+  if (ck){ state.checks[ck.dataset.check] = !state.checks[ck.dataset.check]; render(); return; }
+  const en = e.target.closest('[data-energy]');
+  if (en){ state.energy = +en.dataset.energy; render(); return; }
+});
+$('presets').addEventListener('click', e => {
+  const p = e.target.closest('.preset'); if (!p) return;
+  setCur(+p.dataset.v); render();
+});
+$('slider').addEventListener('input', e => { setCur(+e.target.value); render(); });
+$('compare').addEventListener('change', e => { state.compare = e.target.checked; render(); });
+$('stateseg').addEventListener('click', e => {
+  const b = e.target.closest('[data-state]'); if (!b) return;
+  state.st = b.dataset.state; state.marker = null;
+  if (state.st === 'waiting') state.tab = 'results';
+  $('stateseg').querySelectorAll('button').forEach(x =>
+    x.setAttribute('aria-pressed', String(x.dataset.state === state.st)));
+  $('screen').scrollTop = 0;
+  render();
+});
+
+/* theme */
+const tb = $('themebtn');
+const currentDark = () => {
+  const s = document.documentElement.getAttribute('data-theme');
+  return s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+};
+const syncBtn = () => { tb.textContent = currentDark() ? 'Light' : 'Dark'; };
+tb.addEventListener('click', () => {
+  document.documentElement.setAttribute('data-theme', currentDark() ? 'light' : 'dark');
+  syncBtn();
+});
+syncBtn();
+render();
+</script>
