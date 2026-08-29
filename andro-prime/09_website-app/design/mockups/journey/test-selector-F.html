@@ -472,8 +472,18 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
    changed the numeral's style rather than its outline. Keith: "I just needed
    you to make the outline of the numbers thinner." The weight stays at 900. */
 .step .bignum{
-  position:absolute;right:14px;top:50%;z-index:0;pointer-events:none;user-select:none;
-  font-weight:900;font-size:7.8rem;line-height:.78;letter-spacing:-.05em;
+  position:absolute;right:18px;top:50%;z-index:0;pointer-events:none;user-select:none;
+  /* THE 4 WAS CLIPPED, found 2026-08-29 while adopting this card into kits-F.
+     A negative letter-spacing removes the trailing advance AFTER the glyph, so
+     anchoring by the right edge anchors a box narrower than the ink inside it.
+     About 6px of overhang at this size: invisible on 1, 2 and 3, and it cut
+     the right stem clean off the 4 under overflow:hidden. This is fault one
+     from the note above ("situated so you can actually see the number")
+     surviving on one glyph in four, which is why it cleared a first look.
+     Defect fix only, and deliberately the ONLY change made to this approved
+     file: the meta-row alignment change made in kits-F is a design choice and
+     is not brought back here without Keith. */
+  font-weight:900;font-size:7.8rem;line-height:.78;letter-spacing:-.05em;padding-right:.05em;
   color:transparent;-webkit-text-stroke:1px var(--flag);
   opacity:0;transform:translateY(-48%) scale(.9);
   transition:opacity .32s var(--ease),transform .38s var(--ease);

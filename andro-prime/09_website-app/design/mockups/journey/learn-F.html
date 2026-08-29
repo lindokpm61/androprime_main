@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: the Learn stage in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE LEARN STAGE IN DIRECTION F'S LANGUAGE
+   /how-it-works, /about, /faq
+
+   CONCEPT ONLY. NOT BUILT. Copy is reproduced from the live routes because
+   several blocks are APPROVED and must be carried verbatim. Sixth file in the
+   journey set.
+
+   ▶ LIFECYCLE CHECK RAN FIRST. All three alive: ordinary imports, no
+   retirement comment, no docs entry retiring them, and no feature-flag read
+   anywhere in the three files (the fifth rule, earned on the kit pages, where
+   a flag turned out to be a whole second version of three pages).
+
+   ⚠ ALL THREE ARE FOOTER-ONLY, WITH ONE EXCEPTION. Nothing in app/ or
+   components/ links to /about or /faq except `components/shared/Footer.tsx`.
+   /how-it-works has two body links, from the homepage and from /kits. That is
+   worth knowing before deciding how much of the rebuild's budget this stage
+   gets: these are the pages a reader reaches on purpose, not in flow.
+
+   ▶ WHAT THEY ARE, AND ONE OF THE THREE IS NOT WHAT ITS NAME SAYS.
+
+     /how-it-works ... 493 lines, 9 sections .................. Frame S
+     /about ......... 195 lines, 6 sections .................. Frame T
+     /faq ........... 477 lines, 9 sections .................. Frame U
+
+   \U0001F534 /faq IS NOT AN FAQ. There is not one question-and-answer pair on
+   it. It is a long-form biomarker education page: a stat strip, then sections
+   on testosterone, vitamin D, Active B12, inflammation, the NHS gap, a
+   seven-row marker table, supplement honesty, and the CA-026 price block. Its
+   own schema object is called `factsSchema`, which is the only place the code
+   admits it. The footer calls it "FAQ" and the route is /faq, so a reader
+   arriving for questions gets an essay. The actual FAQs live on the three kit
+   pages, in the grid Keith standardised on 2026-08-29. Naming this is not a
+   design change: it is the difference between drawing a frame and drawing the
+   wrong frame confidently.
+
+   \U0001F534 AND THE ENUMERATION FOUND A LIVE DEFECT ON BOTH LEARN PAGES. See
+   the notes on Frames S and U: the panel is understated in two places, by the
+   same two markers, and one of those places contradicts APPROVED copy sitting
+   on the same page.
+
+   ▶ APPROVED COPY IN HERE, CARRIED VERBATIM.
+     1. A1 under CA-026, the standing claim, appears on BOTH /about and
+        /how-it-works and is marked "rendered verbatim" in both files.
+     2. C2 under CA-026, the "why this price" block, on /faq.
+     3. THE EFSA HEALTH CLAIMS are quoted exactly on /faq, and the page says
+        so in terms: "This is the legally verified claim we can make. Not
+        more, not less." An EFSA claim is a fixed string; a redesign that
+        tightens one has changed a regulated statement.
+     4. THE BAND TABLES publish clinical thresholds. Checked this session for
+        vitamin D: the two boundaries the results engine actually enforces
+        (`classifier.ts:303-304`, < 25 and < 50) match the page. The 75 and
+        125 splits above them are editorial and have no engine equivalent, so
+        they are the ones to watch if the engine's bands ever move.
+
+   COLOUR. Marketing host, so no status colour: the one accent is --flag
+   #E0A458, from the approved homepage, spent where the page points at
+   something. On these three that is the band a reader is likely to be in, the
+   EFSA claim quotes, and the receipts list.
+
+   MOTION. Reader-caused response plus one load reveal, the same budget
+   settled on the kit pages: nothing here loops.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF;
+  --tray:#F1F2F4;
+  --core:#FFFFFF;
+  --sunk:#E7E9EC;
+  --ink:#0A0B0D;
+  --ink-2:#4A4F57;
+  --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10);
+  --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458;
+  --flag-f:rgba(224,164,88,.14);
+  --flag-f2:rgba(224,164,88,.26);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r:28px;
+  --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:34px 32px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 14px;margin-bottom:20px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:66ch}
+.sub+.sub{margin-top:12px}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:66ch;
+}
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:14px 24px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+.btn.sm{padding:10px 18px;font-size:13.5px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.kchip{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:5px 13px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+}
+.flagchip{
+  display:inline-flex;align-items:center;gap:8px;background:var(--flag);color:#0A0B0D;
+  border-radius:999px;padding:6px 14px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+
+.hero{padding-top:62px;padding-bottom:40px}
+.hero .grid{display:grid;gap:30px;grid-template-columns:1fr}
+@media (min-width:980px){ .hero .grid{grid-template-columns:1.35fr 1fr;gap:44px;align-items:start} }
+.hero h1{font-size:clamp(2.4rem,5.6vw,4.1rem);letter-spacing:-.045em;margin-bottom:20px}
+.hero .stand{font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:1.6;color:var(--ink-2);max-width:58ch;margin-bottom:26px}
+
+.trustrow{
+  display:grid;gap:1px;background:var(--hair);border-radius:var(--r-in);overflow:hidden;
+  grid-template-columns:1fr 1fr;margin-top:26px;
+}
+@media (min-width:820px){ .trustrow{grid-template-columns:repeat(4,1fr)} }
+.trustrow div{
+  background:var(--core);padding:16px 18px;text-align:center;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+
+.sec{padding:38px 0 6px}
+.sec h2{font-size:clamp(1.6rem,3.4vw,2.5rem);letter-spacing:-.045em;max-width:24ch}
+.sec .grey{color:var(--ink-3)}
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+.pull{border-left:2px solid var(--flag);padding-left:16px;margin-top:18px;font-size:clamp(1.05rem,2vw,1.3rem);line-height:1.45;letter-spacing:-.02em;color:var(--ink)}
+
+/* ---------- THE STEP / NUMBERED CARD, carried from the kit pages ----------
+   Same component, same corrections: small index at rest, outlined numeral on
+   the on state only, capped per theme, hover on a pointer and scroll position
+   on touch, hairline meta row, no inverted last card. /how-it-works is where
+   this card originates on the live site: its `steps` array literally carries
+   `footer: ['Postage', 'Pre-paid']`, which is where the kit frames' meta
+   values came from rather than from the selector's "Tracked 24". */
+.steps{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){ .steps{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1040px){ .steps{grid-template-columns:repeat(4,1fr)} }
+.step{
+  background:var(--core);border-radius:var(--r-in);padding:24px 22px;
+  border:1px solid var(--hair);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
+}
+.step .foot{margin-top:auto}
+.step .bignum{
+  position:absolute;right:18px;top:50%;z-index:0;pointer-events:none;user-select:none;
+  font-weight:900;font-size:7.8rem;line-height:.78;letter-spacing:-.05em;padding-right:.05em;
+  color:transparent;-webkit-text-stroke:1px var(--flag);
+  opacity:0;transform:translateY(-48%) scale(.9);
+  transition:opacity .32s var(--ease),transform .38s var(--ease);
+}
+@supports not (-webkit-text-stroke: 1px #000){
+  .step .bignum{color:var(--flag);-webkit-text-stroke:0}
+}
+.step>*:not(.bignum){position:relative;z-index:1}
+.step .no{transition:opacity .22s var(--ease),transform .22s var(--ease)}
+.step.act,
+.step:hover{border-color:var(--flag);box-shadow:0 0 0 1px var(--flag),var(--amb);transform:translateY(-3px)}
+.step.act .bignum,
+.step:hover .bignum{opacity:.75;transform:translateY(-48%) scale(1)}
+.step.act .no,
+.step:hover .no{opacity:0;transform:translateY(-5px)}
+:root[data-theme="dark"] .step.act .bignum,
+:root[data-theme="dark"] .step:hover .bignum{opacity:.30}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step.act .bignum,
+  :root:not([data-theme="light"]) .step:hover .bignum{opacity:.30}
+}
+@media (hover:none){
+  .step .bignum{opacity:.34}
+  :root[data-theme="dark"] .step .bignum{opacity:.22}
+}
+@media (hover:none) and (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step .bignum{opacity:.22}
+}
+@media (prefers-reduced-motion:reduce){
+  .step,.step .bignum,.step .no{transition:none}
+  .step.act,.step:hover{transform:none}
+}
+.step .no{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:16px;display:block;
+}
+.step h4{font-size:1.1rem;letter-spacing:-.03em;margin-bottom:9px}
+.step p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+.step .foot{
+  padding-top:13px;border-top:1px solid var(--hair);
+  display:flex;justify-content:space-between;gap:12px;margin-top:16px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+}
+.step .foot b{color:var(--ink);font-weight:600}
+
+/* ---------- THE STAT STRIP (/faq) ---------- */
+.stats{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:860px){ .stats{grid-template-columns:repeat(3,1fr)} }
+.stat{background:var(--core);border-radius:var(--r-in);padding:24px 22px;box-shadow:inset 0 0 0 1px var(--hair)}
+.stat .big{font-size:clamp(2.6rem,5vw,3.4rem);font-weight:700;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.stat .lab{
+  display:block;margin:8px 0 12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.stat p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+
+/* ---------- THE BAND TABLE ----------
+   Three of these on /faq, one per marker. The band a reader is most likely to
+   be in takes the accent, which is the same job --flag does everywhere else on
+   a marketing host: it points. It is a wash and a rule rather than a status
+   colour, because this is not the dashboard. */
+.bands{border-radius:var(--r-in);overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}
+.band{display:grid;grid-template-columns:1fr;gap:2px;padding:14px 18px;border-bottom:1px solid var(--hair);background:var(--core)}
+@media (min-width:760px){ .band{grid-template-columns:150px 1fr;gap:18px;align-items:baseline} }
+.band:last-child{border-bottom:0}
+.band .r{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:12.5px;letter-spacing:.06em;color:var(--ink);font-variant-numeric:tabular-nums;
+}
+.band h4{font-size:15.5px;letter-spacing:-.025em;margin-bottom:5px}
+.band p{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.band.here{background:var(--flag-f);box-shadow:inset 3px 0 0 var(--flag)}
+.band.gp{background:var(--sunk)}
+
+/* ---------- THE EFSA CLAIM ---------- */
+.efsa{background:var(--sunk);border-radius:var(--r-in);padding:22px;box-shadow:inset 0 0 0 1px var(--hair);margin-top:18px}
+.efsa q{display:block;font-size:clamp(1.05rem,2vw,1.25rem);line-height:1.45;letter-spacing:-.025em;color:var(--ink);padding-left:14px;border-left:2px solid var(--flag)}
+.efsa q+q{margin-top:12px}
+
+/* ---------- THE MARKER TABLE (/faq) ---------- */
+.mscroll{overflow-x:auto;border-radius:var(--r-in);box-shadow:inset 0 0 0 1px var(--hair)}
+table.mk{width:100%;border-collapse:collapse;min-width:780px;background:var(--core)}
+table.mk th,table.mk td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--hair);font-size:14px;line-height:1.55;vertical-align:top}
+table.mk thead th{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+  border-bottom:1px solid var(--hair-2);
+}
+table.mk td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+table.mk td:nth-child(2),table.mk td:nth-child(3){color:var(--ink-2)}
+table.mk td:last-child{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap;
+}
+table.mk tbody tr td{transition:background .18s var(--ease)}
+table.mk tbody tr:hover td{background:var(--sunk)}
+table.mk tbody tr:last-child td{border-bottom:0}
+
+/* ---------- PEOPLE ---------- */
+.people{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:860px){ .people{grid-template-columns:repeat(2,1fr)} }
+.person{background:var(--core);border-radius:var(--r-in);padding:24px 22px;box-shadow:inset 0 0 0 1px var(--hair)}
+.person .who{display:flex;gap:14px;align-items:center;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--hair)}
+.person .av{
+  width:46px;height:46px;border-radius:14px;background:var(--sunk);flex:none;
+  display:flex;align-items:center;justify-content:center;font-weight:700;letter-spacing:-.02em;color:var(--ink-2);
+  box-shadow:inset 0 0 0 1px var(--hair);
+}
+.person h4{font-size:16.5px;letter-spacing:-.03em}
+.person .role{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-top:3px;
+}
+.person p{font-size:15px;line-height:1.65;color:var(--ink-2)}
+.person p+p{margin-top:10px}
+
+/* ---------- RECEIPTS ---------- */
+.receipts{list-style:none;display:grid;gap:9px;margin-top:18px}
+.receipts li{display:flex;gap:10px;font-size:15px;color:var(--ink-2);line-height:1.55}
+.receipts li span{color:var(--flag);flex:none;font-weight:700}
+
+/* ---------- JUMP NAV ---------- */
+.jump{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.jump a{
+  text-decoration:none;border:1px solid var(--hair-2);border-radius:999px;padding:7px 14px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+  transition:background .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease);
+}
+.jump a:hover{background:var(--flag-f);border-color:var(--flag);color:var(--ink)}
+
+.close{text-align:center;padding:44px 0 10px}
+.close h2{font-size:clamp(1.8rem,4.4vw,3.1rem);letter-spacing:-.05em;max-width:20ch;margin:0 auto 16px}
+.close .stand{color:var(--ink-2);font-size:17px;margin-bottom:24px;max-width:60ch;margin-left:auto;margin-right:auto}
+
+.js .rise{opacity:0;transform:translateY(14px)}
+.js .rise.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+@media (prefers-reduced-motion:reduce){
+  .js .rise,.js .rise.in{opacity:1;transform:none;transition:none}
+  .jump a{transition:none}
+  table.mk tbody tr td{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME S: /how-it-works ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame S</b><span>/how-it-works</span><span>nine sections: hero, trust, four steps, the lab, dashboard, three kits, after, A1, Dr Ewa</span>
+  <span class="hot">carries A1 (CA-026) verbatim</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="grid">
+    <div>
+      <div class="eyebrow"><i></i> Methodology</div>
+      <h1>Order.<br>Test.<br><span style="color:var(--ink-3)">Know.</span></h1>
+      <p class="stand">A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results are in your dashboard in 2 to 5 working days. In plain English, with a specific recommendation based on your actual numbers.</p>
+      <div class="btns">
+        <a class="btn" href="#">Choose your test <span aria-hidden="true">&#8594;</span></a>
+        <a class="btn ghost" href="#">Take the quiz</a>
+      </div>
+      <div class="trustrow">
+        <div>UKAS ISO 15189 lab</div>
+        <div>5 minutes at home</div>
+        <div>GMC-registered doctor</div>
+        <div>Results in 2 to 5 working days</div>
+      </div>
+    </div>
+    <div class="tray rise" style="margin-bottom:0">
+      <div class="core">
+        <p class="blab">What your kit contains</p>
+        <div class="bands" style="box-shadow:none">
+          <div class="band"><span class="r">1</span><div><h4>Lancets</h4><p>Single-use, sterile. One small prick on your fingertip. Most men describe it as barely noticeable.</p></div></div>
+          <div class="band"><span class="r">2</span><div><h4>Medical transport vial</h4><p>UKAS-approved collection tube. Drop your blood in, seal it, and it's ready to post.</p></div></div>
+          <div class="band"><span class="r">3</span><div><h4>Pre-paid return envelope</h4><p>Royal Mail priority return. Drop it in any postbox. Nothing to print. Nothing to pay.</p></div></div>
+          <div class="band"><span class="r">4</span><div><h4>Step-by-step instructions</h4><p>Printed clearly in the kit. Also available in your account. There is no step that requires a clinician.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The process</p>
+  <h2>Four steps.<br><span class="grey">Done in a week.</span></h2>
+  <p class="sub" style="margin-top:14px">Order your kit, take your sample at home, post it back. Results are in your dashboard within 2 to 5 working days of the lab receiving it.</p>
+</div>
+<div class="wrap">
+  <div class="steps">
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">1</span>
+      <span class="no">01</span>
+      <h4>Choose your kit</h4>
+      <p>Pick the panel that matches what you're feeling. Not sure? Take the three-question quiz and we'll point you to the right test.</p>
+      <div class="foot"><span>Action</span><b>You</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">2</span>
+      <span class="no">02</span>
+      <h4>Collect your sample</h4>
+      <p>Simple finger-prick at home. Takes five minutes. Do it fasted, first thing in the morning, for the most accurate hormone results.</p>
+      <div class="foot"><span>Time required</span><b>5 mins</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">3</span>
+      <span class="no">03</span>
+      <h4>Post it back</h4>
+      <p>Seal your sample in the medical transport vial included in your kit. Drop it in any Royal Mail priority postbox using the pre-paid envelope.</p>
+      <div class="foot"><span>Postage</span><b>Pre-paid</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">4</span>
+      <span class="no">04</span>
+      <h4>Read your results</h4>
+      <p>Results land in your secure dashboard within 2 to 5 working days of the lab receiving your sample. Plain English. What your numbers mean. What to do next.</p>
+      <div class="foot"><span>Turnaround</span><b>2 to 5 working days</b></div>
+    </div>
+  </div>
+  <p class="note hot"><b>THIS IS WHERE THE CARD COMES FROM.</b> The live `steps` array on this page carries a number, a title, a body, a two-part footer and a `dark: true` on the fourth card, which is the component the selector's methodology strip and the kit pages' process strips are both versions of. It also settles a question the kit frames had to guess at: the footer values there were written as "Postage / Pre-paid" rather than copied from the selector's "Tracked 24", and <b>this page uses exactly "Postage / Pre-paid"</b>. The site's own vocabulary, not an invention. The `dark: true` fourth card is dropped here for the reason it was dropped everywhere else: on a four-card row an inverted last card reads as the last step being the important one.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The lab</p>
+  <h2>UKAS-accredited.<br>Not a device.<br><span class="grey">An actual lab.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">Your sample is analysed by a UK laboratory accredited to ISO 15189 by UKAS. That's the same standard used by NHS labs.</p>
+      <p class="sub">This isn't a home device giving you an approximation. It's a UKAS ISO 15189-accredited lab test, processed in a certified facility, with a quality standard that is independently verified.</p>
+      <p class="pull">The result you see is the same class of result your GP would order. You just didn't have to wait three weeks for an appointment.</p>
+      <div class="btns" style="margin-top:20px">
+        <span class="kchip">UKAS ISO 15189</span>
+        <span class="kchip">Results in 2 to 5 working days</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The three kits</p>
+  <h2>Start with what's bothering you most.</h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <div class="bands" style="box-shadow:none">
+        <div class="band"><span class="r">Kit 1 &middot; &pound;99</span><div><h4>Testosterone Health Check</h4><p>For men who suspect testosterone might be behind the fatigue, the flat mood, and the loss of drive. GP said normal. Find out if that's the full picture.</p><p style="margin-top:8px"><b style="color:var(--ink)">Markers tested (as listed on this page):</b> Total Testosterone, SHBG, Free Testosterone (Calc)</p></div></div>
+        <div class="band"><span class="r">Kit 2 &middot; &pound;119</span><div><h4>Energy &amp; Recovery Check</h4><p>For active men who are training right, eating right, sleeping right, and still not recovering. This tests the four markers that most directly explain why.</p><p style="margin-top:8px"><b style="color:var(--ink)">Markers tested:</b> Vitamin D, Active B12, hs-CRP (Inflammation), Ferritin (Iron Storage)</p></div></div>
+        <div class="band here"><span class="r">Kit 3 &middot; &pound;179</span><div><h4>Hormone &amp; Recovery Check <span class="flagchip" style="vertical-align:middle;margin-left:6px">Most complete</span></h4><p>Tired, slow to recover, and you don't know if it's hormones, nutrition, or inflammation. This one checks all of them. Nine markers.</p><p style="margin-top:8px"><b style="color:var(--ink)">Markers tested (as listed on this page):</b> Total Testosterone, SHBG, Free T, Vitamin D, Active B12, hs-CRP (Inflammation), Ferritin</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>\U0001F534 LIVE DEFECT, FOUND BY ENUMERATING THIS PAGE, AND IT UNDERSTATES THE PRODUCT.</b> The Kit 1 block above lists <b>three</b> markers under the heading "Markers tested": Total Testosterone, SHBG, Free Testosterone (Calc). Every other surface on the site says <b>five</b>: `/kits`, the Kit 1 page, both comparison tables and the hero panel all add <b>FAI and Albumin</b>. Kit 3's block has the same hole: it names seven markers in a list while its own body text says "Nine markers". <b>This is copy that sells the kit short</b>, on the page a reader is sent to when they want to understand what they are buying, and it is reproduced above exactly as it ships so the gap is visible rather than quietly corrected in a mockup. The same two markers are missing from `/faq` (see Frame U), which is the tell: these pages predate FAI and Albumin joining the panel and were never swept. <b>It is a copy fix, not a design fix, and it belongs to Keith rather than to this file.</b></p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">After your results</p>
+  <h2>The result is the start.<br><span class="grey">Not the end.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">If your result shows a deficiency, you'll see a specific supplement recommendation. Not a guess. Not a generic "support your health" product. We will recommend supplements based on your result. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access waitlist at any time.</p>
+      <p class="sub">If your testosterone is in range, we tell you what that means and when to check it again. If it comes back below 12 nmol/L, your next step is a conversation with a GP, and we give you a printable summary to take to that appointment. That result earns us nothing.</p>
+      <p class="sub">If everything looks good, we'll tell you that too. No upsell when there's nothing to address.</p>
+      <div class="bands" style="margin-top:22px">
+        <div class="band"><span class="r">Low D or B12</span><div><h4>Low Vitamin D or Active B12</h4><p>We will recommend our Daily Stack: Zinc, Active B12 (Methylcobalamin), and Vitamin D3, dosed for EFSA-approved claims. Launching shortly. Join the early-access list at any time.</p></div></div>
+        <div class="band"><span class="r">Raised hs-CRP</span><div><h4>Elevated hs-CRP with joint symptoms</h4><p>We will recommend our Joint and Recovery Collagen: hydrolysed collagen peptides plus Vitamin C. Vitamin C contributes to normal collagen formation for the normal function of cartilage. Launching shortly. Join the early-access list at any time.</p></div></div>
+        <div class="band gp"><span class="r">&lt; 12 nmol/L</span><div><h4>Testosterone below 12 nmol/L</h4><p>Your next step is a conversation with a GP. You can take a printable summary to your appointment. That result earns us nothing.</p></div></div>
+        <div class="band"><span class="r">All in range</span><div><h4>All results in range</h4><p>A retest reminder at 6 to 12 months. That's it. No product pushed when there's no reason for one.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Where we stand</p>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p style="font-size:clamp(1.15rem,2.2vw,1.5rem);line-height:1.45;letter-spacing:-.025em">Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.</p>
+      <p class="blab" style="margin-top:26px">Already live in your account</p>
+      <ul class="receipts">
+        <li><span aria-hidden="true">&#10003;</span> Low testosterone results route to a GP, with no upsell.</li>
+        <li><span aria-hidden="true">&#10003;</span> A printable GP summary you can take to your appointment.</li>
+        <li><span aria-hidden="true">&#10003;</span> Export your results as CSV, or request erasure, from your account.</li>
+        <li><span aria-hidden="true">&#10003;</span> Recommendation logic approved by a GMC-registered GP.</li>
+        <li><span aria-hidden="true">&#10003;</span> A UKAS ISO 15189-accredited lab.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note hot"><b>APPROVED COPY, CARRIED VERBATIM.</b> A1 under CA-026. ⚠ <b>The same claim appears verbatim on `/about` too</b>, marked "rendered verbatim" in both files. That is the third pair of duplicated facts this journey set has found, after the two comparison tables and the shared FAQ questions. A claim under an approval number is the worst of the three to hold in two places, because a correction to an approved sentence has to reach every copy or the site is quoting two versions of the same signed statement. <b>The receipts list under it is NOT part of A1</b>: it is unapproved supporting copy sitting directly beneath approved copy, which is exactly the adjacency that makes a later reader assume the whole block is signed.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Clinical oversight</p>
+  <h2>A real doctor<br><span class="grey">designed your report.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">Dr Ewa Lindo is a GMC-registered GP with specialist training in men's hormonal health, and the clinical lead at Andro Prime. She sets and signs off the healthy ranges your results are measured against, and the plain-English explanation of every marker in your dashboard.</p>
+      <p class="sub">This is not AI-generated copy. It is not a generic reference range. The ranges and plain-English explanations are set and signed off by a doctor who has seen men with exactly these symptoms, and who knows the difference between "not clinically deficient" and "not functioning well."</p>
+      <div class="btns" style="margin-top:20px">
+        <span class="kchip">GMC-registered</span>
+        <span class="kchip">UKAS ISO 15189 lab</span>
+      </div>
+    </div>
+  </div>
+  <p class="note">⚠ <b>Dr Lindo is presented three times across the journey</b>: here, on `/about` (Frame T), and in the founders block on the Kit 3 page. Three different descriptions of the same person and the same role, each written separately. Consolidating them is a content decision rather than a frame decision, but the rebuild should know it is carrying three.</p>
+</div>
+
+<!-- ============ FRAME T: /about ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame T</b><span>/about</span><span>six sections: hero, Keith, Dr Ewa, A1, four principles, the lab, CTA</span>
+  <span class="hot">195 lines, the shortest route in the set</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="grid">
+    <div>
+      <div class="eyebrow"><i></i> About Andro Prime</div>
+      <h1>Built by someone who needed it.</h1>
+      <p class="stand">Not a clinic. Not a wellness brand trying to sell you something. A business built by a man who spent two years being told he was fine while feeling anything but.</p>
+    </div>
+    <div class="tray rise" style="margin-bottom:0">
+      <div class="core">
+        <p class="blab">The lab, in four lines</p>
+        <div class="bands" style="box-shadow:none">
+          <div class="band"><span class="r">Accreditation</span><div><h4>UKAS ISO 15189</h4></div></div>
+          <div class="band"><span class="r">Turnaround</span><div><h4>2 to 5 working days from lab receipt</h4></div></div>
+          <div class="band"><span class="r">Delivery</span><div><h4>Private Andro Prime dashboard</h4></div></div>
+          <div class="band"><span class="r">Data security</span><div><h4>Bank-level encryption</h4></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The people</p>
+  <h2>The founder, and the doctor.</h2>
+</div>
+<div class="wrap">
+  <div class="people">
+    <div class="person rise">
+      <div class="who">
+        <div class="av">KA</div>
+        <div><h4>Keith Antony</h4><div class="role">Founder</div></div>
+      </div>
+      <p>I spent two years being told my levels were "normal for my age" while feeling completely burnt out. Exhausted by 3pm. Brain fog that wouldn't shift. Recovery that took three days for a workout that used to take one.</p>
+      <p>My GP ran a basic panel and told me everything was fine. What he didn't tell me was that "fine" means you're above the threshold for clinical deficiency, not that you're optimised.</p>
+      <p>I built Andro Prime because I couldn't find a service that gave me my actual numbers in plain English with a clear recommendation. Everything was either a GP appointment I couldn't get, or a private clinic costing hundreds before I even knew what I was dealing with.</p>
+      <p>We test first. We tell you what your numbers mean. Then we show you what to do about it.</p>
+      <p class="pull">"I built this company because the standard approach is broken. We test first. Then you know exactly where you stand."</p>
+    </div>
+    <div class="person rise">
+      <div class="who">
+        <div class="av">EL</div>
+        <div><h4>Dr Ewa Lindo</h4><div class="role">Medical Director</div></div>
+      </div>
+      <p>GMC-registered GP with specialist training in men's hormonal health. Dr Lindo reviews our clinical protocols and signs off all results report copy.</p>
+      <p>She understands the gap between what the NHS flags as deficient and what actually leaves men functioning well. That gap is what Andro Prime exists to close.</p>
+      <p class="fine" style="margin-top:18px">Second of three presentations of the same person across the journey. See the note on Frame S.</p>
+    </div>
+  </div>
+  <p class="note"><b>Two first-person voices on one route, and only one of them is marked as speech.</b> Keith's block runs as four paragraphs of unattributed "I", then closes with the same idea again as an attributed pull quote; Dr Lindo's is written about her in the third person. The redraw keeps both as they are, because attributed and unattributed first person are different things in an approvals sense: the quote is a statement by a named person and the paragraphs are brand copy that happens to use "I".</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Where we stand</p>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p style="font-size:clamp(1.15rem,2.2vw,1.5rem);line-height:1.45;letter-spacing:-.025em">Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.</p>
+    </div>
+  </div>
+  <p class="note hot"><b>APPROVED COPY, CARRIED VERBATIM. AND THIS IS THE SECOND COPY OF IT.</b> A1 under CA-026, identical to the block on Frame S. Drawn twice here on purpose, because the duplication is the finding: a signed sentence held in two hand-written places is one edit away from the site quoting two versions of the same approved claim.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">How we operate</p>
+  <h2>Four principles.<br><span class="grey">No exceptions.</span></h2>
+</div>
+<div class="wrap">
+  <div class="steps">
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">1</span>
+      <span class="no">01</span>
+      <h4>Data first</h4>
+      <p>Every recommendation starts with a result. Not a guess. Not a lifestyle questionnaire. Your blood data.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">2</span>
+      <span class="no">02</span>
+      <h4>Plain English</h4>
+      <p>No lab reference tables. No clinical jargon. Your numbers in language that tells you what to do next.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">3</span>
+      <span class="no">03</span>
+      <h4>Evidence-led</h4>
+      <p>EFSA-approved supplement claims. UKAS ISO 15189 accredited lab. GMC-registered doctor. No pseudoscience.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">4</span>
+      <span class="no">04</span>
+      <h4>Anti-corporate</h4>
+      <p>Smaller. More personal. More direct. We tell you if something needs a GP, not just what sells the next product.</p>
+    </div>
+  </div>
+  <p class="note">Same card as the process strips, without the meta row, because these four have no measurable to put in one. That is the honest use of the component: the footer earns its place when there is a fact for it and is left off when there is not, rather than being filled with something to make the cards match.</p>
+</div>
+
+<div class="wrap close">
+  <h2>Ready to find out where you stand?</h2>
+  <div class="btns" style="justify-content:center">
+    <a class="btn" href="#">Choose your test <span aria-hidden="true">&#8594;</span></a>
+    <a class="btn ghost" href="#">How it works</a>
+  </div>
+</div>
+
+<!-- ============ FRAME U: /faq ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame U</b><span>/faq</span><span>nine sections: hero, jump nav, stat strip, four marker essays, the NHS gap, the marker table, supplements, C2</span>
+  <span class="hot">NOT an FAQ. No question-and-answer pair on it</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="grid">
+    <div>
+      <div class="eyebrow"><i></i> Evidence-based</div>
+      <h1>What's actually happening to men over 35.</h1>
+      <p class="stand">Testosterone. Vitamin D. Active B12. Inflammation. These aren't wellness buzzwords. They are four of the key systems that directly explain why men over 35 stop feeling like themselves. Here are the facts.</p>
+      <div class="jump" style="margin-top:8px">
+        <span class="blab" style="margin:0 6px 0 0">Jump to:</span>
+        <a href="#">Testosterone</a>
+        <a href="#">Vitamin D</a>
+        <a href="#">Active B12</a>
+        <a href="#">Inflammation</a>
+        <a href="#">The NHS gap</a>
+        <a href="#">What we test</a>
+      </div>
+    </div>
+    <div class="tray rise" style="margin-bottom:0">
+      <div class="core">
+        <p class="blab">What this route actually is</p>
+        <p class="sub" style="font-size:15px">A 477-line biomarker education page, served at <b style="color:var(--ink)">/faq</b> and labelled "FAQ" in the footer. Its own schema object is called <b style="color:var(--ink)">factsSchema</b>, which is the only place the code says what it is.</p>
+        <p class="sub" style="font-size:15px;margin-top:12px">The real FAQs live on the three kit pages, in the grid standardised on 2026-08-29.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>\U0001F534 THE NAME IS THE FINDING, AND IT CHANGES WHAT THIS FRAME IS.</b> The inventory listed `/faq` in the Learn stage as one of three ordinary marketing pages. It is the longest and most claim-dense page in the whole stage: three statistics, three clinical band tables, four EFSA claim quotations, a seven-row marker table and a CA-026 verbatim block. A reader following a footer link marked "FAQ" is expecting questions and gets an essay, and a rebuild reading the route name would have budgeted for the wrong page. Whether it keeps the name, moves to something like `/the-facts`, or gains an actual FAQ, is a decision for Keith. <b>Drawing it correctly does not require making that decision, but drawing it as an FAQ would have committed the wrong answer.</b></p>
+</div>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat rise">
+      <div class="big">1%</div>
+      <span class="lab">Per year</span>
+      <p>The rate at which testosterone declines in men from the age of 30. By 45, the average man has lost 10 to 15% of his peak testosterone. By 55, closer to 25%.</p>
+    </div>
+    <div class="stat rise">
+      <div class="big">56%</div>
+      <span class="lab">Of UK men</span>
+      <p>UK men are estimated to be below optimal Vitamin D levels. Between October and April, even outdoor workers cannot produce sufficient Vitamin D from sunlight alone.</p>
+    </div>
+    <div class="stat rise">
+      <div class="big">20%</div>
+      <span class="lab">Are deficient</span>
+      <p>An estimated 20% of UK adults have Active B12 levels below the threshold needed for normal cell function. The figure is higher in men over 40 and those who avoid meat or dairy. Standard B12 tests often miss it because they measure inactive fractions.</p>
+    </div>
+  </div>
+  <p class="note">⚠ <b>Three statistics, carried verbatim and un-sourced on the page.</b> 1% a year, 56% of UK men, 20% of UK adults. None of the three cites a source in the markup, and a redraw is not the place to attach one or to soften them. Flagged because they are the most quotable content on the route and the likeliest to be lifted into a carousel or a short, where the surrounding context that makes them defensible is the first thing a compression drops.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Testosterone</p>
+  <h2>"Normal" is not<br><span class="grey">the same as good.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">The NHS reference range for testosterone in men is roughly 8 to 30 nmol/L. That range was built to identify clinical hypogonadism: the level at which a man is medically deficient. A man at 8.5 nmol/L and a man at 24 nmol/L both get the same result from their GP: normal.</p>
+      <p class="sub">They are not the same. Not in how they feel. Not in their energy, recovery, or mental sharpness. The range exists to identify illness, not to optimise performance.</p>
+      <p class="pull">"GP said normal. That's not the same as good."</p>
+      <p class="sub" style="margin-top:18px">Research consistently shows that men with testosterone levels in the lower third of the "normal" range report significantly higher rates of fatigue, reduced libido, slower recovery, and mood changes than men in the upper third, despite both being technically "not ill."</p>
+
+      <p class="blab" style="margin-top:26px">Testosterone: what the numbers mean</p>
+      <div class="bands">
+        <div class="band gp"><span class="r">&lt; 8 nmol/L</span><div><h4>Below NHS threshold</h4><p>NHS referral territory. Speak to your GP.</p></div></div>
+        <div class="band"><span class="r">8&ndash;12 nmol/L</span><div><h4>Borderline</h4><p>Often dismissed by GPs. Symptoms are typically present. Below optimal, and worth a GP conversation.</p></div></div>
+        <div class="band here"><span class="r">12&ndash;20 nmol/L</span><div><h4>In range. Not optimal.</h4><p>Where most men with symptoms sit. Technically "normal." Functionally below par.</p></div></div>
+        <div class="band"><span class="r">&gt; 20 nmol/L</span><div><h4>Healthy range</h4><p>Most men with these levels feel well. Retest in 6 to 12 months.</p></div></div>
+      </div>
+      <p class="fine" style="margin-top:14px">The accent marks the band the page itself says most symptomatic readers are in, which is the sentence this whole section is built to deliver. The sub-8 band takes the neutral wash rather than an alarm colour: it is a GP referral, and status colour is not sanctioned on a marketing host.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Vitamin D</p>
+  <h2>You can't eat or train<br><span class="grey">your way out of this one.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">Vitamin D is produced in the skin when it's exposed to UVB radiation from sunlight. Between October and April in the UK, the angle of the sun is too low to trigger this reaction. For roughly six months of the year, no amount of time outdoors will produce meaningful Vitamin D.</p>
+      <p class="sub">Very few foods contain meaningful amounts of Vitamin D. The NHS advises everyone in the UK to consider supplementation from October to March. Most men don't.</p>
+      <p class="sub">Vitamin D receptors are present in muscle tissue, the brain, and the immune system. Low Vitamin D directly affects energy, muscle function, and how quickly you recover from training.</p>
+
+      <div class="efsa">
+        <p class="blab" style="margin-bottom:12px">EFSA-approved health claim</p>
+        <q>"Vitamin D contributes to normal muscle function."</q>
+        <p class="fine" style="margin-top:12px">This is the legally verified claim we can make. Not more, not less.</p>
+      </div>
+
+      <p class="blab" style="margin-top:26px">Vitamin D: what the numbers mean</p>
+      <div class="bands">
+        <div class="band gp"><span class="r">&lt; 25 nmol/L</span><div><h4>Deficient</h4><p>Associated with bone health issues, significant energy loss, muscle weakness. NHS will typically treat at this level.</p></div></div>
+        <div class="band here"><span class="r">25&ndash;50 nmol/L</span><div><h4>Insufficient</h4><p>Where most UK men sit in winter. Noticeable impact on energy and recovery. Common Andro Prime trigger.</p></div></div>
+        <div class="band"><span class="r">50&ndash;75 nmol/L</span><div><h4>Adequate</h4><p>Functional. Most people feel reasonably well at this level.</p></div></div>
+        <div class="band"><span class="r">75&ndash;125 nmol/L</span><div><h4>Optimal</h4><p>The range most research associates with peak muscle function, immune support, and energy. Target for supplementation.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <p class="note hot"><b>CHECKED AGAINST THE ENGINE THIS SESSION, AND THE TWO BOUNDARIES THAT MATTER AGREE.</b> `lib/results/classifier.ts:303-304` returns `critically-low-vitamin-d` below 25 and `low-vitamin-d` below 50, which is exactly where this page puts "deficient" and "insufficient". ⚠ <b>The 75 and 125 splits have no equivalent in the engine at all</b>: everything above 50 is one state in code and two bands on this page. That is fine as editorial framing and it is the part to watch, because a page publishing a threshold the engine does not hold is the shape that drifts silently. The engine's `high-vitamin-d` state above 250 is deliberately absent here, and must stay absent: its copy is CA-044 and Ewa has not approved the wording.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Active B12</p>
+  <h2>Your GP test<br><span class="grey">probably missed it.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">Most B12 blood tests measure total serum B12, which includes both the active and inactive fractions. You can have a technically "normal" total B12 result while your active B12 (the fraction your cells can actually use) is well below optimal.</p>
+      <p class="sub">Active B12 (Holotranscobalamin) is the specific marker that shows what's available to your cells. It's a more sensitive and clinically meaningful measure, and it's what we test.</p>
+      <p class="sub">Deficiency becomes more common after 40. The stomach produces less intrinsic factor with age, which is required to absorb B12 from food. Plant-based diets significantly increase the risk regardless of age.</p>
+      <div class="efsa">
+        <p class="blab" style="margin-bottom:12px">EFSA-approved health claims</p>
+        <q>"Vitamin B12 contributes to normal energy-yielding metabolism."</q>
+        <q>"Vitamin B12 contributes to normal psychological function."</q>
+        <p class="fine" style="margin-top:12px">These are the legally verified claims. Not marketing lines.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">hs-CRP and inflammation</p>
+  <h2>Sore for three days.<br><span class="grey">Not just bad luck.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">hs-CRP (high-sensitivity C-reactive protein) is a marker of systemic inflammation. When inflammation is elevated, the body's ability to repair and recover is compromised. Training feels harder. Recovery takes longer. Joint stiffness becomes a fixture rather than an occasional irritation.</p>
+      <p class="pull">Elevated inflammation is not something to push through. It's information. It means something is causing the body to remain in a repair state.</p>
+      <p class="blab" style="margin-top:26px">hs-CRP: what the numbers mean</p>
+      <div class="bands">
+        <div class="band"><span class="r">&lt; 1 mg/L</span><div><h4>Low risk</h4><p>Normal. No action required for inflammation specifically.</p></div></div>
+        <div class="band here"><span class="r">1&ndash;3 mg/L</span><div><h4>Mildly elevated</h4><p>Common in active men. Often reflects training stress. Collagen recommended if joint symptoms are present.</p></div></div>
+        <div class="band"><span class="r">3&ndash;10 mg/L</span><div><h4>Elevated</h4><p>Recovery deficit likely significant. Collagen recommended with joint symptoms. GP review if it stays elevated on retest.</p></div></div>
+        <div class="band gp"><span class="r">&gt; 10 mg/L</span><div><h4>High: see your GP</h4><p>At this level, we don't recommend a supplement. We tell you to book a GP appointment. This warrants a conversation with a doctor.</p></div></div>
+      </div>
+      <p class="fine" style="margin-top:14px">Also tested: Ferritin. Low ferritin means muscles and tissues aren't getting enough oxygen-carrying capacity, which directly affects stamina and recovery. If it comes back low we refer to a GP: iron needs dosing on specific levels and getting it wrong can cause harm. We won't sell you iron.</p>
+    </div>
+  </div>
+  <p class="note">The 1 to 3 band is the one CA-034 turned on. Ewa ruled in August that the AHA/CDC framing stays and the reconciliation happens in the copy, with `classifier.ts` left at `value > 1`. This page's wording, "mildly elevated" from 1, is on the right side of that ruling, which is why it is carried unchanged.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The NHS gap</p>
+  <h2>The system is designed for illness.<br><span class="grey">Not performance.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">The NHS testosterone threshold exists to identify men who are clinically hypogonadal, men who have a diagnosable deficiency that warrants treatment. It was designed for that purpose and it does that job well.</p>
+      <p class="sub">It was not designed to answer the question: "Am I functioning at a level that matches how I should feel at my age?" That is a different question. The NHS does not have the infrastructure, the appointment time, or the clinical mandate to answer it for most men.</p>
+      <p class="sub">This is not a criticism of GPs. It's a structural reality. GPs have eight-minute appointments and clinical thresholds to work within. Optimisation is outside their scope in that context.</p>
+      <p class="pull">"Your GP isn't wrong. They're answering a different question. We answer yours."</p>
+      <p class="blab" style="margin-top:26px">Why men don't get tested</p>
+      <ul class="receipts">
+        <li><span aria-hidden="true">&bull;</span> GPs will often decline a testosterone test unless symptoms are severe enough to suggest clinical deficiency. "Tired and unmotivated" doesn't usually qualify.</li>
+        <li><span aria-hidden="true">&bull;</span> If a test is granted, the result is returned as "normal" or "abnormal" without contextual interpretation for where in the range you sit.</li>
+        <li><span aria-hidden="true">&bull;</span> Vitamin D, Active B12, and hs-CRP are rarely tested together unless there is a specific clinical reason. A man with fatigue from three combined deficiencies will often get a "you're fine" across the board.</li>
+        <li><span aria-hidden="true">&bull;</span> Private comprehensive testing typically starts at &pound;150 to &pound;200, often requiring a consultation before any blood is drawn. Other private testing services give you numbers but no interpretation and no recommendation.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Our tests</p>
+  <h2>Every marker we test.<br><span class="grey">Why it's in there.</span></h2>
+  <p class="sub" style="margin-top:14px">Nothing is included because it sounds impressive. Everything is included because it directly explains something specific about how you feel.</p>
+</div>
+<div class="wrap">
+  <p class="fine" style="margin-bottom:10px">Scroll to see all columns <span aria-hidden="true">&#8594;</span></p>
+  <div class="mscroll">
+    <table class="mk">
+      <thead>
+        <tr><th>Marker</th><th>What it measures</th><th>Why it matters</th><th>Included in</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Total Testosterone</td><td>Total circulating testosterone in the blood</td><td>The primary male sex hormone. Affects energy, libido, muscle mass, mood, and drive.</td><td>Kit 1 &amp; Kit 3</td></tr>
+        <tr><td>SHBG</td><td>Sex hormone-binding globulin</td><td>Binds to testosterone and renders it inactive. High SHBG means less testosterone available to your cells regardless of total T.</td><td>Kit 1 &amp; Kit 3</td></tr>
+        <tr><td>Free Testosterone</td><td>Calculated from Total T and SHBG</td><td>The biologically active fraction. This is what your body actually uses. The full picture requires both Total T and SHBG.</td><td>Kit 1 &amp; Kit 3</td></tr>
+        <tr><td>Vitamin D</td><td>25-hydroxyvitamin D (total)</td><td>Supports muscle function, immune response, and energy. Most UK men are below optimal between October and April.</td><td>Kit 2 &amp; Kit 3</td></tr>
+        <tr><td>Active B12</td><td>Holotranscobalamin (active form)</td><td>The form of B12 your cells can actually use. Standard B12 tests measure total serum B12 which includes inactive fractions. Active B12 shows what is truly available. Deficiency is more common in men over 40 and those on plant-based diets.</td><td>Kit 2 &amp; Kit 3</td></tr>
+        <tr><td>hs-CRP</td><td>High-sensitivity C-reactive protein</td><td>Systemic inflammation marker. Elevated hs-CRP is directly associated with slower recovery, joint soreness, and reduced training adaptation.</td><td>Kit 2 &amp; Kit 3</td></tr>
+        <tr><td>Ferritin</td><td>Iron storage marker</td><td>Low ferritin limits oxygen delivery to muscles and tissues. Causes fatigue and stamina decline that is often mistaken for overtraining or low testosterone.</td><td>Kit 2 &amp; Kit 3</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sub" style="margin-top:16px">These markers were chosen because they are the most clinically relevant indicators of the specific symptoms this cohort presents with: fatigue, slow recovery, low drive. We don't test 30 markers to make the panel look impressive. We test the seven that actually answer the question.</p>
+
+  <p class="note hot"><b>\U0001F534 SEVEN ROWS, AND THE PANEL HAS NINE MARKERS. THE SAME TWO ARE MISSING AS ON FRAME S.</b> This table lists Total T, SHBG, Free T, Vitamin D, Active B12, hs-CRP and Ferritin, and the sentence under it commits to the number: "We test the seven that actually answer the question." <b>FAI and Albumin are absent</b>, and they are exactly the two missing from the Kit 1 block on `/how-it-works`. Every commerce surface says nine. \U0001F534 <b>And the contradiction is INSIDE this page</b>: the CA-026 approved block further down says our panels buy "the markers that matter for men, <b>including free testosterone via FAI</b>". So the approved copy names a marker the page's own table omits. That makes this the one worth fixing first: an approved sentence and an unapproved table on the same route disagreeing about what the product contains. <b>Carried here exactly as it ships, because a mockup that quietly corrected it would hide the defect rather than surface it.</b></p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">On supplements</p>
+  <h2>We don't trust supplements either.<br><span class="grey">Unless there's a reason.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">We will not recommend a supplement unless your blood result shows a specific deficiency that it directly addresses. If your Vitamin D is fine, you will not see a Daily Stack recommendation. If your inflammation is mildly elevated but you don't have joint symptoms, you won't see a Collagen recommendation.</p>
+      <p class="sub">Every ingredient in our supplements has an EFSA-approved health claim. That means the European Food Safety Authority has reviewed the evidence and confirmed the claim is substantiated. We use the exact approved language, nothing more.</p>
+      <p class="sub">Our supplements do not diagnose, treat, or cure. They support normal physiological function where a deficiency has been confirmed. That is an important distinction and we will always be straight about it.</p>
+      <div class="efsa">
+        <p class="blab" style="margin-bottom:12px">Daily Stack &middot; Zinc, Active B12 (Methylcobalamin), Vitamin D3. Launching shortly.</p>
+        <q>Zinc: "Contributes to the maintenance of normal testosterone levels."</q>
+        <q>Active B12: "Contributes to normal energy-yielding metabolism."</q>
+        <q>Vitamin D3: "Contributes to normal muscle function."</q>
+      </div>
+    </div>
+  </div>
+  <p class="note hot"><b>EVERY QUOTED CLAIM ON THIS FRAME IS A FIXED STRING.</b> Four EFSA quotations across two sections, and the page states the rule itself: "We use the exact approved language, nothing more." A redesign tightening one of these for rhythm has edited a regulated statement, and it would read as a copy improvement in any review that was not looking for it. They are quoted here character for character.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Why this price</p>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <h2 style="font-size:clamp(1.4rem,2.8vw,2rem);letter-spacing:-.04em;margin-bottom:16px">Why do your tests cost more than a &pound;45 test?</h2>
+      <p style="font-size:clamp(1.05rem,2vw,1.25rem);line-height:1.5;letter-spacing:-.02em">Our panels cost more than a basic entry test. That buys the markers that matter for men, including free testosterone via FAI, analysis by a UKAS ISO 15189-accredited lab, plain-English results under recommendation logic approved by a GMC-registered GP, and a business with no stake in your result coming back low.</p>
+    </div>
+  </div>
+  <p class="note hot"><b>APPROVED COPY, CARRIED VERBATIM.</b> C2 under CA-026. This is the block that names FAI, seven rows above a table that does not list it.</p>
+</div>
+
+<div class="wrap close" style="padding-bottom:40px">
+  <h2>Find out what your blood is telling you.</h2>
+  <p class="stand">&pound;99 to &pound;179. Five minutes. Results in 2 to 5 working days. A UKAS ISO 15189-accredited lab. Plain English. A specific recommendation based on your actual numbers.</p>
+  <div class="btns" style="justify-content:center">
+    <a class="btn" href="#">Choose your test <span aria-hidden="true">&#8594;</span></a>
+    <a class="btn ghost" href="#">Take the quiz first</a>
+  </div>
+  <p class="fine" style="margin:20px auto 0;max-width:52ch">No GP required. Discreet packaging. Supplement range launches shortly.</p>
+</div>
+
+<div class="flabel"><div class="in">
+  <b>End of the Learn stage</b><span>Frames S, T, U</span>
+  <span class="hot">next: Buy (2 frames) and the five auth frames</span>
+</div></div>
+
+<div class="wrap" style="padding:26px 20px 60px">
+  <p class="note hot"><b>What this file settles, and the one thing it refuses to settle.</b> It settles the three Learn frames. It does NOT decide what `/faq` should be called, and it does not fix the marker counts, because both are content decisions that belong to Keith and both are cheaper to make before the rebuild than after. <b>The marker-count defect is the one to act on first</b>: it is live, it understates what the product tests on the two pages a reader visits to understand the product, and on `/faq` it contradicts approved copy sitting on the same page.</p>
+</div>
+
+<script>
+/* The touch trigger, same as the kit frames: on a device with no hover the
+   card closest to the middle of the viewport carries the on state. Skipped on
+   a pointer that can hover, where :hover already does the job. */
+(function(){
+  var noHover=window.matchMedia&&window.matchMedia('(hover: none)').matches;
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  if(!noHover||!steps.length)return;
+  var tick=false;
+  function mark(){
+    tick=false;
+    var mid=window.innerHeight/2,best=null,bestD=Infinity;
+    steps.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.bottom<0||r.top>window.innerHeight)return;
+      var d=Math.abs((r.top+r.bottom)/2-mid);
+      if(d<bestD){bestD=d;best=el}
+    });
+    steps.forEach(function(el){ el.classList.toggle('act',el===best); });
+  }
+  window.addEventListener('scroll',function(){
+    if(tick)return; tick=true; window.requestAnimationFrame(mark);
+  },{passive:true});
+  window.addEventListener('resize',mark,{passive:true});
+  mark();
+})();
+(function(){
+  if(!document.documentElement.classList.contains('js'))return;
+  var els=[].slice.call(document.querySelectorAll('.rise'));
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

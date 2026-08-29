@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: the auth frames in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE AUTH FRAMES IN DIRECTION F'S LANGUAGE
+   /auth/login, /auth/signup, /auth/reset, /auth/link, /auth/consent
+
+   CONCEPT ONLY. NOT BUILT. Eighth file in the journey set.
+
+   ▶ LIFECYCLE CHECK RAN FIRST. All five alive, ordinary imports, no
+   retirement comment, no docs entry, no feature-flag read.
+
+   ▶ 🔴 FIVE ROUTES, BUT NOT FIVE FRAMES, AND THIS IS THE KIT-PAGE ERROR IN
+   REVERSE. The inventory reads "five auth frames". Four of the five are the
+   SAME COMPONENT in four modes: `components/auth/AuthCard.tsx`, 177 lines,
+   `mode = login | signup | reset | link`. The four routes are 25-line
+   wrappers that pass a title, a description and a server action into it.
+   They differ in exactly five things: the heading, the standfirst, which
+   fields render, the submit label, and which four cross-links show.
+
+   On the kit pages the inventory said "one template, three kits" and there
+   was no template: three hand-written pages, 530, 882 and 463 lines. Here it
+   says five frames and there is one component. **Both errors came from
+   reading route names instead of opening files, and they point in opposite
+   directions**, which is why neither is correctable by a rule of thumb about
+   how many frames a stage "usually" has.
+
+   So this stage is 1 card plus a mode row plus a banner row plus the consent
+   route: **4 frames, not 5.**
+
+     the card, login mode ......................... Frame X
+     the four modes, side by side ................. Frame X2
+     the message and error banners ................ Frame X3
+     /auth/consent ................................ Frame Y
+
+   ▶ 🔴 AND /auth/consent CARRIES NO HEALTH-DATA CONSENT.
+   `design/journey-inventory.md` said: "Consent is the one with compliance
+   weight (health-data processing, CA-018) and its wording is approved copy
+   that the redesign must not disturb." **Both halves are wrong.** The route
+   asks for an AGE (18+ eligibility) and a MARKETING opt-in. There is no
+   Article 9(2)(a) wording on it, no CA-018 sentence, nothing version-locked.
+   The health-data consent is on `/checkout/details`, found while drawing the
+   Buy stage.
+
+   The line had been corrected to say the copy here was UNVERIFIED and had to
+   be read rather than inherited. It was read. This is what it says. **A note
+   that says "unverified" is worth more than a note that says the wrong thing
+   confidently**, and this is the second time in this set that a stale
+   inventory line pointed a frame at the wrong content.
+
+   ⚠ THE ROUTE NAME IS THE SECOND MISMATCH IN THE SET. `/faq` is not an FAQ
+   and `/auth/consent` is not the health consent. Both were read from their
+   names and both were wrong in the same direction: the name described what a
+   reader would assume rather than what the page holds.
+
+   ▶ 18+ IS COLLECTED THREE TIMES, AND ONLY TWO OF THE THREE ENFORCE IT.
+     `/checkout/details` .. date of birth, `max` attribute AND `isAtLeast18()`
+     `/auth/consent` ...... `age`, `min={18}`, **required**
+     `/auth/signup` ....... `age`, `min={18}`, **NOT required**
+   The signup field has no `required` attribute, so the same eligibility fact
+   is mandatory in two places and optional in the third. Drawn as it is, and
+   flagged: it is a behaviour question rather than a design one.
+
+   ⚠ THE MARKETING OPT-IN APPEARS TWICE, one identical sentence on
+   `/auth/signup` and on `/auth/consent`. Fifth member of the duplicated-fact
+   pattern this journey set keeps turning up.
+
+   ▶ OAUTH IS GOOGLE ONLY, ON PURPOSE. The source comment records that
+   Microsoft is deliberately withheld until the Azure app registration is
+   configured for personal accounts. Drawn as one button, not two, because
+   drawing the absent one would put a provider in the design system that does
+   not exist.
+
+   COLOUR. These are authenticated-app doorways served from the app host, but
+   they are not the dashboard: no status colour. One accent, --flag, on the
+   thing each frame is pointing at.
+
+   MOTION. Reader-caused response only. Nothing loops, and there is no load
+   reveal on a form a reader is trying to fill in.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF; --tray:#F1F2F4; --core:#FFFFFF; --sunk:#E7E9EC;
+  --ink:#0A0B0D; --ink-2:#4A4F57; --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10); --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458; --flag-f:rgba(224,164,88,.14); --flag-f2:rgba(224,164,88,.26);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1); --r:28px; --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:32px 30px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 14px;margin-bottom:18px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:60ch}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:70ch;
+}
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:14px 24px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;width:100%;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+
+/* ---------- THE AUTH SPLIT ---------- */
+.auth{display:grid;gap:0;grid-template-columns:1fr}
+@media (min-width:940px){ .auth{grid-template-columns:1fr 1fr;align-items:stretch} }
+.auth .pitch{padding:30px 26px}
+@media (min-width:940px){ .auth .pitch{padding:36px 34px;border-right:1px solid var(--hair)} }
+.auth .pitch h1{font-size:clamp(1.7rem,3.4vw,2.4rem);letter-spacing:-.045em;margin-bottom:14px}
+.auth .form{padding:30px 26px}
+@media (min-width:940px){ .auth .form{padding:36px 34px} }
+.ticks{display:grid;gap:9px;margin-top:22px;list-style:none}
+.ticks li{display:flex;gap:10px;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.ticks li span{color:var(--flag);flex:none;font-weight:700}
+
+.field{margin-bottom:16px}
+.field>label,.field>.lab{display:block;margin-bottom:8px;font-size:14px;font-weight:600;letter-spacing:-.015em;color:var(--ink)}
+.inp{
+  width:100%;border:1px solid var(--hair-2);border-radius:14px;background:var(--core);
+  padding:13px 15px;font:inherit;font-size:15.5px;color:var(--ink-3);
+}
+.opt{
+  display:flex;gap:11px;align-items:flex-start;margin:16px 0;font-size:14px;line-height:1.55;color:var(--ink-2);
+}
+.opt .box{
+  width:20px;height:20px;border-radius:6px;flex:none;margin-top:1px;
+  background:var(--core);box-shadow:inset 0 0 0 1.5px var(--hair-2);
+}
+.oauth{
+  width:100%;border:1px solid var(--hair-2);border-radius:999px;background:var(--core);
+  padding:13px 20px;font:inherit;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background .18s var(--ease),box-shadow .18s var(--ease);
+}
+.oauth:hover{background:var(--flag-f);box-shadow:0 0 0 1.5px var(--flag)}
+.or{
+  display:flex;align-items:center;gap:14px;margin:18px 0;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+}
+.or i{flex:1;height:1px;background:var(--hair);display:block}
+.xlinks{
+  display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1px solid var(--hair);
+}
+.xlinks a{
+  text-decoration:none;border:1px solid var(--hair-2);border-radius:999px;padding:7px 13px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-2);
+  transition:background .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease);
+}
+.xlinks a:hover{background:var(--flag-f);border-color:var(--flag);color:var(--ink)}
+
+/* ---------- BANNERS ---------- */
+.banner{border-radius:14px;padding:13px 16px;font-size:14.5px;line-height:1.55;margin-bottom:14px}
+.banner.msg{background:var(--flag-f);box-shadow:inset 0 0 0 1.5px var(--flag);color:var(--ink)}
+.banner.err{background:var(--sunk);box-shadow:inset 3px 0 0 var(--ink);color:var(--ink)}
+.banner .k{
+  display:block;margin-bottom:4px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ---------- THE MODE ROW ---------- */
+.modes{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){ .modes{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1120px){ .modes{grid-template-columns:repeat(4,1fr)} }
+.mode{background:var(--core);border-radius:var(--r-in);padding:22px 20px;box-shadow:inset 0 0 0 1px var(--hair);display:flex;flex-direction:column}
+.mode .r{
+  display:block;margin-bottom:12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.mode h4{font-size:17px;letter-spacing:-.03em;margin-bottom:8px}
+.mode p{font-size:14px;line-height:1.55;color:var(--ink-2);margin-bottom:14px}
+.mode .has{display:grid;gap:5px;margin-top:auto;padding-top:14px;border-top:1px solid var(--hair)}
+.mode .has span{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);
+}
+.mode .has span.no{color:var(--ink-3);text-decoration:line-through}
+.mode .cta{
+  margin-top:14px;border-radius:999px;background:var(--ink);color:var(--paper);
+  padding:10px 14px;text-align:center;font-size:13.5px;font-weight:600;
+}
+
+.sec{padding:34px 0 6px}
+.sec h2{font-size:clamp(1.5rem,3.2vw,2.2rem);letter-spacing:-.045em;max-width:24ch}
+.sec .grey{color:var(--ink-3)}
+
+@media (prefers-reduced-motion:reduce){
+  .oauth,.xlinks a{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME X: THE AUTH CARD ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame X</b><span>/auth/login</span><span>the card that serves four routes, shown in login mode</span>
+  <span class="hot">one component, four modes</span>
+</div></div>
+
+<div class="wrap" style="padding-top:52px">
+  <div class="tray">
+    <div class="core" style="padding:0;overflow:hidden">
+      <div class="auth">
+        <div class="pitch">
+          <div class="eyebrow"><i></i> Andro Prime</div>
+          <h1>Access Your Results</h1>
+          <p class="sub">Your results, recommendations, and order history are waiting. Log in to access your private dashboard.</p>
+          <ul class="ticks">
+            <li><span aria-hidden="true">&#10003;</span> Results in your private dashboard</li>
+            <li><span aria-hidden="true">&#10003;</span> EU data hosting: GDPR compliant</li>
+            <li><span aria-hidden="true">&#10003;</span> GP-set ranges and explanations</li>
+          </ul>
+        </div>
+
+        <div class="form">
+          <button class="oauth" type="button">Continue with Google</button>
+          <div class="or"><i></i> or <i></i></div>
+
+          <div class="field">
+            <label for="em">Email</label>
+            <input class="inp" id="em" type="text" value="you@andro-prime.com" readonly>
+          </div>
+          <div class="field">
+            <label for="pw">Password</label>
+            <input class="inp" id="pw" type="text" value="Minimum 8 characters" readonly>
+          </div>
+
+          <button class="btn" type="button">Log In</button>
+
+          <div class="xlinks">
+            <a href="#">Create account</a>
+            <a href="#">Reset password</a>
+            <a href="#">Email me a sign-in link</a>
+            <a href="#">Back to site</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 THE INVENTORY SAID FIVE AUTH FRAMES. FOUR OF THE FIVE ARE THIS CARD.</b> `components/auth/AuthCard.tsx`, 177 lines, with `mode = login | signup | reset | link`. The four routes are 25-line wrappers passing in a title, a standfirst and a server action. <b>This is the kit-page error in reverse</b>: there the inventory said "one template, three kits" and there was no template, just three hand-written pages of 530, 882 and 463 lines. Here it says five frames and there is one component. Both readings came from route names rather than files, and they were wrong in opposite directions, which is why no rule of thumb about how many frames a stage "usually" holds would have caught either.</p>
+
+  <p class="note"><b>Google is the only OAuth button, and that is deliberate rather than unfinished.</b> The source records that Microsoft is withheld until the Azure app registration is configured for personal accounts, and says to re-add it then. Drawn as one button: putting the absent provider in the mockup would introduce a control to the design system that does not exist, which is how a mockup starts specifying work nobody asked for.</p>
+</div>
+
+<!-- ============ FRAME X2: THE FOUR MODES ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame X2</b><span>four routes, one component</span><span>what actually changes between the modes</span>
+  <span class="hot">five differences, no more</span>
+</div></div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="modes">
+    <div class="mode">
+      <span class="r">/auth/login</span>
+      <h4>Access Your Results</h4>
+      <p>Your results, recommendations, and order history are waiting. Log in to access your private dashboard.</p>
+      <div class="has">
+        <span>Google sign-in</span>
+        <span>Email</span>
+        <span>Password</span>
+        <span class="no">Age</span>
+        <span class="no">Marketing opt-in</span>
+      </div>
+      <div class="cta">Log In</div>
+    </div>
+
+    <div class="mode">
+      <span class="r">/auth/signup</span>
+      <h4>Create Your Account</h4>
+      <p>Your results go here. Set up your account and every biomarker, recommendation, and report lands in your private dashboard the moment it's ready.</p>
+      <div class="has">
+        <span>Google sign-in</span>
+        <span>Email</span>
+        <span>Password</span>
+        <span>Age (not required)</span>
+        <span>Marketing opt-in</span>
+      </div>
+      <div class="cta">Create Account</div>
+    </div>
+
+    <div class="mode">
+      <span class="r">/auth/link</span>
+      <h4>Get a Sign-In Link</h4>
+      <p>Enter your email and we'll send a one-time link to sign in. No password needed. It's the quickest way back to your results.</p>
+      <div class="has">
+        <span class="no">Google sign-in</span>
+        <span>Email</span>
+        <span class="no">Password</span>
+        <span class="no">Age</span>
+        <span class="no">Marketing opt-in</span>
+      </div>
+      <div class="cta">Email me a sign-in link</div>
+    </div>
+
+    <div class="mode">
+      <span class="r">/auth/reset</span>
+      <h4>Reset Your Password</h4>
+      <p>Request a password reset email for the account linked to your Andro Prime lab history and dashboard access.</p>
+      <div class="has">
+        <span class="no">Google sign-in</span>
+        <span>Email</span>
+        <span class="no">Password</span>
+        <span class="no">Age</span>
+        <span class="no">Marketing opt-in</span>
+      </div>
+      <div class="cta">Send Reset Link</div>
+    </div>
+  </div>
+
+  <p class="note"><b>Five differences and that is the whole of it:</b> the heading, the standfirst, which fields render, the submit label, and which of the four cross-links appear (each mode hides its own). The struck-through rows are what the mode does NOT render. Drawn as a row rather than four full cards, for the same reason the six subscription status badges and the nine order statuses were drawn as rows: <b>they are variants of one screen, not four screens</b>, and drawing them as four would repeat the counting error that put five frames on the board.</p>
+
+  <p class="note hot"><b>🔴 18+ IS COLLECTED THREE TIMES AND ENFORCED TWICE.</b> `/checkout/details` takes a date of birth with a `max` attribute AND an `isAtLeast18()` re-check on submit. `/auth/consent` takes an `age` with `min={18}` and <b>required</b>. `/auth/signup` takes an `age` with `min={18}` and <b>no `required` attribute at all</b>, so the same eligibility fact is mandatory in two places and optional in the third. Drawn exactly as it ships. It is a behaviour question rather than a design one, and it belongs to Keith.</p>
+</div>
+
+<!-- ============ FRAME X3: THE BANNERS ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame X3</b><span>all four routes</span><span>the message and error banners, driven by query params</span>
+</div></div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="tray">
+    <div class="core">
+      <p class="blab">Message, from <code>?message=</code></p>
+      <div class="banner msg">Check your email for the sign-in link.</div>
+
+      <p class="blab" style="margin-top:24px">Error, from <code>?error=</code></p>
+      <div class="banner err"><span class="k">Error</span>That email and password do not match an account.</div>
+
+      <p class="fine" style="margin-top:20px">Both banner strings arrive in the URL rather than from the component, so the text is whatever the redirecting action put there. The two examples above are illustrative of the SHAPE and are marked as such: they are not transcribed from a fixed list, because there is not one in the component. Anything the rebuild wants to standardise about this wording is a copy exercise that has to start from the server actions in <code>lib/auth/actions.ts</code>, not from here.</p>
+    </div>
+  </div>
+
+  <p class="note"><b>The message banner takes the accent and the error takes the neutral rule, which is the opposite of the obvious choice.</b> An error on an auth form is almost always something the reader already knows (a wrong password), and it needs to be legible rather than loud; a message is usually the thing that just happened elsewhere and explains why they are looking at this screen ("check your email"), which is the thing worth pointing at. Status colour is not available here anyway, so the question is only which of the two gets the one accent.</p>
+</div>
+
+<!-- ============ FRAME Y: /auth/consent ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame Y</b><span>/auth/consent</span><span>age and marketing opt-in</span>
+  <span class="hot">NOT the health-data consent</span>
+</div></div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="tray">
+    <div class="core" style="padding:0;overflow:hidden">
+      <div class="auth">
+        <div class="pitch">
+          <div class="eyebrow"><i></i> One last step</div>
+          <h1>A couple of quick questions</h1>
+          <p class="sub">We need your age to confirm eligibility and want to know if you'd like to receive updates from us.</p>
+          <ul class="ticks">
+            <li><span aria-hidden="true">&#10003;</span> 18+ only</li>
+            <li><span aria-hidden="true">&#10003;</span> No spam, ever</li>
+            <li><span aria-hidden="true">&#10003;</span> Unsubscribe any time</li>
+          </ul>
+        </div>
+        <div class="form">
+          <div class="field">
+            <label for="age">Age</label>
+            <input class="inp" id="age" type="text" value="18+ only" readonly>
+          </div>
+          <div class="opt">
+            <span class="box" aria-hidden="true"></span>
+            <span>I'm happy to receive Andro Prime updates and educational emails.</span>
+          </div>
+          <button class="btn" type="button">Continue to Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 THIS ROUTE CARRIES NO HEALTH-DATA CONSENT, AND THE INVENTORY SAID IT WAS THE ONE WITH COMPLIANCE WEIGHT.</b> The line read: "Consent is the one with compliance weight (health-data processing, CA-018) and its wording is approved copy that the redesign must not disturb." <b>Both halves are wrong.</b> The route asks an age for 18+ eligibility and offers a marketing opt-in. There is no Article 9(2)(a) wording on it, no CA-018 sentence, nothing version-locked. <b>The health-data consent is on `/checkout/details`</b>, gating payment, found while drawing the Buy stage.
+
+  That line had already been corrected to say the copy here was UNVERIFIED and had to be read rather than inherited. It was read, and this is what it says. <b>A note that admits it does not know is worth more than a note that is confidently wrong</b>, because the second one gets quoted.</p>
+
+  <p class="note"><b>The route name is the second mismatch in this set.</b> `/faq` is not an FAQ and `/auth/consent` is not the health consent. Both names describe what a reader would assume rather than what the page holds, and both were taken at face value by an inventory built from route names. <b>The marketing opt-in here is also the second copy of a sentence that already exists on `/auth/signup`</b>, word for word: fifth member of the duplication pattern.</p>
+</div>
+
+<div class="flabel"><div class="in">
+  <b>End of the auth frames</b><span>Frames X, X2, X3, Y</span>
+  <span class="hot">next: Act (4 frames), the LP template, /how-to-sample</span>
+</div></div>
+
+<div class="wrap" style="padding:26px 20px 60px">
+  <p class="note hot"><b>What this file settles, and the two things it hands back.</b> It settles the auth stage at <b>4 frames rather than 5</b>, because four routes are one component in four modes. It hands back two questions that are not design questions: <b>whether the signup age field should be `required`</b> like the other two collection points, and <b>whether `/auth/consent` should be renamed</b> now that it is confirmed to be an age gate plus a marketing opt-in rather than the health consent. Both are cheap now and awkward after the tokens are written.</p>
+</div>
+</body>
+</html>

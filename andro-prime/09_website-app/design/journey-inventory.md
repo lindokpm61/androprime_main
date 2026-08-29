@@ -5,6 +5,16 @@ Built to serve the decision Keith made on 2026-08-27: the redesign is **app-wide
 mockups, and **the mockup carries the complete journey before anything is rebuilt**. Volatile status
 lives in `STATE.md`; this file is the working inventory and changes as screens are drawn.
 
+🟢 **APPROVED 2026-08-28: the frames drawn on or before that date.** Keith signed off the six drawn
+files as the design record: *"everything up until this point on this mock-up journey I'm happy with
+and is approved."* It is a design approval and nothing beyond one. **The full statement of what it
+covers and the four things it does NOT do is the entry at the top of `STATE.md`, and it is not
+restated here on purpose**, because a boundary held in two places drifts in one of them. Two rules
+fall out of it for this file: **the six approved files are the ones named in that entry**, so
+anything drawn after 2026-08-28 is undrawn-then-unapproved until Keith says otherwise and must not
+inherit today's approval by sitting under the same heading; and **approval of a frame is never
+approval of the copy inside it**, so every ⚠️ and 🔴 copy constraint below survives untouched.
+
 **Three decisions this file assumes** (Keith, 2026-08-27):
 
 | Decision | Answer |
@@ -46,17 +56,70 @@ are one frame plus a note.
 | Frame | Route | Speaks today | Notes |
 |---|---|---|---|
 | Home | `/` | Brand | **Direction F is already drawn.** Reuse, do not redraw. |
-| Landing page template | `/lp/[product]` | Brand | 5 routes: testosterone, hormone-recovery, energy-recovery, daily-stack, collagen. One template. |
-| Blog index | `/blog` | **Blog skin** | The cream surface and block-shadow are the sharpest break from everything else. |
-| Blog article | `/blog/[slug]` | **Blog skin** | Long-form typography is the hardest thing to restyle without losing readability. |
+| ~~Landing page template~~ **Five hand-written pages** | `/lp/*` | Brand | 🔴 **No `[product]` route.** 246 / 266 / 412 / 505 / **723** lines, five different section lists. A real shared `layout.tsx` (stripped nav + one compliance line) and no template |
+| ~~Blog index~~ | `/blog` | **Blog skin** | ✅ **OFF THE BOARD.** Keith 2026-08-27: the blog keeps `blog-skin.css`. F lost that frame; `blog-F.html` stands as the record |
+| ~~Blog article~~ | `/blog/[slug]` | **Blog skin** | ✅ **OFF THE BOARD**, same ruling |
+
+✅ **DRAWN 2026-08-29: `design/mockups/journey/lp-sample-F.html`**, Frame AC (the LP shell plus a
+variance table across the five) and Frame AD (`/how-to-sample`). Verified at 1440 and a true 390,
+both themes.
+
+🔴 **"ONE TEMPLATE" WAS WRONG FOR THE THIRD TIME, AND THIS IS THE LARGEST INSTANCE.** Five
+hand-written files with a **three-fold spread** and two different section-comment styles. What is
+genuinely shared is `app/lp/layout.tsx`. ⚠️ **The kit pages, the supplement product pages and these
+all made the same error, and the auth routes made it in reverse** (four routes, one component). Four
+structural guesses in this inventory, four wrong, in both directions.
+
+🔴 **`/lp/hormone-recovery` IS THE KIT 3 PAGE AGAIN.** Eleven sections: Kit 3's ten in the same order
+plus a closing CTA, and its COMPARE section carries Kit 3's heading verbatim, "All three kits, side
+by side". **That is the THIRD comparison table of the same three products**, after `/kits` and
+`/kits/hormone-recovery`. 723 lines duplicating an 882-line page, with a third founders block and Dr
+Ewa's sixth appearance.
+
+⚠️ **Nothing in the codebase links to any `/lp/` route.** Correct by design for ad-reached pages, but
+`01_strategy/STATE.md` records that nothing has been promoted, so **these five pages, 2,152 lines,
+may never have been used.**
 
 ### Learn
 
-| Frame | Route | Speaks today |
-|---|---|---|
-| How it works | `/how-it-works` | Brand |
-| About | `/about` | Brand |
-| FAQ | `/faq` | Brand |
+| Frame | Route | Speaks today | Notes |
+|---|---|---|---|
+| How it works | `/how-it-works` | Brand | 493 lines, 9 sections. Carries **A1 (CA-026) verbatim** |
+| About | `/about` | Brand | 195 lines, the shortest route in the set |
+| ~~FAQ~~ **The facts page** | `/faq` | Brand | 🔴 **NOT AN FAQ.** 477 lines, 9 sections, zero question-and-answer pairs |
+
+✅ **DRAWN 2026-08-29: `design/mockups/journey/learn-F.html`.** Frames S, T and U. Lifecycle check
+ran first: all three alive, no retirement comment, no docs entry, and **no feature-flag read
+anywhere** in the three files (the fifth rule, earned on the kit pages). Verified by screenshot at
+1440 and a true 390 in both themes.
+
+🔴 **`/faq` IS NOT AN FAQ, AND THE ROUTE NAME IS THE ONLY THING THAT SAYS IT IS.** It is a long-form
+biomarker education page: three statistics, three clinical band tables, four EFSA claim quotations, a
+seven-row marker table, the NHS-gap essay and the **C2 (CA-026) price block**. Its own schema object
+is called `factsSchema`, which is the only place the code admits what it is. The footer labels it
+"FAQ". **The actual FAQs live on the three kit pages**, in the grid standardised on 2026-08-29.
+Whether it keeps the name is Keith's call; drawing it as an FAQ would have committed the wrong
+answer.
+
+🔴 **THE PANEL IS UNDERSTATED ON BOTH LEARN PAGES, BY THE SAME TWO MARKERS.** `/how-it-works` lists
+Kit 1 as **three** markers (Total T, SHBG, Free T) where every commerce surface says **five**;
+`/faq`'s "every marker we test" table lists **seven** and its copy commits to the number ("we test the
+seven that actually answer the question") where the panel is **nine**. **FAI and Albumin are missing
+from both.** 🔴 **And on `/faq` the contradiction is internal**: the CA-026 approved block on the same
+page says the price buys "the markers that matter for men, **including free testosterone via FAI**".
+An approved sentence and an unapproved table on one route disagreeing about what the product
+contains. Both pages predate FAI and Albumin joining the panel and were never swept. **Copy fix,
+Keith's, not a frame fix.**
+
+⚠️ **Three duplicated facts confirmed on this stage.** A1 (CA-026) is rendered verbatim on **both**
+`/about` and `/how-it-works`; Dr Lindo is presented **three times** across the journey (`/about`,
+`/how-it-works`, the Kit 3 founders block); and the four-step process card now exists in four
+hand-written copies. A signed claim held in two places is the worst of the three, because correcting
+it has to reach every copy or the site quotes two versions of one approved statement.
+
+⚠️ **Band tables publish clinical thresholds outside the engine.** Checked for vitamin D: the two
+boundaries `classifier.ts:303-304` enforces (< 25, < 50) match the page exactly. The 75 and 125
+splits above them have **no engine equivalent** and are the ones that can drift silently.
 
 ### Choose
 
@@ -79,8 +142,32 @@ are one frame plus a note.
   with different words. That is 3 frames, not 1, and it is real work nobody had scheduled.
 
 ✅ **DRAWN 2026-08-28: `design/mockups/journey/test-selector-F.html`**, frames N (the page), N2 (the
-three questions), N3 (the price study) and N4 (the reveal and the capture). 🔵 **Still to draw on
-this stage: `/kits` and the three kit pages.**
+three questions), N3 (the price study) and N4 (the reveal and the capture).
+
+✅ **DRAWN 2026-08-28: `design/mockups/journey/kits-F.html`, AND THIS CLOSES THE CHOOSE STAGE.**
+Frames O (`/kits`, all six sections), P (`/kits/testosterone`, eleven sections), Q
+(`/kits/energy-recovery`, eight), R (`/kits/hormone-recovery`, ten) and **P2, a state that was not on
+this list**. Lifecycle check ran first and the route is alive: no retirement comment, no docs entry,
+and the densest inbound linking on the site (footer, homepage, `/how-it-works`, `/about`,
+`/supplements`, `/waitlist`, `/order/confirmed`, two landing pages, the selector's three
+recommendations, `lib/content/kitCTA.ts`, `sitemap.ts`). Verified by screenshot at 1440 and a true
+390 in both themes.
+
+🔴 **THE THIRD CORRECTION, AND IT IS A STATE RATHER THAN A COUNT: `BUNDLES_ENABLED`.** Every kit page
+calls `isBundlesEnabled()` and branches on it **twice**, in the hero and at the close. With the flag
+on, the hero leads with a bundle price and the close becomes a `BundleChoice`. It is not a swapped
+button: **the related-reading block and the competing-kit cross-sell are both REMOVED**, by direction
+(Keith, 2026-07-24, the page should end on the buying decision). Three kit pages, two states each,
+**six page endings, not three**. `deployment/env/vars.md` records the flag OFF, so the flag-off state
+is drawn as the page and the flag-on state is Frame P2, drawn once because the shape is identical on
+all three. ⚠️ vars.md is a record rather than a reading of production, and there is an open ticket for
+exactly that drift on a different flag.
+
+**The rule this adds: a route's states are not only its JSX branches.** The `/test-selector`
+correction came from reading the component's steps, and the same method here would still have missed
+this, because the branch is not shaped like one: it is a `const` read at the top of the file from an
+environment variable, and the two `? :` that consume it are 300 lines apart. **Grep the route for
+flag reads before declaring its states enumerated.**
 
 ⚠️ **Three things in the quiz are approved and the redesign must not disturb them:** the scoring map
 (2026-05-18, updated 2026-05-26 and 2026-08-12), the Q1 option wording (**split**, not reworded, for
@@ -91,16 +178,72 @@ order while the stored values stay a/d/b/c). 🔴 **And no price of ours may app
 
 ### Buy
 
-| Frame | Route | Speaks today |
-|---|---|---|
-| Checkout details | `/checkout/details` | Brand |
-| Order confirmed | `/order/confirmed` | Brand |
+| Frame | Route | Speaks today | States |
+|---|---|---|---|
+| Checkout details | `/checkout/details` | Brand | ✅ **READ 2026-08-29.** 80-line route around a **177-line form**: three fields, **six error strings**, a submitting state |
+| Order confirmed | `/order/confirmed` | Brand | ✅ **READ 2026-08-29. Three renderable states**, plus one redirect that renders nothing |
+
+**4 frames, not 2**, and the correction is the same one the test selector forced: **a route's line
+count measures its wrapper, not its surface.** `/checkout/details` is the smallest-looking page in
+the set and everything that matters is in `components/commerce/CheckoutDetailsForm.tsx`.
+
+✅ **DRAWN 2026-08-29: `design/mockups/journey/buy-F.html`.** Frames V (the form), V2 (the six errors
+plus submitting), W (the receipt) and W2 (the three states). Lifecycle check first: both alive, no
+retirement comment, no docs entry. ⚠️ **Both are `robots: index:false`**, the only two frames in the
+journey set deliberately invisible to search.
+
+🔴 **CA-018 IS CAPTURED ON `/checkout/details`, NOT ONLY ON `/auth/consent`.** This file records the
+health-data consent against `/auth/consent` in the Account stage and calls that route "the one with
+compliance weight". The Article 9(2)(a) consent is taken **on the checkout form, at the point of
+purchase**, by design: the source comment says it is captured there "so it is freely given as part of
+deciding to buy", it is **required to proceed to payment**, and it is version-locked to
+`HEALTH_PROCESSING_CONSENT_VERSION` = `2026-06-23-v1` (`lib/auth/consentVersions.ts:18`). The comment
+adds: *"Any wording change needs a new version string + a fresh CA record."* **The Account stage may
+carry consent copy of its own and that is worth checking when those frames are drawn, but the Buy
+stage is where a buyer actually gives it.**
+
+⚠️ **The order reference has a scar worth keeping.** Until 2026-08-04 `/order/confirmed` read
+`session_id` and rendered nothing from it, so a customer who closed the confirmation email could not
+find their reference. Resolving one requires being signed in, so **the fallback state is what a
+first-time buyer sees**. The signed-out arrival is a redirect to `/auth/post-checkout` carrying a
+loop guard (`post_checkout=1`) whose comment records that a failed sign-in used to bounce a customer
+between the two routes forever. **An inventory that counts screens misses a redirect.**
 
 ### Account
 
 Five auth frames, all currently Brand: `/auth/signup`, `/auth/consent`, `/auth/login`, `/auth/link`,
-`/auth/reset`. **Consent is the one with compliance weight** (health-data processing, CA-018) and its
-wording is approved copy that the redesign must not disturb.
+`/auth/reset`.
+
+🔴 **4 FRAMES, NOT 5, AND THIS IS THE KIT-PAGE ERROR IN REVERSE.** Four of the five routes
+are the SAME COMPONENT in four modes: `components/auth/AuthCard.tsx`, 177 lines,
+`mode = login | signup | reset | link`, wrapped by four 25-line routes that pass in a title, a
+standfirst and a server action. They differ in five things and no more: the heading, the
+standfirst, which fields render, the submit label, and which cross-links show. On the kit pages
+this file said "one template, three kits" and there was no template. Here it said five frames and
+there is one component. **Both readings came from route names rather than files, and they were
+wrong in opposite directions.**
+
+🔴 **`/auth/consent` CARRIES NO HEALTH-DATA CONSENT. VERIFIED 2026-08-29 BY READING IT.**
+~~Consent is the one with compliance weight (health-data processing, CA-018) and its wording is
+approved copy that the redesign must not disturb.~~ Both halves were wrong. The route asks an
+**age** (18+ eligibility) and offers a **marketing opt-in**. No Article 9(2)(a) wording, no CA-018
+sentence, nothing version-locked. The health-data consent is on `/checkout/details`, gating
+payment. ⚠️ **The route name is the second mismatch in this inventory**, after `/faq`: both
+names describe what a reader would assume rather than what the page holds.
+
+🔴 **18+ IS COLLECTED THREE TIMES AND ENFORCED TWICE.** `/checkout/details` takes a date of
+birth with a `max` attribute and an `isAtLeast18()` re-check; `/auth/consent` takes an `age` with
+`min={18}` and **required**; `/auth/signup` takes an `age` with `min={18}` and **no `required`**.
+Mandatory in two places, optional in the third. Behaviour question, Keith's.
+
+⚠️ **The marketing opt-in sentence exists twice**, word for word, on `/auth/signup` and
+`/auth/consent`. Fifth member of the duplicated-fact pattern. **OAuth is Google only**, and the
+source records that Microsoft is deliberately withheld pending Azure app registration.
+
+✅ **DRAWN 2026-08-29: `design/mockups/journey/auth-F.html`.** Frames X (the card, login mode),
+X2 (the four modes as a row), X3 (the message and error banners) and Y (`/auth/consent`).
+Lifecycle check first: all five alive, no retirement comment, no flag read. Verified by screenshot
+at 1440 and a true 390 in both themes.
 
 ### Activate
 
@@ -143,12 +286,41 @@ a design one, but the redesign must not quietly launder it into new copy.
 
 ### Act
 
-| Frame | Route | Speaks today |
-|---|---|---|
-| Supplements index | `/supplements` | Brand |
-| Supplement page template | `/supplements/[product]` | Brand | 2 routes: daily-stack, collagen. |
-| Supplement waitlist | `/supplement-waitlist` | Brand |
-| Waitlist status | `/supplement-waitlist-status` | App |
+| Frame | Route | Speaks today | Notes |
+|---|---|---|---|
+| Supplements index | `/supplements` | Brand | 213 lines |
+| ~~Supplement page template~~ **Two hand-written pages** | `/supplements/daily-stack`, `/supplements/collagen` | Brand | 🔴 **No `[product]` route.** 263 lines EACH, same 9-section skeleton, **250 of 263 lines differ** |
+| Waitlist form states | shared component | n/a | 🔴 **5 states on 3 routes**, never inventoried |
+| Supplement waitlist | `/supplement-waitlist` | Brand | 184 lines |
+| Waitlist status | `/supplement-waitlist-status` | App | 61 lines, `(app)` group, noindex, **3 states incl. a blank one** |
+
+**5 frames, not 4.** ✅ **DRAWN 2026-08-29: `design/mockups/journey/act-F.html`** (Frames Z, Z2, Z3,
+AA, AB). Verified by screenshot at 1440 and a true 390 in both themes.
+
+🔴 **READ THIS BEFORE REBUILDING THIS STAGE: THE STRATEGY MOVED UNDER IT, AND ONLY THE DOCS CHECK
+FOUND IT.** Every route is alive with no retirement comment, so the code says nothing is wrong.
+`docs/2026-08-23-supplement-shop-front-spec.md` opens **"SUPERSEDED IN DIRECTION, 2026-08-24"**:
+supplements moved to a **secondary shop at member price**, with the app as the product and the kit as
+the gateway. **Adopted 2026-08-25.** `01_strategy/STATE.md` (2026-08-26) adds that member pricing is
+for supplements and **"stays dark until supplements are listed in the shop"**, the shop living at
+`/supplements`, organised by panel, identical for every visitor. These four routes are **pre-decision
+waitlist pages**. They are drawn because a customer reaches them today and their copy is still true;
+⚠️ **this is the stage most likely to be redrawn**, and the replacement is not drawable because it is
+adopted in direction and undecided in substance.
+
+**The product pages sit between the two errors this inventory has made.** Not a template (no dynamic
+route, two hand-written files, like the kits) and not two unrelated pages (same nine sections in the
+same order). **250 of 263 lines differ and the formulation data is not the same shape in both**, so
+no shared component could render them unchanged. They are the same page written twice. Both files
+being exactly 263 lines is a coincidence.
+
+🔴 **A signed-out visitor to `/supplement-waitlist-status` gets a blank page**: `if (!user) return
+null`, no redirect, no prompt, no empty state. `/order/confirmed` redirects in the same situation, so
+the pattern exists and this route does not use it. **Behaviour fix, Keith's.**
+
+⚠️ **Four EFSA claims sit on `/supplements` attached to products that have not shipped**, quoted
+verbatim. **Dr Ewa appears on both product pages**, taking her to five presentations across the
+journey.
 
 ### Stay
 
@@ -193,16 +365,16 @@ Stripe, which is the one place in the signed-in app where the design system stop
 
 | Stage | Frames |
 |---|---|
-| Land | 4 (home already drawn) |
-| Learn | 3 |
-| Choose | 10 (6 drawn: the page and five quiz steps; 4 left: the index and three kit pages) |
-| Buy | 2 |
-| Account | 5 |
-| Activate | 1 (the replacement page; the old 5 are deprecated) |
+| Land | 2, **both drawn**: the homepage and the LP shell. The two blog frames came off the board (the blog keeps its own skin) |
+| Learn | 3, **all drawn** |
+| Choose | 11, **all drawn**: the selector page and its five steps, the index, three kit pages, and the bundles-on state |
+| Buy | 4, **all drawn**: the form, its six errors, the receipt, its three states |
+| Account | 4, **all drawn**: the card, its four modes, its banners, and the consent route |
+| Activate | 1, **drawn**: `/how-to-sample`, the replacement page. The old 5 are deprecated |
 | Results | 5 + 5 card variants |
-| Act | 4 |
+| Act | 5, **all drawn**: the index, the two product pages as one skeleton, the form's five states, the waitlist, the status route |
 | Stay | 5 (the sixth was a retired route) |
-| **Total** | **≈ 44 frames** (45, then 41 when `/activate` was found deprecated, then 40 when `/founding-member-status` was found retired, then **up to 44** when the quiz turned out to be five steps and the kit pages turned out not to share a template) |
+| **Total** | **≈ 45 frames** (45, then 41 when `/activate` was found deprecated, then 40 when `/founding-member-status` was found retired, then up to 44 when the quiz turned out to be five steps and the kit pages turned out not to share a template, then **45** when the kit pages turned out to have a second state behind `BUNDLES_ENABLED`). ✅ **ALL 40 FRAMES PLUS THE 5 MARKER-CARD VARIANTS ARE DRAWN. THE JOURNEY SPINE IS COMPLETE (2026-08-29).** The two blog frames came off the board rather than being drawn, because the blog keeps its own language by Keith's 2026-08-27 ruling. |
 
 **Light and dark is a token flip, not a redraw**, so it does not double the number. It does mean every
 frame has to be checked in both, which is exactly what an HTML canvas makes cheap and a static

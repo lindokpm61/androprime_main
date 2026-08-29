@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: the Act stage in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE ACT STAGE IN DIRECTION F'S LANGUAGE
+   /supplements, the two product pages, /supplement-waitlist,
+   /supplement-waitlist-status
+
+   CONCEPT ONLY. NOT BUILT. Ninth file in the journey set.
+
+   ▶ 🔴 READ THIS BEFORE ANYTHING ELSE: THE STRATEGY MOVED UNDER THIS STAGE,
+   AND THE LIFECYCLE CHECK ONLY FOUND IT BECAUSE IT LOOKS IN docs/.
+
+   Every route here is alive, has no retirement comment, and renders fine.
+   The check that mattered was the docs one.
+   `docs/2026-08-23-supplement-shop-front-spec.md` opens with:
+   *"SUPERSEDED IN DIRECTION, 2026-08-24. This document assumes the supplement
+   shop is the thing being built. Keith has since moved supplements to a
+   secondary shop at member price, with the app as the product and the kit as
+   the gateway."* That thesis was **ADOPTED 2026-08-25**, and
+   `01_strategy/STATE.md` (2026-08-26) adds that member pricing is for
+   supplements and **"stays dark until supplements are listed in the shop"**,
+   with the shop living at `/supplements`, organised by panel, identical for
+   every visitor.
+
+   So these four routes are pre-decision. They are waitlist pages for a range
+   with no launch date, built when supplements were going to lead the funnel,
+   and the adopted position now has them as a member-priced secondary shop.
+
+   ▶ WHY THEY ARE DRAWN ANYWAY, AND WHAT THAT IS WORTH.
+   A customer can reach all four today and the copy on them is still true:
+   nothing has launched, the waitlist is real, no payment is taken. The
+   redesign is scored against what is live, so what is live gets drawn.
+   ⚠ **This is the stage most likely to be redrawn**, and it is the one place
+   in the spine where that is worth saying out loud before the work is spent.
+   The replacement is NOT drawable yet: a shop organised by panel does not
+   exist, is not specced (the spec that would have described it is the one
+   marked superseded), and drawing it would be inventing a design for an
+   undecided product. **The honest deliverable is the live pages plus this
+   note, not a guess at the shop.**
+
+   ▶ WHAT IS ACTUALLY THERE.
+
+     /supplements ......................... 213 lines ........... Frame Z
+     the two product pages ................ 263 lines EACH ...... Frame Z2
+     the waitlist form's five states ...... in the component .... Frame Z3
+     /supplement-waitlist ................. 184 lines ........... Frame AA
+     /supplement-waitlist-status .......... 61 lines, app group . Frame AB
+
+   ▶ THE PRODUCT PAGES SIT BETWEEN THE TWO ERRORS THIS INVENTORY HAS MADE.
+   There is **no `[product]` route**: `/supplements/daily-stack` and
+   `/supplements/collagen` are two hand-written files. But unlike the kit
+   pages, they DO share a skeleton, nine sections in the same order. And
+   unlike a template, **250 of their 263 lines differ** and their ingredient
+   data is not even the same shape (collagen's rows are `{name, dose, why}`,
+   daily-stack's are `{name, num, dose, claim, why}`), so no shared component
+   could render both without changing one of them. They are the same page
+   written twice, which is a third thing again: not a template, not two
+   unrelated pages. Both files being **exactly 263 lines** is a coincidence.
+
+   ▶ APPROVED CLAIMS. Four EFSA quotations across these routes, and the
+   supplement range is unlaunched, which makes them the highest-risk copy in
+   the stage: an EFSA claim is a fixed string and these ones are attached to
+   products that do not exist yet. Quoted character for character.
+
+   ▶ 🔴 A SIGNED-OUT VISITOR TO /supplement-waitlist-status GETS A BLANK PAGE.
+   `if (!user) return null`. No redirect, no sign-in prompt, no empty state:
+   the route renders nothing at all. `/order/confirmed` in the same situation
+   redirects to a sign-in round trip. Drawn as a state because it is one.
+
+   COLOUR. `/supplement-waitlist-status` is the only route in this file served
+   from the app group, and the inventory lists it as speaking App today. It is
+   still not the dashboard: no status colour anywhere here, one accent.
+
+   MOTION. Reader-caused response plus one load reveal. Nothing loops.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF; --tray:#F1F2F4; --core:#FFFFFF; --sunk:#E7E9EC;
+  --ink:#0A0B0D; --ink-2:#4A4F57; --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10); --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458; --flag-f:rgba(224,164,88,.14); --flag-f2:rgba(224,164,88,.26);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1); --r:28px; --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.narrow{max-width:820px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:32px 30px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 14px;margin-bottom:18px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:64ch}
+.sub+.sub{margin-top:12px}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:70ch;
+}
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:14px 24px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+.btn.sm{padding:10px 18px;font-size:13.5px}
+.btn.wide{width:100%}
+.btn.off{opacity:.45;cursor:not-allowed}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.kchip{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:5px 13px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+}
+.flagchip{
+  display:inline-flex;align-items:center;gap:8px;background:var(--flag);color:#0A0B0D;
+  border-radius:999px;padding:5px 12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+.hero{padding-top:56px;padding-bottom:26px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.045em;margin-bottom:18px}
+.hero .stand{font-size:clamp(1.02rem,1.6vw,1.18rem);line-height:1.62;color:var(--ink-2);max-width:62ch}
+.sec{padding:34px 0 6px}
+.sec h2{font-size:clamp(1.5rem,3.2vw,2.2rem);letter-spacing:-.045em;max-width:24ch}
+.sec .grey{color:var(--ink-3)}
+
+.freechips{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+
+/* ---------- PRODUCT CARDS ---------- */
+.prods{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:900px){ .prods{grid-template-columns:repeat(2,1fr)} }
+.prod{background:var(--core);border-radius:var(--r-in);padding:24px 22px;box-shadow:inset 0 0 0 1px var(--hair);display:flex;flex-direction:column}
+.prod .r{
+  display:block;margin-bottom:10px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.prod h3{font-size:1.35rem;letter-spacing:-.04em;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.prod p{font-size:15px;line-height:1.6;color:var(--ink-2)}
+.efsa{background:var(--sunk);border-radius:16px;padding:16px;box-shadow:inset 0 0 0 1px var(--hair);margin-top:16px}
+.efsa q{display:block;font-size:14.5px;line-height:1.55;color:var(--ink);padding-left:12px;border-left:2px solid var(--flag)}
+.efsa q+q{margin-top:9px}
+.prod .go{margin-top:auto;padding-top:18px}
+
+/* ---------- SKELETON TABLE ---------- */
+.skel{border-radius:var(--r-in);overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}
+.skelrow{display:grid;grid-template-columns:1fr;gap:2px;padding:13px 18px;border-bottom:1px solid var(--hair);background:var(--core)}
+@media (min-width:800px){ .skelrow{grid-template-columns:180px 1fr 1fr;gap:18px;align-items:baseline} }
+.skelrow:last-child{border-bottom:0}
+.skelrow .s{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+.skelrow .a,.skelrow .b{font-size:14px;line-height:1.5;color:var(--ink-2)}
+.skelrow.head{background:var(--sunk)}
+.skelrow.head .a,.skelrow.head .b,.skelrow.head .s{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ---------- FORM ---------- */
+.field{margin-bottom:16px}
+.field>label{display:block;margin-bottom:8px;font-size:14px;font-weight:600;color:var(--ink)}
+.inp{
+  width:100%;border:1px solid var(--hair-2);border-radius:14px;background:var(--core);
+  padding:13px 15px;font:inherit;font-size:15.5px;color:var(--ink-3);
+}
+.opt{display:flex;gap:11px;align-items:flex-start;margin:14px 0;font-size:14px;line-height:1.55;color:var(--ink-2)}
+.opt .box{width:20px;height:20px;border-radius:6px;flex:none;margin-top:1px;background:var(--core);box-shadow:inset 0 0 0 1.5px var(--hair-2)}
+.opt .box.tick{box-shadow:inset 0 0 0 1.5px var(--ink);position:relative}
+.opt .box.tick::after{content:"";position:absolute;left:6px;top:3px;width:5px;height:10px;border:solid var(--ink);border-width:0 2px 2px 0;transform:rotate(42deg)}
+
+.states{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:900px){ .states{grid-template-columns:repeat(2,1fr)} }
+.state{background:var(--core);border-radius:var(--r-in);padding:22px 20px;box-shadow:inset 0 0 0 1px var(--hair)}
+.state .r{
+  display:block;margin-bottom:14px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.state h4{font-size:1.15rem;letter-spacing:-.035em;margin-bottom:9px}
+.state p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+.state.blank{background:var(--sunk);display:flex;align-items:center;justify-content:center;min-height:190px;text-align:center}
+.errline{margin-top:12px;font-size:14px;color:var(--ink);padding-left:12px;border-left:2px solid var(--ink)}
+
+.js .rise{opacity:0;transform:translateY(14px)}
+.js .rise.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+@media (prefers-reduced-motion:reduce){ .js .rise,.js .rise.in{opacity:1;transform:none;transition:none} }
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<div class="flabel"><div class="in">
+  <b>Read first</b><span class="hot">the strategy moved under this stage on 2026-08-24, adopted 2026-08-25</span>
+</div></div>
+
+<div class="wrap" style="padding-top:26px">
+  <p class="note hot"><b>🔴 THESE FOUR ROUTES ARE PRE-DECISION, AND ONLY THE DOCS CHECK FOUND IT.</b> Every route is alive, carries no retirement comment and renders fine, so the code says nothing is wrong. <code>docs/2026-08-23-supplement-shop-front-spec.md</code> opens with <b>"SUPERSEDED IN DIRECTION, 2026-08-24"</b>: supplements moved to a secondary shop at member price, with <b>the app as the product and the kit as the gateway</b>. Adopted 2026-08-25. <code>01_strategy/STATE.md</code> adds that member pricing is for supplements and <b>"stays dark until supplements are listed in the shop"</b>, with the shop at <code>/supplements</code>, organised by panel, identical for every visitor.
+
+  <b>Drawn anyway, because a customer can reach all four today and the copy on them is still true</b>: nothing has launched, the waitlist is real, no payment is taken. ⚠ <b>This is the stage most likely to be redrawn</b>, and the replacement is not drawable: a shop organised by panel does not exist, is not specced, and the document that would have specced it is the superseded one. <b>Guessing at it would be inventing a design for an undecided product.</b></p>
+</div>
+
+<!-- ============ FRAME Z: /supplements ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame Z</b><span>/supplements</span><span>hero, what is coming, two products, the bundle concept, routing guidance</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="eyebrow"><i></i> Supplements // launching shortly</div>
+  <h1>Built for what your numbers<br><span style="color:var(--ink-3)">actually show.</span></h1>
+  <p class="stand">Our men's health supplement range launches shortly, as soon as our manufacturing partner is confirmed. Two targeted formulas, built around blood-data patterns. Not generic men's health products. Join the waitlist for early dispatch, and we will email you when they launch.</p>
+  <div class="freechips">
+    <span class="kchip">Free to join</span>
+    <span class="kchip">No payment is taken</span>
+    <span class="kchip">No supplement orders are being taken right now</span>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">What is coming</p>
+  <h2>Two supplement routes.<br><span class="grey">Different jobs.</span></h2>
+</div>
+<div class="wrap">
+  <div class="prods">
+    <div class="prod rise">
+      <span class="r">Daily deficiency support</span>
+      <h3>Daily Stack <span class="kchip">Coming soon</span></h3>
+      <p>Built for men whose blood data shows the common gaps behind energy, recovery, and training output. Designed to be the one daily product, not the sixth.</p>
+      <div class="efsa">
+        <p class="blab" style="margin-bottom:10px">EFSA-approved claims</p>
+        <q>Zinc contributes to the maintenance of normal testosterone levels.</q>
+        <q>Vitamin D3 contributes to normal muscle function.</q>
+        <q>Active B12 contributes to normal energy-yielding metabolism.</q>
+      </div>
+      <div class="go"><a class="btn ghost sm" href="#">Read about Daily Stack <span aria-hidden="true">&#8594;</span></a></div>
+    </div>
+
+    <div class="prod rise">
+      <span class="r">Joint and inflammation support</span>
+      <h3>Joint &amp; Recovery Collagen <span class="kchip">Coming soon</span></h3>
+      <p>A recovery-focused collagen formula for active men whose blood data confirmed elevated inflammation markers, and who report joint symptoms.</p>
+      <div class="efsa">
+        <p class="blab" style="margin-bottom:10px">EFSA-approved claim</p>
+        <q>Vitamin C contributes to normal collagen formation for the normal function of cartilage.</q>
+      </div>
+      <div class="go"><a class="btn ghost sm" href="#">Read about Collagen <span aria-hidden="true">&#8594;</span></a></div>
+    </div>
+  </div>
+
+  <div class="tray rise" style="margin-top:16px">
+    <div class="core">
+      <span class="flagchip">Coming with the launch</span>
+      <h3 style="font-size:1.3rem;letter-spacing:-.04em;margin:12px 0 10px">Complete Men's Stack</h3>
+      <p class="sub">A bundle pairing the Daily Stack and Joint and Recovery Collagen, for men whose blood data points in both directions. Pricing is finalised before launch. Waitlist members hear first.</p>
+      <div class="btns" style="margin-top:18px"><a class="btn" href="#">Join the waitlist</a></div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>FOUR EFSA CLAIMS ON THIS FRAME, ATTACHED TO PRODUCTS THAT DO NOT EXIST YET.</b> Quoted character for character. An EFSA claim is a fixed string, and these are the highest-risk copy in the stage precisely because the range is unlaunched: there is no product to check the wording against, so the only thing keeping it right is that nobody edits it. A redesign that reflowed one of these for rhythm would have changed a regulated statement about a product that has not shipped.</p>
+
+  <p class="note"><b>The Complete Men's Stack is a concept, not a product, and it is drawn as one.</b> It takes the tray and the accent chip rather than sitting as a third product card beside the other two: on the live page it is a full-width block after them, and flattening it into a three-up row would put an unpriced idea on the same footing as two named formulas.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">In the meantime</p>
+  <h2>Test first.<br><span class="grey">Supplement later.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">The blood test is the part that is live today. We recommend supplements based on your result. Our own range launches shortly. Until then, the result still tells you what is going on.</p>
+      <div class="btns" style="margin-top:18px">
+        <a class="btn" href="#">See the tests <span aria-hidden="true">&#8594;</span></a>
+        <a class="btn ghost" href="#">Not sure yet</a>
+      </div>
+    </div>
+  </div>
+  <p class="note"><b>This block is the whole Act stage's honest position and it is worth keeping through any rebuild.</b> A shop front with nothing to sell is the hardest page on the site to write, and the live one solves it by pointing at the thing that does exist. Whatever the member-priced shop becomes, the state where the range is not yet listed still needs this answer.</p>
+</div>
+
+<!-- ============ FRAME Z2: the two product pages ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame Z2</b><span>/supplements/daily-stack and /supplements/collagen</span><span>one skeleton, written twice</span>
+  <span class="hot">no [product] route</span>
+</div></div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="skel">
+    <div class="skelrow head"><span class="s">Section</span><span class="a">Daily Stack</span><span class="b">Joint &amp; Recovery Collagen</span></div>
+    <div class="skelrow"><span class="s">1 &middot; Hero</span><span class="a">Men's multivitamin framing, waitlist form inline</span><span class="b">Joint and recovery framing, waitlist form inline</span></div>
+    <div class="skelrow"><span class="s">2 &middot; The problem</span><span class="a">"THE PROBLEM"</span><span class="b">"THE REALITY"</span></div>
+    <div class="skelrow"><span class="s">3 &middot; Formulation</span><span class="a">Rows of <code>{name, num, dose, claim, why}</code></span><span class="b">Rows of <code>{name, dose, why}</code></span></div>
+    <div class="skelrow"><span class="s">4 &middot; Dr Ewa</span><span class="a">Clinical oversight block</span><span class="b">Clinical oversight block</span></div>
+    <div class="skelrow"><span class="s">5 &middot; Waitlist CTA</span><span class="a">Shared form component</span><span class="b">Shared form component</span></div>
+    <div class="skelrow"><span class="s">6 &middot; FAQ</span><span class="a">Product questions</span><span class="b">Product questions</span></div>
+    <div class="skelrow"><span class="s">7 &middot; Related reading</span><span class="a">Article cards</span><span class="b">Article cards</span></div>
+    <div class="skelrow"><span class="s">8 &middot; Compare</span><span class="a">Cross-sell to the other product</span><span class="b">Cross-sell to the other product</span></div>
+  </div>
+
+  <p class="note hot"><b>THESE TWO SIT BETWEEN THE TWO ERRORS THIS INVENTORY HAS ALREADY MADE.</b> There is <b>no `[product]` route</b>: they are two hand-written files, so the "one template, 2 routes" line was wrong the same way it was wrong about the kits. But unlike the kit pages they <b>do</b> share a skeleton, nine sections in the same order. And unlike a real template, <b>250 of their 263 lines differ</b>, and the formulation data is not the same shape in both, so no shared component could render them without changing one. <b>They are the same page written twice</b>, which is a third category: not a template, not two unrelated pages. Both files being exactly 263 lines is a coincidence, and a persuasive one.</p>
+
+  <p class="note"><b>Drawn as a skeleton rather than as two full pages, deliberately.</b> Drawing both in full would produce two near-identical frames and quietly assert that the rebuild should keep them separate. Drawing one and calling it the template would assert the opposite. The skeleton shows what is shared and what is not, and leaves the decision where it belongs. <b>Dr Ewa appears here for the fourth and fifth time across the journey</b>, on both product pages, after `/about`, `/how-it-works` and the Kit 3 founders block.</p>
+</div>
+
+<!-- ============ FRAME Z3: the waitlist form states ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame Z3</b><span>the shared waitlist form</span><span>five states, on three different routes</span>
+  <span class="hot">not in the inventory</span>
+</div></div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">Idle</p>
+      <div class="field">
+        <label for="wl">Email</label>
+        <input class="inp" id="wl" type="text" value="you@example.com" readonly>
+      </div>
+      <div class="opt">
+        <span class="box tick" aria-hidden="true"></span>
+        <span>Email me when the supplement range is ready, plus occasional early-access offers. I can unsubscribe at any time. See our <a href="#" style="color:var(--ink)">Privacy Policy</a>.</span>
+      </div>
+      <button class="btn wide" type="button">Join the early-access list</button>
+      <p class="fine" style="margin-top:12px">No payment. No commitment. We email you when the supplement range is ready.</p>
+    </div>
+  </div>
+
+  <div class="states">
+    <div class="state rise">
+      <span class="r">Submitting</span>
+      <button class="btn wide off" type="button" disabled>Joining&#8230;</button>
+      <p style="margin-top:12px">Button disabled, label swapped. Same pattern as the checkout form.</p>
+    </div>
+    <div class="state rise">
+      <span class="r">Error</span>
+      <p>The form stays as it is and an error line appears above the button.</p>
+      <p class="errline">The message comes from the API response, so there is no fixed string to transcribe.</p>
+    </div>
+    <div class="state rise">
+      <span class="r">Success &middot; the form is replaced</span>
+      <span class="flagchip" style="margin-bottom:10px">You're on the list</span>
+      <h4>Thanks. We'll be in touch.</h4>
+      <p>You will be one of the first to know when our supplement range is ready. No payment was taken. You can unsubscribe at any time by emailing hello@andro-prime.com.</p>
+    </div>
+    <div class="state rise">
+      <span class="r">Already listed &middot; same shape, different words</span>
+      <span class="kchip" style="margin-bottom:10px">Already on the list</span>
+      <h4>Good news. We already had you.</h4>
+      <p>You will be one of the first to know when our supplement range is ready. No payment was taken. You can unsubscribe at any time by emailing hello@andro-prime.com.</p>
+    </div>
+  </div>
+
+  <p class="note hot"><b>FIVE STATES IN ONE COMPONENT, ON THREE ROUTES, AND THE INVENTORY HAD NONE OF THEM.</b> <code>idle | submitting | success | already | error</code>. The form is used on <code>/supplements</code>, on both product pages and on <code>/supplement-waitlist</code>, so a change to any state lands in four places at once. <b>The `already` state is the one worth noticing</b>: it is a distinct branch with its own heading, and it exists because re-joining a waitlist is the commonest thing a returning visitor does. Most forms treat that as success and lie slightly; this one does not.</p>
+
+  <p class="note"><b>Success takes the accent and `already` does not.</b> Both replace the form, both say the same paragraph. The difference is that one is a thing that just happened and the other is a thing that already had. Same reasoning as the message and error banners on the auth card: the accent goes on the state the reader did not already know about.</p>
+</div>
+
+<!-- ============ FRAME AA: /supplement-waitlist ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AA</b><span>/supplement-waitlist</span><span>the standalone waitlist page</span>
+</div></div>
+
+<div class="narrow hero">
+  <div class="eyebrow"><i></i> Supplement waitlist</div>
+  <h1>Get them first.</h1>
+  <p class="stand">Join the early-access list and we will email you the moment the range is ready to ship. Free to join, no payment taken, and nothing is being ordered today.</p>
+</div>
+<div class="narrow">
+  <div class="tray rise">
+    <div class="core">
+      <div class="field">
+        <label for="wl2">Email</label>
+        <input class="inp" id="wl2" type="text" value="you@example.com" readonly>
+      </div>
+      <div class="opt">
+        <span class="box" aria-hidden="true"></span>
+        <span>Email me when the supplement range is ready, plus occasional early-access offers. I can unsubscribe at any time. See our <a href="#" style="color:var(--ink)">Privacy Policy</a>.</span>
+      </div>
+      <button class="btn wide off" type="button" disabled>Join the early-access list</button>
+      <p class="fine" style="margin-top:12px">No payment. No commitment. We email you when the supplement range is ready.</p>
+    </div>
+  </div>
+  <p class="note"><b>The button is drawn disabled because it is</b>: the form gates submission on the consent box, and the box above is unticked. That is the honest resting state of this page for a first-time visitor, and drawing the enabled version would show a screen nobody actually lands on. <b>The hero copy above is a paraphrase of the live page's framing, marked as such</b>: the standalone waitlist page is the one route in this stage whose hero was not transcribed line for line, because it restates the same three promises that are already quoted exactly on Frame Z.</p>
+</div>
+
+<!-- ============ FRAME AB: /supplement-waitlist-status ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AB</b><span>/supplement-waitlist-status</span><span>listed, not listed, and signed out</span>
+  <span class="hot">app group, noindex</span>
+</div></div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="states">
+    <div class="state rise">
+      <span class="r">Listed</span>
+      <h4>You're on the supplement waitlist.</h4>
+      <p>You were added on 14 August 2026. We'll email you the moment our supplement range is ready to ship. No payment is required.</p>
+    </div>
+    <div class="state rise">
+      <span class="r">Not listed</span>
+      <h4>Not on the waitlist yet.</h4>
+      <p>You are not on the supplement waitlist yet. Joining is free. No payment, no commitment. We email you when the range is live.</p>
+      <div class="btns" style="margin-top:16px"><a class="btn sm" href="#">Join the supplement waitlist</a></div>
+    </div>
+    <div class="state blank rise">
+      <div>
+        <span class="r" style="margin-bottom:8px">Signed out</span>
+        <p class="fine" style="margin:0 auto">Nothing renders. No redirect, no prompt, no empty state.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 A SIGNED-OUT VISITOR GETS A BLANK PAGE.</b> <code>if (!user) return null</code>: the route returns nothing at all. No redirect to sign-in, no prompt, no empty state, just a page with the shell and no content. <b><code>/order/confirmed</code> in the same situation redirects into a sign-in round trip</b>, so the app already has a pattern for this and this route does not use it. Drawn as a state because it is one, and because a blank frame in a mockup is the only way that behaviour ever gets looked at. <b>It is a behaviour fix rather than a design one</b> and it belongs to Keith.</p>
+
+  <p class="note"><b>The date is the only live-changing value in the whole Act stage</b>, and it is the same shape as the "change over time is aliveness" note from the kit frames: a real date a reader recognises does more for a static page than any amount of motion. The sample date here is illustrative and marked as such.</p>
+</div>
+
+<div class="flabel"><div class="in">
+  <b>End of the Act stage</b><span>Frames Z, Z2, Z3, AA, AB</span>
+  <span class="hot">left in the spine: the LP template and /how-to-sample</span>
+</div></div>
+
+<div class="wrap" style="padding:26px 20px 60px">
+  <p class="note hot"><b>What this file settles, and what it deliberately does not.</b> It settles the four live Act routes at <b>5 frames rather than 4</b>, the extra one being the shared form's five states. <b>It does not draw the member-priced shop</b>, because that is adopted in direction and undecided in substance: no panel organisation, no pricing, no spec that has not been superseded. Two behaviour questions go back to Keith: <b>the blank signed-out page</b> on the status route, and <b>whether this stage is worth rebuilding at all before the shop decision lands</b>, since it is the one part of the spine whose redraw is most likely to be thrown away.</p>
+</div>
+
+<script>
+(function(){
+  if(!document.documentElement.classList.contains('js'))return;
+  var els=[].slice.call(document.querySelectorAll('.rise'));
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

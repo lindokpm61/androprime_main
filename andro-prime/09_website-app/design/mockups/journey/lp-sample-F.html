@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: the LP shell and /how-to-sample in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE LAST TWO FRAMES: THE LP SHELL, AND /how-to-sample
+
+   CONCEPT ONLY. NOT BUILT. Tenth and final file in the journey set.
+
+   ▶ 🔴 "ONE TEMPLATE" WAS WRONG FOR THE THIRD TIME, AND THIS IS THE WORST OF
+   THE THREE. The inventory reads "Landing page template, /lp/[product], 5
+   routes, one template". There is **no dynamic route**. There are five
+   hand-written files:
+
+     /lp/daily-stack ......... 246 lines
+     /lp/collagen ............ 266 lines
+     /lp/energy-recovery ..... 412 lines
+     /lp/testosterone ........ 505 lines
+     /lp/hormone-recovery .... 723 lines
+
+   A **three-fold spread**, five different section lists, and two different
+   section-comment styles. What IS shared is a real `app/lp/layout.tsx`: a
+   stripped `Nav variant="lp"` and a minimal footer carrying one compliance
+   line. So there is a shell, and there is no template. This is the same error
+   as the kit pages and the supplement product pages, in the same direction,
+   for the third time in one inventory.
+
+   ▶ 🔴 AND /lp/hormone-recovery IS THE KIT 3 PAGE AGAIN.
+   Its eleven sections are the Kit 3 product page's ten, in the same order,
+   plus a closing CTA: hero, the reality, the data, trust bar and process, the
+   full picture, the next step, built for, founders, compare, FAQ and order.
+   Its COMPARE section carries the same heading as Kit 3's, "All three kits,
+   side by side", which makes it **the THIRD comparison table of the same
+   three products** on the site, after `/kits` (nine marker rows with ticks)
+   and `/kits/hormone-recovery` (five spec rows in words). 723 lines
+   duplicating an 882-line page.
+
+   ▶ ⚠ NOTHING IN THE CODEBASE LINKS TO ANY /lp/ ROUTE.
+   Zero inbound links from `app/`, `components/` or `lib/`. That is correct by
+   design for paid-acquisition pages reached from ads rather than from the
+   site. It is worth stating anyway, because `01_strategy/STATE.md` records
+   that nothing has been promoted (3 kit orders ever, ~20 organic visits a
+   month, none commercial-intent), so **these five pages may never have been
+   used**. Five hand-written pages, 2,152 lines, no traffic path.
+
+   ▶ THE BLOG FRAMES ARE NOT DRAWN, AND THAT IS A DECISION RATHER THAN A GAP.
+   The inventory counts a blog index and a blog article in Land. Keith ruled
+   on 2026-08-27 that **the blog keeps `blog-skin.css`**: F lost that frame.
+   `blog-F.html` exists as the record of the frame it lost and is explicitly
+   NOT ADOPTED. So no F frame is owed for either, and counting them as
+   outstanding work overstates what is left. They come off the board.
+
+   ▶ /how-to-sample DOES NOT EXIST, AND IT IS THE ONLY GENUINELY NEW PAGE IN
+   THE WHOLE SET. It is the sanctioned replacement for the deprecated
+   `/activate` (`docs/2026-06-12-activate-qr-deprecation.md`): no login, no
+   per-order kit code, one generic page behind a QR printed identically on
+   every kit insert. **Its copy already exists** as the `INSTRUCTIONS` array
+   in `app/activate/page.tsx`, which is what survives the deprecation, so the
+   five steps below are transcribed rather than written. ⚠ **The video does
+   not exist.** It is drawn as an absent slot rather than a placeholder that
+   looks like content, because a mockup showing a video frame is a mockup
+   asserting there is a video.
+
+   COLOUR. Marketing host on both. One accent, no status colour.
+   MOTION. Reader-caused response plus one load reveal. Nothing loops.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF; --tray:#F1F2F4; --core:#FFFFFF; --sunk:#E7E9EC;
+  --ink:#0A0B0D; --ink-2:#4A4F57; --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10); --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458; --flag-f:rgba(224,164,88,.14); --flag-f2:rgba(224,164,88,.26);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1); --r:28px; --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.narrow{max-width:820px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:32px 30px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 14px;margin-bottom:18px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:64ch}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:70ch;
+}
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:14px 24px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.kchip{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:5px 13px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+}
+.hero{padding-top:54px;padding-bottom:24px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.5rem);letter-spacing:-.045em;margin-bottom:18px}
+.hero .stand{font-size:clamp(1.02rem,1.6vw,1.18rem);line-height:1.62;color:var(--ink-2);max-width:60ch}
+.sec{padding:34px 0 6px}
+.sec h2{font-size:clamp(1.5rem,3.2vw,2.2rem);letter-spacing:-.045em;max-width:24ch}
+.sec .grey{color:var(--ink-3)}
+
+/* ---------- THE LP SHELL ---------- */
+.shell{border-radius:var(--r-in);overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair);background:var(--core)}
+.shellbar{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:14px 20px;border-bottom:1px solid var(--hair);background:var(--sunk);
+}
+.shellbar .brand{font-weight:700;letter-spacing:-.03em;font-size:15px}
+.shellbody{padding:26px 20px;min-height:120px;display:flex;align-items:center;justify-content:center}
+.shellbody p{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);text-align:center;
+}
+.shellfoot{padding:16px 20px;border-top:1px solid var(--hair);background:var(--sunk)}
+.shellfoot p{font-size:12.5px;line-height:1.55;color:var(--ink-2);max-width:70ch}
+
+/* ---------- VARIANCE TABLE ---------- */
+.vscroll{overflow-x:auto;border-radius:var(--r-in);box-shadow:inset 0 0 0 1px var(--hair)}
+table.v{width:100%;border-collapse:collapse;min-width:820px;background:var(--core)}
+table.v th,table.v td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--hair);font-size:13.5px;vertical-align:top}
+table.v thead th{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+  border-bottom:1px solid var(--hair-2);
+}
+table.v td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+table.v td{color:var(--ink-2)}
+table.v .n{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;font-variant-numeric:tabular-nums;color:var(--ink)}
+table.v .yes{color:var(--ink)}
+table.v .no{color:var(--ink-3)}
+table.v tbody tr td{transition:background .18s var(--ease)}
+table.v tbody tr:hover td{background:var(--sunk)}
+table.v tbody tr:last-child td{border-bottom:0}
+table.v .big{background:var(--flag-f)}
+
+/* ---------- INSTRUCTION STEPS ---------- */
+.steps{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:820px){ .steps{grid-template-columns:repeat(2,1fr)} }
+.step{
+  background:var(--core);border-radius:var(--r-in);padding:22px 20px;
+  border:1px solid var(--hair);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
+}
+.step .bignum{
+  position:absolute;right:18px;top:50%;z-index:0;pointer-events:none;user-select:none;
+  font-weight:900;font-size:7rem;line-height:.78;letter-spacing:-.05em;padding-right:.05em;
+  color:transparent;-webkit-text-stroke:1px var(--flag);
+  opacity:0;transform:translateY(-48%) scale(.9);
+  transition:opacity .32s var(--ease),transform .38s var(--ease);
+}
+@supports not (-webkit-text-stroke: 1px #000){ .step .bignum{color:var(--flag);-webkit-text-stroke:0} }
+.step>*:not(.bignum){position:relative;z-index:1}
+.step .no{
+  transition:opacity .22s var(--ease),transform .22s var(--ease);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:14px;display:block;
+}
+.step.act,.step:hover{border-color:var(--flag);box-shadow:0 0 0 1px var(--flag),var(--amb);transform:translateY(-3px)}
+.step.act .bignum,.step:hover .bignum{opacity:.75;transform:translateY(-48%) scale(1)}
+.step.act .no,.step:hover .no{opacity:0;transform:translateY(-5px)}
+:root[data-theme="dark"] .step.act .bignum,
+:root[data-theme="dark"] .step:hover .bignum{opacity:.30}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step.act .bignum,
+  :root:not([data-theme="light"]) .step:hover .bignum{opacity:.30}
+}
+@media (hover:none){
+  .step .bignum{opacity:.34}
+  :root[data-theme="dark"] .step .bignum{opacity:.22}
+}
+@media (hover:none) and (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step .bignum{opacity:.22}
+}
+@media (prefers-reduced-motion:reduce){
+  .step,.step .bignum,.step .no{transition:none}
+  .step.act,.step:hover{transform:none}
+  table.v tbody tr td{transition:none}
+}
+.step h4{font-size:1.1rem;letter-spacing:-.03em;margin-bottom:8px}
+.step p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+
+/* ---------- THE ABSENT VIDEO ---------- */
+.novideo{
+  border-radius:var(--r-in);background:var(--sunk);box-shadow:inset 0 0 0 1px var(--hair);
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
+}
+.novideo p{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.7;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);max-width:38ch;
+}
+
+.js .rise{opacity:0;transform:translateY(14px)}
+.js .rise.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+@media (prefers-reduced-motion:reduce){ .js .rise,.js .rise.in{opacity:1;transform:none;transition:none} }
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME AC: THE LP SHELL ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AC</b><span>/lp/[five routes]</span><span>the shared shell, and what the five pages actually do</span>
+  <span class="hot">no template, third time</span>
+</div></div>
+
+<div class="wrap" style="padding-top:44px">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">What IS shared: app/lp/layout.tsx</p>
+      <div class="shell">
+        <div class="shellbar">
+          <span class="brand">Andro Prime</span>
+          <span class="kchip">Nav variant="lp"</span>
+        </div>
+        <div class="shellbody"><p>the page body, hand-written per route</p></div>
+        <div class="shellfoot">
+          <p>&copy; 2026 Andro Prime Ltd. Wellness information service only. Not medical advice. Testing by a UKAS ISO 15189 accredited laboratory.</p>
+        </div>
+      </div>
+      <p class="fine" style="margin-top:16px">A stripped nav with no site links, and a footer carrying one compliance line. That is the whole of the shared layer, and it is genuinely shared: one file, five routes.</p>
+    </div>
+  </div>
+
+  <p class="note hot"><b>🔴 THE FOOTER LINE IS THE MOST-REPEATED COMPLIANCE STATEMENT ON THE SITE AND IT IS THE ONE THAT IS PROPERLY SHARED.</b> "Wellness information service only. Not medical advice." rendered once in a layout rather than pasted into five pages. Worth naming because it is the counter-example to everything else this journey set has found: <b>when a fact lives in one file, it cannot drift</b>. Every duplication flagged across the other nine files is a case of the same discipline not being applied.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">What is not shared</p>
+  <h2>Five hand-written pages,<br><span class="grey">a three-fold spread.</span></h2>
+</div>
+<div class="wrap">
+  <div class="vscroll">
+    <table class="v">
+      <thead>
+        <tr>
+          <th>Route</th><th>Lines</th><th>Sections</th><th>Sample report</th><th>Founders</th><th>Compare table</th><th>Comment style</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>/lp/daily-stack</td><td class="n">246</td><td>Hero, the problem, clinical oversight, FAQ</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td>plain</td></tr>
+        <tr><td>/lp/collagen</td><td class="n">266</td><td>Hero, the science, clinical oversight, FAQ</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td>plain</td></tr>
+        <tr><td>/lp/energy-recovery</td><td class="n">412</td><td>Hero, symptom checker, trust bar, process, built for, clinical oversight, FAQ</td><td class="no">no</td><td class="no">no</td><td class="no">no</td><td>plain</td></tr>
+        <tr><td>/lp/testosterone</td><td class="n">505</td><td>Hero, SHBG, symptom checker, trust bar, process, what happens next</td><td class="yes">yes</td><td class="no">no</td><td class="no">no</td><td>plain</td></tr>
+        <tr class="big"><td>/lp/hormone-recovery</td><td class="n">723</td><td>Hero, the reality, the data, trust bar and process, the full picture, the next step, built for, founders, compare, FAQ and order, closing CTA</td><td class="yes">yes</td><td class="yes">yes</td><td class="yes">yes</td><td>&#9472; boxed &#9472;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note hot"><b>🔴 "ONE TEMPLATE" WAS WRONG FOR THE THIRD TIME IN THIS INVENTORY.</b> No dynamic route, five hand-written files, five different section lists, and 246 to 723 lines. The kit pages made this error, the supplement product pages made it, and this is the largest instance. <b>All three came from reading a route pattern and assuming the structure behind it.</b> Where the same inventory guessed the other way, on the auth routes, four routes turned out to be one component. Four guesses, four wrong, in both directions.</p>
+
+  <p class="note hot"><b>🔴 AND /lp/hormone-recovery IS THE KIT 3 PAGE AGAIN.</b> Its eleven sections are Kit 3's ten in the same order plus a closing CTA, and its COMPARE section carries the same heading, "All three kits, side by side". That makes it <b>the THIRD comparison table of the same three products</b>, after `/kits` (nine marker rows with ticks) and `/kits/hormone-recovery` (five spec rows in words). <b>723 lines duplicating an 882-line page</b>, with a third copy of the founders block and Dr Ewa's sixth appearance across the journey.</p>
+
+  <p class="note">⚠ <b>Nothing in `app/`, `components/` or `lib/` links to any `/lp/` route.</b> Correct by design for paid-acquisition pages reached from ads. Worth stating anyway: `01_strategy/STATE.md` records that nothing has been promoted, so <b>these five pages, 2,152 lines between them, may never have been used</b>. That is not a design finding, but it belongs beside any estimate of what rebuilding this stage is worth.</p>
+
+  <p class="note"><b>Drawn as a shell plus a variance table rather than as five frames, or as one "template" frame.</b> Same reasoning as the supplement product pages: drawing five asserts they should stay five, drawing one asserts a template that does not exist. The table shows what is actually there and leaves the decision where it belongs.</p>
+</div>
+
+<!-- ============ FRAME AD: /how-to-sample ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame AD</b><span>/how-to-sample</span><span>the sanctioned replacement for the deprecated /activate</span>
+  <span class="hot">does not exist yet</span>
+</div></div>
+
+<div class="narrow hero">
+  <div class="eyebrow"><i></i> Your kit</div>
+  <h1>How to take your sample.</h1>
+  <p class="stand">Five steps, about five minutes. No account needed, and nothing to enter. Do it fasted, first thing in the morning, for the most accurate hormone results.</p>
+</div>
+
+<div class="narrow">
+  <div class="novideo rise">
+    <p>Video slot &middot; the how-to-sample film<br>does not exist yet<br><br>drawn as an absent slot, not a placeholder</p>
+  </div>
+  <p class="note hot"><b>THE VIDEO IS DRAWN AS ABSENT, ON PURPOSE.</b> The inventory records that this page needs a how-to-sample film and that no such film exists, which makes this page product design as much as redraw. A mockup that showed a video frame with a play button would be asserting there is a video, and the next reader would scope the build assuming one. <b>An empty slot that says why it is empty is the only honest way to draw a dependency that has not been made.</b></p>
+</div>
+
+<div class="narrow sec">
+  <p class="blab">The five steps</p>
+</div>
+<div class="narrow">
+  <div class="steps">
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">1</span>
+      <span class="no">01</span>
+      <h4>Wash your hands</h4>
+      <p>Wash with warm water for 30 seconds to increase blood flow. Dry completely.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">2</span>
+      <span class="no">02</span>
+      <h4>Use the lancet</h4>
+      <p>Twist off the cap. Press it firmly against the side of your fingertip until you hear a click.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">3</span>
+      <span class="no">03</span>
+      <h4>Fill the tube</h4>
+      <p>Gently squeeze your finger. Wipe away the first drop, then fill the tube to the top line. Massage from palm to fingertip if slow.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">4</span>
+      <span class="no">04</span>
+      <h4>Seal and pack</h4>
+      <p>Snap the lid closed tightly. Place the tube in the biohazard bag, then into the original return box.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">5</span>
+      <span class="no">05</span>
+      <h4>Post today</h4>
+      <p>Use the pre-paid return envelope. Drop it in a priority postbox before the last collection of the day.</p>
+    </div>
+  </div>
+
+  <p class="note hot"><b>THE FIVE STEPS ARE TRANSCRIBED, NOT WRITTEN.</b> They are the `INSTRUCTIONS` array in `app/activate/page.tsx`, which is the part of the deprecated flow that survives its deprecation. The login gate goes, the per-order kit code goes, and all three error states go with them; the instruction content is what the replacement inherits. <b>This is the only new page in the journey set, and even here nothing was authored</b>: the copy existed, in a file marked "do not extend".</p>
+
+  <p class="note"><b>Two things this page must NOT have, and they are why it exists.</b> No sign-in, because the QR is printed identically on every kit insert and there is no order to match. And no kit code, because there is no per-order code any more. <code>docs/2026-06-12-activate-qr-deprecation.md</code> records that no per-order QR was ever printed, so the flow being replaced was served but unreachable. <b>The page is drawn at 820px rather than full width</b>: it is read on a phone, at a kitchen table, one-handed, by someone holding a lancet.</p>
+</div>
+
+<div class="narrow" style="padding-top:26px">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">After you post it</p>
+      <p class="sub">Results land in your dashboard within 2 to 5 working days of the lab receiving your sample, in plain English, with a specific next step.</p>
+      <div class="btns" style="margin-top:18px">
+        <a class="btn ghost" href="#">Go to your dashboard <span aria-hidden="true">&#8594;</span></a>
+      </div>
+    </div>
+  </div>
+  <p class="note">The turnaround sentence is the site's standard one, carried from `/how-it-works`. The dashboard link is a ghost button rather than the primary action because <b>at this moment the reader has just posted a sample and there is nothing in the dashboard yet</b>: the page's job ends when the envelope is in the postbox.</p>
+</div>
+
+<div class="flabel"><div class="in">
+  <b>The journey spine is drawn</b><span>Frames A through AD</span>
+  <span class="hot">ten files</span>
+</div></div>
+
+<div class="wrap" style="padding:26px 20px 60px">
+  <p class="note hot"><b>WHAT IS LEFT, AND IT IS NOT FRAMES.</b> The blog index and blog article are NOT drawn and are not owed: Keith ruled on 2026-08-27 that <b>the blog keeps `blog-skin.css`</b>, so F lost that frame and `blog-F.html` stands as the record. Counting them as outstanding overstates what remains. <b>With those off the board and these two frames drawn, the journey spine is complete.</b>
+
+  What remains is not drawing: the copy defects surfaced along the way (the panel understated by FAI and Albumin on two pages, the `/kits` selector description, the `/faq` table contradicting its own approved block), the behaviour questions (the signup age field, the blank signed-out status page), the naming questions (`/faq`, `/auth/consent`), and the decision Keith set at the start: <b>the mockup carries the full journey before anything is rebuilt.</b> It now does.</p>
+</div>
+
+<script>
+(function(){
+  var noHover=window.matchMedia&&window.matchMedia('(hover: none)').matches;
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  if(!noHover||!steps.length)return;
+  var tick=false;
+  function mark(){
+    tick=false;
+    var mid=window.innerHeight/2,best=null,bestD=Infinity;
+    steps.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.bottom<0||r.top>window.innerHeight)return;
+      var d=Math.abs((r.top+r.bottom)/2-mid);
+      if(d<bestD){bestD=d;best=el}
+    });
+    steps.forEach(function(el){ el.classList.toggle('act',el===best); });
+  }
+  window.addEventListener('scroll',function(){
+    if(tick)return; tick=true; window.requestAnimationFrame(mark);
+  },{passive:true});
+  window.addEventListener('resize',mark,{passive:true});
+  mark();
+})();
+(function(){
+  if(!document.documentElement.classList.contains('js'))return;
+  var els=[].slice.call(document.querySelectorAll('.rise'));
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

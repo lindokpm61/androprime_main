@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: the Buy stage in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE BUY STAGE IN DIRECTION F'S LANGUAGE
+   /checkout/details and /order/confirmed
+
+   CONCEPT ONLY. NOT BUILT. Seventh file in the journey set.
+
+   ▶ LIFECYCLE CHECK RAN FIRST. Both alive, ordinary imports, no retirement
+   comment, no docs entry. ⚠ Both are `robots: { index: false }`: these are
+   the only two frames in the journey set that are deliberately invisible to
+   search, which is correct for a checkout step and a receipt, and worth
+   knowing before anyone spends SEO effort on them.
+
+   ▶ THE THIN-ROUTE TRAP, AND IT CAUGHT THIS STAGE TOO.
+   `/checkout/details` is 80 lines and looks like the smallest page in the
+   whole set. It is a hero, a card and a reassurance strip wrapped around
+   `CheckoutDetailsForm`, which is another 177 lines and holds everything that
+   matters: three fields, six distinct error strings, a submitting state, and
+   the consent gate. This is the same shape as `/test-selector`, whose route
+   was 100 lines and whose quiz was 514, and the inventory undercounted that
+   one the same way. **A route's line count measures its wrapper, not its
+   surface.**
+
+     /checkout/details ....... 80 lines + a 177-line form ....... Frame V
+       its states ............ six errors plus submitting ....... Frame V2
+     /order/confirmed ........ 229 lines ....................... Frame W
+       its states ............ three renderable combinations .... Frame W2
+
+   ▶ 🔴 THE CA-018 CONSENT IS CAPTURED HERE, NOT ONLY ON /auth/consent.
+   `design/journey-inventory.md` records CA-018 against `/auth/consent` in the
+   Account stage, and describes that route as the one with compliance weight.
+   The Article 9(2)(a) health-data consent is taken **on this form, at the
+   point of purchase**, deliberately: the source comment says it is captured
+   here "so it is freely given as part of deciding to buy", it is required to
+   proceed to payment, and it is version-locked to
+   `HEALTH_PROCESSING_CONSENT_VERSION`, currently `2026-06-23-v1`
+   (`lib/auth/consentVersions.ts:18`).
+
+   The comment ends: *"Any wording change needs a new version string + a fresh
+   CA record."* So the sentence in Frame V is not copy a redesign may tidy,
+   reflow into two lines with different emphasis, or shorten to fit a card. It
+   is reproduced here character for character, and the inventory is corrected:
+   **the Buy stage carries approved consent copy, and the Account stage is not
+   the only place it lives.**
+
+   ▶ THE ORDER REFERENCE HAS A HISTORY, AND IT IS DRAWN AS TWO STATES.
+   Until 2026-08-04 `/order/confirmed` read `session_id` and rendered nothing
+   from it, so a customer who closed the confirmation email had no way to find
+   their reference. It now resolves one when it can and says where to find it
+   when it cannot. There is also a redirect-loop guard (`post_checkout=1`)
+   whose comment records that a failed sign-in used to bounce a customer
+   between two routes forever. Both states are drawn, because the fallback is
+   the one a first-time buyer actually hits.
+
+   COLOUR. Marketing host, so no status colour. The one accent is --flag,
+   spent on the two things this stage points at: the required consent, and the
+   order reference.
+
+   MOTION. Reader-caused response plus one load reveal, the settled budget.
+   Nothing loops.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF; --tray:#F1F2F4; --core:#FFFFFF; --sunk:#E7E9EC;
+  --ink:#0A0B0D; --ink-2:#4A4F57; --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10); --hair-2:rgba(10,11,13,.16);
+  --flag:#E0A458; --flag-f:rgba(224,164,88,.14); --flag-f2:rgba(224,164,88,.26);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1); --r:28px; --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.narrow{max-width:760px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:34px 32px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 14px;margin-bottom:20px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:66ch}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:66ch;
+}
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:14px 24px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+.btn.wide{width:100%;justify-content:center;padding:16px 24px;font-size:16px}
+.btn.off{opacity:.45;cursor:not-allowed}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.kchip{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:5px 13px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+}
+.flagchip{
+  display:inline-flex;align-items:center;gap:8px;background:var(--flag);color:#0A0B0D;
+  border-radius:999px;padding:5px 12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+
+.hero{padding-top:58px;padding-bottom:26px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:-.045em;margin-bottom:18px}
+.hero .stand{font-size:clamp(1.02rem,1.6vw,1.18rem);line-height:1.62;color:var(--ink-2);max-width:60ch}
+
+.sec{padding:34px 0 6px}
+.sec h2{font-size:clamp(1.5rem,3.2vw,2.2rem);letter-spacing:-.045em;max-width:22ch}
+.sec .grey{color:var(--ink-3)}
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+
+/* ---------- FORM ---------- */
+.field{margin-bottom:26px}
+.field>label,.field>.lab{
+  display:block;margin-bottom:9px;font-size:15px;font-weight:600;letter-spacing:-.02em;color:var(--ink);
+}
+.inp{
+  width:100%;border:1px solid var(--hair-2);border-radius:14px;background:var(--core);
+  padding:14px 16px;font:inherit;font-size:16px;color:var(--ink);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;font-variant-numeric:tabular-nums;
+}
+.inp.ph{color:var(--ink-3)}
+.hint{margin-top:8px;font-size:13.5px;line-height:1.55;color:var(--ink-3);max-width:60ch}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:340px}
+.seg button{
+  border:1px solid var(--hair-2);border-radius:14px;background:var(--core);
+  padding:14px 16px;font:inherit;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;
+  transition:background .18s var(--ease),box-shadow .18s var(--ease);
+}
+.seg button:hover{background:var(--flag-f);box-shadow:0 0 0 1.5px var(--flag)}
+.seg button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* the consent row: the one required control on the page, so it carries the accent */
+.consent{
+  display:flex;gap:14px;align-items:flex-start;background:var(--flag-f);
+  border-radius:18px;padding:18px;box-shadow:inset 0 0 0 1.5px var(--flag);
+}
+.consent .box{
+  width:22px;height:22px;border-radius:7px;flex:none;margin-top:2px;
+  background:var(--core);box-shadow:inset 0 0 0 1.5px var(--ink);position:relative;
+}
+.consent .box.tick::after{
+  content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;
+  border:solid var(--ink);border-width:0 2px 2px 0;transform:rotate(42deg);
+}
+.consent p{font-size:14.5px;line-height:1.6;color:var(--ink)}
+.consent a{color:var(--ink);text-underline-offset:3px}
+
+.err{
+  margin:20px 0;padding:14px 16px;border-radius:14px;background:var(--sunk);
+  box-shadow:inset 3px 0 0 var(--ink);font-size:14.5px;color:var(--ink);
+}
+.errlist{display:grid;gap:8px}
+.errlist .err{margin:0}
+.errlist .err span{
+  display:block;margin-bottom:4px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+
+.reassure{
+  display:grid;gap:1px;background:var(--hair);border-radius:var(--r-in);overflow:hidden;
+  grid-template-columns:1fr 1fr;margin-top:22px;
+}
+@media (min-width:820px){ .reassure{grid-template-columns:repeat(4,1fr)} }
+.reassure div{
+  background:var(--core);padding:15px 16px;text-align:center;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+
+/* ---------- ORDER REFERENCE ---------- */
+.oref{background:var(--flag-f);border-radius:18px;padding:20px;box-shadow:inset 0 0 0 1.5px var(--flag)}
+.oref .k{
+  display:block;margin-bottom:8px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
+}
+.oref .v{
+  display:block;font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:clamp(1.4rem,3vw,1.9rem);letter-spacing:.04em;font-weight:600;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.oref .n{display:block;margin-top:10px;font-size:13.5px;line-height:1.55;color:var(--ink-2)}
+.oref.fallback{background:var(--sunk);box-shadow:inset 0 0 0 1px var(--hair)}
+.oref.fallback .v{font-size:15px;letter-spacing:0;font-family:Geist,system-ui,sans-serif;font-weight:400;color:var(--ink-2);line-height:1.6}
+
+/* ---------- STEP CARDS, same component as everywhere else ---------- */
+.steps{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){ .steps{grid-template-columns:repeat(3,1fr)} }
+.step{
+  background:var(--core);border-radius:var(--r-in);padding:24px 22px;
+  border:1px solid var(--hair);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
+}
+.step .bignum{
+  position:absolute;right:18px;top:50%;z-index:0;pointer-events:none;user-select:none;
+  font-weight:900;font-size:7.8rem;line-height:.78;letter-spacing:-.05em;padding-right:.05em;
+  color:transparent;-webkit-text-stroke:1px var(--flag);
+  opacity:0;transform:translateY(-48%) scale(.9);
+  transition:opacity .32s var(--ease),transform .38s var(--ease);
+}
+@supports not (-webkit-text-stroke: 1px #000){ .step .bignum{color:var(--flag);-webkit-text-stroke:0} }
+.step>*:not(.bignum){position:relative;z-index:1}
+.step .no{
+  transition:opacity .22s var(--ease),transform .22s var(--ease);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:16px;display:block;
+}
+.step.act,.step:hover{border-color:var(--flag);box-shadow:0 0 0 1px var(--flag),var(--amb);transform:translateY(-3px)}
+.step.act .bignum,.step:hover .bignum{opacity:.75;transform:translateY(-48%) scale(1)}
+.step.act .no,.step:hover .no{opacity:0;transform:translateY(-5px)}
+:root[data-theme="dark"] .step.act .bignum,
+:root[data-theme="dark"] .step:hover .bignum{opacity:.30}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step.act .bignum,
+  :root:not([data-theme="light"]) .step:hover .bignum{opacity:.30}
+}
+@media (hover:none){
+  .step .bignum{opacity:.34}
+  :root[data-theme="dark"] .step .bignum{opacity:.22}
+}
+@media (hover:none) and (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step .bignum{opacity:.22}
+}
+@media (prefers-reduced-motion:reduce){
+  .step,.step .bignum,.step .no{transition:none}
+  .step.act,.step:hover{transform:none}
+  .seg button{transition:none}
+}
+.step h4{font-size:1.1rem;letter-spacing:-.03em;margin-bottom:9px}
+.step p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+
+.close{text-align:center;padding:40px 0 10px}
+.close h2{font-size:clamp(1.7rem,4vw,2.7rem);letter-spacing:-.05em;max-width:20ch;margin:0 auto 16px}
+
+.js .rise{opacity:0;transform:translateY(14px)}
+.js .rise.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+@media (prefers-reduced-motion:reduce){
+  .js .rise,.js .rise.in{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME V: /checkout/details ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame V</b><span>/checkout/details</span><span>step 1 of 2: date of birth, sex, and the consent gate</span>
+  <span class="hot">carries CA-018 consent copy, version-locked</span>
+</div></div>
+
+<div class="narrow hero">
+  <div class="eyebrow"><i></i> Step 1 of 2</div>
+  <h1>Two details<br>for the lab.</h1>
+  <p class="stand">We need your date of birth and sex to register your sample with the lab. The lab uses these to apply the correct reference ranges to your results. Payment and delivery are on the next step.</p>
+</div>
+
+<div class="narrow">
+  <div class="tray rise">
+    <div class="core">
+      <div class="field">
+        <label for="dob">Date of birth</label>
+        <input class="inp ph" id="dob" type="text" value="dd / mm / yyyy" readonly>
+        <p class="hint">You must be 18 or over. We use this to apply the correct lab reference ranges.</p>
+      </div>
+
+      <div class="field">
+        <span class="lab">Sex (biological)</span>
+        <div class="seg">
+          <button type="button" class="on">Male</button>
+          <button type="button">Female</button>
+        </div>
+        <p class="hint">Reference ranges for testosterone differ between male and female biology. The lab needs this to analyse your sample correctly.</p>
+      </div>
+
+      <div class="field" style="margin-bottom:22px">
+        <div class="consent">
+          <span class="box tick" aria-hidden="true"></span>
+          <p><span class="flagchip" style="margin-right:8px">Required</span>I consent to Andro Prime processing my health information, including my test results and the answers I provide, to run my test service and show me my results. <a href="#">How we use your data</a>.</p>
+        </div>
+      </div>
+
+      <button class="btn wide" type="button">Continue to payment</button>
+    </div>
+  </div>
+
+  <div class="reassure">
+    <div>GDPR compliant</div>
+    <div>Stored securely in EU</div>
+    <div>18+ only</div>
+    <div>Never sold. Never used for advertising.</div>
+  </div>
+
+  <p class="note hot"><b>🔴 APPROVED CONSENT COPY, VERSION-LOCKED, AND IT IS NOT WHERE THE INVENTORY SAYS IT IS.</b> The sentence in the amber box is the Article 9(2)(a) health-data consent, approved as <b>CA-018</b> (Ewa and Keith) and pinned to <code>HEALTH_PROCESSING_CONSENT_VERSION</code>, currently <code>2026-06-23-v1</code>. The source comment is explicit: it is captured here, at the point of purchase, "so it is freely given as part of deciding to buy", it is required to proceed to payment, and <b>"any wording change needs a new version string plus a fresh CA record"</b>. That puts it outside what a redesign may touch: not reworded, not shortened to fit, not split across two lines for rhythm. <b>`design/journey-inventory.md` records CA-018 against `/auth/consent` in the Account stage.</b> It is on this form too, and this is the one a buyer actually meets, because it gates payment.</p>
+
+  <p class="note"><b>Why the consent row is the only thing on this page wearing the accent.</b> It is the single required control, it is the one thing that blocks the button, and on the live page it is styled the same as everything else in the card. F spends its one marketing accent where the page is pointing, and on a two-field form the thing being pointed at is the box a buyer has to tick. The segmented control gets the same amber on hover, which is the idiom already settled on the quiz options.</p>
+
+  <p class="note"><b>The 18 gate is enforced twice and stated three times.</b> The date input carries a `max` of today minus 18 years, `isAtLeast18()` re-checks on submit, and "18+ only" appears in the reassurance strip. Drawn as it is: a redesign that replaced the native date input with a prettier custom control would drop the first of those three without anyone noticing, because the other two would still be there.</p>
+</div>
+
+<!-- ============ FRAME V2: the form's states ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame V2</b><span>/checkout/details</span><span>six error strings and the submitting state</span>
+  <span class="hot">not in the inventory, found in the component</span>
+</div></div>
+
+<div class="narrow" style="padding-top:26px">
+  <p class="note hot"><b>THE ROUTE IS 80 LINES AND THE FORM IS 177, WHICH IS WHERE ALL OF THIS LIVES.</b> Same shape as `/test-selector`, whose route was thin and whose quiz carried five steps nobody had written down. <b>A route's line count measures its wrapper, not its surface.</b> These six strings are reproduced exactly; each one is what a buyer is actually stopped by, and three of the six are reachable only by trying to skip a field.</p>
+
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">Validation, in the order the form checks</p>
+      <div class="errlist">
+        <div class="err"><span>Missing date of birth</span>Please enter your date of birth.</div>
+        <div class="err"><span>Under 18</span>You must be 18 or over to order a kit.</div>
+        <div class="err"><span>No sex selected</span>Please select male or female.</div>
+        <div class="err"><span>Consent not given</span>Please confirm you consent to us processing your health information to provide your test.</div>
+        <div class="err"><span>API refused</span>Something went wrong. Please try again.</div>
+        <div class="err"><span>Network failure</span>Network error. Please try again.</div>
+      </div>
+
+      <p class="blab" style="margin-top:26px">Submitting</p>
+      <button class="btn wide off" type="button" disabled>Redirecting to checkout&#8230;</button>
+      <p class="fine" style="margin-top:12px">The button is disabled while the checkout session is created, and the label changes rather than a spinner appearing. That is the whole of the motion budget this frame spends, and it is the correct place to spend it: the wait is real, it is between a click and a redirect off-site, and a label that says what is happening survives reduced motion where a spinner does not.</p>
+    </div>
+  </div>
+
+  <p class="note"><b>The errors are drawn as a stack so the set can be read at once. On the page only one appears at a time</b>, in the same position above the button, because the form returns on the first failure rather than validating everything and listing the results. That is a real behaviour and the rebuild should keep it or change it deliberately: on a three-field form, first-failure is arguably right, and it is also the reason a buyer who has missed two things gets told about them one at a time.</p>
+</div>
+
+<!-- ============ FRAME W: /order/confirmed ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame W</b><span>/order/confirmed</span><span>the receipt: confirmation, order reference, what happens next, account CTA</span>
+  <span class="hot">noindex, and it has three renderable states</span>
+</div></div>
+
+<div class="narrow hero">
+  <div class="eyebrow"><i></i> Order confirmed</div>
+  <h1>Kit on its way.</h1>
+  <p class="stand">Your order is confirmed and your kit will be dispatched the same working day. Check your email for your receipt.</p>
+</div>
+
+<div class="narrow">
+  <div class="tray rise">
+    <div class="core">
+      <div class="oref">
+        <span class="k">Your order reference</span>
+        <span class="v">AP-2K4M-8QX1</span>
+        <span class="n">Quote this if you contact us. It is also on your receipt and in your account.</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>THE REFERENCE IS THE ONE THING ON THIS PAGE A CUSTOMER COMES BACK FOR, AND UNTIL 2026-08-04 IT WAS NOT HERE.</b> The page read `session_id` and rendered nothing from it, so a customer who closed the confirmation email had no way to find their reference. It resolves one now when it can. That history is why it carries the accent rather than sitting as another line of body copy, and why the fallback below is drawn rather than treated as an edge case: <b>the fallback is what a first-time buyer actually sees</b>, because resolving a reference requires being signed in.</p>
+</div>
+
+<div class="narrow sec">
+  <p class="blab">What happens next</p>
+</div>
+<div class="narrow">
+  <div class="steps">
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">1</span>
+      <span class="no">01</span>
+      <h4>Kit arrives</h4>
+      <p>Dispatched the same working day. Fits through your letterbox. Everything you need is inside.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">2</span>
+      <span class="no">02</span>
+      <h4>Collect and return</h4>
+      <p>Five-minute finger-prick at home. Drop it back in any postbox using the prepaid return envelope in your kit.</p>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">3</span>
+      <span class="no">03</span>
+      <h4>Results in 2 to 5 working days</h4>
+      <p>Our UKAS accredited lab processes your sample. Results go to your dashboard with a plain-English explanation and a specific next step.</p>
+    </div>
+  </div>
+  <p class="note"><b>Fourth appearance of the same card, and the third different step count.</b> Four on `/how-it-works` and the kit pages, four on the selector, three here. Same component, four hand-written copies, drifting in content rather than in shape. The rebuild reads them from one place or keeps paying for this.</p>
+</div>
+
+<div class="narrow sec">
+  <p class="blab">You're all set</p>
+  <h2>Results land in<br><span class="grey">your dashboard.</span></h2>
+</div>
+<div class="narrow">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">Your kit is linked to your account. The moment your sample is processed, your results, recommendations, and next steps will appear on your private dashboard.</p>
+      <div class="btns" style="margin-top:20px">
+        <a class="btn" href="#">Go to dashboard <span aria-hidden="true">&#8594;</span></a>
+        <a class="btn ghost" href="#">Browse other tests</a>
+      </div>
+    </div>
+  </div>
+  <div class="reassure">
+    <div>UKAS ISO 15189 lab</div>
+    <div>Same-day dispatch</div>
+    <div>GMC-registered doctor</div>
+    <div>Results in 2 to 5 working days</div>
+  </div>
+</div>
+
+<!-- ============ FRAME W2: the three renderable states ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame W2</b><span>/order/confirmed</span><span>signed in with a reference, signed in without one, and not signed in</span>
+  <span class="hot">plus one redirect that renders nothing</span>
+</div></div>
+
+<div class="narrow" style="padding-top:26px">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">State 1 &middot; signed in, reference resolved</p>
+      <div class="oref">
+        <span class="k">Your order reference</span>
+        <span class="v">AP-2K4M-8QX1</span>
+        <span class="n">Quote this if you contact us. It is also on your receipt and in your account.</span>
+      </div>
+
+      <p class="blab" style="margin-top:26px">State 2 &middot; reference not resolved</p>
+      <div class="oref fallback">
+        <span class="k">Your order reference</span>
+        <span class="v">Your reference is on the confirmation email we have just sent you, and in your account under Test history.</span>
+      </div>
+
+      <p class="blab" style="margin-top:26px">State 3 &middot; not signed in: the account block changes too</p>
+      <div style="background:var(--sunk);border-radius:18px;padding:20px;box-shadow:inset 0 0 0 1px var(--hair)">
+        <p class="blab" style="margin-bottom:10px">One more thing</p>
+        <h3 style="font-size:1.3rem;letter-spacing:-.035em;margin-bottom:10px">Sign in to see your results.</h3>
+        <p class="sub" style="font-size:15px">We've created your account from your order. Get a one-time sign-in link by email to reach your private dashboard. No password to remember.</p>
+        <div class="btns" style="margin-top:16px">
+          <a class="btn" href="#">Get a sign-in link</a>
+          <a class="btn ghost" href="#">Use a password instead</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>THREE RENDERABLE STATES, NOT FOUR, AND THE FOURTH COMBINATION IS THE INTERESTING ONE.</b> Signed-in and reference-resolved are two binaries, but they are not independent: resolving a reference requires a signed-in user, so "not signed in with a reference" cannot occur. What exists instead is a <b>redirect</b>: a signed-out arrival carrying a `session_id` is sent to `/auth/post-checkout` and renders nothing at all. <b>That redirect has a loop guard with a scar</b>: `post_checkout=1` is stamped on the way back, and the source comment records that the route used to drop `session_id`, so a first-time buyer could never resolve a reference and a failed sign-in bounced him between two routes forever. A frame cannot draw a redirect, but an inventory that counts screens will miss it, so it is written down here.</p>
+
+  <p class="note"><b>State 2 is drawn in the neutral tray rather than the accent.</b> The accent marks a reference a customer can act on; there is nothing to act on in the fallback, and dressing an apology in the same amber as the real thing is how a design starts lying about which state is which.</p>
+</div>
+
+<div class="flabel"><div class="in">
+  <b>End of the Buy stage</b><span>Frames V, V2, W, W2</span>
+  <span class="hot">next: the five auth frames, then Act and the LP template</span>
+</div></div>
+
+<div class="wrap" style="padding:26px 20px 60px">
+  <p class="note hot"><b>What this file settles, and the one correction it forces on the inventory.</b> It settles the two Buy frames and the two state sets behind them, which takes the stage from 2 frames to 4. <b>And it moves CA-018:</b> the inventory has the health-data consent on `/auth/consent` in the Account stage, and it is captured on this checkout form, version-locked, gating payment. The Account-stage frame may still carry consent copy of its own, and that is worth checking when those five frames are drawn, but <b>the Buy stage is where a buyer actually gives it</b>.</p>
+</div>
+
+<script>
+(function(){
+  var noHover=window.matchMedia&&window.matchMedia('(hover: none)').matches;
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  if(!noHover||!steps.length)return;
+  var tick=false;
+  function mark(){
+    tick=false;
+    var mid=window.innerHeight/2,best=null,bestD=Infinity;
+    steps.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.bottom<0||r.top>window.innerHeight)return;
+      var d=Math.abs((r.top+r.bottom)/2-mid);
+      if(d<bestD){bestD=d;best=el}
+    });
+    steps.forEach(function(el){ el.classList.toggle('act',el===best); });
+  }
+  window.addEventListener('scroll',function(){
+    if(tick)return; tick=true; window.requestAnimationFrame(mark);
+  },{passive:true});
+  window.addEventListener('resize',mark,{passive:true});
+  mark();
+})();
+(function(){
+  if(!document.documentElement.classList.contains('js'))return;
+  var els=[].slice.call(document.querySelectorAll('.rise'));
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

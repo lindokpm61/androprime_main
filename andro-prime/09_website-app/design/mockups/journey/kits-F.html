@@ -1,0 +1,1671 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Journey: /kits and the three kit pages in direction F's language</title>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var t=q.get('t');
+  if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+  if(q.get('still')!=='1')document.documentElement.classList.add('js');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   /kits AND THE THREE KIT PAGES IN DIRECTION F'S LANGUAGE
+
+   CONCEPT ONLY. NOT BUILT. Copy is reproduced from the live routes because
+   several blocks are APPROVED and must be carried verbatim. See below.
+
+   Fifth file in the journey set, and it CLOSES THE CHOOSE STAGE.
+
+   ▶ LIFECYCLE CHECK RAN FIRST, and this time the route is alive.
+   The check exists because it caught two dead routes in two sessions
+   (/activate, /founding-member-status). All four files here open with
+   ordinary imports and no retirement comment, no docs/ entry retires them,
+   and the inbound links are the densest on the site: the footer, the
+   homepage, /how-it-works, /about, /supplements, /waitlist, /order/confirmed,
+   two landing pages, the test selector's three recommendations, the article
+   CTA helper (lib/content/kitCTA.ts) and sitemap.ts. These are the commercial
+   pages. Nothing here is a candidate for deletion.
+
+   ▶ WHAT THE INVENTORY SAID, AND WHAT IS ACTUALLY THERE.
+   The inventory had already been corrected once: "one template, three kits"
+   was wrong, there is no [kit] route and no shared template. Reading the four
+   files this session adds a second correction the inventory did not have:
+
+     /kits ......................... 615 lines, 6 sections ......... Frame O
+     /kits/testosterone ............ 530 lines, 11 sections ........ Frame P
+     /kits/energy-recovery ......... 463 lines, 8 sections ......... Frame Q
+     /kits/hormone-recovery ........ 882 lines, 10 sections ....... Frame R
+
+     THE BUNDLES FLAG ........... a second state on ALL THREE kit pages,
+                                  never inventoried .............. Frame P2
+
+   ▶ THE STATE NOBODY HAD WRITTEN DOWN: BUNDLES_ENABLED.
+   Every kit page calls isBundlesEnabled() and branches TWICE on it: once in
+   the hero, once at the close. With the flag on, the hero leads with a
+   bundle price and the page ends on a BundleChoice; with it off, the hero
+   leads with the single kit and the page ends on related reading, an order
+   CTA and a cross-sell to another kit. That is not a swapped button. With
+   bundles ON the page LOSES the related-reading block and the cross-sell
+   entirely, by deliberate direction (Keith, 2026-07-24: the page should end
+   on the buying decision). So the three kit pages carry six page endings
+   between them, not three, and a redraw that only drew the state it happened
+   to load would have committed half of them.
+   deployment/env/vars.md records BUNDLES_ENABLED as OFF, so the flag-off
+   state is drawn as the page and the flag-on state is drawn as Frame P2.
+   ⚠ vars.md is a record, not a reading of production, and this repo has an
+   open ticket for exactly that drift on a different flag. Treat P2 as the
+   shape, not as proof of what is switched on today.
+
+   ▶ COLOUR, AND THIS IS THE SAME ANSWER AS THE TEST SELECTOR.
+   These four routes are marketing, on the apex. app-theme.css sanctions
+   status colour in the AUTHENTICATED DASHBOARD ONLY, so there is no green
+   and no amber status here. The one accent is --flag #E0A458, from the
+   approved homepage, spent where the page points at something: the
+   recommended row, Kit 3's default route, and the sample-report bars.
+
+   🔴 AND THE LIVE PAGES DISAGREE WITH THAT RULE TODAY. All three kit pages
+   render their sample-report bars with bg-statusWarning and bg-statusOptimal,
+   which are dashboard status colours on a marketing page. Nine bars on Kit 3,
+   four on Kit 2, five on Kit 1. This redraw does NOT carry them across: the
+   bars are drawn in --flag with a dark leading edge, and the status word
+   stays as text. That is a real difference from the live page and it is
+   deliberate, because the alternative is laundering a rule break into the new
+   design system. If Keith wants status colour on marketing pages, that is a
+   brand-guidelines change and it should be made there, where the homepage and
+   the blog move with it.
+
+   ▶ APPROVED COPY IN HERE. CARRIED VERBATIM, NOT REWRITTEN.
+     1. THE MONEY BLOCK on /kits ("One price. Nothing hidden.") is C1 under
+        CA-026 and the source file says rendered verbatim.
+     2. THE CONFORMITY LINE on each kit page is D+ under CA-026, one per kit,
+        three different sentences, each marked rendered verbatim in its file.
+     3. THE KIT 2 LINE "You're not injured. You're not lazy. Something in your
+        blood is holding you back, and guessing won't fix it." carries a
+        PERMANENT SELF-FLAG in the source: the deterministic scanner matches
+        its last three words on every run, and it was ruled APPROVED as CA-038
+        (Keith, business, 2026-08-17). 🔴 The source also records that the
+        approval is scoped to this page IN CONTEXT and does not travel into a
+        carousel slide, hook or short post. It is carried here because a
+        mockup of the page is the page's context; it must not be lifted out.
+     4. THE KIT 1 SYMPTOM LIST is scoped for a compliance reason
+        (04_products/2026-08-15-kit1-scope-marketing-pages-decision.md, CA-025):
+        the fatigue and brain-fog cards were REMOVED from Kit 1 and the reader
+        is handed to Kit 2 explicitly. The dashed routing card is that fix.
+        Restoring a tired-or-foggy symptom to Kit 1 would silently undo it.
+     5. THE FOUNDER QUOTES on Kit 3 are attributed to two real people, one of
+        them the clinical reviewer. Attributed quotes are not design copy and
+        are not mine to tighten.
+
+   ▶ TWO THINGS THE ENUMERATION FOUND THAT ARE NOT DESIGN PROBLEMS.
+   Logged here because a redraw is where they become invisible.
+     - THE SELECTOR IS DESCRIBED AS "THREE QUESTIONS" AND "LESS THAN A MINUTE"
+       in two places on /kits, and the quiz is five steps: three questions,
+       then a four-question price study with an age band, then the reveal and
+       an email capture. The description was true when it was written. It is
+       carried here unchanged because fixing live marketing copy is not a
+       mockup's job, but it is drawn with a note so it does not get frozen
+       into the new system by being redrawn faithfully.
+     - THERE ARE TWO COMPARISON TABLES OF THE SAME THREE PRODUCTS, on /kits
+       (9 marker rows, ticks, totals) and on Kit 3 (5 spec rows, words). They
+       agree today. They are maintained separately, which is the condition
+       where they quietly stop agreeing, and the first correction to either is
+       what would make the divergence visible.
+
+   MOTION. One load reveal, and the FAQ disclosure, which fires on a reader's
+   action rather than on a loop. Both respect prefers-reduced-motion.
+
+   Zero em dashes, including in these comments.
+   ============================================================ */
+
+:root{
+  --paper:#FFFFFF;
+  --tray:#F1F2F4;
+  --core:#FFFFFF;
+  --sunk:#E7E9EC;
+  --ink:#0A0B0D;
+  --ink-2:#4A4F57;
+  --ink-3:#6B7078;
+  --hair:rgba(10,11,13,.10);
+  --hair-2:rgba(10,11,13,.16);
+  /* The marketing accent, from F-field.html. Text on it is --ink, never white. */
+  --flag:#E0A458;
+  --flag-f:rgba(224,164,88,.14);
+  --flag-f2:rgba(224,164,88,.26);
+  --amb:0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --r:28px;
+  --r-in:22px;
+}
+:root[data-theme="dark"]{
+  --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+  --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+  --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+  --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+  --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0A0B0D; --tray:#141619; --core:#1A1D21; --sunk:#0E1013;
+    --ink:#F5F6F7; --ink-2:#B9BDC4; --ink-3:#969BA3;
+    --hair:rgba(245,246,247,.11); --hair-2:rgba(245,246,247,.18);
+    --flag-f:rgba(224,164,88,.16); --flag-f2:rgba(224,164,88,.30);
+    --amb:0 26px 60px -20px rgba(0,0,0,.7), 0 6px 18px -12px rgba(0,0,0,.5);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:Geist,"Geist Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.m{font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,"SFMono-Regular",Menlo,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+.narrow{max-width:880px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+
+.wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(10,11,13,.05), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(10,11,13,.035), transparent 60%);
+}
+:root[data-theme="dark"] .wash{
+  background:
+    radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wash{
+    background:
+      radial-gradient(1100px 700px at 14% -8%, rgba(255,255,255,.045), transparent 62%),
+      radial-gradient(900px 620px at 94% 8%, rgba(255,255,255,.028), transparent 60%);
+  }
+}
+.grain{
+  position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .grain{opacity:.07}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
+
+.tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:34px 32px} }
+
+.flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
+.flabel .in{
+  max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.flabel b{color:var(--ink);font-weight:600}
+.flabel .hot{color:var(--ink);border-bottom:2px solid var(--flag)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:6px 14px;margin-bottom:20px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow i{width:5px;height:5px;border-radius:999px;background:var(--ink);display:block}
+.blab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:66ch}
+.sub+.sub{margin-top:12px}
+.fine{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:66ch;
+}
+.btn{
+  background:var(--ink);color:var(--paper);text-decoration:none;border:0;font:inherit;
+  border-radius:999px;padding:14px 24px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-2)}
+.btn.sm{padding:10px 18px;font-size:13.5px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.flagchip{
+  display:inline-flex;align-items:center;gap:8px;background:var(--flag);color:#0A0B0D;
+  border-radius:999px;padding:6px 14px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+}
+.kchip{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair-2);
+  border-radius:999px;padding:5px 13px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+}
+
+/* ---------- HERO ---------- */
+.hero{padding-top:62px;padding-bottom:44px}
+.hero .grid{display:grid;gap:30px;grid-template-columns:1fr}
+@media (min-width:980px){ .hero .grid{grid-template-columns:1.35fr 1fr;gap:44px;align-items:start} }
+.hero h1{font-size:clamp(2.4rem,5.6vw,4.1rem);letter-spacing:-.045em;margin-bottom:20px}
+.hero .stand{font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:1.6;color:var(--ink-2);max-width:56ch;margin-bottom:26px}
+.trust{
+  margin-top:24px;display:flex;gap:10px;align-items:flex-start;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.6;letter-spacing:.06em;color:var(--ink-2);max-width:46ch;
+}
+/* the four-up trust row the kit pages carry under the hero */
+.trustrow{
+  display:grid;gap:1px;background:var(--hair);border-radius:var(--r-in);overflow:hidden;
+  grid-template-columns:1fr 1fr;margin-top:26px;
+}
+@media (min-width:820px){ .trustrow{grid-template-columns:repeat(4,1fr)} }
+.trustrow div{
+  background:var(--core);padding:16px 18px;text-align:center;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+
+/* ---------- PRICE ROWS IN THE HERO TRAY ---------- */
+.prow{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--hair)}
+.prow:last-of-type{border-bottom:0}
+.prow h3{font-size:16.5px;letter-spacing:-.02em;margin-bottom:5px}
+.prow .mk{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);line-height:1.5;
+}
+.prow .pr{font-size:19px;font-weight:700;letter-spacing:-.03em;flex:none;font-variant-numeric:tabular-nums}
+
+/* ---------- THE MONEY BLOCK, inverted ---------- */
+.invert{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:34px 26px;box-shadow:var(--amb)}
+@media (min-width:800px){ .invert{padding:52px 48px} }
+.invert h2{font-size:clamp(1.9rem,4.2vw,3rem);letter-spacing:-.045em;margin-bottom:18px}
+.invert .blab{color:rgba(255,255,255,.62)}
+.invert p{font-size:clamp(1.02rem,1.5vw,1.16rem);line-height:1.66;color:rgba(255,255,255,.86);max-width:62ch}
+:root[data-theme="dark"] .invert{background:var(--core);color:var(--ink);box-shadow:none;border:1px solid var(--hair-2)}
+:root[data-theme="dark"] .invert p{color:var(--ink-2)}
+:root[data-theme="dark"] .invert .blab{color:var(--ink-3)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .invert{background:var(--core);color:var(--ink);box-shadow:none;border:1px solid var(--hair-2)}
+  :root:not([data-theme="light"]) .invert p{color:var(--ink-2)}
+  :root:not([data-theme="light"]) .invert .blab{color:var(--ink-3)}
+}
+
+/* ---------- KIT CARD ---------- */
+.kit{display:grid;grid-template-columns:1fr;gap:0}
+@media (min-width:900px){ .kit{grid-template-columns:1.75fr 1fr} }
+.kit .side{border-top:1px solid var(--hair);padding-top:22px;margin-top:22px}
+@media (min-width:900px){
+  .kit .side{border-top:0;border-left:1px solid var(--hair);padding-top:0;margin-top:0;padding-left:26px;margin-left:4px}
+}
+.kithead{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-bottom:18px}
+.kithead h3{font-size:clamp(1.55rem,3vw,2.1rem);letter-spacing:-.04em;margin-top:12px}
+.kithead .price{font-size:clamp(1.7rem,3vw,2.2rem);font-weight:700;letter-spacing:-.045em;line-height:1;font-variant-numeric:tabular-nums}
+.kithead .oneoff{
+  display:block;margin-top:5px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+}
+.spec{display:grid;gap:10px;grid-template-columns:1fr;margin:20px 0}
+@media (min-width:700px){ .spec{grid-template-columns:repeat(3,1fr)} }
+.spec div{background:var(--sunk);border-radius:16px;padding:14px 15px;box-shadow:inset 0 0 0 1px var(--hair)}
+.spec .k{
+  display:block;margin-bottom:7px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+.spec .v{font-size:14px;line-height:1.45;color:var(--ink);font-weight:500}
+.foot{border-top:1px solid var(--hair);padding-top:18px;margin-top:4px}
+.postlist{list-style:none;display:grid;gap:9px;margin-bottom:20px}
+.postlist li{display:flex;gap:10px;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.postlist li span{color:var(--flag);flex:none;font-weight:700}
+
+/* ---------- COMPARISON TABLE ---------- */
+.cmpscroll{overflow-x:auto;border-radius:var(--r-in);box-shadow:inset 0 0 0 1px var(--hair)}
+table.cmp{width:100%;border-collapse:collapse;min-width:620px;background:var(--core);border-radius:var(--r-in)}
+table.cmp th,table.cmp td{padding:13px 14px;text-align:center;border-bottom:1px solid var(--hair);font-size:14.5px}
+table.cmp th:first-child,table.cmp td:first-child{text-align:left;color:var(--ink-2)}
+table.cmp thead th{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+  border-bottom:1px solid var(--hair-2);
+}
+table.cmp thead th b{display:block;margin-top:6px;font-size:16px;letter-spacing:-.03em;color:var(--ink);font-family:Geist,system-ui,sans-serif;text-transform:none}
+table.cmp .k3{background:var(--flag-f)}
+table.cmp tfoot td{border-bottom:0;font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
+table.cmp tfoot td:first-child{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+}
+.yes{display:inline-block;width:18px;height:18px;border-radius:6px;background:var(--ink);position:relative}
+.yes::after{content:"";position:absolute;left:5px;top:3px;width:5px;height:9px;border:solid var(--paper);border-width:0 2px 2px 0;transform:rotate(42deg)}
+.no{display:inline-block;width:18px;height:18px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--hair-2)}
+
+/* ---------- NUMBERED STEPS ---------- */
+.steps{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){ .steps{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1040px){ .steps{grid-template-columns:repeat(4,1fr)} }
+/* ---------- THE STEP CARD, ADOPTED WHOLE FROM test-selector-F.html ----------
+   Keith, 2026-08-28: adopt the same principles here as on the selector's
+   methodology strip. That strip is not a first draft, it is the result of four
+   separate corrections, and every one of them applies to this card because it
+   is the same card. Adopting the LOOK and leaving the reasoning behind would
+   reproduce the faults the reasoning fixed, which is exactly what the first
+   version of this file did.
+
+   WHAT CAME ACROSS, AND WHY EACH ONE EXISTS.
+
+   1. THE SWAP: SMALL NUMBER AT REST, BIG NUMBER ON THE ON STATE. At rest the
+      card shows "01" in its corner and no numeral. On the on state the small
+      one fades out and the big one fades in behind the text. One number, two
+      sizes, so nothing is lost in either state. This also retires the fault
+      this file hit on its own: a permanently visible numeral has to find dead
+      space that a heading, a paragraph and a footer row do not leave, and on
+      a four-across grid there is none. A numeral that is only present on the
+      on state does not need any.
+
+   2. THE NUMERAL IS AN OUTLINE, NOT A FILL. A filled glyph puts a mid-tone
+      slab under the body copy and drops its contrast exactly where the text
+      crosses it. An outline carries a fraction of the ink, so what crosses a
+      letter is a 1px line rather than a solid field, which lets the stroke run
+      at high opacity and be MORE visible while clashing less. Stroke 1px,
+      weight 900: the gauge was thinned once already and the weight was
+      explicitly left alone.
+
+   3. THE OPACITY CAPS ARE MEASURED, NOT CHOSEN. In light the copy is dark and
+      the stroke is light, so they separate on their own. In dark BOTH are
+      light and a letter on a stroke fell to 1.7:1. Light .75 gives 4.66:1,
+      dark .30 gives 4.83:1, and the no-hover resting states carry the same
+      caps at .34 and .22.
+
+   4. HOVER DOES NOT EXIST ON A PHONE, and half this audience is on one. Under
+      (hover:none) the card nearest the middle of the viewport takes the on
+      state as you scroll, so the row is alive on touch without a tap. Same
+      class, two triggers, and the pointer path is skipped there so the two
+      never fight.
+
+   5. THE FOOTER META ROW. A hairline, a label and a value. It is what makes
+      the card a spec rather than a paragraph in a box, and it is the reason
+      the row survives being read at a glance.
+
+   6. NO INVERTED FOURTH CARD. The live pages invert the last step to solid
+      black. Dropped there and dropped here for the same reason: on a
+      four-card row the inversion reads as the last step being the important
+      one, when the step that matters to a reader deciding whether to buy is
+      the first.
+
+   ⚠ THE FOOTER VALUES ARE NOT COPIED ACROSS FROM THE SELECTOR. Its third
+   card reads "Transit / Tracked 24"; the kit pages promise a prepaid return
+   envelope and claim no tracking on the return leg, so this row reads
+   "Postage / Prepaid". A meta row is the easiest place in a card to state
+   something the page does not actually promise, because it is short, it looks
+   like a fact, and nobody reads it as copy. */
+.step{
+  background:var(--core);border-radius:var(--r-in);padding:24px 22px;
+  border:1px solid var(--hair);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
+}
+/* ONE PLACE THIS ADOPTION TIGHTENS THE SOURCE RATHER THAN COPYING IT.
+   On the selector strip the meta rows sit at whatever height the body copy
+   leaves them, so on a four-across row they land at three different heights.
+   A meta row is read across the row rather than down the card: it is the line
+   that answers "how long, how much, how far" for all four steps at once, and
+   it can only be read that way if it is on one line. The foot is pushed to the
+   card bottom here. If that is right it belongs on the selector too, and if it
+   is wrong it is one line to drop. */
+.step .foot{margin-top:auto}
+.step .bignum{
+  position:absolute;right:18px;top:50%;z-index:0;pointer-events:none;user-select:none;
+  /* THE LETTER-SPACING HAS TO BE PAID BACK AS PADDING, or the glyph overhangs
+     the box that is being positioned. A negative letter-spacing removes the
+     trailing advance AFTER the glyph, so anchoring the element by its right
+     edge anchors a box that is narrower than the ink inside it. At 7.8rem that
+     is about 6px of overhang, which is invisible on 1, 2 and 3 and cut the
+     right stem clean off the 4 under overflow:hidden. Same fault Keith called
+     on this card once before, reaching one glyph in four rather than all of
+     them, which is why it survived a first look. */
+  font-weight:900;font-size:7.8rem;line-height:.78;letter-spacing:-.05em;padding-right:.05em;
+  color:transparent;-webkit-text-stroke:1px var(--flag);
+  opacity:0;transform:translateY(-48%) scale(.9);
+  transition:opacity .32s var(--ease),transform .38s var(--ease);
+}
+/* If text-stroke is unavailable the glyph would be invisible, so fall back to
+   the fill at the low opacity it can afford. */
+@supports not (-webkit-text-stroke: 1px #000){
+  .step .bignum{color:var(--flag);-webkit-text-stroke:0}
+}
+.step>*:not(.bignum){position:relative;z-index:1}
+.step .no{transition:opacity .22s var(--ease),transform .22s var(--ease)}
+
+/* the on state, reached by hover on a pointer and by scroll position on touch */
+.step.act,
+.step:hover{border-color:var(--flag);box-shadow:0 0 0 1px var(--flag),var(--amb);transform:translateY(-3px)}
+.step.act .bignum,
+.step:hover .bignum{opacity:.75;transform:translateY(-48%) scale(1)}
+.step.act .no,
+.step:hover .no{opacity:0;transform:translateY(-5px)}
+:root[data-theme="dark"] .step.act .bignum,
+:root[data-theme="dark"] .step:hover .bignum{opacity:.30}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step.act .bignum,
+  :root:not([data-theme="light"]) .step:hover .bignum{opacity:.30}
+}
+@media (hover:none){
+  .step .bignum{opacity:.34}
+  :root[data-theme="dark"] .step .bignum{opacity:.22}
+}
+@media (hover:none) and (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .step .bignum{opacity:.22}
+}
+@media (prefers-reduced-motion:reduce){
+  .step,.step .bignum,.step .no{transition:none}
+  .step.act,.step:hover{transform:none}
+}
+.step .no{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:16px;display:block;
+}
+.step h4{font-size:1.1rem;letter-spacing:-.03em;margin-bottom:9px}
+.step p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+.step .foot{
+  margin-top:16px;padding-top:13px;border-top:1px solid var(--hair);
+  display:flex;justify-content:space-between;gap:12px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+}
+.step .foot b{color:var(--ink);font-weight:600}
+
+/* ---------- SAMPLE REPORT ---------- */
+.rep .row{padding:13px 0;border-bottom:1px solid var(--hair)}
+.rep .row:last-child{border-bottom:0}
+.rep .top{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:8px}
+.rep .lab{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
+}
+.rep .sub2{font-size:11.5px;color:var(--ink-3);font-style:italic;margin-top:2px}
+.rep .val{font-size:19px;font-weight:600;letter-spacing:-.03em;text-align:right;font-variant-numeric:tabular-nums}
+.rep .st{
+  display:block;margin-top:3px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+}
+.rep .st.hot{color:var(--ink);border-bottom:2px solid var(--flag);display:inline-block}
+.bar{height:7px;border-radius:999px;background:var(--sunk);box-shadow:inset 0 0 0 1px var(--hair);overflow:hidden;position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--flag);border-radius:999px;box-shadow:inset -2px 0 0 rgba(10,11,13,.55);display:block}
+.bar.none{background:transparent;box-shadow:none;height:7px}
+.bar.none::after{
+  content:"not banded";position:absolute;left:0;top:-4px;
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ---------- BIOMARKER CARDS ---------- */
+.bios{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){ .bios{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1040px){ .bios{grid-template-columns:repeat(3,1fr)} }
+.bio{background:var(--core);border-radius:var(--r-in);padding:22px 20px;box-shadow:inset 0 0 0 1px var(--hair)}
+.bio h4{font-size:18px;letter-spacing:-.035em;margin:10px 0}
+.bio p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+
+/* ---------- SYMPTOM CARDS ---------- */
+.symp{display:grid;gap:10px}
+.symp div{background:var(--core);border-radius:18px;padding:16px 18px;box-shadow:inset 0 0 0 1px var(--hair);font-size:15.5px;line-height:1.55;color:var(--ink-2)}
+.symp div b{color:var(--ink)}
+.symp .dark{background:var(--ink);color:rgba(255,255,255,.84);box-shadow:none}
+.symp .dark b{color:#fff}
+:root[data-theme="dark"] .symp .dark{background:var(--sunk);color:var(--ink-2)}
+:root[data-theme="dark"] .symp .dark b{color:var(--ink)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .symp .dark{background:var(--sunk);color:var(--ink-2)}
+  :root:not([data-theme="light"]) .symp .dark b{color:var(--ink)}
+}
+.route{background:var(--flag-f);box-shadow:inset 0 0 0 1.5px var(--flag)}
+.pull{border-left:2px solid var(--flag);padding-left:16px;margin-top:18px;font-size:clamp(1.1rem,2vw,1.35rem);line-height:1.45;letter-spacing:-.02em;color:var(--ink)}
+
+/* ---------- FAQ ---------- */
+/* ---------- THE FAQ, STANDARDISED (Keith, 2026-08-29) ----------
+   One container across all three kit pages: the open two-column grid. Every
+   question visible, nothing behind a click.
+
+   The divergence this settles was smaller than it looked. Kit 1 was the only
+   page using the collapsible accordion; Kit 2 and Kit 3 both already rendered
+   open grids in their own hand-written markup. So standardising is not a new
+   pattern imposed on three pages, it is the majority pattern winning and one
+   page joining it, which is the cheapest version of this decision there was.
+
+   The accordion CSS is deleted rather than left unused. A disclosure component
+   sitting in the file with nothing using it is an invitation to reintroduce
+   the split, and this file is meant to be the thing the rebuild reads.
+
+   ⚠ FOUR OF THE SIX QUESTIONS ARE THE SAME ON ALL THREE PAGES, with the
+   price swapped: does it hurt, how long, does the price cover everything, is
+   my data private. They are maintained as three separate hand-written copies
+   today. That is the FAQ version of the two comparison tables noted on Frame
+   O, and the rebuild should read the shared four from one source and let each
+   kit add its own two. */
+.faqgrid{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:820px){ .faqgrid{grid-template-columns:repeat(2,1fr)} }
+.faqgrid div{background:var(--sunk);border-radius:18px;padding:20px;box-shadow:inset 0 0 0 1px var(--hair)}
+.faqgrid h4{font-size:15.5px;letter-spacing:-.025em;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--hair)}
+.faqgrid p{font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+
+/* ---------- FOUNDERS ---------- */
+.founders{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:820px){ .founders{grid-template-columns:repeat(2,1fr)} }
+.founder{background:var(--core);border-radius:var(--r-in);padding:24px 22px;box-shadow:inset 0 0 0 1px var(--hair)}
+.founder .who{display:flex;gap:14px;align-items:center;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--hair)}
+.founder .av{
+  width:46px;height:46px;border-radius:14px;background:var(--sunk);flex:none;
+  display:flex;align-items:center;justify-content:center;font-weight:700;letter-spacing:-.02em;color:var(--ink-2);
+  box-shadow:inset 0 0 0 1px var(--hair);
+}
+.founder h4{font-size:16.5px;letter-spacing:-.03em}
+.founder .role{
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-top:3px;
+}
+.founder q{font-size:15.5px;line-height:1.65;color:var(--ink-2);display:block}
+
+/* ---------- SECTION HEADS AND NOTES ---------- */
+.sec{padding:38px 0 6px}
+.sec h2{font-size:clamp(1.6rem,3.4vw,2.5rem);letter-spacing:-.045em;max-width:22ch}
+.sec .grey{color:var(--ink-3)}
+.note{
+  margin-top:16px;padding-left:14px;border-left:2px solid var(--hair-2);
+  font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;letter-spacing:.04em;color:var(--ink-2);max-width:74ch;
+}
+.note.hot{border-left-color:var(--flag)}
+.note b{color:var(--ink);font-weight:600}
+.close{text-align:center;padding:44px 0 10px}
+.close h2{font-size:clamp(1.8rem,4.4vw,3.1rem);letter-spacing:-.05em;max-width:18ch;margin:0 auto 16px}
+.close .stand{color:var(--ink-2);font-size:17px;margin-bottom:24px}
+
+/* ============================================================
+   LESS STATIC, AND WHAT THAT IS ALLOWED TO MEAN HERE (2026-08-29)
+
+   Keith asked whether this page can be made less static. Two rules already
+   answer most of it and they pull in opposite directions, which is why the
+   answer is not "add motion".
+
+   THE BUDGET: one pulsing element, opacity only, plus one load reveal, per
+   brand-guidelines 8.3. Spend it once per screen or not at all.
+
+   THE RULE FROM THE WAITING SCREEN: motion DECORATES aliveness, change over
+   time IS aliveness. What survives prefers-reduced-motion is the real thing,
+   and that matters more than usual here because the group that sets it skews
+   toward this audience.
+
+   So the three additions below are all things a reader CAUSES, plus one
+   reveal that carries information rather than decorating it. A reader-caused
+   response costs nothing from the ambient budget, because it is an affordance
+   rather than an animation: it is still there, doing its job, when motion is
+   switched off. Nothing on this page loops.
+
+   1. THE KIT CARDS ANSWER BACK. Three slabs in a column with no response is
+      the same fault the step cards had before the selector pattern went in:
+      on a page whose entire job is choosing between three things, the reader
+      gets no signal about which one he is reading. Same on-state as the step
+      cards, so the page has one interaction idiom rather than two.
+
+   2. THE COMPARISON TABLE TRACKS THE ROW. Nine marker rows by three columns,
+      and the question a reader has is always "does THIS kit do THIS marker",
+      which means crossing a long row with the eye. Contrast sensitivity falls
+      with age faster than colour discrimination does, and this audience is 35
+      to 65 and over, so the row under the pointer takes a wash. This is the
+      clearest case on the page of motion doing a legibility job rather than a
+      decorative one, and it is the one I would keep if only one survived.
+
+   3. THE SAMPLE-REPORT BARS GROW WHEN THE PANEL FIRST ARRIVES. This is the
+      one load reveal, and it is spent on the one element whose whole meaning
+      is a position on a track: a bar that grows to 14.2 says "here is where
+      you landed" in a way a bar that is simply drawn does not. Staggered down
+      the panel so it reads as a report filling in rather than four things
+      twitching at once. Under reduced motion the bars are simply at their
+      widths, which is the correct fallback because the information was never
+      in the movement.
+
+   WHAT WAS DELIBERATELY NOT DONE. No ambient loop, no pulsing dot, no
+   parallax, no counter that ticks up: the budget is one pulse per screen and
+   these frames have better uses for it than decoration. Nothing was added to
+   the FAQ or the money block, which are reading surfaces.
+   ============================================================ */
+
+/* 1. the kit cards take the step cards' on state */
+.tray.pick{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.tray.pick:hover,.tray.pick.act{transform:translateY(-3px);box-shadow:var(--amb),0 0 0 1.5px var(--flag)}
+
+/* 2. the comparison table tracks the row under the pointer */
+table.cmp tbody tr td{transition:background .18s var(--ease)}
+table.cmp tbody tr:hover td{background:var(--sunk)}
+table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
+
+/* 3. the bars grow on first arrival: the one load reveal, spent on the one
+      element whose meaning IS a position on a track */
+.js .rise .bar i{transform:scaleX(0);transform-origin:left center}
+.js .rise.in .bar i{transform:scaleX(1);transition:transform .85s var(--ease)}
+.js .rise.in .row:nth-child(1) .bar i{transition-delay:.05s}
+.js .rise.in .row:nth-child(2) .bar i{transition-delay:.12s}
+.js .rise.in .row:nth-child(3) .bar i{transition-delay:.19s}
+.js .rise.in .row:nth-child(4) .bar i{transition-delay:.26s}
+.js .rise.in .row:nth-child(5) .bar i{transition-delay:.33s}
+.js .rise.in .row:nth-child(6) .bar i{transition-delay:.40s}
+.js .rise.in .row:nth-child(7) .bar i{transition-delay:.47s}
+.js .rise.in .row:nth-child(8) .bar i{transition-delay:.54s}
+.js .rise.in .row:nth-child(9) .bar i{transition-delay:.61s}
+
+@media (prefers-reduced-motion:reduce){
+  .tray.pick,.tray.pick:hover,.tray.pick.act{transition:none;transform:none}
+  table.cmp tbody tr td{transition:none}
+  .js .rise .bar i,.js .rise.in .bar i{transform:none;transition:none}
+}
+
+/* ---------- LOAD REVEAL ---------- */
+.js .rise{opacity:0;transform:translateY(14px)}
+.js .rise.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+@media (prefers-reduced-motion:reduce){
+  .js .rise,.js .rise.in{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+<div class="grain"></div>
+
+<!-- ============ FRAME O: /kits, THE INDEX ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame O</b><span>/kits</span><span>hero, the money block, three kit cards, the comparison table, process, selector close</span>
+  <span class="hot">marketing host, no status colour</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="grid">
+    <div>
+      <div class="eyebrow"><i></i> Diagnostic kits</div>
+      <h1>Stop guessing.<br><span style="color:var(--ink-3)">Get the numbers.</span></h1>
+      <p class="stand">Three men's health blood tests you take at home. Each one gives you specific results from a UKAS accredited lab, delivered in plain English, with a clear next step based on what your data actually shows. No GP referral needed.</p>
+      <div class="btns">
+        <a class="btn" href="#kits">See the tests <span aria-hidden="true">&#8594;</span></a>
+        <a class="btn ghost" href="#">Not sure which one?</a>
+      </div>
+      <p class="trust"><span aria-hidden="true">&#10003;</span> UKAS ISO 15189 accredited lab. No GP needed. Results in 2 to 5 working days of sample receipt.</p>
+    </div>
+
+    <div class="tray rise" style="margin-bottom:0">
+      <div class="core">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--hair-2);margin-bottom:6px">
+          <h2 style="font-size:19px;letter-spacing:-.03em">Available now</h2>
+          <span class="kchip">UKAS lab</span>
+        </div>
+
+        <div class="prow">
+          <div><h3>Testosterone Health Check</h3><p class="mk">Total T &middot; SHBG &middot; FAI &middot; Albumin &middot; Free T</p></div>
+          <div class="pr">&pound;99</div>
+        </div>
+        <div class="prow">
+          <div><h3>Energy &amp; Recovery Check</h3><p class="mk">Vit D &middot; Active B12 &middot; hs-CRP &middot; Ferritin</p></div>
+          <div class="pr">&pound;119</div>
+        </div>
+        <div class="prow">
+          <div><h3>Hormone &amp; Recovery Check</h3><p class="mk">All 9 markers &middot; Full picture</p></div>
+          <div class="pr">&pound;179</div>
+        </div>
+
+        <div style="border-top:1px solid var(--hair-2);margin-top:16px;padding-top:18px">
+          <p class="sub" style="font-size:15px">Not sure which kit fits your symptoms? Use the selector and answer 3 questions.</p>
+          <a class="btn ghost sm" href="#" style="margin-top:14px">Go to test selector <span aria-hidden="true">&#8594;</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">On the live page this panel is a bordered slab with a pulsing status dot on the UKAS chip. The dot goes: it is a status affordance on a marketing page, and the motion budget on this frame is spent on the load reveal. The chip stays, because "available now" is the thing a reader is checking.</p>
+  <p class="note hot"><b>Copy drift, carried as found rather than fixed here.</b> "Answer 3 questions" and, further down, "takes less than a minute" both describe a quiz that is now five steps: three questions, a four-question price study with an age band, then the reveal and an email capture. True when written. A redraw is not the place to rewrite live marketing copy, but drawing it faithfully without saying so is how a stale sentence gets frozen into a new design system.</p>
+</div>
+
+<div class="wrap" style="padding-top:30px;padding-bottom:10px">
+  <div class="invert rise">
+    <p class="blab">What you pay</p>
+    <h2>One price.<br>Nothing hidden.</h2>
+    <p>The price on the card is everything you pay. No charge to see your own results, no surprise second test, no subscription unless you choose one. If a result needs action, the next step is a GP conversation, and we earn nothing from it.</p>
+  </div>
+  <p class="note hot"><b>APPROVED COPY, CARRIED VERBATIM.</b> This is C1 under CA-026 and the source file marks it "rendered verbatim". Not a word of it is mine, and the redraw changes only the container.</p>
+</div>
+
+<div class="wrap sec" id="kits">
+  <p class="blab">The full range</p>
+  <h2>Three tests.<br><span class="grey">Different questions.</span></h2>
+</div>
+
+<div class="wrap">
+  <!-- KIT 1 -->
+  <div class="tray pick rise">
+    <div class="core">
+      <div class="kit">
+        <div>
+          <div class="kithead">
+            <div>
+              <span class="kchip">Kit 1</span>
+              <h3>Testosterone<br>Health Check</h3>
+            </div>
+            <div style="text-align:right">
+              <span class="price">&pound;99</span>
+              <span class="oneoff">one-off</span>
+            </div>
+          </div>
+          <p class="sub">Your GP told you you're normal. That's not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 2 to 5 working days with a plain-English explanation of what they mean. If the main problem is tiredness, poor recovery or fogginess, Kit 2 is the better fit.</p>
+          <div class="spec">
+            <div><span class="k">Markers tested</span><span class="v">Total T &middot; SHBG &middot; FAI &middot; Albumin &middot; Free T</span></div>
+            <div><span class="k">Turnaround</span><span class="v">Results within 2 to 5 working days of sample receipt</span></div>
+            <div><span class="k">Right for</span><span class="v">Low drive, stalled training, "not myself" symptoms</span></div>
+          </div>
+          <div class="foot">
+            <p class="blab" style="margin-bottom:8px">If your result shows testosterone below 12 nmol/L</p>
+            <p class="sub" style="font-size:15px">You will receive a specific next step, not a generic recommendation.</p>
+          </div>
+        </div>
+        <div class="side">
+          <p class="blab">What arrives in the post</p>
+          <ul class="postlist">
+            <li><span aria-hidden="true">&#10003;</span> Finger-prick collection kit</li>
+            <li><span aria-hidden="true">&#10003;</span> Pre-paid return label</li>
+            <li><span aria-hidden="true">&#10003;</span> 5-minute collection process</li>
+          </ul>
+          <p class="blab">Results delivered to</p>
+          <p class="sub" style="font-size:14.5px">Your Andro Prime dashboard. Not the lab portal. Plain English with a specific next step.</p>
+          <a class="btn" href="#" style="margin-top:22px;width:100%;justify-content:center">Order for &pound;99</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIT 2 -->
+  <div class="tray pick rise">
+    <div class="core">
+      <div class="kit">
+        <div>
+          <div class="kithead">
+            <div>
+              <span class="kchip">Kit 2</span>
+              <h3>Energy &amp;<br>Recovery Check</h3>
+            </div>
+            <div style="text-align:right">
+              <span class="price">&pound;119</span>
+              <span class="oneoff">one-off</span>
+            </div>
+          </div>
+          <p class="sub">Sore for 3 days after a session that used to take 1. Tired all the time. Joints aching. This test looks at the four markers most likely to explain why: Vitamin D, Active B12 (Holotranscobalamin), inflammation (hs-CRP), and iron stores (Ferritin). If the issue is hormones, Kit 1 or Kit 3 is the better fit.</p>
+          <div class="spec">
+            <div><span class="k">Markers tested</span><span class="v">Vit D &middot; Active B12 &middot; hs-CRP &middot; Ferritin</span></div>
+            <div><span class="k">Turnaround</span><span class="v">Results within 2 to 5 working days of sample receipt</span></div>
+            <div><span class="k">Right for</span><span class="v">Poor recovery, fatigue, joint stress, slow progress</span></div>
+          </div>
+          <div class="foot">
+            <p class="blab" style="margin-bottom:8px">Supplement routing from this kit</p>
+            <p class="sub" style="font-size:15px">Low D or low Active B12 routes to the Daily Stack pattern. Elevated hs-CRP with joint symptoms routes to the Joint and Recovery Collagen pattern. Our own range launches shortly; you can join the early-access waitlist at any time. All recommendations are based on your specific numbers.</p>
+          </div>
+        </div>
+        <div class="side">
+          <p class="blab">What arrives in the post</p>
+          <ul class="postlist">
+            <li><span aria-hidden="true">&#10003;</span> Finger-prick collection kit</li>
+            <li><span aria-hidden="true">&#10003;</span> Pre-paid return label</li>
+            <li><span aria-hidden="true">&#10003;</span> 5-minute collection process</li>
+          </ul>
+          <p class="blab">Results delivered to</p>
+          <p class="sub" style="font-size:14.5px">Your Andro Prime dashboard. With supplement recommendations matched to your specific markers. Our own range launches shortly; join the early-access waitlist at any time.</p>
+          <a class="btn ghost" href="#" style="margin-top:22px;width:100%;justify-content:center">Order for &pound;119</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIT 3, the default route -->
+  <div class="tray pick rise" style="box-shadow:var(--amb),0 0 0 1.5px var(--flag)">
+    <div class="core">
+      <div class="kit">
+        <div>
+          <div class="kithead">
+            <div>
+              <span class="flagchip">Kit 3 &middot; Most complete</span>
+              <h3>Hormone &amp;<br>Recovery Check</h3>
+            </div>
+            <div style="text-align:right">
+              <span class="price">&pound;179</span>
+              <span class="oneoff">one-off</span>
+            </div>
+          </div>
+          <p class="sub">Nine markers covering hormones, energy, recovery, and inflammation in one kit. The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.</p>
+          <div class="spec">
+            <div><span class="k">Markers tested</span><span class="v">Total T &middot; SHBG &middot; FAI &middot; Albumin &middot; Free T &middot; Vit D &middot; Active B12 &middot; hs-CRP &middot; Ferritin</span></div>
+            <div><span class="k">Turnaround</span><span class="v">Results within 2 to 5 working days of sample receipt</span></div>
+            <div><span class="k">Right for</span><span class="v">Full picture across hormones, energy, and recovery</span></div>
+          </div>
+          <div class="foot">
+            <p class="blab" style="margin-bottom:8px">Widest set of recommendation pathways</p>
+            <p class="sub" style="font-size:15px">Kit 3 covers both testosterone and deficiency markers, with supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.</p>
+          </div>
+        </div>
+        <div class="side">
+          <p class="blab">What arrives in the post</p>
+          <ul class="postlist">
+            <li><span aria-hidden="true">&#10003;</span> Finger-prick collection kit</li>
+            <li><span aria-hidden="true">&#10003;</span> Pre-paid return label</li>
+            <li><span aria-hidden="true">&#10003;</span> 5-minute collection process</li>
+          </ul>
+          <p class="blab">Results delivered to</p>
+          <p class="sub" style="font-size:14.5px">Your Andro Prime dashboard. Full breakdown across all nine markers with targeted recommendations.</p>
+          <a class="btn" href="#" style="margin-top:22px;width:100%;justify-content:center">Order for &pound;179</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note"><b>The three cards answer to the reader now.</b> Same on-state as the step cards, so the page has one interaction idiom rather than two, and the reader gets a signal about which of the three he is reading on a page whose entire job is choosing between them. Hover on a pointer, scroll position on touch. It survives <code>prefers-reduced-motion</code> as a border and shadow change with the lift removed, which is the half that was doing the work.</p>
+  <p class="note hot"><b>Kit 3 is the inverted card on the live page: black panel, white type, the one screen-sized contrast reversal on the route.</b> F does not have an inverted card in its vocabulary, so the emphasis moves to the accent: a hairline ring in --flag, the same amber chip the homepage spends on our own number, and the solid button that Kit 2 does not get. It marks the same thing for the same reason (the selector defaults upward to Kit 3 when the picture is mixed) without asking the page to change colour scheme mid-scroll, which is what stopped the inverted card working in dark mode.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Side by side</p>
+  <h2>What each men's health blood test covers.</h2>
+</div>
+<div class="wrap">
+  <p class="fine" style="margin-bottom:10px">Scroll to see all kits <span aria-hidden="true">&#8594;</span></p>
+  <div class="cmpscroll">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th>Marker</th>
+          <th>Kit 1<b>&pound;99</b></th>
+          <th>Kit 2<b>&pound;119</b></th>
+          <th class="k3">Kit 3<b>&pound;179</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Total Testosterone (nmol/L)</td><td><span class="yes"></span></td><td><span class="no"></span></td><td class="k3"><span class="yes"></span></td></tr>
+        <tr><td>SHBG (nmol/L)</td><td><span class="yes"></span></td><td><span class="no"></span></td><td class="k3"><span class="yes"></span></td></tr>
+        <tr><td>Free Androgen Index (FAI)</td><td><span class="yes"></span></td><td><span class="no"></span></td><td class="k3"><span class="yes"></span></td></tr>
+        <tr><td>Albumin (g/L)</td><td><span class="yes"></span></td><td><span class="no"></span></td><td class="k3"><span class="yes"></span></td></tr>
+        <tr><td>Free Testosterone (calculated)</td><td><span class="yes"></span></td><td><span class="no"></span></td><td class="k3"><span class="yes"></span></td></tr>
+        <tr><td>Vitamin D (25-OH)</td><td><span class="no"></span></td><td><span class="yes"></span></td><td class="k3"><span class="yes"></span></td></tr>
+        <tr><td>Active B12 (Holotranscobalamin)</td><td><span class="no"></span></td><td><span class="yes"></span></td><td class="k3"><span class="yes"></span></td></tr>
+        <tr><td>hs-CRP (inflammation)</td><td><span class="no"></span></td><td><span class="yes"></span></td><td class="k3"><span class="yes"></span></td></tr>
+        <tr><td>Ferritin (iron stores)</td><td><span class="no"></span></td><td><span class="yes"></span></td><td class="k3"><span class="yes"></span></td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Total markers</td><td>5</td><td>4</td><td class="k3">9</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><a class="btn ghost sm" href="#">Order</a></td>
+          <td><a class="btn ghost sm" href="#">Order</a></td>
+          <td class="k3"><a class="btn sm" href="#">Order</a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <p class="note"><b>The tick is a filled square on the live page and the blank is a pale outline.</b> Both survive, rounded to F's radius, because the pairing is the one thing in the table doing real work at a glance. The Kit 3 column keeps its wash, in --flag rather than grey, so the highlighted column and the highlighted card are the same signal rather than two.</p>
+  <p class="note"><b>The row under the pointer takes a wash.</b> Nine marker rows by three columns, and the question is always "does THIS kit do THIS marker", which means crossing a long row with the eye. Contrast sensitivity falls with age faster than colour discrimination does and this audience is 35 to 65 and over, so this is the clearest case on the page of an interaction doing a legibility job rather than a decorative one. It is the one I would keep if only one survived.</p>
+  <p class="note hot"><b>This is one of TWO comparison tables of the same three products.</b> The other is section 9 of the Kit 3 page, five spec rows in words rather than nine marker rows with ticks. They agree today. Nothing keeps them agreeing, and the first correction to either is what would make the divergence visible, so the rebuild should read both from one source.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Process</p>
+  <h2>Order to results in under a week.</h2>
+</div>
+<div class="wrap">
+  <div class="steps">
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">1</span>
+      <span class="no">01</span>
+      <h4>Order online</h4>
+      <p>Choose your kit. Pay once. Kit dispatched the same working day.</p>
+      <div class="foot"><span>Dispatch</span><b>Same day</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">2</span>
+      <span class="no">02</span>
+      <h4>Collect at home</h4>
+      <p>Five minutes. Finger-prick. Return with the pre-paid label in your kit.</p>
+      <div class="foot"><span>Time required</span><b>5 mins</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">3</span>
+      <span class="no">03</span>
+      <h4>Lab processes it</h4>
+      <p>UKAS ISO 15189 accredited lab. Results ready within 2 to 5 working days of receipt.</p>
+      <div class="foot"><span>Lab</span><b>UKAS 15189</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">4</span>
+      <span class="no">04</span>
+      <h4>Plain-English results</h4>
+      <p>Your numbers in your dashboard. What they mean. What to do next. Specific to your data.</p>
+      <div class="foot"><span>Turnaround</span><b>2 to 5 days</b></div>
+    </div>
+  </div>
+  <a class="btn ghost sm" href="#" style="margin-top:18px">Full process breakdown <span aria-hidden="true">&#8594;</span></a>
+  <p class="note hot"><b>These cards now run the selector's methodology pattern, corrections included.</b> Small index at rest, outlined numeral on the on state only, opacity capped per theme so body copy crossing a stroke stays above 4.5:1, hover on a pointer and scroll position on touch, and a hairline meta row. <b>The meta values are written from these pages rather than copied from the selector</b>, which says "Tracked 24" on its third card: the kit pages promise a prepaid return envelope and claim no tracking on the return leg, so this row reads "Postage / Prepaid".</p>
+</div>
+
+<div class="wrap" style="padding-top:34px;padding-bottom:20px">
+  <div class="tray rise">
+    <div class="core" style="display:grid;gap:24px;align-items:center;grid-template-columns:1fr">
+      <div>
+        <p class="blab">Still not sure</p>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,1.9rem);letter-spacing:-.04em;margin-bottom:12px">Three questions. One clear recommendation.</h2>
+        <p class="sub">The test selector asks about your main symptoms and tells you which kit fits best. Takes less than a minute.</p>
+      </div>
+      <a class="btn" href="#" style="justify-self:start">Use the selector <span aria-hidden="true">&#8594;</span></a>
+    </div>
+  </div>
+  <p class="note">Second instance of the "three questions, under a minute" line noted at the top of this frame. Two sites, one fact, which is the condition where a correction lands on one and not the other.</p>
+</div>
+
+<!-- ============ FRAME P: /kits/testosterone ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame P</b><span>/kits/testosterone</span><span>Kit 1, eleven sections, bundles flag OFF</span>
+  <span class="hot">sample report drawn without status colour</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="grid">
+    <div>
+      <div class="eyebrow"><i></i> Kit 01 // Testosterone</div>
+      <h1>Your GP said normal.<br><span style="color:var(--ink-3)">That's not the same as good.</span></h1>
+      <p class="stand">An at-home testosterone blood test. Find out where your testosterone sits: we test Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T. You get the raw data in plain English, plus a specific recommendation based on your numbers.</p>
+      <div class="btns">
+        <a class="btn" href="#">Order the kit: &pound;99 <span aria-hidden="true">&#8594;</span></a>
+        <span class="kchip">All-in. No hidden fees.</span>
+      </div>
+      <div class="trustrow">
+        <div>UKAS ISO 15189 lab</div>
+        <div>Free UK delivery</div>
+        <div>GMC-registered doctor</div>
+        <div>Results in 2 to 5 working days</div>
+      </div>
+    </div>
+
+    <div class="tray rise" style="margin-bottom:0">
+      <div class="core">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--hair-2);margin-bottom:6px">
+          <h2 style="font-size:18px;letter-spacing:-.03em">Your results</h2>
+          <span class="kchip">Sample report</span>
+        </div>
+        <div class="rep">
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">Total testosterone</span><div class="sub2">Your baseline level</div></div>
+              <div><div class="val">14.2 <span style="font-size:12px;color:var(--ink-3)">nmol/L</span></div><span class="st hot">Borderline</span></div>
+            </div>
+            <div class="bar"><i style="width:35%"></i></div>
+          </div>
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">SHBG</span><div class="sub2">Binding globulin</div></div>
+              <div><div class="val">38.5 <span style="font-size:12px;color:var(--ink-3)">nmol/L</span></div><span class="st">Normal</span></div>
+            </div>
+            <div class="bar"><i style="width:55%"></i></div>
+          </div>
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">Free androgen index</span><div class="sub2">Bioavailable testosterone ratio</div></div>
+              <div><div class="val">36.9 <span style="font-size:12px;color:var(--ink-3)">%</span></div><span class="st hot">Borderline</span></div>
+            </div>
+            <div class="bar"><i style="width:20%"></i></div>
+          </div>
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">Albumin</span><div class="sub2">Transport protein</div></div>
+              <div><div class="val">42.0 <span style="font-size:12px;color:var(--ink-3)">g/L</span></div><span class="st">Normal</span></div>
+            </div>
+            <div class="bar"><i style="width:65%"></i></div>
+          </div>
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">Free testosterone</span><div class="sub2">What your body can actually use</div></div>
+              <div><div class="val">0.244 <span style="font-size:12px;color:var(--ink-3)">nmol/L</span></div><span class="st hot">Low</span></div>
+            </div>
+            <div class="bar"><i style="width:15%"></i></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--hair-2);margin-top:16px;padding-top:16px">
+          <p class="sub" style="font-size:14.5px;margin:0"><b style="color:var(--ink)">Recommendation:</b> Further investigation advised</p>
+          <span class="kchip">2 to 5 working days</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note"><b>The bars grow when the panel first arrives, and that is the page's one load reveal.</b> It is spent here because this is the one element whose whole meaning is a position on a track: a bar that grows to 14.2 says "this is where you landed" in a way a bar that is simply drawn does not. Staggered down the panel so it reads as a report filling in rather than five things twitching at once. Under <code>prefers-reduced-motion</code> the bars are simply at their widths, which is the right fallback because the information was never in the movement. <b>Nothing on these frames loops</b>: the ambient budget is one pulsing element per screen and it is left unspent.</p>
+  <p class="note hot"><b>The bars are the one place this frame deliberately departs from the live page.</b> Live, they are bg-statusWarning and bg-statusOptimal: dashboard status colour on a marketing page, which app-theme.css does not sanction. Here they are --flag with a dark leading edge, and the status word carries the meaning in type, underlined in amber where the result is not clean. Same five rows, same five values, same three flagged states, no rule break carried into the new system.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The reality</p>
+  <h2>Stop guessing what's wrong.</h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core" style="display:grid;gap:26px;grid-template-columns:1fr">
+      <div>
+        <p class="sub">You're doing everything right. You're training. You're eating well. But your drive has gone, your training has stalled, and you don't feel like yourself anymore.</p>
+        <p class="sub">When you ask a standard doctor, they run a basic test and tell you you're "fine". Fine isn't good enough.</p>
+        <p class="pull">The NHS sets its threshold to catch severe disease. That's not the same as optimal.</p>
+      </div>
+      <div>
+        <p class="blab">Symptoms</p>
+        <div class="symp">
+          <div><b>Drive and motivation just gone.</b> Libido has flatlined.</div>
+          <div><b>Training has stalled.</b> Strength and muscle going backwards on the same programme.</div>
+          <div><b>Mood and edge have flattened,</b> and it is not just a bad week.</div>
+          <div class="dark"><b>"GP said I'm fine",</b> but you know you're not.</div>
+          <div class="route">
+            <b>Mainly tired, foggy, or slow to recover?</b> Testosterone is not the first thing to check. The Energy and Recovery Check looks at Vitamin D, Active B12, inflammation and iron stores instead.
+            <div style="margin-top:14px"><a class="btn ghost sm" href="#">See Kit 2: &pound;119 <span aria-hidden="true">&#8594;</span></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note hot"><b>THIS LIST IS SCOPED FOR A COMPLIANCE REASON AND MUST NOT BE REPOPULATED.</b> Three symptoms, all hormonal. The fatigue and brain-fog cards that used to sit here were removed under CA-025 (04_products/2026-08-15-kit1-scope-marketing-pages-decision.md) because Kit 1 measures testosterone only and a reader arriving from a fatigue or brain-fog route was being sold a testosterone-only kit. Deleting those symptoms alone would have relocated the problem rather than solved it, so the dashed card hands that reader to Kit 2 explicitly. It is drawn in the accent here because it is the one place on the page that routes a reader AWAY from the thing being sold, which is worth more than a dashed border can carry.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The process</p>
+  <h2>Five minutes.<br><span class="grey">No GP needed.</span></h2>
+</div>
+<div class="wrap">
+  <div class="steps">
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">1</span>
+      <span class="no">01</span>
+      <h4>Order</h4>
+      <p>Dispatched same day. Fits through your letterbox.</p>
+      <div class="foot"><span>Dispatch</span><b>Same day</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">2</span>
+      <span class="no">02</span>
+      <h4>Collect</h4>
+      <p>Simple finger-prick at the kitchen table.</p>
+      <div class="foot"><span>Time required</span><b>5 mins</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">3</span>
+      <span class="no">03</span>
+      <h4>Return</h4>
+      <p>Drop it in a postbox using the prepaid return envelope.</p>
+      <div class="foot"><span>Postage</span><b>Prepaid</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">4</span>
+      <span class="no">04</span>
+      <h4>Read</h4>
+      <p>Your results appear in your private dashboard within 2 to 5 working days. Clear, specific, and in plain English.</p>
+      <div class="foot"><span>Turnaround</span><b>2 to 5 days</b></div>
+    </div>
+  </div>
+  <p class="note">Step 4 is the inverted card on the live page, the second contrast reversal on this route, and it is dropped here for the reason the selector strip dropped its own: on a four-card row an inverted last card reads as the last step being the important one, when the step that matters to a reader deciding whether to buy is the first.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The data</p>
+  <h2>Five numbers.<br><span class="grey">The full testosterone picture.</span></h2>
+</div>
+<div class="wrap">
+  <div class="bios">
+    <div class="bio rise"><span class="kchip">Biomarker 01</span><h4>Total testosterone</h4><p>The total amount of testosterone in your blood. Your baseline. The number most GPs test, if they test anything at all.</p></div>
+    <div class="bio rise"><span class="kchip">Biomarker 02</span><h4>SHBG</h4><p>Sex Hormone Binding Globulin. It binds to testosterone and makes it unusable. High SHBG means your total T might look fine on paper while you still feel terrible.</p></div>
+    <div class="bio rise"><span class="kchip">Biomarker 03</span><h4>Free androgen index</h4><p>The ratio of total testosterone to SHBG, expressed as a percentage. A more sensitive indicator of testosterone availability than Total T alone, especially when SHBG is elevated.</p></div>
+    <div class="bio rise"><span class="kchip">Biomarker 04</span><h4>Albumin</h4><p>The main carrier protein in your blood. Albumin-bound testosterone is considered weakly bioavailable. Testing it allows accurate calculation of your Free Testosterone. Without it, the number is an estimate.</p></div>
+    <div class="bio rise"><span class="kchip">Biomarker 05</span><h4>Free testosterone</h4><p>The testosterone your body can actually use. Calculated from your Total T, SHBG, and Albumin. This is the number that matters most for how you feel day to day.</p></div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The next step</p>
+  <h2>Numbers you can act on.</h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core" style="display:grid;gap:22px;grid-template-columns:1fr">
+      <p class="sub">Every result comes with a specific recommendation. If your testosterone is below where it should be, we tell you what your level means and what to consider next. If something needs a GP, we tell you that too.</p>
+      <div style="background:var(--sunk);border-radius:var(--r-in);padding:22px;box-shadow:inset 0 0 0 1px var(--hair)">
+        <h4 style="font-size:17px;letter-spacing:-.03em;margin-bottom:10px">GMC-registered oversight</h4>
+        <p class="sub" style="font-size:15px">Your report is built on healthy ranges and explanations set by a GMC-registered GP. Every recommendation is backed by your actual data, not a guess.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">If your result is low</p>
+      <p style="font-size:clamp(1.15rem,2.2vw,1.5rem);line-height:1.45;letter-spacing:-.025em">If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.</p>
+    </div>
+  </div>
+  <p class="note hot"><b>APPROVED COPY, CARRIED VERBATIM.</b> D+ Kit 1 under CA-026. There is one of these on each kit page and all three sentences differ; none is a template fill.</p>
+</div>
+
+<div class="wrap sec"><h2>Frequently asked questions</h2></div>
+<div class="wrap">
+  <div class="faqgrid">
+    <div>
+      <h4>What does this test show?</h4>
+      <p>It shows your Total Testosterone, SHBG (Sex Hormone Binding Globulin), Free Androgen Index (FAI), Albumin, and Free Testosterone. Free T is the testosterone your body can actually use. It&rsquo;s often the number your GP doesn&rsquo;t test.</p>
+    </div>
+    <div>
+      <h4>Does it hurt?</h4>
+      <p>It&rsquo;s a quick prick on the fingertip. Most men say it&rsquo;s painless. We include extra lancets just in case.</p>
+    </div>
+    <div>
+      <h4>How long do results take?</h4>
+      <p>Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.</p>
+    </div>
+    <div>
+      <h4>Does the &pound;99 cover everything?</h4>
+      <p>Yes. The kit, the lab analysis for all five biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
+    </div>
+    <div>
+      <h4>What if my testosterone comes back low?</h4>
+      <p>Your report will explain what your result means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.</p>
+    </div>
+    <div>
+      <h4>Is my data private?</h4>
+      <p>Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.</p>
+    </div>
+  </div>
+  <p class="note hot"><b>STANDARDISED (Keith, 2026-08-29): the open grid, on all three kit pages.</b> Kit 1 is the page that moves; it was the only one of the three using the collapsible <code>FaqAccordion</code>, while Kit 2 and Kit 3 already rendered open grids in their own markup. All six live questions are here, none behind a click. The accordion is gone from this file rather than left unused, because a disclosure component sitting unused is an invitation to reintroduce the split.</p>
+</div>
+
+<div class="wrap close">
+  <h2>Find out where your testosterone actually sits.</h2>
+  <p class="stand">A finger prick. A prepaid envelope. That's it.</p>
+  <a class="btn" href="#">Order the kit: &pound;99 <span aria-hidden="true">&#8594;</span></a>
+  <p class="fine" style="margin:20px auto 0;max-width:44ch">One-off purchase. Results in your personal dashboard. No GP needed.</p>
+</div>
+
+<div class="wrap" style="padding-bottom:26px">
+  <div class="tray rise">
+    <div class="core" style="display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+      <p class="sub" style="margin:0;max-width:52ch">Want to check testosterone AND energy/recovery markers? Kit 3 includes everything in Kit 1 plus 4 more biomarkers for &pound;179.</p>
+      <a class="btn ghost" href="#">See Kit 3: &pound;179 <span aria-hidden="true">&#8594;</span></a>
+    </div>
+  </div>
+  <p class="note"><b>Related reading sits between the close and this cross-sell on the live page</b>, two article cards (myth-of-normal-range, low-vitamin-d-symptoms) rendered by RelatedArticles. It is drawn as a placeholder rather than in full because the article card is a Land-stage frame that this set has not reached yet, and drawing it twice in two languages is how two card designs get built. <b>Both this cross-sell and the related reading disappear when the bundles flag is on.</b> See Frame P2.</p>
+</div>
+
+<!-- ============ FRAME P2: THE BUNDLES-ON STATE ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame P2</b><span>all three kit pages</span><span>BUNDLES_ENABLED on: the hero offer and the close</span>
+  <span class="hot">flag-dark, recorded OFF in vars.md</span>
+</div></div>
+
+<div class="wrap" style="padding-top:26px">
+  <p class="note hot"><b>This state was not in the inventory and it is a second version of every kit page.</b> isBundlesEnabled() is read once at the top of each file and branched on twice: the hero and the close. With it on, the hero leads with the bundle and the single kit becomes a text link underneath; the close becomes a BundleChoice; and the related reading plus the competing-kit cross-sell are BOTH removed, by direction (Keith, 2026-07-24: the page ends on the buying decision, nothing pulls focus off it). Three pages, two states each, six page endings.</p>
+
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">Hero offer, flag on</p>
+      <div class="btns" style="align-items:center">
+        <a class="btn" href="#">Get the Recheck bundle: &pound;169 <span aria-hidden="true">&#8594;</span></a>
+        <span class="flagchip">Best value</span>
+      </div>
+      <p class="sub" style="margin-top:16px">Your test now, plus a second test if your result comes back low. If it is not, your second test is banked for your recheck, refundable on request.</p>
+      <p class="sub" style="font-size:15px;margin-top:10px"><a href="#" style="color:var(--ink);text-underline-offset:3px">Or just the single test: &pound;99 <span aria-hidden="true">&#8594;</span></a></p>
+    </div>
+  </div>
+
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">Close, flag on</p>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.045em;margin-bottom:8px">Find out where your testosterone actually sits.</h2>
+      <p class="sub" style="margin-bottom:20px">A finger prick. A prepaid envelope. That's it.</p>
+      <div style="display:grid;gap:12px;grid-template-columns:1fr">
+        <div style="background:var(--sunk);border-radius:18px;padding:18px;box-shadow:inset 0 0 0 1px var(--hair);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center">
+          <div><h4 style="font-size:16px;letter-spacing:-.03em">Kit 1: Testosterone</h4><p class="fine" style="margin-top:6px">Single test</p></div>
+          <div style="text-align:right"><div style="font-size:20px;font-weight:700;letter-spacing:-.04em">&pound;99</div></div>
+        </div>
+        <div style="background:var(--flag-f);border-radius:18px;padding:18px;box-shadow:inset 0 0 0 1.5px var(--flag);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center">
+          <div>
+            <h4 style="font-size:16px;letter-spacing:-.03em">Recheck bundle</h4>
+            <p class="fine" style="margin-top:6px">&pound;99 base plus &pound;70 retest, if needed. Saves &pound;29.</p>
+          </div>
+          <div style="text-align:right"><div style="font-size:20px;font-weight:700;letter-spacing:-.04em">&pound;169</div></div>
+        </div>
+      </div>
+      <p class="sub" style="font-size:14.5px;margin-top:14px">Your second test ships only if your first result comes back low. If your result is not low, your second test is banked for your recheck window, refundable on request.</p>
+      <p class="fine" style="margin-top:16px">One-off purchase. Results in your personal dashboard. No GP needed.</p>
+    </div>
+  </div>
+
+  <p class="note"><b>The bundle mechanic is the only place on these four routes where a price does arithmetic in front of the reader</b> (99 plus 70 against 169, and the saving stated). It is drawn in the accent because that comparison IS the pointing, which is the same job --flag does on the homepage. The other two kits carry their own bundle names and prices; the shape is identical, so it is drawn once.</p>
+</div>
+
+<!-- ============ FRAME Q: /kits/energy-recovery ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame Q</b><span>/kits/energy-recovery</span><span>Kit 2, eight sections, no trust bar, no GMC block, FAQ open in a grid</span>
+  <span class="hot">carries the CA-038 self-flagged line</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="grid">
+    <div>
+      <div class="eyebrow"><i></i> Data first</div>
+      <h1>Sore for three days after a workout that used to take one.</h1>
+      <p class="stand">An at-home blood test for tiredness and fatigue. Find out which deficiency is slowing you down: four biomarkers, one finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.</p>
+      <div class="btns">
+        <a class="btn" href="#">Order the kit: &pound;119 <span aria-hidden="true">&#8594;</span></a>
+        <span class="kchip">All-in. No hidden fees.</span>
+      </div>
+      <p class="trust"><span aria-hidden="true">&#10003;</span> UKAS ISO 15189 accredited lab. No GP needed. Results in 2 to 5 working days.</p>
+    </div>
+
+    <div class="tray rise" style="margin-bottom:0">
+      <div class="core">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--hair-2);margin-bottom:6px">
+          <h2 style="font-size:18px;letter-spacing:-.03em">Your results</h2>
+          <span class="kchip">Sample report</span>
+        </div>
+        <div class="rep">
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">Vitamin D</span><div class="sub2">Muscle function &amp; energy</div></div>
+              <div><div class="val">44</div><span class="st hot">Action needed</span></div>
+            </div>
+            <div class="bar"><i style="width:26%"></i></div>
+          </div>
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">Active B12</span><div class="sub2">Cellular energy</div></div>
+              <div><div class="val">61</div><span class="st hot">Monitor</span></div>
+            </div>
+            <div class="bar"><i style="width:56%"></i></div>
+          </div>
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">hs-CRP</span><div class="sub2">Inflammation</div></div>
+              <div><div class="val">1.2</div><span class="st hot">Monitor</span></div>
+            </div>
+            <div class="bar"><i style="width:68%"></i></div>
+          </div>
+          <div class="row">
+            <div class="top">
+              <div><span class="lab">Ferritin</span><div class="sub2">Iron stores</div></div>
+              <div><div class="val">38</div><span class="st hot">Monitor</span></div>
+            </div>
+            <div class="bar"><i style="width:30%"></i></div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--hair-2);margin-top:16px;padding-top:16px">
+          <p class="fine">Every row mirrors what the results engine would actually return for these values. The sample is one flagged marker and three to monitor, which is the commonest real shape rather than the worst one.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The reality</p>
+  <h2>You're doing everything right.<br><span class="grey">Something's still off.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">You train. You eat well. You sleep. But your recovery has slowed, your energy tanks by mid-afternoon, and your joints ache in a way they didn't two years ago.</p>
+      <p class="sub">You're not injured. You're not lazy. Something in your blood is holding you back, and guessing won't fix it.</p>
+    </div>
+  </div>
+  <p class="note hot"><b>THE SECOND SENTENCE CARRIES A PERMANENT SELF-FLAG IN THE SOURCE. DO NOT RE-ESCALATE IT.</b> The deterministic scanner matches its last three words against the retest and efficacy table on every run. It was ruled and APPROVED as CA-038 (Keith, business, 2026-08-17), copy unchanged: the line names no marker, threshold, condition, ingredient, product or outcome, so no clinical question is reached and Ewa was not a required signer. 🔴 The approval is scoped to this page IN CONTEXT. It does not travel into a carousel slide, a hook or a short post, where the surrounding narrative the ruling rests on is the first thing a compression drops. It is carried here because a mockup of the page is the page's context.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The data</p>
+  <h2>A blood test for tiredness.<br><span class="grey">Four markers, four answers.</span></h2>
+</div>
+<div class="wrap">
+  <div class="bios">
+    <div class="bio rise"><span class="kchip">Biomarker 01</span><h4>Vitamin D</h4><p>Most UK men are deficient between October and March. Low vitamin D directly affects muscle function, recovery speed, and energy. You can't tell from how you feel. You can only tell from your blood.</p></div>
+    <div class="bio rise"><span class="kchip">Biomarker 02</span><h4>Active B12</h4><p>Holotranscobalamin: the form of B12 your cells can actually absorb. Standard NHS B12 tests often miss deficiency. Active B12 catches it early. Low levels affect energy, nerve function, and how quickly you recover between sessions.</p></div>
+    <div class="bio rise"><span class="kchip">Biomarker 03</span><h4>hs-CRP (inflammation)</h4><p>A high-sensitivity inflammation marker. If this is elevated, your body is dealing with inflammation it isn't clearing. In active men, this is often linked to joint and connective tissue stress.</p></div>
+    <div class="bio rise"><span class="kchip">Biomarker 04</span><h4>Ferritin</h4><p>Your iron stores. Low ferritin is one of the most common and most overlooked causes of fatigue in men. If your energy has dropped off a cliff, this is often why.</p></div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The process</p>
+  <h2>Five minutes.<br><span class="grey">No GP needed.</span></h2>
+</div>
+<div class="wrap">
+  <div class="steps">
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">1</span>
+      <span class="no">01</span>
+      <h4>Order</h4>
+      <p>Dispatched same day. Fits through your letterbox.</p>
+      <div class="foot"><span>Dispatch</span><b>Same day</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">2</span>
+      <span class="no">02</span>
+      <h4>Collect</h4>
+      <p>Simple finger-prick at the kitchen table.</p>
+      <div class="foot"><span>Time required</span><b>5 mins</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">3</span>
+      <span class="no">03</span>
+      <h4>Return</h4>
+      <p>Drop it in a postbox using the prepaid return envelope.</p>
+      <div class="foot"><span>Postage</span><b>Prepaid</b></div>
+    </div>
+    <div class="step rise">
+      <span class="bignum" aria-hidden="true">4</span>
+      <span class="no">04</span>
+      <h4>Read</h4>
+      <p>Your results appear in your private dashboard within 2 to 5 working days.</p>
+      <div class="foot"><span>Turnaround</span><b>2 to 5 days</b></div>
+    </div>
+  </div>
+  <p class="note">Identical to Kit 1's strip, and identical on Kit 3. Three hand-written copies of one component: the clearest single argument in this whole set for rebuilding these pages from shared parts rather than page by page.</p>
+</div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">Some results need a doctor</p>
+      <p style="font-size:clamp(1.15rem,2.2vw,1.5rem);line-height:1.45;letter-spacing:-.025em">Some results need a doctor. Low ferritin, for example, goes to a GP and earns us nothing. The rest get a plain-English reading, and what we offer alongside it is the same whether your numbers are flagged or fine.</p>
+    </div>
+  </div>
+  <p class="note hot"><b>APPROVED COPY, CARRIED VERBATIM.</b> D+ Kit 2 under CA-026.</p>
+</div>
+
+<div class="wrap sec"><h2>Frequently asked questions</h2></div>
+<div class="wrap">
+  <div class="faqgrid">
+    <div>
+      <h4>Does it hurt?</h4>
+      <p>It&rsquo;s a quick prick on the fingertip. Most men say it&rsquo;s painless. We include extra lancets just in case.</p>
+    </div>
+    <div>
+      <h4>How long do results take?</h4>
+      <p>Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.</p>
+    </div>
+    <div>
+      <h4>Does the &pound;119 cover everything?</h4>
+      <p>Yes. The kit, the lab analysis for all four biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
+    </div>
+    <div>
+      <h4>Is my data private?</h4>
+      <p>Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.</p>
+    </div>
+    <div>
+      <h4>Can I test testosterone as well?</h4>
+      <p>This kit focuses on energy, recovery, and inflammation. If you also want testosterone checked, Kit 3 includes everything in this kit plus the full testosterone panel (Total T, SHBG, Free Androgen Index (FAI), Albumin, and Free T) for &pound;179.</p>
+    </div>
+    <div>
+      <h4>I already take supplements. Is this still worth it?</h4>
+      <p>Especially if you already take supplements. Most men are guessing which ones they need. This test tells you which deficiencies you have, so you stop spending money on things you don&rsquo;t need.</p>
+    </div>
+  </div>
+  <p class="note hot"><b>ALL SIX LIVE QUESTIONS, AND THE FIRST DRAFT OF THIS FRAME GOT IT WRONG.</b> It showed four, described as "representative", and one of the four was a question this page does not ask: "Will this tell me why I'm tired?" was written to fill the shape rather than transcribed from the source. It has been removed. A mockup is the thing the rebuild reads, so an invented question in it is a proposal for new customer-facing copy wearing the clothes of an existing one, and nothing downstream would have flagged it as new.</p>
+</div>
+
+<div class="wrap close">
+  <h2>Find out what's actually slowing you down.</h2>
+  <p class="stand">A finger prick. A prepaid envelope. That's it.</p>
+  <a class="btn" href="#">Order the kit: &pound;119 <span aria-hidden="true">&#8594;</span></a>
+  <p class="fine" style="margin:20px auto 0;max-width:44ch">One-off purchase. Results in your personal dashboard. No GP needed.</p>
+</div>
+
+<!-- ============ FRAME R: /kits/hormone-recovery ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame R</b><span>/kits/hormone-recovery</span><span>Kit 3, ten sections, 882 lines, the only page with founders and its own comparison table</span>
+  <span class="hot">nine markers, one of them unbanded</span>
+</div></div>
+
+<div class="wrap hero">
+  <div class="grid">
+    <div>
+      <div class="eyebrow"><i></i> Data first</div>
+      <h1>Nine numbers every man over 40 should know.</h1>
+      <p class="stand">A complete men's health blood test you take at home. Hormones, energy, recovery, and inflammation: one test, nine biomarkers, and the full picture of what's going on inside your body, with a specific recommendation based on your data.</p>
+      <div class="btns">
+        <a class="btn" href="#">Order the kit: &pound;179 <span aria-hidden="true">&#8594;</span></a>
+        <span class="flagchip">Most complete</span>
+      </div>
+      <div class="trustrow">
+        <div>UKAS ISO 15189 lab</div>
+        <div>Free UK delivery</div>
+        <div>GMC-registered doctor</div>
+        <div>Results in 2 to 5 working days</div>
+      </div>
+    </div>
+
+    <div class="tray rise" style="margin-bottom:0">
+      <div class="core">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--hair-2);margin-bottom:6px">
+          <h2 style="font-size:18px;letter-spacing:-.03em">Your results</h2>
+          <span class="kchip">All 9 markers</span>
+        </div>
+        <div class="rep">
+          <div class="row"><div class="top"><div><span class="lab">Total testosterone</span></div><div><div class="val">16.8</div><span class="st hot">Monitor</span></div></div><div class="bar"><i style="width:42%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">SHBG</span></div><div><div class="val">34.0</div><span class="st">In range</span></div></div><div class="bar"><i style="width:55%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Free androgen index</span></div><div><div class="val">41.0</div><span class="st">Reported</span></div></div><div class="bar none"></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Albumin</span></div><div><div class="val">44.0</div><span class="st">In range</span></div></div><div class="bar"><i style="width:64%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Free testosterone</span></div><div><div class="val">0.31</div><span class="st">In range</span></div></div><div class="bar"><i style="width:32%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Vitamin D</span></div><div><div class="val">47</div><span class="st hot">Action needed</span></div></div><div class="bar"><i style="width:26%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Active B12</span></div><div><div class="val">58</div><span class="st hot">Monitor</span></div></div><div class="bar"><i style="width:54%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">hs-CRP</span></div><div><div class="val">2.1</div><span class="st hot">Monitor</span></div></div><div class="bar"><i style="width:62%"></i></div></div>
+          <div class="row"><div class="top"><div><span class="lab">Ferritin</span></div><div><div class="val">39</div><span class="st hot">Monitor</span></div></div><div class="bar"><i style="width:24%"></i></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note hot"><b>FAI has no bar, and that is correct rather than a gap.</b> The live source says so in a comment: resolveBarZones returns an empty set for FAI, so the panel deliberately renders no track for it and the status word reads "Reported" rather than a band. The redraw keeps the absence and labels it, because an empty row where eight others have bars looks like a rendering fault unless it says why. This is the same marker the results engine refuses to grade, and the Kit 1 landing page was corrected in August for grading it.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The data</p>
+  <h2>Everything Kit 1 and Kit 2 test.<br><span class="grey">In one kit.</span></h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core" style="display:grid;gap:14px;grid-template-columns:1fr">
+      <div class="spec" style="margin:0">
+        <div><span class="k">Hormones, 5</span><span class="v">Total T &middot; SHBG &middot; FAI &middot; Albumin &middot; Free T</span></div>
+        <div><span class="k">Energy and recovery, 4</span><span class="v">Vit D &middot; Active B12 &middot; hs-CRP &middot; Ferritin</span></div>
+        <div><span class="k">One finger-prick</span><span class="v">Same collection, same turnaround, one sample</span></div>
+      </div>
+      <p class="sub">The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">The next step</p>
+  <h2>We don't just give you numbers.</h2>
+</div>
+<div class="wrap">
+  <div class="tray rise">
+    <div class="core">
+      <p class="sub">Nine markers means the widest set of recommendation pathways: both testosterone and deficiency patterns, with a specific route for each. Where a result needs a doctor, the report says so and says why.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Built for</p>
+  <h2>The men's health blood test your GP doesn't offer.</h2>
+</div>
+
+<div class="wrap sec">
+  <h2>Built by men who needed it.<br><span class="grey">Backed by doctors who understand it.</span></h2>
+</div>
+<div class="wrap">
+  <div class="founders">
+    <div class="founder rise">
+      <div class="who">
+        <div class="av">KA</div>
+        <div><h4>Keith Antony</h4><div class="role">Founder</div></div>
+      </div>
+      <q>"I spent two years being told my levels were 'normal for my age' while feeling completely burnt out. I built this company because the standard approach is broken. We test first. Then you know exactly where you stand."</q>
+    </div>
+    <div class="founder rise">
+      <div class="who">
+        <div class="av">EL</div>
+        <div><h4>Dr Ewa Lindo</h4><div class="role">Medical Director</div></div>
+      </div>
+      <q>"Normal ranges are statistical averages, not targets for how you should actually feel. I review our clinical protocols to ensure your data translates into effective, actionable steps."</q>
+    </div>
+  </div>
+  <p class="note hot"><b>Attributed quotes from two real people, one of them the clinical reviewer.</b> Carried verbatim. Attributed speech is not design copy and is not a redraw's to tighten, shorten or make punchier, and a quote that has been "improved" is a quote the named person did not say. The live page sets Dr Lindo's card with an icon rather than initials; initials are used here so the two cards are the same object, which is a design choice and is the kind of thing that needs a look rather than a rule.</p>
+</div>
+
+<div class="wrap sec">
+  <p class="blab">Compare</p>
+  <h2>All three kits, side by side.</h2>
+</div>
+<div class="wrap">
+  <div class="cmpscroll">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th>Spec</th>
+          <th>Kit 1<b>Testosterone</b></th>
+          <th>Kit 2<b>Energy &amp; Recovery</b></th>
+          <th class="k3">Kit 3<b>Hormone &amp; Recovery</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Price</td><td>&pound;99</td><td>&pound;119</td><td class="k3">&pound;179</td></tr>
+        <tr><td>Markers</td><td>Total T, SHBG, FAI, Albumin, Free T</td><td>Vit D, Active B12, hs-CRP, Ferritin</td><td class="k3">All 9 markers</td></tr>
+        <tr><td>Best for</td><td>Testosterone only</td><td>Energy, recovery, joints</td><td class="k3">Full picture</td></tr>
+        <tr><td>Testosterone?</td><td>Yes</td><td>No</td><td class="k3">Yes</td></tr>
+        <tr><td>Energy and recovery?</td><td>No</td><td>Yes</td><td class="k3">Yes</td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td><a class="btn ghost sm" href="#">Order</a></td>
+          <td><a class="btn ghost sm" href="#">Order</a></td>
+          <td class="k3"><a class="btn sm" href="#">Order</a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <p class="note hot"><b>The second comparison table, and the reason the pair is worth naming.</b> This one compares specs in words; the one on /kits compares nine markers with ticks. Neither is redundant, both are hand-maintained, and they share four facts (three prices and the marker sets) with nothing keeping them in step. The rebuild should read both from one source, and if only one survives, this is the one to lose, because the marker table answers the question a buyer on a kit page is actually asking.</p>
+</div>
+
+<div class="wrap" style="padding-top:26px">
+  <div class="tray rise">
+    <div class="core">
+      <p class="blab">The same two rules</p>
+      <p style="font-size:clamp(1.15rem,2.2vw,1.5rem);line-height:1.45;letter-spacing:-.025em">The full panel follows the same two rules. Anything that needs a doctor goes to a GP and earns us nothing. And no result changes what we offer or what it costs.</p>
+    </div>
+  </div>
+  <p class="note hot"><b>APPROVED COPY, CARRIED VERBATIM.</b> D+ Kit 3 under CA-026. Three kits, three different sentences, one rule.</p>
+</div>
+
+<div class="wrap sec"><h2>Frequently asked questions</h2></div>
+<div class="wrap">
+  <div class="faqgrid">
+    <div>
+      <h4>Does it hurt?</h4>
+      <p>It&rsquo;s a quick prick on the fingertip. Most men say it&rsquo;s painless. We include extra lancets just in case.</p>
+    </div>
+    <div>
+      <h4>How long do results take?</h4>
+      <p>Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.</p>
+    </div>
+    <div>
+      <h4>Does the &pound;179 cover everything?</h4>
+      <p>Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included.</p>
+    </div>
+    <div>
+      <h4>Is my data private?</h4>
+      <p>Your results are private to you, in your own dashboard. We do not sell your data, and we do not share it for advertising. You choose who sees your numbers.</p>
+    </div>
+    <div>
+      <h4>Why not just buy Kit 1 and Kit 2 separately?</h4>
+      <p>You could. They&rsquo;d cost &pound;218 combined. Kit 3 gives you all nine markers for &pound;179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.</p>
+    </div>
+    <div>
+      <h4>What if my testosterone comes back low?</h4>
+      <p>Your report will explain what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.</p>
+    </div>
+  </div>
+  <p class="note">Kit 3's FAQ was missing from the first draft of this frame: the page has ten sections and nine were drawn. It already rendered an open grid on the live page, in its own hand-written markup rather than a shared component, which is what made the standardisation above a one-page change rather than a three-page one.</p>
+</div>
+
+<div class="wrap close" style="padding-bottom:40px">
+  <h2>The full picture, in one test.</h2>
+  <p class="stand">Nine markers. One finger prick. Results in 2 to 5 working days.</p>
+  <a class="btn" href="#">Order the kit: &pound;179 <span aria-hidden="true">&#8594;</span></a>
+  <p class="fine" style="margin:20px auto 0;max-width:44ch">One-off purchase. Results in your personal dashboard. No GP needed.</p>
+</div>
+
+<div class="flabel"><div class="in">
+  <b>End of the Choose stage</b><span>Frames N, N2, N3, N4, O, P, P2, Q, R</span>
+  <span class="hot">next: Learn, Buy, and the five auth frames</span>
+</div></div>
+
+<div class="wrap" style="padding:26px 20px 60px">
+  <p class="note hot"><b>ONE MORE WAY TO MAKE THIS PAGE LESS STATIC, NOT DRAWN, BECAUSE IT NEEDS A FACT WE DO NOT HAVE.</b> The strongest anti-static device available to a commerce page is a real deadline: "order in the next 2h 40m and it ships today" changes on its own, is true, and needs no animation at all, which is exactly the shape the waiting-screen rule says works. The live pages say "dispatched the same working day" and <b>state no cutoff anywhere</b>, so drawing a countdown would mean inventing the cutoff, and an invented operational promise in a mockup is read by the rebuild as an existing one. If there is a real dispatch cutoff, this is the highest-value thing that could be added to Frame O and it would cost no motion budget. If there is not, it should not be drawn.</p>
+  <p class="note"><b>What this file settles, and what it does not.</b> It settles the four remaining Choose frames and one state that was never on the list. <b>The FAQ container is now settled: the open grid, all three pages (Keith, 2026-08-29).</b> Two things still need him, both rebuild decisions rather than frame decisions: whether status colour is allowed on a marketing sample-report panel (the live pages already do it and this redraw does not), and whether the two comparison tables collapse into one. Each is cheaper to answer now than after the tokens are written.</p>
+</div>
+
+<script>
+/* THE TOUCH TRIGGER, adopted with the card. On a device with no hover the card
+   closest to the middle of the viewport carries the on state, so scrolling the
+   row lights each card in turn. Skipped entirely on a pointer that can hover,
+   where :hover already does the job and a second trigger would fight it. */
+(function(){
+  var noHover=window.matchMedia&&window.matchMedia('(hover: none)').matches;
+  /* Both idioms answer to the same trigger, so a touch reader gets the same
+     behaviour on a kit card as on a step card. */
+  var steps=[].slice.call(document.querySelectorAll('.step,.tray.pick'));
+  if(!noHover||!steps.length)return;
+  var tick=false;
+  function mark(){
+    tick=false;
+    var mid=window.innerHeight/2,best=null,bestD=Infinity;
+    steps.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.bottom<0||r.top>window.innerHeight)return;
+      var d=Math.abs((r.top+r.bottom)/2-mid);
+      if(d<bestD){bestD=d;best=el}
+    });
+    steps.forEach(function(el){ el.classList.toggle('act',el===best); });
+  }
+  window.addEventListener('scroll',function(){
+    if(tick)return; tick=true; window.requestAnimationFrame(mark);
+  },{passive:true});
+  window.addEventListener('resize',mark,{passive:true});
+  mark();
+})();
+(function(){
+  if(!document.documentElement.classList.contains('js'))return;
+  var els=[].slice.call(document.querySelectorAll('.rise'));
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
