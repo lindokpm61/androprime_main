@@ -2,7 +2,7 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-08-30 (✅ **THE BRAND LEAD IS RULED AND THIS WORKSPACE WAS THE ONE THE LAST SWEEP MISSED.** Keith, 2026-08-30, ruling A2 on `../01_strategy/2026-08-30-brand-lead-after-the-monitoring-thesis.md`: **conflict-free stays the lead; the Patient-owned data pillar is promoted from "privacy receipt" to PROOF LAYER** and may appear in customer copy as demonstration, still never as the opening claim. **Category noun ruled: "a UK men's health company"**, not a wellness brand (wellness is the Phase 0 regulatory tier, and `brand-guidelines.md` already says "not a wellness brand") and not a testing company (forecloses the record and the membership). `CONTEXT.md` and `messaging-framework.md` are amended. 🔴 **STILL OWED BY KEITH: the `brand-description.md` rewrite**, which is now TWO leads stale (last touched 2026-07-22, commit `647e91b`) and feeds affiliate briefs, press, the About page, the homepage meta and every social bio. The sweep re-stamped its banner and deliberately did not write the copy. **No CA-026 re-clearance is triggered**: under A2 no approved claim moves. Earlier: 2026-08-27 (**visual brand guidelines demoted to advisory by Keith**; packaging renders are product not mood, see below). Earlier: 2026-08-25 (🔴 **THE KIT SLEEVE APERTURE IS IN DISPUTE AND NOTHING MAY GO TO PRINT.** Vitall's Laura Sutton answered all nine sleeve questions on 2026-08-24 and gave the aperture as **67 x 118 mm** against the **108.00 x 57.00 mm** we lifted from her own `.eps` and recorded as "exact, not measured": 10 mm larger on both axes, which would make **both Route B print proofs wrong**. Her attached box cutter templates are the arbiter and are **still in Gmail, unmeasured**. Everything else in the sleeve spec is now CLOSED: **no new die needed** if we build to their dimensions, the sleeve does not move on the box, **we supply printed sleeves via Vitall's partner Mega-Pak** who ship direct to the fulfilment centres, setup is ~1 month but gated on Mega-Pak capacity, the **500 minimum is per design** (so Kit 1 + Kit 2 is 1,000 sleeves), and the IFU and Lab Request Form can both carry our branding. **Owed by us: the logo as SVG, and the template download.** Earlier: 2026-08-20 (**both sleeve routes now drawn; Route B recommended.** Route B keeps the board dominant and reduces the black to the channel and the table rules. ✅ **It preserves the 2026-06-12 warm-white finding, prints far cheaper, and gives the credentials the whole page** — and drawing it corrected my own call: Route B is **not** the weaker match to the bottle, it is its photographic negative, which is a stronger two-family system than a literal colour match. Earlier: sleeve fronts redrawn onto the supplement system (v6); bottle heroes on the real Nutribl bottles; the inverted black label on a white bottle scored highest; the generative-model limit tested and corrected.))_
+_Last updated: 2026-08-30 (✅ **THE LOGO CHANGED: KEITH APPROVED THE "INTERLOCKED AP" (2026-08-30)**, the A and P as one glyph sharing a stem, **with no container**, `assets/logos/interlocked-ap/`. It closes the F rounding question **by removal**, since there is no square left to round. **Direction only: there are no vector masters**, so the Refined Monogram still ships everywhere **except the icon set**, which migrated the same day (favicon, app icon, apple-touch, PWA) because a fixed-size raster output does not need a vector source. **The site is therefore in a deliberate mixed state**: new mark in the browser tab, old mark in the page header. Earlier: ✅ **THE BRAND LEAD IS RULED AND THIS WORKSPACE WAS THE ONE THE LAST SWEEP MISSED.** Keith, 2026-08-30, ruling A2 on `../01_strategy/2026-08-30-brand-lead-after-the-monitoring-thesis.md`: **conflict-free stays the lead; the Patient-owned data pillar is promoted from "privacy receipt" to PROOF LAYER** and may appear in customer copy as demonstration, still never as the opening claim. **Category noun ruled: "a UK men's health company"**, not a wellness brand (wellness is the Phase 0 regulatory tier, and `brand-guidelines.md` already says "not a wellness brand") and not a testing company (forecloses the record and the membership). `CONTEXT.md` and `messaging-framework.md` are amended. 🔴 **STILL OWED BY KEITH: the `brand-description.md` rewrite**, which is now TWO leads stale (last touched 2026-07-22, commit `647e91b`) and feeds affiliate briefs, press, the About page, the homepage meta and every social bio. The sweep re-stamped its banner and deliberately did not write the copy. **No CA-026 re-clearance is triggered**: under A2 no approved claim moves. Earlier: 2026-08-27 (**visual brand guidelines demoted to advisory by Keith**; packaging renders are product not mood, see below). Earlier: 2026-08-25 (🔴 **THE KIT SLEEVE APERTURE IS IN DISPUTE AND NOTHING MAY GO TO PRINT.** Vitall's Laura Sutton answered all nine sleeve questions on 2026-08-24 and gave the aperture as **67 x 118 mm** against the **108.00 x 57.00 mm** we lifted from her own `.eps` and recorded as "exact, not measured": 10 mm larger on both axes, which would make **both Route B print proofs wrong**. Her attached box cutter templates are the arbiter and are **still in Gmail, unmeasured**. Everything else in the sleeve spec is now CLOSED: **no new die needed** if we build to their dimensions, the sleeve does not move on the box, **we supply printed sleeves via Vitall's partner Mega-Pak** who ship direct to the fulfilment centres, setup is ~1 month but gated on Mega-Pak capacity, the **500 minimum is per design** (so Kit 1 + Kit 2 is 1,000 sleeves), and the IFU and Lab Request Form can both carry our branding. **Owed by us: the logo as SVG, and the template download.** Earlier: 2026-08-20 (**both sleeve routes now drawn; Route B recommended.** Route B keeps the board dominant and reduces the black to the channel and the table rules. ✅ **It preserves the 2026-06-12 warm-white finding, prints far cheaper, and gives the credentials the whole page** — and drawing it corrected my own call: Route B is **not** the weaker match to the bottle, it is its photographic negative, which is a stronger two-family system than a literal colour match. Earlier: sleeve fronts redrawn onto the supplement system (v6); bottle heroes on the real Nutribl bottles; the inverted black label on a white bottle scored highest; the generative-model limit tested and corrected.))_
 
 ---
 
@@ -495,7 +495,8 @@ made for. **Neither font was ever assessed against this brand, this register or 
 
 **What it is tied to, and the ordering.** The current logo mark's glyphs are **Inter Black outlined to
 paths** (`visual-identity.md`), so the typeface decision governs the logo decision below rather than the
-other way round. Settle the typeface first. It also governs the app-wide rebuild, which is live now:
+other way round. Settle the typeface first. ✅ **BOTH SETTLED 2026-08-30, and this dependency turned out
+not to exist: the approved logo is a custom interlock in no typeface.** Kept for the reasoning. It also governs the app-wide rebuild, which is live now:
 `09_website-app/frontend/styles/components/f-primitives.css` renders every rule through `--font-sans`
 and `--font-mono`, so a ruling is a change to `styles/tokens/typography.css` plus `app/layout.tsx` and
 nothing else, however many pages have been rebuilt by then.
@@ -510,9 +511,11 @@ headline.
 
 ## Logo: SHIPPED (2026-06-12, `e442d2b`), 🔴 but the mark's radius is now an open question
 
-> 🔴 **TWO THINGS ARE OPEN ON THE MARK (2026-08-30).**
+> ✅ **BOTH OF THESE CLOSED LATER ON 2026-08-30. Kept for the reasoning; point 3 below has the
+> outcome.** Point 1 was resolved **by removal**: Keith approved a mark with no container, so there is
+> no square left to round. Point 2's exploration produced that mark.
 >
-> **1. Direction F rounds it, and that is not ruled.** `design/mockups/journey/chrome-F.html` renders the
+> **1. Direction F rounds it, and that is not ruled (SUPERSEDED, see above).** `design/mockups/journey/chrome-F.html` renders the
 > AP square with `border-radius:9px` (26px footer lockup) and `7px` (22px nav lockup). `visual-identity.md`
 > lists **"round the square's corners"** among the things not to do to the mark, and the 2026-08-27
 > advisory demotion listed page-level surface rules and never mentioned the logo. The mark is not a page
@@ -574,10 +577,13 @@ headline.
 > approved mark is on disk. They were untracked and are **not recoverable from git**; the size ladder
 > and the outcome table in `assets/logos/interlocked-ap/README.md` are the whole surviving record.
 >
-> **These two are one decision, not two**, and they are tied to a third: the site typeface. The current
-> mark's glyphs are **Inter Black outlined to paths**, so a ruling that moves the site to Geist
-> (`09_website-app/STATE.md`, still open) argues for redrawing the mark, and a ruling that keeps Inter
-> argues for leaving it square. **Settle the typeface first.**
+> ~~**These two are one decision, not two**, and they are tied to a third: the site typeface.~~
+> ✅ **OVERTAKEN 2026-08-30, and the ordering advice was wrong in the event.** It said "settle the
+> typeface first", reasoning that the mark's glyphs were Inter Black outlined to paths so the typeface
+> ruling governed the mark. **The approved mark is a custom-drawn interlock in no typeface at all, so
+> that dependency does not exist**, and the logo was settled before the typeface rather than after.
+> The typeface was then ruled the same day (`c4d477c`): a **serif headline over a humanist sans**,
+> faces unchosen, and **neither Inter nor Geist was ever a brand choice**, both were defaults.
 
 
 

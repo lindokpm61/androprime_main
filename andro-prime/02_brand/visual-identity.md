@@ -175,9 +175,13 @@ Full spec in [brand-guidelines.md](brand-guidelines.md) §3–§4. Implemented t
 > first**, by hand, and the build fed from that drawing. Rewriting this build is part of producing the
 > new masters, not a follow-up to it.
 >
-> The **wordmark** half still outlines from a font, and which font is not settled: "ANDRO PRIME" is
-> set in a grotesque sans and the site's Inter-to-Geist decision is still open
-> (`09_website-app/STATE.md`). **The mark can be produced before that ruling; the lockup cannot.**
+> The **wordmark** half still outlines from a font. ✅ **Which KIND of font is ruled (Keith,
+> 2026-08-30, commit `c4d477c`): a heavy grotesque, uppercase**, confirmed against this mark at 52px,
+> 22px nav and 14px minimum. Which specific grotesque is open, and the cheapest answer is the site's
+> body sans at its heaviest weight rather than licensing a third family. The site's headline face was
+> ruled the same day as a **serif over a humanist sans**, so the lockup pairs a grotesque wordmark
+> with a serif headline **deliberately**; do not file that as a defect. **Neither half of the lockup
+> is blocked on typography now. Both are blocked on the mark being drawn as vector.**
 >
 > ✅ **The ICON SET half is already rebuilt and does not use this procedure**:
 > `assets/logos/interlocked-ap/build-icons.js` produces `favicon.ico` (16/32/48, PNG-embedded), the
