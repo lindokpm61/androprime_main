@@ -27,7 +27,11 @@
 
 Andro Prime is a UK men's health company built on one principle: blood data should precede every recommendation. Test first, then act.
 
-The brand is light, direct, and editorial. Not a wellness brand. Not a supplement shop. Not a sterile clinic. Think quality British print publication meets precise medical reporting. The visual language says: we have nothing to prove, here are your numbers.
+The brand is light, direct, and editorial. Not a wellness brand. Not a supplement shop. Not a sterile clinic. Think quality British print publication meets precise health reporting.
+
+> **Corrected 2026-08-30 (Keith): "health reporting", not "medical reporting".** Medical overstates what
+> Andro Prime does and drifts toward the clinical register Phase 0 must stay out of; health reporting is
+> the precise description. Same correction applies wherever this line is quoted. The visual language says: we have nothing to prove, here are your numbers.
 
 This replaces the previous dark/cockpit aesthetic. The rationale: the dark glass/glow system is now ubiquitous in men's health DTC. The light editorial direction differentiates at category level and better matches the 38-54 ICP who responds to authority signals, not tech-startup atmosphere.
 
@@ -53,6 +57,13 @@ This replaces the previous dark/cockpit aesthetic. The rationale: the dark glass
 - Never stretch, rotate, or add effects to the wordmark
 - No pill shape, no rounded corners on the logo container — always `rounded-none`
 
+> ✅ **SUPERSEDED 2026-08-30: Keith approved a new mark, the Interlocked AP, which has no container.**
+> The rule below prohibits rounding the logo container; the approved mark **has no container to round**,
+> so the conflict dissolves rather than being ruled on. `2026-08-29-direction-f-supersedes-v2-non-negotiables.md`
+> §5 is CLOSED. 🔴 **But the rule still binds today**, because the approved direction has **no vector
+> masters** and the square Refined Monogram is still what ships on every surface. Do not round it in
+> the meantime. Source of truth, as ever: `visual-identity.md`. **The 08-29 note follows unchanged.**
+>
 > 🔴 **STILL IN FORCE, AND DIRECTION F CROSSES IT (noted 2026-08-29).** `chrome-F.html` renders the
 > AP mark with `border-radius:9px` (26px footer lockup) and `7px` (22px nav lockup). **The 2026-08-27
 > release listed page-level surface rules and did not mention the logo.** The mark is not a page surface:
@@ -160,9 +171,26 @@ Biomarker status indicators — the traffic-light range bars and the optimal/war
 
 ### 4.1 Font Stack
 
+> ✅ **RULED 2026-08-30 (Keith): a SERIF HEADLINE over a HUMANIST SANS.** The sans carries body copy,
+> UI and all data; the serif is headlines only. Chosen from a live comparison on the rebuilt
+> `/kits/testosterone` at 1440 and 390, against two sans-only alternatives. **This changes Direction F,
+> which was drawn all-sans.** The **faces are not yet chosen**: the comparison ran on free stand-ins,
+> and the licensed candidates are Austin (Commercial Type) for the headline over a humanist sans such as
+> Effra (Dalton Maag). Licensing, self-hosting rights and price are all unverified and gate any spend.
+> Substance, and the open reconciliation against the logo wordmark: `02_brand/STATE.md`, typeface entry.
+>
+> **How it got here, because this document previously misstated it:**
+> Inter is here because it was the default used to stand the site up quickly, not because it was
+> selected. Direction F's Geist is not a choice either: `high-end-visual-design` bans Inter and Geist is
+> the first name on that skill's own substitutes list, and the quality detector then flagged Geist with
+> the identical `overused-font` finding it had raised against Inter. **Two defaults, neither chosen.**
+> Keith's position, 2026-08-30: a men's health company needs its own type form, one that carries British
+> high quality. Wherever this document or another calls Inter "the documented brand face", read it as
+> "the incumbent default". Substance and options: `02_brand/STATE.md`, typeface entry.
+
 | Role | Family | Weights | Source |
 | ---- | ------ | ------- | ------ |
-| Headlines & UI | **Inter** | 300, 400, 500, 600, 700, 900 | Google Fonts |
+| Headlines & UI | **Inter** (incumbent default, not a brand decision) | 300, 400, 500, 600, 700, 900 | Google Fonts |
 | Body copy | **Merriweather** | 300, 400, 700, 400 italic | Google Fonts |
 | Data labels | **JetBrains Mono** | 400, 500, 700 | Google Fonts |
 

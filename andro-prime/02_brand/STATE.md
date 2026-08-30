@@ -423,6 +423,88 @@ Keith + Ewa approved the set: §P + A1 + B1 + C1 + C2 (FAQs) + D1 + D2 + D+ + E2
 
 ---
 
+## ✅ RULED: serif headline over humanist sans (Keith, 2026-08-30)
+
+**Keith's ruling, from a live comparison on the rebuilt `/kits/testosterone`:** the site runs a
+**serif headline over a humanist sans**, with the sans carrying body copy, UI and all data. Picked
+against two sans-only alternatives (Inter as-is, and a Dalton Maag humanist standing in for Effra) on
+the real page at 1440 and 390, sample-report panel included, so the numerals and the mono labels were
+part of the judgement rather than a specimen sheet.
+
+**What this decides, and what it does not.** It decides the **system**: F was drawn all-sans, and it is
+now a serif-headline system. It does **not** decide the faces. The comparison ran on Newsreader over
+Source Sans 3, both free stand-ins chosen to test the category; the licensed candidates are **Austin**
+(Commercial Type, Paul Barnes, built on Richard Austin's late-18th-century English letterforms) for the
+headline over a licensed humanist sans such as **Effra** (Dalton Maag) for everything else. Austin is
+higher contrast and more assertive than its stand-in, which cuts both ways at small sizes.
+
+**Not yet verified, and it gates any spend:** licensing terms, self-hosting rights (the site serves
+fonts itself through `next/font`, and some foundry web licences forbid that), and price. No figures
+have been confirmed and none should be quoted until they are.
+
+**Cost to apply, either way: two files.** `09_website-app/frontend/styles/tokens/typography.css` plus
+`app/layout.tsx`. Every Direction F rule resolves `--font-sans` / `--font-mono` rather than naming a
+family, which is what made the comparison itself a runtime swap with no rebuild.
+
+> ✅ **RECONCILED 2026-08-30: the wordmark stays a heavy grotesque (Keith).** Put to him as a
+> three-way render against the approved Interlocked AP mark, at 52px, 22px nav and 14px minimum, each
+> lockup also shown above a real serif page headline: **A** heavy grotesque (the approved spec),
+> **B** the headline serif letterspaced, **C** a bridge treatment (sans construction, editorial
+> weight and spacing). **He took A.**
+>
+> **The tension is accepted, not overlooked, and this note exists so nobody "fixes" it later.** A
+> grotesque wordmark over serif headlines does read as two registers in the nav, and that was visible
+> in the comparison when the call was made. What A buys in exchange: the wordmark matches the mark's
+> own construction, since the Interlocked AP is geometric with uniform strokes and no serifs anywhere,
+> and it is the option that survives the 14px minimum most comfortably. B was nearest its floor there.
+>
+> 🔴 **One detail this leaves open, and it is small.** A specifies a *heavy grotesque* while the
+> site's body sans is now a *humanist*. Cheapest resolution is to cut the wordmark from the body sans at
+> its heaviest weight rather than licensing a third family; most humanist families carry a Black. Decide
+> it when the faces are chosen, not before.
+>
+> **The original conflict, kept for the record:** `assets/logos/interlocked-ap/README.md` records the approved lockup as the mark
+> "to the left of **ANDRO PRIME** in **a heavy grotesque sans, uppercase**". That is the V2.0
+> typographic register: the same heavy-sans-uppercase treatment the site has just moved away from.
+> Neither decision is wrong and the pairing is a legitimate one, but **the two were made independently,
+> hours apart, and nobody has looked at them together.** The question to settle: does the wordmark stay
+> a heavy grotesque while headlines run serif, or does the wordmark follow the headline face? Settle it
+> before the Interlocked AP vector masters are drawn, because the wordmark is cut into those masters
+> and redrawing them later is the expensive version of this conversation.
+
+### The evidence that got here, kept because the record misstated it
+
+**Both prior candidates were somebody's default, and neither was ever chosen.**
+
+**Keith's position, verbatim in substance:** Inter was the default we used to build the site quickly.
+Geist is the direction tool's default. **A men's health company needs its own type form, one that
+serves being British high quality.**
+
+**The evidence, because the record currently misstates it.** `homepage-direction-brief.md:157` and
+`09_website-app/STATE.md:2114` both call Inter *"the documented brand face"*, which reads as a
+selection and was not one. And Geist's arrival is recorded at `09_website-app/STATE.md:2008` as
+*"Inter to Geist, because `high-end-visual-design` bans Inter outright and keeping it would have made D
+a version of B"*. Geist is the **first name on that skill's own substitutes list**
+(`~/.claude/skills/high-end-visual-design/SKILL.md:15`). The same quality detector then raised **two
+`overused-font` findings against Geist and Geist Mono**, *"the same finding class v1 carried on Inter"*
+(`09_website-app/STATE.md:2033`). So the substitution did not even deliver the differentiation it was
+made for. **Neither font was ever assessed against this brand, this register or this ICP.**
+
+**What it is tied to, and the ordering.** The current logo mark's glyphs are **Inter Black outlined to
+paths** (`visual-identity.md`), so the typeface decision governs the logo decision below rather than the
+other way round. Settle the typeface first. It also governs the app-wide rebuild, which is live now:
+`09_website-app/frontend/styles/components/f-primitives.css` renders every rule through `--font-sans`
+and `--font-mono`, so a ruling is a change to `styles/tokens/typography.css` plus `app/layout.tsx` and
+nothing else, however many pages have been rebuilt by then.
+
+**The register this has to serve, corrected the same day:** quality British print publication meets
+precise **health** reporting, not *medical* reporting (`brand-guidelines.md` §1). Audience is men 38 to
+55 who respond to authority rather than atmosphere, and the brief treats the presbyopia legibility floor
+as a hard gate, so whatever is chosen has to hold at small sizes and in a data table, not only in a
+headline.
+
+**Not yet done:** no options have been researched, costed or licensed. Nothing here is a recommendation.
+
 ## Logo: SHIPPED (2026-06-12, `e442d2b`), 🔴 but the mark's radius is now an open question
 
 > 🔴 **TWO THINGS ARE OPEN ON THE MARK (2026-08-30).**
