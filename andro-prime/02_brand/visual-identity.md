@@ -1,6 +1,34 @@
 # Visual Identity — Logo & Identity Assets
 
-**Owner:** Keith Antony · **Status:** Active · **Last updated:** 2026-06-12
+**Owner:** Keith Antony · **Status:** Active · **Last updated:** 2026-08-30
+
+> 🟢 **THE LOGO DIRECTION CHANGED ON 2026-08-30. Keith approved the "Interlocked AP".** The A and the
+> P cut as a single geometric glyph sharing one stem, **with no container**, replacing the Refined
+> Monogram's filled square. Reference and full detail: `assets/logos/interlocked-ap/README.md`.
+>
+> 🔴 **THE APPROVAL IS OF THE DIRECTION, AND THE VECTOR ARTWORK STILL DOES NOT EXIST.** What was
+> approved is a raster PNG from a generative model, where every shipped master is outlined vector
+> paths. **Do not treat any section of this document as void on the strength of the approval alone**
+> — each carries a dated note where the new direction changes it.
+>
+> ⚠️ **THE SITE IS NOW IN A MIXED STATE, DELIBERATELY (2026-08-30).** The **icon set has migrated**
+> and the **lockup has not**:
+>
+> | Surface | Carries |
+> |---|---|
+> | `app/favicon.ico`, `app/icon.png`, `app/apple-icon.png`, `public/icon-192.png`, `public/icon-512.png` | 🟢 **Interlocked AP** |
+> | `components/shared/Logo.tsx` (nav, footer, activate header) | 🔴 still Refined Monogram |
+> | OG cards, packaging sleeve renders, social profiles | 🔴 still Refined Monogram |
+>
+> So a page currently shows the **new mark in the browser tab and the old mark in its own header.**
+> That is expected, not a defect, and it is not deployed: it is on `redesign/direction-f`, and a push
+> to `main` is what deploys. **The icon set could move first because it is the one surface where a
+> raster source costs nothing** — every output is a fixed-size raster, and the vector requirement
+> exists for print and font-independence. The lockup cannot follow until the mark is drawn as vector,
+> and its wordmark also waits on the Inter-to-Geist ruling.
+>
+> ✅ **One thing the approval settles immediately:** the mark has no square, so the rounding question
+> held open in `2026-08-29-direction-f-supersedes-v2-non-negotiables.md` §5 is closed by removal.
 
 ## Purpose & scope
 
@@ -14,7 +42,19 @@ It deliberately does **not** restate the full design system. Colour, typography,
 
 ## The logo
 
-**Direction:** "Refined Monogram" (chosen 2026-06-12 from three explored directions; the others, Threshold Cell and Mono Bracket, were rejected and kept for the record under `assets/logos/`).
+**Direction: "Interlocked AP" (approved by Keith, 2026-08-30).** The A and the P cut as a single
+geometric glyph sharing one vertical stem, **with no enclosing square and no container of any kind**,
+plus the horizontal lockup of that mark to the left of **ANDRO PRIME**. Reference and production gap:
+`assets/logos/interlocked-ap/README.md`.
+
+🔴 **The composition spec below still describes the Refined Monogram, because that is what is still
+live.** The Interlocked AP has no vector masters yet, so nothing has been re-cut. Read the rest of
+this section as the rules governing the mark currently on every surface, not as a description of the
+approved direction.
+
+**Previous direction: "Refined Monogram"** (chosen 2026-06-12 from three explored directions; the
+others, Threshold Cell and Mono Bracket, were rejected and kept for the record under `assets/logos/`).
+Superseded as the direction on 2026-08-30; **still the live mark** until the replacement is drawn.
 
 **Composition — horizontal lockup:**
 
@@ -34,12 +74,23 @@ The mark may be used on its own (square icon); the wordmark is not used without 
 
 Black and white only. No accent colour, no gradient, no shadow, no rounded corners — consistent with the core brand rules.
 
-> 🔴 **The logo specifically is UNCHANGED and still square (2026-08-29).** The 2026-08-27 advisory
-> demotion released the page-level surface rules, not the mark. Direction F's `chrome-F.html` rounds it
-> (9px footer, 7px nav) and that is **not yet ruled**. Until it is, the mark stays square everywhere,
-> which is also what the packaging renders and the icon set currently carry. See `02_brand/2026-08-29-direction-f-supersedes-v2-non-negotiables.md` §5.
+> ✅ **RESOLVED 2026-08-30, by removal rather than by a ruling.** This note previously held the mark
+> square while Direction F's `chrome-F.html` rounded it 9px / 7px against an explicit prohibition, with
+> the question waiting on Keith. **The approved Interlocked AP has no square**, so there is no container
+> to round and the prohibition has nothing to apply to. `chrome-F.html`'s rounded lockup is moot: it
+> rounds a container the new mark does not have. Record: `2026-08-29-direction-f-supersedes-v2-non-negotiables.md` §5.
+>
+> 🔴 **Until the new masters exist the live mark is still the square Refined Monogram**, and while that
+> is true the old rule still binds: do not round it. The packaging renders, the icon set and the OG
+> cards all carry the square today.
 
 ### Outlined variant (large-format / packaging)
+
+> 🔴 **This whole variant has no successor in the approved direction (noted 2026-08-30).** It exists
+> because a *filled square* reads too heavy at large scale, so it swaps the fill for a keyline. The
+> Interlocked AP is **already an open glyph with no fill to remove**, so there is nothing for an
+> "outline variant" to be. When the new masters are drawn, either this section retires or a genuinely
+> different large-format treatment has to be designed and approved. It is not a carry-over.
 
 For **large-format and packaging** use, the standalone mark may be rendered as an **outlined ("line") emblem**: a square keyline (no fill) enclosing the "AP", instead of the solid filled block. At large sizes the solid square reads too heavy and dominates the composition; the outlined version keeps the mark's presence while staying light and premium.
 
@@ -60,6 +111,12 @@ For **large-format and packaging** use, the standalone mark may be rendered as a
 - **Minimum size:** wordmark lockup no smaller than ~16px tall; below that, use the square mark alone.
 - **Do not** stretch, rotate, recolour, add effects/shadows, round the square's corners, attach a tagline to the lockup, or re-letterspace the wordmark. (The outlined large-format variant above is the only sanctioned exception, and only for the standalone mark.)
 
+> **Two of these need restating for the Interlocked AP and have NOT been (2026-08-30).** *Clear space*
+> is defined as the height of the "A" measured off a container that no longer exists, and *minimum
+> size* says "below 16px use the square mark alone", which names a square there is no longer. **"Round
+> the square's corners" retires with the square.** These are open, and they belong with the master
+> drawing rather than ahead of it.
+
 ---
 
 ## Asset inventory & file locations
@@ -75,6 +132,7 @@ For **large-format and packaging** use, the standalone mark may be rendered as a
 | `refined-monogram/icon-outline-light.svg` | Outlined mark, light — large-format / packaging on dark backgrounds |
 | `logo-preview.html` | Side-by-side comparison of all explored directions on light/dark panels |
 | `threshold-cell/`, `mono-bracket/` | Rejected exploration directions (kept for the record) |
+| `interlocked-ap/` | 🟢 **The approved direction (2026-08-30).** Reference rasters plus the production gap. **No vector masters yet** |
 
 All `refined-monogram/*.svg` files are **outlined paths** (font-independent). The two `icon-outline*.svg` files are the sanctioned large-format / packaging variant (see [Outlined variant](#outlined-variant-large-format--packaging)).
 
@@ -82,9 +140,9 @@ All `refined-monogram/*.svg` files are **outlined paths** (font-independent). Th
 
 | Path | Role |
 | ---- | ---- |
-| `components/shared/Logo.tsx` | Reusable React logo. `variant="dark" \| "light"`, accepts standard SVG props (size via `className`). Inline outlined SVG; the single source of truth used in-app. |
-| `app/favicon.ico` | Multi-resolution favicon (16/32/48) |
-| `app/icon.png` | 512px PNG icon (Next auto-injects `<link rel="icon">`) |
+| `components/shared/Logo.tsx` | 🔴 **Still the Refined Monogram** (2026-08-30): needs the vector master before it can move. Reusable React logo. `variant="dark" \| "light"`, accepts standard SVG props (size via `className`). Inline outlined SVG; the single source of truth used in-app. |
+| `app/favicon.ico` | Multi-resolution favicon (16/32/48). 🟢 **Interlocked AP since 2026-08-30**, PNG-embedded, built by `assets/logos/interlocked-ap/build-icons.js` |
+| `app/icon.png` | 512px PNG icon (Next auto-injects `<link rel="icon">`). 🟢 **Interlocked AP since 2026-08-30** |
 | `app/apple-icon.png` | 180px Apple touch icon |
 | `public/icon-192.png`, `public/icon-512.png` | PWA manifest icons |
 | `app/manifest.ts` | Web app manifest (`theme_color #000000`, `background_color #ffffff`) |
@@ -109,6 +167,24 @@ Full spec in [brand-guidelines.md](brand-guidelines.md) §3–§4. Implemented t
 ---
 
 ## Regenerating the assets
+
+> 🔴 **THIS PROCEDURE DOES NOT TRANSFER TO THE APPROVED MARK (2026-08-30).** Every step below starts
+> by **outlining Inter Black glyphs to paths**, which works because the Refined Monogram is two typed
+> letters inside a square. The Interlocked AP is a **custom-drawn interlock and is not any typeface**,
+> so there is no font to outline and step 1 has nothing to run on. The mark has to be **drawn as vector
+> first**, by hand, and the build fed from that drawing. Rewriting this build is part of producing the
+> new masters, not a follow-up to it.
+>
+> The **wordmark** half still outlines from a font, and which font is not settled: "ANDRO PRIME" is
+> set in a grotesque sans and the site's Inter-to-Geist decision is still open
+> (`09_website-app/STATE.md`). **The mark can be produced before that ruling; the lockup cannot.**
+>
+> ✅ **The ICON SET half is already rebuilt and does not use this procedure**:
+> `assets/logos/interlocked-ap/build-icons.js` produces `favicon.ico` (16/32/48, PNG-embedded), the
+> 512 / 192 / 180 PNGs, and installs them. It works from the approved raster, which is legitimate
+> here and only here, because every output is a fixed-size raster. Re-run it against the hand-drawn
+> vector when that exists; the geometry it encodes (tile treatment, 6% margin, threshold-then-resample)
+> is a verified decision and should carry over unchanged.
 
 The outlined masters and favicon set are produced by an isolated build (kept out of the app's dependencies) that outlines Inter Black glyphs to paths, rasterises the icon, and packs the `.ico`. If the mark or wordmark spacing ever changes, regenerate rather than hand-editing path data:
 

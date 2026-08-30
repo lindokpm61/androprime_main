@@ -107,7 +107,26 @@ So as drawn, the colour telling a man his result needs monitoring is the hex hig
 
 **Current state:** `--flag` is defined in the token layer and wired into Tailwind as `flag` / `flagFaint` / `flagFaint2`, **cleared for marketing surfaces and barred from results panels**. No page renders it yet, because the rebuild has not started, so the ruling lands ahead of any live exposure rather than behind it. The boundary is stated in three places that a builder will actually hit: `colours.css` beside the token, `tailwind.config.ts` beside the utility, and §3.1 of the guidelines.
 
-## 5. 🔴 OPEN: F rounds the logo mark, and the logo was not in the 08-27 list
+## 5. ✅ CLOSED 2026-08-30: the mark has no square to round
+
+> **Resolved by removal, not by a ruling on the question.** Keith approved a new logo direction on
+> 2026-08-30, the **Interlocked AP**, which has **no container at all**
+> (`assets/logos/interlocked-ap/README.md`). There is no square, so there is nothing to round and the
+> `visual-identity.md` prohibition has nothing left to apply to. `chrome-F.html`'s 9px / 7px radius on
+> the lockup is moot: it rounds a container the new mark does not have, and that markup will be
+> replaced when the mark is.
+>
+> 🔴 **The dependency this section warned about survives, pointed the other way.** The warning was that
+> rounding the mark on the website alone would desynchronise it from print while the sleeve artwork
+> was near a print decision. **Changing the mark entirely desynchronises far more**: the packaging
+> sleeves rendered this week, the favicon and app-icon set, the OG cards and the social profiles all
+> carry the square Refined Monogram and every one of them is now stale. Nothing is re-cut yet, because
+> the approved direction has no vector masters. **Until it does, the square mark stays live and the old
+> rule still binds.**
+>
+> The original text of the open item follows, unchanged, for the record.
+
+### 🔴 OPEN (superseded 2026-08-30): F rounds the logo mark, and the logo was not in the 08-27 list
 
 `chrome-F.html` renders the AP mark with `border-radius:9px` on the 26px footer lockup and `7px` on the 22px nav lockup. The guidelines call the square container an identity rule (§2: *"No pill shape, no rounded corners on the logo container — always `rounded-none`"*), and `visual-identity.md` is the logo's source of truth and repeats it.
 

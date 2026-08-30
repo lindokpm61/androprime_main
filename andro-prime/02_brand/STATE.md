@@ -32,9 +32,12 @@ gradients or effects, and "structural black borders instead of whitespace".
 > `kits-F.html`, the only frame that had the collision. The boundary is restated beside the token in
 > `colours.css`, beside the utility in `tailwind.config.ts`, and in §3.1 of the guidelines.
 >
-> 🔴 **One thing that ruling still does NOT cover: the logo mark's radius.** F rounds it 9px / 7px;
-> the 08-27 release listed page surfaces and the mark is also on the packaging sleeves rendered this
-> week, the icon set and the OG cards. §5 of the record.
+> ✅ **RESOLVED 2026-08-30, and not the way the question was asked.** This held open whether F may
+> round the AP square 9px / 7px. **Keith approved a new mark instead: the Interlocked AP, which has no
+> container**, so there is no square to round. The question is closed by removal. §5 of the record now
+> reads CLOSED. 🔴 **What replaces it is bigger**: the packaging sleeves, the icon set, the OG cards and
+> the social profiles all carry the square Refined Monogram and are now stale, and **the approved mark
+> has no vector masters**, so nothing can be re-cut yet. `assets/logos/interlocked-ap/README.md`.
 
 **What this does NOT release, and the distinction must never blur:** everything in
 `03_compliance/CONTEXT.md`. The EFSA wording, the ashwagandha silence, the Phase 0 / post-CQC
@@ -527,6 +530,49 @@ headline.
 > **None has been tested at 16px**, which is the gate the June exploration used (see `logo-preview.html`,
 > which shows all three June directions at 96 / 48 / 32 / 16). Deliberately avoided in the brief: the two
 > June directions already rejected, **Threshold Cell** and **Mono Bracket**.
+>
+> **3. ✅ APPROVED 2026-08-30: the Interlocked AP is the new logo (Keith), AND THE ICON SET IS
+> ALREADY REBUILT IN IT.** `app/favicon.ico` (16/32/48), `app/icon.png`, `app/apple-icon.png`,
+> `public/icon-192.png` and `public/icon-512.png` now carry the new mark, produced by
+> `assets/logos/interlocked-ap/build-icons.js` and verified by decoding every installed file in a
+> browser rather than trusting the build. **The icon set could move ahead of everything else because
+> it is the one surface a raster source does not compromise** (fixed-size raster output; the vector
+> requirement is for print and font-independence). Treatment: **white mark knocked out of a black
+> tile at a 6% margin**, both decided on screen, not assumed. A bare black glyph on transparent was
+> built and rejected: **it is invisible on a dark browser tab strip.** ⚠️ **The site is now in a
+> deliberate mixed state, new mark in the tab and old mark in the header**, until `Logo.tsx` moves.
+> Nothing is deployed.
+>
+> **The approval itself.** Concept 1 of the round
+> below, adopted as both the standalone mark and the horizontal lockup. Filed at
+> `assets/logos/interlocked-ap/` with the production gap written out; `visual-identity.md` carries the
+> rules and the dated notes at each section the change touches. **The approval is of the DIRECTION: it
+> is a raster PNG from a generative model, there are no vector masters, and the Refined Monogram stays
+> live on every surface until there are.** The build that produces the masters **does not transfer**,
+> because it works by outlining Inter Black glyphs and the new mark is a custom interlock in no
+> typeface at all; the mark must be drawn as vector by hand first. Two knock-ons: the **outlined
+> large-format packaging variant has no successor** (it swaps a fill for a keyline, and the new mark
+> has no fill), and **clear space and minimum size are both defined off the square** and need
+> restating. The mark is now independent of the Inter-to-Geist ruling; **the wordmark is not.**
+>
+> **The round it was chosen from (2026-08-30).** Six
+> concepts, briefed against **ruling A2** (conflict-free
+> leads, the record is a proof layer, "a UK men's health company") and against Keith's same-day
+> correction of the register to **"health reporting", not "medical"** — none of which round 1 had.
+> Higgsfield `gpt_image_2`, 51 credits. **The size ladder round 1 named as owed and never ran is now
+> run** (`assets/logos/interlocked-ap/size-ladder-2026-08-30.png`, 96 / 48 / 32 / 16), **and it
+> eliminated two of the six on measurable
+> grounds, not taste**: the masthead-rule mark is **7.26:1**, so a square favicon reduces it to a 2px
+> smear, and the index-stack mark blurs at 16px and reads as the text-align-centre icon at every size
+> above it. Surviving: **Punched A** (solid square, A and a circle knocked out; strongest at 16px
+> because it is the only one that is a filled field with the artwork reversed out, so its contrast does
+> not degrade), **Interlocked AP** (no container at all, which dissolves the rounding question in point
+> 1 rather than answering it), **Record spread** and **Architectural P**. Still raster, still untested
+> at 25mm. 🔴 **"GPT Image 2.5" does not exist in the Higgsfield catalogue**, re-queried 2026-08-30
+> rather than assumed; `openai_hazel` is a second OpenAI model tagged for logos and has not been tried.
+> 🔴 **The five unchosen concepts were DELETED on 2026-08-30 at Keith's instruction**, so only the
+> approved mark is on disk. They were untracked and are **not recoverable from git**; the size ladder
+> and the outcome table in `assets/logos/interlocked-ap/README.md` are the whole surviving record.
 >
 > **These two are one decision, not two**, and they are tied to a third: the site typeface. The current
 > mark's glyphs are **Inter Black outlined to paths**, so a ruling that moves the site to Geist
