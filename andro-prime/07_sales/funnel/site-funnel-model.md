@@ -76,7 +76,7 @@ this argument. It is currently below the fold, underneath a convenience hero.
 | Surface | Who lands here | The one job | Primary route | Conflict-free surfacing |
 | --- | --- | --- | --- | --- |
 | **Blog / organic** | Men with numbers they do not understand, no vertical chosen | **Do the understanding, then offer a baseline.** The front door under this thesis | Quiz (primary) or kit page | Article CTAs |
-| **Homepage `/`** | Broad, brand, and undecided traffic | **Establish that the product is the record, and route the undecided** | Quiz (primary), Browse all tests (secondary) | Speed hero + money-honesty subline |
+| **Homepage `/`** | Broad, brand, and undecided traffic | **Establish the position, SHOW the record as its proof, and route the undecided** (amended 2026-08-30, ruling A2: the record demonstrates the position and may not open the page) | Quiz (primary), Browse all tests (secondary) | Speed hero + money-honesty subline |
 | **Demo account** | Anyone who wants to see the product before paying | Show the app populated, with zero ingestion and zero liability | Back to the quiz or a kit page | Sample data must be visibly sample data |
 | **Landing pages `lp/*`** | Hot, single-intent paid-search traffic | Convert at the lowest CAC, zero added friction | Direct to on-page checkout (`#order`) | Intent-matched hero + one receipt line; NO quiz |
 | **Quiz `/test-selector`** | Symptom-led and undecided | Route to the right kit AND capture WTP + buyer-profile | Result → kit page → checkout | Position strip; the WTP block (Section 4) |
@@ -95,6 +95,11 @@ this argument. It is currently below the fold, underneath a convenience hero.
 
 2. **The homepage's job changes** from "establish the position" to "establish that the product
    is the record." The routing it performs is unchanged.
+   🔴 **Amended 2026-08-30 by Keith's ruling A2** (`../../01_strategy/2026-08-30-brand-lead-after-the-monitoring-thesis.md`):
+   that swing went too far. The homepage's job is to **establish the position and show the record as
+   its proof**. The record is what the page demonstrates, not what it opens on, and the conflict-free
+   surfacing in the table above (speed hero, money-honesty subline) is the July rail 2 and is
+   unchanged by either document.
 
 3. **The demo account is a surface, and it does not exist.** It was answered by Keith on
    2026-08-24 as half of the free layer and has no build behind it. See Section 5.
