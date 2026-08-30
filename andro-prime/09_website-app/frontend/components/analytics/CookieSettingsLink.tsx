@@ -13,7 +13,11 @@ export function CookieSettingsLink() {
     <button
       type="button"
       onClick={openConsentPreferences}
-      className="text-base font-serif text-black hover:underline transition-colors text-left"
+      // Matches the footer's own link rule (.f-foot ul a) rather than restating
+      // it. Under V2.0 this was font-serif, which is why it stood out from its
+      // siblings once the footer moved to F: it was the one link picking up
+      // Merriweather from the base layer.
+      className="f-footlink"
     >
       Cookie Settings
     </button>

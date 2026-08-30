@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Merriweather, JetBrains_Mono } from "next/font/google";
+import { Inter, Merriweather, JetBrains_Mono, Newsreader } from "next/font/google";
 import "@/styles/base/globals.css";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { SkipToContent } from "@/components/shared/SkipToContent";
@@ -35,6 +35,35 @@ const merriweather = Merriweather({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
+  display: "swap",
+  preload: false,
+});
+
+// DISPLAY / HEADLINE FACE: a STAND-IN, not the brand face (added 2026-08-30).
+//
+// Keith ruled the type system on 2026-08-30 (02_brand/brand-guidelines.md §4.1):
+// a SERIF HEADLINE over a HUMANIST SANS, the sans carrying body copy, UI and all
+// data. Direction F was drawn all-sans, so this changes F. The faces are NOT
+// chosen: the licensed candidates are Austin (Commercial Type) over a humanist
+// sans such as Effra (Dalton Maag), and licensing, self-hosting rights and price
+// are all unverified and gate any spend.
+//
+// Newsreader is the free stand-in the ruling was actually made against, so it
+// reproduces the comparison rather than inventing a new one. That comparison was
+// a runtime throwaway and left no artefact in the repo.
+//
+// It feeds --font-display, which is a NEW token. It deliberately does NOT feed
+// --font-serif: that token means "Merriweather body copy" in 517 places across 83
+// files, and globals.css sets `body { font-family: var(--font-serif) }`, so
+// repointing it would silently reset body copy on every page not yet rebuilt.
+// Swapping in the licensed face later is one line in typography.css plus the
+// import here, but note it will need next/font/local, since neither candidate is
+// on Google Fonts.
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
   display: "swap",
   preload: false,
 });
@@ -136,7 +165,7 @@ export default function RootLayout({
     <html
       lang="en-GB"
       suppressHydrationWarning
-      className={`scroll-smooth ${inter.variable} ${merriweather.variable} ${jetbrainsMono.variable}`}
+      className={`scroll-smooth ${inter.variable} ${merriweather.variable} ${jetbrainsMono.variable} ${newsreader.variable}`}
     >
       <head>
         <JsonLd data={siteSchema} />

@@ -3,36 +3,61 @@
    Source: 02_brand/brand-guidelines.md §4
    ============================================================
 
-   Font stack:
-     Sans  — Inter (headlines, UI)
-     Serif — Merriweather (body copy)
-     Mono  — JetBrains Mono (data labels, eyebrows)
+   Font stack (four roles since the 2026-08-30 ruling, see the note below):
+     Display: Newsreader STAND-IN (headlines only, Direction F)
+     Sans:    Inter (body, UI, all data)
+     Serif:   Merriweather (V2.0 body copy, not yet rebuilt pages)
+     Mono:    JetBrains Mono (data labels, eyebrows)
 
-   Load order: Inter (300–900) + Merriweather (300,400,700,400i)
-              + JetBrains Mono (400,500,700) via Google Fonts.
+   Load order: Inter (300-900) + Merriweather (300,400,700,400i)
+              + JetBrains Mono (400,500,700) + Newsreader (400,500,600 + italic)
+              via next/font/google, self-hosted at build time.
    ============================================================ */
 
 :root {
   /* --- Font families --- */
   /* Bound to the next/font CSS variables defined in app/layout.tsx.
    *
-   * 🔴 DIRECTION F WANTS GEIST, AND THAT IS NOT RULED (noted 2026-08-29).
-   * The F frames are drawn in Geist and Geist Mono, loaded from Google Fonts in
-   * the mockup HTML, and `09_website-app/STATE.md` records the switch as part of
-   * F's surviving language. But it was not a brand judgement: STATE says the
-   * change happened "because `high-end-visual-design` bans Inter outright and
-   * keeping it would have made D a version of B", i.e. a lint rule in the
-   * direction-exploration tool. `design/homepage-direction-brief.md` §8 then
-   * flags the `overused-font: inter` finding as "Keith's to reopen if he wants",
-   * which is a hand-off, not a decision. And Inter is load-bearing elsewhere:
-   * the logo glyphs are Inter Black outlined to paths (`visual-identity.md`).
+   * ✅ THE TYPE SYSTEM WAS RULED 2026-08-30 (Keith, commit c4d477c;
+   * 02_brand/brand-guidelines.md §4.1): a SERIF HEADLINE over a HUMANIST SANS.
+   * The sans carries body copy, UI and all data; the serif is headlines only.
+   * Direction F was drawn all-sans, so this CHANGES F.
    *
-   * F also drops the serif body entirely: Merriweather has no role in it.
+   * (This block previously said "DIRECTION F WANTS GEIST, AND THAT IS NOT
+   * RULED" and "Merriweather has no role in F at all". Both are now false.
+   * Geist was never a brand choice, and neither was Inter: both were defaults
+   * the site was stood up on. Kept out of the file rather than struck through,
+   * because it was the first thing a reader hit and it stated the opposite of
+   * what was decided.)
    *
-   * Until Keith rules, the F component layer renders on these families. Because
-   * every F rule references --font-sans and --font-mono rather than a family
-   * name, ruling Geist later is a change to the three lines below and to
-   * app/layout.tsx, and to nothing else. */
+   * 🔴 THE FACES ARE NOT CHOSEN. The licensed candidates are Austin
+   * (Commercial Type) over a humanist sans such as Effra (Dalton Maag), and
+   * licensing, self-hosting rights and price are all unverified and gate any
+   * spend. --font-display below is a STAND-IN: Newsreader, the free face the
+   * ruling was actually compared on.
+   *
+   * FOUR ROLES, AND --font-display IS A NEW TOKEN ON PURPOSE:
+   *
+   *   --font-display  headlines only          Newsreader (stand-in)
+   *   --font-sans     body, UI, all data      Inter
+   *   --font-serif    V2.0 body copy          Merriweather  <- DO NOT REPOINT
+   *   --font-mono     labels, eyebrows        JetBrains Mono
+   *
+   * The obvious-looking move is to repoint --font-serif at the headline face.
+   * Do not. It means "Merriweather body copy" in 517 places across 83 files,
+   * and globals.css sets `body { font-family: var(--font-serif) }`, so
+   * repointing it silently resets body copy to a display serif on every page
+   * not yet rebuilt in F.
+   *
+   * COST TO APPLY THE REAL FACE, corrected. STATE.md called this "a three-line
+   * change plus app/layout.tsx, and nothing else". That is true of
+   * styles/components/f-primitives.css (17 font-family declarations, zero
+   * family names) and false of the rest. There is a THIRD binding site:
+   * tailwind.config.ts fontFamily binds var(--font-inter) DIRECTLY, not
+   * --font-sans, so every font-sans / font-serif Tailwind class in the app
+   * bypasses this file entirely. And neither candidate face is on Google
+   * Fonts, so layout.tsx moves to next/font/local with licensed files. */
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
   --font-sans:  var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: var(--font-merriweather), Georgia, serif;
   --font-mono:  var(--font-jetbrains), monospace;

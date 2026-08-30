@@ -19,92 +19,101 @@ const companyLinks = [
   { label: 'Terms of Service', href: '/terms' },
 ]
 
+/**
+ * Restyled into Direction F on 2026-08-30 from design/mockups/journey/chrome-F.html
+ * Frame AE. 🔴 chrome-F.html IS NOT APPROVED; built to be judged running.
+ *
+ * THIS IS THE COMPLIANCE SURFACE, NOT DECORATION. One file, 25 routes. The
+ * medical-disclaimer paragraph, the two accreditation chips, the eleven links
+ * and the registered-company line live HERE AND NOWHERE ELSE. Per learn-F.html
+ * it is also the only inbound path to /about and /faq: nothing else in app/ or
+ * components/ links to either.
+ *
+ * Two things not to "tidy":
+ *
+ *   The eight Company links keep their live order rather than being regrouped.
+ *   The order is what a returning reader's muscle memory is built on.
+ *
+ *   Cookie settings stays in the list and does NOT move to the bottom bar. It is
+ *   the only control in the footer, and burying a consent reopener in small
+ *   print is the pattern the ICO wording exists to prevent.
+ *
+ * Copy is unchanged from V2.0, deliberately: the 2026-08-28 approval covers
+ * layouts, not copy, and this paragraph is compliance-bearing.
+ */
 export function Footer() {
   return (
-    <footer className="bg-white border-t-4 border-black pt-20 pb-12">
-      <div className="max-w-7xl mx-auto px-6">
+    <footer className="f-footer f-page">
+      <div className="f-tray">
+        <div className="f-core">
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-16 border-b-2 border-black pb-16">
+          <div className="f-foot">
 
-          {/* Brand column */}
-          <div className="md:col-span-6">
-            <Link href="/" className="mb-8 inline-flex" aria-label="Andro Prime home">
-              <Logo variant="dark" className="h-10 w-auto" />
-            </Link>
-            <p className="text-base text-black font-serif leading-relaxed max-w-md">
-              Andro Prime is a wellness information service. Our kits show you your
-              numbers. They don&apos;t diagnose conditions, replace your GP, or
-              constitute medical advice. If you have a health concern, talk to a
-              doctor.
-            </p>
-            <div className="flex flex-wrap gap-4 mt-8">
-              <div className="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black px-3 py-2 border-2 border-black">
-                <span className="status-dot" />
-                UKAS ISO 15189
-              </div>
-              <div className="flex items-center gap-3 text-xs font-sans font-black uppercase tracking-widest text-black px-3 py-2 border-2 border-black">
-                <span className="status-dot" />
-                EFSA-Approved Claims
+            {/* Brand column */}
+            <div>
+              <Link href="/" className="inline-flex" aria-label="Andro Prime home">
+                <Logo variant="dark" className="h-8 w-auto" />
+              </Link>
+              <p className="f-legal">
+                Andro Prime is a wellness information service. Our kits show you your
+                numbers. They don&apos;t diagnose conditions, replace your GP, or
+                constitute medical advice. If you have a health concern, talk to a
+                doctor.
+              </p>
+              <div className="f-chips">
+                <span className="f-chip">
+                  <i />
+                  UKAS ISO 15189
+                </span>
+                <span className="f-chip">
+                  <i />
+                  EFSA-approved claims
+                </span>
               </div>
             </div>
+
+            {/* Diagnostics column */}
+            <div>
+              <h4>Diagnostics</h4>
+              <ul>
+                {diagnosticsLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href}>{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Company column */}
+            <div>
+              <h4>Company</h4>
+              <ul>
+                {companyLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href}>{link.label}</Link>
+                  </li>
+                ))}
+                <li>
+                  <CookieSettingsLink />
+                </li>
+              </ul>
+            </div>
+
           </div>
 
-          {/* Diagnostics column */}
-          <div className="md:col-span-3">
-            <h4 className="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">
-              Diagnostics
-            </h4>
-            <ul className="space-y-4">
-              {diagnosticsLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-base font-serif text-black hover:underline transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company column */}
-          <div className="md:col-span-3">
-            <h4 className="text-black font-sans font-black uppercase tracking-tighter text-xl mb-6">
-              Company
-            </h4>
-            <ul className="space-y-4">
-              {companyLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-base font-serif text-black hover:underline transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <CookieSettingsLink />
-              </li>
-            </ul>
+          <div className="f-footbar">
+            <span style={{ flex: '1 1 auto', maxWidth: '74ch' }}>
+              &copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing
+              carried out by a UKAS ISO 15189 accredited laboratory. Supplement
+              claims are EFSA-approved.
+            </span>
+            <span className="f-stat" style={{ flex: '0 0 auto' }}>
+              <span>Sys.stat: online</span>
+              <span>Sec: AES-256</span>
+            </span>
           </div>
 
         </div>
-
-        {/* Copyright bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-sans font-black uppercase tracking-widest text-black">
-          <p>
-            &copy; 2026 Andro Prime Ltd. Registered in England &amp; Wales. Testing
-            carried out by a UKAS ISO 15189 accredited laboratory. Supplement
-            claims are EFSA-approved.
-          </p>
-          <div className="flex gap-8 shrink-0">
-            <span className="font-mono uppercase tracking-[0.15em]">SYS.STAT: ONLINE</span>
-            <span className="font-mono uppercase tracking-[0.15em]">SEC: AES-256</span>
-          </div>
-        </div>
-
       </div>
     </footer>
   )

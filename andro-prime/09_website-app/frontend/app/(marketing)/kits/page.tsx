@@ -1,9 +1,116 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { panelShortLabels } from '@/lib/kits/panel'
+import {
+  ALL_PANEL_MARKER_IDS,
+  KIT_PANELS,
+  PANEL_MARKERS,
+  panelCount,
+  panelShortLabels,
+  type PanelMarkerId,
+} from '@/lib/kits/panel'
+// KitType is owned by lib/results/types, which is where panel.ts imports it from.
+import type { KitType } from '@/lib/results/types'
 import { JsonLd } from '@/components/shared/JsonLd'
 
+/**
+ * /kits, rebuilt in Direction F on 2026-08-30 from
+ * design/mockups/journey/kits-F.html Frame O (approved 2026-08-29).
+ *
+ * COPY IS CARRIED VERBATIM FROM THE V2.0 PAGE. The 2026-08-28/29 approval covers
+ * LAYOUTS, NOT COPY, so a redraw is not the place to rewrite live marketing copy.
+ * Two known drifts are therefore carried as found and flagged where they sit:
+ * "answer 3 questions" and "takes less than a minute" both describe a selector
+ * that is now five steps. Frame O flags the same two. Fixing them is a copy
+ * change with its own compliance pre-flight, not a side effect of a restyle.
+ *
+ * The kit cards and the comparison table are now DERIVED from lib/kits/panel.ts
+ * rather than hand-written. That module is the single source of truth for which
+ * markers sit on which panel, and hand-copying is exactly what produced the
+ * marker-count defect that reached six surfaces on 2026-08-29.
+ */
+
 const BASE_URL = 'https://andro-prime.com'
+
+const ORDER: KitType[] = ['testosterone', 'energy-recovery', 'hormone-recovery']
+
+const PRICES: Record<KitType, string> = {
+  'testosterone': '£99',
+  'energy-recovery': '£119',
+  'hormone-recovery': '£179',
+}
+
+const FULL_NAMES: Record<KitType, string> = {
+  'testosterone': 'Testosterone Health Check',
+  'energy-recovery': 'Energy & Recovery Check',
+  'hormone-recovery': 'Hormone & Recovery Check',
+}
+
+const NUMBER_LABEL: Record<KitType, string> = {
+  'testosterone': 'Kit 1',
+  'energy-recovery': 'Kit 2',
+  'hormone-recovery': 'Kit 3',
+}
+
+type KitCard = {
+  kit: KitType
+  title: React.ReactNode
+  blurb: string
+  rightFor: string
+  footLabel: string
+  footBody: string
+  resultsTo: string
+  invert?: boolean
+  /** Frame O gives Kit 2 a ghost button and Kits 1 and 3 a solid one, so the
+      middle option is not competing with the two it sits between. */
+  ghostCta?: boolean
+}
+
+const KITS: KitCard[] = [
+  {
+    kit: 'testosterone',
+    title: <>Testosterone<br />Health Check</>,
+    blurb:
+      'Your GP told you you’re normal. That’s not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 2 to 5 working days with a plain-English explanation of what they mean. If the main problem is tiredness, poor recovery or fogginess, Kit 2 is the better fit.',
+    rightFor: 'Low drive, stalled training, “not myself” symptoms',
+    footLabel: 'If your result shows testosterone below 12 nmol/L',
+    footBody: 'You will receive a specific next step, not a generic recommendation.',
+    resultsTo:
+      'Your Andro Prime dashboard. Not the lab portal. Plain English with a specific next step.',
+  },
+  {
+    kit: 'energy-recovery',
+    title: <>Energy &amp;<br />Recovery Check</>,
+    blurb:
+      'Sore for 3 days after a session that used to take 1. Tired all the time. Joints aching. This test looks at the four markers most likely to explain why: Vitamin D, Active B12 (Holotranscobalamin), inflammation (hs-CRP), and iron stores (Ferritin). If the issue is hormones, Kit 1 or Kit 3 is the better fit.',
+    rightFor: 'Fatigue, slow recovery, aching joints, low mood',
+    ghostCta: true,
+    footLabel: 'If a marker comes back deficient',
+    footBody:
+      'You get the specific marker, the number, and what the evidence supports doing about it.',
+    resultsTo:
+      'Your Andro Prime dashboard. Not the lab portal. Plain English with a specific next step.',
+  },
+  {
+    kit: 'hormone-recovery',
+    title: <>Hormone &amp;<br />Recovery Check</>,
+    blurb:
+      'Nine markers covering hormones, energy, recovery, and inflammation in one kit. The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.',
+    rightFor: 'Full picture across hormones, energy, and recovery',
+    footLabel: 'Widest set of recommendation pathways',
+    footBody:
+      'Kit 3 covers both testosterone and deficiency markers, with supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.',
+    resultsTo:
+      'Your Andro Prime dashboard. Full breakdown across all nine markers with targeted recommendations.',
+    invert: true,
+  },
+]
+
+const STEPS = [
+  { n: '01', h: 'Order online', p: 'Choose your kit. Pay once. Kit dispatched the same working day.' },
+  { n: '02', h: 'Collect at home', p: 'Five minutes. Finger-prick. Return with the pre-paid label in your kit.' },
+  { n: '03', h: 'Lab processes it', p: 'UKAS ISO 15189 accredited lab. Results ready within 2 to 5 working days of receipt.' },
+  { n: '04', h: 'Plain-English results', p: 'Your numbers in your dashboard. What they mean. What to do next. Specific to your data.' },
+]
 
 const kitsSchema = {
   '@context': 'https://schema.org',
@@ -17,600 +124,364 @@ const kitsSchema = {
     },
     {
       '@type': 'ItemList',
-      name: 'Men\'s Health Blood Test Kits',
-      description: 'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture.',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Testosterone Health Check: £99',
-          url: `${BASE_URL}/kits/testosterone`,
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Energy & Recovery Check: £119',
-          url: `${BASE_URL}/kits/energy-recovery`,
-        },
-        {
-          '@type': 'ListItem',
-          position: 3,
-          name: 'Hormone & Recovery Check: £179',
-          url: `${BASE_URL}/kits/hormone-recovery`,
-        },
-      ],
+      name: 'Men’s Health Blood Test Kits',
+      description:
+        'Three diagnostic kits targeting testosterone, energy and recovery, or the full picture.',
+      itemListElement: ORDER.map((kit, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: `${FULL_NAMES[kit]}: ${PRICES[kit]}`,
+        url: `${BASE_URL}/kits/${kit}`,
+      })),
     },
   ],
 }
 
 export const metadata: Metadata = {
-  title: 'Men\'s Health Blood Tests at Home (UK)',
-  description: 'At-home men\'s health blood tests. Three kits: testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 days.',
+  title: 'Men’s Health Blood Tests at Home (UK)',
+  description:
+    'At-home men’s health blood tests. Three kits: testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 days.',
   alternates: { canonical: 'https://andro-prime.com/kits' },
   openGraph: {
-    title: 'Men\'s Health Blood Tests at Home (UK) | Andro Prime',
-    description: 'Men\'s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
+    title: 'Men’s Health Blood Tests at Home (UK) | Andro Prime',
+    description:
+      'Men’s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/kits',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Men\'s health blood test kits from Andro Prime' }],
+    images: [
+      {
+        url: '/og/default.png',
+        width: 1200,
+        height: 630,
+        alt: 'Men’s health blood test kits from Andro Prime',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Men\'s Health Blood Tests at Home (UK) | Andro Prime',
-    description: 'Men\'s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
-    images: ['/og/default.png'],
+    title: 'Men’s Health Blood Tests at Home (UK) | Andro Prime',
+    description:
+      'Men’s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
   },
 }
 
-const CheckSvg = ({ className }: { className?: string }) => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className={`shrink-0 mt-0.5 ${className || ''}`}>
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-)
+/** Marker row label, e.g. "Free Testosterone (Calc)". */
+function markerLabel(id: PanelMarkerId): string {
+  const m = PANEL_MARKERS[id]
+  return m.gloss ? `${m.name} (${m.gloss})` : m.name
+}
 
 export default function KitsPage() {
   return (
-    <>
+    <div className="f-page">
       <JsonLd data={kitsSchema} />
-      {/* HERO */}
-      <section className="relative min-h-[90vh] flex items-center pt-32 pb-16 overflow-hidden bg-white">
-        <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <div className="inline-flex items-center gap-3 px-3 py-1.5 rounded-none border-2 border-black bg-white mb-8">
-              <span className="w-2 h-2 rounded-none bg-black"></span>
-              <span className="data-label !text-[10px] !text-black">Diagnostic Kits</span>
-            </div>
 
-            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[90px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
+      {/* ---------- HERO ---------- */}
+      <section className="f-wrap f-sec">
+        <div className="f-herogrid f-rise">
+          <div>
+            <div className="f-eyebrow"><i />Diagnostic kits</div>
+            <h1 className="f-h1" style={{ marginTop: 18 }}>
               Stop guessing.<br />
-              <span className="text-gray-400">Get the numbers.</span>
+              <span className="f-grey">Get the numbers.</span>
             </h1>
-
-            <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Three men&rsquo;s health blood tests you take at home. Each one gives you specific results from a UKAS accredited lab, delivered in plain English, with a clear next step based on what your data actually shows. No GP referral needed.
+            <p className="f-stand" style={{ marginTop: 18 }}>
+              Three men&rsquo;s health blood tests you take at home. Each one gives you specific
+              results from a UKAS accredited lab, delivered in plain English, with a clear next step
+              based on what your data actually shows. No GP referral needed.
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="#kits" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-2 shadow-none">
-                See the tests
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            <div className="f-btns" style={{ marginTop: 24 }}>
+              <Link className="f-btn" href="#kits">
+                See the tests <span aria-hidden="true">&#8594;</span>
               </Link>
-              <Link href="/test-selector" className="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center shadow-none">
+              <Link className="f-btn f-btn-ghost" href="/test-selector">
                 Not sure which one?
               </Link>
             </div>
-          </div>
-
-          {/* Sidebar panel */}
-          <div className="lg:col-span-5">
-            <div className="glass-panel p-8 md:p-10 relative border-4 border-black bg-white">
-              <div className="flex items-center justify-between border-b-4 border-black pb-6 mb-6">
-                <div className="text-black font-sans font-black uppercase text-xl tracking-tight">Available now</div>
-                <div className="px-2 py-1 rounded-none bg-black border-2 border-black data-label !text-white flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-none bg-white status-dot"></span>
-                  UKAS Lab
-                </div>
-              </div>
-
-              <div className="space-y-0 divide-y-2 divide-black">
-                <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
-                  <div>
-                    <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Testosterone Health Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">{panelShortLabels('testosterone').join(' · ')}</p>
-                  </div>
-                  <div className="shrink-0 text-right">
-                    <span className="font-sans font-black text-xl text-black">£99</span>
-                  </div>
-                </div>
-
-                <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
-                  <div>
-                    <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Energy &amp; Recovery Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">{panelShortLabels('energy-recovery').join(' · ')}</p>
-                  </div>
-                  <div className="shrink-0 text-right">
-                    <span className="font-sans font-black text-xl text-black">£119</span>
-                  </div>
-                </div>
-
-                <div className="py-5 flex justify-between items-center gap-4 hover:bg-gray-50 transition-colors -mx-8 px-8 md:-mx-10 md:px-10">
-                  <div>
-                    <h3 className="font-sans font-black text-base uppercase tracking-tight text-black mb-0.5">Hormone &amp; Recovery Check</h3>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-[0.15em]">All 9 markers · Full picture</p>
-                  </div>
-                  <div className="shrink-0 text-right">
-                    <span className="font-sans font-black text-xl text-black">£179</span>
-                  </div>
-                </div>
-
-                <div className="pt-6 flex flex-col gap-3 -mx-8 px-8 md:-mx-10 md:px-10">
-                  <p className="font-serif text-sm text-black leading-relaxed">Not sure which kit fits your symptoms? Use the selector and answer 3 questions.</p>
-                  <Link href="/test-selector" className="data-label flex items-center gap-2 hover:underline">
-                    Go to test selector
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* MONEY BLOCK: C1 (CA-026), rendered verbatim */}
-      <section className="py-24 bg-white border-t-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="border-4 border-black bg-black text-white p-10 md:p-16">
-            <div className="data-label !text-gray-400 flex items-center gap-4 mb-8">
-              <span className="w-12 h-[4px] bg-white"></span>
-              What you pay
-            </div>
-            <h2 className="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter leading-[0.9] mb-8">
-              One price.<br />Nothing hidden.
-            </h2>
-            <p className="text-xl md:text-2xl font-serif leading-relaxed max-w-3xl text-gray-200">
-              The price on the card is everything you pay. No charge to see your own results, no surprise second test, no subscription unless you choose one. If a result needs action, the next step is a GP conversation, and we earn nothing from it.
+            <p className="f-fine" style={{ marginTop: 20 }}>
+              UKAS ISO 15189 accredited lab. No GP needed. Results in 2 to 5 working days of sample
+              receipt.
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* 3 KITS */}
-      <section id="kits" className="py-32 relative bg-white border-y-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          
-          <div className="mb-20">
-            <div className="data-label flex items-center gap-4 mb-6">
-              <span className="w-12 h-[4px] bg-black"></span>
-              The full range
-            </div>
-            <h2 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
-              Three tests.<br />
-              <span className="text-gray-400">Different questions.</span>
-            </h2>
-          </div>
+          {/*
+            Available-now panel. The frame drops V2.0's pulsing status dot on the
+            UKAS chip: it is a status affordance on a marketing page, and the
+            motion budget on this frame is spent on the load reveal. The chip
+            stays, because "available now" is the thing a reader is checking.
+          */}
+          <div className="f-tray" style={{ marginBottom: 0 }}>
+            <div className="f-core">
+              <div className="f-panelhead">
+                <h2 className="f-h4">Available now</h2>
+                <span className="f-kchip">UKAS lab</span>
+              </div>
 
-          <div className="flex flex-col gap-8">
-
-            {/* Kit 1 */}
-            <div className="glass-panel border-4 border-black hover:bg-gray-50 transition-colors">
-              <div className="grid lg:grid-cols-12 gap-0">
-                <div className="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-black">
+              {ORDER.map((kit) => (
+                <div className="f-prow" key={kit}>
                   <div>
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-                      <div>
-                        <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black self-start mb-4 inline-flex">
-                          Kit 1
-                        </div>
-                        <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black leading-none">Testosterone<br />Health Check</h3>
-                      </div>
-                      <div className="shrink-0 sm:text-right">
-                        <span className="block text-4xl font-sans font-black text-black">£99</span>
-                        <span className="text-sm font-serif text-gray-500">one-off</span>
-                      </div>
-                    </div>
-
-                    <p className="text-lg text-black font-serif mb-8 leading-relaxed max-w-2xl">
-                      Your GP told you you&apos;re normal. That&apos;s not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 2 to 5 working days with a plain-English explanation of what they mean. If the main problem is tiredness, poor recovery or fogginess, Kit 2 is the better fit.
+                    <h3 className="f-prow-t">{FULL_NAMES[kit]}</h3>
+                    <p className="f-prow-m">
+                      {kit === 'hormone-recovery'
+                        ? `All ${panelCount(kit)} markers · Full picture`
+                        : panelShortLabels(kit).join(' · ')}
                     </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                      <div className="border-2 border-black p-4">
-                        <div className="data-label mb-2">Markers tested</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">{panelShortLabels('testosterone').join(' · ')}</div>
-                      </div>
-                      <div className="border-2 border-black p-4">
-                        <div className="data-label mb-2">Turnaround</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Results within 2 to 5 working days of sample receipt</div>
-                      </div>
-                      <div className="border-2 border-black p-4">
-                        <div className="data-label mb-2">Right for</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Low drive, stalled training, &quot;not myself&quot; symptoms</div>
-                      </div>
-                    </div>
                   </div>
-
-                  <div className="pt-8 border-t-2 border-black">
-                    <div className="data-label mb-3">If your result shows testosterone below 12 nmol/L</div>
-                    <p className="font-serif text-sm text-black">You will receive a specific next step, not a generic recommendation.</p>
-                  </div>
+                  <div className="f-prow-p">{PRICES[kit]}</div>
                 </div>
+              ))}
 
-                <div className="lg:col-span-4 p-10 flex flex-col justify-between bg-white">
-                  <div className="space-y-6">
-                    <div>
-                      <div className="data-label mb-3">What arrives in the post</div>
-                      <ul className="space-y-2 font-serif text-sm text-black">
-                        <li className="flex items-start gap-3">
-                          <CheckSvg />
-                          Finger-prick collection kit
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <CheckSvg />
-                          Pre-paid return label
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <CheckSvg />
-                          5-minute collection process
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <div className="data-label mb-3">Results delivered to</div>
-                      <p className="font-serif text-sm text-black">Your Andro Prime dashboard. Not the lab portal. Plain English with a specific next step.</p>
-                    </div>
-                  </div>
-                  <Link href="/kits/testosterone" className="mt-8 block w-full text-center px-6 py-5 bg-black text-white border-4 border-black font-sans font-black uppercase tracking-widest text-sm hover:bg-white hover:text-black transition-colors">
-                    Order for £99
-                  </Link>
-                </div>
+              <div className="f-panelfoot">
+                {/*
+                  Copy drift, carried as found: the selector is five steps now
+                  (three questions, a four-question price study with an age band,
+                  then the reveal and an email capture), not three questions.
+                  Frame O flags the same sentence. Changing it is a copy edit with
+                  its own pre-flight, not part of a restyle.
+                */}
+                <p className="f-sub" style={{ fontSize: 15 }}>
+                  Not sure which kit fits your symptoms? Use the selector and answer 3 questions.
+                </p>
+                <Link
+                  className="f-btn f-btn-ghost f-btn-sm"
+                  href="/test-selector"
+                  style={{ marginTop: 14 }}
+                >
+                  Go to test selector <span aria-hidden="true">&#8594;</span>
+                </Link>
               </div>
             </div>
-
-            {/* Kit 2 */}
-            <div className="glass-panel border-4 border-black hover:bg-gray-50 transition-colors">
-              <div className="grid lg:grid-cols-12 gap-0">
-                <div className="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-black">
-                  <div>
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-                      <div>
-                        <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black self-start mb-4 inline-flex">
-                          Kit 2
-                        </div>
-                        <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black leading-none">Energy &amp;<br />Recovery Check</h3>
-                      </div>
-                      <div className="shrink-0 sm:text-right">
-                        <span className="block text-4xl font-sans font-black text-black">£119</span>
-                        <span className="text-sm font-serif text-gray-500">one-off</span>
-                      </div>
-                    </div>
-
-                    <p className="text-lg text-black font-serif mb-8 leading-relaxed max-w-2xl">
-                      Sore for 3 days after a session that used to take 1. Tired all the time. Joints aching. This test looks at the four markers most likely to explain why: Vitamin D, Active B12 (Holotranscobalamin), inflammation (hs-CRP), and iron stores (Ferritin). If the issue is hormones, Kit 1 or Kit 3 is the better fit.
-                    </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                      <div className="border-2 border-black p-4">
-                        <div className="data-label mb-2">Markers tested</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">{panelShortLabels('energy-recovery').join(' · ')}</div>
-                      </div>
-                      <div className="border-2 border-black p-4">
-                        <div className="data-label mb-2">Turnaround</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Results within 2 to 5 working days of sample receipt</div>
-                      </div>
-                      <div className="border-2 border-black p-4">
-                        <div className="data-label mb-2">Right for</div>
-                        <div className="font-sans font-black text-black text-sm leading-snug">Poor recovery, fatigue, joint stress, slow progress</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-8 border-t-2 border-black">
-                    <div className="data-label mb-3">Supplement routing from this kit</div>
-                    <p className="font-serif text-sm text-black">Low D or low Active B12 routes to the Daily Stack pattern. Elevated hs-CRP with joint symptoms routes to the Joint and Recovery Collagen pattern. Our own range launches shortly; you can join the early-access waitlist at any time. All recommendations are based on your specific numbers.</p>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-4 p-10 flex flex-col justify-between bg-gray-50">
-                  <div className="space-y-6">
-                    <div>
-                      <div className="data-label mb-3">What arrives in the post</div>
-                      <ul className="space-y-2 font-serif text-sm text-black">
-                        <li className="flex items-start gap-3">
-                          <CheckSvg />
-                          Finger-prick collection kit
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <CheckSvg />
-                          Pre-paid return label
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <CheckSvg />
-                          5-minute collection process
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <div className="data-label mb-3">Results delivered to</div>
-                      <p className="font-serif text-sm text-black">Your Andro Prime dashboard. With supplement recommendations matched to your specific markers. Our own range launches shortly; join the early-access waitlist at any time.</p>
-                    </div>
-                  </div>
-                  <Link href="/kits/energy-recovery" className="mt-8 block w-full text-center px-6 py-5 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors">
-                    Order for £119
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Kit 3 */}
-            <div className="bg-black transition-colors border-4 border-black rounded-none">
-              <div className="grid lg:grid-cols-12 gap-0">
-                <div className="lg:col-span-8 p-10 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-gray-600">
-                  <div>
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
-                      <div>
-                        <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-white self-start mb-4 inline-flex text-black">
-                          Kit 3: Most complete
-                        </div>
-                        <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-white leading-none">Hormone &amp;<br />Recovery Check</h3>
-                      </div>
-                      <div className="shrink-0 sm:text-right">
-                        <span className="block text-4xl font-sans font-black text-white">£179</span>
-                        <span className="text-sm font-serif text-gray-400">one-off</span>
-                      </div>
-                    </div>
-
-                    <p className="text-lg text-white font-serif mb-8 leading-relaxed max-w-2xl opacity-90">
-                      Nine markers covering hormones, energy, recovery, and inflammation in one kit. The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.
-                    </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                      <div className="border-2 border-gray-600 p-4">
-                        <div className="data-label mb-2 !text-gray-400">Markers tested</div>
-                        <div className="font-sans font-black text-white text-sm leading-snug">{panelShortLabels('hormone-recovery').join(' · ')}</div>
-                      </div>
-                      <div className="border-2 border-gray-600 p-4">
-                        <div className="data-label mb-2 !text-gray-400">Turnaround</div>
-                        <div className="font-sans font-black text-white text-sm leading-snug">Results within 2 to 5 working days of sample receipt</div>
-                      </div>
-                      <div className="border-2 border-gray-600 p-4">
-                        <div className="data-label mb-2 !text-gray-400">Right for</div>
-                        <div className="font-sans font-black text-white text-sm leading-snug">Full picture across hormones, energy, and recovery</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-8 border-t-2 border-gray-600">
-                    <div className="data-label mb-3 !text-gray-400">Widest set of recommendation pathways</div>
-                    <p className="font-serif text-sm text-gray-400">Kit 3 covers both testosterone and deficiency markers, with supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.</p>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-4 p-10 flex flex-col justify-between">
-                  <div className="space-y-6">
-                    <div>
-                      <div className="data-label mb-3 !text-gray-400">What arrives in the post</div>
-                      <ul className="space-y-2 font-serif text-sm text-gray-400">
-                        <li className="flex items-start gap-3">
-                          <CheckSvg className="text-white" />
-                          Finger-prick collection kit
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <CheckSvg className="text-white" />
-                          Pre-paid return label
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <CheckSvg className="text-white" />
-                          5-minute collection process
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <div className="data-label mb-3 !text-gray-400">Results delivered to</div>
-                      <p className="font-serif text-sm text-gray-400">Your Andro Prime dashboard. Full breakdown across all nine markers with targeted recommendations.</p>
-                    </div>
-                  </div>
-                  <Link href="/kits/hormone-recovery" className="mt-8 block w-full text-center px-6 py-5 bg-white text-black border-4 border-white font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white hover:border-gray-600 transition-colors">
-                    Order for £179
-                  </Link>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </section>
 
-      {/* COMPARISON TABLE */}
-      <section className="py-32 bg-white relative">
-        <div className="max-w-7xl mx-auto px-6">
+      {/*
+        ---------- MONEY BLOCK ----------
+        C1 under CA-026, rendered VERBATIM. The redraw changes only the container.
+        Not a word of this copy is editable without a compliance pre-flight.
+      */}
+      <section className="f-wrap f-sec">
+        <div className="f-invert f-rise">
+          <p className="f-blab f-invert-lab">What you pay</p>
+          <h2 className="f-h2 f-invert-h">
+            One price.<br />Nothing hidden.
+          </h2>
+          <p className="f-sub f-invert-p">
+            The price on the card is everything you pay. No charge to see your own results, no
+            surprise second test, no subscription unless you choose one. If a result needs action,
+            the next step is a GP conversation, and we earn nothing from it.
+          </p>
+        </div>
+      </section>
 
-          <div className="mb-16">
-            <div className="data-label flex items-center gap-4 mb-6">
-              <span className="w-12 h-[4px] bg-black"></span>
-              Side by side
+      {/* ---------- THREE KITS ---------- */}
+      <section className="f-wrap f-sec" id="kits">
+        <p className="f-blab">The full range</p>
+        <h2 className="f-h2">
+          Three tests.<br />
+          <span className="f-grey">Different questions.</span>
+        </h2>
+      </section>
+
+      <section className="f-wrap">
+        {KITS.map((k) => (
+          <div className={k.invert ? 'f-tray f-tray-dark f-rise' : 'f-tray f-rise'} key={k.kit}>
+            <div className={k.invert ? 'f-core f-core-dark' : 'f-core'}>
+              <div className="f-kitgrid">
+                <div>
+                  <div className="f-kithead">
+                    <div>
+                      <span className="f-kchip">{NUMBER_LABEL[k.kit]}</span>
+                      <h3 className="f-h2 f-kittitle">{k.title}</h3>
+                    </div>
+                    <div className="f-kitprice">
+                      <span className="f-price">{PRICES[k.kit]}</span>
+                      <span className="f-oneoff">one-off</span>
+                    </div>
+                  </div>
+
+                  <p className="f-sub">{k.blurb}</p>
+
+                  <div className="f-spec">
+                    <div>
+                      <span className="f-spec-k">Markers tested</span>
+                      <span className="f-spec-v">{panelShortLabels(k.kit).join(' · ')}</span>
+                    </div>
+                    <div>
+                      <span className="f-spec-k">Turnaround</span>
+                      <span className="f-spec-v">
+                        Results within 2 to 5 working days of sample receipt
+                      </span>
+                    </div>
+                    <div>
+                      <span className="f-spec-k">Right for</span>
+                      <span className="f-spec-v">{k.rightFor}</span>
+                    </div>
+                  </div>
+
+                  <div className="f-kitfoot">
+                    <p className="f-blab" style={{ marginBottom: 8 }}>
+                      {k.footLabel}
+                    </p>
+                    <p className="f-sub" style={{ fontSize: 15 }}>
+                      {k.footBody}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="f-kitaside">
+                  <div>
+                    <p className="f-blab">What arrives in the post</p>
+                    <ul className="f-ticks">
+                      {['Finger-prick collection kit', 'Pre-paid return label', '5-minute collection process'].map((t) => (
+                        <li key={t}>
+                          <span aria-hidden="true">&#10003;</span>
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="f-blab" style={{ marginTop: 20 }}>
+                      Results delivered to
+                    </p>
+                    <p className="f-sub" style={{ fontSize: 15 }}>
+                      {k.resultsTo}
+                    </p>
+                  </div>
+                  <Link
+                    href={`/kits/${k.kit}`}
+                    className={
+                      k.invert ? 'f-btn f-btn-onDark' : k.ghostCta ? 'f-btn f-btn-ghost' : 'f-btn'
+                    }
+                    style={{ marginTop: 22, width: '100%', justifyContent: 'center' }}
+                  >
+                    Order for {PRICES[k.kit]}
+                  </Link>
+                </div>
+              </div>
             </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
-              What each men&rsquo;s health blood test covers.
-            </h2>
           </div>
+        ))}
+      </section>
 
-          <p className="md:hidden font-mono text-xs uppercase tracking-[0.15em] text-gray-500 mb-3">Scroll to see all kits &rarr;</p>
-          <div className="overflow-x-auto max-w-full">
-            <table className="w-full border-collapse min-w-[480px]">
-              <thead>
-                <tr className="border-b-4 border-black">
-                  <th className="text-left py-4 pr-8 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold w-1/4">Marker</th>
-                  <th className="text-center py-4 px-4 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold">
-                    Kit 1<br />
-                    <span className="font-sans font-black text-lg normal-case tracking-normal">£99</span>
-                  </th>
-                  <th className="text-center py-4 px-4 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold">
-                    Kit 2<br />
-                    <span className="font-sans font-black text-lg normal-case tracking-normal">£119</span>
-                  </th>
-                  <th className="text-center py-4 px-4 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold bg-gray-100 border-l-4 border-r-4 border-black">
-                    Kit 3<br />
-                    <span className="font-sans font-black text-lg normal-case tracking-normal">£179</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y-2 divide-black">
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">Total Testosterone (nmol/L)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">SHBG (nmol/L)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">Free Androgen Index (FAI)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">Albumin (g/L)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">Free Testosterone (calculated)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">Vitamin D (25-OH)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">Active B12 (Holotranscobalamin)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">hs-CRP (inflammation)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-                <tr>
-                  <td className="py-4 pr-8 font-serif text-black">Ferritin (iron stores)</td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 border-2 border-gray-200 inline-block"></span></td>
-                  <td className="py-4 px-4 text-center"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                  <td className="py-4 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-black"><span className="w-5 h-5 bg-black inline-flex items-center justify-center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg></span></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr className="border-t-4 border-black">
-                  <td className="pt-6 pr-8 font-mono text-xs tracking-[0.15em] uppercase text-black font-bold">Total markers</td>
-                  <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black">5</td>
-                  <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black">4</td>
-                  <td className="pt-6 px-4 text-center font-sans font-black text-2xl text-black bg-gray-100 border-l-4 border-r-4 border-black">9</td>
-                </tr>
-                <tr>
-                  <td className="pt-2 pb-6 pr-8"></td>
-                  <td className="pt-2 pb-6 px-4 text-center">
-                    <Link href="/kits/testosterone" className="inline-block px-4 py-3 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-colors">Order</Link>
-                  </td>
-                  <td className="pt-2 pb-6 px-4 text-center">
-                    <Link href="/kits/energy-recovery" className="inline-block px-4 py-3 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-colors">Order</Link>
-                  </td>
-                  <td className="pt-2 pb-6 px-4 text-center bg-gray-100 border-l-4 border-r-4 border-b-4 border-black">
-                    <Link href="/kits/hormone-recovery" className="inline-block px-4 py-3 bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-colors">Order</Link>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+      {/*
+        ---------- COMPARISON TABLE ----------
+        Derived from KIT_PANELS so this table cannot desync from the kit pages.
+      */}
+      <section className="f-wrap f-sec">
+        <p className="f-blab">Side by side</p>
+        <h2 className="f-h2">What each men&rsquo;s health blood test covers.</h2>
+
+        <p className="f-fine f-scrollhint">Scroll to see all kits &rarr;</p>
+        <div className="f-tray" style={{ marginTop: 18 }}>
+          <div className="f-core">
+            <div className="f-tablewrap">
+              <table className="f-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Marker</th>
+                    {ORDER.map((kit) => (
+                      <th
+                        scope="col"
+                        key={kit}
+                        className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}
+                      >
+                        {NUMBER_LABEL[kit]}
+                        <span className="f-th-price">{PRICES[kit]}</span>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {ALL_PANEL_MARKER_IDS.map((id) => (
+                    <tr key={id}>
+                      <th scope="row">{markerLabel(id)}</th>
+                      {ORDER.map((kit) => {
+                        const has = KIT_PANELS[kit].includes(id)
+                        return (
+                          <td
+                            key={kit}
+                            className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}
+                          >
+                            <span className={has ? 'f-in' : 'f-out'} aria-hidden="true" />
+                            <span className="sr-only">{has ? 'Included' : 'Not included'}</span>
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th scope="row">Total markers</th>
+                    {ORDER.map((kit) => (
+                      <td key={kit} className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}>
+                        <span className="f-total">{panelCount(kit)}</span>
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td />
+                    {ORDER.map((kit) => (
+                      <td key={kit} className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}>
+                        <Link href={`/kits/${kit}`} className="f-btn f-btn-sm f-btn-ghost">
+                          Order
+                        </Link>
+                      </td>
+                    ))}
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* PROCESS STRIP */}
-      <section className="py-32 bg-white border-t-4 border-black relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <div className="data-label flex items-center gap-4 mb-6">
-              <span className="w-12 h-[4px] bg-black"></span>
-              Process
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter max-w-3xl leading-[0.9]">
-              Order to results in under a week.
-            </h2>
-          </div>
+      {/* ---------- PROCESS ---------- */}
+      <section className="f-wrap f-sec">
+        <p className="f-blab">Process</p>
+        <h2 className="f-h2">Order to results in under a week.</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border-2 border-black">
-            <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
-              <div className="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">01</div>
-              <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Order online</h3>
-              <p className="font-serif text-sm text-black leading-relaxed">Choose your kit. Pay once. Kit dispatched the same working day.</p>
+        <div className="f-steps" style={{ marginTop: 22 }}>
+          {STEPS.map((s) => (
+            <div className="f-step" key={s.n}>
+              <span className="f-bignum" aria-hidden="true">
+                {s.n}
+              </span>
+              <h3 className="f-h4">{s.h}</h3>
+              <p className="f-sub" style={{ fontSize: 15 }}>
+                {s.p}
+              </p>
             </div>
+          ))}
+        </div>
 
-            <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
-              <div className="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">02</div>
-              <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Collect at home</h3>
-              <p className="font-serif text-sm text-black leading-relaxed">Five minutes. Finger-prick. Return with the pre-paid label in your kit.</p>
-            </div>
+        <div className="f-btns" style={{ marginTop: 20 }}>
+          <Link href="/how-it-works" className="f-btn f-btn-ghost f-btn-sm">
+            Full process breakdown <span aria-hidden="true">&#8594;</span>
+          </Link>
+        </div>
+      </section>
 
-            <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
-              <div className="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">03</div>
-              <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Lab processes it</h3>
-              <p className="font-serif text-sm text-black leading-relaxed">UKAS ISO 15189 accredited lab. Results ready within 2 to 5 working days of receipt.</p>
-            </div>
-
-            <div className="p-8">
-              <div className="font-sans font-black text-5xl text-gray-200 mb-4 leading-none">04</div>
-              <h3 className="font-sans font-black text-xl uppercase tracking-tight text-black mb-3">Plain-English results</h3>
-              <p className="font-serif text-sm text-black leading-relaxed">Your numbers in your dashboard. What they mean. What to do next. Specific to your data.</p>
-            </div>
-          </div>
-
-          <div className="mt-8 flex items-center gap-4">
-            <Link href="/how-it-works" className="data-label flex items-center gap-2 hover:underline">
-              Full process breakdown
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      {/* ---------- SELECTOR CLOSE ---------- */}
+      <section className="f-wrap f-sec">
+        <div className="f-close">
+          <p className="f-blab">Still not sure</p>
+          <h2>Three questions. One clear recommendation.</h2>
+          {/*
+            Copy drift, carried as found: "less than a minute" describes the
+            three-question version, not the current five-step selector.
+          */}
+          <p className="f-sub" style={{ margin: '0 auto' }}>
+            The test selector asks about your main symptoms and tells you which kit fits best. Takes
+            less than a minute.
+          </p>
+          <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
+            <Link href="/test-selector" className="f-btn">
+              Use the selector <span aria-hidden="true">&#8594;</span>
             </Link>
           </div>
         </div>
       </section>
-
-      {/* NOT SURE CTA */}
-      <section className="py-32 bg-white border-t-4 border-black relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="glass-panel p-10 md:p-16 border-4 border-black bg-gray-50 flex flex-col lg:flex-row items-center gap-12 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 border-b-4 border-l-4 border-black hidden md:flex items-start justify-end p-4 bg-white">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="text-black"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </div>
-
-            <div className="lg:w-2/3 relative z-10">
-              <div className="data-label flex items-center gap-4 mb-8">
-                <span className="w-12 h-[4px] bg-black"></span>
-                Still not sure
-              </div>
-              <p className="text-xl md:text-2xl text-black font-serif leading-relaxed">
-                <strong className="text-black font-sans font-black uppercase tracking-tight border-b-2 border-black pb-1">Three questions. One clear recommendation.</strong>
-                <br /><br />
-                The test selector asks about your main symptoms and tells you which kit fits best. Takes less than a minute.
-              </p>
-            </div>
-
-            <div className="lg:w-1/3 w-full relative z-10 flex lg:justify-end">
-              <Link href="/test-selector" className="w-full text-center bg-black hover:bg-white text-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-lg px-8 py-8 transition-colors">
-                Use the selector
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   )
 }

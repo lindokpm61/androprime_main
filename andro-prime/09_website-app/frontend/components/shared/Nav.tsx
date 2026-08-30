@@ -46,6 +46,7 @@ function HostLink({
   className,
   ariaLabel,
   onClick,
+  dataNavLink,
   children,
 }: {
   href: string
@@ -53,20 +54,33 @@ function HostLink({
   className?: string
   ariaLabel?: string
   onClick?: () => void
+  dataNavLink?: boolean
   children: React.ReactNode
 }) {
   const resolved = hrefFor(href, currentHost)
 
   if (isCrossHost(href, currentHost)) {
     return (
-      <a href={resolved} className={className} aria-label={ariaLabel} onClick={onClick}>
+      <a
+        href={resolved}
+        className={className}
+        aria-label={ariaLabel}
+        onClick={onClick}
+        data-navlink={dataNavLink ? '' : undefined}
+      >
         {children}
       </a>
     )
   }
 
   return (
-    <Link href={resolved} className={className} aria-label={ariaLabel} onClick={onClick}>
+    <Link
+      href={resolved}
+      className={className}
+      aria-label={ariaLabel}
+      onClick={onClick}
+      data-navlink={dataNavLink ? '' : undefined}
+    >
       {children}
     </Link>
   )
@@ -85,6 +99,29 @@ const appLinks = [
   { label: 'Account', href: '/account' },
 ]
 
+/**
+ * Restyled into Direction F on 2026-08-30 from design/mockups/journey/chrome-F.html
+ * Frames AF (three variants) and AG (drawer, scrolled state).
+ *
+ * 🔴 chrome-F.html IS NOT APPROVED. This is built so it can be judged running.
+ *
+ * NOTHING ABOUT THE BEHAVIOUR CHANGED, only the classes. The host-aware
+ * HostLink, the POST-form logout, the three variants, the membership flag, the
+ * scroll listener and the resize-closes-drawer effect are all as they were. The
+ * two rules that are load-bearing and easy to undo by accident:
+ *
+ *   Logout is a FORM POST and must never become a link. This nav is fixed, so
+ *   it is always in the viewport, and Next prefetches links that enter it: as a
+ *   GET it signed people out with no click at all.
+ *
+ *   Cross-host links must stay plain <a>. next/link cannot navigate across
+ *   origins and would client-render the target on the wrong host, bypassing the
+ *   middleware redirect.
+ *
+ * The F frame draws the mark as a CSS box with border-radius 7px. Not
+ * reproduced: Keith approved the Interlocked AP the same day and it has no
+ * container, so that radius is moot. <Logo /> renders the real asset.
+ */
 export function Nav({
   variant = 'marketing',
   lpCtaText,
@@ -101,10 +138,12 @@ export function Nav({
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close mobile menu on resize to desktop
+  // Close mobile menu on resize to desktop. The breakpoint is 900 to match the
+  // .f-navlinks / .f-burger media queries in f-primitives.css; at 768 the drawer
+  // stayed open while the desktop links were already showing.
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) setMenuOpen(false)
+      if (window.innerWidth >= 900) setMenuOpen(false)
     }
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
@@ -136,69 +175,105 @@ export function Nav({
   const isLogoutCta = variant === 'app'
 
   return (
-    <nav
-      aria-label="Primary"
-      className={`fixed top-0 left-0 w-full z-50 bg-white ${
-        scrolled ? 'border-b-4 border-black' : 'border-b border-black'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <nav aria-label="Primary" className="f-nav f-page">
+      <div className={`f-navshell${scrolled ? ' f-scrolled' : ''}`}>
 
-        {/* Logo */}
         <HostLink
           href={variant === 'app' ? '/results-dashboard' : '/'}
           currentHost={currentHost}
-          className="group flex items-center"
+          className="flex items-center"
           ariaLabel="Andro Prime home"
         >
-          <Logo
-            variant="dark"
-            className="h-8 w-auto"
-          />
+          <Logo variant="dark" className="h-6 w-auto" />
         </HostLink>
 
-        {/* Desktop nav links */}
         {showLinks && (
-          <div className="hidden md:flex items-center gap-4 lg:gap-8">
+          <span className="f-navlinks">
             {links.map((link) => (
-              <HostLink
-                key={link.href}
-                href={link.href}
-                currentHost={currentHost}
-                className="text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline whitespace-nowrap"
-              >
+              <HostLink key={link.href} href={link.href} currentHost={currentHost}>
                 {link.label}
               </HostLink>
             ))}
-          </div>
+          </span>
         )}
 
-        {/* Right side: status + CTA + mobile toggle */}
-        <div className="flex items-center gap-4">
+        <span className="f-navright">
           {variant === 'marketing' && (
-            <div className="hidden xl:flex items-center gap-2 mr-4 data-label text-[10px] whitespace-nowrap">
-              <span className="status-dot" />
-              UKAS Lab Online
-            </div>
+            <span className="f-navstat">
+              <i />
+              UKAS lab online
+            </span>
           )}
 
           {variant === 'marketing' && (
-            <HostLink
-              href="/auth/login"
-              currentHost={currentHost}
-              className="hidden md:block text-sm font-bold font-sans uppercase tracking-widest text-black hover:underline whitespace-nowrap"
-            >
+            <HostLink href="/auth/login" currentHost={currentHost} className="f-navlogin">
               Log in
             </HostLink>
           )}
 
-          {ctaConfig && (
-            isLogoutCta ? (
+          {ctaConfig &&
+            (isLogoutCta ? (
               // Logout is a POST, never a link. See app/auth/logout/route.ts.
-              <form action="/auth/logout" method="post" className="hidden md:flex">
+              <form action="/auth/logout" method="post" className="f-navcta-wrap">
+                <button type="submit" className="f-navcta">
+                  {ctaConfig.text}
+                </button>
+              </form>
+            ) : (
+              <span className="f-navcta-wrap">
+                <HostLink href={ctaConfig.href} currentHost={currentHost} className="f-navcta">
+                  {ctaConfig.text}
+                </HostLink>
+              </span>
+            ))}
+
+          {showLinks && (
+            <button
+              type="button"
+              className="f-burger"
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          )}
+        </span>
+      </div>
+
+      {showLinks && menuOpen && (
+        <div className="f-drawer">
+          {links.map((link) => (
+            <HostLink
+              key={link.href}
+              href={link.href}
+              currentHost={currentHost}
+              dataNavLink
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </HostLink>
+          ))}
+          {variant === 'marketing' && (
+            <HostLink
+              href="/auth/login"
+              currentHost={currentHost}
+              dataNavLink
+              onClick={() => setMenuOpen(false)}
+            >
+              Log in
+            </HostLink>
+          )}
+          {ctaConfig &&
+            (isLogoutCta ? (
+              // Logout is a POST, never a link. See app/auth/logout/route.ts.
+              <form action="/auth/logout" method="post">
                 <button
                   type="submit"
-                  className="bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 transition-colors flex items-center gap-2"
+                  className="f-navcta w-full"
+                  onClick={() => setMenuOpen(false)}
                 >
                   {ctaConfig.text}
                 </button>
@@ -207,104 +282,12 @@ export function Nav({
               <HostLink
                 href={ctaConfig.href}
                 currentHost={currentHost}
-                className="hidden md:flex bg-black text-white hover:bg-white hover:text-black border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-2.5 transition-colors items-center gap-2"
+                className="f-navcta block"
+                onClick={() => setMenuOpen(false)}
               >
                 {ctaConfig.text}
               </HostLink>
-            )
-          )}
-
-          {showLinks && (
-            <button
-              className="md:hidden text-black p-2"
-              onClick={() => setMenuOpen((prev) => !prev)}
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={menuOpen}
-            >
-              {menuOpen ? (
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="square"
-                  aria-hidden="true"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              ) : (
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="square"
-                  aria-hidden="true"
-                >
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-              )}
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Mobile drawer */}
-      {showLinks && menuOpen && (
-        <div className="md:hidden border-t-2 border-black bg-white">
-          <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-6">
-            {links.map((link) => (
-              <HostLink
-                key={link.href}
-                href={link.href}
-                currentHost={currentHost}
-                className="text-lg font-black font-sans uppercase tracking-widest text-black"
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
-              </HostLink>
             ))}
-            {variant === 'marketing' && (
-              <HostLink
-                href="/auth/login"
-                currentHost={currentHost}
-                className="text-lg font-black font-sans uppercase tracking-widest text-black"
-                onClick={() => setMenuOpen(false)}
-              >
-                Log in
-              </HostLink>
-            )}
-            {ctaConfig && (
-              isLogoutCta ? (
-                // Logout is a POST, never a link. See app/auth/logout/route.ts.
-                <form action="/auth/logout" method="post" className="contents">
-                  <button
-                    type="submit"
-                    className="bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-3 text-center mt-2 w-full"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {ctaConfig.text}
-                  </button>
-                </form>
-              ) : (
-                <HostLink
-                  href={ctaConfig.href}
-                  currentHost={currentHost}
-                  className="bg-black text-white border-2 border-black font-sans font-black uppercase tracking-widest text-xs px-5 py-3 text-center mt-2"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {ctaConfig.text}
-                </HostLink>
-              )
-            )}
-          </div>
         </div>
       )}
     </nav>

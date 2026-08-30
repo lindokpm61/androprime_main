@@ -24,7 +24,11 @@ export default function MarketingLayout({
   return (
     <>
       <Nav variant="marketing" />
-      <main id="main-content" className="pt-20">{children}</main>
+      {/* Clears the fixed nav. Direction F's nav is a floating shell, not a
+          full-width bar: 14px top gutter + 62px shell + breathing room, against
+          V2.0's flush 80px. Raised at 800px to match .f-nav's own gutter step in
+          f-primitives.css. */}
+      <main id="main-content" className="pt-[92px] md:pt-[104px]">{children}</main>
       <Footer />
     </>
   )
