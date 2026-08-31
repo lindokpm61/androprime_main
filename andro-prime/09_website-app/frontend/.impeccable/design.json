@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-31T00:00:00Z",
+  "title": "Design System: Andro Prime, Direction F",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "primary", "displayName": "Ink", "canonical": "#0A0B0D" },
+      "ink-2": { "role": "neutral", "displayName": "Ink 2", "canonical": "#4A4F57" },
+      "ink-3": { "role": "neutral", "displayName": "Ink 3", "canonical": "#6B7078" },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#FFFFFF" },
+      "core": { "role": "neutral", "displayName": "Core", "canonical": "#FFFFFF" },
+      "tray": { "role": "neutral", "displayName": "Tray", "canonical": "#F1F2F4" },
+      "sunk": { "role": "neutral", "displayName": "Sunk", "canonical": "#E7E9EC" },
+      "flag": { "role": "accent", "displayName": "Flag Amber", "canonical": "#E0A458" },
+      "status-optimal": { "role": "semantic", "displayName": "Status Optimal", "canonical": "#059669" },
+      "status-warning": { "role": "semantic", "displayName": "Status Warning", "canonical": "#d97706" },
+      "status-critical": { "role": "semantic", "displayName": "Status Critical", "canonical": "#b91c1c" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "All headings. Newsreader, a STAND-IN for a licensed serif. Weight 500 and -0.02em are re-judged serif settings, not grotesque settings carried across." },
+      "body": { "displayName": "Body", "purpose": "Source Sans 3, a humanist sans. Won a comparison in which Inter, a neo-grotesque, lost." },
+      "label": { "displayName": "Mono Label", "purpose": "JetBrains Mono. Section eyebrows, units, spec keys, step meta, trust lines. Marks the parts that are data." }
+    },
+    "shadows": [
+      {
+        "name": "ambient",
+        "value": "0 26px 60px -20px rgba(10, 11, 13, 0.16), 0 6px 18px -12px rgba(10, 11, 13, 0.10)",
+        "purpose": "The only shadow in the system. Very large, very soft, very low opacity, offset downward. Carried by the tray, never by the core."
+      },
+      {
+        "name": "ambient-lift",
+        "value": "0 40px 90px -24px rgba(10, 11, 13, 0.22), 0 10px 26px -14px rgba(10, 11, 13, 0.12)",
+        "purpose": "Hover state of the tray. The card rises about 2px."
+      },
+      {
+        "name": "inset-ring",
+        "value": "inset 0 0 0 1px rgba(10, 11, 13, 0.10)",
+        "purpose": "Drawn INSIDE the shape rather than around it. Pairs with the ambient shadow deliberately: this is the double bezel, not a ghost card."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.32, 0.72, 0, 1)",
+        "purpose": "The only easing curve. Exponential ease-out, from an already-visible default."
+      },
+      {
+        "name": "rise",
+        "value": "opacity and translateY, staggered, on scroll entry",
+        "purpose": "The one authored entrance. Under prefers-reduced-motion elements sit at their final state, because the information was never in the movement."
+      },
+      {
+        "name": "bar-grow",
+        "value": "width transition on report bars, staggered down the panel",
+        "purpose": "The page's single load reveal, spent here because a bar's whole meaning is a position on a track. Nothing in this system loops."
+      }
+    ],
+    "breakpoints": [
+      { "name": "card", "value": "800px" },
+      { "name": "section", "value": "900px" },
+      { "name": "nav", "value": "980px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Tray and Core",
+      "kind": "card",
+      "refersTo": "tray",
+      "description": "The base surface pair and the signature of the direction. A recessed grey tray holding a raised white core, concentric radii, ambient shadow on the tray only.",
+      "html": "<div class=\"ds-tray\"><div class=\"ds-core\"><p>Almost every block on a page is one of these.</p></div></div>",
+      "css": ".ds-tray { background: var(--tray, #F1F2F4); border-radius: 28px; padding: 6px; box-shadow: 0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px rgba(10,11,13,.10); transition: box-shadow .25s cubic-bezier(.32,.72,0,1), transform .25s cubic-bezier(.32,.72,0,1); } .ds-tray:hover { box-shadow: 0 40px 90px -24px rgba(10,11,13,.22), 0 10px 26px -14px rgba(10,11,13,.12); transform: translate3d(0,-2px,0); } .ds-core { background: var(--core, #FFF); border-radius: 22px; padding: 34px 32px; box-shadow: inset 0 0 0 1px rgba(10,11,13,.10); } .ds-core p { font-family: var(--font-source-sans), sans-serif; font-size: 16px; line-height: 1.68; color: #4A4F57; margin: 0; }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Pill, ink fill, trailing arrow. The only filled control in the system.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Order the kit: &pound;119 <span aria-hidden=\"true\">&#8594;</span></a>",
+      "css": ".ds-btn { background: #0A0B0D; color: #FFF; text-decoration: none; border: 0; border-radius: 999px; padding: 14px 24px; font-family: var(--font-source-sans), sans-serif; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 9px; cursor: pointer; transition: opacity .18s cubic-bezier(.32,.72,0,1); } .ds-btn:hover { opacity: .88; }"
+    },
+    {
+      "name": "Mono Label",
+      "kind": "chip",
+      "refersTo": "label",
+      "description": "The section eyebrow. Sits above a heading. Generic anti-slop guidance bans this outright; it is the committed world here and overrides that ban.",
+      "html": "<p class=\"ds-blab\">The data</p>",
+      "css": ".ds-blab { font-family: var(--font-jetbrains), monospace; font-size-adjust: none; font-size: 11.5px; letter-spacing: .13em; text-transform: uppercase; color: #4A4F57; margin: 0 0 14px; }"
+    },
+    {
+      "name": "Sample Report Row",
+      "kind": "custom",
+      "refersTo": "core",
+      "description": "Label, sub-label, value, status word, and a track with a filled bar. Status word and bar are driven from one value so they cannot disagree. A report-only marker renders NO bar, because a coloured bar is a verdict.",
+      "html": "<div class=\"ds-row\"><div class=\"ds-row-top\"><div><span class=\"ds-lab\">Vitamin D</span><div class=\"ds-sub2\">Muscle function &amp; energy</div></div><div><div class=\"ds-val\">44</div><span class=\"ds-st ds-st-hot\">Action needed</span></div></div><div class=\"ds-bar\"><i style=\"width:26%\"></i></div></div>",
+      "css": ".ds-row { padding: 14px 0; border-bottom: 1px solid rgba(10,11,13,.10); } .ds-row-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; } .ds-lab { font-family: var(--font-source-sans), sans-serif; font-size: 15px; font-weight: 600; color: #0A0B0D; } .ds-sub2 { font-family: var(--font-source-sans), sans-serif; font-size: 13px; color: #6B7078; } .ds-val { font-family: var(--font-source-sans), sans-serif; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; color: #0A0B0D; } .ds-st { font-family: var(--font-jetbrains), monospace; font-size: 10.5px; letter-spacing: .13em; text-transform: uppercase; color: #6B7078; display: block; text-align: right; } .ds-st-hot { color: #0A0B0D; box-shadow: inset 0 -2px 0 0 #E0A458; } .ds-bar { height: 10px; border-radius: 999px; background: #E7E9EC; margin-top: 12px; overflow: hidden; } .ds-bar i { display: block; height: 100%; border-radius: 999px; background: #d97706; }"
+    },
+    {
+      "name": "Flag Chip",
+      "kind": "chip",
+      "refersTo": "flagchip",
+      "description": "The only saturated fill in the system. Marks a flagged state or a 'most complete' kit. Text on it is ALWAYS ink, never white.",
+      "html": "<span class=\"ds-flagchip\">Most complete</span>",
+      "css": ".ds-flagchip { background: #E0A458; color: #0A0B0D; border-radius: 999px; padding: 6px 14px; font-family: var(--font-jetbrains), monospace; font-size: 11.5px; letter-spacing: .13em; text-transform: uppercase; display: inline-block; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Instrument",
+    "overview": "Direction F is an instrument, not a brochure. The governing idea is a recessed tray holding a raised core: a soft grey well with a white card inside it, concentric radii, and a single very large, very low-opacity ambient shadow. Nothing is hard-edged, nothing is flat, and nothing carries a drop shadow. It reads as measurement equipment because the product is measurement.\n\nThe page is mostly white and grey. The only saturated colour in the whole system is one amber, and it is fenced to flagged states. A serif display sits over a humanist sans, and small monospace labels mark the parts that are data. The direction describes itself as Soft Structuralism on an asymmetrical bento.\n\nIt should look like something that measures you, and refuses to sell you the answer. That refusal is the brand's actual position, so the restraint in the palette is not minimalism for its own sake: it is the argument.",
+    "keyCharacteristics": [
+      "Recessed tray holding a raised core, concentric 28px and 22px radii",
+      "One ambient shadow, very large and very soft, never a hard drop shadow",
+      "Depth carried by ground and inset rings rather than borders",
+      "Serif display over humanist sans, with two load-bearing optical corrections",
+      "Monospace labels mark data, not decoration",
+      "Grey and white page with exactly one fenced accent colour",
+      "130px section rhythm above 900px, always more space above a heading than below it"
+    ],
+    "rules": [
+      {
+        "name": "The Status Colour Fence",
+        "body": "The optimal, warning and critical colours carry clinical meaning. They appear only on range-bar fills and status dots INSIDE a results or sample-report panel. Never on headings, body copy, buttons, CTAs, backgrounds, icons or eyebrows. A coloured bar outside a results panel is a bug, not a style choice. Red is reserved for the GP-block state, so decorative red near health copy collides with that meaning and carries ASA risk.",
+        "section": "colors"
+      },
+      {
+        "name": "The Verdict Rule",
+        "body": "A coloured bar IS a verdict. A marker the results engine refuses to grade renders its value, its label and no bar at all. Rendering an empty track still reads as a verdict, so the status word carries the reason instead.",
+        "section": "colors"
+      },
+      {
+        "name": "The Double Bezel Is Not A Ghost Card",
+        "body": "The tray carries an inset 1px ring AND a wide ambient shadow, together, deliberately. Generic guidance calls that a ghost card and says to declare elevation once. Here it is the signature of the approved direction. Do not collapse it to one or the other.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Eyebrow Stays",
+        "body": "A mono label sits above every section heading. Generic anti-slop guidance bans a kicker above a heading outright and says no brief earns it back. This brief does: it is in the approved direction and in all 13 frames. The committed visual world overrides the generic ban.",
+        "section": "typography"
+      },
+      {
+        "name": "Specificity Discipline On Mono Labels",
+        "body": "`.f-page p` is (0,1,1) and a bare `.f-blab` is (0,1,0), so any mono label that happens to be a paragraph silently loses its face to the body sans. 37 of 51 did. Every mono primitive is re-asserted at (0,2,0). Element selectors inside a card are the shape that causes this whole class of bug.",
+        "section": "typography"
+      },
+      {
+        "name": "The Direction Beats The Frames",
+        "body": "Authority runs: the direction file, then the implemented primitives, then the 13 journey frames. The frames were drawn later and have drifted from the direction twice, on section rhythm and container width. When a frame and the direction disagree, the direction wins.",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do port the frame's own declarations rather than re-deriving CSS from its markup.",
+      "Do derive marker sets, prices and panel copy from lib/kits/panel.ts and lib/pricing.ts.",
+      "Do probe the built page with getComputedStyle and selector counts; a declaration diff cannot see an absence.",
+      "Do check a frame's stated section count against the sections it actually draws.",
+      "Do keep more space above a heading than below it. 130 above, 20 below."
+    ],
+    "donts": [
+      "Don't remove the mono eyebrow above section headings; it is the committed world, not slop.",
+      "Don't flatten the 28px radius to 12-16px, and don't collapse the ring-plus-shadow double bezel.",
+      "Don't add a hard offset shadow, a gradient, glass, or gradient text.",
+      "Don't put status colour outside a results panel, and never put white text on the amber.",
+      "Don't give a report-only marker a bar, and never restore FAI as a stand-in for free testosterone in men.",
+      "Don't invent a dispatch cutoff, testimonial, review count, customer number or press mention. None exist.",
+      "Don't use an em dash in any external-facing text.",
+      "Don't trust the journey frames over the direction."
+    ]
+  }
+}
