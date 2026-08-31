@@ -24,6 +24,16 @@
 :root {
   /* F's --amb: a two-layer ambient elevation. The wide soft layer reads as
      distance from the ground; the tight layer keeps the edge from floating. */
+  /* THE LIFT IS THE SAME ELEVATION'S SECOND STATE, NOT A SECOND ELEVATION.
+     The note above says one shadow token deliberately, and that still holds:
+     this is --shadow-ambient raised, used only on :hover by the two things the
+     direction lifts (a tray and a button). It is F's own --amb-lift, ported
+     because the hover state was dropped in the original port and the lift is
+     what the interaction is MADE of. Do not add a third. */
+  --shadow-ambient-lift:
+    0 40px 90px -24px rgba(10, 11, 13, 0.22),
+    0 10px 26px -14px rgba(10, 11, 13, 0.12);
+
   --shadow-ambient:
     0 26px 60px -20px rgba(10, 11, 13, 0.16),
     0 6px 18px -12px rgba(10, 11, 13, 0.10);

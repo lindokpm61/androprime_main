@@ -52,6 +52,15 @@
    five places, so this fixes that page too. */
 .f-sec { padding-top: var(--f-sec-gap); padding-bottom: var(--f-sec-below); }
 
+.f-tray:hover {
+  box-shadow: var(--shadow-ambient-lift);
+  transform: translate3d(0, -2px, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .f-tray { transition: none; }
+  .f-tray:hover { transform: none; }
+}
+
 /* ---------- SECTION RHYTHM ----------
    Restored from directions/F-field.html, the approved direction (8c8066f, the
    six-direction pick). The DIRECTION sets `.sec` to 72/72, and 130/130 above
@@ -95,17 +104,29 @@
   .f-tray-pick, .f-tray-pick:hover { transition: none; transform: none; }
 }
 
+/* THE TRAY LIFTS ON HOVER. This was in the direction and the port dropped it,
+   so every panel on every F page was inert: the ambient shadow made the card
+   look raised and nothing answered a pointer. The lift is the whole reason the
+   double bezel reads as an object rather than a drawing of one. */
 .f-tray {
   background: var(--tray);
   border-radius: var(--radius-container);
   padding: 6px;
   box-shadow: var(--shadow-ambient);
+  transition: box-shadow 0.7s var(--ease), transform 0.7s var(--ease);
   margin-bottom: 20px;
 }
 .f-core {
   background: var(--core);
   border-radius: var(--radius-inset);
   padding: 26px 22px;
+  /* The direction declares this and the port dropped it. Without it a square
+     child painted over the rounded corners: every photograph on the homepage
+     sat in a 22px-radius card with hard 90-degree top corners, which Keith
+     caught by eye. The reconciler could not: it compares properties BOTH sides
+     declare and skips one the app omits entirely, so a missing declaration is
+     invisible to it by construction. */
+  overflow: hidden;
 }
 @media (min-width: 800px) { .f-core { padding: 34px 32px; } }
 
@@ -310,7 +331,56 @@
   gap: 9px;
   transition: opacity 0.2s var(--ease);
 }
-.f-btn:hover { opacity: 0.88; }
+/* ---------- THE PIP, AND THE HOVER IT EXISTS FOR ----------
+   The direction wraps a button's arrow in a translucent circle and nudges it
+   on hover. Both were dropped in the port: `opacity: 0.88` was standing in for
+   an interaction made of a lift and a moving arrow.
+
+   The pip is styled ON THE SVG rather than on a wrapper span, because the arrow
+   is a shared `ARROW` constant used at 24 call sites across four pages. A CSS
+   approach gets every one of them, including any added later, and a wrapper
+   would have to be threaded through all of them by hand.
+
+   The asymmetric padding (22 left, 9 right) is the direction's, and it is what
+   seats the circle against the button's right edge. It is applied only via
+   :has(svg), because a button with no arrow needs the padding even. */
+/* The direction gives a button the ambient shadow AT REST, not only on hover,
+   so it sits on the page as an object like the trays do. Also dropped in the
+   original port, which is why the hover had nothing to lift FROM. */
+.f-btn {
+  box-shadow: var(--shadow-ambient);
+  border: 1px solid transparent;
+  letter-spacing: -0.015em;
+  transition: box-shadow 0.5s var(--ease), transform 0.2s var(--ease);
+}
+.f-btn:has(svg) { padding-right: 9px; padding-left: 22px; gap: 12px; }
+.f-btn svg {
+  width: 32px; height: 32px; padding: 8px; box-sizing: border-box;
+  border-radius: 999px; flex: none;
+  background: color-mix(in srgb, var(--paper) 18%, transparent);
+  transition: transform 0.5s var(--ease);
+}
+.f-btn:hover { box-shadow: var(--shadow-ambient-lift); }
+.f-btn:hover svg { transform: translate3d(3px, -1px, 0) scale(1.06); }
+.f-btn:active { transform: scale(0.98); }
+
+/* The ghost is a frosted panel in the direction, not a transparent hole, and
+   its pip inverts because it sits on light rather than on ink. */
+.f-btn-ghost {
+  background: color-mix(in srgb, var(--paper) 55%, transparent);
+  backdrop-filter: blur(8px);
+  border-color: var(--hair-2);
+}
+.f-btn-ghost svg { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+
+/* The small variant carries a proportionally smaller circle. */
+.f-btn-sm:has(svg) { padding-right: 7px; padding-left: 16px; gap: 9px; }
+.f-btn-sm svg { width: 24px; height: 24px; padding: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .f-btn, .f-btn svg { transition: none; }
+  .f-btn:hover svg, .f-btn:active { transform: none; }
+}
 .f-btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--hair-2); }
 .f-btn-sm { padding: 10px 18px; font-size: 13.5px; }
 .f-btns { @apply flex flex-wrap items-center; gap: 12px; }
