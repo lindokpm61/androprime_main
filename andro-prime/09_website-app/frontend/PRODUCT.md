@@ -104,12 +104,16 @@ selling an empty room. Membership is offered once a result lands, inside 30 days
 Collection is a finger-prick at home, posted back in a prepaid envelope. Results arrive in 2 to 5
 working days in a private dashboard. No GP appointment, no referral.
 
-🔴 **Open decision, recorded rather than invented (2026-08-31).** The exact front door for a new
-visitor is unsettled. The repo's most recent written entry (2026-07-08) makes Kit 3 the quiz default
-and taker of direct traffic; Keith has said that is out of date, and the operative frame is the
-funnel model above. **The live homepage still leads on kits, which the funnel model names as a known
-lag that closes when the page is rebuilt, not a decision.** Do not treat any current page's entry
-behaviour as intended.
+⚠ **Front door, updated 2026-08-31.** The repo's most recent written entry (2026-07-08) makes Kit 3
+the quiz default and taker of direct traffic. Keith has said that is out of date; the operative frame
+is the funnel model above. **The funnel model called the kits-led homepage a lag that "closes when
+the page is rebuilt", and the page has now been rebuilt** in the approved direction: it opens on the
+argument, shows a sample readout, then offers the three kits with the nine-marker panel leading, and
+closes on the conflict-free receipt. It sends its primary CTA to the quiz.
+
+🔴 **Still not settled, and not to be inferred from that page:** whether the quiz, the `/kits` hub or
+a single kit is the intended entry for paid and referral traffic. The homepage now expresses the
+funnel model; it does not by itself constitute a routing decision.
 
 ## Capabilities and Constraints
 
@@ -190,9 +194,14 @@ caught it once.
 - **No case studies.**
 - **No customer numbers, sales figures or "X men tested" claims.**
 - **No press mentions or logo walls.**
-- **No real photography of Keith or of the kit.** The approved direction uses photography in its
-  bento cells; the built pages carry none, and none may be invented or substituted with stock
-  standing in for a real subject.
+- **No real photography of Keith, of the kit, or of a customer**, and none may be invented or
+  substituted with stock standing in for a real subject.
+  ⚠ **Updated 2026-08-31, because the homepage now ships imagery.** Five GENERATED lifestyle
+  photographs and a GENERATED hero film are live on `/` from `public/home/`. They are not
+  photographs of Keith, the kit, or any real customer, so the absence above still holds; they are
+  synthetic imagery of unnamed men in ordinary settings. 🔴 **All six assets are gated by CA-045,
+  which is OPEN and needs Ewa and Keith.** Its unanswered question is whether the illegible letter in
+  the film reads as a lab result. Do not add, swap or reuse any of them elsewhere before it signs.
 - **No dispatch cutoff time.** Pages say "dispatched same day" and state no cutoff anywhere, so a
   countdown or a "order within" device would be inventing an operational promise.
 

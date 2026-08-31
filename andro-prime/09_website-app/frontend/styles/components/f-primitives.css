@@ -317,19 +317,25 @@
   color: var(--ink-2);
 }
 
+/* ONE BLOCK. This selector was briefly declared twice, the second adding the
+   shadow and the transition, and the second `transition` silently killed the
+   first: exactly the shape that made .f-btn-ghost render transparent. Two rule
+   blocks for one selector in this file should be treated as a defect. */
 .f-btn {
   background: var(--ink);
   color: var(--paper);
-  border: 0;
+  border: 1px solid transparent;
   border-radius: var(--radius-pill);
   padding: 14px 24px;
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 600;
+  letter-spacing: -0.015em;
   text-decoration: none;
   @apply inline-flex items-center cursor-pointer;
   gap: 9px;
-  transition: opacity 0.2s var(--ease);
+  box-shadow: var(--shadow-ambient);
+  transition: box-shadow 0.5s var(--ease), transform 0.2s var(--ease);
 }
 /* ---------- THE PIP, AND THE HOVER IT EXISTS FOR ----------
    The direction wraps a button's arrow in a translucent circle and nudges it
@@ -347,12 +353,6 @@
 /* The direction gives a button the ambient shadow AT REST, not only on hover,
    so it sits on the page as an object like the trays do. Also dropped in the
    original port, which is why the hover had nothing to lift FROM. */
-.f-btn {
-  box-shadow: var(--shadow-ambient);
-  border: 1px solid transparent;
-  letter-spacing: -0.015em;
-  transition: box-shadow 0.5s var(--ease), transform 0.2s var(--ease);
-}
 .f-btn:has(.f-pip) { padding-right: 9px; padding-left: 22px; gap: 12px; }
 /* THE ARROW IS A TYPOGRAPHIC GLYPH, NOT AN SVG. The mockups all use `&#8594;`
    set in the button's own face; the first port used a stroked SVG path, which

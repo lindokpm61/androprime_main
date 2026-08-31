@@ -14,6 +14,8 @@ colors:
   flag: "#E0A458"
   flag-f: "rgba(224, 164, 88, 0.14)"
   flag-f2: "rgba(224, 164, 88, 0.26)"
+  lab: "rgba(10, 11, 13, 0.13)"
+  ours: "rgba(10, 11, 13, 0.30)"
   status-optimal: "#059669"
   status-warning: "#d97706"
   status-critical: "#b91c1c"
@@ -72,8 +74,17 @@ components:
     rounded: "{rounded.pill}"
     padding: "14px 24px"
     typography: "{typography.subhead}"
+  button-primary-with-pip:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.pill}"
+    padding: "14px 9px 14px 22px"
+  pip:
+    backgroundColor: "rgba(255, 255, 255, 0.18)"
+    rounded: "{rounded.pill}"
+    size: "32px"
   button-ghost:
-    backgroundColor: "transparent"
+    backgroundColor: "rgba(255, 255, 255, 0.55)"
     textColor: "{colors.ink}"
     rounded: "{rounded.pill}"
     padding: "14px 24px"
@@ -202,10 +213,16 @@ scrolls horizontally.
 
 ## Elevation & Depth
 
-**One shadow exists.** `--shadow-ambient` is `0 26px 60px -20px rgba(10,11,13,.16), 0 6px 18px -12px
-rgba(10,11,13,.10)`: very large, very soft, very low opacity, offset downward. There is a lifted
-variant for hover. **There is no hard drop shadow anywhere in the system and adding one is a
+**One elevation, in two states.** `--shadow-ambient` is `0 26px 60px -20px rgba(10,11,13,.16),
+0 6px 18px -12px rgba(10,11,13,.10)`: very large, very soft, very low opacity, offset downward.
+`--shadow-ambient-lift` is the same elevation raised, `0 40px 90px -24px rgba(10,11,13,.22), 0 10px
+26px -14px rgba(10,11,13,.12)`, and it is used ONLY on `:hover`, by the two things the direction
+lifts: a tray and a button. That is not a scale of two, it is one elevation and its hover state. **Do
+not add a third.** **There is no hard drop shadow anywhere in the system and adding one is a
 category error**, because flatness is exactly what this direction was chosen to escape.
+
+**A tray rises 2px on hover and a button does not move**; the button answers with the lift and with
+its arrow. Both are `prefers-reduced-motion` guarded.
 
 **Depth is carried by ground, not by borders.** The ladder is: nothing, sunk, sunk-with-accent, core,
 core-with-ring, tray, tray-with-wash, inverted. Rings are `inset 0 0 0 1px var(--hair)`, drawn inside
@@ -254,6 +271,34 @@ The ghost numeral reveals on hover; on touch, scroll position drives the same st
 **Inverted panel.** Ink ground with the whole type ramp flipped to white at graded opacities. Used
 once per page at most, for a conformity statement.
 
+**Button pip.** A 32px translucent circle around the arrow, paper at 18% on an ink button and ink at
+8% on a ghost. On hover it nudges `translate3d(3px,-1px,0) scale(1.06)`. ⚠ **The arrow is the
+typographic glyph `&rarr;` as text, never a drawn SVG**: it is set in the button's own face, so it
+follows the type ruling instead of drifting from it. The asymmetric padding that seats the circle
+against the right edge is applied through `:has(.f-pip)`, so a button with no arrow stays even.
+
+**Bento.** The direction's asymmetrical 12-column grid, `.f-bento` with `.f-c-3` through `.f-c-12`,
+collapsing to one column below 900px. This is the homepage's layout idiom; the kit pages use simpler
+even grids.
+
+**The two-range readout.** The homepage instrument and the concrete mechanic of the product's
+argument: the LABORATORY reference band and OUR action band drawn on one recessed track, with the
+sample value as a 3px ink marker. Bands are neutral ink at two opacities (`--lab`, `--ours`) and
+never the status triad, because this is a comparison of two scales rather than a verdict. The verdict
+is carried in words underneath, and a row where the two disagree puts its second word in the amber
+pill. 🔴 **Every band position is arithmetic from `04_products/results-engine/thresholds.md` and the
+working is written beside each row in the page source. A value moved without re-deriving its
+percentage is a page that contradicts the results engine.**
+
+**Photography.** `.f-shot`, greyscale at rest easing toward colour on tray hover, with a frosted
+caption pill. Greyscale is not decoration: it stops photography competing with the single accent the
+system allows.
+
+**The hero film.** A silent, half-speed, crossfade-looped clip under a 90%-to-26% white wash, so it
+reads as the ground moving rather than as a picture and the headline stays dark ink on light. 🔴 The
+gate is a `media` attribute on the `<source>`, NOT `display: none` in CSS: hiding a video still
+downloads and decodes it.
+
 ## Do's and Don'ts
 
 **Do**
@@ -267,6 +312,13 @@ once per page at most, for a conformity statement.
   absence, and absences are this system's most common defect.
 - Check a frame's stated section count against the sections it actually draws. Two frames failed that
   checksum by one on 2026-08-31.
+- **Diff for ABSENCE, not only for disagreement.** Six of the eight defects found by eye on
+  2026-08-31 were declarations present in the direction and simply never carried: `overflow: hidden`
+  on the card, the tray's hover lift, the button's hover lift, the button's rest shadow, the arrow
+  pip, and the hero's `min-height`. The reconciler saw none of them, because its compare loop skips a
+  property the app does not declare at all.
+- **Verify a hover by hovering, and a video by watching the network.** Reading the CSS would have
+  passed a `display: none` that still downloaded 726KB, and a `.f-btn-ghost` rule that never applied.
 
 **Don't**
 
@@ -283,6 +335,14 @@ once per page at most, for a conformity statement.
   exist. See `PRODUCT.md`, Evidence on Hand.
 - Don't use an em dash. Anywhere, in any external-facing text.
 - Don't trust the journey frames over the direction. They have drifted twice already.
+- **Don't write a second rule block for a selector that already has one.** `.f-btn-ghost` was
+  declared twice and the older `background: transparent` sat later in the file, so it silently beat
+  the frosted background at equal specificity and the button rendered fully transparent. `.f-btn` had
+  the same shape and its `transition` was being overwritten. Both are now single blocks. Two blocks
+  for one selector in this file should be read as a defect.
+- **Don't set a container's height "later".** A container's aspect ratio is an input to
+  `object-fit`, so a missing `min-height` silently re-crops the media inside it. The hero without one
+  was throwing away a quarter of the film's height.
 
 ## Known gaps in this system
 
@@ -297,7 +357,14 @@ Recorded so they are not rediscovered as surprises.
    12 instances. The token is correct and the pairing is wrong: the direction defines `--ink-3` as
    the functional-text floor **on paper**, not on a recessed well.
 3. 🟠 **No `:focus-visible` styling exists in the F layer.** Nothing sets `outline: none`, so the
-   browser default ring shows. Focus is visible but undesigned.
+   browser default ring shows. Focus is visible but undesigned. This is now the most visible
+   remaining interaction gap, since hover has been restored everywhere and focus has not.
+6. 🔴 **CA-045 gates the homepage imagery and is OPEN.** Five generated photographs and the hero film
+   ship in `public/home/`. Signers are Ewa and Keith. The gate's own condition is that it arms when a
+   direction is built into the site, which has now happened, so it blocks the merge to `main`.
+7. ⚠ **The reconciler has two structural blind spots**, both recorded in `12_operations/CONTEXT.md`:
+   its `RULED` table is consulted in only one of its emit branches, and its compare loop cannot see a
+   declaration one side omits entirely. Do not read a clean run as a clean layer.
 4. 🟠 **`RelatedArticles` is still V2.0** and is the visible seam on every rebuilt page.
 5. ⚠ **The journey frames are owed a sweep** on container width and section rhythm, both of which the
    direction wins. Recorded in the reconciler's `RULED` table meanwhile.
