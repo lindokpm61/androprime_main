@@ -217,12 +217,50 @@ export default function HomePage() {
       <JsonLd data={homeSchema} />
 
       {/* ---------------- HERO ----------------
-          The direction's hero carries a film, a drifting measurement rule and a
-          canvas data-field behind this type. None is ported yet: the film is
-          inside CA-045 and the field animates real threshold percentages, so
-          both want a pass of their own. The type, spacing and CTAs are the
-          frame's, and the hero is built to receive the layers behind them. */}
-      <div className="f-wrap" style={{ paddingTop: 88, paddingBottom: 64 }}>
+          Layer 1 of the direction's three is ported: the film. It is a texture,
+          not a picture, and not a dark hero: greyscaled under a white wash so
+          the headline stays dark ink on light.
+
+          Still NOT ported, layers 2 and 3: the drifting measurement rule and the
+          canvas data-field. The field animates real percentages from
+          thresholds.md at three depths, which is a data surface rather than a
+          decoration and wants its own pass with the numbers checked.
+
+          🔴 The film is inside CA-045 with the five photographs, and it is the
+          asset carrying that gate's one OPEN question: does an illegible letter
+          on a kitchen table read as a lab result? Claim-adjacent, so it routes
+          to Ewa. The sheet in this clip is unreadable by design. */}
+      <div className="f-hero-film">
+        <div className="f-film" aria-hidden="true">
+          {/* muted + playsinline are what make autoplay legal on iOS and Chrome.
+              preload="metadata" keeps the 726KB off the critical path; the poster
+              paints immediately and the loop takes over when it is ready.
+              The ?v= is a cache buster and not decoration: the direction had this
+              file replaced in place twice and browsers kept serving the old bytes
+              through a reload. Bump it whenever the asset changes. */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/home/poster.jpg?v=1"
+            tabIndex={-1}
+          >
+            {/* THE GATE IS HERE, NOT IN CSS. An unmatched `media` means the
+                browser picks no source, fetches nothing, and paints the poster.
+                Hiding the element in CSS instead still downloads and decodes it.
+                Two conditions: honour a reduced-motion preference, and do not
+                spend 726KB on a phone where the wash covers most of the frame
+                anyway. */}
+            <source
+              src="/home/table.mp4?v=1"
+              type="video/mp4"
+              media="(min-width: 641px) and (prefers-reduced-motion: no-preference)"
+            />
+          </video>
+        </div>
+      <div className="f-wrap f-hero-in" style={{ paddingTop: 0, paddingBottom: 0 }}>
         <h1 className="f-h1" style={{ maxWidth: '15ch' }}>
           Your bloods came back normal.<br />
           <span className="f-grey">That&rsquo;s not an answer.</span>
@@ -239,6 +277,7 @@ export default function HomePage() {
         </div>
 
         <p className="f-fine mt-9">Scroll for a sample result</p>
+      </div>
       </div>
 
       {/* ---------------- THE READOUT ----------------

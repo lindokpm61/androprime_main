@@ -1030,6 +1030,81 @@
 .f-founder-q { font-size: 15.5px; line-height: 1.65; color: var(--ink-2); display: block; }
 .f-page .f-founder-role { font-family: var(--font-mono); font-size-adjust: none; }
 
+/* ---------- THE HERO FILM ----------
+   Ported from directions/F-field.html. An overhead kitchen table on the morning
+   the post arrived: a mug, a single sheet with reading glasses resting on it,
+   and hard window light moving across pale wood. Generated in Higgsfield, 15.46s,
+   half speed, silent, crossfade loop.
+
+   IT IS A TEXTURE, NOT A DARK HERO. The video is greyscaled and sits under a
+   white wash running 90% to 26% across the frame, so the headline stays dark ink
+   on light and the film reads as the ground moving rather than as a picture. The
+   direction's dark-mode treatment is deliberately NOT ported: this app has no
+   dark mode, so a `prefers-color-scheme` block here would be a rule with no
+   users pretending the capability exists.
+
+   🔴 THE SHEET IS ILLEGIBLE ON PURPOSE AND THAT IS THE COMPLIANCE LINE.
+   Soft grey lines of type, no letterhead, no logo, no heading, no numbers, no
+   readable words. An unbranded, unreadable letter on a kitchen table makes no
+   claim; it is post nobody has dealt with. A legible letterhead, anything that
+   reads as a named lab or the NHS, or any readable figures would imply a
+   clinical service and a per-customer result. CA-045 gates this asset and its
+   open question is exactly whether the sheet reads as a lab result. Do not
+   replace this clip with one whose paper can be read. */
+.f-film {
+  position: absolute; inset: 0; top: -84px; z-index: 0;
+  pointer-events: none; overflow: hidden;
+  /* The poster doubles as the reduced-motion still, so it is a background here
+     rather than only the video's own poster attribute. */
+  background-image: url('/home/poster.jpg');
+  background-size: cover;
+  background-position: 58% 48%;
+}
+.f-film video {
+  width: 100%; height: 100%; object-fit: cover; object-position: 58% 48%;
+  display: block;
+  transform: scale(1.14);
+  filter: grayscale(1) brightness(1.06) contrast(0.96);
+}
+.f-film::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.90) 0%,
+    rgba(255, 255, 255, 0.72) 38%,
+    rgba(255, 255, 255, 0.40) 70%,
+    rgba(255, 255, 255, 0.26) 100%
+  );
+}
+/* NOTE ON WHERE THE REDUCED-MOTION AND MOBILE GATING LIVES, because the obvious
+   place is wrong. `@media (prefers-reduced-motion: reduce) { video { display:
+   none } }` LOOKS correct and is not: it hides the element while the browser
+   goes on downloading all 726KB and decoding every frame, so the user gets the
+   cost of the film and none of it. Measured: display none, paused false,
+   currentTime advancing.
+   The gate is therefore a `media` attribute on the <source> in the markup. An
+   unmatched source means no source at all, so nothing is fetched and the poster
+   paints instead. Pure HTML, no JS, and it cannot desync from the query. */
+
+/* THE HERO'S HEIGHT IS PART OF THE FILM'S FRAMING, NOT JUST ITS SIZE, and
+   leaving it out is what cropped the clip. The source is 1280x720, so 1.778.
+   Without a min-height this hero sized to its own content at 1440x625, an
+   aspect of 2.031, which is much WIDER than the source: `object-fit: cover`
+   then fills the width and throws away the height, showing 87.5% of the frame
+   before `scale(1.14)` took another 14%. Roughly a quarter of the picture,
+   sliced off top and bottom.
+   The direction's own `calc(100dvh - 56px)` makes the box NARROWER than 1.778,
+   so cover trims a little width instead and the full height survives. It also
+   makes "Scroll for a sample result" mean something, which it cannot on a hero
+   that already ends above the fold. */
+.f-hero-film {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: calc(100dvh - 56px);
+  padding-top: 26px; padding-bottom: 34px;
+}
+.f-hero-in { position: relative; z-index: 2; }
+
 /* ---------- BENTO ----------
    The direction's asymmetrical 12-column grid. Ported from F-field.html. One
    column below 900px, which is the same breakpoint the section rhythm uses. */
