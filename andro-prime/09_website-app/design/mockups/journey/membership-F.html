@@ -233,8 +233,11 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
 @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .grain{opacity:.07} }
 
 .tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb);margin-bottom:20px}
-.core{background:var(--core);border-radius:var(--r-in);padding:24px 22px}
-@media (min-width:800px){ .core{padding:28px 26px} }
+/* Density ruled 2026-08-31 (Keith): the tighter app values were DRIFT, not a
+   deliberate app density. Converged on the marketing values the built
+   primitives already carry. */
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:34px 32px} }
 
 /* frame label: review chrome, not design */
 .flabel{border-top:1px solid var(--hair-2);border-bottom:1px solid var(--hair);background:var(--tray)}
@@ -296,7 +299,7 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
   font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);
   margin-bottom:14px;
 }
-.sub{font-size:15px;line-height:1.66;color:var(--ink-2);max-width:64ch}
+.sub{font-size:16px;line-height:1.68;color:var(--ink-2);max-width:64ch}
 .fine{
   font-family:"Geist Mono","Geist Mono Fallback",ui-monospace,monospace;
   font-size:11.5px;line-height:1.6;letter-spacing:.04em;color:var(--ink-2);max-width:62ch;

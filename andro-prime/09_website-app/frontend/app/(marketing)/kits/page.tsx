@@ -266,7 +266,7 @@ export default function KitsPage() {
       */}
       <section className="f-wrap f-sec">
         <div className="f-invert f-rise">
-          <p className="f-blab f-invert-lab">What you pay</p>
+          <p className="f-blab f-blab-lg f-invert-lab">What you pay</p>
           <h2 className="f-h2 f-invert-h">
             One price.<br />Nothing hidden.
           </h2>

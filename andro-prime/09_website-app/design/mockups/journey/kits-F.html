@@ -302,6 +302,12 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
 .invert h2{font-size:clamp(1.9rem,4.2vw,3rem);letter-spacing:-.045em;margin-bottom:18px}
 .invert .blab{color:rgba(255,255,255,.62)}
 .invert p{font-size:clamp(1.02rem,1.5vw,1.16rem);line-height:1.66;color:rgba(255,255,255,.86);max-width:62ch}
+/* Ruled deliberate 2026-08-31 (Keith): the inverted panel's lead label is
+   larger than the other 30 instances of .blab ON PURPOSE. It had been reaching
+   that size through a specificity accident (.invert p at 0,1,1 beating .blab at
+   0,1,0); it is now a named class at 0,2,0 so it survives an edit to either
+   rule. Rendered size is unchanged. */
+.invert .blab-lg{font-size:clamp(1.02rem,1.5vw,1.16rem);line-height:1.66}
 :root[data-theme="dark"] .invert{background:var(--core);color:var(--ink);box-shadow:none;border:1px solid var(--hair-2)}
 :root[data-theme="dark"] .invert p{color:var(--ink-2)}
 :root[data-theme="dark"] .invert .blab{color:var(--ink-3)}
@@ -761,7 +767,7 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
 
 <div class="wrap" style="padding-top:30px;padding-bottom:10px">
   <div class="invert rise">
-    <p class="blab">What you pay</p>
+    <p class="blab blab-lg">What you pay</p>
     <h2>One price.<br>Nothing hidden.</h2>
     <p>The price on the card is everything you pay. No charge to see your own results, no surprise second test, no subscription unless you choose one. If a result needs action, the next step is a GP conversation, and we earn nothing from it.</p>
   </div>

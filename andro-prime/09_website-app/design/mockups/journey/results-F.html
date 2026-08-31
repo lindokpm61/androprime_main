@@ -245,8 +245,11 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.035em;line-height:1.05}
   font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
 }
 .tray{background:var(--tray);border-radius:var(--r);padding:6px;box-shadow:var(--amb)}
-.core{background:var(--core);border-radius:var(--r-in);padding:24px 22px}
-@media (min-width:800px){ .core{padding:28px 26px} }
+/* Density ruled 2026-08-31 (Keith): the tighter app values were DRIFT, not a
+   deliberate app density. Converged on the marketing values the built
+   primitives already carry. */
+.core{background:var(--core);border-radius:var(--r-in);padding:26px 22px}
+@media (min-width:800px){ .core{padding:34px 32px} }
 
 /* 02 + 03. STATUS STRIP. The live page uses a full-bleed black slab; F's
    equivalent is a slim rule-bounded strip that does not compete with the

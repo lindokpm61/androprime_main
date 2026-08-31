@@ -180,6 +180,15 @@
 }
 .f-blab { font-size: 11.5px; text-transform: uppercase; margin-bottom: 14px; }
 
+/* The inverted panel's lead label is larger than the other thirty instances of
+   .f-blab ON PURPOSE (ruled 2026-08-31, Keith). In kits-F.html it was reaching
+   that size through a specificity accident -- `.invert p` at (0,1,1) beating
+   `.blab` at (0,1,0) -- which the build never inherited, because the build uses
+   a class. Keith approved the frame with the big label on screen and ruled it
+   deliberate, so it is ported as a NAMED variant at (0,2,0) rather than
+   recreating the accident. Clamp carried verbatim from the frame. */
+.f-blab.f-blab-lg { font-size: clamp(1.02rem, 1.5vw, 1.16rem); line-height: 1.66; }
+
 /* .f-page p is (0,1,1) and a bare .f-blab is (0,1,0), so every mono label that
    happened to be a <p> silently lost its face to the body sans: 37 of 51 across
    the three rebuilt pages, measured 2026-08-31. Spans were fine, which is why it
@@ -952,6 +961,41 @@
 .f-core-dark .f-ticks li::before { background: var(--paper); }
 .f-core-dark .f-kitfoot { border-top-color: rgba(255, 255, 255, 0.14); }
 .f-btn-onDark { background: var(--paper); color: var(--ink); }
+
+/* ---------- FOUNDERS ----------
+   Ported from kits-F.html .founders / .founder, which only Frame R declares.
+   The frame styles the quote with a bare element selector (`.founder q`); this
+   uses a CLASS, because an element selector inside a card is the exact shape
+   that produced the .invert p / .blab specificity bug on this same frame. The
+   quotes are attributed speech from two real people and are carried verbatim,
+   punctuation included, so the markup is a <p> with its own quote marks rather
+   than a <q> that would have the browser add a second pair. */
+.f-founders { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 820px) { .f-founders { grid-template-columns: repeat(2, 1fr); } }
+.f-founder {
+  background: var(--core);
+  border-radius: var(--radius-inset);
+  padding: 24px 22px;
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.f-founder-who {
+  display: flex; gap: 14px; align-items: center;
+  padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--hair);
+}
+.f-founder-av {
+  width: 46px; height: 46px; border-radius: 14px; background: var(--sunk); flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; letter-spacing: -0.02em; color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.f-founder h3 { font-size: 16.5px; letter-spacing: -0.03em; }
+.f-founder-role {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--ink-3); margin-top: 3px;
+}
+.f-founder-q { font-size: 15.5px; line-height: 1.65; color: var(--ink-2); display: block; }
+.f-page .f-founder-role { font-family: var(--font-mono); font-size-adjust: none; }
 
 /* ---------- COMPARISON TABLE ---------- */
 .f-scrollhint { margin-top: 14px; }
