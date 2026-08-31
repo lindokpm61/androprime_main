@@ -353,35 +353,48 @@
   letter-spacing: -0.015em;
   transition: box-shadow 0.5s var(--ease), transform 0.2s var(--ease);
 }
-.f-btn:has(svg) { padding-right: 9px; padding-left: 22px; gap: 12px; }
-.f-btn svg {
-  width: 32px; height: 32px; padding: 8px; box-sizing: border-box;
-  border-radius: 999px; flex: none;
+.f-btn:has(.f-pip) { padding-right: 9px; padding-left: 22px; gap: 12px; }
+/* THE ARROW IS A TYPOGRAPHIC GLYPH, NOT AN SVG. The mockups all use `&#8594;`
+   set in the button's own face; the first port used a stroked SVG path, which
+   is a visibly chunkier, geometric arrow with rounded caps. Keith spotted the
+   difference. Text also inherits the face, so the arrow changes with the type
+   ruling instead of drifting away from it. */
+.f-btn .f-pip {
+  width: 32px; height: 32px; border-radius: 999px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; line-height: 1;
   background: color-mix(in srgb, var(--paper) 18%, transparent);
   transition: transform 0.5s var(--ease);
 }
 .f-btn:hover { box-shadow: var(--shadow-ambient-lift); }
-.f-btn:hover svg { transform: translate3d(3px, -1px, 0) scale(1.06); }
+.f-btn:hover .f-pip { transform: translate3d(3px, -1px, 0) scale(1.06); }
 .f-btn:active { transform: scale(0.98); }
 
 /* The ghost is a frosted panel in the direction, not a transparent hole, and
    its pip inverts because it sits on light rather than on ink. */
+.f-btn-ghost .f-pip { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+
+/* The small variant carries a proportionally smaller circle. */
+.f-btn-sm:has(.f-pip) { padding-right: 7px; padding-left: 16px; gap: 9px; }
+.f-btn-sm .f-pip { width: 24px; height: 24px; font-size: 11px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .f-btn, .f-btn .f-pip { transition: none; }
+  .f-btn:hover .f-pip, .f-btn:active { transform: none; }
+}
+/* ONE RULE, because there were briefly two. The frosted background was added
+   above this line and lost silently: same specificity (0,1,0), and the older
+   `background: transparent` sat LATER in the file, so source order decided it.
+   The measured result was rgba(0,0,0,0) against the direction's 55% white, and
+   over the hero's near-white wash a fully transparent button reads as a plain
+   white one. A duplicate rule for the same selector is not a style question, it
+   is a bug waiting for whoever edits the wrong copy. */
 .f-btn-ghost {
   background: color-mix(in srgb, var(--paper) 55%, transparent);
   backdrop-filter: blur(8px);
-  border-color: var(--hair-2);
+  color: var(--ink);
+  border: 1px solid var(--hair-2);
 }
-.f-btn-ghost svg { background: color-mix(in srgb, var(--ink) 8%, transparent); }
-
-/* The small variant carries a proportionally smaller circle. */
-.f-btn-sm:has(svg) { padding-right: 7px; padding-left: 16px; gap: 9px; }
-.f-btn-sm svg { width: 24px; height: 24px; padding: 6px; }
-
-@media (prefers-reduced-motion: reduce) {
-  .f-btn, .f-btn svg { transition: none; }
-  .f-btn:hover svg, .f-btn:active { transform: none; }
-}
-.f-btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--hair-2); }
 .f-btn-sm { padding: 10px 18px; font-size: 13.5px; }
 .f-btns { @apply flex flex-wrap items-center; gap: 12px; }
 
@@ -633,7 +646,12 @@
 .f-faqgrid p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
 
 /* ---------- CLOSE ---------- */
-.f-close { text-align: center; padding-top: var(--f-sec-gap); padding-bottom: var(--f-sec-below); }
+/* The close is a WHOLE section, not a section header, so it takes the gap on
+   both sides. It was using --f-sec-below underneath, which is the 20px meant
+   for the space between a heading and its own content, and that left the final
+   CTA sitting almost against the footer. In the direction `.close` is a `.sec`
+   and gets the full rhythm above and below. */
+.f-close { text-align: center; padding-top: var(--f-sec-gap); padding-bottom: var(--f-sec-gap); }
 .f-close h2 {
   font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: clamp(1.8rem, 4.4vw, 3.1rem);

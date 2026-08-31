@@ -205,11 +205,9 @@ export const metadata: Metadata = {
   },
 }
 
-const ARROW = (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
-    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-  </svg>
-)
+// The mockups set the arrow as the typographic glyph in the button's own face,
+// not as a drawn path. Keeping it as text means it inherits the type ruling.
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
 
 export default function HomePage() {
   return (
