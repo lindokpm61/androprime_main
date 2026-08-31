@@ -127,6 +127,7 @@ MCP servers and tools most relevant when working in this workspace. Repo-wired s
   in `account-F`, `membership-F` and `results-F` were **drift, not a deliberate app density**, and
   those three frames were converged onto the marketing values the built primitives already carry.
   Mockup-vs-mockup drift went 33 to 31.
+  **Four deviations are now RULED** (2026-08-31): the serif ruling's two, plus `.f-wrap` max-width and `.f-sec` padding, both from Keith's ruling that `directions/F-field.html` beats the 13 journey frames on container width and section rhythm. **The frames are owed a sweep on both.**
   🔴 **Known gap: its `RULED` table is consulted in the CONFLICT branch only.** Mockup drift is
   emitted unconditionally and never tested against it, so a ruling about a mockup-vs-mockup
   disagreement has nowhere to be recorded and would report as a defect forever — which is the exact

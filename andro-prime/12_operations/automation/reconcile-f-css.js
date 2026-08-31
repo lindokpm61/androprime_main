@@ -145,6 +145,21 @@ const RULED = [
     match: (sel, prop, appVal) => prop === 'font-family' && /--font-display/.test(appVal),
     reason: '2026-08-30 serif ruling: the mockups predate it and name Geist throughout',
   },
+  {
+    match: (sel, prop) => sel === '.f-wrap' && prop === 'max-width',
+    reason:
+      '2026-08-31 direction ruling: 1180px is the container in directions/F-field.html, ' +
+      'the approved direction. All 13 journey frames say 1240px because they were drawn ' +
+      'later and widened it. The direction wins; the frames are owed a sweep',
+  },
+  {
+    match: (sel, prop, appVal) => sel === '.f-sec' && /^padding/.test(prop) && /--f-sec-/.test(appVal),
+    reason:
+      '2026-08-31 direction ruling: section rhythm restored from directions/F-field.html ' +
+      '(72/130) after the journey frames compressed it to 38/6 and this build ported the ' +
+      'frames faithfully. Driven by --f-sec-gap / --f-sec-below, so the literal values ' +
+      'no longer appear here to compare',
+  },
 ];
 
 // ------------------------------------------------------------------ parsing
