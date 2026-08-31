@@ -100,6 +100,15 @@
   --flag-f:  rgba(224, 164, 88, 0.14);
   --flag-f2: rgba(224, 164, 88, 0.26);
 
+  /* --- Two-range readout bands (the homepage instrument) ---
+     Ported from design/mockups/directions/F-field.html:79-80. These are the
+     LABORATORY reference band and OUR action band, drawn on the same track so
+     a reader can see both at once. They are neutral ink at two opacities on
+     purpose: this is a comparison of two scales, NOT a verdict, so it must not
+     borrow the status triad. The verdict is carried in words beneath it. */
+  --lab:  rgba(10, 11, 13, 0.13);
+  --ours: rgba(10, 11, 13, 0.30);
+
   /* --- Motion. F's easing, used on every transform in the frames. --- */
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
 }

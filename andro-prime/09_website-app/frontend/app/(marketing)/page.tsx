@@ -1,12 +1,169 @@
 import type { Metadata } from 'next'
-import ReactDOM from 'react-dom'
+import Image from 'next/image'
 import Link from 'next/link'
-import { panelCardLabels } from '@/lib/kits/panel'
 import { JsonLd } from '@/components/shared/JsonLd'
-import { HeroBackground } from '@/components/marketing/HeroBackground'
+import { PRICING } from '@/lib/pricing'
 
+/*
+ * REBUILT IN DIRECTION F, 2026-08-31.
+ * Frame: design/mockups/directions/F-field.html, THE DIRECTION ITSELF
+ * (commit 8c8066f, "six homepage directions, and Keith picked F", 2026-08-27).
+ *
+ * This page is different in kind from the other five F pages. Those were ported
+ * from the per-page journey frames, which were derived from this file and have
+ * since been shown to have drifted from it twice. This one is ported from the
+ * approved direction directly, so it is the only F page with no intermediary.
+ *
+ * WHY THE COPY IS THE FRAME'S AND NOT THE LIVE PAGE'S, which inverts the rule
+ * used on the kit pages. On those, the live copy won because the frames were
+ * proposing new wording nobody had approved. Here the opposite holds:
+ *   - the live homepage is built to funnel model v1, and
+ *     `07_sales/funnel/site-funnel-model.md` v2 names it a LAG in its own text,
+ *     saying the lag closes when the page is rebuilt;
+ *   - this direction was approved 2026-08-27, after the monitoring thesis, and
+ *     its headings ARE the thesis: "You don't know which question you're asking
+ *     yet", "We give the thinking away", "We do not sell you the answer".
+ * So the direction is both the newer artefact and the approved one.
+ *
+ * 🔴 CA-045 IS THE MERGE BLOCKER ON THIS PAGE. The five photographs below are
+ * generated imagery and the register row covers them explicitly, together with
+ * the hero film. Its status is OPEN and its own words are that the gate "arms
+ * when a direction is built into the site". This commit is that moment. It sits
+ * on `redesign/direction-f`, which deploys nothing, so building it is safe and
+ * MERGING IT IS NOT. Signers are Ewa and Keith; it fails the Keith-only entry
+ * test at Q2 because a homepage hero is customer-facing.
+ *
+ * ⚠ And a discrepancy worth carrying: the register's evidence line ("no people,
+ * hands, clinic, blood or sample") was established on the hero FILM frame. It
+ * does not describe these five. `img-3` is captioned in its own alt text as "a
+ * man's hands at a kitchen table holding a small plain sample collection tube",
+ * which is people, hands and a sample. Those judgement questions are open for
+ * these assets, not evidenced.
+ *
+ * NOT PORTED, deliberately:
+ *   - The hero film and its canvas data-field. The film is the other half of
+ *     CA-045 and the field animates real threshold percentages, so both want
+ *     their own pass. The hero is built to hold them: the type, spacing and
+ *     CTAs are the frame's, and the background is currently the plain ground.
+ *   - Geist. The typeface ruling (Keith, 2026-08-30) supersedes the direction
+ *     on faces only: serif display over humanist sans. Spacing, scale and
+ *     rhythm are the direction's.
+ */
+
+/*
+ * 🔴 COMPLIANCE PRE-FLIGHT: 2 HARD, and BOTH ARE VERBATIM FROM THE APPROVED
+ * DIRECTION. Neither was introduced by this rebuild. Both read as false
+ * positives on inspection, and NEITHER IS SELF-CLEARED HERE: a signed exception
+ * needs a real CA number and this has none, so they go to the judgement pass.
+ *
+ *   1. "Nothing here is a diagnosis" (the readout header) trips «diagnosis».
+ *      It is a disclaimer, and the scanner passes the same word four lines
+ *      later in "That is not a diagnosis". Its negation detector matches
+ *      "is not a X" and does not match a leading "Nothing here is a X", so the
+ *      two identical intents get opposite verdicts.
+ *   2. "the NICE guideline our GP follows TREATS 25 to 70 as an indeterminate
+ *      zone" trips «treats» as a medicinal claim. It is the "regards as" sense
+ *      about a numeric band, not a treatment claim. The scanner's own message
+ *      says to verify benign use, so it is asking rather than asserting.
+ *
+ * Worth recording, because it is the more interesting fact: these two phrases
+ * are in `directions/F-field.html`, which was approved on 2026-08-27. CA-045
+ * covers that file's IMAGERY and explicitly records the scanner as N/A there
+ * because the asset has no words. So the direction's COPY reaching a page is
+ * this scan, here, for the first time.
+ */
 const BASE_URL = 'https://andro-prime.com'
 
+/*
+ * The sample readout. THIS IS THE PAGE'S ONE PIECE OF CLINICAL CONTENT and
+ * every band position is arithmetic from `04_products/results-engine/
+ * thresholds.md`, carried across from the direction with its working intact.
+ *
+ * `labLeft/labWidth` is the LABORATORY reference band (Vitall's own range).
+ * `oursLeft/oursWidth` is OUR action band, which the results engine applies and
+ * a GMC-registered GP approved. `you` is the sample value's position.
+ *
+ * Do not adjust a number here without re-deriving its percentage. A value moved
+ * without its arithmetic is a homepage that contradicts the results engine.
+ */
+const READOUT = [
+  {
+    // thresholds.md, Kit 1, Total Testosterone: our bands low <12, normal 12-20,
+    // optimal >20-29, high >29 -> GP. Vitall male reference 8.64-29.00 nmol/L
+    // (confirmed 2026-08-06). Track scale 0-35 nmol/L.
+    //   lab    8.64 -> 24.7%,  29.00 -> 82.9%,  width 58.2%
+    //   ours     12 -> 34.3%,     20 -> 57.1%,  width 22.8%
+    //   marker 14.2 -> 40.6%
+    name: 'Testosterone', qualifier: 'total', value: '14.2', unit: 'nmol/L',
+    labLeft: 24.7, labWidth: 58.2, oursLeft: 34.3, oursWidth: 22.8, you: 40.6,
+    lab: 'Lab normal', ours: 'Normal', split: false,
+  },
+  {
+    // thresholds.md: <25 -> GP, <50 low, 50-250 normal, >250 -> GP (Ewa
+    // 2026-08-07). Vitall male range 50-250 nmol/L. Track scale 0-250 nmol/L.
+    //   lab      50 -> 20.0%, 250 -> 100%, width 80.0%
+    //   ours     50 -> 20.0%, 250 -> 100%, width 80.0%
+    //   marker   58 -> 23.2%
+    name: 'Vitamin D', qualifier: '25-OH', value: '58', unit: 'nmol/L',
+    labLeft: 20, labWidth: 80, oursLeft: 20, oursWidth: 80, you: 23.2,
+    lab: 'Lab normal', ours: 'Normal', split: false,
+  },
+  {
+    // thresholds.md: NICE NG239 three-band, <25 low, 25-70 borderline, >70
+    // normal. Ewa re-ratified 2026-08-07 with the assay cut visible. Vitall
+    // assay cut is >37.5 pmol/L. Track scale 0-100 pmol/L.
+    //   lab    37.5 -> 37.5%, 100 -> 100%, width 62.5%
+    //   ours     25 -> 25.0%,  70 ->  70%, width 45.0%
+    //   marker   45 -> 45.0%
+    // SPLIT ONE: the assay calls 45 normal, NG239 calls it indeterminate.
+    // Same number, two verdicts. This row is the whole argument of the page.
+    name: 'Active B12', qualifier: 'holo-TC', value: '45', unit: 'pmol/L',
+    labLeft: 37.5, labWidth: 62.5, oursLeft: 25, oursWidth: 45, you: 45,
+    lab: 'Lab normal', ours: 'Borderline', split: true,
+  },
+  {
+    // thresholds.md: <30 -> GP, 30-100 borderline / indeterminate (Ewa ruling 5,
+    // 2026-06-16), 100-300 normal, >300 -> GP. Vitall male range 30-442 ug/L.
+    // Track scale 0-450 ug/L.
+    //   lab      30 ->  6.7%, 442 -> 98.2%, width 91.5%
+    //   ours     30 ->  6.7%, 100 -> 22.2%, width 15.5%
+    //   marker   62 -> 13.8%
+    // SPLIT TWO.
+    name: 'Ferritin', qualifier: null, value: '62', unit: 'µg/L',
+    labLeft: 6.7, labWidth: 91.5, oursLeft: 6.7, oursWidth: 15.5, you: 13.8,
+    lab: 'Lab normal', ours: 'Borderline', split: true,
+  },
+]
+
+const RECORD_STEPS = [
+  { t: 'Your first result', b: 'One point on a scale, both ranges shown, in plain English. Yours to keep whether you buy anything else or not.' },
+  { t: 'The same test, later', b: 'Same lab, same assay, same units. That is what makes two numbers comparable, and why we cannot use your old NHS bloods.' },
+  { t: 'A direction', b: 'Two points make a line. The line is the thing nobody currently has, and the reason to keep your numbers in one place.' },
+]
+
+// Prices read from lib/pricing.ts. Marker strings are the direction's own
+// summary wording, which is looser than lib/kits/panel.ts on purpose: these are
+// one-line teasers on a homepage card, and the kit pages carry the exact panel.
+const KITS = [
+  {
+    slug: 'hormone-recovery', title: 'Hormone & Recovery', meta: `Kit 3 · nine markers`,
+    price: `£${PRICING.KIT_3.rrp}`, lead: true,
+    lines: ['Testosterone, free T, SHBG, albumin, FAI', 'Vitamin D, active B12, ferritin, hs-CRP'],
+  },
+  {
+    slug: 'testosterone', title: 'Testosterone', meta: `Kit 1 · five markers`,
+    price: `£${PRICING.KIT_1.rrp}`, lead: false,
+    lines: ['Total & free testosterone', 'SHBG, albumin, free androgen index'],
+  },
+  {
+    slug: 'energy-recovery', title: 'Energy & Recovery', meta: `Kit 2 · four markers`,
+    price: `£${PRICING.KIT_2.rrp}`, lead: false,
+    lines: ['Vitamin D, active B12', 'Ferritin, hs-CRP'],
+  },
+]
+
+// Carried unchanged from the previous homepage. The HowTo graph still describes
+// the process accurately, so the rebuild has no reason to touch it.
 const homeSchema = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
@@ -20,32 +177,10 @@ const homeSchema = {
     { '@type': 'HowToSupply', name: 'Pre-paid return envelope (included)' },
   ],
   step: [
-    {
-      '@type': 'HowToStep',
-      position: 1,
-      name: 'Order your kit',
-      text: 'Select the specific panel you need. Dispatched same-day via tracked delivery in discreet packaging.',
-      url: `${BASE_URL}/kits`,
-    },
-    {
-      '@type': 'HowToStep',
-      position: 2,
-      name: 'Collect your sample',
-      text: 'Simple, painless finger-prick collection at home. Takes five minutes. Best performed fasted, first thing in the morning, for accurate hormone baselines.',
-    },
-    {
-      '@type': 'HowToStep',
-      position: 3,
-      name: 'Post it back',
-      text: 'Seal your sample in the medical transport vial and drop it in any Royal Mail priority postbox using the pre-paid return envelope.',
-    },
-    {
-      '@type': 'HowToStep',
-      position: 4,
-      name: 'View your results',
-      text: 'Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, plain-English explanations, and recommendation logic approved by a GMC-registered GP.',
-      url: `${BASE_URL}/kits`,
-    },
+    { '@type': 'HowToStep', position: 1, name: 'Order your kit', text: 'Select the specific panel you need. Dispatched same-day via tracked delivery in discreet packaging.', url: `${BASE_URL}/kits` },
+    { '@type': 'HowToStep', position: 2, name: 'Collect your sample', text: 'Simple, painless finger-prick collection at home. Takes five minutes. Best performed fasted, first thing in the morning, for accurate hormone baselines.' },
+    { '@type': 'HowToStep', position: 3, name: 'Post it back', text: 'Seal your sample in the medical transport vial and drop it in any Royal Mail priority postbox using the pre-paid return envelope.' },
+    { '@type': 'HowToStep', position: 4, name: 'View your results', text: 'Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, plain-English explanations, and recommendation logic approved by a GMC-registered GP.', url: `${BASE_URL}/kits` },
   ],
 }
 
@@ -70,427 +205,300 @@ export const metadata: Metadata = {
   },
 }
 
-const CheckSvg = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter">
-    <polyline points="20 6 9 17 4 12" />
+const ARROW = (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
   </svg>
 )
 
 export default function HomePage() {
-  // Preload the hero poster at high priority so it becomes the LCP paint rather
-  // than being gated by the autoplay <video> loading. (Audit 2026-06-15: LCP
-  // held at 4.2s because the poster was discovered late with no fetchpriority.)
-  // WebP is the LCP resource for the ~97% of visitors that support it; the
-  // <picture> in HeroBackground falls back to the JPG for the rest. Preloads are
-  // media-scoped so a phone fetches only the light 800px poster (~28 KB) and a
-  // desktop only the 1280px one: no wasted double download, and the LCP image
-  // does not have to race the full 1280px file on a throttled mobile connection.
-  ReactDOM.preload('/videos/hero-poster-800.webp', { as: 'image', fetchPriority: 'high', media: '(max-width: 1023px)' })
-  ReactDOM.preload('/videos/hero-poster.webp', { as: 'image', fetchPriority: 'high', media: '(min-width: 1024px)' })
   return (
-    <>
+    <div className="f-page">
       <JsonLd data={homeSchema} />
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center pb-16 overflow-hidden bg-white">
-        
-        <HeroBackground />
 
-        <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-12 gap-12 items-center">
+      {/* ---------------- HERO ----------------
+          The direction's hero carries a film, a drifting measurement rule and a
+          canvas data-field behind this type. None is ported yet: the film is
+          inside CA-045 and the field animates real threshold percentages, so
+          both want a pass of their own. The type, spacing and CTAs are the
+          frame's, and the hero is built to receive the layers behind them. */}
+      <div className="f-wrap" style={{ paddingTop: 88, paddingBottom: 64 }}>
+        <h1 className="f-h1" style={{ maxWidth: '15ch' }}>
+          Your bloods came back normal.<br />
+          <span className="f-grey">That&rsquo;s not an answer.</span>
+        </h1>
 
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <div className="inline-flex items-center gap-3 px-3 py-1.5 border border-black bg-white mb-8">
-              <span className="w-2 h-2 bg-black" />
-              <span className="data-label !text-[10px] !text-black">Men&rsquo;s health, data first</span>
-            </div>
+        {/* Direction brief section 7: hero subtext, 20 words maximum. This is exactly 20. */}
+        <p className="f-stand mt-6" style={{ maxWidth: '40ch' }}>
+          You do not know yet whether it is thyroid, iron, vitamin D or testosterone. So we test all of them.
+        </p>
 
-            <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[100px] font-sans font-black text-black uppercase tracking-tighter leading-[0.85] mb-8">
-              Know your numbers in days.<br />
-              Five minutes at home.
-            </h1>
+        <div className="f-btns mt-8">
+          <Link href="/test-selector" className="f-btn">Find your test in 60 seconds {ARROW}</Link>
+          <Link href="#free" className="f-btn f-btn-ghost">See the app first {ARROW}</Link>
+        </div>
 
-            <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Men&rsquo;s blood tests analysed by a UKAS ISO 15189-accredited lab, explained in plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP, and earns us nothing.
-            </p>
+        <p className="f-fine mt-9">Scroll for a sample result</p>
+      </div>
 
-            {/* Hero routing (ratified 2026-07-25, site-funnel-model.md §5):
-                the quiz is the primary router for broad/undecided traffic and
-                the sole source of the WTP pricing read, so it takes the
-                primary slot. Catalogue drops to secondary; how-it-works stays
-                as a tertiary text link (education path for cold traffic). */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link href="/test-selector" className="bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors flex items-center justify-center gap-2">
-                Find your test in 60 seconds
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
-              <Link href="/kits" className="bg-white hover:bg-gray-100 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors flex items-center justify-center">
-                Explore Test Kits
-              </Link>
-            </div>
-            <Link href="/how-it-works" className="mt-6 inline-block data-label text-gray-600 hover:text-black underline transition-colors">
-              Or see how it works first
-            </Link>
+      {/* ---------------- THE READOUT ----------------
+          The concrete mechanic of the monitoring thesis: two ranges on one
+          screen. This is the only place on the site where the laboratory band
+          and our action band are drawn together. */}
+      <div className="f-wrap f-sec" id="readout" style={{ paddingBottom: 0 }} />
+      <div className="f-wrap">
+        <div className="f-bento">
+          <div className="f-c-8 f-rise">
+            <div className="f-tray">
+              <div className="f-core" style={{ padding: 0 }}>
+                <div className="f-ro-h">
+                  <span>Sample result &middot; Kit 3 &middot; nine markers</span>
+                  <span>Nothing here is a diagnosis</span>
+                </div>
 
-            <div className="mt-12 flex flex-wrap items-center gap-6 data-label">
-              <div className="flex items-center gap-2">
-                <CheckSvg />
-                No GP required
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckSvg />
-                Results in 2 to 5 working days
+                <div className="f-ro-b">
+                  {READOUT.map((m) => (
+                    <div key={m.name} className={m.split ? 'f-mk f-mk-split' : 'f-mk'}>
+                      <div className="f-mk-t">
+                        <div className="f-mk-n">
+                          {m.name}
+                          {m.qualifier ? <small>{m.qualifier}</small> : null}
+                        </div>
+                        <div className="f-mk-v">{m.value}<i>{m.unit}</i></div>
+                      </div>
+                      <div
+                        className="f-track"
+                        role="img"
+                        aria-label={`${m.name} ${m.value} ${m.unit}. Laboratory reference range: ${m.lab}. Andro Prime action band: ${m.ours}.`}
+                      >
+                        <div className="f-band f-band-lab" style={{ left: `${m.labLeft}%`, width: `${m.labWidth}%` }} />
+                        <div className="f-band f-band-ours" style={{ left: `${m.oursLeft}%`, width: `${m.oursWidth}%` }} />
+                        <div className="f-you" style={{ left: `${m.you}%` }} />
+                      </div>
+                      <div className="f-verd">
+                        <span className="f-v-lab">{m.lab}</span>
+                        <span className="f-v-ours">{m.ours}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="f-ro-f">
+                  Two of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>borderline</b>. That is not a diagnosis. It is the context a bare number does not carry.
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Dashboard preview */}
-          <div className="hidden lg:block lg:col-span-5">
-            <div className="border-2 border-black p-8 bg-white relative">
-              <div className="flex items-center justify-between border-b-2 border-black pb-4 mb-8">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white border-2 border-black flex items-center justify-center">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
-                      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                      <circle cx="12" cy="7" r="4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="text-black font-sans font-black uppercase text-base tracking-tight">Patient Analysis</div>
-                    <div className="data-label !text-[10px]">ID: 8492-X · AGE: 42</div>
-                  </div>
+          <div className="f-c-4 f-rise">
+            <div className="f-tray" style={{ height: '100%' }}>
+              <div className="f-core f-cell" style={{ height: '100%', justifyContent: 'space-between' }}>
+                <div>
+                  <h2 className="f-h4" style={{ fontSize: 26, maxWidth: '14ch', letterSpacing: '-0.03em', lineHeight: 1.15 }}>
+                    Two ranges. Nine markers. You should see both.
+                  </h2>
+                  <p className="f-sub mt-3.5">
+                    Active B12 is the plainest case. The assay calls anything above 37.5 normal, while the NICE guideline our GP follows treats 25 to 70 as an indeterminate zone. Same number, two verdicts.
+                  </p>
                 </div>
-                <div className="px-2 py-1 bg-black border border-black data-label !text-white flex items-center gap-2">
-                  <span className="w-2 h-2 bg-white" />
-                  Live Data
+                <p className="f-blab mt-6" style={{ marginBottom: 0 }}>Bands: results engine, GP approved</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ---------------- THE ARGUMENT ---------------- */}
+      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }} />
+      <div className="f-wrap">
+        <div className="f-bento">
+          <div className="f-c-7 f-rise">
+            <div className="f-tray" style={{ height: '100%' }}>
+              <div className="f-core" style={{ height: '100%' }}>
+                <h2 className="f-h2">&ldquo;In range&rdquo; is a statistical band, not a health band.</h2>
+                <p className="f-lede">
+                  A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="f-c-5 f-rise">
+            <div className="f-tray" style={{ height: '100%' }}>
+              <div className="f-core f-cell" style={{ height: '100%', padding: 0 }}>
+                <div className="f-shot f-shot-r43">
+                  <Image src="/home/img-4.jpg" alt="A man in his early fifties at an office desk late in the afternoon, looking away from his monitor towards a window." width={800} height={600} />
+                  <span className="f-shot-cap">Thursday, 4pm</span>
+                </div>
+                <div style={{ flex: 1, padding: '24px 20px' }}>
+                  <p className="f-sub">Most men arrive here after a set of bloods came back with nothing flagged, and nothing explained.</p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-              <div className="space-y-8">
-                <div>
-                  <div className="flex justify-between items-end mb-2">
-                    <div className="data-label">Testosterone (Total)</div>
-                    <div className="data-value">14.2 <span className="text-xs font-normal">nmol/L</span></div>
-                  </div>
-                  <div className="h-2 w-full bg-gray-200 overflow-hidden">
-                    <div className="h-full bg-statusWarning w-[28%]" />
-                  </div>
-                  <div className="flex justify-between mt-2 text-[10px] font-mono font-bold text-black uppercase tracking-[0.15em]">
-                    <span>Low</span><span>Borderline</span><span>Optimal</span>
-                  </div>
+      {/* ---------------- THE RECORD ---------------- */}
+      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }} />
+      <div className="f-wrap">
+        <div className="f-bento">
+          <div className="f-c-5 f-rise">
+            <div className="f-tray" style={{ height: '100%' }}>
+              <div className="f-core f-cell" style={{ height: '100%', padding: 0 }}>
+                <div className="f-shot f-shot-r43">
+                  <Image src="/home/img-2.jpg" alt="A man in his fifties at a kitchen table in the evening, reading on a laptop." width={800} height={600} />
+                  <span className="f-shot-cap">The same test, later</span>
                 </div>
-                <div>
-                  <div className="flex justify-between items-end mb-2">
-                    <div className="data-label">Free Testosterone</div>
-                    <div className="data-value">0.28 <span className="text-xs font-normal">nmol/L</span></div>
-                  </div>
-                  <div className="h-2 w-full bg-gray-200 overflow-hidden">
-                    <div className="h-full bg-statusOptimal w-[45%]" />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between items-end mb-2">
-                    <div className="data-label">hs-CRP (Inflammation)</div>
-                    <div className="data-value text-black">3.8 <span className="text-xs font-normal">mg/L</span></div>
-                  </div>
-                  <div className="h-2 w-full bg-gray-200 overflow-hidden">
-                    <div className="h-full bg-statusWarning w-[65%]" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-6 border-t-2 border-black -mx-8 -mb-8 p-8 bg-white">
-                <div className="flex items-start gap-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="shrink-0 mt-1">
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                  </svg>
-                  <p className="text-sm text-black font-serif leading-relaxed">
-                    <span className="font-sans font-black uppercase tracking-tight">Panel Summary:</span> Testosterone is below your optimal range. Inflammation markers are elevated. Your dashboard explains what this means.
+                <div style={{ flex: 1, padding: '24px 20px' }}>
+                  <h2 className="f-h4" style={{ fontSize: 26, maxWidth: '15ch', letterSpacing: '-0.03em', lineHeight: 1.15 }}>
+                    A number is a fact. A record is an answer.
+                  </h2>
+                  <p className="f-sub mt-3">
+                    One result tells you where you are today. It cannot tell you which direction you are going, and we are not going to pretend otherwise.
                   </p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* TRUST BAR */}
-      <section className="border-y-2 border-black bg-white py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:divide-x-2 divide-black">
-            {[
-              { icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />, label: 'UKAS ISO 15189', sub: 'Accredited Laboratory' },
-              { icon: <><path d="M19 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="23" y2="12" /><line x1="23" y1="8" x2="19" y2="12" /></>, label: 'GMC-Registered', sub: 'Clinical Oversight' },
-              { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, label: '2 to 5 working days', sub: 'Fast, reliable results' },
-              { icon: <><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></>, label: 'Discreet Packaging', sub: 'Direct to your door' },
-            ].map(({ icon, label, sub }) => (
-              <div key={label} className="flex flex-col items-center justify-center text-center px-4">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="text-black mb-4">{icon}</svg>
-                <span className="text-base font-sans font-black uppercase tracking-tight text-black">{label}</span>
-                <span className="text-sm font-serif text-gray-600 mt-2">{sub}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CLINICAL CONTEXT */}
-      <section className="py-32 relative bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20 items-start">
-            <div>
-              <div className="data-label flex items-center gap-3 mb-8">
-                <span className="w-12 h-[2px] bg-black" />
-                Clinical Context
-              </div>
-              <h2 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-                &ldquo;Your results are normal.&rdquo;<br />
-                <span className="text-gray-400 font-black">That&rsquo;s not an answer.</span>
-              </h2>
-              <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-                <p>The public health system sets testosterone thresholds to identify clinical deficiency: the baseline before you are officially recognised as ill. That standard is not the same as being optimised.</p>
-                <p>Many men experiencing genuine symptoms, fatigue, brain fog, loss of drive, sit technically &ldquo;in range&rdquo; but far below their optimal levels. They are sent home without solutions.</p>
-                <div className="pl-8 border-l-[6px] border-black py-4 bg-gray-50 mt-8">
-                  <p className="text-black font-serif italic text-2xl leading-snug">Your GP isn&rsquo;t wrong. They&rsquo;re answering a different question. We answer yours.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="border-2 border-black p-10 md:p-12 relative overflow-hidden bg-white">
-              <div className="flex items-center gap-4 mb-10 pb-8 border-b-2 border-black">
-                <div className="w-3 h-3 bg-black" />
-                <h3 className="font-sans font-black text-2xl tracking-tighter uppercase text-black m-0">Symptom Diagnostic</h3>
-              </div>
-              <div className="space-y-6">
-                {[
-                  { label: 'Persistent fatigue', detail: ', even after a full night\'s restful sleep.' },
-                  { label: 'Prolonged recovery.', detail: ' Sore for days after a workout that used to take hours.' },
-                  { label: 'Diminished drive.', detail: ' Loss of motivation, focus, or libido.' },
-                  { label: 'Brain fog.', detail: ' Mental sharpness feeling blunted.' },
-                ].map(({ label, detail }) => (
-                  <div key={label} className="flex items-start gap-5">
-                    <div className="mt-1.5 w-6 h-6 border-2 border-black flex shrink-0 items-center justify-center bg-white">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
-                    </div>
-                    <p className="text-black font-serif text-lg leading-relaxed">
-                      <strong className="text-black font-sans font-black uppercase text-base tracking-tight">{label}</strong>{detail}
-                    </p>
+          <div className="f-c-7 f-rise">
+            <div className="f-tray" style={{ height: '100%' }}>
+              <div className="f-core" style={{ height: '100%' }}>
+                {RECORD_STEPS.map(({ t, b }) => (
+                  <div key={t} className="f-rstep">
+                    <h3>{t}</h3>
+                    <p>{b}</p>
                   </div>
                 ))}
-                <div className="flex items-start gap-5 p-6 bg-black border-2 border-black mt-8">
-                  <div className="mt-1.5 w-6 h-6 border-2 border-white bg-white flex shrink-0 items-center justify-center">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ---------------- KITS ----------------
+          The nine-marker panel leads, per the direction brief section 4: a
+          reader who has not chosen a question yet is served by the panel that
+          does not make him choose. */}
+      <div className="f-wrap f-sec" id="kits">
+        <h2 className="f-h2">You don&rsquo;t know which question you&rsquo;re asking yet.</h2>
+        <p className="f-lede">
+          That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.
+        </p>
+      </div>
+      <div className="f-wrap">
+        <div className="f-bento">
+          {KITS.map(({ slug, title, meta, price, lead, lines }) => (
+            <div key={slug} className={lead ? 'f-c-6 f-rise' : 'f-c-3 f-rise'}>
+              <div className="f-tray" style={{ height: '100%' }}>
+                <div className="f-core f-cell f-kit" style={{ height: '100%', padding: lead ? 0 : undefined }}>
+                  {lead ? (
+                    <div className="f-shot f-shot-r16">
+                      <Image src="/home/img-3.jpg" alt="A man's hands at a kitchen table holding a small plain sample collection tube." width={800} height={500} />
+                      <span className="f-shot-cap">Five minutes, at home</span>
+                    </div>
+                  ) : null}
+                  <div className="f-cell" style={{ flex: 1, padding: lead ? '24px 20px' : undefined }}>
+                    <h3>{title}</h3>
+                    <p className="f-blab" style={{ marginTop: 4, marginBottom: 0 }}>{meta}</p>
+                    <ul>
+                      {lines.map((l) => <li key={l}>{l}</li>)}
+                    </ul>
+                    <div className="f-kprice">{price}</div>
+                    <Link
+                      href={`/kits/${slug}`}
+                      className={lead ? 'f-btn mt-4 self-start' : 'f-btn f-btn-ghost mt-4 self-start'}
+                    >
+                      Start a baseline {ARROW}
+                    </Link>
                   </div>
-                  <p className="text-white font-sans font-black text-lg uppercase tracking-tight leading-tight">Doing everything right: eating, training, sleeping. Nothing&rsquo;s shifting.</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ---------------- THE FREE LAYER ----------------
+          "Give away the thinking. Sell the record."
+          `01_strategy/2026-08-24-vertical-agnostic-monitoring-thesis.md` §10.1.
+          🔴 This section markets the app and the content. It does NOT sell the
+          membership, and it must not: membership cannot be bought standalone
+          and no acquisition surface may sell it
+          (`01_strategy/2026-08-26-membership-offer-window.md`). */}
+      <div className="f-wrap f-sec" id="free">
+        <h2 className="f-h2">We give the thinking away.</h2>
+        <p className="f-lede">
+          You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.
+        </p>
+      </div>
+      <div className="f-wrap">
+        <div className="f-bento">
+          <div className="f-c-6 f-rise">
+            <div className="f-tray" style={{ height: '100%' }}>
+              <div className="f-core f-cell" style={{ height: '100%', padding: 0 }}>
+                <div className="f-shot f-shot-r16">
+                  <Image src="/home/img-1.jpg" alt="A man in his mid forties reading on his phone at a kitchen counter early in the morning." width={800} height={500} />
+                  <span className="f-shot-cap">No email, no gate</span>
+                </div>
+                <div className="f-cell" style={{ flex: 1, padding: '24px 20px' }}>
+                  <h3>Read it first</h3>
+                  <p>Articles on what your results actually mean, what a reference range is, and why &ldquo;within range&rdquo; and &ldquo;well&rdquo; are two different questions.</p>
+                  <Link href="/blog/how-to-read-blood-test-results" className="f-btn f-btn-ghost f-btn-sm mt-4 self-start">
+                    How to read your bloods {ARROW}
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="f-c-6 f-rise">
+            <div className="f-tray" style={{ height: '100%' }}>
+              <div className="f-core f-cell" style={{ height: '100%', padding: 0 }}>
+                <div className="f-shot f-shot-r16">
+                  <Image src="/home/img-5.jpg" alt="A man in his early forties in an ordinary gym changing room, sitting on a bench putting on a trainer." width={800} height={500} />
+                  <span className="f-shot-cap">A demo account</span>
+                </div>
+                <div className="f-cell" style={{ flex: 1, padding: '24px 20px' }}>
+                  <h3>See the app</h3>
+                  <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>
+                  {/* 🔴 NO CTA, DELIBERATELY: THE DEMO ROUTE DOES NOT EXIST YET.
+                      The demo is a decided part of the free layer (thesis §10.1,
+                      ANSWERED 2026-08-24) and it is built only as an interactive
+                      prototype at `design/prototypes/demo-account-interactive.html`.
+                      There is no live route. The first draft of this page linked
+                      to `/results-dashboard/demo`, which was invented and would
+                      have shipped a dead link on the homepage.
+                      This card is the free layer's second leg and it is inert
+                      until that route exists. Building it is the thing that
+                      completes "give away the thinking". */}
+                  <p className="f-blab mt-4" style={{ marginBottom: 0 }}>Opening soon</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* HOW IT WORKS */}
-      <section id="how-it-works" className="py-32 bg-white border-y-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="data-label flex items-center justify-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              Methodology
-              <span className="w-12 h-[2px] bg-black" />
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Four steps.<br />Done in a week.</h2>
-            <p className="text-black font-serif text-xl leading-relaxed">Order your kit, take your sample at home, post it back. Results are in your dashboard within 2 to 5 working days of the lab receiving it.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            <div className="hidden lg:block absolute top-1/2 left-[10%] right-[10%] h-[2px] bg-black -translate-y-1/2 z-0" />
-            {[
-              { num: '01', title: 'Order Kit', body: 'Select the specific panel required. Dispatched same-day via tracked delivery in discreet packaging.', meta: ['Action', 'User'] },
-              { num: '02', title: 'Collect Sample', body: 'Simple, painless finger-prick collection at home. Best performed fasted early morning for accurate hormone baselines.', meta: ['Time required', '5 Mins'] },
-              { num: '03', title: 'Post Return', body: 'Seal sample in the provided medical transport vial and drop it in any priority postbox using the pre-paid envelope.', meta: ['Transit', 'Tracked 24'] },
-            ].map(({ num, title, body, meta }) => (
-              <div key={num} className="border-2 border-black p-10 relative z-10 bg-white hover:bg-gray-50 transition-colors">
-                <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-gray-100 leading-none select-none pointer-events-none -mt-8 -mr-4">{num[1]}</div>
-                <div className="w-12 h-12 bg-white border-4 border-black text-black flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">{num}</div>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4 relative z-20">{title}</h3>
-                <p className="text-black font-serif text-base leading-relaxed relative z-20">{body}</p>
-                <div className="mt-8 pt-6 border-t-2 border-black data-label flex justify-between relative z-20">
-                  <span>{meta[0]}</span>
-                  <span className="font-black">{meta[1]}</span>
-                </div>
-              </div>
-            ))}
-            <div className="p-10 relative z-10 border-4 border-black bg-black text-white">
-              <div className="absolute top-0 right-0 p-4 text-[150px] font-sans font-black text-white leading-none select-none pointer-events-none -mt-8 -mr-4">4</div>
-              <div className="w-12 h-12 bg-black text-white border-2 border-white flex items-center justify-center font-sans font-black text-xl mb-8 relative z-20">04</div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-white mb-4 relative z-20">View Analytics</h3>
-              <p className="text-gray-400 font-serif text-base leading-relaxed relative z-20">Access your secure dashboard within 2 to 5 working days of lab receipt. Clear data, actionable protocols, and recommendation logic approved by a GMC-registered GP.</p>
-              <div className="mt-8 pt-6 border-t-2 border-gray-600 data-label flex justify-between relative z-20">
-                <span className="text-gray-400">Status</span>
-                <span className="text-white font-black">System Ready</span>
-              </div>
-            </div>
+      {/* ---------------- THE CONFLICT-FREE RECEIPT ----------------
+          The brand lead, stated rather than sold (Keith ruling A2, 2026-08-30:
+          conflict-free stays the lead and the record is its proof). */}
+      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }} />
+      <div className="f-wrap">
+        <div className="f-tray f-rise">
+          <div className="f-core f-receipt">
+            <h2>We do not sell you the answer.</h2>
+            <p>
+              Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.
+            </p>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* TEST KITS */}
-      <section id="tests" className="py-32 relative bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <div className="data-label flex items-center justify-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              Diagnostics Catalog
-              <span className="w-12 h-[2px] bg-black" />
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6">Start with what&rsquo;s bothering you most.</h2>
-            <p className="text-black font-serif text-xl leading-relaxed">Each kit targets the markers that matter for what you&rsquo;re feeling. Not sure which one? Take the two-minute quiz.</p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-            {/* Kit 1 */}
-            <div className="border-2 border-black bg-white flex flex-col h-full hover:bg-gray-50 transition-colors">
-              <div className="p-10 flex-grow">
-                <div className="flex justify-between items-start mb-8">
-                  <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black">
-                    <span className="w-2 h-2 bg-black" /> Base
-                  </div>
-                  <span className="text-4xl font-sans font-black text-black">£99</span>
-                </div>
-                <h3 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4">Testosterone Profile</h3>
-                {/* Kit 1 scope (CA-025): testosterone only, so this card must not claim fatigue.
-                    The Symptom Diagnostic block above is deliberately left alone: it sits under a
-                    testosterone-thresholds H2, carries no CTA, and is followed by the three-kit
-                    grid rather than by Kit 1 alone. See
-                    04_products/2026-08-15-kit1-scope-marketing-pages-decision.md. */}
-                <p className="text-base text-black font-serif mb-8 leading-relaxed">Baseline hormonal assessment. For men whose drive, training response or muscle have gone backwards.</p>
-                <div className="space-y-4 mt-10">
-                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6">Biomarkers Analyzed</div>
-                  {panelCardLabels('testosterone').map((m) => (
-                    <div key={m} className="flex items-center gap-4 text-base text-black font-serif"><CheckSvg /> {m}</div>
-                  ))}
-                </div>
-              </div>
-              <div className="p-10 pt-0 mt-auto">
-                <Link href="/kits/testosterone" className="block w-full text-center px-6 py-4 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors">Order test</Link>
-              </div>
-            </div>
-
-            {/* Kit 3 (Featured) */}
-            <div className="border-4 border-black bg-white flex flex-col h-full relative lg:-translate-y-4">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-black text-white text-[12px] font-sans font-black tracking-widest uppercase px-6 py-2">Most complete</div>
-              <div className="p-10 flex-grow mt-6">
-                <div className="flex justify-between items-start mb-8">
-                  <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black">
-                    <span className="w-2 h-2 bg-white" /> Advanced
-                  </div>
-                  <span className="text-4xl font-sans font-black text-black">£179</span>
-                </div>
-                <h3 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4">Hormone &amp; Recovery</h3>
-                <p className="text-base text-black font-serif mb-8 leading-relaxed">The full picture. Combines hormonal data with crucial recovery, energy, and inflammation markers.</p>
-                <div className="space-y-4 mt-10">
-                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6">Biomarkers Analyzed</div>
-                  {['Complete Testosterone Panel', 'Vitamin D (Energy)', 'Active B12 (Energy)', 'hs-CRP (Inflammation)', 'Ferritin (Iron Storage)'].map((m) => (
-                    <div key={m} className="flex items-center gap-4 text-base text-black font-serif"><CheckSvg /> {m}</div>
-                  ))}
-                </div>
-              </div>
-              <div className="p-10 pt-0 mt-auto">
-                <Link href="/kits/hormone-recovery" className="block w-full text-center px-6 py-4 bg-black text-white font-sans font-black uppercase tracking-widest text-sm hover:bg-white hover:text-black border-2 border-black transition-colors">Order test</Link>
-              </div>
-            </div>
-
-            {/* Kit 2 */}
-            <div className="border-2 border-black bg-white flex flex-col h-full hover:bg-gray-50 transition-colors">
-              <div className="p-10 flex-grow">
-                <div className="flex justify-between items-start mb-8">
-                  <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black">
-                    <span className="w-2 h-2 bg-black" /> Targeted
-                  </div>
-                  <span className="text-4xl font-sans font-black text-black">£119</span>
-                </div>
-                <h3 className="text-3xl font-sans font-black uppercase tracking-tighter text-black mb-4">Energy &amp; Recovery</h3>
-                <p className="text-base text-black font-serif mb-8 leading-relaxed">Designed for active men experiencing prolonged soreness, lethargy, or joint stiffness despite proper rest.</p>
-                <div className="space-y-4 mt-10">
-                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest border-b-2 border-black pb-3 mb-6">Biomarkers Analyzed</div>
-                  {panelCardLabels('energy-recovery').map((m) => (
-                    <div key={m} className="flex items-center gap-4 text-base text-black font-serif"><CheckSvg /> {m}</div>
-                  ))}
-                </div>
-              </div>
-              <div className="p-10 pt-0 mt-auto">
-                <Link href="/kits/energy-recovery" className="block w-full text-center px-6 py-4 border-2 border-black text-black font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors">Order test</Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link href="/test-selector" className="inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
-              Not sure which kit? Take the three-question quiz
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* SUPPLEMENTS */}
-      <section id="supplements" className="py-32 bg-white border-t-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col lg:flex-row gap-20 items-center">
-            <div className="lg:w-5/12">
-              <div className="data-label flex items-center gap-4 mb-6">
-                <span className="w-12 h-[2px] bg-black" />
-                Data-Led Supplements
-              </div>
-              <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-8">Test first.<br />Then act on it.</h2>
-              <p className="text-black font-serif text-xl mb-10 leading-relaxed">
-                Your dashboard does not just show your numbers. We recommend supplements based on your result. Our own Daily Stack and Joint and Recovery Collagen launch shortly; you can join the early-access waitlist at any time.
-              </p>
-              <Link href="/supplement-waitlist" className="inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
-                Join the supplement waitlist
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
-            </div>
-
-            <div className="lg:w-7/12 space-y-0 border-4 border-black divide-y-4 divide-black bg-white">
-              {[
-                { title: 'Daily Stack', tag: 'Deficiency support', href: '/supplements/daily-stack' },
-                { title: 'Joint & Recovery Collagen', tag: 'Inflammation support', href: '/supplements/collagen' },
-              ].map(({ title, tag, href }) => (
-                <Link key={title} href={href} className="flex justify-between items-center p-10 hover:bg-gray-50 transition-colors group">
-                  <div>
-                    <h3 className="font-sans font-black text-2xl uppercase tracking-tighter text-black mb-1">{title}</h3>
-                    <span className="data-label text-gray-500">{tag}</span>
-                  </div>
-                  <div className="text-right">
-                    <div className="data-label px-3 py-1.5 border-2 border-black bg-white">Launching shortly</div>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="ml-auto mt-2"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOUNDING MEMBER: section removed 2026-06-04 (FM take-down, low-T routing decision).
-          Low-T now routes to GP referral + consent-gated nurture, not the FM list.
-          Restore from git if a lawful basis for the list is approved.
-          See 04_products/results-engine/2026-06-04-low-t-routing-decision.md §6. */}
-
-      {/* BOTTOM CTA */}
-      <section className="py-40 bg-white border-t-4 border-black text-center">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-4xl sm:text-6xl md:text-[90px] font-sans font-black uppercase tracking-tighter text-black leading-[0.85] mb-10">
-            Find out what your blood is telling you.
-          </h2>
-          <p className="text-2xl text-black font-serif mb-16 max-w-2xl mx-auto leading-relaxed">
-            UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.
-          </p>
-          <Link href="/kits" className="inline-flex bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-xl px-12 py-6 transition-colors items-center justify-center gap-4">
-            Choose your test
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </Link>
-        </div>
-      </section>
-    </>
+      {/* ---------------- CLOSE ---------------- */}
+      <div className="f-wrap f-close">
+        <h2>Find out what your blood is telling you.</h2>
+        <p className="f-stand">UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.</p>
+        <Link href="/test-selector" className="f-btn">Find your test in 60 seconds {ARROW}</Link>
+      </div>
+    </div>
   )
 }

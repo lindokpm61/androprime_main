@@ -8,6 +8,36 @@ the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1
 
 ---
 
+## 🔴 CA-045 HAS ARMED: the F homepage is built, imagery included (2026-08-31)
+
+**The gate's own condition was "when a direction is built into the site." That happened today.** The
+homepage is rebuilt in Direction F on `redesign/direction-f` and the five generated photographs ship
+with it at `09_website-app/frontend/public/home/`. **The branch deploys nothing, so building is safe.
+MERGING TO MAIN IS NOT, and CA-045 is the blocker.** Signers: Ewa and Keith.
+
+⚠ **The register's evidence line does not cover the assets that just shipped.** It records four of
+five judgement questions as answered, *no people, hands, clinic, blood or sample*, and that was
+established on the hero FILM frame. It does not describe `img-1..5`. `img-3`'s own alt text is *"a
+man's hands at a kitchen table holding a small plain sample collection tube"*: people, hands, and a
+sample. Those four questions are **open for these five assets**, not evidenced. The fifth, the
+illegible-letter question, was already open and still is.
+
+🔴 **And a second thing the gate never covered: the direction's COPY.** CA-045 records the
+scanner as N/A because the imagery has no words, which is correct for the imagery and left the words
+unscanned. Running `compliance-preflight/scan.js` over the built page returns **2 HARD, both verbatim
+from the approved direction**, so the direction was approved 2026-08-27 without its copy ever meeting
+the deterministic scanner:
+
+1. **"Nothing here is a diagnosis"** trips «diagnosis». A disclaimer. The scanner passes the same word
+   four lines later in *"That is not a diagnosis"*, because its negation detector matches `is not a X`
+   and misses a leading `Nothing here is a X`. Two identical intents, opposite verdicts.
+2. **"the NICE guideline our GP follows TREATS 25 to 70 as an indeterminate zone"** trips «treats».
+   The *regards as* sense, about a numeric band.
+
+Both read as false positives. **Neither has been self-cleared**: a signed exception requires a real CA
+number and there is none, so both are owed a judgement pass. Nothing was rewritten, per the rule that
+Keith's copy is not silently edited.
+
 ## CA-045 opened, because an imagery gate had been filed under CA-039 for ten days (2026-08-27)
 
 🔵 **CA-045 is OPEN and nothing is owed on it yet:** the generated imagery for homepage direction F,

@@ -178,7 +178,9 @@ caught it once.
 - **Eighteen published interpretation articles**, which carry the argument the funnel depends on.
   `how-to-read-blood-test-results.mdx` is the entry point and `myth-of-normal-range.mdx` states the
   two-range case outright.
-- **A demo account** showing the app populated with a sample result.
+- **A demo account, as an interactive PROTOTYPE only**
+  (`design/prototypes/demo-account-interactive.html`). It is a decided part of the free layer
+  (thesis §10.1, answered 2026-08-24) and **there is no live route for it**. Do not link to one.
 - **Sample report values** on the kit pages are illustrative but engine-true: each row is what the
   results engine would actually return for that value, and its state is derived rather than chosen.
 
