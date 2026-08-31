@@ -59,7 +59,10 @@ type KitCard = {
   footLabel: string
   footBody: string
   resultsTo: string
-  invert?: boolean
+  /** The accent-ringed card. Frame O REPLACED an inverted Kit 3 with this and
+      records why: inverting asked the page to change colour scheme mid-scroll,
+      which is what stopped it working in dark mode. The value is the chip text. */
+  flag?: string
   /** Frame O gives Kit 2 a ghost button and Kits 1 and 3 a solid one, so the
       middle option is not competing with the two it sits between. */
   ghostCta?: boolean
@@ -101,15 +104,15 @@ const KITS: KitCard[] = [
       'Kit 3 covers both testosterone and deficiency markers, with supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.',
     resultsTo:
       'Your Andro Prime dashboard. Full breakdown across all nine markers with targeted recommendations.',
-    invert: true,
+    flag: 'Most complete',
   },
 ]
 
 const STEPS = [
-  { n: '01', h: 'Order online', p: 'Choose your kit. Pay once. Kit dispatched the same working day.' },
-  { n: '02', h: 'Collect at home', p: 'Five minutes. Finger-prick. Return with the pre-paid label in your kit.' },
-  { n: '03', h: 'Lab processes it', p: 'UKAS ISO 15189 accredited lab. Results ready within 2 to 5 working days of receipt.' },
-  { n: '04', h: 'Plain-English results', p: 'Your numbers in your dashboard. What they mean. What to do next. Specific to your data.' },
+  { n: '01', h: 'Order online', p: 'Choose your kit. Pay once. Kit dispatched the same working day.', metaK: 'Dispatch', metaV: 'Same day' },
+  { n: '02', h: 'Collect at home', p: 'Five minutes. Finger-prick. Return with the pre-paid label in your kit.', metaK: 'Time required', metaV: '5 mins' },
+  { n: '03', h: 'Lab processes it', p: 'UKAS ISO 15189 accredited lab. Results ready within 2 to 5 working days of receipt.', metaK: 'Lab', metaV: 'UKAS 15189' },
+  { n: '04', h: 'Plain-English results', p: 'Your numbers in your dashboard. What they mean. What to do next. Specific to your data.', metaK: 'Turnaround', metaV: '2 to 5 days' },
 ]
 
 const kitsSchema = {
@@ -198,7 +201,8 @@ export default function KitsPage() {
                 Not sure which one?
               </Link>
             </div>
-            <p className="f-fine" style={{ marginTop: 20 }}>
+            <p className="f-trust">
+              <span aria-hidden="true">&#10003;</span>
               UKAS ISO 15189 accredited lab. No GP needed. Results in 2 to 5 working days of sample
               receipt.
             </p>
@@ -285,13 +289,22 @@ export default function KitsPage() {
 
       <section className="f-wrap">
         {KITS.map((k) => (
-          <div className={k.invert ? 'f-tray f-tray-dark f-rise' : 'f-tray f-rise'} key={k.kit}>
-            <div className={k.invert ? 'f-core f-core-dark' : 'f-core'}>
+          <div
+            className={k.flag ? 'f-tray f-tray-pick f-tray-flag f-rise' : 'f-tray f-tray-pick f-rise'}
+            key={k.kit}
+          >
+            <div className="f-core">
               <div className="f-kitgrid">
                 <div>
                   <div className="f-kithead">
                     <div>
-                      <span className="f-kchip">{NUMBER_LABEL[k.kit]}</span>
+                      {k.flag ? (
+                        <span className="f-flagchip">
+                          {NUMBER_LABEL[k.kit]} &middot; {k.flag}
+                        </span>
+                      ) : (
+                        <span className="f-kchip">{NUMBER_LABEL[k.kit]}</span>
+                      )}
                       <h3 className="f-h2 f-kittitle">{k.title}</h3>
                     </div>
                     <div className="f-kitprice">
@@ -350,7 +363,7 @@ export default function KitsPage() {
                   <Link
                     href={`/kits/${k.kit}`}
                     className={
-                      k.invert ? 'f-btn f-btn-onDark' : k.ghostCta ? 'f-btn f-btn-ghost' : 'f-btn'
+                      k.ghostCta ? 'f-btn f-btn-ghost' : 'f-btn'
                     }
                     style={{ marginTop: 22, width: '100%', justifyContent: 'center' }}
                   >
@@ -423,7 +436,14 @@ export default function KitsPage() {
                     <td />
                     {ORDER.map((kit) => (
                       <td key={kit} className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}>
-                        <Link href={`/kits/${kit}`} className="f-btn f-btn-sm f-btn-ghost">
+                        <Link
+                          href={`/kits/${kit}`}
+                          className={
+                            kit === 'hormone-recovery'
+                              ? 'f-btn f-btn-sm'
+                              : 'f-btn f-btn-sm f-btn-ghost'
+                          }
+                        >
                           Order
                         </Link>
                       </td>
@@ -445,12 +465,17 @@ export default function KitsPage() {
           {STEPS.map((s) => (
             <div className="f-step" key={s.n}>
               <span className="f-bignum" aria-hidden="true">
-                {s.n}
+                {s.n.replace(/^0/, '')}
               </span>
-              <h3 className="f-h4">{s.h}</h3>
+              <span className="f-no">{s.n}</span>
+              <h3 className="f-h4 mt-2.5 mb-2">{s.h}</h3>
               <p className="f-sub" style={{ fontSize: 15 }}>
                 {s.p}
               </p>
+              <div className="f-step-foot">
+                <span>{s.metaK}</span>
+                <b>{s.metaV}</b>
+              </div>
             </div>
           ))}
         </div>

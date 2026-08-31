@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Merriweather, JetBrains_Mono, Newsreader } from "next/font/google";
+import { Source_Sans_3, Merriweather, JetBrains_Mono, Newsreader } from "next/font/google";
 import "@/styles/base/globals.css";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { SkipToContent } from "@/components/shared/SkipToContent";
@@ -11,14 +11,24 @@ import { SITE_URL } from "@/lib/site-url";
 // Brand fonts: self-hosted by Next at build time (no Google request from the
 // visitor's browser). Exposed as CSS variables consumed by tailwind.config.ts
 // fontFamily and the typography tokens (--font-sans / --font-serif / --font-mono).
-const inter = Inter({
+// The humanist sans the 2026-08-30 ruling names, carrying body copy, UI and all
+// data. Inter was here until 2026-08-31 and was never a brand choice: it is a
+// NEO-GROTESQUE, which is the category the ruling was taken against, and it was
+// option A in the comparison Keith judged. Source Sans 3 is the face option C
+// rendered. Loaded variable, so the 600 Direction F uses in 18 rules and the 900
+// on the ghost numeral both resolve exactly; italic is included because
+// f-primitives declares it and a synthesised oblique on a humanist face is
+// visibly wrong. Still a stand-in for a LICENSED humanist (Effra), but the right
+// category, which Inter was not.
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-inter",
+  style: ["normal", "italic"],
+  variable: "--font-source-sans",
   display: "swap",
 });
 
 // Merriweather (body serif) and JetBrains Mono (data labels) are NOT preloaded:
-// only Inter (the hero H1) is. On a throttled mobile connection the preloaded
+// only the body sans (the hero H1) is. On a throttled mobile connection the preloaded
 // fonts were competing with the LCP poster for bandwidth. These still load via
 // their @font-face on first use with display:swap (fallback text shows meanwhile,
 // CLS stays 0 thanks to next/font metric adjustment), just at a lower priority
@@ -165,7 +175,7 @@ export default function RootLayout({
     <html
       lang="en-GB"
       suppressHydrationWarning
-      className={`scroll-smooth ${inter.variable} ${merriweather.variable} ${jetbrainsMono.variable} ${newsreader.variable}`}
+      className={`scroll-smooth ${sourceSans.variable} ${merriweather.variable} ${jetbrainsMono.variable} ${newsreader.variable}`}
     >
       <head>
         <JsonLd data={siteSchema} />

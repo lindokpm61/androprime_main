@@ -44,6 +44,9 @@ Rule: when a launch task becomes a recurring steady-state check, its SOP belongs
 │   └── incident-runbook.md
 └── automation/
     ├── scheduled-agents.md             ← which cadences are automated vs still manual
+    ├── reconcile-f-css.js              ← diffs each Direction F mockup's CSS against
+    │                                     the app's f-primitives.css and reports
+    │                                     conflicting declarations. Reports only.
     └── shot.js                         ← headless screenshots of a local HTML file
                                           or URL; the tool behind the "verify UI
                                           visually" rule. `--help` is the doc.
@@ -110,6 +113,18 @@ MCP servers and tools most relevant when working in this workspace. Repo-wired s
 - **Stripe** (MCP, connector): the billing-ops cadence (failed payments, dunning, refunds).
 - **supabase** (MCP, wired, read-only): order/subscription/results state for the daily dispatch and monthly retention checks.
 - **dataforseo** (MCP, wired): deeper SEO diagnostics when the weekly GSC glance flags a drop.
+- **`automation/reconcile-f-css.js`** (local script): the Direction F component layer exists in
+  **fourteen independent copies**, a `<style>` block in each of the 13 journey mockups plus
+  `f-primitives.css` in the app, with nothing reconciling them. This diffs them and reports
+  conflicting declarations, mockup-vs-mockup drift, ruled deviations and unpaired selectors.
+  **Exit 0 agree, 2 drift, 1 could not run, which is never a pass** (same shape as
+  `.claude/skills/wrap/reconcile-observations.js`). `--help` is the doc.
+  **It reports and never rewrites**, deliberately: with 14 copies and no ruling yet on whether the
+  authenticated app is meant to run denser than marketing, a script that fixed the drift would be
+  choosing a winner on Keith's behalf. **It compares DECLARATIONS**, so it is blind to absences (a
+  class the markup never emits, a glyph never rendered) and to cascade interactions inside one file;
+  those need a probe against the built page. Added 2026-08-31.
+
 - **`automation/shot.js`** (local script, no MCP): the way to actually SEE a rendered page. **No browser MCP is wired here and `/plugin` is unavailable in this environment**, so nothing is installable through the plugin system; this script drives system Chrome through puppeteer-core instead. `node andro-prime/12_operations/automation/shot.js <file-or-url> --selector "css" --nth all --theme both`. Shoots per-element and per-theme, waits on webfonts, disables subpixel text fringing, and warns on horizontal body overflow. **A local path may carry a query string** (fixed 2026-08-28): the design mockups read `?still=1` and `?t=light|dark` off their own URL, and the existence check used to reject the whole argument as "no such file", which made the tool unusable on exactly the pages it exists to photograph. **Use it rather than `chrome --headless --window-size` for any narrow viewport**: Windows clamps the window to about 518px inner width and then crops the PNG to the width you asked for, so a 390 capture is a 518 render cropped to 390 and every overflow it appears to show is an artefact. It cannot reach anything behind auth: a fresh headless browser has no session and photographs the login page, which looks like a successful capture.
 
 ---

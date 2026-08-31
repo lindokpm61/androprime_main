@@ -80,7 +80,7 @@ const config: Config = {
       },
       fontFamily: {
         // Bound to the next/font CSS variables defined in app/layout.tsx.
-        sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        sans: ["var(--font-source-sans)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
         serif: ["var(--font-merriweather)", "Georgia", "serif"],
         mono: ["var(--font-jetbrains)", "monospace"],
       },

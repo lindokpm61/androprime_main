@@ -19,7 +19,7 @@
  rather than carried across. The faces are still stand-ins: see typography.css.
 
  Being token-clean HERE does not make applying a face a one-line change
- site-wide. tailwind.config.ts binds var(--font-inter) directly and bypasses
+ site-wide. tailwind.config.ts binds var(--font-source-sans) directly and bypasses
  the token layer, and the mockups name Geist 212 times. This file is the
  exception, not the rule.
 
@@ -51,6 +51,17 @@
 /* ---------- SURFACES ----------
    The tray/core pair is the signature of F: a recessed tray holding a raised
    core, with the ambient shadow on the tray and a concentric inner radius. */
+/* The chosen card carries a permanent accent ring. This REPLACED an inverted
+   card in the frame, and the frame says why: inverting asked the page to
+   change colour scheme mid-scroll, which is what stopped it working in dark
+   mode. The ring marks the same thing for the same reason without that. */
+.f-tray-flag { box-shadow: var(--shadow-ambient), 0 0 0 1.5px var(--flag); }
+.f-tray-pick { transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+.f-tray-pick:hover { transform: translateY(-3px); box-shadow: var(--shadow-ambient), 0 0 0 1.5px var(--flag); }
+@media (prefers-reduced-motion: reduce) {
+  .f-tray-pick, .f-tray-pick:hover { transition: none; transform: none; }
+}
+
 .f-tray {
   background: var(--tray);
   border-radius: var(--radius-container);
@@ -77,6 +88,26 @@
   font-family: var(--font-sans);
   background: var(--paper);
   color: var(--ink);
+
+  /* OPTICAL SIZE, NOT A SIZE CHANGE. Every font-size in this file was ported
+     from a mockup drawn in Geist, and x-height is what the eye reads as "size",
+     not the declared px. Measured at 100px in a real browser: Geist 53, Inter 55,
+     Source Sans 3 49. So the same 16px is 8% optically smaller than the frames,
+     and Keith saw it immediately. font-size-adjust pins the x-height ratio to
+     Geist's 0.53, which scales the used size by 0.53/0.49 = 1.082 and leaves
+     every declared value in this file matching its frame. It is also the fix
+     that SURVIVES the next face change: whatever licensed humanist lands, this
+     renders it at the size the mockups were drawn at without re-editing 40
+     numbers. Use 0.55 to match Inter instead of the mockups.
+
+     Reset to `none` on every rule below that declares --font-mono or
+     --font-display, because their sizes were judged on their own faces. That
+     reset is applied mechanically wherever the family is set, so it cannot
+     drift out of step with a new component.
+
+     Unsupported browsers ignore it and get the un-compensated size, which is
+     what shipped before this line. */
+  font-size-adjust: 0.53;
 }
 /* `body` is Merriweather for V2.0, so everything inside inherits a serif F does
    not use. Setting the family once on the page root fixes the whole class;
@@ -107,7 +138,7 @@
 
    Body stays sans: see the .f-page rules above. Only headings are serif. */
 .f-h1 {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: clamp(2.4rem, 5.6vw, 4.1rem);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -115,7 +146,7 @@
   color: var(--ink);
 }
 .f-h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: clamp(1.6rem, 3.4vw, 2.5rem);
   font-weight: 500;
   letter-spacing: -0.018em;
@@ -124,7 +155,7 @@
   max-width: 22ch;
 }
 .f-h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -143,12 +174,46 @@
 
 /* Mono label furniture. */
 .f-blab, .f-fine {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   letter-spacing: 0.13em;
   color: var(--ink-2);
 }
 .f-blab { font-size: 11.5px; text-transform: uppercase; margin-bottom: 14px; }
+
+/* .f-page p is (0,1,1) and a bare .f-blab is (0,1,0), so every mono label that
+   happened to be a <p> silently lost its face to the body sans: 37 of 51 across
+   the three rebuilt pages, measured 2026-08-31. Spans were fine, which is why it
+   never looked systematic. Re-asserted here at (0,2,0), so source order does not
+   matter. The BETTER fix is to make the body default inherited (font-family on
+   .f-page itself) instead of element-targeted, since inheritance loses to any
+   class rule and this whole class of bug disappears. That is a cascade change
+   across every F primitive and wants its own rendered check, not a defect fix. */
+.f-page .f-blab,
+.f-page .f-fine,
+.f-page .f-prow-m,
+.f-page .f-spec-k,
+.f-page .f-trust-l,
+.f-page .f-trust { font-family: var(--font-mono); font-size-adjust: none; }
 .f-fine { font-size: 11.5px; line-height: 1.6; letter-spacing: 0.04em; max-width: 66ch; }
+
+/* Ported from kits-F.html .trust, which test-selector-F declares identically.
+   NOT .f-fine: that is 66ch of generic fine print, and this is a 46ch mono line
+   with a hanging tick, which is what makes it wrap to three short lines under the
+   CTAs instead of running the full width of the column. The tick inherits --ink-2
+   in the frame; it is not an accent use. */
+.f-trust {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11.5px;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+.f-trust > span[aria-hidden] { flex: none; }
 
 /* Pull quote. Marketing surface, so the accent is permitted here. */
 .f-pull {
@@ -168,7 +233,7 @@
   border: 1px solid var(--hair-2);
   border-radius: var(--radius-pill);
   padding: 6px 14px;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 11.5px;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -182,7 +247,7 @@
   border: 1px solid var(--hair-2);
   border-radius: var(--radius-pill);
   padding: 5px 13px;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -208,6 +273,20 @@
 .f-btn-sm { padding: 10px 18px; font-size: 13.5px; }
 .f-btns { @apply flex flex-wrap items-center; gap: 12px; }
 
+.f-flagchip {
+  @apply inline-flex items-center;
+  gap: 8px;
+  background: var(--flag);
+  color: #0a0b0d;
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 /* ---------- TRUST ROW ---------- */
 .f-trustrow {
   display: grid;
@@ -223,7 +302,7 @@
   background: var(--core);
   padding: 16px 18px;
   text-align: center;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -237,7 +316,7 @@
 .f-rep { display: grid; gap: 18px; }
 .f-rep .f-row-top { @apply flex justify-between items-start; gap: 14px; margin-bottom: 8px; }
 .f-rep .f-lab {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 10.5px;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -255,7 +334,7 @@
 .f-rep .f-st {
   display: block;
   margin-top: 3px;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -292,7 +371,7 @@
 .f-bar-none::after {
   content: "not banded";
   position: absolute; left: 0; top: -4px;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 9.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -339,20 +418,23 @@
 }
 .f-step:hover { border-color: var(--flag); box-shadow: 0 0 0 1px var(--flag), var(--shadow-ambient); transform: translateY(-3px); }
 .f-step .f-no {
-  font-family: var(--font-mono);
+  display: block;
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 11px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
+  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
 }
+.f-step:hover .f-no { opacity: 0; transform: translateY(-5px); }
 .f-step .f-step-foot {
   margin-top: auto;
-  padding-top: 16px;
+  padding-top: 13px;
   @apply flex items-baseline justify-between;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  gap: 12px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-3);
   border-top: 1px solid var(--hair);
@@ -410,7 +492,7 @@
 }
 /* Declared no family before 2026-08-30, so it inherited sans from .f-page and
    would have stayed sans while every other heading went serif. */
-.f-bio h3 { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; margin: 10px 0; font-weight: 600; line-height: 1.25; color: var(--ink); }
+.f-bio h3 { font-family: var(--font-display); font-size-adjust: cap-height 0.71; font-size: 18px; letter-spacing: -0.01em; margin: 10px 0; font-weight: 600; line-height: 1.25; color: var(--ink); }
 .f-bio p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
 
 /* ---------- FAQ, OPEN GRID ----------
@@ -427,7 +509,7 @@
 /* Also declared no family before 2026-08-30. At 15.5px a serif needs its tracking
    back at 0: negative tracking on a small serif closes the counters first. */
 .f-faqgrid h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: 15.5px;
   font-weight: 600;
   letter-spacing: 0;
@@ -441,7 +523,7 @@
 /* ---------- CLOSE ---------- */
 .f-close { text-align: center; padding: 44px 0 10px; }
 .f-close h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: clamp(1.8rem, 4.4vw, 3.1rem);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -552,7 +634,7 @@
   display: none;
   align-items: center;
   gap: 7px;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 9.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -654,7 +736,7 @@
   border: 1px solid var(--hair-2);
   border-radius: 999px;
   padding: 7px 13px;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 10.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -666,7 +748,7 @@
    as the eyebrows and data labels, and a serif at 11.5px uppercase with 0.14em
    tracking would read as a mistake. */
 .f-foot h4 {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -707,7 +789,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono); font-size-adjust: none;
   font-size: 10.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -752,8 +834,10 @@
    /kits (Frame O) primitives. Added 2026-08-30.
    ============================================================================ */
 
-.f-herogrid { display: grid; gap: 26px; grid-template-columns: 1fr; align-items: center; }
-@media (min-width: 980px) { .f-herogrid { grid-template-columns: 7fr 5fr; gap: 40px; } }
+.f-herogrid { display: grid; gap: 30px; grid-template-columns: 1fr; }
+@media (min-width: 980px) {
+  .f-herogrid { grid-template-columns: 1.35fr 1fr; gap: 44px; align-items: start; }
+}
 
 /* Available-now panel */
 .f-panelhead {
@@ -768,9 +852,9 @@
    A flex child defaults to min-width:auto, which refuses to shrink below its
    content, so at 390 the mono marker line slid beneath the £ figure. */
 .f-prow > div:first-child { min-width: 0; }
-.f-prow-t { font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: var(--ink); }
+.f-prow-t { font-family: var(--font-sans); font-size: 16.5px; font-weight: 600; color: var(--ink); }
 .f-prow-m {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 10.5px; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--ink-3); margin-top: 3px;
   overflow-wrap: anywhere; line-height: 1.5;
 }
@@ -787,7 +871,14 @@
 }
 @media (min-width: 800px) { .f-invert { padding: 48px 44px; } }
 .f-invert-lab { color: var(--ink-3); }
-.f-invert-h { color: var(--paper); margin-top: 4px; }
+.f-invert-h {
+  color: var(--paper);
+  margin-top: 4px;
+  /* The frame gives the inverted panel its own larger heading,
+     clamp(1.9rem, 4.2vw, 3rem). Inheriting .f-h2 capped it at 2.5rem, which
+     measured 20% short on cap-height against the frame. */
+  font-size: clamp(1.9rem, 4.2vw, 3rem);
+}
 .f-invert-p { color: rgba(255, 255, 255, 0.78); margin-top: 16px; max-width: 62ch; }
 
 /* ---------- KIT CARDS ----------
@@ -819,14 +910,14 @@
   color: var(--ink);
   display: block;
 }
-.f-oneoff { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+.f-oneoff { display: block; margin-top: 5px; font-family: var(--font-mono); font-size-adjust: none; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
 
 .f-spec { display: grid; gap: 10px; grid-template-columns: 1fr; margin: 20px 0; }
 @media (min-width: 700px) { .f-spec { grid-template-columns: repeat(3, 1fr); } }
 .f-spec > div { background: var(--sunk); border-radius: 16px; padding: 14px 15px; box-shadow: inset 0 0 0 1px var(--hair); }
 .f-spec-k {
   display: block; margin-bottom: 7px;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 10px; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--ink-3);
 }
 .f-spec-v { display: block; font-family: var(--font-sans); font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink); }
@@ -875,7 +966,7 @@
 .f-table { width: 100%; border-collapse: collapse; min-width: 480px; }
 .f-table th, .f-table td { padding: 12px 10px; text-align: center; }
 .f-table thead th {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.13em;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 10.5px; letter-spacing: 0.13em;
   text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--hair-2);
 }
 .f-table .f-th-price {
@@ -894,8 +985,15 @@
 .f-in, .f-out { display: inline-block; width: 11px; height: 11px; border-radius: 999px; }
 .f-in { background: var(--ink); }
 .f-out { box-shadow: inset 0 0 0 1px var(--hair-2); }
-.f-col-hi { background: var(--sunk); }
-.f-table tfoot th[scope="row"] { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); }
+.f-col-hi { background: var(--flag-f); }
+/* Reader-caused response, not ambient motion: the row under the pointer lifts,
+   and the marked column deepens rather than switching colour. Ported from
+   kits-F.html, where it is the same idiom as the card on-state below. */
+.f-table tbody tr td { transition: background 0.18s var(--ease); }
+.f-table tbody tr:hover td { background: var(--sunk); }
+.f-table tbody tr:hover td.f-col-hi { background: var(--flag-f2); }
+@media (prefers-reduced-motion: reduce) { .f-table tbody tr td { transition: none; } }
+.f-table tfoot th[scope="row"] { font-family: var(--font-mono); font-size-adjust: none; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); }
 .f-table tfoot tr:first-child th, .f-table tfoot tr:first-child td { border-top: 1px solid var(--hair-2); padding-top: 16px; }
 .f-total { font-family: var(--font-sans); font-size: 20px; font-weight: 600; color: var(--ink); }
 
@@ -909,10 +1007,13 @@
 /* Trust row items: mono label over a sans gloss. */
 .f-trustrow > div { display: grid; gap: 4px; }
 .f-trust-l {
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.13em;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 11px; letter-spacing: 0.13em;
   text-transform: uppercase; color: var(--ink);
 }
-.f-trust-s { font-family: var(--font-sans); font-size: 13.5px; color: var(--ink-3); }
+.f-trust-s {
+  font-family: var(--font-sans); font-size: 13.5px; color: var(--ink-3);
+  text-transform: none; letter-spacing: 0;
+}
 
 /* Numbered list: a small solid disc, not a boxed numeral. The boxed numeral is
    V2.0's square language, and the ghost numeral is already spoken for by the
@@ -924,7 +1025,7 @@
   width: 26px; height: 26px; border-radius: 999px;
   background: var(--ink); color: var(--paper);
   display: grid; place-items: center;
-  font-family: var(--font-mono); font-size: 11.5px; font-weight: 600;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 11.5px; font-weight: 600;
 }
 
 /* The FAQ grid doubles as a card list; -onecol drops it to a single column when
@@ -956,10 +1057,10 @@
   font-family: var(--font-sans); font-size: 15px; font-weight: 600;
 }
 .f-quotehead strong {
-  display: block; font-family: var(--font-display); font-size: 17px;
+  display: block; font-family: var(--font-display); font-size-adjust: cap-height 0.71; font-size: 17px;
   font-weight: 600; color: var(--ink); margin-bottom: 2px;
 }
 .f-quotecard blockquote {
-  font-family: var(--font-display);
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: 16.5px; line-height: 1.55; font-style: italic; color: var(--ink-2);
 }

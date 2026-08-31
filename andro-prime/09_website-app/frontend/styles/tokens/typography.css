@@ -53,12 +53,12 @@
    * change plus app/layout.tsx, and nothing else". That is true of
    * styles/components/f-primitives.css (17 font-family declarations, zero
    * family names) and false of the rest. There is a THIRD binding site:
-   * tailwind.config.ts fontFamily binds var(--font-inter) DIRECTLY, not
+   * tailwind.config.ts fontFamily binds var(--font-source-sans) DIRECTLY, not
    * --font-sans, so every font-sans / font-serif Tailwind class in the app
    * bypasses this file entirely. And neither candidate face is on Google
    * Fonts, so layout.tsx moves to next/font/local with licensed files. */
   --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
-  --font-sans:  var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:  var(--font-source-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: var(--font-merriweather), Georgia, serif;
   --font-mono:  var(--font-jetbrains), monospace;
 

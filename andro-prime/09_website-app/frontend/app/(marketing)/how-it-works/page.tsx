@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { panelCardLabels, panelShortLabels } from '@/lib/kits/panel'
+import { panelCardLabels } from '@/lib/kits/panel'
 import { JsonLd } from '@/components/shared/JsonLd'
 
 /**
@@ -153,7 +153,8 @@ const KITS = [
     price: '£179',
     blurb:
       'Tired, slow to recover, and you don’t know if it’s hormones, nutrition, or inflammation. This one checks all of them. Nine markers.',
-    markers: [panelShortLabels('testosterone').join(', '), ...panelCardLabels('energy-recovery')],
+    markers: panelCardLabels('hormone-recovery'),
+    flag: 'Most complete',
   },
 ]
 
@@ -193,13 +194,21 @@ export default function HowItWorksPage() {
             <span className="f-kchip">5 minutes. No GP needed.</span>
           </div>
           <h1 className="f-h1">
-            Order.<br />Test.<br />Know.
+            Order.<br />Test.<br /><span className="f-grey">Know.</span>
           </h1>
           <p className="f-stand" style={{ marginTop: 20 }}>
             A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results
             are in your dashboard in 2 to 5 working days. In plain English, with a specific
             recommendation based on your actual numbers.
           </p>
+          <div className="f-btns" style={{ marginTop: 26 }}>
+            <Link href="/kits" className="f-btn">
+              Choose your test <span aria-hidden="true">&#8594;</span>
+            </Link>
+            <Link href="/test-selector" className="f-btn f-btn-ghost">
+              Take the quiz
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -223,7 +232,7 @@ export default function HowItWorksPage() {
       {/* ---------- FOUR STEPS ---------- */}
       <section className="f-wrap f-sec">
         <p className="f-blab">The process</p>
-        <h2 className="f-h2">Four steps.<br />Done in a week.</h2>
+        <h2 className="f-h2">Four steps.<br /><span className="f-grey">Done in a week.</span></h2>
         <p className="f-sub" style={{ marginTop: 12 }}>
           Order your kit, take your sample at home, post it back. Results are in your dashboard
           within 2 to 5 working days of the lab receiving it.
@@ -232,9 +241,10 @@ export default function HowItWorksPage() {
         <div className="f-steps" style={{ marginTop: 24 }}>
           {steps.map((s) => (
             <div className="f-step" key={s.num}>
-              <span className="f-bignum" aria-hidden="true">{s.num}</span>
-              <h3 className="f-h4">{s.title}</h3>
-              <p className="f-sub" style={{ fontSize: 15, marginTop: 8 }}>{s.body}</p>
+              <span className="f-bignum" aria-hidden="true">{s.num.replace(/^0/, '')}</span>
+              <span className="f-no">{s.num}</span>
+              <h3 className="f-h4 mt-2.5 mb-2">{s.title}</h3>
+              <p className="f-sub" style={{ fontSize: 15 }}>{s.body}</p>
               <div className="f-step-foot">
                 <span>{s.footer[0]}</span>
                 <b>{s.footer[1]}</b>
@@ -249,7 +259,7 @@ export default function HowItWorksPage() {
         <div className="f-splitgrid">
           <div>
             <p className="f-blab">The lab</p>
-            <h2 className="f-h2">UKAS-accredited.<br />Not a device.<br />An actual lab.</h2>
+            <h2 className="f-h2">UKAS-accredited.<br />Not a device.<br /><span className="f-grey">An actual lab.</span></h2>
             <p className="f-sub" style={{ marginTop: 16 }}>
               Your sample is analysed by a UK laboratory <strong>accredited to ISO 15189 by
               UKAS</strong>. That&rsquo;s the same standard used by NHS labs.
@@ -291,7 +301,7 @@ export default function HowItWorksPage() {
       {/* ---------- DASHBOARD ---------- */}
       <section className="f-wrap f-sec">
         <p className="f-blab">Your dashboard</p>
-        <h2 className="f-h2">Not a lab report.<br />An actual answer.</h2>
+        <h2 className="f-h2">Not a lab report.<br /><span className="f-grey">An actual answer.</span></h2>
 
         <div className="f-tray" style={{ marginTop: 22 }}>
           <div className="f-core">
@@ -324,13 +334,17 @@ export default function HowItWorksPage() {
             <div className="f-bio" key={k.slug}>
               <div className="f-kithead" style={{ marginBottom: 4 }}>
                 <span className="f-kchip">{k.number}</span>
+                {'flag' in k && k.flag ? <span className="f-flagchip">{k.flag}</span> : null}
                 <span className="f-price" style={{ fontSize: 24 }}>{k.price}</span>
               </div>
               <h3>{k.name}</h3>
               <p>{k.blurb}</p>
               <ul className="f-ticks" style={{ marginTop: 14 }}>
                 {k.markers.map((m) => (
-                  <li key={m}>{m}</li>
+                  <li key={m}>
+                    <span aria-hidden="true">&#10003;</span>
+                    {m}
+                  </li>
                 ))}
               </ul>
               <Link href={`/kits/${k.slug}`} className="f-btn f-btn-sm f-btn-ghost" style={{ marginTop: 18, justifyContent: 'center' }}>
@@ -352,7 +366,7 @@ export default function HowItWorksPage() {
         <div className="f-splitgrid">
           <div>
             <p className="f-blab">After your results</p>
-            <h2 className="f-h2">The result is the start.<br />Not the end.</h2>
+            <h2 className="f-h2">The result is the start.<br /><span className="f-grey">Not the end.</span></h2>
             <p className="f-sub" style={{ marginTop: 16 }}>
               If your result shows a deficiency, you&rsquo;ll see a specific supplement
               recommendation. Not a guess. Not a generic &ldquo;support your health&rdquo; product.
@@ -402,7 +416,10 @@ export default function HowItWorksPage() {
               <p className="f-blab">Already live in your account</p>
               <ul className="f-ticks">
                 {receipts.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item}>
+                    <span aria-hidden="true">&#10003;</span>
+                    {item}
+                  </li>
                 ))}
               </ul>
             </div>

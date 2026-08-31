@@ -2,7 +2,7 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-08-30 (🔵 **THE DESIGN GUIDELINES DO NOT NEED UPDATING, BUT THE COMPONENT LAYER HAS NO SINGLE SOURCE OF TRUTH.** Measured across all 13 journey mockups 2026-08-30: the **token layer is clean, 24 tokens and ZERO value conflicts**, and `f-primitives.css` matches the mockup majority exactly. But the component layer exists in **fourteen independent copies** (13 mockup `<style>` blocks plus `f-primitives.css`) with nothing reconciling them, and the mockups have already drifted from each other: `.btn` padding in four sizes, `.sub` measure at 70/66/64/62ch, `.eyebrow` margin split 4/4. The `results-*` frames run tighter, which looks like deliberate app density but is recorded nowhere. **Owed: a mockup-vs-primitives reconciler, and Keith's ruling on whether the app scale is deliberately denser than marketing.** Detail in `../09_website-app/STATE.md` ▶️ PICK UP HERE. Earlier: ✅ **THE LOGO CHANGED: KEITH APPROVED THE "INTERLOCKED AP" (2026-08-30)**, the A and P as one glyph sharing a stem, **with no container**, `assets/logos/interlocked-ap/`. It closes the F rounding question **by removal**, since there is no square left to round. **Direction only: there are no vector masters**, so the Refined Monogram still ships everywhere **except the icon set**, which migrated the same day (favicon, app icon, apple-touch, PWA) because a fixed-size raster output does not need a vector source. **The site is therefore in a deliberate mixed state**: new mark in the browser tab, old mark in the page header. Earlier: ✅ **THE BRAND LEAD IS RULED AND THIS WORKSPACE WAS THE ONE THE LAST SWEEP MISSED.** Keith, 2026-08-30, ruling A2 on `../01_strategy/2026-08-30-brand-lead-after-the-monitoring-thesis.md`: **conflict-free stays the lead; the Patient-owned data pillar is promoted from "privacy receipt" to PROOF LAYER** and may appear in customer copy as demonstration, still never as the opening claim. **Category noun ruled: "a UK men's health company"**, not a wellness brand (wellness is the Phase 0 regulatory tier, and `brand-guidelines.md` already says "not a wellness brand") and not a testing company (forecloses the record and the membership). `CONTEXT.md` and `messaging-framework.md` are amended. 🔴 **STILL OWED BY KEITH: the `brand-description.md` rewrite**, which is now TWO leads stale (last touched 2026-07-22, commit `647e91b`) and feeds affiliate briefs, press, the About page, the homepage meta and every social bio. The sweep re-stamped its banner and deliberately did not write the copy. **No CA-026 re-clearance is triggered**: under A2 no approved claim moves. Earlier: 2026-08-27 (**visual brand guidelines demoted to advisory by Keith**; packaging renders are product not mood, see below). Earlier: 2026-08-25 (🔴 **THE KIT SLEEVE APERTURE IS IN DISPUTE AND NOTHING MAY GO TO PRINT.** Vitall's Laura Sutton answered all nine sleeve questions on 2026-08-24 and gave the aperture as **67 x 118 mm** against the **108.00 x 57.00 mm** we lifted from her own `.eps` and recorded as "exact, not measured": 10 mm larger on both axes, which would make **both Route B print proofs wrong**. Her attached box cutter templates are the arbiter and are **still in Gmail, unmeasured**. Everything else in the sleeve spec is now CLOSED: **no new die needed** if we build to their dimensions, the sleeve does not move on the box, **we supply printed sleeves via Vitall's partner Mega-Pak** who ship direct to the fulfilment centres, setup is ~1 month but gated on Mega-Pak capacity, the **500 minimum is per design** (so Kit 1 + Kit 2 is 1,000 sleeves), and the IFU and Lab Request Form can both carry our branding. **Owed by us: the logo as SVG, and the template download.** Earlier: 2026-08-20 (**both sleeve routes now drawn; Route B recommended.** Route B keeps the board dominant and reduces the black to the channel and the table rules. ✅ **It preserves the 2026-06-12 warm-white finding, prints far cheaper, and gives the credentials the whole page** — and drawing it corrected my own call: Route B is **not** the weaker match to the bottle, it is its photographic negative, which is a stronger two-family system than a literal colour match. Earlier: sleeve fronts redrawn onto the supplement system (v6); bottle heroes on the real Nutribl bottles; the inverted black label on a white bottle scored highest; the generative-model limit tested and corrected.))_
+_Last updated: 2026-08-31 (🔵 **TYPEFACE LICENSING IS PART-VERIFIED, AND THE TWO FACES PRICE VERY DIFFERENTLY.** **Effra (Dalton Maag) clears the hard requirement: self-hosting is permitted and is the default**, licences are perpetual, desktop is from £31 a style and **the 2-axis variable is £185 including all 18 statics**. 🟢 **Buy the variable, not statics**: F uses `font-weight: 600` in 18 places and Effra’s statics have no 600. It also ships a **Heavy**, which closes the open wordmark detail without a third licence. **Austin (Commercial Type) publishes no price anywhere**, for any licence type: quote-only, in USD, desktop by workstation and web by unique monthly visitors. 🔴 **Their self-hosting position is unconfirmed and gates the price question rather than following it.** ⚠ **Adobe Fonts does not solve this**: it carries Effra, but Adobe forbids self-hosting and serves only from its CDN, so it can cover desktop and design work and cannot serve the site. Earlier: 🔵 **THE DESIGN GUIDELINES DO NOT NEED UPDATING, BUT THE COMPONENT LAYER HAS NO SINGLE SOURCE OF TRUTH.** Measured across all 13 journey mockups 2026-08-30: the **token layer is clean, 24 tokens and ZERO value conflicts**, and `f-primitives.css` matches the mockup majority exactly. But the component layer exists in **fourteen independent copies** (13 mockup `<style>` blocks plus `f-primitives.css`) with nothing reconciling them, and the mockups have already drifted from each other: `.btn` padding in four sizes, `.sub` measure at 70/66/64/62ch, `.eyebrow` margin split 4/4. The `results-*` frames run tighter, which looks like deliberate app density but is recorded nowhere. **Owed: a mockup-vs-primitives reconciler, and Keith's ruling on whether the app scale is deliberately denser than marketing.** Detail in `../09_website-app/STATE.md` ▶️ PICK UP HERE. Earlier: ✅ **THE LOGO CHANGED: KEITH APPROVED THE "INTERLOCKED AP" (2026-08-30)**, the A and P as one glyph sharing a stem, **with no container**, `assets/logos/interlocked-ap/`. It closes the F rounding question **by removal**, since there is no square left to round. **Direction only: there are no vector masters**, so the Refined Monogram still ships everywhere **except the icon set**, which migrated the same day (favicon, app icon, apple-touch, PWA) because a fixed-size raster output does not need a vector source. **The site is therefore in a deliberate mixed state**: new mark in the browser tab, old mark in the page header. Earlier: ✅ **THE BRAND LEAD IS RULED AND THIS WORKSPACE WAS THE ONE THE LAST SWEEP MISSED.** Keith, 2026-08-30, ruling A2 on `../01_strategy/2026-08-30-brand-lead-after-the-monitoring-thesis.md`: **conflict-free stays the lead; the Patient-owned data pillar is promoted from "privacy receipt" to PROOF LAYER** and may appear in customer copy as demonstration, still never as the opening claim. **Category noun ruled: "a UK men's health company"**, not a wellness brand (wellness is the Phase 0 regulatory tier, and `brand-guidelines.md` already says "not a wellness brand") and not a testing company (forecloses the record and the membership). `CONTEXT.md` and `messaging-framework.md` are amended. 🔴 **STILL OWED BY KEITH: the `brand-description.md` rewrite**, which is now TWO leads stale (last touched 2026-07-22, commit `647e91b`) and feeds affiliate briefs, press, the About page, the homepage meta and every social bio. The sweep re-stamped its banner and deliberately did not write the copy. **No CA-026 re-clearance is triggered**: under A2 no approved claim moves. Earlier: 2026-08-27 (**visual brand guidelines demoted to advisory by Keith**; packaging renders are product not mood, see below). Earlier: 2026-08-25 (🔴 **THE KIT SLEEVE APERTURE IS IN DISPUTE AND NOTHING MAY GO TO PRINT.** Vitall's Laura Sutton answered all nine sleeve questions on 2026-08-24 and gave the aperture as **67 x 118 mm** against the **108.00 x 57.00 mm** we lifted from her own `.eps` and recorded as "exact, not measured": 10 mm larger on both axes, which would make **both Route B print proofs wrong**. Her attached box cutter templates are the arbiter and are **still in Gmail, unmeasured**. Everything else in the sleeve spec is now CLOSED: **no new die needed** if we build to their dimensions, the sleeve does not move on the box, **we supply printed sleeves via Vitall's partner Mega-Pak** who ship direct to the fulfilment centres, setup is ~1 month but gated on Mega-Pak capacity, the **500 minimum is per design** (so Kit 1 + Kit 2 is 1,000 sleeves), and the IFU and Lab Request Form can both carry our branding. **Owed by us: the logo as SVG, and the template download.** Earlier: 2026-08-20 (**both sleeve routes now drawn; Route B recommended.** Route B keeps the board dominant and reduces the black to the channel and the table rules. ✅ **It preserves the 2026-06-12 warm-white finding, prints far cheaper, and gives the credentials the whole page** — and drawing it corrected my own call: Route B is **not** the weaker match to the bottle, it is its photographic negative, which is a stronger two-family system than a literal colour match. Earlier: sleeve fronts redrawn onto the supplement system (v6); bottle heroes on the real Nutribl bottles; the inverted black label on a white bottle scored highest; the generative-model limit tested and corrected.))_
 
 ---
 
@@ -426,6 +426,114 @@ Keith + Ewa approved the set: §P + A1 + B1 + C1 + C2 (FAQs) + D1 + D2 + D+ + E2
 
 ---
 
+## ✅ THE RULING IS NOW IMPLEMENTED LOCALLY, AND WHAT WAS MISSING WAS A CATEGORY, NOT A FACE (2026-08-31)
+
+**Keith supplied the option label he actually chose on 2026-08-30: “**C · Serif headline over humanist
+sans**”.** The options were labelled **by category, not by face**, which is exactly why the ruling reads
+"the faces are NOT chosen": he was picking a system, and the free faces were only what rendered it.
+
+🔴 **That makes the current build wrong on the ruling's own terms, not merely provisional.**
+`--font-sans` resolves to **Inter, which is a neo-grotesque**, not a humanist sans. It descends from the
+Helvetica / Roboto line and aims at neutrality; humanist sans faces reintroduce calligraphic
+influence, varied stroke widths and organic proportions. The ruling names the sans as carrying **body
+copy, UI and all data**, so this is the larger half of the decision and it is in the wrong category.
+
+**The record has been describing this as a stand-in, which undersells it.** Newsreader is a genuine
+stand-in: right category, unlicensed face. Inter is not a stand-in for a humanist sans, it is a
+different classification, and it is the one the comparison's option A represented and lost.
+
+✅ **FIXED THE SAME DAY, AND IT COST NOTHING.** `Source_Sans_3` is in this project's installed
+`next/font/google`, loaded as a variable font with italic, so it covers every weight Direction F uses
+including the 600 in 18 rules and the 900 ghost numeral, and the italic `f-primitives` declares.
+**Verified on the running pages**: `/kits` and `/how-it-works` now render Source Sans 3 for body, UI
+and data, JetBrains Mono for labels, Newsreader for headlines, and **no Inter anywhere**. No overflow
+at 390.
+
+🔴 **It was THREE binding sites, not the two the ruling records.** `typography.css` and `layout.tsx`
+are the two it names, but `tailwind.config.ts` binds the family variable **directly**, bypassing the
+token layer, so every Tailwind `font-sans` class would have stayed on the old face while the F rules
+moved. That third site was already flagged in the record and is exactly the kind of thing that makes
+a "two-file change" quietly wrong. All three are repointed and `--font-inter` no longer appears
+anywhere in `app/`, `styles/` or the Tailwind config.
+
+**Whether to then license Effra is a separate question about quality, not about correctness.**
+
+⚠ **Worth stating plainly**: nothing here re-opens the ruling. It says the build has not implemented
+it yet, and that the gap was invisible because both documents called Inter "a stand-in".
+
+---
+
+## 🔵 Typeface licensing: Effra is priced and self-hostable, Austin is quote-only (2026-08-31)
+
+The 2026-08-30 ruling recorded that "licensing terms, self-hosting rights and price" were unverified
+and gated any spend. **Two of the three are now verified for Effra, one is verified for Austin, and
+Austin's price is not published anywhere.** Everything below is from the foundries' own pages;
+nothing is estimated.
+
+### Effra (Dalton Maag), the humanist sans
+
+- **Self-hosting is permitted and is the default.** Their web licence is called **Host & Link**:
+  "self-host 'Web' fonts and link them via CSS to your own websites". This is the one hard
+  requirement, because the site serves fonts itself through `next/font`. ✅ Cleared.
+- **Perpetual, one payment, upgradeable later.** All four Dalton Maag licence classes work this way.
+- **Desktop (Install & Use): from £31 per style**, priced per user.
+- **1-axis variable font (weight): from £95.**
+- **2-axis variable font (weight + italic): from £185, and it includes a Family Pack of all 18
+  static fonts.**
+- **Web (Host & Link): priced by maximum page impressions per month**, tiers running from **50k** to
+  **35M**. 🔴 **The per-tier figures appear only in their configurator and are NOT yet captured.**
+  Andro Prime sits in the lowest tier by a wide margin.
+- Prices are GBP with a currency switcher; VAT is added at checkout.
+
+🟢 **Buy the variable font, not a stack of statics, and the reason is concrete.** Direction F uses
+`font-weight: 600` in **18 places**. Effra's statics run Light, Regular, Medium, Bold, Heavy, so
+there is no 600 to buy: static licensing would force every one of those rules onto 500 or 700. The
+variable font gives 600 exactly. At £185 the 2-axis also brings the 18 statics with it, so it is
+both the correct buy and the complete one.
+
+🟢 **It also closes the open wordmark detail at no extra cost.** The 2026-08-30 note left one thing
+open: the wordmark is specified as a *heavy grotesque* while the body sans is now a *humanist*, with
+the cheapest resolution being "cut the wordmark from the body sans at its heaviest weight rather than
+licensing a third family". **Effra ships a Heavy.** The family pack settles it without a third
+licence.
+
+### Austin (Commercial Type), the headline serif
+
+- 🔴 **No price is published, anywhere, for any licence type.** Commercial Type's catalogue, EULA and
+  licensing FAQ carry no figures; prices appear only in the cart, and the site says outright that
+  "some of these license types may not be purchased via this website. Please contact
+  info[at]commercialtype.com for details and pricing."
+- **Prices are in US dollars.**
+- **Desktop is priced by number of workstations. Web is priced by unique monthly visitors**,
+  aggregated across all domains.
+- **Discounts exist and are worth structuring for**: a base **$50 per additional family** within one
+  collection, and a further discount for licensing the same family across desktop, web and app at the
+  same time.
+- ⚠ **Self-hosting rights are NOT yet confirmed for Commercial Type.** Their web licence exists, but
+  whether it permits self-hosting under `next/font/local` has not been read out of the EULA. **This
+  is the question to settle before the price question**, because a no makes the price irrelevant.
+- The Austin family is **16 styles**; there are separate Austin Text and Austin News cuts.
+
+**To get a number: add the styles to the cart on commercialtype.com, or email
+info@commercialtype.com.** One of those is required; there is no published figure to look up.
+
+### Adobe Fonts does not solve this, and it is worth knowing why
+
+Effra is on Adobe Fonts, with web use at unlimited pageviews, which reads like a free answer if there
+is already a Creative Cloud subscription. **It is not, for this site.** Adobe does not offer local
+hosting: web fonts must be delivered from Adobe's CDN via their embed code, and their Terms of Use
+prohibit self-hosting the files. `next/font/local` is self-hosting. **Adobe Fonts can cover desktop
+and design work at no extra cost; it cannot serve the site.**
+
+### What is still owed
+
+1. 🔴 **Austin's price**, which needs a cart run or an email. Nothing can be estimated from public
+   sources.
+2. 🔴 **Commercial Type's self-hosting position**, which gates the above.
+3. **Effra's Host & Link price at the lowest impressions tier**, which needs their configurator.
+
+---
+
 ## ✅ RULED: serif headline over humanist sans (Keith, 2026-08-30)
 
 **Keith's ruling, from a live comparison on the rebuilt `/kits/testosterone`:** the site runs a
@@ -441,9 +549,14 @@ Source Sans 3, both free stand-ins chosen to test the category; the licensed can
 headline over a licensed humanist sans such as **Effra** (Dalton Maag) for everything else. Austin is
 higher contrast and more assertive than its stand-in, which cuts both ways at small sizes.
 
-**Not yet verified, and it gates any spend:** licensing terms, self-hosting rights (the site serves
+~~**Not yet verified, and it gates any spend:** licensing terms, self-hosting rights (the site serves
 fonts itself through `next/font`, and some foundry web licences forbid that), and price. No figures
-have been confirmed and none should be quoted until they are.
+have been confirmed and none should be quoted until they are.~~ **PARTLY VERIFIED 2026-08-31, see the
+entry above.** Effra: self-hosting is permitted and is the default (“Host & Link”), licences are
+perpetual, desktop from £31 per style and the 2-axis variable £185 including all 18 statics; its web
+tier price is still uncaptured. Austin: **no price is published anywhere** and it is quote-only, in
+USD, and 🔴 **Commercial Type’s self-hosting position is unconfirmed, which gates the price question
+rather than following it.**
 
 **Cost to apply, either way: two files.** `09_website-app/frontend/styles/tokens/typography.css` plus
 `app/layout.tsx`. Every Direction F rule resolves `--font-sans` / `--font-mono` rather than naming a
