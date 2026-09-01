@@ -106,8 +106,20 @@
      a reader can see both at once. They are neutral ink at two opacities on
      purpose: this is a comparison of two scales, NOT a verdict, so it must not
      borrow the status triad. The verdict is carried in words beneath it. */
-  --lab:  rgba(10, 11, 13, 0.13);
-  --ours: rgba(10, 11, 13, 0.30);
+  /* 🔴 Raised 2026-08-31 from .13 / .30, which are the values F-field.html drew
+     and the build ported faithfully. Measured on the rendered page, the lab band
+     sat at 1.32:1 against the track and the two bands at 1.51:1 against each
+     other, on a 10px bar carrying the entire argument of the homepage, for a
+     readership PRODUCT.md puts at 40+. WCAG 1.4.11 wants 3:1 for a graphical
+     object needed to understand content.
+     Now: lab↔ours 3.17:1, ours↔track 4.95:1. lab↔track is 1.56:1 and cannot be
+     fixed chromatically -- three distinguishable zones on a light 10px track
+     cannot all clear 3:1 pairwise without taking the bands to near-black and
+     losing the direction's look -- so the lab band gets an inset ring instead
+     (f-primitives.css .f-band-lab) and carries its extent by edge, not by fill.
+     🔵 KEITH'S TO REVERSE: these are the approved direction's values. */
+  --lab:  rgba(10, 11, 13, 0.20);
+  --ours: rgba(10, 11, 13, 0.60);
 
   /* --- Motion. F's easing, used on every transform in the frames. --- */
   --ease: cubic-bezier(0.32, 0.72, 0, 1);

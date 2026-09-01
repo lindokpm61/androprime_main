@@ -94,9 +94,14 @@ const READOUT = [
     //   lab    8.64 -> 24.7%,  29.00 -> 82.9%,  width 58.2%
     //   ours     12 -> 34.3%,     20 -> 57.1%,  width 22.8%
     //   marker 14.2 -> 40.6%
+    // SPLIT THREE, and it was not marked as one until 2026-08-31. 14.2 sits
+    // inside the lab's 8.64-29.00 so a standard report says normal and stops;
+    // it also sits in OUR 12-20 band, which is the state `normal-testosterone`,
+    // and that state badges Monitor. Lab normal and Monitor is a disagreement,
+    // so the row is a split by the same test the other two pass.
     name: 'Testosterone', qualifier: 'total', value: '14.2', unit: 'nmol/L',
     labLeft: 24.7, labWidth: 58.2, oursLeft: 34.3, oursWidth: 22.8, you: 40.6,
-    lab: 'Lab normal', ours: 'Normal', split: false,
+    lab: 'Lab normal', ours: 'Monitor', split: true,
   },
   {
     // thresholds.md: <25 -> GP, <50 low, 50-250 normal, >250 -> GP (Ewa
@@ -104,9 +109,12 @@ const READOUT = [
     //   lab      50 -> 20.0%, 250 -> 100%, width 80.0%
     //   ours     50 -> 20.0%, 250 -> 100%, width 80.0%
     //   marker   58 -> 23.2%
+    // The two ranges COINCIDE here, both 50 to 250, which is why the ours band
+    // is inset 2px vertically: at equal height it covered the lab band exactly
+    // and the row rendered as one band. `normal-vitamin-d` badges In range.
     name: 'Vitamin D', qualifier: '25-OH', value: '58', unit: 'nmol/L',
     labLeft: 20, labWidth: 80, oursLeft: 20, oursWidth: 80, you: 23.2,
-    lab: 'Lab normal', ours: 'Normal', split: false,
+    lab: 'Lab normal', ours: 'In range', split: false,
   },
   {
     // thresholds.md: NICE NG239 three-band, <25 low, 25-70 borderline, >70
@@ -117,9 +125,10 @@ const READOUT = [
     //   marker   45 -> 45.0%
     // SPLIT ONE: the assay calls 45 normal, NG239 calls it indeterminate.
     // Same number, two verdicts. This row is the whole argument of the page.
+    // `borderline-b12` badges Monitor.
     name: 'Active B12', qualifier: 'holo-TC', value: '45', unit: 'pmol/L',
     labLeft: 37.5, labWidth: 62.5, oursLeft: 25, oursWidth: 45, you: 45,
-    lab: 'Lab normal', ours: 'Borderline', split: true,
+    lab: 'Lab normal', ours: 'Monitor', split: true,
   },
   {
     // thresholds.md: <30 -> GP, 30-100 borderline / indeterminate (Ewa ruling 5,
@@ -128,10 +137,10 @@ const READOUT = [
     //   lab      30 ->  6.7%, 442 -> 98.2%, width 91.5%
     //   ours     30 ->  6.7%, 100 -> 22.2%, width 15.5%
     //   marker   62 -> 13.8%
-    // SPLIT TWO.
+    // SPLIT TWO. `suboptimal-ferritin` badges Monitor.
     name: 'Ferritin', qualifier: null, value: '62', unit: 'µg/L',
     labLeft: 6.7, labWidth: 91.5, oursLeft: 6.7, oursWidth: 15.5, you: 13.8,
-    lab: 'Lab normal', ours: 'Borderline', split: true,
+    lab: 'Lab normal', ours: 'Monitor', split: true,
   },
 ]
 
@@ -144,20 +153,59 @@ const RECORD_STEPS = [
 // Prices read from lib/pricing.ts. Marker strings are the direction's own
 // summary wording, which is looser than lib/kits/panel.ts on purpose: these are
 // one-line teasers on a homepage card, and the kit pages carry the exact panel.
+/*
+ * All three cards now carry a photograph. Before 2026-09-01 only the lead card
+ * did, and `.f-kit ul { flex: 1 }` absorbed the difference, so Kit 1 and Kit 2
+ * rendered with 309px and 335px of empty space between the marker lines and the
+ * price. They did not read as spacious, they read as unfinished, because they
+ * were visibly the lead card MINUS a photograph, and the layout was spending
+ * 300px announcing the absence. That put the two cheaper products at a
+ * disadvantage created by layout rather than by argument, at the exact moment
+ * the visitor chooses.
+ *
+ * `who` is one line, not a spec block. It answers the question the page's own
+ * thesis says the visitor cannot answer yet ("You don't know which question
+ * you're asking yet"), and it makes Kit 3 the honest default rather than the
+ * expensive one. Deliberately short: the fix for an unfinished card is not a
+ * wall of text (Keith, 2026-09-01).
+ *
+ * 🔴 COPY IS FRAME-CONSTRAINED, not invented. icp-kit-supplement-alignment
+ * §9 fixes these: Kit 1 is "where your testosterone stands" and NEVER "find out
+ * why you're tired", which is the documented failure mode; Kit 2 must not claim
+ * anything about testosterone; Kit 3 is the nine-marker panel. None of the three
+ * lines makes a symptom or outcome claim.
+ *
+ * 🔴 img-6 and img-7 are NEW generated assets (gpt_image_2, 2026-09-01) and are
+ * NOT yet in CA-045. Generating them on this branch is fine because the branch
+ * deploys nothing; SHIPPING them is what the gate covers. They must be added to
+ * the CA-045 register and signed by Ewa and Keith before this merges. Both were
+ * briefed to contain no clinic, no blood and no sample, which is deliberate:
+ * the register's evidence line already overstates the existing five, so these
+ * two were made easier to clear rather than harder.
+ */
 const KITS = [
   {
     slug: 'hormone-recovery', title: 'Hormone & Recovery', meta: `Kit 3 · nine markers`,
     price: `£${PRICING.KIT_3.rrp}`, lead: true,
+    who: 'If you do not know which question it is.',
+    photo: '/home/img-3.jpg', cap: 'Five minutes, at home',
+    alt: "A man's hands at a kitchen table holding a small plain sample collection tube.",
     lines: ['Testosterone, free T, SHBG, albumin, FAI', 'Vitamin D, active B12, ferritin, hs-CRP'],
   },
   {
     slug: 'testosterone', title: 'Testosterone', meta: `Kit 1 · five markers`,
     price: `£${PRICING.KIT_1.rrp}`, lead: false,
+    who: 'If the question is testosterone.',
+    photo: '/home/img-6.jpg', cap: 'Ordinary Tuesday',
+    alt: 'A man in his late forties standing in a back doorway at dawn with a mug of tea, looking out over a terraced garden.',
     lines: ['Total & free testosterone', 'SHBG, albumin, free androgen index'],
   },
   {
     slug: 'energy-recovery', title: 'Energy & Recovery', meta: `Kit 2 · four markers`,
     price: `£${PRICING.KIT_2.rrp}`, lead: false,
+    who: 'If the question is energy and recovery.',
+    photo: '/home/img-7.jpg', cap: 'Not bouncing back',
+    alt: 'A man in his early forties sitting on the bottom stair of a hallway after a run, still in running kit, catching his breath.',
     lines: ['Vitamin D, active B12', 'Ferritin, hs-CRP'],
   },
 ]
@@ -293,6 +341,16 @@ export default function HomePage() {
                   <span>Nothing here is a diagnosis</span>
                 </div>
 
+                {/* The key. The two bands were unlabelled until 2026-08-31, so
+                    the chart asked the reader to infer which grey was the lab
+                    and which was ours, four rows running, from a paragraph in
+                    the next column that stacks BELOW the chart on mobile. */}
+                <div className="f-ro-k">
+                  <span><i className="f-k-lab" aria-hidden="true" />Lab reference range</span>
+                  <span><i className="f-k-ours" aria-hidden="true" />Our action band</span>
+                  <span><i className="f-k-you" aria-hidden="true" />Your value</span>
+                </div>
+
                 <div className="f-ro-b">
                   {READOUT.map((m) => (
                     <div key={m.name} className={m.split ? 'f-mk f-mk-split' : 'f-mk'}>
@@ -321,7 +379,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="f-ro-f">
-                  Two of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>borderline</b>. That is not a diagnosis. It is the context a bare number does not carry.
+                  Three of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>monitor</b>. That is not a diagnosis. It is the context a bare number does not carry.
                 </div>
               </div>
             </div>
@@ -424,19 +482,18 @@ export default function HomePage() {
       </div>
       <div className="f-wrap">
         <div className="f-bento">
-          {KITS.map(({ slug, title, meta, price, lead, lines }) => (
+          {KITS.map(({ slug, title, meta, price, lead, lines, who, photo, cap, alt }) => (
             <div key={slug} className={lead ? 'f-c-6 f-rise' : 'f-c-3 f-rise'}>
               <div className="f-tray" style={{ height: '100%' }}>
-                <div className="f-core f-cell f-kit" style={{ height: '100%', padding: lead ? 0 : undefined }}>
-                  {lead ? (
-                    <div className="f-shot f-shot-r16">
-                      <Image src="/home/img-3.jpg" alt="A man's hands at a kitchen table holding a small plain sample collection tube." width={800} height={500} />
-                      <span className="f-shot-cap">Five minutes, at home</span>
-                    </div>
-                  ) : null}
-                  <div className="f-cell" style={{ flex: 1, padding: lead ? '24px 20px' : undefined }}>
+                <div className="f-core f-cell f-kit" style={{ height: '100%', padding: 0 }}>
+                  <div className={lead ? 'f-shot f-shot-r16' : 'f-shot f-shot-r16 f-shot-tall'}>
+                    <Image src={photo} alt={alt} width={800} height={500} />
+                    <span className="f-shot-cap">{cap}</span>
+                  </div>
+                  <div className="f-cell" style={{ flex: 1, padding: '24px 20px' }}>
                     <h3>{title}</h3>
                     <p className="f-blab" style={{ marginTop: 4, marginBottom: 0 }}>{meta}</p>
+                    <p className="f-kwho">{who}</p>
                     <ul>
                       {lines.map((l) => <li key={l}>{l}</li>)}
                     </ul>
@@ -533,7 +590,7 @@ export default function HomePage() {
       {/* ---------------- CLOSE ---------------- */}
       <div className="f-wrap f-close">
         <h2>Find out what your blood is telling you.</h2>
-        <p className="f-stand">UKAS accredited lab. Results in 2 to 5 working days. Plain English. No GP needed.</p>
+        <p className="f-stand">UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. Plain English.</p>
         <Link href="/test-selector" className="f-btn">Find your test in 60 seconds {ARROW}</Link>
       </div>
     </div>

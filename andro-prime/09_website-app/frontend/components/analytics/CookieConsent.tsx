@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CONSENT_OPEN_EVENT, getConsent, setConsent } from '@/lib/analytics/consent'
 
 /**
@@ -29,6 +29,7 @@ import { CONSENT_OPEN_EVENT, getConsent, setConsent } from '@/lib/analytics/cons
 export default function CookieConsent() {
   const gaEnabled = Boolean(process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID)
   const [visible, setVisible] = useState(false)
+  const wrapRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (!gaEnabled) return
@@ -38,6 +39,36 @@ export default function CookieConsent() {
     window.addEventListener(CONSENT_OPEN_EVENT, reopen)
     return () => window.removeEventListener(CONSENT_OPEN_EVENT, reopen)
   }, [gaEnabled])
+
+  /*
+   * Publish the banner's REAL height as --f-consent-h so a viewport-height hero
+   * can lift its content clear of it (see .f-hero-film). Measured, not assumed:
+   * the height depends on how the consent copy wraps, and that copy is fixed by
+   * PECR / UK GDPR rather than by us, so a hardcoded number would be wrong at
+   * the first breakpoint or translation that rewraps it.
+   *
+   * Found 2026-08-31: at 390x844 the banner covered the primary CTA on all six
+   * Direction F routes, and cleared it by 19px at 1440, so the defect was
+   * invisible to anyone checking at desktop.
+   */
+  useEffect(() => {
+    const root = document.documentElement
+    const clear = () => root.style.removeProperty('--f-consent-h')
+    if (!visible) {
+      clear()
+      return
+    }
+    const el = wrapRef.current
+    if (!el) return
+    const publish = () => root.style.setProperty('--f-consent-h', `${Math.ceil(el.getBoundingClientRect().height)}px`)
+    publish()
+    const ro = new ResizeObserver(publish)
+    ro.observe(el)
+    return () => {
+      ro.disconnect()
+      clear()
+    }
+  }, [visible])
 
   if (!gaEnabled || !visible) return null
 
@@ -52,6 +83,7 @@ export default function CookieConsent() {
       aria-modal="false"
       aria-label="Cookie consent"
       className="f-cookiewrap f-page"
+      ref={wrapRef}
     >
       <div className="f-cookie">
         <div>

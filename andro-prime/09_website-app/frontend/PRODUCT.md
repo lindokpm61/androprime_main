@@ -196,12 +196,17 @@ caught it once.
 - **No press mentions or logo walls.**
 - **No real photography of Keith, of the kit, or of a customer**, and none may be invented or
   substituted with stock standing in for a real subject.
-  ⚠ **Updated 2026-08-31, because the homepage now ships imagery.** Five GENERATED lifestyle
+  ⚠ **Updated 2026-09-01, because the homepage now ships imagery.** **Seven** GENERATED lifestyle
   photographs and a GENERATED hero film are live on `/` from `public/home/`. They are not
   photographs of Keith, the kit, or any real customer, so the absence above still holds; they are
-  synthetic imagery of unnamed men in ordinary settings. 🔴 **All six assets are gated by CA-045,
+  synthetic imagery of unnamed men in ordinary settings. 🔴 **All eight assets are gated by CA-045,
   which is OPEN and needs Ewa and Keith.** Its unanswered question is whether the illegible letter in
-  the film reads as a lab result. Do not add, swap or reuse any of them elsewhere before it signs.
+  the film reads as a lab result.
+  **`img-6` and `img-7` were commissioned 2026-09-01** for the Kit 1 and Kit 2 cards (gpt_image_2 via
+  Higgsfield) and are added to the CA-045 row. **Generating imagery on a branch that deploys nothing
+  is not what the gate governs; SHIPPING is** (Keith, 2026-09-01), so new assets may be made and
+  built during design work and must be registered and signed before merge. The earlier reading here,
+  that nothing could be created before signing, was wrong.
 - **No dispatch cutoff time.** Pages say "dispatched same day" and state no cutoff anywhere, so a
   countdown or a "order within" device would be inventing an operational promise.
 

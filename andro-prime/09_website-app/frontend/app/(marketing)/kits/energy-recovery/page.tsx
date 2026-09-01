@@ -133,11 +133,11 @@ const kitSchema = {
 
 export const metadata: Metadata = {
   title: 'Blood Test for Tiredness & Fatigue',
-  description: 'At-home blood test for tiredness and fatigue. Vitamin D, Active B12, hs-CRP and Ferritin show why your energy and recovery are off. UKAS accredited lab. £119.',
+  description: 'At-home blood test for tiredness and fatigue. Vitamin D, Active B12, hs-CRP and Ferritin show why your energy is off. UKAS ISO 15189 accredited lab. £119.',
   alternates: { canonical: 'https://andro-prime.com/kits/energy-recovery' },
   openGraph: {
     title: 'Blood Test for Tiredness & Fatigue | Andro Prime',
-    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited lab. £119.',
+    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS ISO 15189 accredited lab. £119.',
     url: 'https://andro-prime.com/kits/energy-recovery',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Blood test for tiredness and fatigue: Energy & Recovery Check' }],
@@ -145,7 +145,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Blood Test for Tiredness & Fatigue | Andro Prime',
-    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS accredited. £119.',
+    description: 'At-home blood test for energy, recovery and inflammation. Vitamin D, Active B12, hs-CRP, Ferritin. UKAS ISO 15189 accredited. £119.',
     images: ['/og/default.png'],
   },
 }

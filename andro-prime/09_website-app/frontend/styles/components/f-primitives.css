@@ -241,7 +241,11 @@
    a class. Keith approved the frame with the big label on screen and ruled it
    deliberate, so it is ported as a NAMED variant at (0,2,0) rather than
    recreating the accident. Clamp carried verbatim from the frame. */
-.f-blab.f-blab-lg { font-size: clamp(1.02rem, 1.5vw, 1.16rem); line-height: 1.66; }
+/* Raised to (0,3,0) on 2026-08-31 so it still beats the `.f-page .f-blab`
+   font-size re-assertion below, which is (0,2,0) and sits LATER in the file.
+   Left at (0,2,0) it would have tied and lost on source order, and this variant
+   is a Keith ruling. A named variant must always outrank the rule it varies. */
+.f-page .f-blab.f-blab-lg { font-size: clamp(1.02rem, 1.5vw, 1.16rem); line-height: 1.66; }
 
 /* .f-page p is (0,1,1) and a bare .f-blab is (0,1,0), so every mono label that
    happened to be a <p> silently lost its face to the body sans: 37 of 51 across
@@ -257,6 +261,24 @@
 .f-page .f-spec-k,
 .f-page .f-trust-l,
 .f-page .f-trust { font-family: var(--font-mono); font-size-adjust: none; }
+
+/* 🔴 2026-08-31: the fix above was INCOMPLETE and the missing half was live for
+   a day. It re-asserted only font-family and font-size-adjust, so `font-size`
+   and `text-transform` were still sitting at (0,1,0) and still losing -- not to
+   `.f-page p` this time but to `.f-cell p` (0,1,1) at the bento-cell rule below.
+   Measured: all 5 .f-blab on `/` rendered at 15px instead of 11.5px, a 30%
+   overshoot, with letter-spacing resolving 1.95px instead of 1.495px because
+   0.13em is relative to the wrong size. A mono eyebrow was rendering at body
+   copy size on the homepage.
+   THE LESSON, and it is the third override defect this week: a specificity
+   collision is a contest PER PROPERTY, not per rule. Re-assert every property
+   the losing rule declares, not the ones somebody noticed were wrong, because
+   the ones nobody noticed are losing too. Neither the detector nor a
+   declaration diff can see this: both declarations are present and correct and
+   the file reads as though the rule applies. Only getComputedStyle on a
+   rendered page finds it. */
+.f-page .f-blab { font-size: 11.5px; text-transform: uppercase; }
+.f-page .f-fine { font-size: 11.5px; }
 .f-fine { font-size: 11.5px; line-height: 1.6; letter-spacing: 0.04em; max-width: 66ch; }
 
 /* Ported from kits-F.html .trust, which test-selector-F declares identically.
@@ -877,7 +899,9 @@
 /* Column headings stay MONO, not display. They are furniture, the same register
    as the eyebrows and data labels, and a serif at 11.5px uppercase with 0.14em
    tracking would read as a mistake. */
-.f-foot h4 {
+/* h3 since 2026-08-31 (h4 skipped a level after the page's h2s). h4 kept in
+   the selector so any not-yet-migrated markup keeps the same size. */
+.f-foot h3, .f-foot h4 {
   font-family: var(--font-mono); font-size-adjust: none;
   font-size: 11.5px;
   font-weight: 600;
@@ -956,9 +980,47 @@
 .f-cookie .f-h4 { margin-bottom: 8px; }
 .f-cookie .f-sub { font-size: 14.5px; max-width: 78ch; }
 .f-cookielink { color: var(--ink); text-decoration: underline; }
-.f-cookieacts { display: flex; flex-wrap: wrap; gap: 12px; }
-.f-cookieacts .f-btn { flex: 1 1 auto; justify-content: center; }
-@media (min-width: 560px) { .f-cookieacts .f-btn { flex: 0 0 auto; } }
+/* 🔴 Compacted 2026-08-31. Measured at 390x844 the banner was 303px, 36% of the
+   viewport, and it covered the primary CTA on ALL SIX Direction F routes --
+   including every "Order the kit" button -- with elementFromPoint at each
+   button's centre returning the banner's own heading. At 1440 it cleared them
+   by 19px, which is why nobody saw it.
+   The two buttons now share one row instead of stacking, which is what most of
+   the height was. That also STRENGTHENS the ICO constraint above rather than
+   weakening it: side by side at `flex: 1 1 0` they are exactly equal width and
+   equal hit area, where stacked full-width buttons were equal only by
+   convention. Do not revert this to a wrap without re-measuring the height. */
+.f-cookieacts { display: flex; flex-wrap: nowrap; gap: 10px; }
+.f-cookieacts .f-btn {
+  flex: 1 1 0; min-width: 0; justify-content: center;
+  padding-left: 14px; padding-right: 14px;
+}
+@media (min-width: 560px) {
+  .f-cookieacts { flex-wrap: wrap; gap: 12px; }
+  .f-cookieacts .f-btn { flex: 0 0 auto; padding-left: 22px; padding-right: 22px; }
+}
+@media (max-width: 559px) {
+  .f-cookiewrap { padding: 0 14px 14px; }
+  .f-cookie { padding: 18px; gap: 14px; }
+  .f-cookie .f-sub { font-size: 14px; line-height: 1.55; }
+  /* The pill is 62px tall elsewhere because it carries a 32px pip. The consent
+     buttons carry no pip, so 52px is the same button without the empty height.
+     Both buttons take it, so the ICO equal-weight constraint is untouched. */
+  .f-cookieacts .f-btn { padding-top: 11px; padding-bottom: 11px; }
+}
+
+/* ---------- CONSENT-AWARE HERO LIFT ----------
+   For a hero that is NOT viewport-height, bottom padding cannot lift its CTA
+   clear of the fixed consent banner, because the content is not centred in a
+   fixed box -- it simply starts at the top and runs down. So the leading offset
+   is what gives, and it gives only while the banner is up: --f-consent-h is
+   published by CookieConsent.tsx on mount and removed on choice, so the max()
+   collapses back to the design value the moment consent is answered. The 12px
+   floor keeps the hero off the floating nav shell at full lift.
+   Only needed below 900px. Measured at 1440 the banner clears every CTA on all
+   six routes by a wide margin, so desktop keeps the direction's spacing. */
+.f-sec-hero { padding-top: max(12px, calc(var(--f-hero-pt, 72px) - var(--f-consent-h, 0px))); }
+@media (min-width: 900px) { .f-sec-hero { padding-top: var(--f-hero-pt-lg, 130px); } }
 
 /* ============================================================================
    /kits (Frame O) primitives. Added 2026-08-30.
@@ -1000,7 +1062,12 @@
   box-shadow: var(--shadow-ambient);
 }
 @media (min-width: 800px) { .f-invert { padding: 48px 44px; } }
-.f-invert-lab { color: var(--ink-3); }
+/* 🔴 2026-08-31: was var(--ink-3), which is the functional-text floor ON PAPER
+   and measured 3.95:1 on the ink field. Its siblings .f-invert-h and .f-invert-p
+   both flip to white at graded opacities and this one did not, so it was the
+   only element in the panel still using the light-ground ramp. 0.72 white on ink
+   measures 9.7:1 and keeps it recessive against the heading. */
+.f-invert-lab { color: rgba(255, 255, 255, 0.72); }
 .f-invert-h {
   color: var(--paper);
   margin-top: 4px;
@@ -1045,10 +1112,16 @@
 .f-spec { display: grid; gap: 10px; grid-template-columns: 1fr; margin: 20px 0; }
 @media (min-width: 700px) { .f-spec { grid-template-columns: repeat(3, 1fr); } }
 .f-spec > div { background: var(--sunk); border-radius: 16px; padding: 14px 15px; box-shadow: inset 0 0 0 1px var(--hair); }
+/* 🔴 2026-08-31: was --ink-3 at 10px on --sunk, measuring 4.10:1 against a
+   4.5:1 floor, on 12 instances. The token was never wrong: the direction defines
+   --ink-3 as the functional-text floor at 4.99:1 ON PAPER, and the defect was
+   pairing it with a recessed well. --ink-2 on --sunk measures 7.8:1. Size went
+   10px to 11px in the same pass, because PRODUCT.md puts this readership at 40+
+   and 10px mono is the smallest type on the site. */
 .f-spec-k {
   display: block; margin-bottom: 7px;
-  font-family: var(--font-mono); font-size-adjust: none; font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--ink-3);
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-2);
 }
 .f-spec-v { display: block; font-family: var(--font-sans); font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink); }
 
@@ -1068,7 +1141,13 @@
    the accent's only appearance inside the card. Marketing surface, permitted. */
 .f-ticks { list-style: none; display: grid; gap: 9px; padding: 0; margin: 0 0 20px; }
 .f-ticks li { display: flex; gap: 10px; font-family: var(--font-sans); font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
-.f-ticks li > span[aria-hidden] { color: var(--flag); flex: none; font-weight: 700; }
+/* 🔴 2026-08-31: this was var(--flag) and measured 2.18:1 on paper, 32 instances
+   across /kits and /how-it-works. --flag is a FILL token: it is designed to carry
+   ink ON TOP of it, which is why the amber verdict pill measures 9.02:1 and
+   passes, and it has no contrast to give when used as ink. The tick is
+   functional text, so it takes the functional-text colour. The accent is not
+   lost: it still fills the pill, the nav status dot and the footer chips. */
+.f-ticks li > span[aria-hidden] { color: var(--ink-2); flex: none; font-weight: 700; }
 
 /* Inverted Kit 3. The tray is the ink field; everything inside flips. */
 .f-tray-dark { background: var(--ink); }
@@ -1185,11 +1264,20 @@
    so cover trims a little width instead and the full height survives. It also
    makes "Scroll for a sample result" mean something, which it cannot on a hero
    that already ends above the fold. */
+/* --f-consent-h is published by CookieConsent.tsx while the banner is mounted
+   and removed the moment a choice is made. Because this hero centres its content
+   inside a viewport-height box, bottom padding lifts the content clear of the
+   banner rather than adding a gap; the moment consent is answered the padding
+   collapses and the composition returns to the direction's exactly. Compacting
+   the banner was not enough on its own: the banner's height depends on how the
+   consent copy wraps, which is not ours to shorten, so the hero reads the real
+   measured height instead of assuming one. */
 .f-hero-film {
   position: relative; overflow: hidden;
   display: flex; flex-direction: column; justify-content: center;
   min-height: calc(100dvh - 56px);
-  padding-top: 26px; padding-bottom: 34px;
+  padding-top: 26px;
+  padding-bottom: calc(34px + var(--f-consent-h, 0px));
 }
 .f-hero-in { position: relative; z-index: 2; }
 
@@ -1222,6 +1310,27 @@
   font-family: var(--font-mono); font-size-adjust: none;
   font-size: 12px; color: var(--ink-3);
 }
+/* The key. Added 2026-08-31 because the instrument had none: four rows of two
+   unlabelled greys, and the reader was expected to hold "darker = ours" in his
+   head across all of them. The verdict row names the two scales in words on
+   every row, but nothing said which band was which, so the chart carried a
+   mapping the page never stated. Sits under the header rule, above the rows. */
+.f-ro-k {
+  display: flex; flex-wrap: wrap; gap: 8px 20px;
+  padding: 12px 20px; border-bottom: 1px solid var(--hair);
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.f-ro-k span { display: inline-flex; align-items: center; gap: 8px; }
+.f-ro-k i { width: 22px; height: 12px; border-radius: 999px; flex: none; }
+.f-ro-k .f-k-lab { background: var(--lab); box-shadow: inset 0 0 0 1px rgba(10, 11, 13, 0.30); }
+/* The swatch mirrors the band's own 2px vertical inset, so the key looks like
+   the thing it is keying rather than approximately like it. */
+.f-ro-k .f-k-ours { background: var(--ours); height: 8px; }
+/* Mirrors the marker, casing included, so the key looks like the thing it keys. */
+.f-ro-k .f-k-you { width: 3px; height: 18px; background: var(--ink); box-shadow: 0 0 0 1.5px var(--paper); }
+
 .f-ro-b { padding-left: 20px; padding-right: 20px; }
 .f-ro-f {
   border-top: 1px solid var(--hair);
@@ -1231,6 +1340,7 @@
 .f-ro-f b { color: var(--ink); font-weight: 600; }
 @media (min-width: 900px) {
   .f-ro-h { padding-left: 32px; padding-right: 32px; }
+  .f-ro-k { padding-left: 32px; padding-right: 32px; }
   .f-ro-b { padding-left: 32px; padding-right: 32px; }
   .f-ro-f { padding-left: 32px; padding-right: 32px; }
 }
@@ -1248,18 +1358,60 @@
 .f-mk-v i { font-style: normal; font-size: 12px; color: var(--ink-3); font-weight: 400; margin-left: 4px; }
 
 /* A recessed well, so the bands read as inlaid rather than drawn on top. */
+/* No `overflow: hidden`. It was clipping .f-you, which is declared to sit proud
+   of the track and could not, so the marker was trapped inside the bands instead
+   of standing above and below them. Safe to remove because every band carries its
+   own border-radius: 999px and no band's left+width exceeds 100% (checked against
+   all four rows), so nothing spills a square corner past the track's ends. */
 .f-track {
-  position: relative; height: 10px; border-radius: 999px;
+  position: relative; height: 12px; border-radius: 999px;
   background: var(--sunk); margin-top: 14px;
   box-shadow: inset 0 1px 2px rgba(10, 11, 13, 0.10);
-  overflow: hidden;
 }
 .f-band { position: absolute; top: 0; bottom: 0; border-radius: 999px; }
-.f-band-lab { background: var(--lab); }
-.f-band-ours { background: var(--ours); }
-/* The marker sits OUTSIDE the track's rounded clip on purpose, so a value at
-   either extreme is not shaved by the border radius. */
-.f-you { position: absolute; top: -3px; bottom: -3px; width: 3px; border-radius: 999px; background: var(--ink); }
+/* The ring does two jobs, both found by measurement on 2026-08-31. It gives the
+   lab band an edge against the track, which its fill cannot do at any opacity
+   that still reads as recessive. And it is what makes a COINCIDENT row legible:
+   where the lab range and our action band are arithmetically identical -- which
+   is true of Vitamin D, both 50 to 250, see the derivation in page.tsx -- the
+   darker ours band covers the lab band exactly, and without the ring the row
+   renders as ONE band directly under a heading that reads "Two ranges." The
+   ring survives the overlap, so agreement now looks like agreement rather than
+   like a missing band. */
+.f-band-lab { background: var(--lab); box-shadow: inset 0 0 0 1px rgba(10, 11, 13, 0.30); }
+/* Inset vertically so the lab band shows as a rim above and below wherever the
+   two overlap. The first attempt at this was a ring on .f-band-lab alone, and a
+   screenshot killed it: .f-band-ours paints later and covered the ring exactly,
+   so the ring was invisible in the one case it existed for. Height is what the
+   ours band cannot be covered on.
+   This is also the fix for the COINCIDENT row. Vitamin D's lab range and action
+   band are arithmetically identical (both 50 to 250, see the derivation in
+   page.tsx), so at equal height the row rendered as ONE band directly under a
+   heading reading "Two ranges." Now the narrower ours band sits inside the
+   full-height lab band and agreement reads as containment. It earns its keep on
+   every other row too: our band being INSIDE the lab's is the entire argument of
+   the page, and the geometry now says so without the reader being told. */
+.f-band-ours { background: var(--ours); top: 2px; bottom: 2px; }
+/* THE VALUE MARKER, rebuilt 2026-09-01. Keith: the marker is barely visible
+   against the two greys, and he is right, and the cause was the band-contrast fix
+   the day before. Raising --ours to 0.60 ink took solid-ink-on-that-band from
+   about 8:1 down to 3.26:1, so fixing lab-vs-ours traded away marker-vs-ours.
+   Lightening the band again would just swap the defect back.
+   The answer is to stop treating the marker as a FILL that competes with whatever
+   is behind it, and make it an OBJECT that carries its own contrast:
+     1. A paper casing. Ink core against white reads 21:1, and the white rim
+        against the 0.60 band reads 6.0:1, so the mark is legible on the dark
+        band, the light band, and the bare track, without depending on any of them.
+     2. It stands proud of the track. Most of its length is now over white page
+        rather than over a band, which is the same reason a ruler's tick extends
+        past the rule.
+   A marker whose legibility depends on the ground behind it has to be re-judged
+   every time a band value changes. This one does not. */
+.f-you {
+  position: absolute; top: -5px; bottom: -5px; width: 3px;
+  border-radius: 999px; background: var(--ink);
+  box-shadow: 0 0 0 1.5px var(--paper);
+}
 
 .f-verd {
   display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center;
@@ -1297,6 +1449,24 @@
 }
 .f-shot-r16 img { aspect-ratio: 16 / 10; }
 .f-shot-r43 img { aspect-ratio: 4 / 3; }
+/* A PORTRAIT crop for the two narrow kit cards, above 900px only.
+   Arithmetic, not taste. At 1440 the lead card is 561px wide and the narrow ones
+   272px, so at a shared 16:10 the lead's photo is 343px tall and theirs are 162px.
+   Card height is set by the tallest sibling, so that 181px difference had to go
+   somewhere, and `.f-kit ul { flex: 1 }` absorbed it: a 192px and a 217px hole
+   between the marker list and the price. Adding photographs halved the void
+   without closing it, because the void was never the missing photo, it was the
+   missing photo HEIGHT.
+   272 x 5/4 = 340px, within 3px of the lead's 343, so the columns now agree.
+   Below 900px the bento is one column, every card is full width, and 16:10 is
+   already exact (measured: 211px photo and a 36px gap on all three), so this
+   deliberately does not apply there.
+   Written at (0,2,1) rather than (0,1,1) so it beats .f-shot-r16 img on
+   specificity instead of on source order. A tie decided by file position is how
+   .f-btn-ghost shipped transparent and how .f-blab shipped 30% oversized. */
+@media (min-width: 900px) {
+  .f-shot-r16.f-shot-tall img { aspect-ratio: 4 / 5; }
+}
 .f-shot-cap {
   position: absolute; left: 12px; bottom: 12px;
   border-radius: 999px; padding: 5px 11px;
@@ -1318,7 +1488,18 @@
 /* ---------- HOMEPAGE KIT CELL ----------
    The compact kit card used in the homepage bento. The kit pages have their own
    richer card; this one is a summary that links out. */
-.f-kit ul { list-style: none; font-size: 14.5px; color: var(--ink-2); line-height: 1.75; margin-top: 10px; flex: 1; padding: 0; }
+/* The one-line audience frame, added 2026-09-01. Display face rather than the
+   body sans, because it is a statement the card makes and not a caption on it.
+   ONE LINE. The void it helps fill was 300px and the temptation is to fill that
+   with a spec block; a card that looks unfinished is not fixed by making the
+   reader work harder (Keith). The photograph does the filling, this does the
+   choosing. */
+.f-kwho {
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
+  font-size: 17px; line-height: 1.35; letter-spacing: -0.01em;
+  color: var(--ink); margin-top: 12px; max-width: 24ch;
+}
+.f-kit ul { list-style: none; font-size: 14.5px; color: var(--ink-2); line-height: 1.75; margin-top: 14px; flex: 1; padding: 0; }
 .f-kit .f-kprice {
   font-family: var(--font-mono); font-size-adjust: none;
   font-size: 32px; font-weight: 700; letter-spacing: -0.04em; margin-top: 16px;
@@ -1451,4 +1632,51 @@
 .f-quotecard blockquote {
   font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: 16.5px; line-height: 1.55; font-style: italic; color: var(--ink-2);
+}
+
+/* ============================================================================
+   FOCUS. Added 2026-08-31 after a critique measured ZERO :focus-visible rules
+   and ZERO `outline: none` rules across all 1322 rules on every F route. Nothing
+   was suppressing the ring, so the UA default shipped: visible in principle, and
+   on the ink-filled pill CTA it is dark-on-dark and effectively invisible.
+   Two rings, because one colour cannot serve both grounds. Ink on light, paper
+   on ink. offset keeps the ring clear of the pill's own edge, and `inherit` on
+   the radius means it traces the shape rather than boxing it.
+   ============================================================================ */
+.f-page :focus-visible,
+.f-cookiewrap :focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: inherit;
+}
+.f-page .f-btn:not(.f-btn-ghost):focus-visible,
+.f-cookieacts .f-btn:not(.f-btn-ghost):focus-visible,
+.f-core-dark :focus-visible,
+.f-invert :focus-visible,
+.f-navshell .f-btn:focus-visible {
+  outline-color: var(--paper);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(10, 11, 13, 0.55);
+}
+
+/* TAP TARGETS. WCAG 2.2 SC 2.5.8 asks for 24x24 CSS px. Measured 2026-08-31:
+   12 footer links rendered 22px tall on every route and 4 nav links 18px at
+   desktop. Padding rather than min-height, so the hit area grows without moving
+   the text off its baseline grid; negative margin-inline keeps the visual
+   left edge of a footer column exactly where it was. */
+.f-page .f-navlinks a,
+.f-page .f-navlogin {
+  padding-block: 4px;
+}
+/* .f-cookielink is deliberately NOT in this list. WCAG 2.2 SC 2.5.8 exempts an
+   Inline target, one "in a sentence or whose size is constrained by the
+   line-height of non-target text", and the cookie-policy link is exactly that.
+   Padding it also grew the consent banner by 6px, which pushed it back over the
+   /kits hero CTA: a tap-target fix that re-broke a blocked-CTA fix. The two
+   constraints are coupled through the banner's height, so anything that changes
+   its layout has to be re-measured against the CTA collision. */
+.f-foot ul a,
+.f-foot ul .f-footlink {
+  display: inline-block;
+  padding-block: 3px;
 }

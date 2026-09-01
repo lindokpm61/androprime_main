@@ -143,12 +143,12 @@ const kitsSchema = {
 export const metadata: Metadata = {
   title: 'Men’s Health Blood Tests at Home (UK)',
   description:
-    'At-home men’s health blood tests. Three kits: testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 days.',
+    'At-home men’s health blood tests. Three kits: testosterone, energy and recovery, or the full picture. UKAS ISO 15189 lab. Results in 2 to 5 days.',
   alternates: { canonical: 'https://andro-prime.com/kits' },
   openGraph: {
     title: 'Men’s Health Blood Tests at Home (UK) | Andro Prime',
     description:
-      'Men’s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
+      'Men’s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
     url: 'https://andro-prime.com/kits',
     type: 'website',
     images: [
@@ -164,7 +164,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Men’s Health Blood Tests at Home (UK) | Andro Prime',
     description:
-      'Men’s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS accredited lab. Results in 2 to 5 working days.',
+      'Men’s health blood tests you take at home. Three kits covering testosterone, energy and recovery, or the full picture. UKAS ISO 15189 accredited lab. Results in 2 to 5 working days.',
   },
 }
 
@@ -190,7 +190,7 @@ export default function KitsPage() {
             </h1>
             <p className="f-stand" style={{ marginTop: 18 }}>
               Three men&rsquo;s health blood tests you take at home. Each one gives you specific
-              results from a UKAS accredited lab, delivered in plain English, with a clear next step
+              results from a UKAS ISO 15189 accredited lab, delivered in plain English, with a clear next step
               based on what your data actually shows. No GP referral needed.
             </p>
             <div className="f-btns" style={{ marginTop: 24 }}>

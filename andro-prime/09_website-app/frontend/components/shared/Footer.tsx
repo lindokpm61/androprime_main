@@ -74,7 +74,10 @@ export function Footer() {
 
             {/* Diagnostics column */}
             <div>
-              <h4>Diagnostics</h4>
+              {/* h3, not h4: the page's last heading is an h2, so h4 skipped a level on
+                  every route on the site. The visual size is set by `.f-foot h3, .f-foot h4`
+                  in f-primitives.css and is unchanged. */}
+              <h3>Diagnostics</h3>
               <ul>
                 {diagnosticsLinks.map((link) => (
                   <li key={link.href}>
@@ -86,7 +89,7 @@ export function Footer() {
 
             {/* Company column */}
             <div>
-              <h4>Company</h4>
+              <h3>Company</h3>
               <ul>
                 {companyLinks.map((link) => (
                   <li key={link.href}>

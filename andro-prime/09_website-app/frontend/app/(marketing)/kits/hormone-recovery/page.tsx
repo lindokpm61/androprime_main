@@ -144,7 +144,7 @@ const kitSchema = {
 
 export const metadata: Metadata = {
   title: "Men's Health Blood Test at Home: 9 Markers",
-  description: "Men's health blood test you take at home. All 9 markers: full testosterone panel plus energy, recovery and inflammation. UKAS accredited lab. £179.",
+  description: "Men's health blood test you take at home. All 9 markers: testosterone panel plus energy, recovery and inflammation. UKAS ISO 15189 accredited lab. £179.",
   alternates: { canonical: 'https://andro-prime.com/kits/hormone-recovery' },
   openGraph: {
     title: "Men's Health Blood Test at Home: 9 Markers | Andro Prime",

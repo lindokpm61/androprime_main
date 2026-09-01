@@ -175,6 +175,13 @@ export function Nav({
   const isLogoutCta = variant === 'app'
 
   return (
+    /* The <header> banner landmark. Measured 2026-08-31: the site had 1 <main>,
+       1 <nav> and 1 <footer> but ZERO <header> on all six F routes. Wrapping
+       rather than renaming, because the mobile drawer sits outside .f-navshell
+       and carries nav links of its own, so <nav> has to stay where it is. The
+       wrapper is unclassed and .f-nav is position:fixed, so it adds a zero-height
+       block to the flow and changes nothing visually. */
+    <header>
     <nav aria-label="Primary" className="f-nav f-page">
       <div className={`f-navshell${scrolled ? ' f-scrolled' : ''}`}>
 
@@ -291,5 +298,6 @@ export function Nav({
         </div>
       )}
     </nav>
+    </header>
   )
 }

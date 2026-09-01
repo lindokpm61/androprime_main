@@ -118,7 +118,7 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
               <div className="font-sans font-black text-5xl text-white/20 mb-6 leading-none">03</div>
               <h3 className="font-sans font-black text-lg uppercase tracking-tight text-white mb-3">Results in 2 to 5 working days</h3>
               <p className="font-serif text-sm text-gray-400 leading-relaxed">
-                Our UKAS accredited lab processes your sample. Results go to your dashboard with a plain-English explanation and a specific next step.
+                Our UKAS ISO 15189 accredited lab processes your sample. Results go to your dashboard with a plain-English explanation and a specific next step.
               </p>
             </div>
           </div>

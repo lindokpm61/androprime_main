@@ -186,8 +186,11 @@ export default function HowItWorksPage() {
     <div className="f-page">
       <JsonLd data={howItWorksSchema} />
 
-      {/* ---------- HERO ---------- */}
-      <section className="f-wrap f-sec">
+      {/* ---------- HERO ----------
+          f-sec-hero, not plain f-sec: this hero is not viewport-height, so it
+          gives back its top padding while the consent banner is up. Without it
+          both hero CTAs sat 83% under the banner at 390. */}
+      <section className="f-wrap f-sec f-sec-hero">
         <div className="f-rise">
           <div className="f-btns" style={{ marginBottom: 18 }}>
             <span className="f-eyebrow"><i />Methodology</span>

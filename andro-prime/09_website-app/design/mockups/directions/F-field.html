@@ -560,7 +560,7 @@ h2.hd{font-size:clamp(28px,6.6vw,50px);margin-top:14px;max-width:19ch;font-weigh
                  lab band  8.64 -> 24.7%,  29.00 -> 82.9%,  width 58.2%
                  our normal  12 -> 34.3%,     20 -> 57.1%,  width 22.8%
                  marker    14.2 -> 40.6% -->
-            <div class="mk">
+            <div class="mk split">
               <div class="mk-t">
                 <div class="mk-n">Testosterone <small>total</small></div>
                 <div class="mk-v mono">14.2<i>nmol/L</i></div>
@@ -570,7 +570,19 @@ h2.hd{font-size:clamp(28px,6.6vw,50px);margin-top:14px;max-width:19ch;font-weigh
                 <div class="band ours"  style="left:34.3%;width:22.8%"></div>
                 <div class="you" style="left:40.6%"></div>
               </div>
-              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Normal</span></div>
+<!-- 🔴 BACK-PATCHED 2026-08-31, and the reason matters more than the edit.
+     This file said Normal / Borderline in its verdict column. That vocabulary was
+     RETIRED on 2026-08-17 after a compliance pre-flight caught it on
+     /kits/hormone-recovery: the product's customer-facing words come from
+     lib/results/resultSeverity.ts and are In range / Monitor / Action Needed /
+     Not interpreted. The code was corrected on the page the pre-flight was
+     pointed at; this file was not, and /kits/testosterone was not either.
+     Two weeks later the homepage was ported FROM HERE and reintroduced the
+     retired words in all four rows.
+     A correction applied downstream of a mockup does not travel back up it. If
+     you fix a ported component in code, fix it here in the same change, or the
+     next port brings the defect back. -->
+              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Monitor</span></div>
             </div>
 
             <!-- VITAMIN D (25-OH). thresholds.md: <25 -> GP, <50 low, 50-250 normal,
@@ -589,7 +601,7 @@ h2.hd{font-size:clamp(28px,6.6vw,50px);margin-top:14px;max-width:19ch;font-weigh
                 <div class="band ours" style="left:20%;width:80%"></div>
                 <div class="you" style="left:23.2%"></div>
               </div>
-              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Normal</span></div>
+              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">In range</span></div>
             </div>
 
             <!-- ACTIVE B12 (holo-TC). thresholds.md: NICE NG239 three-band,
@@ -611,7 +623,7 @@ h2.hd{font-size:clamp(28px,6.6vw,50px);margin-top:14px;max-width:19ch;font-weigh
                 <div class="band ours" style="left:25%;width:45%"></div>
                 <div class="you" style="left:45%"></div>
               </div>
-              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Borderline</span></div>
+              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Monitor</span></div>
             </div>
 
             <!-- FERRITIN. thresholds.md: <30 -> GP, 30-100 borderline / indeterminate
@@ -632,12 +644,12 @@ h2.hd{font-size:clamp(28px,6.6vw,50px);margin-top:14px;max-width:19ch;font-weigh
                 <div class="band ours" style="left:6.7%;width:15.5%"></div>
                 <div class="you" style="left:13.8%"></div>
               </div>
-              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Borderline</span></div>
+              <div class="verd mono"><span class="v-lab">Lab normal</span><span class="v-ours">Monitor</span></div>
             </div>
 
           </div>
           <div class="ro-f">
-            Two of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>borderline</b>. That is not a diagnosis. It is the context a bare number does not carry.
+            Three of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>monitor</b>. That is not a diagnosis. It is the context a bare number does not carry.
           </div>
         </div></div>
       </div>

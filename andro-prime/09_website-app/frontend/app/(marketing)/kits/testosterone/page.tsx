@@ -122,7 +122,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Testosterone Blood Test at Home (UK) | Andro Prime',
-    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, and Free T. UKAS accredited. Results in 2 to 5 working days. £99.',
+    description: 'At-home testosterone blood test. Total T, SHBG, FAI, Albumin, Free T. UKAS ISO 15189 accredited. Results in 2 to 5 working days. £99.',
     images: ['/og/default.png'],
   },
 }
@@ -147,11 +147,22 @@ const SAMPLE_ROWS: {
   band: 'ok' | 'warn' | null
   width: string | null
 }[] = [
-  { label: 'Total testosterone', sub: 'Your baseline level', value: '14.2', unit: 'nmol/L', status: 'Borderline', band: 'warn', width: '35%' },
-  { label: 'SHBG', sub: 'Binding globulin', value: '38.5', unit: 'nmol/L', status: 'Normal', band: 'ok', width: '55%' },
+  // 12 to 20 is our normal band and the state `normal-testosterone`, which badges Monitor.
+  { label: 'Total testosterone', sub: 'Your baseline level', value: '14.2', unit: 'nmol/L', status: 'Monitor', band: 'warn', width: '35%' },
+  { label: 'SHBG', sub: 'Binding globulin', value: '38.5', unit: 'nmol/L', status: 'In range', band: 'ok', width: '55%' },
   { label: 'Free androgen index', sub: FAI_REPORT_ONLY.sub, value: '36.9', unit: '%', status: FAI_REPORT_ONLY.badge, band: null, width: null },
-  { label: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'Normal', band: 'ok', width: '65%' },
-  { label: 'Free testosterone', sub: 'What your body can actually use', value: '0.244', unit: 'nmol/L', status: 'Low', band: 'warn', width: '15%' },
+  { label: 'Albumin', sub: 'Transport protein', value: '42.0', unit: 'g/L', status: 'In range', band: 'ok', width: '65%' },
+  // 🔴 2026-08-31: this row was a WRONG VERDICT, not just a retired word. It read
+  // "Low" on a warn bar, and a coloured bar IS a verdict. thresholds.md line 59
+  // puts the Free Testosterone reference at 0.1980-0.6190 nmol/L and classifier.ts
+  // returns `ft-low` only when value < referenceLow. 0.244 is above it (and above
+  // the 0.225 fixed anchor too), so the engine returns `ft-normal`, which badges
+  // In range on an ok bar. The page was asserting a deficiency the engine does
+  // not find.
+  // ⚠ `width` is left at 15% deliberately: re-deriving bar geometry is a separate
+  // change and moving a number without its arithmetic is the exact failure this
+  // file's header warns about. Flagged for Keith.
+  { label: 'Free testosterone', sub: 'What your body can actually use', value: '0.244', unit: 'nmol/L', status: 'In range', band: 'ok', width: '15%' },
 ]
 
 const BIOMARKERS = [
@@ -186,8 +197,16 @@ export default function KitTestosteronePage() {
     <div className="f-page">
       <JsonLd data={kitSchema} />
 
-      {/* ---------------- HERO ---------------- */}
-      <div className="f-wrap" style={{ paddingTop: 62, paddingBottom: 44 }}>
+      {/* ---------------- HERO ----------------
+          paddingTop moved off the inline style and onto f-sec-hero so the hero
+          gives it back while the consent banner is up: at 390 the "Order the
+          kit" button sat 78% under the banner. --f-hero-pt carries the 62 the
+          inline style used to set, and an inline style could not have been
+          overridden by the class. */}
+      <div
+        className="f-wrap f-sec-hero"
+        style={{ ['--f-hero-pt' as string]: '62px', ['--f-hero-pt-lg' as string]: '62px', paddingBottom: 44 }}
+      >
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-11 lg:items-start">
           <div>
             <div className="f-eyebrow mb-5"><i />Kit 01 // Testosterone</div>

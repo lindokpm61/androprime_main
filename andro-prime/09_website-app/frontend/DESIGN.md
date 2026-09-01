@@ -14,11 +14,11 @@ colors:
   flag: "#E0A458"
   flag-f: "rgba(224, 164, 88, 0.14)"
   flag-f2: "rgba(224, 164, 88, 0.26)"
-  lab: "rgba(10, 11, 13, 0.13)"
-  ours: "rgba(10, 11, 13, 0.30)"
-  status-optimal: "#059669"
-  status-warning: "#d97706"
-  status-critical: "#b91c1c"
+  lab: "rgba(10, 11, 13, 0.20)"
+  ours: "rgba(10, 11, 13, 0.60)"
+  color-status-optimal: "#059669"
+  color-status-warning: "#d97706"
+  color-status-critical: "#b91c1c"
 typography:
   display:
     fontFamily: "var(--font-newsreader), Georgia, 'Times New Roman', serif"
@@ -290,11 +290,44 @@ pill. 🔴 **Every band position is arithmetic from `04_products/results-engine/
 working is written beside each row in the page source. A value moved without re-deriving its
 percentage is a page that contradicts the results engine.**
 
+🔴 **Three properties of this component are load-bearing and were all added on 2026-08-31 after a
+critique measured the instrument as illegible. Do not tune them back toward the direction's
+drawing without re-measuring.**
+
+1. **The opacities are 0.20 and 0.60, not the direction's 0.13 and 0.30.** As drawn, the lab band
+   measured **1.32:1** against the track and the two bands **1.51:1** against each other, on the one
+   graphic that carries the argument of the homepage, for a readership PRODUCT.md puts at 40 and
+   above. Now lab↔ours is **3.17:1** and ours↔track **4.89:1**. lab↔track remains 1.55:1 and cannot
+   be fixed chromatically: three distinguishable zones on a light track cannot all clear 3:1
+   pairwise without taking the bands to near-black, so the lab band carries a 1px inset ring and
+   holds its extent by edge rather than by fill.
+2. **The ours band is inset 2px vertically**, so it nests inside the full-height lab band wherever
+   they overlap. This is not decoration. Where the two ranges COINCIDE exactly, which is true of
+   Vitamin D because both run 50 to 250, an equal-height ours band covered the lab band perfectly
+   and the row rendered as **one** band directly under a heading reading "Two ranges." A ring on the
+   lab band alone did not fix it, because the ours band paints later and covered the ring too:
+   height is the only axis the ours band cannot cover. It also earns its keep on every other row,
+   since our band sitting inside the lab's IS the argument, and the geometry now says so.
+3. **The value marker is a cased needle, not a fill (2026-09-01).** 3px ink core, 1.5px paper
+   casing, 22px tall in a 12px track so 10px of it stands proud over white page. It exists because
+   raising `--ours` in step 1 took solid ink on that band from about 8:1 down to **3.31:1** and the
+   marker nearly vanished: fixing lab-vs-ours had traded away marker-vs-ours. Lightening the band
+   again would only swap the defect back, so the marker stopped being a fill that competes with its
+   ground and became an object carrying its own contrast. Measured: casing against the dark band
+   **5.94:1**, core against casing 19.69:1, core against the lab band 10.45:1, core against paper
+   19.69:1. `.f-track` therefore has **no `overflow: hidden`** (it was clipping the very overhang the
+   marker is declared to have); that is safe only because every band carries its own
+   `border-radius: 999px` and no band's left+width exceeds 100%. **Check that before adding a row.**
+4. **The key (`.f-ro-k`) is required.** The instrument shipped with four rows of two unlabelled greys
+   and no legend, so the chart asked the reader to infer the mapping and hold it across every row,
+   from a paragraph that stacks BELOW the chart on mobile. Track height went 10px to 12px in the
+   same pass.
+
 **Photography.** `.f-shot`, greyscale at rest easing toward colour on tray hover, with a frosted
 caption pill. Greyscale is not decoration: it stops photography competing with the single accent the
 system allows.
 
-**The hero film.** A silent, half-speed, crossfade-looped clip under a 90%-to-26% white wash, so it
+**The hero film.** A silent, looping clip under a 90%-to-26% white wash, so it
 reads as the ground moving rather than as a picture and the headline stays dark ink on light. 🔴 The
 gate is a `media` attribute on the `<source>`, NOT `display: none` in CSS: hiding a video still
 downloads and decodes it.
@@ -322,9 +355,13 @@ downloads and decodes it.
 
 **Don't**
 
-- **Don't remove the mono eyebrow above section headings.** Generic anti-slop guidance bans a kicker
-  above a heading outright. This system uses one on every section, in the approved direction and all
-  13 frames. It is the committed world and it overrides that ban.
+- **Don't remove the mono eyebrow where a page already uses one.** `.f-eyebrow` is a real component
+  and generic anti-slop guidance would ban it, so where it appears it stays. ⚠ **Corrected
+  2026-08-31:** this rule previously said the system "uses one on every section, in the approved
+  direction and all 13 frames." That is false of the approved direction itself, which defines
+  `.eyebrow` and uses it **zero** times across its 7 sections and 6 h2s, and the homepage correctly
+  has none. The rule as written would have instructed a future pass to ADD a component the direction
+  never used. Take usage from the page, not from this sentence.
 - **Don't flatten the radius to 12 to 16px, and don't collapse the ring-plus-shadow double bezel.**
   Both are rulings, both are the signature, and both read as generic-guidance violations.
 - Don't add a hard offset shadow, a gradient, glass, or a colour gradient of any kind.
@@ -353,12 +390,13 @@ Recorded so they are not rediscovered as surprises.
    dark token values. Blocked by the shared chrome: 25 marketing routes wear the F nav and footer and
    only 5 are Direction F, so enabling it would give 20 V2.0 pages a dark shell around light content.
    Unblocks when the F rebuild covers the marketing surface.
-2. 🟠 **`.f-spec-k` fails contrast.** `--ink-3` on `--sunk` at 10px is 4.1:1 against a 4.5:1 floor, on
-   12 instances. The token is correct and the pairing is wrong: the direction defines `--ink-3` as
-   the functional-text floor **on paper**, not on a recessed well.
-3. 🟠 **No `:focus-visible` styling exists in the F layer.** Nothing sets `outline: none`, so the
-   browser default ring shows. Focus is visible but undesigned. This is now the most visible
-   remaining interaction gap, since hover has been restored everywhere and focus has not.
+2. ✅ **CLOSED 2026-08-31. `.f-spec-k` contrast.** Was `--ink-3` on `--sunk` at 10px, 4.1:1 on 12
+   instances. Now `--ink-2` at 11px, measured **6.78:1**. The token was never wrong; the pairing was,
+   because `--ink-3` is the functional-text floor **on paper** and not on a recessed well.
+3. ✅ **CLOSED 2026-08-31. Focus is designed.** Two rings, because one colour cannot serve both
+   grounds: ink on light, paper plus a dark halo on ink fills and inverted panels. Verified 7
+   `:focus-visible` rules and still 0 `outline: none` on all six routes. The ink-filled pill CTA,
+   where the UA default ring was dark-on-dark and effectively invisible, now shows a white ring.
 6. 🔴 **CA-045 gates the homepage imagery and is OPEN.** Five generated photographs and the hero film
    ship in `public/home/`. Signers are Ewa and Keith. The gate's own condition is that it arms when a
    direction is built into the site, which has now happened, so it blocks the merge to `main`.
@@ -368,3 +406,22 @@ Recorded so they are not rediscovered as surprises.
 4. 🟠 **`RelatedArticles` is still V2.0** and is the visible seam on every rebuilt page.
 5. ⚠ **The journey frames are owed a sweep** on container width and section rhythm, both of which the
    direction wins. Recorded in the reconciler's `RULED` table meanwhile.
+8. ✅ **CLOSED 2026-08-31. `--flag` is a FILL token, never a glyph.** 32 amber ticks measured
+   **2.18:1** on white and `.f-blab.f-invert-lab` **3.95:1** on ink. Ticks are now `--ink-2`
+   (**8.24:1**) and the inverted label is white at 0.72 (**19.69:1**). 🔴 **Keep the rule:** `--flag`
+   is designed to carry ink ON TOP of it, which is why the verdict pill measures 9.02:1 and passes.
+   Used as ink it has no contrast to give. It fills the pill, the nav status dot and the footer
+   chips, and nothing else.
+9. ✅ **CLOSED 2026-08-31, on all three surfaces including the mockup.** 8 instances of the retired
+   Normal / Borderline / Low vocabulary, mapped to the engine's own words from
+   `lib/results/resultSeverity.ts`, and `F-field.html` back-patched in the same change so the next
+   port cannot reintroduce it. Two were more than a wrong word: the homepage's testosterone row is a
+   third SPLIT (lab normal, our band Monitor) and was not marked as one, and
+   `/kits/testosterone` asserted free testosterone was **Low on a warn bar** at 0.244 when the
+   reference low is 0.198, so the engine returns `ft-normal` and the page was claiming a deficiency
+   the engine does not find. 🔴 **The remaining half is the scanner:** add the retired word list to
+   the compliance pre-flight, sourced from the engine's label map so the two cannot drift.
+10. ⚠ **`.f-shot-cap` has no measured contrast.** Five instances, `--ink-2` at 12px on `--paper` at
+    78% over uncontrolled photography. Two separate measurement passes got it wrong in opposite
+    directions, one by resolving the wrong ancestor background and one by treating the `color-mix`
+    ground as opaque. Its real ratio is unknown and varies per photograph.
