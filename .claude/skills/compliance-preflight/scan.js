@@ -24,6 +24,10 @@ const fs = require('fs');
 // `compliance-tables.js` for the full reasoning. (Observation 97.)
 const { HARD, REVIEW, NEG } = require('./compliance-tables');
 
+// The results engine's own verdict words, read out of `resultSeverity.ts` at run
+// time rather than typed here. See the header of `badge-labels.js`.
+const { loadBadgeLabels } = require('./badge-labels');
+
 // ── Folded-scalar reconstruction ────────────────────────────────────────────
 // NEG is evaluated per physical line. Inside a YAML block scalar (`>-`, `>`,
 // `|`, `|-`) a single logical sentence is hard-wrapped across several physical
@@ -260,9 +264,98 @@ function stripMarkup(s) {
     .trim();
 }
 
+
+// ── Retired verdict vocabulary ───────────────────────────────────────────
+// A sample-report panel grades a marker: a value, a coloured bar, and a word.
+// The word must be one the results engine would actually return for that state,
+// because a labelled coloured bar IS a verdict, and a verdict the product does
+// not make is a claim nobody signed.
+//
+// The panels are hand-typed strings with nothing enforcing them, which is how
+// they drifted. `StatusBadge` cannot drift, because `BADGES` is an exhaustive
+// `Record<ResultState, BadgeConfig>` and adding a state without deciding its
+// badge fails the build. These panels had no such constraint and reached three
+// surfaces reading Normal / Borderline / Low, a vocabulary that appears nowhere
+// in the engine. Keith retired it on 2026-08-17; the fix was applied to the one
+// page the pre-flight happened to be pointed at, and it was still live on two
+// others and in the direction mockup two weeks later. A finding arrives attached
+// to where the checker happened to look, and treating that location as the scope
+// is the default failure. This is the check that makes the ruling travel.
+//
+// TWO SHAPES, TWO SEVERITIES:
+//
+//  · 🔴 HARD — a verdict FIELD whose value is not one of the engine’s labels.
+//    The allowlist is DERIVED, so this catches the retired words and any future
+//    invented one, with nobody maintaining a blacklist.
+//  · 🟠 REVIEW — a retired verdict word standing alone inside an emphasis tag
+//    ("they read <b>borderline</b>"), which is how the prose instance of the same
+//    defect was written. Emphasis is also ordinary writing, so a human rules and
+//    the gate does not fail.
+//
+// SCOPING, and it is the whole difference between a check and noise. `status:` is
+// a schema key all over this repo (draft / published / scheduled), so it counts as
+// a verdict only on a line shaped like a marker row: one that also carries the bar
+// it colours, or the label and value it grades. `lab:` is deliberately NOT a
+// verdict field — "Lab normal" is the other party’s word, and quoting it is the
+// entire point of the two-range readout.
+const VERDICT_FIELD = /\b(status|ours)\s*[:=]\s*([\x27"])([^\x27"]*)\2/g;
+const VERDICT_HTML = /class\s*=\s*([\x27"])[^\x27"]*\bv-ours\b[^\x27"]*\1\s*>\s*([^<]*?)\s*</g;
+const EMPHASISED = /<(b|strong|em)\b[^>]*>\s*([A-Za-z][A-Za-z -]{2,20}?)\s*<\/\1>/gi;
+
+function isMarkerRow(line) {
+  // WIDTH OF THIS GUARD IS THE WHOLE DETECTOR. Every key it does not know is a
+  // marker row it cannot see, and the miss is silent — the file scans clean.
+  // Both separators, because an object literal writes `band: 'warn'` and a JSX
+  // row writes `band="warn"`; and both naming conventions for the marker, because
+  // the kit pages write `label:` while `app/lp/hormone-recovery` writes `name:`.
+  // That second one was found by running this detector over the repo on the day it
+  // was written: eight live rows on a deployed landing page, invisible to the first
+  // draft of this function for no reason except a synonym.
+  const marker = /\b(label|name)\s*[:=]/.test(line);
+  return /\bband\s*[:=]/.test(line) || (marker && /\bvalue\s*[:=]/.test(line));
+}
+
+function verdictFieldHits(line) {
+  const out = [];
+  const rowish = isMarkerRow(line);
+  let m;
+  VERDICT_FIELD.lastIndex = 0;
+  while ((m = VERDICT_FIELD.exec(line)) !== null) {
+    if (m[1].toLowerCase() === 'status' && !rowish) continue;
+    out.push({ field: m[1], value: m[3], index: m.index });
+  }
+  VERDICT_HTML.lastIndex = 0;
+  while ((m = VERDICT_HTML.exec(line)) !== null) {
+    out.push({ field: 'v-ours', value: m[2], index: m.index });
+  }
+  return out;
+}
+
+function emphasisedRetiredHits(line, retiredLower) {
+  const out = [];
+  let m;
+  EMPHASISED.lastIndex = 0;
+  while ((m = EMPHASISED.exec(line)) !== null) {
+    const w = m[2].trim();
+    if (retiredLower.has(w.toLowerCase())) out.push({ word: w, index: m.index });
+  }
+  return out;
+}
+
 function die(m) { console.error(`ERROR: ${m}`); process.exit(1); }
 const files = process.argv.slice(2);
 if (!files.length) die('usage: node scan.js <file> [<file> ...]');
+
+// Loaded ONCE, and a failure here stops the scanner rather than degrading it.
+// An unreadable allowlist has two silent wrong answers available to it and no
+// right one: empty flags every verdict on every page, permissive clears every
+// one of them. Neither is a safe default, so neither is taken.
+let VERDICTS;
+try { VERDICTS = loadBadgeLabels(); }
+catch (e) { die(`${e.message}\n       The verdict-vocabulary check cannot run, so this scan would be incomplete in a way you could not see.`); }
+const ALLOWED_LIST = [...VERDICTS.labels].map((l) => `"${l}"`).join(', ');
+const RETIRED_LOWER = new Set(VERDICTS.retired.map((r) => r.toLowerCase()));
+const VERDICT_REL = VERDICTS.source.replace(/\\/g, '/').replace(/^.*?\/andro-prime\//, 'andro-prime/');
 
 // A HARD term inside a code comment in a .ts/.tsx/.js source file is NOT
 // customer-facing copy — it never renders — so it must not fail the gate.
@@ -286,7 +379,7 @@ function inCodeComment(line, idx) {
   return open !== -1 && open > close;
 }
 
-let hard = 0, review = 0, comment = 0, scanned = 0, exempted = 0;
+let hard = 0, review = 0, comment = 0, scanned = 0, exempted = 0, verdict = 0;
 for (const f of files) {
   if (!fs.existsSync(f)) { console.log(`SKIP  ${f} (not found)`); continue; }
   const lines = fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n').split('\n');
@@ -372,6 +465,36 @@ for (const f of files) {
       if (!m && hasMarkup) { m = stripped.match(p.re); viaMarkup = m !== null; }
       if (m) { review++; console.log(`\n🟠 REVIEW ${f}:${n + 1}  «${m[0]}»${viaMarkup ? MARKUP_NOTE : ''}\n   ${p.why}\n   ${(viaMarkup ? stripped : text).slice(0, 140)}`); }
     }
+
+    // A verdict field carrying a word the engine does not return.
+    for (const h of verdictFieldHits(ln)) {
+      const v = h.value.trim();
+      if (!v) continue;
+      if (VERDICTS.lower.has(v.toLowerCase())) continue;
+      if (isCode && inCodeComment(ln, h.index)) {
+        comment++;
+        console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${h.field}: ‘${v}’» inside a code comment — not customer-facing, gate NOT failed.\n   ${text.slice(0, 140)}`);
+        continue;
+      }
+      hard++; verdict++;
+      console.log(`\n🔴 HARD  ${f}:${n + 1}  «${h.field}: ‘${v}’» is not a verdict the results engine returns.\n` +
+        `   A marker row grades a number, and a labelled coloured bar IS a verdict — so the only words a sample panel may show are the engine’s own: ${ALLOWED_LIST}.\n` +
+        `   → Use the label \`BADGES\` renders for this marker’s state (${VERDICT_REL}) and name that state in a comment on the row.\n` +
+        `   ${text.slice(0, 140)}`);
+    }
+
+    // The prose shape of the same defect: a retired verdict word, emphasised.
+    for (const h of emphasisedRetiredHits(ln, RETIRED_LOWER)) {
+      if (isCode && inCodeComment(ln, h.index)) {
+        comment++;
+        console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${h.word}» emphasised inside a code comment — gate NOT failed.\n   ${text.slice(0, 140)}`);
+        continue;
+      }
+      review++;
+      console.log(`\n🟠 REVIEW ${f}:${n + 1}  «${h.word}» emphasised on its own — retired verdict vocabulary.\n` +
+        `   This is the prose shape of a grading ("on the action bands our GP approved, they read <b>borderline</b>"). If it grades a marker, use the engine’s word; if it is ordinary prose, it clears here.\n` +
+        `   ${(hasMarkup ? stripped : text).slice(0, 140)}`);
+    }
   });
 
   // A permission that no longer covers anything has outlived the copy it was
@@ -388,6 +511,7 @@ console.log(`\n${'─'.repeat(60)}`);
 console.log(`Scanned ${scanned} file(s).  🔴 HARD: ${hard}   🟠 REVIEW: ${review}   🟡 CODE-COMMENT: ${comment}   🔵 SIGNED EXCEPTION: ${exempted}`);
 if (exempted) console.log(`${exempted} hit(s) cleared by a signed claims-pack exception declared in frontmatter. They did NOT fail the gate. The pack governs the use, so re-read it if the copy around the term has changed.`);
 if (comment) console.log('CODE-COMMENT hits are in source comments (not customer-facing); they do not fail the gate — confirm none is actually a rendered string.');
+if (verdict) console.log(`${verdict} of the HARD hit(s) are verdict-vocabulary: a sample panel graded a marker with a word the results engine does not return. The allowed words are read from ${VERDICT_REL} and change only when the engine changes — do not widen them here.`);
 if (hard) console.log('HARD hits must be removed/replaced before publish (Decision Priority #1).');
 if (review) console.log('REVIEW hits need a human/Ewa decision — do NOT silently rewrite Keith\'s copy.');
 if (!hard && !review) console.log('Deterministic floor clean. Still do the CONTEXT.md judgement pass (EFSA wording, Phase-0 boundary).');

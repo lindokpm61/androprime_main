@@ -273,6 +273,54 @@ itself compliant.** The limits are enforced in code, not by convention:
 term comes out. Suite: `node .claude/skills/compliance-preflight/test-signed-exceptions.js`
 (12 cases, nine of them adversarial). (Observation 32.)
 
+#### 2d-ii. A SAMPLE-REPORT PANEL is graded against the engine, not against English
+
+A sample panel on a marketing page grades a marker: a value, a coloured bar and a
+word. **The word is a verdict, and a coloured bar is a verdict even when nobody
+thinks of it as copy.** So the only words a panel may use are the ones
+`lib/results/resultSeverity.ts` would actually return for that state. Anything
+else claims something about a number that the product does not claim.
+
+The scanner now enforces this, and the allowlist is **derived from the engine at
+run time** rather than typed into the skill:
+
+| | |
+| --- | --- |
+| Allowed words | read out of `BADGES` in `andro-prime/09_website-app/frontend/lib/results/resultSeverity.ts` |
+| Verdict fields | `status:` / `status=` on a marker-row line, `ours:`, and a `v-ours` span in a mockup |
+| Marker-row line | one that also carries `band:` or `label:`/`name:` **and** `value:` |
+| Not a verdict field | `lab:` and `v-lab` — "Lab normal" is the other party’s word, and quoting it is the point of the two-range readout |
+| 🔴 HARD | a verdict field carrying a word the engine does not return |
+| 🟠 REVIEW | a retired verdict word alone inside `<b>`/`<strong>`/`<em>` — the prose shape of the same defect |
+
+Suite: `node .claude/skills/compliance-preflight/test-verdict-vocabulary.js`
+(49 cases, over half of them negative). Vocabulary loader:
+`badge-labels.js`, which **throws rather than degrading** — an allowlist that
+silently came back empty would flag every verdict on every page, and one that
+silently came back permissive would clear every one of them.
+
+**Why it is derived and not a word list.** Keith retired Normal / Borderline / Low
+on 2026-08-17 and the fix reached the single page the pre-flight happened to be
+pointed at. Two weeks later the vocabulary was still live on `/`, on
+`/kits/testosterone` and in the direction mockup, and one instance was worse than
+a wrong word: `/kits/testosterone` asserted free testosterone was "Low" on a warn
+bar at 0.244, where `classifier.ts` returns `ft-low` only below the lab’s
+referenceLow. The page claimed a deficiency the engine does not find, in colour.
+**A finding arrives attached to where the checker happened to look, and treating
+that location as the scope is the default failure.** A derived allowlist also
+catches invented words nobody has used yet, which a blacklist by construction
+cannot.
+
+⚠ **The guard’s width is the whole detector, and every key it does not know is a
+silent miss.** The first draft recognised `label:` only; running it over the repo
+the same day found eight live rows on `app/lp/hormone-recovery`, which writes
+`name:`. If a panel scans clean, check that its marker key is one of the ones
+listed above before believing the result.
+
+⚠ The check judges **string literals only**. `status: FAI_REPORT_ONLY.badgeShort`
+is deliberately not flagged: a reference to a constant cannot drift from the
+constant, which is the outcome the rule wants.
+
 #### 2e. FRAGMENT COPY is checked against its source, never on its own
 
 A carousel slide, a hook, a spoken script line and a short post are **compressions
