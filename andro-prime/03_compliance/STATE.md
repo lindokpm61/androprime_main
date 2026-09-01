@@ -8,6 +8,33 @@ the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1
 
 ---
 
+## 🔵 CA-045: scope ruled, and the row now covers eight assets (2026-09-01)
+
+**KEITH'S RULING, 2026-09-01: CA-045 governs SHIPPING, not creating.** New imagery may be generated
+and built during design work on a branch that deploys nothing; it must be registered on this row and
+signed before merge. This corrects an over-strict reading in the same session, which treated the open
+gate as forbidding creation and twice stated that as a hard blocker. **The merge blocker is unchanged:
+`redesign/direction-f` cannot reach `main` until this row signs.** Signers remain Ewa and Keith.
+
+**Two new generated photographs added to the row**, `09_website-app/frontend/public/home/img-6.jpg`
+and `img-7.jpg` (gpt_image_2 via Higgsfield, 2k). They ship on the `/` kit cards for Kit 1 and Kit 2.
+Both were briefed to contain **no clinic, no blood, no sample and no medical object**, deliberately,
+so they clear the judgement pass more easily than the five inherited from D rather than adding risk.
+
+🔴 **Two things the row now records that it did not:**
+
+1. **The "four of five judgement questions already evidenced" line does NOT describe the
+   photographs.** It was established on the hero FILM frame. `img-3` is captioned in its own alt text
+   as "a man's hands at a kitchen table holding a small plain sample collection tube", which is
+   people, hands AND a sample. Those three questions are **open** for the seven photographs, not
+   evidenced. This is the single most likely thing to be misread when the packet goes to Ewa.
+2. ⚠ **`img-7`'s trainers carry a logo-like mark.** Generated, not a real brand, but it is a
+   trademark question rather than a clinical one and wants a look before signing. Cheap to inpaint
+   out if Keith would rather not have the conversation.
+
+**Owed: the sign-off packet to Ewa.** Not drafted this session. It is now the only blocker on the
+whole Direction F branch.
+
 ## 🔴 CA-045 HAS ARMED: the F homepage is built, imagery included (2026-08-31)
 
 **The gate's own condition was "when a direction is built into the site." That happened today.** The
