@@ -48,6 +48,32 @@ directory. The rule now covers both, mechanically, on every run.
 and its threshold, with the state named in a comment on the row (the convention the kit pages
 adopted on 2026-08-17). Then a pre-flight on both pages. Keith’s call whether it ships before or
 with the Direction F merge.
+## 🟡 OPEN against CA-045: is the hero data field a data display, or texture? (2026-09-02)
+
+Layer 3 of the Direction F hero is now built: a canvas of **real range geometry from
+`04_products/results-engine/thresholds.md`**, six markers repeated down the hero, drifting slowly
+behind the headline. **Built on `redesign/direction-f`, which deploys nothing.** Keith’s 2026-09-01
+ruling applies: the gate governs SHIPPING, not creating. **This must be answered before merge.**
+
+**The question, stated plainly.** Every band the field draws is a real percentage. Nothing is
+labelled, no marker is named, no number appears, and at 0.34 opacity behind a vertical mask, with a
+further per-row fade near the headline, no individual band is readable as a value. **Our reading is
+that it is texture whose generative source happens to be real, rather than a data display.** That
+reading is not ours to ratify.
+
+🔴 **Two of the six rows are markers the page does not otherwise show**, hs-CRP and SHBG. On a page
+whose readout draws four, the field draws six. Nothing identifies them, but it is the asymmetry most
+likely to matter to a reviewer, so it is named rather than left to be discovered.
+
+**What is already mechanical.** `scripts/verify-hero-field.js` asserts the four shared markers’
+geometry equals the homepage readout’s, because the field is deliberately illegible and drift would
+therefore be invisible: the page would look identical while "every band is a real percentage" quietly
+stopped being true. 14 assertions, passing. hs-CRP and SHBG cannot be checked that way and are part
+of this question.
+
+**Routing.** It sits with CA-045 rather than opening its own gate: same surface, same hero, same
+signers (Ewa and Keith), and the register row already covers the film and eight images. Add it to
+that row rather than creating CA-046, unless Ewa asks for it separately.
 ## 🔵 CA-045: scope ruled, and the row now covers eight assets (2026-09-01)
 
 **KEITH'S RULING, 2026-09-01: CA-045 governs SHIPPING, not creating.** New imagery may be generated

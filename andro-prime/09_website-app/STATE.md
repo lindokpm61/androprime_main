@@ -57,6 +57,66 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ The hero data field is ported, the last unported layer of the direction (2026-09-02)
+
+Layer 3 of the hero, left out of the F build on 2026-08-31 with the reason recorded as "a data
+surface rather than a decoration". Keith took it. **Real range geometry from `thresholds.md`, six
+markers repeated down the hero, drifting slowly behind the type and abstracted until it reads as
+texture: no labels, no numbers, nothing legible.**
+
+It is the most distinctive thing in the direction and the answer to "what makes this page ours" that
+needs no explaining: the hero is made out of the product’s own data.
+
+### 🔴 The compliance question is OPEN, recorded, and not self-cleared
+
+Full statement in `03_compliance/STATE.md` (2026-09-02), filed against CA-045. In short: nothing is
+labelled, named or readable, so our reading is texture-whose-source-is-real rather than a data
+display, **and that reading is not ours to ratify.** Two of the six rows, hs-CRP and SHBG, are
+markers the page does not otherwise show, which is the asymmetry most likely to matter to a reviewer.
+
+**Safe to build, gated to merge.** Keith’s 2026-09-01 ruling that CA-045 governs shipping rather than
+creating is exactly the case this is.
+
+### 🔴 The claim that justifies it is now mechanical
+
+The only thing making this layer defensible is that every band is a real percentage. **The field is
+deliberately illegible, so drift between it and the readout would be invisible**: the page would look
+identical while the claim quietly stopped being true, with no visual regression and no failing test.
+So the geometry lives in `lib/home/fieldRows.ts` and `scripts/verify-hero-field.js` asserts the four
+shared markers equal the homepage readout’s, parsed from the page’s own literal. 14 assertions. It
+also asserts the COUNT of compared markers, so silently dropping a row from either side, which would
+make every remaining comparison pass, cannot read as success.
+
+### Three deliberate departures from the direction’s script
+
+1. **It stops when nobody is looking.** The direction runs its `requestAnimationFrame` for the life
+   of the page. This pauses when the hero leaves the viewport and when the tab is hidden. An
+   unthrottled loop all session is a real battery cost, and this is a decoration: the readout’s
+   draw-in earns its frames because it carries the argument, and this does not.
+2. **No `prefers-color-scheme` listener.** The app has no dark mode, so that would be a listener for
+   a capability that does not exist, which is the same criticism DESIGN.md already records against
+   the film’s ported dark treatment.
+3. **Reduced motion paints one frame and stops**, as the direction does, and it is now asserted
+   rather than assumed, because the failure mode is invisible: a loop still running under reduced
+   motion looks identical in a screenshot. Sampled the canvas twice 1.4s apart: **identical under
+   reduced motion, different under normal.**
+
+⚠ **z-index 1, above the film AND its wash.** The wash runs 90% white at the left edge, which is
+where the headline sits, so a field underneath it would simply not exist for the first third of the
+hero. It is a foreground texture over the photography, not another thing beneath it.
+
+⚠ **The pseudo-randomness is deterministic on purpose** (`i*37 % 11`, and so on), so a screenshot of
+this hero is repeatable. Replacing it with `Math.random` would make every visual check on this page
+fail at random.
+
+### Verification
+
+tsc 0, `next build` 0 with dev stopped. 14/14 on `verify-hero-field.js`. Canvas confirmed painting at
+2880x1688 with z-index 1, opacity 0.34 and the mask applied, under both motion settings. Hero
+screenshotted at 1440 in both.
+
+🔵 **Layer 2, the drifting measurement rule, is still not ported.** It is the last piece of the hero
+the direction has and the build does not.
 ## ✅ Prose is no longer contained: 12 cards to 5, and the empty-card defect is dissolved (2026-09-02)
 
 The third and largest of the three distinctiveness moves, and the one that most changes the register.

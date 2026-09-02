@@ -1490,6 +1490,29 @@
   padding-top: 26px;
   padding-bottom: calc(34px + var(--f-consent-h, 0px));
 }
+/* ---------- THE HERO FIELD ----------
+   Layer 3, ported 2026-09-02 from directions/F-field.html:303-307. A canvas of
+   real range geometry from thresholds.md, repeated down the hero and abstracted
+   until it is texture: no labels, no numbers, nothing legible.
+
+   🔴 z-index 1, ABOVE the film and its wash, below `.f-hero-in`. The wash runs
+   90% white at the left edge, so a field underneath it would simply not exist
+   for the first third of the hero, which is where the headline sits. It is a
+   foreground texture over the photography, not another thing beneath it.
+
+   The vertical mask is the direction’s own: the field fades in by 14% and out
+   by 74%, so it never collides with the nav above it or the scroll hint below.
+   Combined with the 0.34 opacity and the per-row fade the canvas applies near
+   the headline band, the type keeps its contrast over a moving ground. */
+.f-field {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none; overflow: hidden;
+  opacity: 0.34;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 74%, transparent 98%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 74%, transparent 98%);
+}
+.f-field canvas { display: block; width: 100%; height: 100%; }
+
 .f-hero-in { position: relative; z-index: 2; }
 
 /* ---------- BENTO ----------

@@ -499,7 +499,7 @@ at all, and it is what makes the reduced-motion fallback honest rather than a de
 | **Readout draw-in** | lab band scales across the track, ours trails by 140ms, the value marker lands at 500ms; rows cascade 110ms apart via `--d` | IntersectionObserver, 35% |
 | **Hover** | tray and button lift to `--shadow-ambient-lift`, arrow pip nudges, photo greyscale eases to 0.72 | pointer |
 | Hero stagger | `mask-rise` / `fade-up` on headline, sub and CTAs | NOT PORTED |
-| Hero canvas data-field | six real marker rows drifting as texture | NOT PORTED, deliberately: it is a data surface with a compliance question, not a decoration |
+| **Hero data field** | six rows of real range geometry drifting behind the type, masked and at 0.34 | PORTED 2026-09-02. Runs only while the hero is on screen and the tab is visible. 🔴 Its compliance question is OPEN against CA-045 |
 
 🔴 **Observers, never a scroll listener.** A scroll handler runs on the main thread on every frame of
 every scroll for the life of the page. An observer costs nothing once fired, and each target is

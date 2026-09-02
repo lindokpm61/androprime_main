@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { PRICING } from '@/lib/pricing'
 import { SectionRule, Marginalia } from '@/components/marketing/SectionRule'
+import { HeroField } from '@/components/marketing/HeroField'
 
 /*
  * REBUILT IN DIRECTION F, 2026-08-31.
@@ -268,16 +269,27 @@ export default function HomePage() {
           not a picture, and not a dark hero: greyscaled under a white wash so
           the headline stays dark ink on light.
 
-          Still NOT ported, layers 2 and 3: the drifting measurement rule and the
-          canvas data-field. The field animates real percentages from
-          thresholds.md at three depths, which is a data surface rather than a
-          decoration and wants its own pass with the numbers checked.
+          LAYER 3, THE DATA FIELD, IS PORTED (2026-09-02). Real range geometry
+          from thresholds.md drifting behind the type, abstracted until it reads
+          as texture. 🔴 Its compliance question is OPEN and recorded against
+          CA-045 in 03_compliance/STATE.md: nothing is labelled, named or
+          legible, so it reads as texture whose source happens to be real, but
+          that is not a reading we may ratify ourselves. Safe to build on a
+          branch that deploys nothing (Keith, 2026-09-01: the gate governs
+          shipping, not creating); it must be answered before merge.
+
+          Still NOT ported, layer 2: the drifting measurement rule.
 
           🔴 The film is inside CA-045 with the five photographs, and it is the
           asset carrying that gate's one OPEN question: does an illegible letter
           on a kitchen table read as a lab result? Claim-adjacent, so it routes
           to Ewa. The sheet in this clip is unreadable by design. */}
       <div className="f-hero-film">
+        {/* Above the film and its wash, below .f-hero-in. Washing the field would
+            leave the left third of it invisible, since the wash runs 90% white
+            there; the field is a foreground texture over the photography, not
+            another thing underneath it. */}
+        <HeroField />
         <div className="f-film" aria-hidden="true">
           {/* muted + playsinline are what make autoplay legal on iOS and Chrome.
               preload="metadata" keeps the 726KB off the critical path; the poster
