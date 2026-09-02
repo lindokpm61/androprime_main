@@ -474,8 +474,8 @@ export default function HomePage() {
             <div className="f-plate">
                 <div className="f-shot f-shot-r43">
                   <Image src="/home/img-4.jpg" alt="A man in his early fifties at an office desk late in the afternoon, looking away from his monitor towards a window." width={800} height={600} />
-                  <span className="f-shot-cap">Thursday, 4pm</span>
                 </div>
+                <span className="f-shot-cap">Thursday, 4pm</span>
                 <div className="f-plate-b">
                   <p className="f-sub">Most men arrive here after a set of bloods came back with nothing flagged, and nothing explained.</p>
                 </div>
@@ -494,8 +494,8 @@ export default function HomePage() {
             <div className="f-plate">
                 <div className="f-shot f-shot-r43">
                   <Image src="/home/img-2.jpg" alt="A man in his fifties at a kitchen table in the evening, reading on a laptop." width={800} height={600} />
-                  <span className="f-shot-cap">The same test, later</span>
                 </div>
+                <span className="f-shot-cap">The same test, later</span>
                 <div className="f-plate-b">
                   <h2 className="f-h4" style={{ fontSize: 26, maxWidth: '15ch', letterSpacing: '-0.03em', lineHeight: 1.15 }}>
                     A number is a fact. A record is an answer.
@@ -538,8 +538,8 @@ export default function HomePage() {
                 <div className="f-core f-cell f-kit" style={{ height: '100%', padding: 0 }}>
                   <div className={lead ? 'f-shot f-shot-r16' : 'f-shot f-shot-r16 f-shot-tall'}>
                     <Image src={photo} alt={alt} width={800} height={500} />
-                    <span className="f-shot-cap">{cap}</span>
                   </div>
+                  <span className="f-shot-cap">{cap}</span>
                   <div className="f-cell" style={{ flex: 1, padding: '24px 20px' }}>
                     <h3>{title}</h3>
                     <p className="f-blab" style={{ marginTop: 4, marginBottom: 0 }}>{meta}</p>
@@ -582,8 +582,8 @@ export default function HomePage() {
             <div className="f-plate">
                 <div className="f-shot f-shot-r16">
                   <Image src="/home/img-1.jpg" alt="A man in his mid forties reading on his phone at a kitchen counter early in the morning." width={800} height={500} />
-                  <span className="f-shot-cap">No email, no gate</span>
                 </div>
+                <span className="f-shot-cap">No email, no gate</span>
                 <div className="f-cell f-plate-b">
                   <h3>Read it first</h3>
                   <p>Articles on what your results actually mean, what a reference range is, and why &ldquo;within range&rdquo; and &ldquo;well&rdquo; are two different questions.</p>
@@ -597,8 +597,8 @@ export default function HomePage() {
             <div className="f-plate">
                 <div className="f-shot f-shot-r16">
                   <Image src="/home/img-5.jpg" alt="A man in his early forties in an ordinary gym changing room, sitting on a bench putting on a trainer." width={800} height={500} />
-                  <span className="f-shot-cap">A demo account</span>
                 </div>
+                <span className="f-shot-cap">A demo account</span>
                 <div className="f-cell f-plate-b">
                   <h3>See the app</h3>
                   <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>

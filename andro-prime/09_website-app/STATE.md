@@ -57,6 +57,60 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ The captions came off the photographs, and the credential dots came off the footer (2026-09-02)
+
+A second taste-skill pass over the homepage, run against its Pre-Flight matrix and AI-Tells list with
+the serif rule again set aside. **The page passed most of it**, including the skill’s self-declared
+"#1 violated rule in production tests": zero em dashes, zero en dashes, hero inside the viewport at
+844 of 900, nav one line at 80px, no duplicate CTA intent, exact bento cell counts, and **zero
+eyebrows** above section headings across seven sections.
+
+### What was actioned
+
+1. 🔴 **Seven caption pills were sitting on top of the photographs** ("Thursday, 4pm", "The same
+   test, later", the three kit captions, and the two free-layer ones). A label overlaid on a photo is
+   one of the most reliable AI-designed signatures there is: the caption competes with the picture
+   instead of serving it. All seven now sit below their image in the body sans at 12.5px.
+
+   ⚠ **The pill was the last card-era artefact on those images.** It needed a surface to float over,
+   and after the trays came off there was nothing to float over, so this is the second half of a
+   change made earlier today rather than a separate idea.
+
+2. **The two footer credential chips lost their dots.** A dot marks a state; UKAS accreditation and
+   EFSA claim wording are either true or the chip should not exist. The nav dot survives because
+   "UKAS lab online" genuinely is a state. Rule deleted rather than left unused, since a live-looking
+   rule for a removed element is what a later reader restores by accident.
+
+### 🔵 Reported and NOT actioned, both Keith’s call
+
+- **"Scroll for a sample result".** Two rules hit it: scroll cues are banned outright, and it is a
+  fifth text element in a hero the skill caps at four. But this file records that the hero’s
+  viewport height was restored partly BECAUSE that line means something. The skill is right that
+  "Scroll" is redundant and wrong that the line is worthless: it is a content promise, not an
+  instruction. Rewording keeps the promise and loses the tell, and is new copy needing a pre-flight.
+- 🔴 **The `01 / 06` section numbers, built the same morning.** Section 9.F bans section-number
+  eyebrows by name. My read is that the ban targets decorative enumeration above a headline, and this
+  is a position indicator on a measurement track carrying a real value. **Surfaced deliberately
+  rather than passed over because I built it.**
+
+### ⚠ One conflict, no action
+
+The skill mandates dark mode. The app has none by decision, recorded as DESIGN.md gap 1 and blocked
+by the shared chrome across 25 marketing routes. **A general skill run against an approved brand will
+cheerfully undo the brand**: take its method, not its defaults. Same reason its serif ban is ignored
+here, per its own Section 11.C.
+
+### Also found, not yet done
+
+- `Sys.stat: online` and `Sec: AES-256` in the footer read as the CLI build-footer tell the skill
+  bans on marketing pages.
+- "Sample result · Kit 3 · nine markers" carries two middle dots on one line against a cap of one.
+
+### Verification
+
+tsc 0, `next build` 0 with dev stopped. Measured on the running page: 7 captions, **0** absolutely
+positioned, **0** still inside `.f-shot`, footer chip dots 0, nav dot 1, no horizontal overflow.
+Argument plate and a kit card screenshotted.
 ## ✅ The body rhythm is fixed, and it was wrong in a way the cards had been hiding (2026-09-02)
 
 Keith: the spacing in the body text is a little off. Audited with the taste skill’s redesign protocol

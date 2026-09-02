@@ -1117,7 +1117,10 @@
 /* The footer half of the same credential mark as .f-navstat i above; both moved
    off --flag on 2026-09-02 and the reasoning is there. They are separate rules
    because the chip carries a border and the nav dot does not, so change both. */
-.f-chip i { width: 5px; height: 5px; border-radius: 999px; background: var(--ink); display: block; }
+/* .f-chip i is gone (2026-09-02): the footer credential chips carry no dot,
+   because a credential is not a state. The rule is deleted rather than left
+   unused, since a live-looking rule for a removed element is what a later
+   reader restores by accident. .f-navstat i survives and keeps its comment. */
 
 /* Column headings stay MONO, not display. They are furniture, the same register
    as the eyebrows and data labels, and a serif at 11.5px uppercase with 0.14em
@@ -1751,14 +1754,32 @@
 @media (min-width: 900px) {
   .f-shot-r16.f-shot-tall img { aspect-ratio: 4 / 5; }
 }
+/* ---------- PHOTO CAPTION ----------
+   🔴 IT LEFT THE PHOTOGRAPH ON 2026-09-02. This was a frosted pill sitting on
+   top of the image, seven of them across the page. A label overlaid on a photo
+   is one of the most reliable "AI-designed" signatures there is: the caption
+   is competing with the picture instead of serving it, and the frosted pill is
+   doing the competing.
+
+   A caption belongs BELOW its image, which is also the only form that works
+   now the photographs are plates rather than cards. The pill was the last
+   card-era artefact left on them: it needed a surface to float over, and after
+   the trays came off there was nothing to float over any more.
+
+   Set in the body sans at 12.5px in --ink-3, the same register a printed
+   caption uses. Not mono: mono is this system’s INSTRUMENT voice, for labels,
+   units and spec keys, and a photograph is editorial rather than measured. */
 .f-shot-cap {
-  position: absolute; left: 12px; bottom: 12px;
-  border-radius: 999px; padding: 5px 11px;
-  background: color-mix(in srgb, var(--paper) 78%, transparent);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--hair);
-  font-size: 12px; letter-spacing: 0.02em; color: var(--ink-2);
+  display: block;
+  margin-top: 10px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-3);
 }
+/* Inside a kit card the image is full-bleed against the card edge, so the
+   caption takes the card’s own horizontal inset to line up with the body below
+   it. A plate needs none: it already sits on the page. */
+.f-kit .f-shot-cap { padding-left: 20px; padding-right: 20px; }
 
 /* ---------- RECORD STEPS ----------
    NOT `.f-step`. That is the numbered card with a ghost numeral used on the kit

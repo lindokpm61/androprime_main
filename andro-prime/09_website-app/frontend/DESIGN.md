@@ -409,6 +409,27 @@ downloads and decodes it.
   `object-fit`, so a missing `min-height` silently re-crops the media inside it. The hero without one
   was throwing away a quarter of the film's height.
 
+## Captions and dots
+
+Ruled 2026-09-02 from a taste-skill audit.
+
+🔴 **A caption goes BELOW its photograph, never on top of it.** Seven frosted pills were sitting on
+the images. A label overlaid on a photo is one of the most reliable "AI-designed" signatures there
+is: the caption competes with the picture instead of serving it, and the pill does the competing. Set
+in the body sans at 12.5px in `--ink-3`, the register a printed caption uses. **Not mono**: mono is
+this system’s instrument voice, for labels, units and spec keys, and a photograph is editorial rather
+than measured.
+
+⚠ The pill was the last card-era artefact on the photographs. It needed a surface to float over, and
+once the trays came off there was nothing to float over. A plate takes its caption underneath; inside
+a kit card, where the image is full-bleed, the caption takes the card’s own 20px inset so it lines up
+with the body below it.
+
+🔴 **A dot marks a STATE, never a credential.** The two footer chips lost theirs: UKAS accreditation
+and EFSA claim wording are either true or the chip should not exist, so a dot in front of them reads
+as a live indicator for something that has no live state. The nav dot survives, because "UKAS lab
+online" genuinely is one.
+
 ## Vertical rhythm
 
 Ruled 2026-09-02, after uncontaining the prose made the existing values visibly wrong.

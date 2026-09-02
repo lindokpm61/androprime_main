@@ -77,15 +77,14 @@ export function Footer() {
                 constitute medical advice. If you have a health concern, talk to a
                 doctor.
               </p>
+              {/* NO DOT. These are credentials, not states (2026-09-02). A
+                  coloured or inked dot before a fact reads as a live status
+                  indicator and there is no status here: UKAS accreditation and
+                  EFSA claim wording are either true or the chip should not exist.
+                  The nav keeps its dot because "UKAS lab online" IS a state. */}
               <div className="f-chips">
-                <span className="f-chip">
-                  <i />
-                  UKAS ISO 15189
-                </span>
-                <span className="f-chip">
-                  <i />
-                  EFSA-approved claims
-                </span>
+                <span className="f-chip">UKAS ISO 15189</span>
+                <span className="f-chip">EFSA-approved claims</span>
               </div>
             </div>
 
