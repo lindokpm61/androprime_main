@@ -409,6 +409,49 @@ downloads and decodes it.
   `object-fit`, so a missing `min-height` silently re-crops the media inside it. The hero without one
   was throwing away a quarter of the film's height.
 
+## The measurement device
+
+Added 2026-09-02. **The one piece of visual language the product owns and the category does not**, spent
+as page structure rather than kept in a single chart.
+
+**Why it exists.** A critique found nothing outside the copy made the homepage identifiably ours: the
+design would sit as comfortably on a tech brand or a makeup brand. Measuring the page agreed. It was
+**12 floating rounded cards holding 51 elements at `border-radius: 999px`**, plus 13 at 28px and 13 at
+22px, on near-white, with 4 full-bleed elements and all of them chrome. That is the shared surface kit
+of premium consumer software and premium beauty, and `02_brand/brand-guidelines.md` §11 names the
+territory outright: *"White wellness: correct palette, wrong energy. Too soft and medicated."* §1 sets
+the target as a quality British print publication meeting precise health reporting, and the page had
+neither register except in its words.
+
+| Component | What it is | Where |
+| --- | --- | --- |
+| `.f-srule` | The readout’s track, band and cased needle as a section opener, with the position in mono | Six section openers on `/` |
+| `.f-marg` | A print sidenote: figure reference and counts, in a 104px mono column beside the prose above 900px | `Fig. 01` on the argument section |
+
+🔴 **The needle measures something real, and that is the point rather than a nicety.** A track with a
+mark at a decorative position would be an instrument face reading a number that does not exist, which
+is the one thing a brand built on "here are your actual numbers" cannot put on its own homepage. It
+reads the reader’s position through the page: true, checkable, and nothing to do with anybody’s blood.
+
+🔴 **The vocabulary is borrowed deliberately and must stay in step with the readout.** `--sunk` track,
+`--ours` band, and the needle is the readout marker’s own construction: an object carrying its own
+contrast in a paper casing, not a fill that depends on what is behind it. If the readout marker
+changes, change this with it, or the device stops reading as the same instrument and becomes
+decoration that resembles one.
+
+⚠ **Never the status triad and never `--flag`.** This is furniture, not a verdict, and colour here
+would collide with the one meaning amber is allowed to carry.
+
+⚠ **Every marginalia line must be a count of something already drawn on the page.** "Four markers,
+three splits" describes the readout the reader has just passed, and the interpretation column says the
+same thing in words, so the device ships at zero new claims.
+
+🔴 **The stronger version of the sidenote is NOT ours to ship.** Hanging the actual ranges there (the
+lab’s 37.5+ against our 25 to 70 for B12, and so on per marker) is what would really read as health
+reporting. Those figures exist and are Ewa-ratified, but they live in the source COMMENTS beside the
+readout data and **have never been rendered to a customer**. Putting them on screen is new clinical
+content on a marketing page: Ewa, not a redraw.
+
 ## Motion
 
 Added 2026-09-02, when the choreography was ported. The system had no motion section before that,

@@ -686,6 +686,94 @@
 }
 .f-close .f-stand { color: var(--ink-2); font-size: 17px; margin-bottom: 24px; margin-left: auto; margin-right: auto; }
 
+/* ============================================================================
+   THE MEASUREMENT DEVICE
+   Added 2026-09-02, after a critique found nothing outside the copy made the
+   homepage identifiably ours: the design would sit as comfortably on a tech
+   brand or a makeup brand.
+
+   The measurement said the same thing. The page was TWELVE floating rounded
+   cards holding SEVENTY-ODD rounded pills (51 elements at radius 999px, 13 at
+   28px, 13 at 22px) on near-white, with four full-bleed elements and all of
+   those chrome. That is the shared surface kit of premium consumer software
+   and premium beauty, and `02_brand/brand-guidelines.md` §11 names the
+   territory outright: "White wellness: correct palette, wrong energy. Too soft
+   and medicated." §1 sets the target as a quality British print publication
+   meeting precise health reporting, and the page had neither register except
+   in its words.
+
+   These two components spend the ONE piece of visual language the product owns
+   and the category does not: the two-range readout. Recessed track, band, cased
+   needle. It existed in exactly one card halfway down the page.
+
+   🔴 THE VOCABULARY IS BORROWED DELIBERATELY AND MUST STAY IN STEP. `--sunk`
+   for the track, `--ours` for the band, and the needle is the readout marker’s
+   own construction: an OBJECT carrying its own contrast in a paper casing, not
+   a fill that depends on what is behind it. That was learned the hard way on
+   2026-09-01. If the readout marker changes, change this with it, or the device
+   stops reading as the same instrument and becomes decoration that resembles it.
+
+   ⚠ NOT the status triad, and never `--flag`. This is page furniture, not a
+   verdict about anything, and colour here would collide with the one meaning
+   amber is allowed to carry (see the 2026-08-29 accent ruling in
+   tokens/colours.css).
+   ============================================================================ */
+
+/* ---------- SECTION RULE ---------- */
+.f-srule { display: flex; align-items: center; gap: 18px; margin-bottom: 30px; }
+.f-srule-track {
+  position: relative; flex: 1; height: 3px;
+  border-radius: 999px; background: var(--sunk);
+}
+.f-srule-band {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  border-radius: 999px; background: var(--ours);
+}
+/* The readout marker’s construction at page scale: it stands proud of the
+   track and carries a paper casing, so its legibility is casing-against-track
+   rather than core-against-band. `translateX(-1.5px)` centres the 3px needle on
+   its position instead of hanging it off the right of it, which matters most at
+   100%, where an uncentred needle would sit outside the track entirely. */
+.f-srule-you {
+  position: absolute; top: -5px; bottom: -5px; width: 3px;
+  border-radius: 999px; background: var(--ink);
+  box-shadow: 0 0 0 1.5px var(--paper);
+  transform: translateX(-1.5px);
+}
+.f-srule-n {
+  flex: none;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11px; letter-spacing: 0.14em;
+  color: var(--ink-3); font-variant-numeric: tabular-nums;
+}
+
+/* ---------- MARGINALIA ----------
+   A print sidenote. Above 900px it is a real margin column beside the prose;
+   below that there is no margin to hang in, so it becomes a single annotation
+   line above the heading rather than a cramped 104px column. */
+.f-margwrap > div { min-width: 0; }
+@media (min-width: 900px) {
+  .f-margwrap {
+    display: grid;
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 30px;
+    align-items: start;
+  }
+}
+.f-marg {
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
+  margin-bottom: 16px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-3); line-height: 1.5;
+}
+@media (min-width: 900px) {
+  .f-marg { display: grid; gap: 5px; margin-bottom: 0; padding-top: 6px; }
+}
+/* The figure number is the anchor and takes the ink; its counts stay
+   recessive, the same relationship the spec keys have to their values. */
+.f-marg-fig { color: var(--ink); }
+
 /* ---------- ENTRANCE ----------
    Ported from directions/F-field.html:472-475 and its observer at :887.
 

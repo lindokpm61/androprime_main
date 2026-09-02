@@ -57,6 +57,75 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ The homepage has a device of its own, which is what the critique said it lacked (2026-09-02)
+
+Keith raised the critique’s first finding: nothing outside the content text made the homepage uniquely
+ours, and the design could belong to a tech brand or a makeup brand. **The page measures out exactly
+as the critique described.**
+
+| | count |
+| --- | --- |
+| Floating rounded cards (`.f-tray` / `.f-core`) | **12** |
+| Elements at `border-radius: 999px` | **51** |
+| At 28px / 22px | 13 / 13 |
+| Full-bleed elements | 4, all chrome |
+| Hairline rules | 27 |
+
+Twelve floating rounded cards holding seventy-odd rounded pills on near-white, nothing touching an
+edge, nothing breaking the column. That is the shared surface kit of premium consumer software and
+premium beauty. 🔴 **And the brand doc names the trap itself**: `brand-guidelines.md` §11 lists what
+the brand is NOT, and the first row is *"White wellness (Hims, Numan): correct palette, wrong energy.
+Too soft and medicated."* §1 sets the target as *"quality British print publication meets precise
+health reporting"*. The page had neither register outside its words, which is the same verdict the
+critique reached: it passes on the strength of its writing and the composition rides the copy.
+
+### What shipped: the one thing nobody else has, spent as structure
+
+The two-range readout is unique to this product, it is the literal shape of the argument, and it
+appeared **once**, in one card, halfway down the page.
+
+- **`.f-srule`, a section opener** built from the readout’s own parts: `--sunk` track, `--ours` band,
+  and the cased needle. Six of them on `/`, with the position in mono at the right. It gives the page
+  a spine and repeats the instrument six times instead of once.
+- **`.f-marg`, a print sidenote.** `Fig. 01 / Four markers / Three splits` in a 104px mono column
+  beside the argument prose above 900px, stacking to one annotation line below it. Publications
+  annotate their figures in the margin; the category does not, because it has nothing to put there.
+
+🔴 **The needle measures something real.** A mark at a decorative position would be an instrument face
+reading a number that does not exist, which is the one thing a brand built on "here are your actual
+numbers" cannot put on its own homepage. It reads the reader’s position through the page: true,
+checkable, nothing to do with anybody’s blood.
+
+⚠ **Zero new claims, by construction.** Every sidenote line is a count of what the page already draws:
+the readout has four rows and three are marked split, and the interpretation column says so in words.
+Pre-flight on the changed files: 2 HARD, both the known pre-existing false positives on this page
+("Nothing here is a diagnosis" and "treats" in the regards-as sense), none introduced here.
+
+🔴 **The stronger version is owed to Ewa and was deliberately not built.** Hanging the real ranges in
+the margin, the lab’s 37.5+ against our 25 to 70 for B12 and so on per marker, is what would truly
+read as health reporting. Those figures exist and are Ewa-ratified, **but they live in source comments
+beside the readout data and have never been rendered to a customer.** Putting them on screen is new
+clinical content on a marketing page. Recorded rather than quietly skipped, because it is the better
+design and somebody will reach for it.
+
+### 🔵 Not done, and one of them is the fourth empty card
+
+- **The structural move was NOT made.** The third suggestion was to stop containing prose and let the
+  argument sections sit on the page with a rule instead of a tray, taking the page from twelve cards
+  to about five. That is the change that most moves the register, and it is a bigger call than a
+  device, so it is Keith’s. Worth judging now that the page has a spine of its own.
+- 🔴 **The fourth of the four empty bento cards is now identified.** It is the argument section’s
+  `.f-c-7` prose card: it carries `height: 100%` beside a taller photo card, so it stretches and
+  leaves a large void under the lede, which the new sidenote makes more visible rather than less. Same
+  defect and same fix as the interpretation card closed earlier today. Left alone to keep this change
+  to what was asked for.
+
+### Verification
+
+tsc 0, `next build` 0 with dev stopped. Measured on the running page at 1440 and 390: six rules
+stepping 1/6 to 6/6 with the band and needle at the matching percentage, the sidenote in a
+`104px 447.5px` grid at 1440 and stacked at 390, no horizontal overflow at either. Screenshotted full
+page and at the argument section.
 ## ✅ The site felt flat because the choreography was never ported (2026-09-02)
 
 Keith: the design is good and everything flows, but it is still a little flat, with not enough

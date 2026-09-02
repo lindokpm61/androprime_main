@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { PRICING } from '@/lib/pricing'
+import { SectionRule, Marginalia } from '@/components/marketing/SectionRule'
 
 /*
  * REBUILT IN DIRECTION F, 2026-08-31.
@@ -330,7 +331,9 @@ export default function HomePage() {
           The concrete mechanic of the monitoring thesis: two ranges on one
           screen. This is the only place on the site where the laboratory band
           and our action band are drawn together. */}
-      <div className="f-wrap f-sec" id="readout" style={{ paddingBottom: 0 }} />
+      <div className="f-wrap f-sec" id="readout" style={{ paddingBottom: 0 }}>
+        <SectionRule n={1} of={6} />
+      </div>
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-8 f-rise">
@@ -438,16 +441,24 @@ export default function HomePage() {
       </div>
 
       {/* ---------------- THE ARGUMENT ---------------- */}
-      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }} />
+      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }}>
+        <SectionRule n={2} of={6} />
+      </div>
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-7 f-rise">
             <div className="f-tray" style={{ height: '100%' }}>
-              <div className="f-core" style={{ height: '100%' }}>
+              <div className="f-core f-margwrap" style={{ height: '100%' }}>
+                {/* Counts of what the readout above actually draws: four rows,
+                    three of them marked split. The interpretation column already
+                    says the same thing in words, so this adds no claim. */}
+                <Marginalia fig="Fig. 01" lines={['Four markers', 'Three splits']} />
+                <div>
                 <h2 className="f-h2">&ldquo;In range&rdquo; is a statistical band, not a health band.</h2>
                 <p className="f-lede">
                   A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.
                 </p>
+                </div>
               </div>
             </div>
           </div>
@@ -468,7 +479,9 @@ export default function HomePage() {
       </div>
 
       {/* ---------------- THE RECORD ---------------- */}
-      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }} />
+      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }}>
+        <SectionRule n={3} of={6} />
+      </div>
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-5 f-rise">
@@ -509,6 +522,7 @@ export default function HomePage() {
           reader who has not chosen a question yet is served by the panel that
           does not make him choose. */}
       <div className="f-wrap f-sec" id="kits">
+        <SectionRule n={4} of={6} />
         <h2 className="f-h2">You don&rsquo;t know which question you&rsquo;re asking yet.</h2>
         <p className="f-lede">
           That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.
@@ -554,6 +568,7 @@ export default function HomePage() {
           and no acquisition surface may sell it
           (`01_strategy/2026-08-26-membership-offer-window.md`). */}
       <div className="f-wrap f-sec" id="free">
+        <SectionRule n={5} of={6} />
         <h2 className="f-h2">We give the thinking away.</h2>
         <p className="f-lede">
           You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.
@@ -629,7 +644,9 @@ export default function HomePage() {
           /kits C1 panel states about itself. The panel’s optional
           `.f-blab-lg` lead label is deliberately absent: adding one would be
           new customer-facing copy and needs a pre-flight, not a redraw. */}
-      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }} />
+      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }}>
+        <SectionRule n={6} of={6} />
+      </div>
       <div className="f-wrap">
         <div className="f-invert f-rise">
           <h2 className="f-h2 f-invert-h">We do not sell you the answer.</h2>
