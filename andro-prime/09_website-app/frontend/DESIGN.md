@@ -305,7 +305,16 @@ argument: the LABORATORY reference band and OUR action band drawn on one recesse
 sample value as a 3px ink marker. Bands are neutral ink at two opacities (`--lab`, `--ours`) and
 never the status triad, because this is a comparison of two scales rather than a verdict. The verdict
 is carried in words underneath, and a row where the two disagree puts its second word in the amber
-pill. 🔴 **Every band position is arithmetic from `04_products/results-engine/thresholds.md` and the
+pill.
+
+🔴 **That pill takes `--color-status-warning`, not `--flag`** (2026-09-02). It is a status chip on a
+sample-report panel, which `tokens/colours.css` forbids the marketing accent on in terms that name
+this exact case: *"on any surface, including a sample report embedded in a marketing page."* It had
+been on the accent since the port, making the homepage the one surface where a verdict wore the
+colour that also tints the £179 kit column. The kit pages never had this problem: `.f-bar i.warn` has
+always been the status token. Text on the pill stays ink, never white: **6.18:1** against white’s
+3.19:1. **Amber now means caution and only caution**; the credential marks in the nav and footer
+moved to ink in the same change (gap 8). 🔴 **Every band position is arithmetic from `04_products/results-engine/thresholds.md` and the
 working is written beside each row in the page source. A value moved without re-deriving its
 percentage is a page that contradicts the results engine.**
 
@@ -425,12 +434,24 @@ Recorded so they are not rediscovered as surprises.
 4. 🟠 **`RelatedArticles` is still V2.0** and is the visible seam on every rebuilt page.
 5. ⚠ **The journey frames are owed a sweep** on container width and section rhythm, both of which the
    direction wins. Recorded in the reconciler's `RULED` table meanwhile.
-8. ✅ **CLOSED 2026-08-31. `--flag` is a FILL token, never a glyph.** 32 amber ticks measured
-   **2.18:1** on white and `.f-blab.f-invert-lab` **3.95:1** on ink. Ticks are now `--ink-2`
-   (**8.24:1**) and the inverted label is white at 0.72 (**19.69:1**). 🔴 **Keep the rule:** `--flag`
-   is designed to carry ink ON TOP of it, which is why the verdict pill measures 9.02:1 and passes.
-   Used as ink it has no contrast to give. It fills the pill, the nav status dot and the footer
-   chips, and nothing else.
+8. ✅ **CLOSED 2026-09-02, having been declared closed on 2026-08-31 with two instances left.**
+   `--flag` is a FILL token, never a glyph. 32 amber ticks measured **2.18:1** on white and
+   `.f-blab.f-invert-lab` **3.95:1** on ink; ticks are now `--ink-2` (**8.24:1**) and the inverted
+   label is white at 0.72 (**19.69:1**). 🔴 **Keep the rule:** `--flag` is designed to carry ink ON
+   TOP of it. Used as ink it has no contrast to give.
+
+   🔴 **The 2026-08-31 entry stated the rule correctly and then listed two violations as compliant.**
+   Its closing sentence read "It fills the pill, the nav status dot and the footer chips, and nothing
+   else." The nav status dot and the footer chip dots are 5px marks with nothing on top of them, so
+   they are the glyph case the rule forbids, not the fill case it permits, and both were painting at
+   **2.18:1** — the same number the entry quotes as the reason for the sweep. **A rule and its
+   inventory are two claims, and closing an entry verifies only the first.** The sweep enumerated
+   `.f-ticks` because that is where the finding arrived, and calling the gap CLOSED made the
+   remainder invisible. Both dots are now `--ink` (**19.69:1**).
+
+   Where the accent legitimately fills something, on this page: the "Most complete" chip, the pull
+   quote rule, the symptom-route card, the step hover ring, the tray rings and the comparison
+   column tint. All marketing furniture, all permitted by the 2026-08-29 ruling.
 9. ✅ **CLOSED 2026-08-31, on all three surfaces including the mockup.** 8 instances of the retired
    Normal / Borderline / Low vocabulary, mapped to the engine's own words from
    `lib/results/resultSeverity.ts`, and `F-field.html` back-patched in the same change so the next

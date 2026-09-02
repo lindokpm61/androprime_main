@@ -57,6 +57,60 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ The amber double meaning is resolved, and both sides of it were already defective (2026-09-02)
+
+Keith: amber means caution in the sample readout and credential in the nav and footer; change one to
+a suitable colour. **Neither side was a matter of taste. Each was independently in breach of a rule
+this repo had already written down**, so the fix is two token corrections rather than a new hue.
+
+### The readout’s caution pill was on the MARKETING accent
+
+`.f-mk-split .f-v-ours` used `var(--flag)`. `tokens/colours.css` records the 2026-08-29 accent
+ruling, which forbids the accent on *"any results or sample-report panel — bar fills, status chips,
+status dots"* and names this case exactly: *"on any surface, including a sample report embedded in a
+marketing page."* The panel the pill sits in is that sample report.
+
+🔴 **So the homepage was the one surface where a verdict wore the colour that also tints the £179
+kit column** — precisely the collision the token file was written to stop, and it was in the file
+as a worked example while the code did it anyway. The kit pages never had it: `.f-bar i.warn` has
+always been `--color-status-warning`. Now `--color-status-warning` here too, ink on it at **6.18:1**
+(white would be 3.19:1 and fail). Down from 9.02:1 on the old accent, which is a real reduction and
+still well over the floor.
+
+### The credential dots were the FILL-token defect, two instances after it was called closed
+
+`.f-navstat i` and `.f-chip i` are 5px dots that were painting `--flag` at **2.18:1** on paper. That
+is the same defect, at the same measured number, as the 32 amber ticks fixed on 2026-08-31 under the
+rule *"`--flag` is a FILL token, never a glyph"*.
+
+🔴 **DESIGN.md gap 8 stated that rule correctly and then listed these two as compliant**, closing
+with *"It fills the pill, the nav status dot and the footer chips, and nothing else."* A 5px dot with
+nothing on top of it is the glyph case the rule forbids, not the fill case it permits. **A rule and
+its inventory are two separate claims, and closing an entry verifies only the first.** The sweep
+enumerated `.f-ticks` because that is where the finding arrived; marking the gap CLOSED then made the
+remainder invisible, because a closed gap is not re-read.
+
+Both are now `--ink` at **19.69:1**. Ink rather than a new hue, for two reasons: it matches `.f-in`
+in the comparison table, already an ink dot meaning present, and it adds nothing to a system whose
+discipline is one accent. 🔵 **Explicitly not green:** `--color-status-optimal` in the chrome would
+put the status triad in the nav and rebuild the same collision from the other side.
+
+### Result
+
+| | before | after |
+| --- | --- | --- |
+| Readout caution pill | `--flag` #E0A458, 9.02:1 | `--color-status-warning` #d97706, **6.18:1** |
+| Nav credential dot | `--flag`, **2.18:1** | `--ink`, **19.69:1** |
+| Footer credential dots (x2) | `--flag`, **2.18:1** | `--ink`, **19.69:1** |
+
+**Amber now means caution and only caution.** The marketing accent keeps every use the 2026-08-29
+ruling permits, and a DOM sweep of the homepage confirms it now paints on nothing there at all.
+
+### Verification
+
+tsc 0, `next build` 0. Measured and screenshotted on the running page at 1440: nav dot, both footer
+chip dots and all three Monitor pills read back the intended tokens, and the deeper status amber is
+visibly distinct from the marketing accent rather than a second shade of the same idea.
 ## ✅ The conflict-free receipt takes the inverted panel, and the footer stops saying wellness (2026-09-02)
 
 Two of the five design calls carried from the dual-agent critique, both ruled by Keith and both

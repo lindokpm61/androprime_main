@@ -794,7 +794,20 @@
   white-space: nowrap;
 }
 @media (min-width: 1180px) { .f-navstat { display: inline-flex; } }
-.f-navstat i { width: 5px; height: 5px; border-radius: 999px; background: var(--flag); display: block; }
+/* 🔴 2026-09-02: was var(--flag) at 2.18:1 on paper. TWO defects in one 5px dot.
+
+   The contrast one is a repeat: the 2026-08-31 sweep moved 32 instances of
+   .f-ticks off --flag with the rule "--flag is a FILL token, designed to carry
+   ink ON TOP of it, and it has no contrast to give when used as ink". This dot
+   and .f-chip i are pure foreground marks and were missed by that sweep, so the
+   rule was right and its enumeration was short.
+
+   The semantic one is Keith’s (2026-09-02): amber said "caution" in the sample
+   readout and "credential" here. Ink resolves it without inventing a hue, and
+   it matches .f-in in the comparison table, which is already an ink dot meaning
+   present/included. NOT green: --color-status-optimal would put the status
+   triad in the chrome and recreate the same collision from the other side. */
+.f-navstat i { width: 5px; height: 5px; border-radius: 999px; background: var(--ink); display: block; }
 
 .f-navlogin {
   display: none;
@@ -894,7 +907,10 @@
   text-transform: uppercase;
   color: var(--ink-2);
 }
-.f-chip i { width: 5px; height: 5px; border-radius: 999px; background: var(--flag); display: block; }
+/* The footer half of the same credential mark as .f-navstat i above; both moved
+   off --flag on 2026-09-02 and the reasoning is there. They are separate rules
+   because the chip carries a border and the nav dot does not, so change both. */
+.f-chip i { width: 5px; height: 5px; border-radius: 999px; background: var(--ink); display: block; }
 
 /* Column headings stay MONO, not display. They are furniture, the same register
    as the eyebrows and data labels, and a serif at 11.5px uppercase with 0.14em
@@ -1420,10 +1436,29 @@
 }
 .f-v-lab { color: var(--ink-3); }
 .f-v-ours { font-weight: 600; color: var(--ink); }
-/* A row where the two scales disagree. The amber is the flag token, and text on
-   it is ink, never white. */
+/* A row where the two scales disagree, and the pill is a STATUS chip.
+
+   🔴 2026-09-02: this was var(--flag), the MARKETING accent, and that is a
+   violation of the ruling already written in tokens/colours.css. The accent
+   ruling of 2026-08-29 forbids the accent on "any results or sample-report
+   panel — bar fills, status chips, status dots", and names this exact case:
+   "on any surface, including a sample report embedded in a marketing page."
+   The panel this pill sits in is that sample report. The kit pages already got
+   this right — .f-bar i.warn has always been var(--color-status-warning) — so
+   the homepage was the one surface where a verdict borrowed the colour that
+   also tints the £179 kit column, which is the collision the token file was
+   written to stop.
+
+   IT ALSO ANSWERS KEITH’S DOUBLE-MEANING QUESTION (2026-09-02): amber meant
+   caution here and credential in the nav and footer. Both sides moved. Caution
+   is now the deeper, reserved status amber; the credential marks are ink (see
+   .f-navstat i and .f-chip i). One hue, one meaning, and no new hue added.
+
+   Text on it stays ink, never white: ink measures 6.18:1 on #d97706 and white
+   measures 3.19:1, which fails. The pill was 9.02:1 on the old accent, so this
+   is a real reduction and it is still comfortably over the 4.5:1 floor. */
 .f-mk-split .f-v-ours {
-  background: var(--flag); color: var(--ink);
+  background: var(--color-status-warning); color: var(--ink);
   border-radius: 999px; padding: 3px 9px;
 }
 
