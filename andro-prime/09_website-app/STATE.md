@@ -242,6 +242,27 @@ vector of it, and the three typefaces that were cut and rejected.
 
 🟢 **Vitall are unblocked** for the sleeve print. The **25mm gate is still unrun**.
 
+
+**🟢 RESIZED 2026-09-02, same day, because the first install was overpowering.** Keith called it:
+the logo was too big for the site. The cause is arithmetic rather than taste. **The lockup's aspect
+is 9.32 where the Refined Monogram's was 4.7**, because the old one spent half its width on a black
+square, so the SAME css height renders the wordmark more than twice as large. `h-6` had been correct
+on a 4.7 lockup and was wrong on a 9.32 one: it put the wordmark's cap at **15.9px against nav links
+whose cap is about 8.4px**, nearly double the surrounding type. The old logo sat at 7.3px, just under
+the links, which is why nobody had noticed the nav's logo before.
+
+Chosen by rendering the ladder from 14px to 24px and looking at it, not by arithmetic: **nav h-6 to
+h-4** (cap 10.6px, 149px wide), **footer h-8 to h-5** (cap 13.3px), **activate h-7 to 18px**. The
+dashboard is unchanged: it draws the mark alone, so the aspect problem does not reach it. Verified at
+1440 and 390; at 390 the lockup is 149px of a 390px bar and clears the menu button.
+
+`Logo.tsx` now carries the rule so it cannot drift again: **size by the wordmark's cap height, which
+is 0.663 x the rendered height**, working back from the surrounding type rather than reusing a number.
+
+⚠ The first attempt to verify this reported the old size, because the dev server was serving stale
+HTML: the class in the DOM still read `h-6` while the file on disk read `h-4`. Reading the class off
+the live DOM is what caught it; a screenshot alone would have been believed.
+
 ## ✅ The captions came off the photographs, and the credential dots came off the footer (2026-09-02)
 
 A second taste-skill pass over the homepage, run against its Pre-Flight matrix and AI-Tells list with

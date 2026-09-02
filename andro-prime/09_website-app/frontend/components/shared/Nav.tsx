@@ -191,7 +191,7 @@ export function Nav({
           className="flex items-center"
           ariaLabel="Andro Prime home"
         >
-          <Logo variant="dark" className="h-6 w-auto" />
+          <Logo variant="dark" className="h-4 w-auto" />
         </HostLink>
 
         {showLinks && (

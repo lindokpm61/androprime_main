@@ -21,6 +21,19 @@ import {
   LOCKUP_VIEWBOX,
 } from './logoArt'
 
+// 🔴 SIZING. The lockup's aspect is 9.32, where the Refined Monogram's was 4.7, because that one
+// spent half its width on a black square and this one does not. So the SAME css height renders the
+// wordmark more than twice as large, and the first install of this logo looked overpowering in the
+// nav for exactly that reason: h-6 had been fine on a 4.7 lockup and is not on a 9.32 one.
+//
+// Size by the WORDMARK'S CAP HEIGHT, not by the element height:
+//
+//     wordmark cap height ≈ 0.663 × the rendered height of the lockup
+//
+// The nav's own links are 12px, so a cap of roughly 8.4px. The logo should read as the brand and
+// sit slightly above them, not shout: h-4 (16px) puts the cap at 10.6px, which is where it landed
+// after rendering the whole ladder from 14px to 24px and looking at it. If a new placement needs a
+// size, work back from the surrounding type the same way rather than reusing a number from here.
 type LogoVariant = 'dark' | 'light'
 
 interface LogoProps extends SVGProps<SVGSVGElement> {

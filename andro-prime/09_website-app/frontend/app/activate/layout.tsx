@@ -16,7 +16,7 @@ export default function ActivateLayout({ children }: { children: React.ReactNode
           className="inline-flex"
           aria-label="Andro Prime home"
         >
-          <Logo variant="dark" className="h-7 w-auto" />
+          <Logo variant="dark" className="h-[18px] w-auto" />
         </Link>
       </header>
       <main id="main-content" className="pb-20">{children}</main>
