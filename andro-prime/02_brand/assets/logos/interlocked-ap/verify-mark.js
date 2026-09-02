@@ -56,9 +56,11 @@ function renderMark(mark, W, H) {
   fs.mkdirSync(OUT, { recursive: true })
   const W = REF.GW, H = REF.GH
 
-  // The reference raster, cropped to its own glyph bounds (source y 128..1264, full width).
-  const refBuf = await sharp(path.join(HERE, 'SOURCE-mark-only.png'))
-    .extract({ left: 0, top: 128, width: 1392, height: 1137 }).png().toBuffer()
+  // The reference is the big mark on the APPROVED SHEET, cropped to its own bounds. Not
+  // SOURCE-mark-only.png: that file has 60px clipped off the foot of the stem, so verifying
+  // against it would have confirmed the master reproduced a defect faithfully.
+  const refBuf = await sharp(path.join(HERE, 'SOURCE-approved-2026-08-30.png'))
+    .extract({ left: 323, top: 215, width: 1392, height: 1197 }).png().toBuffer()
   const ref = await inkMask(refBuf, W, H)
 
   // The redraw at the REFERENCE's weights: this is the geometry test, with weight held out of it.
@@ -77,7 +79,7 @@ function renderMark(mark, W, H) {
     .toFile(path.join(OUT, 'verify-diff.png'))
 
   const refInk = both + onlyRef
-  console.log('GEOMETRY TEST — redraw at the reference\'s own stroke weights, against SOURCE-mark-only.png')
+  console.log('GEOMETRY TEST — redraw at the reference weights, against the approved sheet mark')
   console.log(`  reference ink      ${refInk} px`)
   console.log(`  agreeing           ${both} px  (${((both / refInk) * 100).toFixed(2)}% of the reference)`)
   console.log(`  reference only     ${onlyRef} px  (${((onlyRef / refInk) * 100).toFixed(2)}%)`)

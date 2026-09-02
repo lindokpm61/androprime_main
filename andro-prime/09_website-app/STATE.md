@@ -2,7 +2,36 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-09-02 (🟡 **THE CA-045 PACKET IS RAISED AND SITTING IN DRAFTS, NOT SENT.** Nine items as seven
+_Last updated: 2026-09-02 (🟢 **`/kits` NOW SPEAKS THE HOMEPAGE'S LANGUAGE, AND THE DIAGNOSIS THAT GOT
+IT THERE WAS NOT THE ONE THE RULE AUDIT PRODUCED.** Asked whether the homepage design should be copied
+across, the first two answers were code-level and both ranked the problem wrong. The stylesheet is
+shared, so the CSS "had already propagated": false in effect, because the 2026-09-02 rhythm rule is
+`.f-h2 + .f-lede`, an ADJACENT-SIBLING selector, and on all four kit pages the heading is the last
+child of its wrapper. **Same stylesheet, same class names, rule never fires, and every name-based
+audit reports the page compliant.** Then a screenshot of each page showed what the rule audit could
+not: **the homepage carries six photographs and the kit pages carried zero**, and the kit pages drew
+every block inside a box, three grey wells nested inside a white card inside the page. A rule audit
+enumerates what was RULED, and nobody rules "the homepage has photographs". **Three of the four fixes
+are in on `/kits`:** the three kit cards take the SAME photographs as the homepage kit cards for the
+same kits (`img-6`, `img-7`, `img-3`, matched by slug, so **nothing is added to CA-045**); the four
+process steps and the three spec wells are uncontained to hairline columns, via MODIFIERS
+(`.f-steps-open`, `.f-spec-open`) because `.f-step` and `.f-spec` are also drawn by the three detail
+pages and `/how-it-works`; and the section openers are in, four of them, hero and closing CTA
+excluded per the homepage's convention. `.f-kit .f-shot-cap` turned out to have been written on
+2026-09-02 with **no call site**: the kit-card photograph was designed and never built. 🔴 **THE BAND CROP SHIPPED TWO DECAPITATED PORTRAITS AND A SCREENSHOT PASS DID NOT CATCH IT; KEITH
+DID.** The band was first set at 3/1 to land the photo near the homepage's 343px, a ratio derived from
+a neighbouring layout's HEIGHT, and `object-fit: cover` pays for a wide box in source height: 3/1
+threw away 50% and 56% of frames whose subjects sit high, so both men lost their heads. Eased to
+2.4/1 AND given a per-image focal point (`--focal`, a REQUIRED field), because ratio alone still cut
+img-6's hair. **The verification pass had confirmed every property of the container** (present,
+full-bleed, greyscale, correctly inset) **and nobody looked at the man.** `tsc` clean,
+re-verified by screenshot at 1440 and a true 390, subjects intact, no horizontal overflow at either. 🔴 **THE FOURTH FIX
+IS BLOCKED ON KEITH, NOT ON WORK: the `/kits` hero is still a white block** while the homepage hero is
+full-bleed film, and all seven existing photographs are spoken for, so closing it needs either a new
+generated asset (**a new CA-045 item, on a packet still sitting in drafts**) or a decision to reuse
+one. ▶️ **NEXT: the three kit detail pages, then fold the two modifiers into their base classes.**
+⚠ `kits-F.html` still predates all of this and has not been updated; code is ahead of the approved
+frame and Keith has not yet ruled which way to reconcile. Earlier: 🟡 **THE CA-045 PACKET IS RAISED AND SITTING IN DRAFTS, NOT SENT.** Nine items as seven
 questions, ten attachments, to Ewa; sending is Keith's act. Expected answer count is **7**. Building it
 corrected three things this file had wrong, all found by opening the images: nothing is live (`main`
 carries no `frontend/public/home/` path at all), `img-5`'s alt text describes the opposite of the
@@ -153,28 +182,37 @@ Remaining, each with its substance in the dual-agent critique entry below:
   twice, `.f-btn-ghost` declared twice, `.f-blab` losing on specificity) were invisible to it by
   construction, because it compares declarations and all three declarations were present and correct.
 
-### 🟢 No longer blocked: the vector masters are drawn
+### 🟢 No longer blocked: the vector masters are drawn. 🔴 And the live favicon is wrong
 
-**The logo swap is unblocked. Keith does not owe files after all**, because the mark did not need to
-be supplied: it needed to be measured off the raster he already approved and redrawn as geometry.
+**The logo swap is unblocked. Keith does not owe files**, because the mark did not need supplying:
+it needed measuring off the raster he approved and redrawing as geometry.
+`02_brand/assets/logos/interlocked-ap/icon.svg` exists, has no container, carries `currentColor`, is
+767 bytes, and is verified against the approved sheet at **99.54% pixel agreement**. `gen-logo.js`
+replaces the missing `gen-component.js`, and every constant is measured by scripts kept beside it.
 
-- 🟢 **`02_brand/assets/logos/interlocked-ap/icon.svg` exists** and is verified against the approved
-  raster at **99.53% pixel agreement**. No container, `currentColor`, 767 bytes, real arcs.
-- 🟢 **`gen-logo.js` replaces the missing `gen-component.js`.** Every constant is measured by
-  `measure-source.js` and `fit-bowl.js`, both kept, so the numbers can be re-derived rather than
-  trusted. The wordmark is outlined through fontTools with HarfBuzz shaping, so kerning is real.
-- 🟡 **The lockup is cut three ways and waits on ONE decision from Keith: which grotesque.** The
-  approved spec says heavy grotesque; the body sans, Source Sans 3, is humanist, so the cheap option
-  departs from what he approved. `out/face-compare.png` sets all three at 52px, 22px and 14px.
-  Archivo Black is closest to the approved render's proportions (11.44 advances per cap against the
-  reference's 11.93).
-- 🔴 **`Logo.tsx` is NOT installed yet.** `out/logoArt.data.json` carries the path data; installing
-  it is the same decision as the lockup, so the site stays in its mixed state until the face lands.
-- 🟢 **Vitall are unblocked too.** The sleeve print needs the mark as SVG and now has it, though the
-  **25mm packaging gate is still unrun** and is the second size gate after the 16px one.
+🔴 **A defect found while doing it, and it is LIVE on `main`.** `SOURCE-mark-only.png`, which the
+README called "the mark cropped to its own bounds", is the approved mark with **60px cut off the
+foot of the stem**. Every other landmark matches the approved sheet to the pixel; only the stem's
+foot differs, 1196 against 1136. `build-icons.js` sources that clipped file, so **the favicon, app
+icon, apple-touch and PWA icons already on `main` all carry a 5% short descender**, and so did the
+16px gate that chose this concept. The vector master reads the sheet instead and is correct.
+**Re-cutting the icon set from `icon.svg` is the obvious next step and has NOT been done**, because
+it changes assets that are already live and that is Keith's call.
 
-**Light and dark are one artwork** (Keith's call, 2026-09-02): one geometry, `currentColor` on the
-icon, ink flipped for the two lockup files, so they cannot drift.
+🟡 **One decision open: which grotesque the wordmark uses.** The approved spec says heavy grotesque;
+the body sans, Source Sans 3, is humanist, so the cheap option departs from what he approved.
+**`variants-compare-2026-09-02.png` is the sheet to look at**: the approved composition, big mark
+above lockup, redrawn per face beside the original raster. `face-compare-2026-09-02.png` is the
+52/22/14px legibility ladder. Archivo Black is closest to the approved render's proportions, 11.44
+advances per cap against 11.93.
+
+🔴 **`Logo.tsx` is NOT installed.** `out/logoArt.data.json` carries the path data; installing it is
+the same decision as the lockup, so the site stays mixed until the face lands.
+
+🟢 **Vitall are unblocked** for the sleeve print, though the **25mm gate is still unrun**.
+
+**Light and dark are one artwork** (Keith, 2026-09-02): one geometry, `currentColor` on the icon,
+ink flipped for the two lockup files, so they cannot drift.
 
 ## ✅ The captions came off the photographs, and the credential dots came off the footer (2026-09-02)
 

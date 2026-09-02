@@ -3,7 +3,8 @@
  *
  *   node gen-logo.js                  # masters + component path data, default face
  *   node gen-logo.js --face archivo   # archivo | figtree | source
- *   node gen-logo.js --compare        # the three-face sheet at 52 / 22 / 14 px
+ *   node gen-logo.js --variants       # the approved sheet redrawn, one per wordmark face
+ *   node gen-logo.js --compare        # the same lockups as a legibility ladder, 52 / 22 / 14 px
  *   node gen-logo.js --verify         # raster the mark against SOURCE-mark-only.png
  *   node gen-logo.js --ref            # draw at the REFERENCE weights, for the verify diff
  *
@@ -61,6 +62,19 @@
  * and 591, a 6px misalignment that is generative-model slop rather than design. The redraw aligns
  * them exactly, which is the kind of tightening a hand-drawn master exists to do.
  *
+ * ── SOURCE-mark-only.png IS CLIPPED, AND THE SHIPPED ICONS INHERIT IT ────────────────────────
+ * `README.md` describes `SOURCE-mark-only.png` as "the mark cropped to its own bounds and squared".
+ * It is not: it is the approved mark with 60px cut off the foot of the stem. Measured against the
+ * big mark on `SOURCE-approved-2026-08-30.png`, which Keith confirmed on 2026-09-02 is THE approved
+ * source, every other landmark is identical to the pixel — stem x 627..835, counter bottom y 613,
+ * diagonal baseline y 985, bowl height 614 — and only the stem's foot differs, 1196 against 1136.
+ * The descender is 5% short, and on a mark whose whole idea is a P stem dropping past the bowl that
+ * is a proportion, not a rounding error.
+ *
+ * The geometry here therefore reads from the SHEET, and `--verify` diffs against the sheet's mark.
+ * ⚠ `build-icons.js` still sources the clipped file, so the favicon, app icon and PWA icons that
+ * shipped on 2026-08-30 all carry the short stem, and so did the 16px gate that chose this concept.
+ *
  * ── THE SLOT IS REAL AND IS KEPT ─────────────────────────────────────────────────────────────
  * The crossbar does NOT touch the diagonal: there is a ~49px white slot, its left edge cut parallel
  * to the diagonal. That was checked against a magnified crop before being drawn, because a
@@ -80,7 +94,7 @@ const OUT = path.join(HERE, 'out')
  * Glyph box in the reference: x 0..1391, y 0..1136 (the source's y 128..1264).            */
 const REF = {
   GW: 1392,
-  GH: 1137,
+  GH: 1197,             // the APPROVED SHEET's glyph height; see the SOURCE-mark-only warning below
   stemR: 835,          // right edge of the shared stem; the bowl springs from here
   bowlCy: 395,         // centre of both bowl arcs
   bowlR: 395,          // outer radius; equals half the bowl height, which is what makes it a stadium
@@ -89,7 +103,7 @@ const REF = {
   diagRightAt0: 710.7, // the leg's right edge at the glyph top; this edge does not move
   diagBase: 985.8,     // y at which the leg's baseline sits; below it only the stem runs
   slot: 49.4,          // white gap between the leg's right edge and the crossbar's left edge
-  glyphH: 1136,        // the stem's foot, and the glyph's full height
+  glyphH: 1196,        // the stem's foot, and the glyph's full height. NOT 1136: see below
   // reference stroke weights, for the report and for --ref
   ref: { V: 209, Vdiag: 200, waist: 181, horiz: 174, crossbar: 171 },
 }
@@ -300,7 +314,8 @@ module.exports = { buildMark, buildLockup, markPathAt, wordmark, writeMasters, F
 if (require.main === module) {
   const argv = process.argv.slice(2)
   const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d }
-  if (argv.includes('--compare')) require(path.join(HERE, 'compare-faces.js'))
+  if (argv.includes('--variants')) require(path.join(HERE, 'variant-sheets.js'))
+  else if (argv.includes('--compare')) require(path.join(HERE, 'compare-faces.js'))
   else if (argv.includes('--verify')) require(path.join(HERE, 'verify-mark.js'))
   else {
     const { mark, lk, lkVb } = writeMasters(arg('--face', 'archivo'))

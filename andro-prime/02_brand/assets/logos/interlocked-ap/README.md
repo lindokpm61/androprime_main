@@ -22,7 +22,21 @@ squared, which is what the 16px check was run against.
 
 `SOURCE-*.png` are **PNG output from a generative model** (Higgsfield `gpt_image_2`, 2026-08-30). They
 are what the approval was given against. **They are not shippable and must not be placed on any
-surface.** Every master in `../refined-monogram/` is **outlined vector paths**, specifically so the
+surface.**
+
+🔴 **AND `SOURCE-mark-only.png` IS CLIPPED. The approved artwork is `SOURCE-approved-2026-08-30.png`,
+confirmed by Keith 2026-09-02.** The sentence below calling the mark-only file "cropped to its own
+bounds" is wrong and is left in place so the error is legible: it has **60px cut off the foot of the
+stem**. Measured against the big mark on the approved sheet, every other landmark is identical to the
+pixel (stem x 627..835, counter bottom y 613, diagonal baseline y 985, bowl height 614) and only the
+stem's foot differs, **1196 against 1136**. On a mark whose whole idea is a P stem dropping past the
+bowl, a 5% short descender is a proportion rather than a rounding error.
+
+**Consequences, both live:** `build-icons.js` sources the clipped file, so **the favicon, app icon,
+apple-touch and PWA icons on `main` all carry the short stem**, and so did the 16px gate that chose
+this concept over the other five. `gen-logo.js` reads the sheet instead, and `--verify` diffs against
+the sheet, so the vector master is correct. **Re-cutting the icon set from `icon.svg` is the obvious
+follow-on and has not been done**: it changes assets that are already live. Every master in `../refined-monogram/` is **outlined vector paths**, specifically so the
 logo renders identically without Inter installed (print, partner decks, email, third-party use), and
 the replacement has to meet the same bar.
 
@@ -95,6 +109,12 @@ lockup three ways at 52px, 22px and 14px:
 | **Archivo Black** | OFL, free | 11.44 | A true neo-grotesque. Closest to the approved render, which measured **11.93** |
 | **Figtree Black** | OFL, free | 9.96 | Geometric, more modern, narrower |
 | **Source Sans 3 Black** | OFL, free, already loaded | 9.55 | The body sans. Humanist, so it reads warmer and less like the reference |
+
+Two sheets are kept for the decision, and they answer different questions.
+**`variants-compare-2026-09-02.png` is the one to look at**: the approved sheet's own composition,
+big mark above lockup, redrawn as vector once per face and set beside the original raster, so the
+comparison has a control. `face-compare-2026-09-02.png` is the legibility ladder, the same lockups
+at 52px, 22px and 14px. Regenerate either with `--variants` or `--compare`.
 
 **Effra Heavy is the fourth answer and is not testable yet**: the licence is only part-verified
 (`../../../STATE.md`, 2026-08-31) and the file is not on disk. If Effra is bought, re-run with a
