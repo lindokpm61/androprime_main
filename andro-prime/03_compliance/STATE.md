@@ -2,7 +2,12 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-09-01 (🔴 **TWELVE LIVE SAMPLE-PANEL VERDICTS USE A VOCABULARY THE RESULTS ENGINE DOES
+_Last updated: 2026-09-02 (🟡 **CA-045 GAINED A NINTH ITEM AND IT IS NOT AN IMAGE.** The hero data
+field is built: real range geometry from `thresholds.md`, abstracted until illegible. The open
+question is whether that is a data display or a texture, and it is not ours to ratify. Two of its six
+rows are hs-CRP and SHBG, markers the homepage does not otherwise show. Safe to build on a branch
+that deploys nothing (Keith, 2026-09-01: the gate governs shipping, not creating); **must be answered
+before merge.** Earlier: 🔴 **TWELVE LIVE SAMPLE-PANEL VERDICTS USE A VOCABULARY THE RESULTS ENGINE DOES
 NOT HAVE**, on `/lp/energy-recovery` (4) and `/lp/hormone-recovery` (8), found by a new deterministic
 rule on its first run. One of them grades free testosterone "Low" at 0.231, which is the same defect
 already corrected on `/kits/testosterone`. NOT fixed: it is a finding on `main`, on deployed pages.

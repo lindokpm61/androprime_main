@@ -2,7 +2,21 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-09-01 (🟢 **THE RETIRED VERDICT VOCABULARY NOW HAS A MECHANICAL CHECK, AND IT FOUND TWELVE LIVE
+_Last updated: 2026-09-02 (🟢 **A LONG DESIGN SESSION, AND THE HOMEPAGE IS MATERIALLY DIFFERENT FROM THE ONE
+DESCRIBED FURTHER DOWN THIS FILE.** Eleven changes, all on `redesign/direction-f`, which deploys
+nothing. The conflict-free receipt took the inverted ink panel; the footer stopped saying "wellness
+information service" in BOTH places it said it; amber means caution only, and both sides of that
+double meaning turned out to be already in breach of written rules; the emptiest bento card (67%
+empty in one 423px block) is fixed; **the direction’s scroll choreography was never ported at all**,
+so 36 reveals were firing at page load to an empty room; the page gained a device of its own, the
+readout’s own track and needle as section furniture plus a print sidenote; **prose left its cards,
+twelve down to five**, which dissolved the empty-card defect rather than patching it; the hero data
+field is ported, the last unported layer bar one; the body rhythm is proportional and the measures
+are capped; the captions came off the photographs. DESIGN.md and PRODUCT.md were reconciled against
+all of it, and PRODUCT.md’s terminology section had been naming the wrong file and the wrong words.
+🔴 **Still the only merge blocker: CA-045, now nine items, needs Ewa and Keith.** 🔴 **And twelve
+verdict-vocabulary instances are live on `main`**, on the two landing pages. ▶️ **PICK UP HERE is at
+the top of this file.** Earlier: 🟢 **THE RETIRED VERDICT VOCABULARY GOT A MECHANICAL CHECK, AND IT FOUND TWELVE LIVE
 INSTANCES THE MOMENT IT RAN.** `compliance-preflight` reads the allowed words out of
 `resultSeverity.ts`'s `BADGES` map at run time, so the scanner and the customer's result card cannot
 drift; a derived allowlist rather than a blacklist, which is why it caught "Suboptimal", a word on
@@ -27,35 +41,94 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
-## ▶️ PICK UP HERE (2026-09-01)
+## ▶️ PICK UP HERE (2026-09-02)
 
-Session ended mid-backlog. Everything below this line is committed on `redesign/direction-f`, which
-deploys nothing. **Nothing is live.**
+Everything below is committed on `redesign/direction-f`. **The branch deploys nothing and nothing in
+it is live.** A long design session; the homepage is materially different from the one described
+further down this file, so read this block before the older entries.
 
-**Next, in order:**
+### What changed on 2026-09-02, in one list
 
-1. ✅ **DONE — the pre-flight scanner rule for the retired status vocabulary**, and it found twelve
-   more instances on two LIVE landing pages the moment it ran. See the entry below; those twelve are
-   now the open item, and they are on `main`, not on this branch.
-2. **The CA-045 sign-off packet to Ewa.** Register row is amended and ready; see
-   `03_compliance/STATE.md` (2026-09-01). This is the ONLY blocker on merging Direction F to `main`.
-   Use the `signoff-email` skill. It creates a Gmail draft; it does not send, and it does not rule.
-3. **The new logo and wordmark**, when Keith supplies the files. What is needed and why it is not a
-   path swap is under "The logo swap is blocked on vector masters" below.
+The retired-vocabulary scanner; the conflict-free receipt took the inverted ink panel; the footer
+stopped saying "wellness information service" in both places; amber now means caution only; the
+emptiest bento card; the direction's scroll choreography (36 dead reveals became live ones); a
+measurement device of our own (`.f-srule`, `.f-marg`); prose left its cards, twelve down to five; the
+hero data field; the body rhythm; the captions came off the photographs. DESIGN.md and PRODUCT.md
+were reconciled against all of it on the same day.
 
-**Owed by Keith, five design calls** carried from the dual-agent critique, all with their substance
-in the critique entry below: the amber double meaning (caution in the readout versus credential in
-the nav and footer); whether the conflict-free receipt should take the inverted ink panel DESIGN.md
-reserves for exactly that statement; naming Dr Ewa Lindo instead of saying "our GP" three times;
-the hero's "See the app first" routing to a card that declines; and the footer's "wellness
-information service" against ruling B ("a UK men's health company"). Plus the **disputed-interval
-tint** proposal, which is the one yes on the colour question and is gated on DESIGN.md's "never the
-status triad" line, itself a ruling.
+### 🔴 The only merge blocker: the CA-045 packet to Ewa
 
-**Then the system-debt group**, of which the one worth doing is a **computed-vs-declared check**:
-three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twice, `.f-blab` losing
-on specificity) were invisible to the reconciler by construction, because it compares declarations
-and all three declarations were present and correct.
+Unchanged as the blocker, but **the packet is bigger than the last note said**. The register row
+covers **eight assets** (seven photographs plus the hero film), and on 2026-09-02 a **ninth item that
+is not an image** joined it: the hero data field, whose question is whether real range geometry,
+abstracted until illegible, is a data display or a texture. Two things want naming to Ewa rather than
+leaving to be found: **img-7's trainers carry a logo-like mark** (a trademark question, not a clinical
+one), and **two of the field's six rows are hs-CRP and SHBG, markers the homepage does not otherwise
+show.** Substance: `03_compliance/STATE.md`, entries dated 2026-09-01 and 2026-09-02. Use the
+`signoff-email` skill; it creates a Gmail draft, it does not send and it does not rule.
+
+### 🔴 Twelve live verdict-vocabulary instances, and they are on `main`, not this branch
+
+Found by the new scanner on its first run. **Four** on `app/lp/energy-recovery/page.tsx:150-153`
+(Suboptimal, Low, Elevated, Normal) and **eight** on `app/lp/hormone-recovery/page.tsx:244-256`
+(Borderline, Normal x3, Low x3, Elevated). Both pages are deployed. One repeats a defect already
+corrected on `/kits/testosterone`: **free testosterone graded "Low" at 0.231**, where `classifier.ts`
+returns `ft-low` only below the lab's `referenceLow`, so the word has to come from that check rather
+than from the look of the number. Each replacement must be the label `BADGES` renders for that
+marker's state, with the state named in a comment on the row. Then a pre-flight on both pages.
+Keith's call whether it ships before or with the Direction F merge.
+
+### 🔵 Three of Keith's five design calls are still open
+
+Two were closed on 2026-09-02 (the amber double meaning, and the receipt taking the inverted panel).
+Remaining, each with its substance in the dual-agent critique entry below:
+
+1. **Naming Dr Ewa Lindo instead of "our GP".** The phrase "our GP" appears three times on a page
+   making a clinical claim while she is never named. Instances at
+   `app/(marketing)/page.tsx:382` and `:396`.
+2. **The hero's "See the app first" button routes to a card that declines.** That card ships with no
+   CTA on purpose, because `/results-dashboard/demo` does not exist; the demo is built only as
+   `design/prototypes/demo-account-interactive.html`. Either build the route or change the button.
+3. **The disputed-interval tint.** Tint only the interval where the two scales disagree on a split
+   row, in a hue deliberately outside the status triad, because "two scales disagree here" is a fact
+   rather than a severity. Gated on DESIGN.md's "never the status triad" line, which is a ruling, and
+   on a pre-flight plus probably Ewa. **Recommendation: hold it until CA-045 clears her desk**, so
+   she is not asked two things about the same panel in the same week.
+
+### 🔵 From the 2026-09-02 taste audit, reported and not actioned
+
+- **"Scroll for a sample result"** in the hero. Two rules hit it (scroll cues are banned; it is a
+  fifth text element in a hero capped at four) but this file records that the hero's viewport height
+  was restored partly BECAUSE that line means something. It is a content promise, not an
+  instruction. Rewording keeps the promise and loses the tell, and is new copy needing a pre-flight.
+- **The `01 / 06` section numbers**, built the same morning. The skill bans section-number eyebrows by
+  name. My read: the ban targets decorative enumeration above a headline, and this is a position
+  indicator on a measurement track carrying a real value. Surfaced deliberately rather than passed
+  over because I built it.
+- **`Sys.stat: online` and `Sec: AES-256`** in the footer (`components/shared/Footer.tsx:130-133`)
+  read as the CLI build-footer tell that skill bans on marketing pages.
+- **"Sample result · Kit 3 · nine markers"** carries two middle dots on one line, against a cap of one.
+
+### 🟢 Cheap and self-contained, if you want a short next session
+
+- **The hero stagger**, `mask-rise` on the headline and `fade-up` on the sub at 0.42s and the CTAs at
+  0.56s. Roughly ten minutes now the observer machinery exists. The homepage's first screen is still
+  the one static slab on the page.
+- **Layer 2 of the hero, the drifting measurement rule**, is now the last piece the direction has and
+  the build does not.
+- **Decode apostrophe entities in the pre-flight's `NEG` table.** It accepts every literal apostrophe
+  and no HTML entity, so `They don&rsquo;t diagnose conditions` reports HARD on a plain disclaimer.
+  Pre-existing, and it means a false HARD sits on live footer copy on every page. `stripMarkup`
+  already decodes `&nbsp;` and `&amp;`; extend it and the `test-curly-negation.js` suite.
+- **A computed-vs-declared check** for the reconciler. Three defects on 2026-08-31 (`.f-btn` declared
+  twice, `.f-btn-ghost` declared twice, `.f-blab` losing on specificity) were invisible to it by
+  construction, because it compares declarations and all three declarations were present and correct.
+
+### 🔴 Still blocked on Keith supplying files
+
+**The logo swap needs SVG masters.** Detail in the entry below, dated 2026-09-01. Nothing has changed:
+the site is still in a deliberate mixed state, `gen-component.js` is still missing from the repo, and
+Vitall are still owed the same masters for the sleeve print.
 
 ## ✅ The captions came off the photographs, and the credential dots came off the footer (2026-09-02)
 
