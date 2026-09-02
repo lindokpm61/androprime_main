@@ -1509,13 +1509,12 @@
 /* ---------- CONFLICT-FREE RECEIPT ----------
    Approved copy, stated rather than sold. Wider measure than a normal card
    because it is the one paragraph on the page that must be read whole. */
-.f-receipt h2 {
-  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
-  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
-  font-weight: 500; letter-spacing: -0.018em; line-height: 1.12;
-  max-width: 17ch;
-}
-.f-receipt p { margin-top: 20px; font-size: 16.5px; line-height: 1.66; color: var(--ink-2); max-width: 60ch; }
+/* ---------- THE CONFLICT-FREE RECEIPT ----------
+   Deleted 2026-09-02, with its own tombstone rather than silently. The receipt
+   took the inverted panel (Keith, 2026-09-02), which brings its own type ramp
+   in .f-invert-h / .f-invert-p, so .f-receipt h2 and .f-receipt p had exactly
+   one call site between them and now have none. A rule kept "in case" after its
+   only consumer moved is the thing a later reader mistakes for a live style. */
 
 /* ---------- HOMEPAGE LEDE ----------
    The paragraph under a section head. Wider than .f-sub because it carries an

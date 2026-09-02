@@ -574,16 +574,34 @@ export default function HomePage() {
 
       {/* ---------------- THE CONFLICT-FREE RECEIPT ----------------
           The brand lead, stated rather than sold (Keith ruling A2, 2026-08-30:
-          conflict-free stays the lead and the record is its proof). */}
+          conflict-free stays the lead and the record is its proof).
+
+          🔴 THE INVERTED PANEL IS A DELIBERATE DEPARTURE FROM THE DIRECTION,
+          NOT A PORT. `F-field.html:813` draws this section as an ordinary
+          tray/core, and the build was a faithful port of that. Keith ruled
+          2026-09-02 that the receipt takes the inverted ink panel DESIGN.md
+          reserves for a statement of this kind. Recorded so a future
+          direction-vs-build comparison reads this as ruled rather than as
+          drift, the same way the section-rhythm and heading-scale
+          disagreements are recorded.
+
+          DESIGN.md allows the panel ONCE PER PAGE and the homepage was
+          spending its one on nothing, so the strongest claim on the page
+          carried the same weight as the section above it. Check before adding
+          another inverted block here: this is now the homepage’s one.
+
+          ⚠ THE CONTAINER CHANGED AND NOT ONE WORD DID. Both sentences are
+          byte-identical to the pre-flighted copy, which is the same rule the
+          /kits C1 panel states about itself. The panel’s optional
+          `.f-blab-lg` lead label is deliberately absent: adding one would be
+          new customer-facing copy and needs a pre-flight, not a redraw. */}
       <div className="f-wrap f-sec" style={{ paddingBottom: 0 }} />
       <div className="f-wrap">
-        <div className="f-tray f-rise">
-          <div className="f-core f-receipt">
-            <h2>We do not sell you the answer.</h2>
-            <p>
-              Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.
-            </p>
-          </div>
+        <div className="f-invert f-rise">
+          <h2 className="f-h2 f-invert-h">We do not sell you the answer.</h2>
+          <p className="f-sub f-invert-p">
+            Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.
+          </p>
         </div>
       </div>
 

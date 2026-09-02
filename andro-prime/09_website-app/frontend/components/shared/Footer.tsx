@@ -54,9 +54,26 @@ export function Footer() {
               <Link href="/" className="inline-flex" aria-label="Andro Prime home">
                 <Logo variant="dark" className="h-8 w-auto" />
               </Link>
+              {/* SELF-DESCRIPTION, NOT A DISCLAIMER, and the two do different jobs
+                  in one paragraph. Sentence one says what the company IS and is
+                  governed by PRODUCT.md ruling B (Keith, 2026-08-30): a men’s health
+                  company, not a wellness brand. It read "wellness information
+                  service" until 2026-09-02, contradicting the ruling on every page
+                  the shared chrome renders.
+
+                  ⚠ "information service" IS LOAD-BEARING AND STAYS. It is the
+                  Phase-0 hedge: we provide information, not health services, which
+                  is the line that cannot move before CQC. Ruling B changes the
+                  adjective, not the noun. Sentences two and three do the disclaimer
+                  work and are untouched.
+
+                  The apostrophe is &rsquo; because that is the house entity (115
+                  uses against 1); the lone &apos; in this paragraph was the outlier
+                  and is corrected rather than matched, so one paragraph does not
+                  render two different apostrophes. */}
               <p className="f-legal">
-                Andro Prime is a wellness information service. Our kits show you your
-                numbers. They don&apos;t diagnose conditions, replace your GP, or
+                Andro Prime is a men&rsquo;s health information service. Our kits show you
+                your numbers. They don&rsquo;t diagnose conditions, replace your GP, or
                 constitute medical advice. If you have a health concern, talk to a
                 doctor.
               </p>

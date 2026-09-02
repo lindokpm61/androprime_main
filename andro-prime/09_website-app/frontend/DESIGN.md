@@ -271,6 +271,25 @@ The ghost numeral reveals on hover; on touch, scroll position drives the same st
 **Inverted panel.** Ink ground with the whole type ramp flipped to white at graded opacities. Used
 once per page at most, for a conformity statement.
 
+**Where each page spends its one** (2026-09-02). `/kits` on the C1 price panel, `/how-it-works` on
+its conformity block, and **`/` on the conflict-free receipt**, ruled by Keith on 2026-09-02. Check
+this list before adding an inverted block: the constraint is per page, and a second one silently
+costs the first its weight.
+
+⚠ **The homepage use is a departure from the direction, not a port.** `F-field.html:813` draws the
+receipt as an ordinary tray, and the build was faithful to it. The reasoning for overruling it: the
+panel is reserved for a statement of exactly this kind, the homepage was spending its one on
+nothing, and the page’s strongest claim was carrying the same weight as the section above it. Read
+this as ruled rather than as drift, alongside the section-rhythm and heading-scale disagreements.
+
+⚠ **The container changed and not one word did.** The copy is byte-identical to the pre-flighted
+text. The panel’s optional `.f-blab-lg` lead label is deliberately absent on the homepage: adding
+one is new customer-facing copy and needs a pre-flight, not a redraw.
+
+Measured on ink `rgb(10,11,13)` at 1440 and 390: heading white **19.69:1**, body white at 0.78
+**11.93:1**, lead label white at 0.72 **10.22:1**. The `.f-receipt` rules were deleted in the same
+change, having lost their only call site.
+
 **Button pip.** A 32px translucent circle around the arrow, paper at 18% on an ink button and ink at
 8% on a ghost. On hover it nudges `translate3d(3px,-1px,0) scale(1.06)`. ⚠ **The arrow is the
 typographic glyph `&rarr;` as text, never a drawn SVG**: it is set in the button's own face, so it

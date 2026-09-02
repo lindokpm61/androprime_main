@@ -57,6 +57,77 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ The conflict-free receipt takes the inverted panel, and the footer stops saying wellness (2026-09-02)
+
+Two of the five design calls carried from the dual-agent critique, both ruled by Keith and both
+implemented. **Still on `redesign/direction-f`, which deploys nothing.**
+
+### The receipt takes the inverted ink panel
+
+DESIGN.md reserves the inverted panel for a conformity statement, **once per page at most**. The
+homepage had one statement of that kind and was drawing it as an ordinary tray, so **it was spending
+its one on nothing** and the strongest claim on the page carried the same weight as the section
+above it.
+
+🔴 **This is a departure from the direction, not a port omission.** `F-field.html:813` draws the
+receipt as `tray > core > receipt` and the build was faithful to it. Keith overruled the direction.
+Recorded in DESIGN.md and in a comment on the section so a future direction-vs-build comparison
+reads it as ruled, the way the section-rhythm and heading-scale disagreements are.
+
+⚠ **The container changed and not one word did.** Both sentences are byte-identical to the
+pre-flighted copy, which is the same rule the `/kits` C1 panel states about itself. The panel’s
+optional `.f-blab-lg` lead label was deliberately NOT added: it would be new customer-facing copy
+and needs a pre-flight, not a redraw.
+
+`.f-receipt h2` and `.f-receipt p` had one call site between them and now have none, so they were
+deleted with a tombstone comment rather than left as a rule a later reader mistakes for live style.
+
+### The footer stops contradicting ruling B, in BOTH places it was doing it
+
+PRODUCT.md ruling B (Keith, 2026-08-30) is that the company describes itself as a men’s health
+company, not a wellness brand. The shared footer said "a wellness information service" on every page
+the chrome renders.
+
+🔴 **It was two call sites, not one.** `components/shared/Footer.tsx:58` and
+`app/lp/layout.tsx:17` ("Wellness information service only"), the second live on `main`. Changing
+only the one that was reported would have made the site say two different things about what the
+company is; a duplicated fact is invisible exactly while the copies agree, and the first correction
+is what makes it visible. They cannot be collapsed to one source — the LP chrome is deliberately
+separate — so they are coupled by a comment in each and nothing else.
+
+⚠ **"information service" is load-bearing and stays.** It is the Phase-0 hedge: we provide
+information, not health services, which is the line that cannot move before CQC. Ruling B changes
+the adjective, not the noun.
+
+🔵 **One instance deliberately NOT changed and owed to Ewa.**
+`app/(app)/results-dashboard/handoff/page.tsx:161` says "Andro Prime is a wellness service" inside
+the block commented as the not-a-diagnosis disclaimer. That sentence is addressed to a **GP**, not
+to the market, and tells a clinician what kind of service this is. Ruling B governs market
+self-description; changing a clinical-facing disclaimer is Ewa’s call, not a redraw’s.
+
+### 🔴 A pre-flight defect found doing it: the negation detector cannot read an HTML entity
+
+The scanner returns HARD on the footer’s `They don&rsquo;t diagnose conditions`, which is a plain
+disclaimer. `NEG` accepts every literal apostrophe form (`'` `’` `‘` `` ` `` `´`) and no **entity**,
+so `don&rsquo;t` and `don&apos;t` both read as bare claims. **Pre-existing, not introduced by this
+change** — verified by testing both forms against the table. It means a false HARD has been sitting
+on live footer copy on every page. Fix is small and not applied: decode apostrophe entities in
+`stripMarkup`, which already decodes `&nbsp;` and `&amp;`. Suite `test-curly-negation.js` covers the
+literal forms and would extend naturally.
+
+### Verification
+
+tsc 0, `next build` 0. Dev server restarted clean after finding **two** servers bound at once, on
+3000 and 3001, which is the stale-capture trap this file already records; one listener now.
+Screenshotted and measured at 1440 and 390 on a known-fresh server: one `.f-invert` on the page,
+zero `.f-receipt`, heading **19.69:1**, body **11.93:1**, no horizontal overflow, both footers
+reading the new wording on `/` and on `/lp/testosterone`.
+
+⚠ The first contrast numbers reported for the body text were wrong and are corrected here: the
+measuring helper took the first three integers out of `rgba(255,255,255,0.78)` and dropped the
+alpha, so it reported the paragraph at 19.69:1, the same as solid white. Composited over the ink it
+is 11.93:1. **A contrast helper that ignores alpha reports every translucent foreground as its
+opaque colour**, which is always the flattering direction.
 ## ✅ The retired verdict vocabulary now has a mechanical check, and it found twelve live instances (2026-09-01)
 
 The open half of the correctness group. The words were taken off three surfaces on 2026-08-31, but
