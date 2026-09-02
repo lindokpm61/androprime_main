@@ -409,6 +409,39 @@ downloads and decodes it.
   `object-fit`, so a missing `min-height` silently re-crops the media inside it. The hero without one
   was throwing away a quarter of the film's height.
 
+## Motion
+
+Added 2026-09-02, when the choreography was ported. The system had no motion section before that,
+which is part of why the choreography went missing without anyone noticing.
+
+**The rule that governs all of it: nothing that moves may carry information.** Every band position is
+arithmetic from `thresholds.md` and paints identically whether or not it animated, so a reader on
+reduced motion loses nothing. That is the test a health page has to pass before it is allowed to move
+at all, and it is what makes the reduced-motion fallback honest rather than a degraded experience.
+
+| | What | Trigger |
+| --- | --- | --- |
+| **Section reveal** | `.f-rise`: 44px travel, 7px blur resolving, 0.9s, staggered `(i%3)*90ms` | IntersectionObserver, 8% with a -12% bottom margin |
+| **Readout draw-in** | lab band scales across the track, ours trails by 140ms, the value marker lands at 500ms; rows cascade 110ms apart via `--d` | IntersectionObserver, 35% |
+| **Hover** | tray and button lift to `--shadow-ambient-lift`, arrow pip nudges, photo greyscale eases to 0.72 | pointer |
+| Hero stagger | `mask-rise` / `fade-up` on headline, sub and CTAs | NOT PORTED |
+| Hero canvas data-field | six real marker rows drifting as texture | NOT PORTED, deliberately: it is a data surface with a compliance question, not a decoration |
+
+🔴 **Observers, never a scroll listener.** A scroll handler runs on the main thread on every frame of
+every scroll for the life of the page. An observer costs nothing once fired, and each target is
+`unobserve`d the moment it fires.
+
+🔴 **Two observers on two thresholds, and the difference is deliberate.** A section only has to be
+arriving to start revealing; a marker row has to be properly on screen before its data starts
+drawing, or the reader misses the thing the animation exists to show.
+
+⚠ **Everything that HIDES is scoped under `.js`, and the class has three ways not to arrive.** No
+`IntersectionObserver`, reduced motion, or no JavaScript at all means no class, no hiding, and a
+complete page. A fourth case is covered by a 2.5s timer in the inline gate: if the class is added and
+hydration then never happens, nothing would ever reveal, so the timer strips it. **A rule whose
+failure mode is a blank page must fail visible**, and each of those four paths is asserted by the
+verification suite rather than assumed.
+
 ## Known gaps in this system
 
 Recorded so they are not rediscovered as surprises.

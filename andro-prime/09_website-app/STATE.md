@@ -57,6 +57,65 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ The site felt flat because the choreography was never ported (2026-09-02)
+
+Keith: the design is good and everything flows, but it is still a little flat, with not enough
+happening to hold the reader. **Not a taste problem.** The F build ported the direction’s layout, type
+and spacing faithfully and dropped almost all of its motion.
+
+| | `F-field.html` | the build, before |
+| --- | --- | --- |
+| Keyframes | 4 (`mask-rise`, `fade-up`, `band-in`, `you-in`) | 1 (`fRise`) |
+| Scroll observers | 2 | **0** |
+| Reveal | scroll-triggered, 44px + 7px blur, 0.9s, staggered 90ms | 14px, 0.7s, **fired at page load** |
+| Readout bands | draw themselves across the track, 110ms per row | static |
+
+🔴 **The sharpest number: `.f-rise` is applied 36 times across the six F routes and every one fired at
+page load,** because the build kept the keyframe and left the trigger behind. There was no
+`IntersectionObserver` anywhere in the app. So thirty-odd reveals played to an empty room in the first
+700ms and were at rest before anyone scrolled to them. **The system had entrance motion designed into
+it and a reader saw about two instances of it.** Same defect class as the hover lifts, the arrow pip
+and the section rhythm: it was sitting in `F-field.html` the whole time.
+
+### What shipped
+
+- **The section reveal is now scroll-triggered** at the direction’s own values, `components/marketing/
+  ScrollReveal.tsx`. The stagger is `(i%3)*90ms`, per row of three rather than cumulative, because a
+  twelve-element page staggered cumulatively would end on a delay over a second long.
+- **The readout draws itself**, and it is the only motion on the site doing an argument rather than a
+  welcome. The page’s claim is that two scales disagree about the same number; a static picture
+  asserts that, and the instrument now performs it. Lab band scales across, ours trails 140ms, the
+  value marker lands at 500ms, rows cascade 110ms apart.
+- **Two observers on two thresholds** (8% for sections, 35% for rows), because a row has to be
+  properly on screen before its data draws or the reader misses the point of the animation.
+- **DESIGN.md gained a Motion section.** It had none, which is part of why the choreography could go
+  missing without anyone noticing.
+
+### 🔴 The failure mode is a blank page, so it has four fallbacks and all four are tested
+
+Everything that hides is scoped under `.js`. The class is never added when there is no
+`IntersectionObserver`, under reduced motion, or with JavaScript off. The fourth case is the one that
+is easy to miss: **if the class is added and hydration then never happens, nothing would ever reveal
+and the page would stay invisible forever.** A 2.5s timer in the inline gate strips the class unless
+`ScrollReveal` has signalled. Verified by blocking all 8 script requests after the gate ran: 12
+elements hidden at load, 0 after the timer.
+
+⚠ The gate is an inline synchronous script rather than an effect, because `.js` arriving after paint
+would show every section, hide it, and fade it back in.
+
+### Verification
+
+tsc 0, `next build` 0 with dev stopped. **39/39** on a harness covering six routes × (load + full
+scroll), plus reduced motion, JavaScript off, and the no-hydration case. Every assertion is on a
+**computed style, never a status code** — today’s unstyled-page incident returned 200 with valid HTML
+and dead CSS and produced entirely plausible numbers, so the suite opens by asserting a tray paints
+its recessed ground. Readout captured mid-draw and at rest; the settled frame is pixel-identical to
+the pre-motion static state, which is the correct end state.
+
+🔵 **Not done, and deliberately.** The hero stagger (`mask-rise` / `fade-up`) is item 3 of the three
+proposed and was not in scope; the homepage’s first screen still lands as one static slab, and it is
+the obvious next increment. The hero canvas data-field stays unported: it animates real percentages
+from `thresholds.md`, which makes it a data surface with a compliance question rather than a texture.
 ## ✅ The third of the four empty bento cards is fixed, and it was the worst of them (2026-09-02)
 
 Keith pointed at the readout’s interpretation card. It is one of the four the 2026-08-31 critique

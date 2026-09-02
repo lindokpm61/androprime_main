@@ -687,15 +687,70 @@
 .f-close .f-stand { color: var(--ink-2); font-size: 17px; margin-bottom: 24px; margin-left: auto; margin-right: auto; }
 
 /* ---------- ENTRANCE ----------
-   One reveal per page. Under reduced motion the element is simply at rest,
-   which is the correct fallback because the information was never in the
-   movement. */
-@media (prefers-reduced-motion: no-preference) {
-  .f-rise { animation: fRise 0.7s var(--ease) both; }
-  @keyframes fRise {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: none; }
-  }
+   Ported from directions/F-field.html:472-475 and its observer at :887.
+
+   🔴 WHAT WAS WRONG UNTIL 2026-09-02. This was `animation: fRise 0.7s both`,
+   a LOAD-fired keyframe, because the build ported the direction’s keyframe and
+   left its trigger behind: there was no IntersectionObserver anywhere in the
+   app. `.f-rise` is applied 36 times across the six F routes, so thirty-odd
+   reveals played to an empty room in the first 700ms and were at rest before
+   anyone scrolled to them. The system had entrance motion designed into it and
+   a reader saw about two instances of it. That is why the site read flat.
+
+   Now a transition the observer trips on arrival. The direction’s own values:
+   44px of travel against the old 14px, a 7px blur that resolves, and 0.9s
+   against 0.7s. The blur is what makes it read as arriving rather than
+   sliding, and it is why the longer duration is right.
+
+   ⚠ Everything that HIDES is scoped under `.js`, which only exists when the
+   observer can actually run. No JS, no IntersectionObserver, or reduced motion
+   means no class, no hiding, and a complete page. A rule whose failure mode is
+   a blank page must fail visible. */
+.js .f-rise {
+  opacity: 0;
+  transform: translate3d(0, 44px, 0);
+  filter: blur(7px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease), filter 0.9s var(--ease);
+}
+.js .f-rise.on { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+
+/* ---------- THE READOUT DRAWS ITSELF ----------
+   Ported from directions/F-field.html:409-417, which the build had dropped
+   entirely: the app had one keyframe against the direction’s four.
+
+   This is the only motion on the site that is doing an argument rather than a
+   welcome. The page’s claim is that two scales disagree about the same number,
+   and a static picture asserts that where the instrument can perform it: the
+   lab band draws across the track, our band trails it by 140ms, and the value
+   marker lands after both. `--d` is set per row by ScrollReveal so the four
+   rows cascade 110ms apart and the panel fills in as one instrument.
+
+   🔴 THE MOTION CARRIES NO INFORMATION, and that is load-bearing rather than
+   scrupulous. Every band position is arithmetic from thresholds.md and is
+   painted identically whether or not it animated. A reader on reduced motion
+   loses nothing, which is exactly the test a health page has to pass before it
+   is allowed to move at all. */
+.js .f-band { transform: scaleX(0); transform-origin: left center; }
+.js .f-you { opacity: 0; }
+.js .f-mk.on .f-band { animation: fBandIn 0.9s var(--ease) var(--d, 0ms) forwards; }
+.js .f-mk.on .f-band-ours { animation-delay: calc(var(--d, 0ms) + 140ms); }
+.js .f-mk.on .f-you { animation: fYouIn 0.7s var(--ease) calc(var(--d, 0ms) + 500ms) forwards; }
+@keyframes fBandIn { to { transform: scaleX(1); } }
+@keyframes fYouIn {
+  from { opacity: 0; transform: translate3d(0, 6px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* Belt and braces. The inline gate already refuses to add `.js` under reduced
+   motion, but that is evaluated once at parse time and the preference can
+   change inside a session. These rules mean the answer is right either way. */
+@media (prefers-reduced-motion: reduce) {
+  .js .f-rise { opacity: 1; transform: none; filter: none; transition: none; }
+  .js .f-band { transform: none; }
+  .js .f-you { opacity: 1; }
+  .js .f-mk.on .f-band,
+  .js .f-mk.on .f-band-ours,
+  .js .f-mk.on .f-you { animation: none; }
 }
 
 /* ============================================================================
