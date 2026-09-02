@@ -1,2 +1,7 @@
-# build output of build-icons.js; the installed copies in 09_website-app are what ship
+# build output of build-icons.js and gen-logo.js; the installed copies are what ship
 out/
+
+# wordmark faces, fetched by fetch-fonts.sh. Reproducible, OFL-licensed, and ~800KB
+# of binary that does not belong in the repo. The MASTERS are outlined paths, so
+# nothing at runtime or in print needs these: they are only needed to re-cut a lockup.
+fonts/

@@ -1,6 +1,9 @@
 # Interlocked AP — the approved logo direction
 
-**Status:** 🟢 **DIRECTION APPROVED (Keith, 2026-08-30).** 🔴 **ARTWORK NOT PRODUCED.**
+**Status:** 🟢 **DIRECTION APPROVED (Keith, 2026-08-30).** 🟢 **THE MARK IS DRAWN AS VECTOR
+(2026-09-02), verified against the approved raster at 99.53% pixel agreement.** 🟡 **The LOCKUP is
+cut and waiting on one decision: which grotesque the wordmark is set in.** See "The vector build"
+below.
 **Supersedes:** Refined Monogram (`../refined-monogram/`, chosen 2026-06-12), which stays on disk and
 **stays live on every surface except the icon set**, which migrated 2026-08-30. See the table below.
 **Source of truth for the rules:** `../../../visual-identity.md`.
@@ -23,13 +26,18 @@ surface.** Every master in `../refined-monogram/` is **outlined vector paths**, 
 logo renders identically without Inter installed (print, partner decks, email, third-party use), and
 the replacement has to meet the same bar.
 
-**What has to be drawn before anything ships:**
+**What was owed, and where it stands (2026-09-02):**
 
-| File owed | Mirrors |
-|---|---|
-| `lockup-light.svg` / `lockup-dark.svg` | `../refined-monogram/lockup-*.svg` |
-| `icon.svg` (standalone mark) | `../refined-monogram/icon.svg` |
-| `Logo.tsx` regenerated from the outlined paths | `09_website-app/frontend/components/shared/Logo.tsx` |
+| File owed | Mirrors | Status |
+|---|---|---|
+| `icon.svg` (standalone mark) | `../refined-monogram/icon.svg` | 🟢 **DRAWN AND VERIFIED.** In this folder. No container, `fill="currentColor"`, 767 bytes |
+| `lockup-light.svg` / `lockup-dark.svg` | `../refined-monogram/lockup-*.svg` | 🟡 **CUT, IN `out/`, HELD.** Waiting on the wordmark face; re-run with `--face` once it is chosen |
+| `Logo.tsx` regenerated from the outlined paths | `09_website-app/frontend/components/shared/Logo.tsx` | 🔴 **NOT INSTALLED.** `out/logoArt.data.json` carries the path data; installing it is the same decision as the lockup |
+
+**Light and dark are ONE artwork** (Keith, 2026-09-02): a single set of paths, `currentColor` on the
+icon, and `lockup-light.svg` / `lockup-dark.svg` emitted as the same geometry with the ink flipped,
+so the two cannot drift apart. That is the failure the Refined Monogram had and the reason its
+successor sat half-installed for three days.
 
 ✅ **The icon set is DONE and is the exception** (2026-08-30): `favicon.ico` (16/32/48), `icon.png`
 512, `apple-icon.png` 180 and the PWA 192/512 all ship the Interlocked AP, built by `build-icons.js`
@@ -42,6 +50,58 @@ The **old** regeneration procedure in `../../../visual-identity.md` does not tra
 Inter Black glyphs to paths, and this mark is a **custom-drawn interlock in no typeface**, so there is
 nothing to outline. `build-icons.js` replaces it for the icon set. Everything else waits on the mark
 being drawn as vector by hand.
+
+## The vector build
+
+`gen-logo.js` is the generator. It replaces `gen-component.js`, which `logoArt.ts` still names in its
+header and which is **not in the repo** and was never recovered. That absence is why the site sat in
+a mixed state: there was no route from an approved mark to a shipped component.
+
+```
+bash fetch-fonts.sh                   # the candidate faces, OFL, gitignored
+python -m pip install fonttools uharfbuzz
+
+node measure-source.js                # re-derive the geometry from the approved raster
+node fit-bowl.js                      # re-derive the bowl's construction
+node gen-logo.js --face archivo       # masters into ./out
+node gen-logo.js --verify             # pixel-diff the redraw against the approved raster
+node gen-logo.js --compare            # the three-face sheet, out/face-compare.png
+```
+
+**Every constant in the generator is measured, not eyeballed**, and the two measuring scripts are
+kept so the numbers can be re-derived rather than trusted.
+
+**The bowl is a stadium.** Straight top and bottom off the stem, then a true semicircle whose radius
+is exactly half the bowl's height, drawn with SVG arcs so it is exact at any size. This is the one
+thing worth carrying forward if the mark is ever redrawn again: a superellipse *appeared* to fit it
+at an rms of 8.9px on a 1392px glyph, and was wrong by 184px at the top of the bowl, because a
+superellipse has poles and the real shape has a flat top. The average hid it and the render did not.
+
+**The mark carries more weight than the reference**, which is what the note further down this file
+asks for. The reference's strokes are uneven (stem 209, diagonal 200, bowl waist 181, bowl top and
+bottom 174, crossbar 171, in source px), and the bowl, the largest shape on the mark, has the
+lightest strokes, so the whole thing reads light. The redraw resolves this to one vertical weight
+(224) and one horizontal weight (193, at 86% of the vertical, the normal optical correction) and
+adds **7.2% ink** overall. The outer silhouette is untouched: all weight is added inwards, so it is
+the same mark.
+
+🔴 **THE ONE OPEN DECISION: which grotesque.** The approved spec says the wordmark is "a heavy
+grotesque sans", and the site's body sans is **Source Sans 3, which is humanist, not grotesque**, so
+the cheapest option quietly departs from what was approved. `out/face-compare.png` sets the same
+lockup three ways at 52px, 22px and 14px:
+
+| Face | Licence | Advance per cap | Note |
+|---|---|---|---|
+| **Archivo Black** | OFL, free | 11.44 | A true neo-grotesque. Closest to the approved render, which measured **11.93** |
+| **Figtree Black** | OFL, free | 9.96 | Geometric, more modern, narrower |
+| **Source Sans 3 Black** | OFL, free, already loaded | 9.55 | The body sans. Humanist, so it reads warmer and less like the reference |
+
+**Effra Heavy is the fourth answer and is not testable yet**: the licence is only part-verified
+(`../../../STATE.md`, 2026-08-31) and the file is not on disk. If Effra is bought, re-run with a
+fourth entry in `FACES` rather than redrawing anything.
+
+**The 25mm packaging gate is still unrun.** The 16px gate passed, on the raster and now on the
+vector, but Vitall's sleeve print is the second gate and the vector is what unblocks running it.
 
 ## What this direction settles, and what it does not
 

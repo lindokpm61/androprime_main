@@ -153,11 +153,28 @@ Remaining, each with its substance in the dual-agent critique entry below:
   twice, `.f-btn-ghost` declared twice, `.f-blab` losing on specificity) were invisible to it by
   construction, because it compares declarations and all three declarations were present and correct.
 
-### 🔴 Still blocked on Keith supplying files
+### 🟢 No longer blocked: the vector masters are drawn
 
-**The logo swap needs SVG masters.** Detail in the entry below, dated 2026-09-01. Nothing has changed:
-the site is still in a deliberate mixed state, `gen-component.js` is still missing from the repo, and
-Vitall are still owed the same masters for the sleeve print.
+**The logo swap is unblocked. Keith does not owe files after all**, because the mark did not need to
+be supplied: it needed to be measured off the raster he already approved and redrawn as geometry.
+
+- 🟢 **`02_brand/assets/logos/interlocked-ap/icon.svg` exists** and is verified against the approved
+  raster at **99.53% pixel agreement**. No container, `currentColor`, 767 bytes, real arcs.
+- 🟢 **`gen-logo.js` replaces the missing `gen-component.js`.** Every constant is measured by
+  `measure-source.js` and `fit-bowl.js`, both kept, so the numbers can be re-derived rather than
+  trusted. The wordmark is outlined through fontTools with HarfBuzz shaping, so kerning is real.
+- 🟡 **The lockup is cut three ways and waits on ONE decision from Keith: which grotesque.** The
+  approved spec says heavy grotesque; the body sans, Source Sans 3, is humanist, so the cheap option
+  departs from what he approved. `out/face-compare.png` sets all three at 52px, 22px and 14px.
+  Archivo Black is closest to the approved render's proportions (11.44 advances per cap against the
+  reference's 11.93).
+- 🔴 **`Logo.tsx` is NOT installed yet.** `out/logoArt.data.json` carries the path data; installing
+  it is the same decision as the lockup, so the site stays in its mixed state until the face lands.
+- 🟢 **Vitall are unblocked too.** The sleeve print needs the mark as SVG and now has it, though the
+  **25mm packaging gate is still unrun** and is the second size gate after the 16px one.
+
+**Light and dark are one artwork** (Keith's call, 2026-09-02): one geometry, `currentColor` on the
+icon, ink flipped for the two lockup files, so they cannot drift.
 
 ## ✅ The captions came off the photographs, and the credential dots came off the footer (2026-09-02)
 
@@ -781,7 +798,13 @@ field-first search finds the population.
 49/49 new cases pass; the six existing pre-flight suites still pass. 258 app files, 51 content
 assets and the blog MDX scanned with zero verdict-vocabulary false positives. Rule and guard
 vocabulary documented in `compliance-preflight/SKILL.md` §2d-ii.
-## 🔴 The logo swap is blocked on vector masters, and the generator is gone (2026-09-01)
+## ✅ RESOLVED 2026-09-02 — The logo swap was blocked on vector masters, and the generator was gone (2026-09-01)
+
+> 🟢 **RESOLVED 2026-09-02.** The masters were drawn rather than supplied: the mark is measured off
+> the approved raster and rebuilt as geometry, and `gen-logo.js` replaces the lost generator. What
+> follows is the original entry, kept because its account of the blast radius is still accurate and
+> is what the swap has to satisfy. The one item still open is which grotesque the wordmark uses.
+
 
 Keith flagged that a new logo and wordmark are coming. Recording what a swap touches, because it is
 not a path swap and the surface is wider than the header.
