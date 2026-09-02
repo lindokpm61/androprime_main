@@ -409,6 +409,37 @@ downloads and decodes it.
   `object-fit`, so a missing `min-height` silently re-crops the media inside it. The hero without one
   was throwing away a quarter of the film's height.
 
+## Containment: a card holds a transaction or an instrument
+
+Ruled 2026-09-02. **The structural half of the answer to "this could belong to a tech brand or a
+makeup brand".** The device gave the page something of its own; this gives it a grammar.
+
+The homepage was twelve floating rounded cards, produced by the rule *every block gets a tray*, which
+is not a rule about meaning at all. Under it an argument in prose and a £179 product were the same
+kind of object, and the page read as an app rather than as a document.
+
+| | Treatment | What it is |
+| --- | --- | --- |
+| `.f-tray` + `.f-core` | the card, kept | the readout (an instrument), the three kit cards (a transaction), the footer (chrome) |
+| `.f-plate` | image keeps a `--radius-inset` edge, text below sits on the page | a photograph and its caption |
+| `.f-plain` | no ground, border, shadow or padding | prose |
+
+**Result: 12 cards to 5.** Four plates, three uncontained prose blocks.
+
+🔴 **This dissolves the empty-card problem rather than patching it.** Three of the four cards the
+2026-08-31 critique measured as 32-51% empty were empty for one reason: a short prose block stretched
+to a taller sibling by `height: 100%`. **Uncontained prose has no container to look unfinished in**, so
+the defect cannot occur. Every `height: 100%` on a prose block went with the trays. Do not put them
+back.
+
+⚠ **Hover had to move with the photograph.** `.f-tray:hover .f-shot img` was what eased a photo
+toward colour, so every plate would have silently lost its hover along with its tray. **A behaviour
+attached to a container is a behaviour you lose when you remove the container, and nothing warns
+you**: no error, no failed build, just a page that no longer responds. Re-scoped to `.f-plate:hover`.
+
+⚠ Unequal column heights are now normal and are not a defect to fix. A text column running past its
+neighbour is what a document does; it was only ever hidden by making both columns full height.
+
 ## The measurement device
 
 Added 2026-09-02. **The one piece of visual language the product owns and the category does not**, spent

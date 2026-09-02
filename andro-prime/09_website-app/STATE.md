@@ -57,6 +57,65 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ Prose is no longer contained: 12 cards to 5, and the empty-card defect is dissolved (2026-09-02)
+
+The third and largest of the three distinctiveness moves, and the one that most changes the register.
+Keith took it after seeing the device land.
+
+**The rule now: a card holds a transaction or an instrument. Everything else sits on the page.** The
+old rule was *every block gets a tray*, which says nothing about meaning, and under it an argument in
+prose and a £179 product were the same kind of object.
+
+| | before | after |
+| --- | --- | --- |
+| `.f-tray` cards | **12** | **5** |
+| Plates (`.f-plate`) | 0 | 4 |
+| Uncontained prose (`.f-plain`) | 0 | 3 |
+
+The five that keep a card: the readout, the three kit cards, the footer. Everything with a
+photograph became a plate, where the image keeps its own `--radius-inset` edge and the text below it
+sits on the page. Nothing else is contained.
+
+### 🔴 It dissolves the empty-card defect rather than patching it
+
+**Three of the four cards the 2026-08-31 critique measured as 32-51% empty were empty for one
+reason**: a short prose block stretched to a taller sibling by `height: 100%`. Uncontained prose has
+no container to look unfinished in, so the defect cannot occur. That includes the fourth card,
+identified earlier today and left open, which is closed by this change without being touched
+directly. Every `height: 100%` on a prose block went out with the trays.
+
+**Unequal column heights are now normal and are not a defect.** A text column running past its
+neighbour is what a document does; it was only ever hidden by making both columns full height.
+
+### ⚠ The one thing that would have broken silently
+
+`.f-tray:hover .f-shot img` was the rule easing a photograph toward colour. Every plate would have
+lost its hover along with its tray, with **no error, no failed build, and nothing to notice except a
+page that stopped responding to the pointer.** Re-scoped to `.f-plate:hover`. **A behaviour attached
+to a container is a behaviour you lose when you remove the container**, and the container is the
+thing you are thinking about while the behaviour is not.
+
+### ⚠ A screenshot said the photographs were gone, and they were not
+
+The first full-page capture after the change showed every below-fold photograph as an empty grey box,
+which reads exactly like a broken image path after a structural edit. **They were lazy-loading.** A
+`fullPage` screenshot does not scroll the viewport, so `next/image` never loaded them. Probing the DOM
+settled it in one call: 7 images, `complete: true`, `naturalWidth: 828`. **Scroll the page before
+capturing it, and check the DOM before believing a screenshot about absence** — a capture is evidence
+about what painted, not about what exists.
+
+### Verification
+
+tsc 0, `next build` 0 with dev stopped. 39/39 on `verify-scroll-reveal.js` re-run after the
+restructure, since the change moved every reveal target. Measured on the running page: 5 trays, 4
+plates, 3 plain blocks, no horizontal overflow. Full page and both reworked sections screenshotted
+with the images loaded.
+
+⚠ **One count went the wrong way and it is worth knowing.** Elements at `border-radius: 999px` went
+51 to 69, because the section rules added 18 of them (six rules × track, band, needle). Pills are the
+correct shape for a track, so this is not a regression, but the headline number that described the
+problem no longer describes it. **Count the thing you actually changed**, which here is containers: 12
+to 5.
 ## ✅ The homepage has a device of its own, which is what the critique said it lacked (2026-09-02)
 
 Keith raised the critique’s first finding: nothing outside the content text made the homepage uniquely

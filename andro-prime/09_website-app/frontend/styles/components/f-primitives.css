@@ -687,6 +687,58 @@
 .f-close .f-stand { color: var(--ink-2); font-size: 17px; margin-bottom: 24px; margin-left: auto; margin-right: auto; }
 
 /* ============================================================================
+   PROSE IS NOT CONTAINED. A CARD HOLDS A TRANSACTION OR AN INSTRUMENT.
+   Added 2026-09-02, and it is the structural half of the answer to the
+   critique that nothing outside the copy made the page identifiably ours.
+
+   The device (below) gave the page something of its own. This gives it a
+   grammar. The homepage was TWELVE floating rounded cards, and the rule that
+   produced them was "every block gets a tray", which is not a rule about
+   meaning at all. Under it, an argument in prose and a £179 product were the
+   same kind of object, and the whole page read as an app rather than as a
+   document.
+
+   THE RULE NOW: a card is where you buy something or read an instrument.
+   Everything else sits on the page.
+
+     KEEP the tray   the readout (an instrument), the three kit cards (a
+                     transaction), the footer (chrome).
+     .f-plate        a photograph and its text. The image keeps a radius
+                     because an image needs its own edge; the text below it
+                     sits on the page. A plate, in the print sense, not a card.
+     .f-plain        prose. No ground, no border, no shadow, no padding.
+
+   🔴 THIS DISSOLVES THE EMPTY-CARD PROBLEM RATHER THAN PATCHING IT. Three of
+   the four cards the 2026-08-31 critique measured as 32-51% empty were empty
+   because a short prose block was stretched to a taller sibling’s height by
+   `height: 100%`. Uncontained prose has no container to look unfinished in, so
+   the defect cannot occur. Every `height: 100%` on a prose block went with the
+   trays; do not put them back.
+
+   ⚠ HOVER MOVED WITH THE PHOTOGRAPH. `.f-tray:hover .f-shot img` was what
+   eased a photo toward colour, so a plate would have silently lost its hover
+   when it lost its tray. Re-scoped below. A behaviour attached to a container
+   is a behaviour you lose when you remove the container, and nothing warns you.
+   ============================================================================ */
+
+.f-plain { min-width: 0; }
+
+.f-plate { display: flex; flex-direction: column; min-width: 0; }
+/* The image carries the radius the tray used to carry for it. --radius-inset,
+   not --radius-container: it is the same 22px the photograph had when it sat
+   inside a core, so the plate is the same shape it always was with the tray
+   peeled off, rather than a new one. */
+.f-plate .f-shot { border-radius: var(--radius-inset); }
+.f-plate-b { padding-top: 20px; }
+.f-plate .f-cell.f-plate-b { flex: 1; }
+
+/* Was `.f-tray:hover .f-shot img`, which a plate can no longer match. */
+.f-plate:hover .f-shot img { transform: scale(1.035); filter: grayscale(0.72) contrast(1.02); }
+@media (prefers-reduced-motion: reduce) {
+  .f-plate:hover .f-shot img { transform: none; }
+}
+
+/* ============================================================================
    THE MEASUREMENT DEVICE
    Added 2026-09-02, after a critique found nothing outside the copy made the
    homepage identifiably ours: the design would sit as comfortably on a tech

@@ -420,8 +420,7 @@ export default function HomePage() {
               here asks a phone reader to infer which grey is which for four rows
               running. That is the defect this card would recreate. */}
           <div className="f-c-4 f-rise">
-            <div className="f-tray">
-              <div className="f-core f-cell">
+            <div className="f-plain f-cell">
                 <div>
                   <h2 className="f-h4" style={{ fontSize: 26, maxWidth: '14ch', letterSpacing: '-0.03em', lineHeight: 1.15 }}>
                     Two ranges. Nine markers. You should see both.
@@ -434,7 +433,6 @@ export default function HomePage() {
                   </p>
                 </div>
                 <p className="f-blab mt-6" style={{ marginBottom: 0 }}>Bands: results engine, GP approved</p>
-              </div>
             </div>
           </div>
         </div>
@@ -447,8 +445,7 @@ export default function HomePage() {
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-7 f-rise">
-            <div className="f-tray" style={{ height: '100%' }}>
-              <div className="f-core f-margwrap" style={{ height: '100%' }}>
+            <div className="f-plain f-margwrap">
                 {/* Counts of what the readout above actually draws: four rows,
                     three of them marked split. The interpretation column already
                     says the same thing in words, so this adds no claim. */}
@@ -459,20 +456,17 @@ export default function HomePage() {
                   A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.
                 </p>
                 </div>
-              </div>
             </div>
           </div>
           <div className="f-c-5 f-rise">
-            <div className="f-tray" style={{ height: '100%' }}>
-              <div className="f-core f-cell" style={{ height: '100%', padding: 0 }}>
+            <div className="f-plate">
                 <div className="f-shot f-shot-r43">
                   <Image src="/home/img-4.jpg" alt="A man in his early fifties at an office desk late in the afternoon, looking away from his monitor towards a window." width={800} height={600} />
                   <span className="f-shot-cap">Thursday, 4pm</span>
                 </div>
-                <div style={{ flex: 1, padding: '24px 20px' }}>
+                <div className="f-plate-b">
                   <p className="f-sub">Most men arrive here after a set of bloods came back with nothing flagged, and nothing explained.</p>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -485,13 +479,12 @@ export default function HomePage() {
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-5 f-rise">
-            <div className="f-tray" style={{ height: '100%' }}>
-              <div className="f-core f-cell" style={{ height: '100%', padding: 0 }}>
+            <div className="f-plate">
                 <div className="f-shot f-shot-r43">
                   <Image src="/home/img-2.jpg" alt="A man in his fifties at a kitchen table in the evening, reading on a laptop." width={800} height={600} />
                   <span className="f-shot-cap">The same test, later</span>
                 </div>
-                <div style={{ flex: 1, padding: '24px 20px' }}>
+                <div className="f-plate-b">
                   <h2 className="f-h4" style={{ fontSize: 26, maxWidth: '15ch', letterSpacing: '-0.03em', lineHeight: 1.15 }}>
                     A number is a fact. A record is an answer.
                   </h2>
@@ -499,19 +492,16 @@ export default function HomePage() {
                     One result tells you where you are today. It cannot tell you which direction you are going, and we are not going to pretend otherwise.
                   </p>
                 </div>
-              </div>
             </div>
           </div>
           <div className="f-c-7 f-rise">
-            <div className="f-tray" style={{ height: '100%' }}>
-              <div className="f-core" style={{ height: '100%' }}>
+            <div className="f-plain">
                 {RECORD_STEPS.map(({ t, b }) => (
                   <div key={t} className="f-rstep">
                     <h3>{t}</h3>
                     <p>{b}</p>
                   </div>
                 ))}
-              </div>
             </div>
           </div>
         </div>
@@ -577,30 +567,27 @@ export default function HomePage() {
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-6 f-rise">
-            <div className="f-tray" style={{ height: '100%' }}>
-              <div className="f-core f-cell" style={{ height: '100%', padding: 0 }}>
+            <div className="f-plate">
                 <div className="f-shot f-shot-r16">
                   <Image src="/home/img-1.jpg" alt="A man in his mid forties reading on his phone at a kitchen counter early in the morning." width={800} height={500} />
                   <span className="f-shot-cap">No email, no gate</span>
                 </div>
-                <div className="f-cell" style={{ flex: 1, padding: '24px 20px' }}>
+                <div className="f-cell f-plate-b">
                   <h3>Read it first</h3>
                   <p>Articles on what your results actually mean, what a reference range is, and why &ldquo;within range&rdquo; and &ldquo;well&rdquo; are two different questions.</p>
                   <Link href="/blog/how-to-read-blood-test-results" className="f-btn f-btn-ghost f-btn-sm mt-4 self-start">
                     How to read your bloods {ARROW}
                   </Link>
                 </div>
-              </div>
             </div>
           </div>
           <div className="f-c-6 f-rise">
-            <div className="f-tray" style={{ height: '100%' }}>
-              <div className="f-core f-cell" style={{ height: '100%', padding: 0 }}>
+            <div className="f-plate">
                 <div className="f-shot f-shot-r16">
                   <Image src="/home/img-5.jpg" alt="A man in his early forties in an ordinary gym changing room, sitting on a bench putting on a trainer." width={800} height={500} />
                   <span className="f-shot-cap">A demo account</span>
                 </div>
-                <div className="f-cell" style={{ flex: 1, padding: '24px 20px' }}>
+                <div className="f-cell f-plate-b">
                   <h3>See the app</h3>
                   <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>
                   {/* 🔴 NO CTA, DELIBERATELY: THE DEMO ROUTE DOES NOT EXIST YET.
@@ -615,7 +602,6 @@ export default function HomePage() {
                       completes "give away the thinking". */}
                   <p className="f-blab mt-4" style={{ marginBottom: 0 }}>Opening soon</p>
                 </div>
-              </div>
             </div>
           </div>
         </div>
