@@ -57,6 +57,63 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ The body rhythm is fixed, and it was wrong in a way the cards had been hiding (2026-09-02)
+
+Keith: the spacing in the body text is a little off. Audited with the taste skill’s redesign protocol
+(Section 11, Lever 2: spacing and rhythm), which means auditing before touching. **The values were
+not arbitrary, they were tuned inside cards whose 26px padding supplied the surrounding air.**
+Uncontaining the prose earlier today left the gaps doing that work alone, and they were never
+proportional to their type in the first place.
+
+| Relationship | before | after |
+| --- | --- | --- |
+| `.f-h2` to body | 18px fixed: **0.45em** at 1440, **0.70em** at 390 | **0.62em** at both |
+| `.f-h4` to body | 12-14px (0.46-0.54em) | **0.55em** |
+| `.f-rstep h3` to body | 6px, **0.33em**, half what the rest of the page used | **0.55em** |
+| `.f-cell h2/h3` to body | 8px (0.38em) | **0.55em** |
+| `.f-rstep p` measure | uncapped, about **82ch** | **66ch** cap, renders 519px |
+
+### The two rules, both about ownership rather than taste
+
+1. **The gap under a heading belongs to the heading, in `em`.** It was on the paragraph, against a
+   heading that clamps 25.6px to 40px, and one fixed value cannot serve both ends of a clamp.
+2. **Every body class states its own measure.** `.f-rstep p` had none and ran the full column. **A
+   measure held by a container is not a measure, it is a coincidence**, and it ends when the
+   container does. This is the same family as the hover that would have been lost with the tray:
+   removing a container removes everything it was incidentally providing.
+
+### ⚠ Leading was not the problem, and was not changed
+
+The ratios read inconsistent (1.60 / 1.62 / 1.68) and the obvious move was to unify them. **The
+computed leadings are 26.9px and 26.7px for the two body sizes that carry the page**, which is
+consistent; the ratios differ only because the font sizes do. Unifying them would have reflowed the
+page to fix nothing. Measured before assuming.
+
+### 🔴 A specificity bug that presented as a responsive bug
+
+The rule zeroing the paragraph’s own top margin was first written with `:where()`, which has
+**specificity zero by definition**, so it lost to `.f-lede` and to Tailwind’s `mt-*`. At 1440 the
+heading’s new 25px exceeded the paragraph’s 18px, so margin collapsing picked the right number by
+accident and the bug was invisible; it showed only at 390, where 15.9px lost to 18px. **A specificity
+failure inside a margin collapse looks exactly like a breakpoint problem**, because both are "correct
+at one width, wrong at the other". Rewritten with real selectors.
+
+### ⚠ On the taste skill
+
+Used for its redesign protocol and its spacing lever. **Its serif-as-default ban was deliberately not
+applied**: Keith ruled a serif display on 2026-08-30, and the skill’s own Section 11.C says existing
+brand tokens are starting material rather than optional input. A general skill run against an
+approved brand will happily undo the brand; take its method and leave its defaults.
+
+### Verification
+
+tsc 0, `next build` 0 with dev stopped. Ratios measured at 1440 and 390: h2 0.62 at both, every
+sub-head 0.55 at both. Record section screenshotted.
+
+⚠ **One number I published was wrong and is corrected here.** The first audit reported
+`.f-rstep p` at 91ch using a crude character-width estimate (font-size × 0.5). Measured against the
+font’s real `0` advance it was about 82ch, and it now renders 519px, about 64ch, under a 66ch cap.
+The defect and the fix are unchanged; the number was overstated by roughly a tenth.
 ## ✅ The hero data field is ported, the last unported layer of the direction (2026-09-02)
 
 Layer 3 of the hero, left out of the F build on 2026-08-31 with the reason recorded as "a data

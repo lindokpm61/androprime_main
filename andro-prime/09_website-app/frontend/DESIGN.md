@@ -409,6 +409,40 @@ downloads and decodes it.
   `object-fit`, so a missing `min-height` silently re-crops the media inside it. The hero without one
   was throwing away a quarter of the film's height.
 
+## Vertical rhythm
+
+Ruled 2026-09-02, after uncontaining the prose made the existing values visibly wrong.
+
+**Two rules, and both are about ownership rather than taste.**
+
+1. 🔴 **The gap under a heading belongs to the HEADING, and is set in `em`.** It was set on the
+   paragraph (`.f-lede { margin-top: 18px }`) against a heading that clamps from 25.6px to 40px. One
+   fixed value cannot serve both ends of a clamp: at 40px it was 0.45em and read tight, at 25.6px it
+   was 0.70em and read loose. In `em` on the heading it is one ratio at every size.
+2. 🔴 **Every body class states its own measure.** `.f-rstep p` had none and ran the full column,
+   about 82ch, because the card padding used to hold it in. **A measure held by a container is not a
+   measure, it is a coincidence**, and it ends the moment the container does.
+
+| Relationship | before | after |
+| --- | --- | --- |
+| `.f-h2` to body | 18px fixed (0.45em at 1440, 0.70em at 390) | **0.62em** at both |
+| `.f-h4` to body | 12-14px (0.46-0.54em) | **0.55em** |
+| `.f-rstep h3` to body | 6px (**0.33em**) | **0.55em** |
+| `.f-cell h2/h3` to body | 8px (0.38em) | **0.55em** |
+| `.f-rstep p` measure | uncapped, about **82ch** | **66ch** (renders 519px, ~64ch) |
+
+⚠ **Leading was NOT the problem and was not changed.** The ratios look inconsistent on paper (1.60,
+1.62, 1.68) but the computed leadings are 26.9px and 26.7px for the two body sizes that matter, which
+is consistent. Unifying the ratios would have reflowed the page to fix nothing.
+
+⚠ **Do not write the neutralising rule with `:where()`.** The paragraph must stop declaring its own
+top margin or the two collapse to the larger and the heading’s ratio never shows. The first attempt
+used `:where(.f-h2,.f-h4) + :where(.f-lede,.f-sub,p)`, which has specificity **zero by definition**
+and lost to both `.f-lede` and Tailwind’s `mt-*`. It was invisible at desktop, where the heading’s
+25px happened to exceed the paragraph’s 18px so collapsing picked the right number by accident, and
+showed only at 390. **A specificity bug inside a margin collapse presents as a responsive bug**,
+because both are "right at one width, wrong at the other".
+
 ## Containment: a card holds a transaction or an instrument
 
 Ruled 2026-09-02. **The structural half of the answer to "this could belong to a tech brand or a

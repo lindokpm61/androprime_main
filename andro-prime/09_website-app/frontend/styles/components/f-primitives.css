@@ -199,6 +199,15 @@
   line-height: 1.1;
   color: var(--ink);
 }
+/* 🔴 THE GAP UNDER A HEADING BELONGS TO THE HEADING, IN em (2026-09-02).
+   It was 18px, set on `.f-lede`’s margin-top, against a heading that clamps
+   from 25.6px to 40px. One fixed value cannot serve both ends of a clamp: at
+   40px it was 0.45em and read tight, and at 25.6px it was 0.70em and read
+   loose. In em on the heading it is one ratio at every size.
+
+   These values were tuned when every prose block sat inside a card whose 26px
+   padding supplied the surrounding air. Uncontained, the gap does that work
+   alone, which is why the rhythm read wrong only after the trays came off. */
 .f-h2 {
   font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: clamp(1.6rem, 3.4vw, 2.5rem);
@@ -207,8 +216,11 @@
   line-height: 1.12;
   color: var(--ink);
   max-width: 22ch;
+  margin-bottom: 0.62em;
 }
+/* Same ratio as .f-h2, so the relationship reads the same at every level. */
 .f-h4 {
+  margin-bottom: 0.55em;
   font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: 18px;
   font-weight: 600;
@@ -1698,7 +1710,10 @@
 
 /* ---------- GENERIC BENTO CELL ---------- */
 .f-cell { display: flex; flex-direction: column; height: 100%; }
-.f-cell h2, .f-cell h3 { font-size: 21px; letter-spacing: -0.03em; margin-bottom: 8px; font-weight: 700; }
+/* 8px under a 21px heading is 0.38em, off the 0.55 the rest of the page uses.
+   In em it also stops fighting `.f-h4` on specificity: both now say the same
+   thing, so whichever wins the cascade produces the same rhythm. */
+.f-cell h2, .f-cell h3 { font-size: 21px; letter-spacing: -0.03em; margin-bottom: 0.55em; font-weight: 700; }
 .f-cell p { font-size: 15px; line-height: 1.62; color: var(--ink-2); }
 
 /* ---------- PHOTOGRAPHY ----------
@@ -1751,8 +1766,15 @@
    are different components that happened to share a name in two files. */
 .f-rstep { padding: 20px 0; border-bottom: 1px solid var(--hair); }
 .f-rstep:last-child { border-bottom: none; }
-.f-rstep h3 { font-size: 18px; margin-bottom: 6px; letter-spacing: -0.025em; font-weight: 600; }
-.f-rstep p { font-size: 14.5px; color: var(--ink-2); line-height: 1.6; }
+/* 6px under an 18px heading is 0.33em, half what the same relationship gets
+   anywhere else on the page. Matched to the .f-h2 ratio. */
+.f-rstep h3 { font-size: 18px; margin-bottom: 0.55em; letter-spacing: -0.025em; font-weight: 600; }
+/* 🔴 THIS RAN TO 91ch, the longest line on the page by 25 characters and well
+   past the 66ch every other body class already caps at. It had no max-width at
+   all: the card’s padding used to hold the measure in, and taking the tray off
+   removed the only thing constraining it. **A measure held by a container is
+   not a measure, it is a coincidence.** Every body class now states its own. */
+.f-rstep p { font-size: 14.5px; color: var(--ink-2); line-height: 1.6; max-width: 66ch; }
 
 /* ---------- HOMEPAGE KIT CELL ----------
    The compact kit card used in the homepage bento. The kit pages have their own
@@ -1789,6 +1811,21 @@
    The paragraph under a section head. Wider than .f-sub because it carries an
    argument rather than a caption. */
 .f-lede { margin-top: 18px; font-size: 16.5px; line-height: 1.62; color: var(--ink-2); max-width: 58ch; }
+/* Margins collapse to the LARGER of the two, so the heading’s em gap only
+   takes effect once the paragraph stops declaring its own. One owner per
+   relationship.
+
+   🔴 WRITTEN WITH REAL SELECTORS, NOT `:where()`. The first version of this
+   rule used `:where(.f-h2,.f-h4) + :where(.f-lede,.f-sub,p)`, which has
+   specificity ZERO by definition, so it lost to `.f-lede`’s own (0,1,0)
+   margin-top and to Tailwind’s `mt-*` utilities. The failure was invisible at
+   desktop, where the heading’s 25px exceeded the paragraph’s 18px and
+   collapsing picked the right number by accident, and only showed at 390 where
+   15.9px lost to 18px. **A specificity bug inside a margin-collapse looks like
+   a responsive bug**, because both are "correct at one width, wrong at the
+   other". */
+.f-h2 + .f-lede, .f-h2 + .f-sub, .f-h2 + p,
+.f-h4 + .f-lede, .f-h4 + .f-sub, .f-h4 + p { margin-top: 0; }
 
 /* ---------- COMPARISON TABLE ---------- */
 .f-scrollhint { margin-top: 14px; }
