@@ -378,22 +378,56 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                <div className="f-ro-f">
-                  Three of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>monitor</b>. That is not a diagnosis. It is the context a bare number does not carry.
-                </div>
               </div>
             </div>
           </div>
 
+          {/* ---------------- THE INTERPRETATION COLUMN ----------------
+              🔴 2026-09-02: this card was 747px tall carrying 244px of content at
+              1440, i.e. 67% empty with the void in ONE 423px block — worse than
+              any of the four cards the 2026-08-31 critique measured. Keith raised
+              it and asked to keep the page’s balance.
+
+              NOT A PORT OMISSION, unlike the last several of these.
+              `F-field.html:657` writes the same `height:100%` +
+              `justify-content:space-between` on the same short content beside the
+              same tall instrument, and draws NINE marker rows to this build’s
+              four, so the void is larger in the direction than in the build. The
+              defect is in the approved design and the port was faithful.
+
+              TWO CHANGES, AND THE SECOND IS THE ONE THAT MATTERS.
+
+              1. The `.f-ro-f` sentence moved here from the instrument card. It is
+                 interpretation ("Three of these sit where a standard report would
+                 say normal and stop"), not instrument, so it belongs in the
+                 interpretation column; the instrument is now only the instrument.
+                 No new copy, byte-identical, and it still follows the rows on
+                 mobile because this column stacks after them.
+
+              2. The card no longer stretches. `height: 100%` and
+                 `space-between` are gone, so it ends where its content ends.
+                 **Empty space INSIDE a bordered card reads as unfinished; the
+                 same pixels in the grid beside a card read as layout.** The void
+                 was never too much space, it was space wearing a container. The
+                 8/4 asymmetry is untouched, which is what keeps the balance.
+
+              ⚠ The KEY STAYS IN THE INSTRUMENT and must not be moved here to
+              fill space. It was put there on 2026-08-31 precisely because this
+              column stacks BELOW the chart on mobile, so keying the chart from
+              here asks a phone reader to infer which grey is which for four rows
+              running. That is the defect this card would recreate. */}
           <div className="f-c-4 f-rise">
-            <div className="f-tray" style={{ height: '100%' }}>
-              <div className="f-core f-cell" style={{ height: '100%', justifyContent: 'space-between' }}>
+            <div className="f-tray">
+              <div className="f-core f-cell">
                 <div>
                   <h2 className="f-h4" style={{ fontSize: 26, maxWidth: '14ch', letterSpacing: '-0.03em', lineHeight: 1.15 }}>
                     Two ranges. Nine markers. You should see both.
                   </h2>
                   <p className="f-sub mt-3.5">
                     Active B12 is the plainest case. The assay calls anything above 37.5 normal, while the NICE guideline our GP follows treats 25 to 70 as an indeterminate zone. Same number, two verdicts.
+                  </p>
+                  <p className="f-ro-note">
+                    Three of these sit where a standard report would say normal and stop. On the action bands our GP approved, they read <b>monitor</b>. That is not a diagnosis. It is the context a bare number does not carry.
                   </p>
                 </div>
                 <p className="f-blab mt-6" style={{ marginBottom: 0 }}>Bands: results engine, GP approved</p>

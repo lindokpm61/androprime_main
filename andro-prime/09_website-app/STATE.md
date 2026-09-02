@@ -57,6 +57,81 @@ three defects this session (`.f-btn` declared twice, `.f-btn-ghost` declared twi
 on specificity) were invisible to the reconciler by construction, because it compares declarations
 and all three declarations were present and correct.
 
+## ✅ The third of the four empty bento cards is fixed, and it was the worst of them (2026-09-02)
+
+Keith pointed at the readout’s interpretation card. It is one of the four the 2026-08-31 critique
+measured as 32-51% empty, and **it was worse than the worst figure that critique quoted**: at 1440 it
+stood 747px tall carrying 244px of content, **67% empty, with the void in a single 423px block.** His
+constraint was to keep the page’s overall balance.
+
+### 🔵 Not a port omission, unlike the last several
+
+The reflex by now is to check the direction first, because the last several defects found by eye were
+things `F-field.html` had and the build dropped. **This one is the opposite.** `F-field.html:657`
+writes the same `height:100%` and `justify-content:space-between` on the same short content beside the
+same tall instrument, and it draws NINE marker rows where the build draws four, so the void is larger
+in the approved direction than in the build. The port was faithful; the design has the defect.
+
+### The fix is two changes, and the second is the one that matters
+
+1. **The `.f-ro-f` sentence moved to the interpretation column.** "Three of these sit where a standard
+   report would say normal and stop…" is interpretation, not instrument, so it belongs with the
+   interpretation; the instrument card is now only the instrument. No new copy, byte-identical, and it
+   still follows the rows on mobile because that column stacks after them. Renamed `.f-ro-note`, since
+   it no longer needs a rule about the panel’s edges.
+2. 🔴 **The card stops stretching.** `height: 100%` and `space-between` are gone, so it ends where its
+   content ends. **Empty space INSIDE a bordered card reads as unfinished; the same pixels in the grid
+   beside a card read as layout.** The void was never too much space, it was space wearing a
+   container. The 8/4 asymmetry is untouched, which is what keeps the balance Keith asked for.
+
+| at 1440 | before | after |
+| --- | --- | --- |
+| Card height | 747px | 506px |
+| Content in it | 244px | **402px** |
+| Largest void | **423px** | **24px** |
+| Empty | **67%** | 21% |
+| Instrument card | 727px | 637px |
+
+⚠ **The key stays in the instrument and must not be moved here to fill space.** It was put there on
+2026-08-31 exactly because this column stacks BELOW the chart on mobile, so keying the chart from here
+asks a phone reader to infer which grey is which for four rows running. Recorded because an empty card
+next to a chart with a legend is a standing invitation to make that mistake.
+
+### 🔴 And the fix broke the card below it, which Keith saw immediately
+
+Moving `.f-ro-f` out left the last marker row standing **20px off the card edge against 32px sides**,
+and the instrument looked cramped at the bottom. `.f-ro-b` never had a vertical inset: **the card was
+closing on `.f-ro-f`, whose own 20px bottom padding was doing that job as a side effect.**
+
+**Removing an element removes its incidental contributions, and the padding an adjacent element was
+donating is the one nobody lists.** A move is a deletion at the source, and the source’s neighbours
+inherit the hole. Now explicit on `.f-ro-b`: 32px total at mobile, 40px at desktop, the latter
+deliberately over the 32px side inset because content above an edge needs more than content beside one
+to read as settled.
+
+### ⚠ The measurement pass lied first, and the screenshot is what caught it
+
+The first run reported the card 10% empty with a 16px void, against a screenshot Keith had already
+shown was two-thirds empty. The numbers were correct measurements **of an unstyled page**: an earlier
+`next build` had been run while `next dev` served from the same `.next`, so the dev server went on
+answering **200 with valid HTML and dead CSS**. Port listening, curl 200, stylesheet tag present:
+every cheap check green.
+
+🔴 **This file already documents this trap** from 2026-08-31, it was read and quoted earlier the same
+day, and it was still walked into twice. **A verification harness has to assert something that is only
+true when the thing it verifies actually worked** — for a rendered page that is a computed style, not
+a status code. Never run a production build against a running dev server’s `.next`: stop the server
+first, or use a separate `distDir`.
+
+### Verification
+
+tsc 0, `next build` 0, with the dev server stopped this time. Measured and screenshotted at 1440 and
+390 on a known-fresh server: void 423px to 24px, bottom inset 40px desktop and 32px mobile, `.f-ro-f`
+gone from both the markup and the stylesheet.
+
+🔵 **One of the four is still unaccounted for.** The critique named four cards; the kit row closed two,
+this closes the third, and the fourth has never been identified in any record. It needs re-measuring
+rather than assuming it went away.
 ## ✅ The amber double meaning is resolved, and both sides of it were already defective (2026-09-02)
 
 Keith: amber means caution in the sample readout and credential in the nav and footer; change one to

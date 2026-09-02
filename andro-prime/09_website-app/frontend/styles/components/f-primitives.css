@@ -1347,18 +1347,34 @@
 /* Mirrors the marker, casing included, so the key looks like the thing it keys. */
 .f-ro-k .f-k-you { width: 3px; height: 18px; background: var(--ink); box-shadow: 0 0 0 1.5px var(--paper); }
 
-.f-ro-b { padding-left: 20px; padding-right: 20px; }
-.f-ro-f {
+/* 🔴 The bottom padding is LOAD-BEARING and was supplied by accident until
+   2026-09-02. .f-ro-b never had a vertical inset; the card closed on .f-ro-f,
+   whose own 20px bottom padding was doing that job. Moving that block to the
+   interpretation column left the last marker row standing 20px off the card
+   edge against 32px sides, and Keith saw it as cramped immediately.
+
+   **Removing an element removes its incidental contributions, and the padding
+   an adjacent element was donating is the one nobody lists.** The last row
+   already gives 20px of its own, so these values are the REMAINDER: 32px total
+   at mobile and 40px at desktop, the latter deliberately over the 32px side
+   inset because content sitting above an edge needs more than content beside
+   one to read as settled. */
+.f-ro-b { padding-left: 20px; padding-right: 20px; padding-bottom: 12px; }
+/* .f-ro-f is retired (2026-09-02). The sentence it styled was interpretation
+   sitting inside the instrument card; it moved to the interpretation column as
+   .f-ro-note, which needs no rule about the panel’s edges because it is no
+   longer against one. Deleted rather than left behind: an unused rule for a
+   class that no longer appears is what a later reader mistakes for live style. */
+.f-ro-note {
+  margin-top: 18px; padding-top: 18px;
   border-top: 1px solid var(--hair);
   font-size: 15px; line-height: 1.62; color: var(--ink-2);
-  padding: 20px;
 }
-.f-ro-f b { color: var(--ink); font-weight: 600; }
+.f-ro-note b { color: var(--ink); font-weight: 600; }
 @media (min-width: 900px) {
   .f-ro-h { padding-left: 32px; padding-right: 32px; }
   .f-ro-k { padding-left: 32px; padding-right: 32px; }
-  .f-ro-b { padding-left: 32px; padding-right: 32px; }
-  .f-ro-f { padding-left: 32px; padding-right: 32px; }
+  .f-ro-b { padding-left: 32px; padding-right: 32px; padding-bottom: 20px; }
 }
 
 .f-mk { padding: 20px 0; border-bottom: 1px solid var(--hair); }
