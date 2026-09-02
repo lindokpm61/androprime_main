@@ -2,7 +2,11 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-09-02 (🟢 **A LONG DESIGN SESSION, AND THE HOMEPAGE IS MATERIALLY DIFFERENT FROM THE ONE
+_Last updated: 2026-09-02 (🟡 **THE CA-045 PACKET IS RAISED AND SITTING IN DRAFTS, NOT SENT.** Nine items as seven
+questions, ten attachments, to Ewa; sending is Keith's act. Expected answer count is **7**. Building it
+corrected three things this file had wrong, all found by opening the images: nothing is live (`main`
+carries no `frontend/public/home/` path at all), `img-5`'s alt text describes the opposite of the
+photograph, and the set is in colour rather than black and white. **Alt text is not evidence.** Earlier: 🟢 **A LONG DESIGN SESSION, AND THE HOMEPAGE IS MATERIALLY DIFFERENT FROM THE ONE
 DESCRIBED FURTHER DOWN THIS FILE.** Eleven changes, all on `redesign/direction-f`, which deploys
 nothing. The conflict-free receipt took the inverted ink panel; the footer stopped saying "wellness
 information service" in BOTH places it said it; amber means caution only, and both sides of that
@@ -56,16 +60,41 @@ measurement device of our own (`.f-srule`, `.f-marg`); prose left its cards, twe
 hero data field; the body rhythm; the captions came off the photographs. DESIGN.md and PRODUCT.md
 were reconciled against all of it on the same day.
 
-### 🔴 The only merge blocker: the CA-045 packet to Ewa
+### 🟡 The merge blocker: the CA-045 packet is RAISED, and is sitting in drafts
 
-Unchanged as the blocker, but **the packet is bigger than the last note said**. The register row
-covers **eight assets** (seven photographs plus the hero film), and on 2026-09-02 a **ninth item that
-is not an image** joined it: the hero data field, whose question is whether real range geometry,
-abstracted until illegible, is a data display or a texture. Two things want naming to Ewa rather than
-leaving to be found: **img-7's trainers carry a logo-like mark** (a trademark question, not a clinical
-one), and **two of the field's six rows are hs-CRP and SHBG, markers the homepage does not otherwise
-show.** Substance: `03_compliance/STATE.md`, entries dated 2026-09-01 and 2026-09-02. Use the
-`signoff-email` skill; it creates a Gmail draft, it does not send and it does not rule.
+**Still the blocker, but the ball is now in Keith's court rather than mine.** The packet exists as a
+Gmail DRAFT to Ewa, id `r-3136750216544571074`, subject "Nine items for sign-off before the new
+homepage can ship (CA-045)". **It has NOT been sent. Sending is Keith's act.** Body, question map,
+attachment list and the corrections it makes to the record:
+`03_compliance/content-approval/ewa-packet-ca-045-homepage-imagery-2026-09-02.md`. Mirrored on
+ClickUp task `869eqz4bd`, which is where the rulings land first.
+
+**Nine items, asked as seven questions, ten attachments. Expected answer count is 7.** If fewer than
+seven letters come back, the rest are UNANSWERED; do not infer a ruling from an adjacent answer.
+Q1 the hero film's illegible sheet; Q2 `img-3`, hands and a collection tube; Q3 `img-1`, `img-2`,
+`img-4`, `img-6` grouped; Q4 `img-5`; Q5 `img-7`, with the trainer mark named as **Keith's** call
+because it is a trademark question and not a clinical one; Q6 the hero data field, display or
+texture; Q7 the hs-CRP and SHBG rows the page never shows.
+
+🔴 **Building it found three things this file and the register had wrong, all by opening the
+images.** **(a)** Nothing is live. Both documents said the five inherited photographs were "LIVE on
+`/`"; `git ls-tree -r main` returns no `frontend/public/home/` path at all. The packet would have
+told a clinical reviewer that unapproved imagery was already published. **(b)** `img-5`'s alt text
+says "sitting on a bench putting on a trainer" and the photograph is a man hunched forward, head
+down, hands clasped, not moving: the strongest "looks unwell" image in the set, so it was asked on
+its own rather than grouped with the benign four. **(c)** The photographs are in colour, not black
+and white. ⚠ The general form is worth carrying: **alt text is not evidence.** It is written to be
+brief and calm for a screen reader, which is the opposite bias from naming what a regulator would
+notice, and the register already quotes `img-3`'s alt verbatim as its evidence of content.
+
+**Two of the ten attachments had to be rendered, not found.** The hero data field is a canvas that
+exists only at run time, so no still of it existed; the dev server was started and the hero shot at
+1440. One render is the hero as it ships, the other has the 0.34 opacity and the vertical mask
+removed so the geometry is visible. **That second one never ships**, and the email says so, because
+Q6 cannot honestly be answered on a description of something deliberately illegible.
+
+**What is left here:** Keith reads the draft and sends it. Nothing else on this branch moves until
+the seven letters come back.
 
 ### 🔴 Twelve live verdict-vocabulary instances, and they are on `main`, not this branch
 

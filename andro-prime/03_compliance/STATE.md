@@ -2,7 +2,18 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-09-02 (🟡 **CA-045 GAINED A NINTH ITEM AND IT IS NOT AN IMAGE.** The hero data
+_Last updated: 2026-09-02 (🟡 **THE CA-045 PACKET IS RAISED: a Gmail DRAFT to Ewa, nine items
+as seven questions, NOT SENT.** Sending is Keith's act. Draft `r-3136750216544571074`; body and question
+map in `content-approval/ewa-packet-ca-045-homepage-imagery-2026-09-02.md`. Expected answer count is
+**7**, and fewer than seven letters back leaves the rest UNANSWERED. 🔴 **Building it corrected three
+things the record had wrong, all found by opening the images rather than reading the row.** Nothing is
+live: the row said the five inherited photographs were "now LIVE on `/`" and `git ls-tree -r main`
+returns no `frontend/public/home/` path at all, so the packet would have told a clinical reviewer that
+unapproved imagery was already published. `img-5`'s alt text says "putting on a trainer" and the
+photograph is a man hunched forward with his head down, which is the strongest "looks unwell" image in
+the set, so it was pulled out of the grouped question and asked on its own. And the photographs are in
+colour, not black and white. **Alt text is not evidence**: it is written to be brief and calm for a
+screen reader, which is the opposite bias from naming what a regulator would notice. Earlier: 🟡 **CA-045 GAINED A NINTH ITEM AND IT IS NOT AN IMAGE.** The hero data
 field is built: real range geometry from `thresholds.md`, abstracted until illegible. The open
 question is whether that is a data display or a texture, and it is not ours to ratify. Two of its six
 rows are hs-CRP and SHBG, markers the homepage does not otherwise show. Safe to build on a branch
@@ -17,6 +28,61 @@ public media bucket rule and the takedown path, both written as part of plan ste
 the section below. Earlier: **the 30-post run is SCHEDULED in Metricool**, day 1 on 2026-08-17 and days 2 to 30 held as drafts, which puts a date on CA-034's one remaining open item: **close B first publishes 2026-08-18 and points at Kit 2, a page that has never been pre-flighted**. Earlier: **the MP4 covers passed their compliance pass**, closing the last surface CA-034 excluded: no warping on any of the ten, disclaimer on 10 of 10, one non-claims typo baked into the `myth-of-normal-range` newsprint. **Three of CA-034's four uncovered items are now closed**; the only one left is the **Kit 2 and Kit 3 page copy**, never pre-flighted, which close B sends buyers to. Earlier: **CA-034 raised, all 7 ruled**: the 30 carousel posts. **Ewa closed all three clinical items the same day by email**, E1 without moving the threshold, so **no decision-sweep is owed**. **K2 shipped**: close C is a delayed kit offer, kit CTAs added to the two articles that lacked them, and the run now tests one offer at three distances. **Captions APPROVED the same day as CA-035**, so all copy on the run is signed off. **Live-versus-mirror closed**: `content/blog/` was in sync throughout and `sync-mirror.ts` re-synced the two K2 files; the stale copy was in the drafting workspace, which is not a mirror. **CA-033 approved with condition** and the condition discharged live. **CA-032 amended**, one cover row. Earlier: CA-032, the Instagram carousel cover headlines)._
 
 ---
+
+## 🟡 THE CA-045 PACKET IS RAISED, AS A DRAFT, AND BUILDING IT CORRECTED THE RECORD (2026-09-02)
+
+**A Gmail DRAFT to Ewa, id `r-3136750216544571074`. NOT SENT: sending is Keith's act, not the
+assistant's, and the existence of this packet approves nothing.** Full body, question map and
+attachment list: `content-approval/ewa-packet-ca-045-homepage-imagery-2026-09-02.md`. Logged on
+ClickUp task `869eqz4bd` in Approvals & Sign-offs, which is where the rulings land first.
+
+**Nine items, asked as SEVEN questions. Expected answer count is 7.** A reply with fewer than seven
+letters leaves the missing ones unanswered, and nothing may be inferred from an adjacent answer.
+Q1 the hero film and its illegible sheet; Q2 `img-3`, hands holding a collection tube; Q3 `img-1`,
+`img-2`, `img-4` and `img-6` as one grouped judgement; Q4 `img-5`; Q5 `img-7`, with the trainer mark
+disclosed as **Keith's** call rather than hers, because it is a trademark question and not a clinical
+one; Q6 the hero data field, display or texture; Q7 the hs-CRP and SHBG rows the page never shows.
+
+🔴 **Three things the record had wrong, and all three were found by opening the images.**
+
+1. **Nothing is live, and the register said it was.** The row described the five inherited
+   photographs as "now LIVE on `/` from `public/home/`". `git ls-tree -r main` returns no
+   `frontend/public/home/` path at all; all nine assets arrived in one commit on
+   `redesign/direction-f`, which the same documents correctly say deploys nothing. Written from the
+   register, this packet would have told the clinical reviewer that unapproved imagery was already
+   published, which is a different question from the one she is actually being asked. **"Live" is a
+   claim about a deployed ref and the working tree can never evidence it**, because an undeployed
+   branch and a deployed one look identical from inside a checkout. Row corrected.
+2. **`img-5`'s alt text describes the opposite of the photograph.** It reads "sitting on a bench
+   putting on a trainer". The image is a man alone on a changing-room bench, hunched forward, head
+   down, hands clasped, not moving. It is the strongest "this man looks unwell" image in the set, on
+   a page about tiredness, so it was pulled out of the grouped question and asked on its own rather
+   than cleared alongside four benign ones.
+3. **The photographs are in colour, not black and white**, and `img-2`'s subject reads considerably
+   older than the "man in his fifties" his alt text claims. Both stated plainly in the email.
+
+⚠ **The general lesson, which is bigger than this gate: alt text is not evidence.** Every
+description in the first draft came from each image's `alt` attribute, which is the obvious source:
+written, adjacent, already reviewed. But alt text is written to serve a screen reader in the flow of
+a page, so it is optimised to be brief and non-alarming, and that is the exact opposite of the bias a
+compliance description needs. The two purposes pull in opposite directions and nothing marked them as
+different jobs. This row already quotes `img-3`'s alt verbatim as its evidence of what that asset
+contains, so the failure had already propagated once before it was caught.
+
+**Two attachments were rendered for this packet rather than found.** The hero data field is a canvas
+that exists only at run time, so no still of it existed anywhere; the packet needed the dev server
+started and the hero shot. One render is the hero as it ships, the other has the 0.34 opacity and the
+vertical mask removed so the geometry is visible. **The second never ships**, and the email says so:
+it exists so Q6 can be answered on the artefact instead of on our description of it.
+
+**Format:** `signoff-email/validate.js` exits 0 on the drafted body and again on the copy read back
+out of Gmail after the draft was created. Seven contiguous items, one question and at least two
+lettered options each, no em dashes, reply-by-letter instruction present. The read-back also confirms
+all ten attachments arrived at their exact source byte sizes and that the label is `DRAFT` only.
+
+**Still the merge blocker.** `redesign/direction-f` cannot reach `main` until this row signs, and it
+needs Ewa on the clinical questions and Keith on the trademark one.
+
 
 ## 🔴 Twelve live sample-panel verdicts use a vocabulary the results engine does not have (2026-09-01)
 
