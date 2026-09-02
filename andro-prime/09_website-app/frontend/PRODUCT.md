@@ -80,8 +80,14 @@ constraints follow and both are binding on any surface:
    plus trust competes on ground already owned by Thriva, and the 2026-07-20 teardown refuted it.
    **What a rival cannot copy is what the app visibly refuses to do. Demonstrate it; do not open
    on it.**
-2. **The company describes itself as a men's health company**, not a wellness brand (ruling B,
-   2026-08-30).
+2. **The company describes itself as a men’s health company**, not a wellness brand (ruling B,
+   2026-08-30). ✅ **Implemented 2026-09-02** in both places it was contradicted: the shared footer
+   and the landing-page footer, which said "wellness information service" and "Wellness information
+   service only". ⚠ **"information service" is load-bearing and stayed**: it is the Phase-0 hedge
+   that we provide information rather than health services, and ruling B changes the adjective, not
+   the noun. 🔵 One instance is deliberately unchanged and owed to Ewa: the results-dashboard GP
+   handoff says "a wellness service" inside its not-a-diagnosis disclaimer, which is addressed to a
+   clinician rather than to the market.
 
 The conflict-free mechanic, stated as a receipt rather than a claim: a result that needs a doctor
 goes to a GP and earns Andro Prime nothing, and no result changes what is offered or what it costs.
@@ -149,10 +155,28 @@ hand-write either onto a surface.
   the documented failure mode. Kit 2 must not claim anything about testosterone. Kit 3 is "9 markers.
   Hormones, energy, recovery, inflammation", never "comprehensive health MOT".
 
-**Terminology.** Customer-facing status words come from the results engine's own vocabulary
-(`components/results-engine/StatusBadge.tsx`): In range, Monitor, Action needed, Not interpreted.
-Normal / Borderline / Low is a vocabulary the product uses nowhere and a pre-flight has already
-caught it once.
+**Terminology.** Customer-facing status words come from the results engine’s own vocabulary, and
+there are exactly six of them:
+
+> **Optimal · In range · Reported · Monitor · Action Needed · See Your GP**
+
+🔴 **The source is `lib/results/resultSeverity.ts` (the `BADGES` map), NOT
+`components/results-engine/StatusBadge.tsx`.** The map moved out of the badge component on
+2026-08-26, when the membership screen needed the same answer and the alternative was a second list
+of "which states mean something is wrong". The badge still renders from it. **This entry pointed at
+the old path until 2026-09-02**, and it also listed the wrong words: it omitted Optimal, Reported
+and See Your GP, and invented "Not interpreted", which the engine has never returned.
+
+🔴 **Normal / Borderline / Low is retired, and the claim that the product "uses it nowhere" was
+false when this file said it.** It was live on `/`, `/kits/testosterone` and the direction mockup
+until 2026-08-31, and a scanner built on 2026-09-02 found **twelve further instances on two
+DEPLOYED landing pages** (`/lp/energy-recovery`, `/lp/hormone-recovery`), one of which grades free
+testosterone "Low" at a value the engine calls In range. Those are open on `main`.
+
+✅ **It is now mechanically enforced.** The `compliance-preflight` scanner derives the allowed list
+from the `BADGES` map at run time, so this document, the scanner and the customer’s result card
+cannot drift apart. A verdict field carrying anything else is a HARD finding. **Do not maintain a
+copy of the word list here or anywhere else: cite the map.**
 
 ## Brand Commitments
 
@@ -235,6 +259,13 @@ Two audience facts make this more than boilerplate: the readership skews 40 and 
 presbyopia is near-universal, and small mono type at 10 to 11.5px is a signature of the approved
 visual direction. That pairing is where the standard actually bites.
 
-🟠 **Known open deviation (2026-08-31):** `.f-spec-k` renders `--ink-3` on `--sunk` at 10px for
-4.1:1, under the 4.5:1 floor, on 12 instances. The direction's own token comment defines `--ink-3` as
-the "floor for functional text" at 4.99:1 **on paper**, so the defect is the pairing, not the token.
+✅ **The 2026-08-31 deviation is CLOSED.** `.f-spec-k` was `--ink-3` on `--sunk` at 10px for 4.1:1
+across 12 instances; it is now `--ink-2` at 11px, measured **6.78:1**. The token was never wrong,
+the pairing was: `--ink-3` is the functional-text floor **on paper** and not on a recessed well.
+**This file carried it as open for two days after it was fixed**, which is the ordinary way a
+deviation list goes stale: only the doc that records a fix gets updated, and the doc that records
+the problem is a different file.
+
+Also closed since: amber foreground glyphs 2.18:1 to 8.24:1, focus designed for the first time (0
+rules to 7), tap targets 13 per route to 1 exempt, a `<header>` landmark, and heading skips to 0.
+Live tally of open deviations belongs in `09_website-app/STATE.md`, not here.

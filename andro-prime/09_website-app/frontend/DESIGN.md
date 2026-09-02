@@ -351,14 +351,30 @@ drawing without re-measuring.**
    from a paragraph that stacks BELOW the chart on mobile. Track height went 10px to 12px in the
    same pass.
 
-**Photography.** `.f-shot`, greyscale at rest easing toward colour on tray hover, with a frosted
-caption pill. Greyscale is not decoration: it stops photography competing with the single accent the
-system allows.
+**Photography.** `.f-shot`, greyscale at rest easing toward colour on hover. Greyscale is not
+decoration: it stops photography competing with the single accent the system allows.
+
+⚠ **Two things about this changed on 2026-09-02 and the old wording described both wrongly.** The
+frosted caption pill is gone: a caption sits BELOW its image now (see "Captions and dots"). And the
+hover is `.f-plate:hover`, not `.f-tray:hover`, because most photographs are no longer in a tray at
+all; the tray-scoped rule would have left every plate without a hover, silently.
 
 **The hero film.** A silent, looping clip under a 90%-to-26% white wash, so it
 reads as the ground moving rather than as a picture and the headline stays dark ink on light. 🔴 The
 gate is a `media` attribute on the `<source>`, NOT `display: none` in CSS: hiding a video still
 downloads and decodes it.
+
+**The hero data field.** `.f-field`, a canvas at z-index 1, above the film AND its wash, below
+`.f-hero-in`. Real range geometry from `thresholds.md` (`lib/home/fieldRows.ts`), six markers
+repeated down the hero, masked top and bottom and held at 0.34 opacity, with a per-row fade near the
+headline band so type keeps its contrast. Ported 2026-09-02. 🔴 **Its compliance question is OPEN
+against CA-045** and `scripts/verify-hero-field.js` asserts its four shared markers still equal the
+readout’s, because the field is illegible by design and drift would otherwise be invisible.
+
+**The readout note.** `.f-ro-note`, the interpretation sentence under the two-range readout. It
+lives in the interpretation COLUMN, not in the instrument card: it is interpretation rather than
+instrument. It replaced `.f-ro-f` on 2026-09-02, which had also been supplying the instrument
+card’s bottom padding as a side effect.
 
 ## Do's and Don'ts
 
@@ -587,9 +603,15 @@ Recorded so they are not rediscovered as surprises.
    grounds: ink on light, paper plus a dark halo on ink fills and inverted panels. Verified 7
    `:focus-visible` rules and still 0 `outline: none` on all six routes. The ink-filled pill CTA,
    where the UA default ring was dark-on-dark and effectively invisible, now shows a white ring.
-6. 🔴 **CA-045 gates the homepage imagery and is OPEN.** Five generated photographs and the hero film
-   ship in `public/home/`. Signers are Ewa and Keith. The gate's own condition is that it arms when a
-   direction is built into the site, which has now happened, so it blocks the merge to `main`.
+6. 🔴 **CA-045 gates the homepage imagery and is OPEN.** Signers are Ewa and Keith. It arms when a
+   direction is built into the site, which has happened, so it blocks the merge to `main`.
+   **The register row covers EIGHT assets as of 2026-09-01**, not the five this entry used to say:
+   seven photographs (img-6 and img-7 were generated for the kit cards) plus the hero film.
+   ⚠ img-7’s trainers carry a logo-like mark, a trademark question rather than a clinical one.
+   🔴 **And a ninth item joined it on 2026-09-02 that is not an image at all**: the hero data field,
+   whose question is whether real range geometry, abstracted until illegible, is a data display or a
+   texture. Full statement in `03_compliance/STATE.md`. Keith ruled 2026-09-01 that the gate governs
+   SHIPPING, not creating, so building these on a branch that deploys nothing is not a breach.
 7. ⚠ **The reconciler has two structural blind spots**, both recorded in `12_operations/CONTEXT.md`:
    its `RULED` table is consulted in only one of its emit branches, and its compare loop cannot see a
    declaration one side omits entirely. Do not read a clean run as a clean layer.
@@ -606,7 +628,7 @@ Recorded so they are not rediscovered as surprises.
    Its closing sentence read "It fills the pill, the nav status dot and the footer chips, and nothing
    else." The nav status dot and the footer chip dots are 5px marks with nothing on top of them, so
    they are the glyph case the rule forbids, not the fill case it permits, and both were painting at
-   **2.18:1** — the same number the entry quotes as the reason for the sweep. **A rule and its
+   **2.18:1**, the same number the entry quotes as the reason for the sweep. **A rule and its
    inventory are two claims, and closing an entry verifies only the first.** The sweep enumerated
    `.f-ticks` because that is where the finding arrived, and calling the gap CLOSED made the
    remainder invisible. Both dots are now `--ink` (**19.69:1**).
@@ -621,9 +643,22 @@ Recorded so they are not rediscovered as surprises.
    third SPLIT (lab normal, our band Monitor) and was not marked as one, and
    `/kits/testosterone` asserted free testosterone was **Low on a warn bar** at 0.244 when the
    reference low is 0.198, so the engine returns `ft-normal` and the page was claiming a deficiency
-   the engine does not find. 🔴 **The remaining half is the scanner:** add the retired word list to
-   the compliance pre-flight, sourced from the engine's label map so the two cannot drift.
-10. ⚠ **`.f-shot-cap` has no measured contrast.** Five instances, `--ink-2` at 12px on `--paper` at
-    78% over uncontrolled photography. Two separate measurement passes got it wrong in opposite
-    directions, one by resolving the wrong ancestor background and one by treating the `color-mix`
-    ground as opaque. Its real ratio is unknown and varies per photograph.
+   the engine does not find.
+
+    ✅ **The scanner half is DONE (2026-09-02).** `compliance-preflight` reads the allowed words out
+    of `resultSeverity.ts`’s `BADGES` map at run time, so the check and the engine cannot drift, and
+    it grades a verdict field HARD and the prose shape REVIEW. Suite: `test-verdict-vocabulary.js`,
+    49 cases. 🔴 **On its first run it found twelve LIVE instances on `main`**, four on
+    `/lp/energy-recovery` and eight on `/lp/hormone-recovery`, one of which grades free testosterone
+    "Low" at 0.231. Those are a finding on `main` and are still open.
+10. ✅ **CLOSED 2026-09-02, by removing the condition rather than measuring it.** `.f-shot-cap` had
+    no measurable contrast because it sat on `--paper` at 78% over uncontrolled photography, so its
+    ratio varied per image and two measurement passes got it wrong in opposite directions (one
+    resolved the wrong ancestor background, one treated the `color-mix` ground as opaque). The
+    caption now sits BELOW its image on `--paper`, where `--ink-3` is a known **4.98:1**, which is
+    the exact value the token’s own comment states as its floor for functional text on paper, and
+    passes AA for the 12.5px it is set at.
+    **A value that cannot be measured is usually a sign the design is wrong, not the ruler.**
+11. ⚠ **The gap numbers are not in order** (1, 2, 3, 6, 7, 4, 5, 8, 9, 10, 11) and are kept as they
+    are on purpose: they are cited by number from STATE.md and from commit messages, so renumbering
+    would break every reference for a tidiness nobody reads.
