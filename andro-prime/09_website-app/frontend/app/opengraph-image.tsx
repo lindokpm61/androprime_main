@@ -95,7 +95,7 @@ export default function Image() {
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={LOGO_LOCKUP_DARK_DATA_URI} width={207} height={44} alt="Andro Prime" />
+          <img src={LOGO_LOCKUP_DARK_DATA_URI} width={207} height={22} alt="Andro Prime" />
           <span style={{ fontSize: '18px', color: '#6b7280', fontWeight: 600 }}>
             andro-prime.com
           </span>

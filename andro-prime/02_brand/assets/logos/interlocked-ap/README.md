@@ -45,8 +45,8 @@ the replacement has to meet the same bar.
 | File owed | Mirrors | Status |
 |---|---|---|
 | `icon.svg` (standalone mark) | `../refined-monogram/icon.svg` | 🟢 **DRAWN AND VERIFIED.** In this folder. No container, `fill="currentColor"`, 767 bytes |
-| `lockup-light.svg` / `lockup-dark.svg` | `../refined-monogram/lockup-*.svg` | 🟡 **CUT, IN `out/`, HELD.** Waiting on the wordmark face; re-run with `--face` once it is chosen |
-| `Logo.tsx` regenerated from the outlined paths | `09_website-app/frontend/components/shared/Logo.tsx` | 🔴 **NOT INSTALLED.** `out/logoArt.data.json` carries the path data; installing it is the same decision as the lockup |
+| `lockup-light.svg` / `lockup-dark.svg` | `../refined-monogram/lockup-*.svg` | 🟢 **DRAWN.** In this folder. Mark + traced wordmark, one geometry, ink flipped |
+| `Logo.tsx` regenerated from the outlined paths | `09_website-app/frontend/components/shared/Logo.tsx` | 🟢 **INSTALLED 2026-09-02** via `--install`, which writes `components/shared/logoArt.ts` |
 
 **Light and dark are ONE artwork** (Keith, 2026-09-02): a single set of paths, `currentColor` on the
 icon, and `lockup-light.svg` / `lockup-dark.svg` emitted as the same geometry with the ink flipped,
@@ -99,7 +99,24 @@ lightest strokes, so the whole thing reads light. The redraw resolves this to on
 adds **7.2% ink** overall. The outer silhouette is untouched: all weight is added inwards, so it is
 the same mark.
 
-🔴 **THE ONE OPEN DECISION: which grotesque.** The approved spec says the wordmark is "a heavy
+🟢 **DECIDED 2026-09-02 (Keith): the lockup stays as approved.** Not reset in any typeface. The
+approved wordmark is not a font: with tracking tuned so the total advance matches, the closest
+candidate disagrees on 74% of ink, so there was nothing to outline and it is TRACED from the sheet
+by `trace-wordmark.py`. The trace agrees with the raster on **99.42% of ink** across 16 contours,
+which is exactly ten letters plus six counters.
+
+Tracing a 120px cap height would normally give faceted curves. It does not here because the source
+is anti-aliased and its grey values encode where each edge really falls: the crop is upscaled 8x
+with a Lanczos filter and thresholded AFTER, which recovers that sub-pixel position rather than
+inventing detail. `build-icons.js` uses the same reasoning in the other direction.
+
+⚠ **One thing to know about the lockup.** The approved sheet draws the mark at two different weights:
+heavy in the big standalone, lighter inside the lockup. That is a generative-model inconsistency, not
+a design. The lockup here uses the same heavy mark as the standalone, so the two finally agree.
+
+The three typefaces below were cut and rejected, and are kept because the comparison is the record.
+
+🔵 **The rejected alternatives.** The approved spec says the wordmark is "a heavy
 grotesque sans", and the site's body sans is **Source Sans 3, which is humanist, not grotesque**, so
 the cheapest option quietly departs from what was approved. `out/face-compare.png` sets the same
 lockup three ways at 52px, 22px and 14px:

@@ -2,7 +2,27 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-09-02 (🟢 **`/kits` NOW SPEAKS THE HOMEPAGE'S LANGUAGE, AND THE DIAGNOSIS THAT GOT
+_Last updated: 2026-09-02 (🟢 **TWO HOMEPAGE TYPOGRAPHY DEFECTS FIXED, AND BOTH TURNED OUT TO BE
+INHERITED RATHER THAN AUTHORED.** Keith asked whether /kits used the same fonts as /. Both pages paint
+the identical three faces, so the naive answer was yes; comparing COMPUTED styles across all six F
+routes instead found **13 headings rendering in the body sans**, eight on `/` including its own kit
+card titles, and **the homepage price set in JetBrains Mono** while /kits set the same £ figure in
+sans. 🔴 **Neither was the page's fault.** The headings: `styles/base/globals.css:25` still carries the
+pre-F rule `h1,h2,h3,h4 { @apply font-sans font-black }` ("Brand rule: all headings use Inter
+font-black"), superseded 2026-08-30 and never removed, so every correct F heading was one that had
+individually overridden it. It wins on SOURCE ORDER, because f-primitives is `@import`ed before
+`@tailwind base` and **Tailwind's `@layer base` is a build directive, not a native cascade layer**, so
+a `:where()` fix tied at (0,0,1) and did nothing. Fixed with `.f-page :where(h1,h2,h3,h4)` at (0,1,0),
+which beats the legacy rule and still LOSES to any family stated on purpose (RelatedArticles keeps its
+sans, `.f-foot h3` keeps its mono). The price: `kprice` exists in exactly one mockup in the repo,
+`directions/v1-2026-08-27/A-specimen.html`, **Direction A, rejected** — the build took F's size,
+weight and tracking and A's typeface. F's own frame (`F-field.html:454`) declares no family at all.
+Now sans, which also stops a commercial figure reading in the face that carries blood results.
+Verified by computed-style sweep across 9 routes plus screenshots: `/` now 17 Newsreader + 2 mono + 0
+sans, prices sans; `/about`, `/faq`, `/blog`, `/contact`, `/terms`, `/privacy` each show exactly one
+serif heading, the shared cookie banner, which was already F. ⚠ One deliberate sans heading remains and
+is correct: `.f-prow-t`, the /kits hero price-list rows. ⚠ 8 RelatedArticles headings on the three
+detail pages keep an explicit Tailwind `font-sans` and are **unruled**, pending Keith. Earlier: 🟢 **`/kits` NOW SPEAKS THE HOMEPAGE'S LANGUAGE, AND THE DIAGNOSIS THAT GOT
 IT THERE WAS NOT THE ONE THE RULE AUDIT PRODUCED.** Asked whether the homepage design should be copied
 across, the first two answers were code-level and both ranked the problem wrong. The stylesheet is
 shared, so the CSS "had already propagated": false in effect, because the 2026-09-02 rhythm rule is
@@ -182,37 +202,45 @@ Remaining, each with its substance in the dual-agent critique entry below:
   twice, `.f-btn-ghost` declared twice, `.f-blab` losing on specificity) were invisible to it by
   construction, because it compares declarations and all three declarations were present and correct.
 
-### 🟢 No longer blocked: the vector masters are drawn. 🔴 And the live favicon is wrong
+### 🟢 The new logo is INSTALLED and live on the branch. 🔴 The favicon on `main` is still wrong
 
-**The logo swap is unblocked. Keith does not owe files**, because the mark did not need supplying:
-it needed measuring off the raster he approved and redrawing as geometry.
-`02_brand/assets/logos/interlocked-ap/icon.svg` exists, has no container, carries `currentColor`, is
-767 bytes, and is verified against the approved sheet at **99.54% pixel agreement**. `gen-logo.js`
-replaces the missing `gen-component.js`, and every constant is measured by scripts kept beside it.
+**Keith's decision, 2026-09-02: the lockup stays as approved**, not reset in a typeface. So the
+wordmark is TRACED from `SOURCE-approved-2026-08-30.png` rather than set: it is not a font, and with
+tracking tuned so the advance matches, the closest candidate disagrees on 74% of ink. The trace
+agrees with the raster on **99.42%** across 16 contours, which is ten letters plus six counters
+exactly. Cap height in the source is only 120px, so the crop is upscaled 8x with Lanczos and
+thresholded AFTER, which recovers the sub-pixel edge the anti-aliasing already encodes instead of
+tracing a staircase.
 
-🔴 **A defect found while doing it, and it is LIVE on `main`.** `SOURCE-mark-only.png`, which the
-README called "the mark cropped to its own bounds", is the approved mark with **60px cut off the
-foot of the stem**. Every other landmark matches the approved sheet to the pixel; only the stem's
-foot differs, 1196 against 1136. `build-icons.js` sources that clipped file, so **the favicon, app
-icon, apple-touch and PWA icons already on `main` all carry a 5% short descender**, and so did the
-16px gate that chose this concept. The vector master reads the sheet instead and is correct.
-**Re-cutting the icon set from `icon.svg` is the obvious next step and has NOT been done**, because
-it changes assets that are already live and that is Keith's call.
+**Installed into the app**, by `gen-logo.js --install`:
+- `components/shared/logoArt.ts` regenerated. Lockup aspect **4.7 to 9.3189**, and there is no
+  container any more, so anything assuming 470x100 had to move with it.
+- `Logo.tsx` rewritten: the black `<rect>` is gone, and it gained a `mark` prop. The old trick of
+  passing `viewBox="0 0 100 100"` to crop down to the square icon **cannot work without the square**,
+  and the results dashboard was doing exactly that; it now passes `mark`.
+- The mark and wordmark need **different fill rules**: nonzero for the mark, evenodd for the traced
+  wordmark, because potrace nests contours by winding. Both nonzero fills every counter.
+- Three OG image sites had the old 4.7 ratio hardcoded and were rescaled to hold the wordmark's cap
+  height roughly constant.
+- Typecheck clean; nav and footer both verified by screenshot on the running dev server.
 
-🟡 **One decision open: which grotesque the wordmark uses.** The approved spec says heavy grotesque;
-the body sans, Source Sans 3, is humanist, so the cheap option departs from what he approved.
-**`variants-compare-2026-09-02.png` is the sheet to look at**: the approved composition, big mark
-above lockup, redrawn per face beside the original raster. `face-compare-2026-09-02.png` is the
-52/22/14px legibility ladder. Archivo Black is closest to the approved render's proportions, 11.44
-advances per cap against 11.93.
+🔴 **STILL WRONG ON `main`, and not fixed here.** `build-icons.js` sources
+`SOURCE-mark-only.png`, which is the approved mark with **60px cut off the foot of the stem**. Every
+other landmark matches the approved sheet to the pixel; only the stem's foot differs, 1196 against
+1136. So the favicon, app icon, apple-touch and PWA icons already shipping carry a 5% short
+descender, and so did the 16px gate that chose this concept. **Re-cutting them from `icon.svg` is one
+command and changes live assets, so it is Keith's call.**
 
-🔴 **`Logo.tsx` is NOT installed.** `out/logoArt.data.json` carries the path data; installing it is
-the same decision as the lockup, so the site stays mixed until the face lands.
+⚠ **The approved sheet draws the mark at two weights** — heavy standalone, lighter inside the lockup.
+That is model inconsistency, not design. The installed lockup uses the heavy mark, so the two agree
+for the first time.
 
-🟢 **Vitall are unblocked** for the sleeve print, though the **25mm gate is still unrun**.
+**Masters**, all in `02_brand/assets/logos/interlocked-ap/`: `icon.svg`, `lockup-light.svg`,
+`lockup-dark.svg`. One geometry, ink flipped, so they cannot drift.
+**`variants-compare-2026-09-02.png`** is the five-column record: the approved raster, the traced
+vector of it, and the three typefaces that were cut and rejected.
 
-**Light and dark are one artwork** (Keith, 2026-09-02): one geometry, `currentColor` on the icon,
-ink flipped for the two lockup files, so they cannot drift.
+🟢 **Vitall are unblocked** for the sleeve print. The **25mm gate is still unrun**.
 
 ## ✅ The captions came off the photographs, and the credential dots came off the footer (2026-09-02)
 

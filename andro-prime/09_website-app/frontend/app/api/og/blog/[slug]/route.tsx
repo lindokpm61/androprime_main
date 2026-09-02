@@ -167,7 +167,7 @@ function CardHero({ category }: { category: string }) {
     <Frame justify="space-between">
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={LOGO_LOCKUP_DARK_DATA_URI} width={169} height={36} alt="Andro Prime" />
+        <img src={LOGO_LOCKUP_DARK_DATA_URI} width={169} height={18} alt="Andro Prime" />
       </div>
 
       <div
@@ -312,7 +312,7 @@ function BrandFooter() {
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={LOGO_LOCKUP_DARK_DATA_URI} width={207} height={44} alt="Andro Prime" />
+      <img src={LOGO_LOCKUP_DARK_DATA_URI} width={207} height={22} alt="Andro Prime" />
       <span
         style={{
           fontFamily: 'JetBrains Mono',

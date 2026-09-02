@@ -99,7 +99,7 @@ function label(text, w, size = 34) {
     comps.push({ input: c.buf, left: x, top: GAP + LAB })
   })
   comps.push({
-    input: label('the mark is identical in all four; only the wordmark face changes', W - GAP * 2, 24),
+    input: label('the mark is identical in every column; only the wordmark changes. Column 2 is the approved wordmark traced; 3 to 5 are typefaces.', W - GAP * 2, 24),
     left: GAP, top: GAP + LAB + COL + 10,
   })
 

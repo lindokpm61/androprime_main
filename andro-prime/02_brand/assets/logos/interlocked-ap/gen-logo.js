@@ -3,6 +3,7 @@
  *
  *   node gen-logo.js                  # masters + component path data, default face
  *   node gen-logo.js --face archivo   # archivo | figtree | source
+ *   node gen-logo.js --install        # write components/shared/logoArt.ts into the app
  *   node gen-logo.js --variants       # the approved sheet redrawn, one per wordmark face
  *   node gen-logo.js --compare        # the same lockups as a legibility ladder, 52 / 22 / 14 px
  *   node gen-logo.js --verify         # raster the mark against SOURCE-mark-only.png
@@ -216,6 +217,10 @@ function markPathAt(mark, H) {
 
 // ── wordmark ────────────────────────────────────────────────────────────────────────────────
 const FACES = {
+  // The approved artwork itself. Keith's decision 2026-09-02: the lockup stays as approved rather
+  // than being reset in a typeface. It is not a font (the closest candidate disagrees on 74% of
+  // ink), so it is traced from the sheet by trace-wordmark.py, which honours the same contract.
+  approved: { traced: true, label: 'Approved artwork (traced)' },
   archivo: { file: 'ArchivoBlack-Regular.ttf', weight: 900, label: 'Archivo Black' },
   figtree: { file: 'Figtree.ttf', weight: 900, label: 'Figtree Black' },
   source: { file: 'SourceSans3.ttf', weight: 900, label: 'Source Sans 3 Black' },
@@ -231,6 +236,13 @@ const FACES = {
 function wordmark(faceKey, { text = 'ANDRO PRIME', tracking = 0, scale = 1, dx = 0, dy = 0 } = {}) {
   const face = FACES[faceKey]
   if (!face) throw new Error(`unknown face "${faceKey}" (have: ${Object.keys(FACES).join(', ')})`)
+  if (face.traced) {
+    const raw = execFileSync('python', [
+      path.join(HERE, 'trace-wordmark.py'),
+      '--post-scale', String(scale), '--dx', String(dx), '--dy', String(dy),
+    ], { encoding: 'utf8', cwd: HERE })
+    return { ...JSON.parse(raw), label: face.label, key: faceKey }
+  }
   const fontPath = path.join(FONTS, face.file)
   if (!fs.existsSync(fontPath)) throw new Error(`missing ${fontPath}; run fetch-fonts.sh`)
   const raw = execFileSync('python', [
@@ -250,6 +262,9 @@ function buildLockup(mark, faceKey, H = 100) {
   const word = wordmark(faceKey, { scale: cap / 1000, dx: mk.width + gap, dy: baseline })
   return {
     markD: mk.d, wordD: word.path,
+    // potrace nests contours by winding, so a traced wordmark needs evenodd; outlined font glyphs
+    // are drawn nonzero. Getting this wrong fills every counter in the wordmark.
+    wordRule: word.traced ? 'evenodd' : 'nonzero',
     width: mk.width + gap + word.advanceFinal,
     height: H, face: word.label, faceKey, cap,
   }
@@ -282,15 +297,79 @@ function writeMasters(faceKey) {
       HEADER(`the Interlocked AP lockup, ${where} (${lk.face})`) +
       svg(lkVb,
         `  <path d="${lk.markD}" fill="${ink}" fill-rule="nonzero"/>\n` +
-        `  <path d="${lk.wordD}" fill="${ink}" fill-rule="nonzero"/>`))
+        `  <path d="${lk.wordD}" fill="${ink}" fill-rule="${lk.wordRule}"/>`))
   }
 
   fs.writeFileSync(path.join(OUT, 'logoArt.data.json'), JSON.stringify({
     generatedBy: 'gen-logo.js', face: lk.face, faceKey: lk.faceKey,
     mark: { d: ico.d, viewBox: iconVb, width: Number(f(ico.width)), height: 1000 },
-    lockup: { markD: lk.markD, wordD: lk.wordD, viewBox: lkVb, width: Number(f(lk.width)), height: 100, cap: Number(f(lk.cap)) },
+    lockup: { markD: lk.markD, wordD: lk.wordD, wordRule: lk.wordRule, viewBox: lkVb, width: Number(f(lk.width)), height: 100, cap: Number(f(lk.cap)) },
   }, null, 2) + '\n')
   return { mark, lk, iconVb, lkVb }
+}
+
+/**
+ * Write `components/shared/logoArt.ts` into the app. The old export names are KEPT even though two
+ * of them are misleading (LOGO_LOCKUP_DARK_DATA_URI means dark INK, for light grounds), because
+ * three OG routes import them and renaming is a separate change from swapping the artwork.
+ */
+function installComponent(faceKey) {
+  const mark = buildMark()
+  const ico = markPathAt(mark, 1000)
+  const lk = buildLockup(mark, faceKey, 100)
+  const uri = (str) => 'data:image/svg+xml;base64,' + Buffer.from(str, 'utf8').toString('base64')
+  const lockSvg = (ink) => svg(`0 0 ${f(lk.width)} 100`,
+    `<path d="${lk.markD}" fill="${ink}"/><path d="${lk.wordD}" fill="${ink}" fill-rule="${lk.wordRule}"/>`)
+  const iconSvg = (ink) => svg(`0 0 ${f(ico.width)} 1000`, `<path d="${ico.d}" fill="${ink}"/>`)
+
+  const ts = `// AUTO-GENERATED brand asset data. The Interlocked AP, ${lk.face}.
+// Regenerate with: node 02_brand/assets/logos/interlocked-ap/gen-logo.js --install
+// Do not hand-edit path data.
+//
+// The mark is measured off SOURCE-approved-2026-08-30.png and verified against it at 99.5% pixel
+// agreement. The wordmark is TRACED from the same sheet: it is not a typeface, so there is nothing
+// to outline. Both are font-independent, which is the bar the Refined Monogram set.
+//
+// THERE IS NO CONTAINER. The Refined Monogram sat in a 100x100 black square; this mark is an open
+// glyph, so the square is gone and the lockup's aspect changed from 4.7 to ${lk.width.toFixed(2) / 100 ? (lk.width / 100).toFixed(3) : ''}.
+// Anything that hardcoded 470x100 or a 4.7 ratio needs updating with it.
+
+/** The bare mark, no container. viewBox "0 0 ${f(ico.width)} 1000". */
+export const MARK_PATH =
+  '${ico.d}'
+export const MARK_VIEWBOX = '0 0 ${f(ico.width)} 1000'
+/** Mark aspect (width / height). */
+export const MARK_ASPECT = ${(ico.width / 1000).toFixed(4)}
+
+/** The lockup, in a 100-tall box. Mark and wordmark are separate paths with DIFFERENT fill rules. */
+export const LOCKUP_MARK_PATH =
+  '${lk.markD}'
+export const LOCKUP_WORD_PATH =
+  '${lk.wordD}'
+/** The traced wordmark nests contours by winding, so it needs evenodd; the mark is nonzero. */
+export const LOCKUP_WORD_FILL_RULE = '${lk.wordRule}' as const
+export const LOCKUP_VIEWBOX = '0 0 ${f(lk.width)} 100'
+
+/** Aspect ratio of the full lockup (width / height). Was 4.7 with the old square container. */
+export const LOGO_LOCKUP_ASPECT = ${(lk.width / 100).toFixed(4)}
+
+// Precomputed SVGs as base64 data URIs, for <img src> in satori / next-og image generation
+// (no font dependency at render time).
+/** Black ink lockup: use on LIGHT backgrounds. */
+export const LOGO_LOCKUP_DARK_DATA_URI =
+  '${uri(lockSvg('#000000'))}'
+/** White ink lockup: use on DARK backgrounds. */
+export const LOGO_LOCKUP_LIGHT_DATA_URI =
+  '${uri(lockSvg('#ffffff'))}'
+/** The bare mark in black. No container: it needs a light ground behind it. */
+export const LOGO_ICON_DATA_URI =
+  '${uri(iconSvg('#000000'))}'
+`
+  const dest = path.resolve(HERE, '../../../../09_website-app/frontend/components/shared/logoArt.ts')
+  fs.writeFileSync(dest, ts)
+  console.log(`INSTALLED ${dest}`)
+  console.log(`  lockup aspect ${(lk.width / 100).toFixed(4)} (was 4.7)   mark aspect ${(ico.width / 1000).toFixed(4)}`)
+  console.log('  ⚠ Logo.tsx, the OG routes and anything sized 470x100 must be updated to match.')
 }
 
 function report(mark) {
@@ -309,16 +388,17 @@ function report(mark) {
 }
 
 // ── entry ───────────────────────────────────────────────────────────────────────────────────
-module.exports = { buildMark, buildLockup, markPathAt, wordmark, writeMasters, FACES, REF, LOCKUP, svg, HEADER }
+module.exports = { buildMark, buildLockup, markPathAt, wordmark, writeMasters, installComponent, FACES, REF, LOCKUP, svg, HEADER }
 
 if (require.main === module) {
   const argv = process.argv.slice(2)
   const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d }
-  if (argv.includes('--variants')) require(path.join(HERE, 'variant-sheets.js'))
+  if (argv.includes('--install')) installComponent(arg('--face', 'approved'))
+  else if (argv.includes('--variants')) require(path.join(HERE, 'variant-sheets.js'))
   else if (argv.includes('--compare')) require(path.join(HERE, 'compare-faces.js'))
   else if (argv.includes('--verify')) require(path.join(HERE, 'verify-mark.js'))
   else {
-    const { mark, lk, lkVb } = writeMasters(arg('--face', 'archivo'))
+    const { mark, lk, lkVb } = writeMasters(arg('--face', 'approved'))
     report(mark)
     console.log('')
     console.log(`LOCKUP, ${lk.face}`)

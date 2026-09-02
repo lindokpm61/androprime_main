@@ -366,7 +366,7 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
             </p>
 
             <div className="mt-auto pt-8 border-t-2 border-black">
-              <Logo variant="dark" viewBox="0 0 100 100" className="w-20 h-20" />
+              <Logo variant="dark" mark className="h-20 w-auto" />
             </div>
           </div>
         </aside>

@@ -2,7 +2,15 @@
 
 Volatile status of creative/design production. Durable rules are in `CONTEXT.md` and the source-of-truth docs (`brand-guidelines.md`, `visual-identity.md`, `tone-of-voice.md`, `messaging-framework.md`). Update the date on each change.
 
-_Last updated: 2026-09-02 (🟢 **THE INTERLOCKED AP IS DRAWN AS VECTOR, AND THE LOGO IS NO LONGER
+_Last updated: 2026-09-02 (🟢 **THE LOGO IS DRAWN, DECIDED AND INSTALLED.** Keith ruled the lockup
+stays AS APPROVED rather than being reset in a typeface, so the wordmark is TRACED from the approved
+sheet: it is not a font, and the closest candidate disagrees on 74% of ink with tracking matched. The
+trace agrees with the raster on **99.42%** over 16 contours, ten letters plus six counters. Masters:
+`icon.svg`, `lockup-light.svg`, `lockup-dark.svg`, one geometry with the ink flipped.
+`gen-logo.js --install` wrote it into the site; lockup aspect moved 4.7 to 9.3189 and the container is
+gone. 🔴 **The favicon on `main` is still wrong**: `build-icons.js` sources a file with 60px cut off
+the stem, so every shipped icon has a 5% short descender. Re-cutting is one command and Keith's call.
+**`variants-compare-2026-09-02.png`** holds the five-column record. Earlier: 🟢 **THE INTERLOCKED AP IS DRAWN AS VECTOR, AND THE LOGO IS NO LONGER
 BLOCKED ON KEITH SUPPLYING FILES.** It never needed supplying: it needed measuring off the raster he
 approved on 2026-08-30 and rebuilding as geometry. `assets/logos/interlocked-ap/icon.svg` is verified
 against that raster at **99.53% pixel agreement**, has no container, and carries **7.2% more ink** than
