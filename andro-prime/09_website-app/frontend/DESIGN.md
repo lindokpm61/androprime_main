@@ -194,6 +194,51 @@ not a defect. Cap-height, which is what the eye reads as headline size, is corre
 humanist sans. `--font-serif` means Merriweather body copy in 517 places and was deliberately not
 repointed.
 
+### "All headings" was said twice, and the older one was winning
+
+Found and fixed 2026-09-02, by measuring computed styles across the six F routes rather than reading
+the stylesheet. **13 visible headings were rendering in the body sans**, eight of them on `/`,
+including the homepage's own kit card titles.
+
+🔴 **THE CAUSE WAS A CONTRADICTION, NOT AN OMISSION.** `styles/base/globals.css:25` still carries the
+pre-Direction-F rule `h1, h2, h3, h4 { @apply font-sans font-black }`, commented *"Brand rule: all
+headings use Inter font-black"*. Direction F superseded that ruling on 2026-08-30 and the rule was
+left in place, so **every F heading that looked right was one that had individually overridden it**,
+and the handful that looked wrong were simply the ones that had not. Reading the CSS could not find
+this: the failing rules are the ones with nothing in them, and **absence is not greppable**.
+
+🔴 **IT WON ON SOURCE ORDER, AND THE LAYERING INTUITION IS WRONG HERE.** `f-primitives.css` is
+`@import`ed at `globals.css:16`, before `@tailwind base` on line 18. Tailwind's `@layer base` is a
+**build-time directive, not a native CSS cascade layer**, so its contents emit as ordinary unlayered
+CSS at the `@tailwind base` position, after everything this file declares. A native `@layer` would
+have lost to unlayered author CSS; this does not. The first fix used `:where(.f-page) h1`, tied at
+(0,0,1), lost on order, and changed nothing.
+
+**The fix is one rule, and its specificity is load-bearing:**
+
+```css
+.f-page :where(h1, h2, h3, h4) { font-family: var(--font-display); font-size-adjust: cap-height 0.71; }
+```
+
+| Against | Specificity | Outcome | Why that is right |
+| --- | --- | --- | --- |
+| legacy `h1,h2,h3,h4` | (0,0,1) | **F wins** on specificity | the superseded rule stops reaching F pages |
+| Tailwind `.font-sans` | (0,1,0) | **utility wins** on source order | a family stated on purpose still wins; `RelatedArticles` keeps its sans |
+| `.f-foot h3` | (0,1,1) | **footer wins** | column headings stay mono |
+
+⚠ **Do not raise it to `.f-page h1`.** That is (0,1,1) and would start silently overriding deliberate
+choices, which is the opposite of the intent: this rule exists to catch omissions, not to win
+arguments.
+
+⚠ **Scoped to `.f-page`, and the legacy rule is overridden rather than deleted**, because the blog
+skin and the app theme are separate languages that still rely on it. Verified after the change:
+`/about`, `/faq`, `/blog`, `/contact`, `/terms` and `/privacy` each render exactly one serif heading,
+the shared cookie banner's `.f-h4`, which was already Direction F.
+
+⚠ **One deliberate sans heading remains on an F page and is correct:** `.f-prow-t`, the kit names in
+the `/kits` hero price list, declares `var(--font-sans)` explicitly. It is a price-list row rather
+than a section heading. The rule losing to it is the mechanism working.
+
 ## Layout
 
 A single 1180px container with a 20px gutter, carried by `.f-wrap`. `.f-narrow` is 880px for
@@ -511,6 +556,134 @@ you**: no error, no failed build, just a page that no longer responds. Re-scoped
 ⚠ Unequal column heights are now normal and are not a defect to fix. A text column running past its
 neighbour is what a document does; it was only ever hidden by making both columns full height.
 
+### Applied to `/kits`, 2026-09-02
+
+The same grammar, run over the page that sells the product. **What survived the test and stayed a
+card:** the three kit cards (a transaction), the comparison table (an instrument), the hero's
+available-now panel (a price list). **What did not:** the four process steps and the three spec
+wells, both prose.
+
+| | Was | Now |
+| --- | --- | --- |
+| Process steps | `.f-step`, four bordered boxes on `--core` with a hover lift and accent ring | `.f-steps-open`, a rule above each column and nothing else |
+| Spec row | `.f-spec > div`, three recessed `--sunk` wells **inside the kit card** | `.f-spec-open`, a rule above each column |
+| Kit card photograph | none | `.f-shot-band` at 2.4/1, full-bleed, caption below at the card's inset, focal point per image |
+
+🔴 **The nested panel was the worst of it, and it is a shape rather than a token.** Three grey wells
+inside a white card inside a page: a box in a box in a box. Nothing on the homepage nests, and no
+palette or type change closes a gap that is structural.
+
+✅ **Removing a well IMPROVES its contrast.** `.f-spec-k` is `--ink-2`, moved there on 2026-08-31
+because `--ink-3` on `--sunk` measured 4.10:1 against a 4.5:1 floor. Taking away the well moves the
+same token onto the card's lighter ground, so the ratio can only rise. Restating the 2026-08-31
+finding because it generalises: **the token was never wrong, the pairing was**, and the structural fix
+deletes the pairing rather than re-measuring it.
+
+⚠ **Both are MODIFIERS, and that is temporary.** `.f-step` is also drawn by the three kit detail pages
+and `/how-it-works`, and `.f-spec` by `/kits/hormone-recovery`. Changing the base classes would have
+restyled four pages nobody has reviewed. **When those pages land, fold the modifiers into the base
+classes and delete them**, or the system ends up carrying two step treatments and two spec treatments
+with nothing to say which is current.
+
+🔴 **The kit-card photograph is the same asset as the homepage kit card for the same kit**, matched by
+slug: `img-6`, `img-7`, `img-3`. Two surfaces sold the same three products one click apart, one in
+photographs and one in white boxes, and that was the single largest reason they did not read as one
+site. Matching by slug also adds **nothing to the CA-045 register**, since all three are already on it.
+`.f-kit .f-shot-cap`, the rule giving a kit-card caption the card's 20px inset, was written on
+2026-09-02 and **had no call site until this change**: the treatment was designed and never built.
+
+### Every band crop carries its own focal point
+
+Ruled 2026-09-02, immediately, because the first version of the band shipped two portraits with the
+men's heads cut off and **Keith caught it by eye after the change had been screenshot-verified**.
+
+🔴 **A CROP RATIO IS A STATEMENT ABOUT THE PHOTOGRAPHS, NOT ABOUT THE BOX.** The band was first set at
+3/1 to land the photo at 393px, near the 343px the homepage's lead kit card gives its own: a ratio
+derived from a neighbouring layout's HEIGHT. But `object-fit: cover` buys a wide box with source
+height, and these sources are 1.51 and 1.33, so 3/1 discarded 50% and 56% of the frame, evenly off
+the top and bottom. Both men are composed high in frame, so the half that went was the half with
+their heads in it. Deriving the ratio from a pixel dimension optimised the one variable that cannot
+see the subject.
+
+🔴 **AND RATIO ALONE DOES NOT FIX IT.** Easing to 2.4/1 keeps 63% and still cuts the top of img-6's
+hair, because the subject sits above the centre of the frame and no crop a card can afford will
+centre it. So `.f-shot-band` declares `object-position: var(--focal)` with **no usable default**, and
+every kit sets its own in the page data. Measured off the images: img-6's head runs 5% to 41% of
+frame, img-7's 9% to 32%, both anchored to the top; img-3 is an overhead of two hands at 45%, set at
+40%.
+
+⚠ **`focal` is a REQUIRED field on the card type, not an optional one.** Optional would leave the
+next photograph one forgotten line away from the same defect, and this defect is silent: no error, no
+warning, no failed build, and the alt text goes on truthfully describing a man whose head is no
+longer in the picture.
+
+⚠ **A screenshot pass does not catch this unless it is looking for it.** The change WAS verified by
+screenshot at 1440 and 390 before it shipped, and the check confirmed the photograph was present,
+full-bleed, greyscale and correctly inset, i.e. every property of the CONTAINER. Nobody looked at the
+man. When verifying imagery, check the subject survived the crop, separately from checking the frame
+is right.
+
+## The panel, and the strip
+
+Built 2026-09-02 from Frame O2. **The structural answer to "this page could belong to anyone", one
+level up from the card fix.**
+
+**The diagnosis was the page's argument shape, not its decoration.** The homepage leads with the
+instrument: section 01 is the readout, an actual result, and everything after argues from it, with
+commerce arriving two thirds down. `/kits` led with price, then listed three products, then compared
+them. That is a catalogue, and catalogue shape reads as any direct-to-consumer brand whatever
+typeface it is set in.
+
+**The symptom was that the panel was stated three times**, from one source, in three treatments: the
+hero tray's marker line, each card's spec row, and the comparison table. That is what a page does
+when it has no single instrument to point at, so every section restates the facts for itself.
+
+| | Before | After |
+| --- | --- | --- |
+| Section 01 | "One price. Nothing hidden." | **The panel**, absorbing the comparison table and the cards' spec rows |
+| Section 02 | three full-width slabs | **three light cards**, each carrying its slice of the panel |
+| Section 03 | the comparison table | "One price. Nothing hidden.", moved after the choice |
+| Pill-radius elements | **60** (more than the homepage's 50) | **30** |
+| Tick-list items | 9 | **0** |
+
+🔴 **THREE BANDS, NOT A GRID OF TICKS.** The cells do not gap vertically, so consecutive covered
+markers fuse into one continuous bar: Kit 1 solid down the five hormone rows, Kit 2 down the four
+deficiency rows, Kit 3 unbroken down all nine. The reader chooses from the silhouette before reading
+a marker name, which is the page's entire job. Rail is `--sunk`, band is ink: the readout's own
+construction rather than a resemblance to it.
+
+🔴 **NO NEEDLE, NO VALUE, NO RANGE.** Nobody has taken the test at this point in the journey, so an
+instrument face here would be reading a number that does not exist. It draws COVERAGE, a product
+fact, and restates what the comparison table already showed, so it ships at zero new claims. The
+stronger version, the lab's band against ours per marker, is Ewa's and not a redraw's.
+
+🔴 **THE TRACK NARROWS, IT NEVER STACKS.** The first mobile rule stacked names above bands, which
+reads fine and destroys the point: stacking gaps every row, so the three bands break into nine
+separate three-cell rows. Measured at 390: an 80px gap where the design depends on 0. Now 108px of
+track at every width.
+
+⚠ **The h2 is a gate.** "What each men's health blood test covers" carries `men's health blood
+test`, flagged by `06_marketing/seo-ai-search` as underserved at KD 9 and earmarked for kit-page
+intent. Merging the table upward moves the heading; it must never drop the phrase.
+
+⚠ **The tick list is gone and its words are not.** "Finger-prick collection kit / Pre-paid return
+label / 5-minute collection process" was identical on all three cards, so it differentiated nothing
+and cost nine pills. One fact about all three kits, so it is stated once, under all three.
+
+### A modifier declared before its base class is dead
+
+Found while building the above, and **it had never worked**. `.f-tray-flag` gives Kit 3 its accent
+ring and sat at line 100; `.f-tray` sets `box-shadow: var(--shadow-ambient)` at line 111. Equal
+specificity, so source order decided, so the base overwrote the modifier and **Kit 3's ring never
+rendered once on the live page**. Nothing failed: the card kept a perfectly good ambient shadow, so
+the only symptom was an emphasis nobody could see was missing.
+
+🔴 **THIRD INSTANCE OF THIS EXACT FAILURE IN THIS FILE**, and the note on `.f-shot-tall` already
+names the other two: *"A tie decided by file position is how `.f-btn-ghost` shipped transparent and
+how `.f-blab` shipped 30% oversized."* Fixed the way that note prescribes, by winning on
+**specificity** rather than by moving lines: `.f-tray.f-tray-flag` at (0,2,0). A modifier that only
+works from where it happens to sit is a bug waiting for the next person who reorders a stylesheet.
+
 ## The measurement device
 
 Added 2026-09-02. **The one piece of visual language the product owns and the category does not**, spent
@@ -527,8 +700,14 @@ neither register except in its words.
 
 | Component | What it is | Where |
 | --- | --- | --- |
-| `.f-srule` | The readout’s track, band and cased needle as a section opener, with the position in mono | Six section openers on `/` |
+| `.f-srule` | The readout’s track, band and cased needle as a section opener, with the position in mono | Six section openers on `/`, four on `/kits` |
 | `.f-marg` | A print sidenote: figure reference and counts, in a 104px mono column beside the prose above 900px | `Fig. 01` on the argument section |
+
+**The numbering convention, so a second page does not invent its own** (2026-09-02, when `/kits` took
+the device). **The hero takes no rule and the closing CTA takes no rule**, so `of` is the count of
+content sections between them: six on `/`, four on `/kits`. The rule sits as the first child of its
+section. Getting this wrong is not cosmetic: the needle's position is `n / of`, so a hero counted in
+would put the first needle a fifth of the way along a page the reader has not started.
 
 🔴 **The needle measures something real, and that is the point rather than a nicety.** A track with a
 mark at a decorative position would be an instrument face reading a number that does not exist, which

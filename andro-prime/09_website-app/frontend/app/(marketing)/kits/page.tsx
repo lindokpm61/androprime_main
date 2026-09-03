@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { SectionRule } from '@/components/marketing/SectionRule'
 import {
   ALL_PANEL_MARKER_IDS,
   KIT_PANELS,
@@ -66,6 +68,44 @@ type KitCard = {
   /** Frame O gives Kit 2 a ghost button and Kits 1 and 3 a solid one, so the
       middle option is not competing with the two it sits between. */
   ghostCta?: boolean
+  /** The card photograph, added 2026-09-02.
+   *
+   * 🔴 THE SAME ASSET THE HOMEPAGE KIT CARD USES FOR THE SAME KIT, deliberately.
+   * The two surfaces sell the same three products one click apart, and until now
+   * the homepage rendered them as photographs and this page rendered them as
+   * white boxes, which was the single largest reason the two pages did not read
+   * as one site. Matching by slug also means this change adds NO new image to the
+   * CA-045 register: `img-3`, `img-6` and `img-7` are already on it.
+   *
+   * ⚠ Alt text is carried verbatim from the homepage rather than rewritten. The
+   * 2026-09-02 packet found `img-5`'s alt describing the opposite of its
+   * photograph, so alt text here is copied from the surface that was checked
+   * against the actual image, not re-derived from the filename. */
+  photo: string
+  cap: string
+  alt: string
+  /** The photograph's focal point, as an `object-position` pair.
+   *
+   * 🔴 REQUIRED, WITH NO DEFAULT, ON PURPOSE. A band crop discards 37% to 45% of
+   * the source height, and `object-fit: cover` takes it off the top and bottom
+   * equally unless told otherwise. Both men here are composed high in frame, so
+   * the centred default cut their heads off. Leaving this optional would put the
+   * next photograph one forgotten field away from the same defect, and it is a
+   * defect nothing catches: no error, no warning, and the alt text still
+   * truthfully describes a man whose head is no longer in the picture.
+   *
+   * Read it off the image, not off the filename: img-6's head runs 5% to 41% of
+   * frame and img-7's 9% to 32%, so both anchor to the top; img-3 is an overhead
+   * of two hands at 45% and sits just above centre. */
+  focal: string
+  /** The one-line "who it is for", shown on the light card.
+   *
+   * CARRIED FROM THE HOMEPAGE'S OWN KIT CARDS, verbatim and matched by slug, for
+   * the same reason the photographs are: the two surfaces sell the same three
+   * products one click apart and should say the same thing about them. Existing
+   * live copy in a new placement, not new copy. Logged in
+   * 09_website-app/redesign-copy-register.md. */
+  who: string
 }
 
 const KITS: KitCard[] = [
@@ -75,6 +115,11 @@ const KITS: KitCard[] = [
     blurb:
       'Your GP told you you’re normal. That’s not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 2 to 5 working days with a plain-English explanation of what they mean. If the main problem is tiredness, poor recovery or fogginess, Kit 2 is the better fit.',
     rightFor: 'Low drive, stalled training, “not myself” symptoms',
+    photo: '/home/img-6.jpg',
+    cap: 'Ordinary Tuesday',
+    who: 'If the question is testosterone.',
+    focal: '50% 0%',
+    alt: 'A man in his late forties standing in a back doorway at dawn with a mug of tea, looking out over a terraced garden.',
     footLabel: 'If your result shows testosterone below 12 nmol/L',
     footBody: 'You will receive a specific next step, not a generic recommendation.',
     resultsTo:
@@ -86,6 +131,11 @@ const KITS: KitCard[] = [
     blurb:
       'Sore for 3 days after a session that used to take 1. Tired all the time. Joints aching. This test looks at the four markers most likely to explain why: Vitamin D, Active B12 (Holotranscobalamin), inflammation (hs-CRP), and iron stores (Ferritin). If the issue is hormones, Kit 1 or Kit 3 is the better fit.',
     rightFor: 'Fatigue, slow recovery, aching joints, low mood',
+    photo: '/home/img-7.jpg',
+    cap: 'Not bouncing back',
+    who: 'If the question is energy and recovery.',
+    focal: '50% 0%',
+    alt: 'A man in his early forties sitting on the bottom stair of a hallway after a run, still in running kit, catching his breath.',
     ghostCta: true,
     footLabel: 'If a marker comes back deficient',
     footBody:
@@ -99,6 +149,11 @@ const KITS: KitCard[] = [
     blurb:
       'Nine markers covering hormones, energy, recovery, and inflammation in one kit. The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.',
     rightFor: 'Full picture across hormones, energy, and recovery',
+    photo: '/home/img-3.jpg',
+    cap: 'Five minutes, at home',
+    who: 'If you do not know which question it is.',
+    focal: '50% 40%',
+    alt: "A man's hands at a kitchen table holding a small plain sample collection tube.",
     footLabel: 'Widest set of recommendation pathways',
     footBody:
       'Kit 3 covers both testosterone and deficiency markers, with supplement recommendation routes for every deficiency pattern. Our own supplement range launches shortly; you can join the early-access waitlist at any time. Best choice when the picture is unclear.',
@@ -264,11 +319,203 @@ export default function KitsPage() {
         C1 under CA-026, rendered VERBATIM. The redraw changes only the container.
         Not a word of this copy is editable without a compliance pre-flight.
       */}
+      {/*
+        ---------- SECTION 01: THE PANEL ----------
+        Frame O2, 2026-09-02. This section ABSORBED the old comparison table and
+        the cards' spec rows. Before it, the same nine markers were stated three
+        times on this page in three treatments, which is what a page does when it
+        has no single instrument to point at.
+
+        🔴 THE H2 IS CARRIED VERBATIM AND MUST BE. "What each men's health blood
+        test covers" contains `men's health blood test`, which
+        06_marketing/seo-ai-search flags as an underserved opportunity at KD 9 and
+        earmarks for kit-page intent. Merging the table upward MOVES this heading;
+        it must never drop the phrase. That is a ranking decision, not a design one.
+
+        Everything renders from KIT_PANELS and PANEL_MARKERS, so the instrument
+        cannot desync from the kit pages or from the engine.
+      */}
       <section className="f-wrap f-sec">
+        <SectionRule n={1} of={4} />
+        <p className="f-blab">The panel</p>
+        <h2 className="f-h2">What each men&rsquo;s health blood test covers.</h2>
+        <p className="f-lede">
+          Nine markers. Three ways to buy a slice of them. Every kit reads on the same lab, in the
+          same units, so a result from one is comparable with a result from another.
+        </p>
+
+        <div className="f-pan">
+          <div className="f-panhead">
+            <p className="f-blab" style={{ margin: 0 }}>Included in</p>
+            <div className="f-pankits">
+              {ORDER.map((kit) => (
+                <div key={kit}>
+                  <b className="f-blab" style={{ margin: 0 }}>{NUMBER_LABEL[kit]}</b>
+                  <i>{PRICES[kit]}</i>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {ALL_PANEL_MARKER_IDS.map((id, row) => (
+            <div className="f-panrow" key={id}>
+              <div className="f-pmark">
+                <b>{markerLabel(id)}</b>
+                <span>{PANEL_MARKERS[id].measures}</span>
+              </div>
+              <div className="f-ptrk">
+                {ORDER.map((kit) => {
+                  const has = KIT_PANELS[kit].includes(id)
+                  // A band's cap is rounded only where the run starts or ends, so
+                  // consecutive markers read as one continuous bar rather than as
+                  // nine stacked pills.
+                  const prev = row > 0 && KIT_PANELS[kit].includes(ALL_PANEL_MARKER_IDS[row - 1])
+                  const next =
+                    row < ALL_PANEL_MARKER_IDS.length - 1 &&
+                    KIT_PANELS[kit].includes(ALL_PANEL_MARKER_IDS[row + 1])
+                  const cls = [
+                    'f-pc',
+                    has ? 'f-on' : '',
+                    has && !prev ? 'f-cap-t' : '',
+                    has && !next ? 'f-cap-b' : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')
+                  return (
+                    <span key={kit} className={cls}>
+                      <span className="sr-only">
+                        {NUMBER_LABEL[kit]}: {has ? 'included' : 'not included'}
+                      </span>
+                    </span>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+
+          <div className="f-panfoot">
+            <p className="f-blab" style={{ margin: 0 }}>Total markers</p>
+            <div className="f-pantot">
+              {ORDER.map((kit) => (
+                <span key={kit}>{panelCount(kit)}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- SECTION 02: THE THREE KITS ----------
+          The cards are light because section 01 did the explaining. Gone from
+          each: the marker string (now the strip), the three spec wells, and the
+          full blurb. What is left is what is unique to this kit. */}
+      <section className="f-wrap f-sec" id="kits">
+        <SectionRule n={2} of={4} />
+        <p className="f-blab">The full range</p>
+        <h2 className="f-h2">
+          Three tests.<br />
+          <span className="f-grey">Different questions.</span>
+        </h2>
+      </section>
+
+      <section className="f-wrap">
+        <div className="f-kgrid">
+          {KITS.map((k) => (
+            <div
+              className={k.flag ? 'f-tray f-tray-pick f-tray-flag f-rise f-kcard' : 'f-tray f-tray-pick f-rise f-kcard'}
+              key={k.kit}
+            >
+              <div className="f-core f-kit" style={{ padding: 0 }}>
+                <div
+                  className="f-shot f-shot-r16"
+                  style={{ '--focal': k.focal } as React.CSSProperties}
+                >
+                  <Image src={k.photo} alt={k.alt} width={800} height={500} />
+                </div>
+                <span className="f-shot-cap">{k.cap}</span>
+                <div className="f-kbody">
+                  {k.flag ? (
+                    <span className="f-flagchip">
+                      {NUMBER_LABEL[k.kit]} &middot; {k.flag}
+                    </span>
+                  ) : (
+                    <span className="f-kchip">{NUMBER_LABEL[k.kit]}</span>
+                  )}
+                  <h3>{k.title}</h3>
+                  <p className="f-kwho">{k.who}</p>
+
+                  {/* The card's own slice of the instrument above it. */}
+                  <div className="f-pstrip" aria-hidden="true">
+                    {ALL_PANEL_MARKER_IDS.map((id) => (
+                      <span
+                        key={id}
+                        className={KIT_PANELS[k.kit].includes(id) ? 'f-ps f-on' : 'f-ps'}
+                      />
+                    ))}
+                  </div>
+                  <p className="f-blab f-pscount">
+                    {panelCount(k.kit)} of {ALL_PANEL_MARKER_IDS.length} markers
+                  </p>
+
+                  <div className="f-kfoot">
+                    <span className="f-price">{PRICES[k.kit]}</span>
+                    <Link
+                      href={`/kits/${k.kit}`}
+                      className={k.ghostCta ? 'f-btn f-btn-sm f-btn-ghost' : 'f-btn f-btn-sm'}
+                    >
+                      Order
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 🔴 THE TICK LIST WAS THE MOST GENERIC ELEMENT ON THE PAGE, and it was
+            IDENTICAL on all three cards, so it differentiated nothing and cost
+            nine of the page's sixty pill-radius elements. It is one fact about
+            all three kits, so it is stated once, under all three. The words are
+            unchanged; only the placement is. Logged in
+            09_website-app/redesign-copy-register.md item 1. */}
+        {/* `.f-fine` caps at 66ch, which is 455px of mono and breaks this into
+            three short ragged lines when centred under a 1180px grid. Widened
+            here rather than in the class, because 66ch is right for the fine
+            print it was written for.
+            105ch and not 92ch: the class also carries 0.04em of tracking, so a
+            mono character costs ~7.4px rather than the ~6.9px the ch unit
+            assumes, and 92ch landed at 2.05 lines of text, which word wrapping
+            rounds up to three. */}
+        <p
+          className="f-fine"
+          style={{
+            marginTop: 18,
+            textAlign: 'center',
+            maxWidth: '105ch',
+            marginInline: 'auto',
+            textWrap: 'balance',
+          }}
+        >
+          Every kit arrives with a finger-prick collection kit and a pre-paid return label.
+          Collection takes five minutes. Results land in your Andro Prime dashboard, not the lab
+          portal.
+        </p>
+      </section>
+
+      {/* ---------- SECTION 03: THE MONEY BLOCK ----------
+          🔴 APPROVED COPY, CARRIED VERBATIM, AND MOVED RATHER THAN CHANGED. This
+          is C1 under CA-026 and the source marks it "rendered verbatim". Not a
+          word differs. What differs is WHERE: it now lands AFTER the choice
+          rather than before it, so it reads as a promise about the thing you have
+          just picked instead of a claim about products you have not seen yet.
+          Still the page's one inverted block, which DESIGN.md caps at one per
+          page. Logged in redesign-copy-register.md item 3. */}
+      <section className="f-wrap f-sec">
+        <SectionRule n={3} of={4} />
         <div className="f-invert f-rise">
           <p className="f-blab f-blab-lg f-invert-lab">What you pay</p>
           <h2 className="f-h2 f-invert-h">
-            One price.<br />Nothing hidden.
+            One price.<br />
+            Nothing hidden.
           </h2>
           <p className="f-sub f-invert-p">
             The price on the card is everything you pay. No charge to see your own results, no
@@ -278,186 +525,9 @@ export default function KitsPage() {
         </div>
       </section>
 
-      {/* ---------- THREE KITS ---------- */}
-      <section className="f-wrap f-sec" id="kits">
-        <p className="f-blab">The full range</p>
-        <h2 className="f-h2">
-          Three tests.<br />
-          <span className="f-grey">Different questions.</span>
-        </h2>
-      </section>
-
-      <section className="f-wrap">
-        {KITS.map((k) => (
-          <div
-            className={k.flag ? 'f-tray f-tray-pick f-tray-flag f-rise' : 'f-tray f-tray-pick f-rise'}
-            key={k.kit}
-          >
-            <div className="f-core">
-              <div className="f-kitgrid">
-                <div>
-                  <div className="f-kithead">
-                    <div>
-                      {k.flag ? (
-                        <span className="f-flagchip">
-                          {NUMBER_LABEL[k.kit]} &middot; {k.flag}
-                        </span>
-                      ) : (
-                        <span className="f-kchip">{NUMBER_LABEL[k.kit]}</span>
-                      )}
-                      <h3 className="f-h2 f-kittitle">{k.title}</h3>
-                    </div>
-                    <div className="f-kitprice">
-                      <span className="f-price">{PRICES[k.kit]}</span>
-                      <span className="f-oneoff">one-off</span>
-                    </div>
-                  </div>
-
-                  <p className="f-sub">{k.blurb}</p>
-
-                  <div className="f-spec">
-                    <div>
-                      <span className="f-spec-k">Markers tested</span>
-                      <span className="f-spec-v">{panelShortLabels(k.kit).join(' · ')}</span>
-                    </div>
-                    <div>
-                      <span className="f-spec-k">Turnaround</span>
-                      <span className="f-spec-v">
-                        Results within 2 to 5 working days of sample receipt
-                      </span>
-                    </div>
-                    <div>
-                      <span className="f-spec-k">Right for</span>
-                      <span className="f-spec-v">{k.rightFor}</span>
-                    </div>
-                  </div>
-
-                  <div className="f-kitfoot">
-                    <p className="f-blab" style={{ marginBottom: 8 }}>
-                      {k.footLabel}
-                    </p>
-                    <p className="f-sub" style={{ fontSize: 15 }}>
-                      {k.footBody}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="f-kitaside">
-                  <div>
-                    <p className="f-blab">What arrives in the post</p>
-                    <ul className="f-ticks">
-                      {['Finger-prick collection kit', 'Pre-paid return label', '5-minute collection process'].map((t) => (
-                        <li key={t}>
-                          <span aria-hidden="true">&#10003;</span>
-                          {t}
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="f-blab" style={{ marginTop: 20 }}>
-                      Results delivered to
-                    </p>
-                    <p className="f-sub" style={{ fontSize: 15 }}>
-                      {k.resultsTo}
-                    </p>
-                  </div>
-                  <Link
-                    href={`/kits/${k.kit}`}
-                    className={
-                      k.ghostCta ? 'f-btn f-btn-ghost' : 'f-btn'
-                    }
-                    style={{ marginTop: 22, width: '100%', justifyContent: 'center' }}
-                  >
-                    Order for {PRICES[k.kit]}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/*
-        ---------- COMPARISON TABLE ----------
-        Derived from KIT_PANELS so this table cannot desync from the kit pages.
-      */}
-      <section className="f-wrap f-sec">
-        <p className="f-blab">Side by side</p>
-        <h2 className="f-h2">What each men&rsquo;s health blood test covers.</h2>
-
-        <p className="f-fine f-scrollhint">Scroll to see all kits &rarr;</p>
-        <div className="f-tray" style={{ marginTop: 18 }}>
-          <div className="f-core">
-            <div className="f-tablewrap">
-              <table className="f-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Marker</th>
-                    {ORDER.map((kit) => (
-                      <th
-                        scope="col"
-                        key={kit}
-                        className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}
-                      >
-                        {NUMBER_LABEL[kit]}
-                        <span className="f-th-price">{PRICES[kit]}</span>
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {ALL_PANEL_MARKER_IDS.map((id) => (
-                    <tr key={id}>
-                      <th scope="row">{markerLabel(id)}</th>
-                      {ORDER.map((kit) => {
-                        const has = KIT_PANELS[kit].includes(id)
-                        return (
-                          <td
-                            key={kit}
-                            className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}
-                          >
-                            <span className={has ? 'f-in' : 'f-out'} aria-hidden="true" />
-                            <span className="sr-only">{has ? 'Included' : 'Not included'}</span>
-                          </td>
-                        )
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th scope="row">Total markers</th>
-                    {ORDER.map((kit) => (
-                      <td key={kit} className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}>
-                        <span className="f-total">{panelCount(kit)}</span>
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td />
-                    {ORDER.map((kit) => (
-                      <td key={kit} className={kit === 'hormone-recovery' ? 'f-col-hi' : undefined}>
-                        <Link
-                          href={`/kits/${kit}`}
-                          className={
-                            kit === 'hormone-recovery'
-                              ? 'f-btn f-btn-sm'
-                              : 'f-btn f-btn-sm f-btn-ghost'
-                          }
-                        >
-                          Order
-                        </Link>
-                      </td>
-                    ))}
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ---------- PROCESS ---------- */}
       <section className="f-wrap f-sec">
+        <SectionRule n={4} of={4} />
         <p className="f-blab">Process</p>
         <h2 className="f-h2">Order to results in under a week.</h2>
 

@@ -97,7 +97,22 @@
    card in the frame, and the frame says why: inverting asked the page to
    change colour scheme mid-scroll, which is what stopped it working in dark
    mode. The ring marks the same thing for the same reason without that. */
-.f-tray-flag { box-shadow: var(--shadow-ambient), 0 0 0 1.5px var(--flag); }
+/* 🔴 (0,2,0), NOT (0,1,0), AND THIS RULE WAS DEAD UNTIL 2026-09-02. It was
+   written as `.f-tray-flag` on line 100 while `.f-tray` sets
+   `box-shadow: var(--shadow-ambient)` on line 111. Equal specificity, so source
+   order decided, so the base class overwrote the modifier and **Kit 3's accent
+   ring never rendered once** on the live page. Nothing failed: the card kept a
+   perfectly good ambient shadow, so the only symptom was the absence of an
+   emphasis nobody could see was missing.
+
+   THIRD INSTANCE OF THE SAME FAILURE IN THIS FILE, and the other two are already
+   named in the note on `.f-shot-tall`: "A tie decided by file position is how
+   .f-btn-ghost shipped transparent and how .f-blab shipped 30% oversized." The
+   fix follows that note's own remedy rather than moving lines around: win on
+   SPECIFICITY, so the rule cannot be broken again by an edit somewhere else in
+   the file. A modifier that only works from where it happens to sit is a bug
+   waiting for the next person who reorders a stylesheet. */
+.f-tray.f-tray-flag { box-shadow: var(--shadow-ambient), 0 0 0 1.5px var(--flag); }
 .f-tray-pick { transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
 .f-tray-pick:hover { transform: translateY(-3px); box-shadow: var(--shadow-ambient), 0 0 0 1.5px var(--flag); }
 @media (prefers-reduced-motion: reduce) {
@@ -191,6 +206,59 @@
      long descender and collides line to line at 1.05. Now 1.1 to 1.25 by size.
 
    Body stays sans: see the .f-page rules above. Only headings are serif. */
+
+/* ---------- "ALL HEADINGS" IS NOW SAID ONCE, AT THE ROOT ----------
+   Added 2026-09-02. DESIGN.md has always read "Display, Newsreader. All
+   headings", and that rule was enforced by every heading rule REMEMBERING to
+   restate the family. Diligence has a failure rate: on 2026-09-02 a computed
+   audit across the six F routes found 13 visible headings rendering in the body
+   sans, from four rules that set size, tracking and weight and omitted
+   font-family, so each silently inherited `.f-page`'s sans.
+
+   🔴 THE OMISSION IS INVISIBLE BY CONSTRUCTION, TWICE OVER. It does not fail, it
+   inherits, and what it inherits is a real legible face, so the output reads as a
+   deliberate typographic choice rather than a missing line. And a rule that omits
+   a property has nothing in it to grep for: **absence is not searchable**, so it
+   can only be caught by measuring the rendered page. The same bug was found and
+   fixed on 2026-08-30 for `.f-bio h3` and `.f-faqgrid h3`, and that sweep fixed
+   the two instances it had found rather than the condition, which is why four
+   more rules survived it. This is the condition.
+
+   🔴 THE ACTUAL CAUSE IS NOT FOUR FORGETFUL RULES, IT IS ONE LEGACY RULE THEY ALL
+   HAD TO FIGHT. `styles/base/globals.css` carries the pre-Direction-F brand rule
+   `h1, h2, h3, h4 { @apply font-sans font-black }`, commented "Brand rule: all
+   headings use Inter font-black". Direction F superseded that ruling on
+   2026-08-30, and the rule was left in place. So every F heading that renders
+   correctly does so by individually overriding it, and the four "broken" rules
+   were simply the four that did not. **The bug was never an omission; it was a
+   contradiction between two rules that both call themselves "all headings".**
+
+   🔴 AND IT WINS BY SOURCE ORDER, WHICH IS WHY IT IS EASY TO MISREAD. This file is
+   `@import`ed at globals.css:16, BEFORE `@tailwind base` on line 18, and Tailwind's
+   `@layer base` is a BUILD-TIME directive rather than a native CSS cascade layer,
+   so its contents emit as ordinary unlayered CSS at the `@tailwind base` position,
+   i.e. after everything here. Native layering intuitions do not apply: at equal
+   specificity the legacy rule is simply later, so a `:where()` version of this rule
+   (0,0,1) tied and lost. Measured, not reasoned about.
+
+   SPECIFICITY IS THEREFORE LOAD-BEARING AND (0,1,0) IS THE ONLY CORRECT VALUE.
+   `.f-page` supplies the class and `:where()` keeps the element names free, so:
+   it BEATS the legacy `h1,h2,h3,h4` (0,0,1) on specificity, and it LOSES on source
+   order to Tailwind's `.font-sans` (0,1,0), which is emitted by `@tailwind
+   utilities` on line 20 and is therefore later. That is the behaviour we want on
+   both sides: the legacy rule stops reaching F pages, while anything that states a
+   family ON PURPOSE still wins, so RelatedArticles keeps its `font-sans` and
+   `.f-foot h3` (0,1,1) keeps its mono. Do not raise this to `.f-page h1`, which is
+   (0,1,1) and would silently start overriding deliberate choices.
+
+   ⚠ Scoped to `.f-page`, not global: the blog skin and the app theme are separate
+   languages with their own headings and must not be reached from here. The legacy
+   rule stays for them, which is why it is overridden here rather than deleted. */
+.f-page :where(h1, h2, h3, h4) {
+  font-family: var(--font-display);
+  font-size-adjust: cap-height 0.71;
+}
+
 .f-h1 {
   font-family: var(--font-display); font-size-adjust: cap-height 0.71;
   font-size: clamp(2.4rem, 5.6vw, 4.1rem);
@@ -562,20 +630,27 @@
 .f-symp .f-route { background: var(--flag-f); box-shadow: inset 0 0 0 1.5px var(--flag); }
 
 /* ---------- STEPS ---------- */
-.f-steps { display: grid; gap: 12px; grid-template-columns: 1fr; }
+.f-steps { display: grid; gap: 0 34px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .f-steps { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1040px) { .f-steps { grid-template-columns: repeat(4, 1fr); } }
+/* 🔴 ONE CONTAINMENT GRAMMAR, 2026-09-02. The four prose grids on the F pages
+   (steps, spec rows, biomarker cards, FAQ answers) were four boxed treatments of
+   the same thing: a short block of prose in a rounded well. Under the containment
+   ruling a card holds a transaction or an instrument, and none of these is either,
+   so all four take the same print treatment: a rule above, and nothing else.
+   ⚠ This reaches /how-it-works as well as the three kit pages, by design: it is an
+   F page and the ruling is system-wide.
+   ⚠ The grids' gaps grew, because the gap was doing half the separating and the
+   padding the rest. With no padding the gap is all there is. */
 .f-step {
-  background: var(--core);
-  border-radius: var(--radius-inset);
-  padding: 24px 22px;
-  border: 1px solid var(--hair);
+  border-top: 1px solid var(--hair);
+  padding: 16px 0 0;
   position: relative;
-  overflow: hidden;
   @apply flex flex-col;
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
 }
-.f-step:hover { border-color: var(--flag); box-shadow: 0 0 0 1px var(--flag), var(--shadow-ambient); transform: translateY(-3px); }
+/* 🔴 THE HOVER WENT WITH THE BOX: it lifted and ringed a card, and with no card
+   it would ring a rectangle of empty paper. Same failure the homepage hit when
+   photographs left their trays and `.f-tray:hover .f-shot img` stopped matching. */
 .f-step .f-no {
   display: block;
   font-family: var(--font-mono); font-size-adjust: none;
@@ -585,7 +660,7 @@
   color: var(--ink-3);
   transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
 }
-.f-step:hover .f-no { opacity: 0; transform: translateY(-5px); }
+
 .f-step .f-step-foot {
   margin-top: auto;
   padding-top: 13px;
@@ -599,6 +674,45 @@
   border-top: 1px solid var(--hair);
 }
 .f-step .f-step-foot b { color: var(--ink); font-weight: 600; }
+
+/* ---------- STEPS, UNCONTAINED ----------
+   Added 2026-09-02 for /kits, under the containment ruling: a card holds a
+   transaction or an instrument, and a description of the postal process is
+   neither. The other boxes on that page survive the same test and are staying
+   (the kit cards are transactions, the comparison table is an instrument, the
+   hero's available-now panel is a price list).
+
+   ⚠ SCOPED TO A MODIFIER RATHER THAN CHANGING `.f-step`, deliberately and
+   temporarily. `.f-step` is also drawn by the three kit detail pages and by
+   /how-it-works, and those are being reworked in a later pass; changing the base
+   class here would restyle four pages nobody has reviewed yet. When those pages
+   land, fold this into `.f-step` and delete the modifier rather than leaving two
+   step treatments in the system.
+
+   🔴 THE HOVER GOES WITH THE BOX. `.f-step:hover` lifts the card and rings it in
+   accent, which is a behaviour that only makes sense on something raised off the
+   page. Left in place it would ring a rectangle of empty paper. This is the same
+   failure the homepage hit when the photographs left their trays and
+   `.f-tray:hover .f-shot img` silently stopped matching. */
+/* .f-steps-open FOLDED INTO .f-step 2026-09-02; kept as a no-op alias so any
+   stray call site cannot silently lose its styling. Remove once none remain. */
+.f-steps-open { }
+.f-steps-open .f-step {
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--hair);
+  border-radius: 0;
+  padding: 16px 0 0;
+  overflow: visible;
+  transition: none;
+}
+.f-steps-open .f-step:hover { border-color: var(--hair); box-shadow: none; transform: none; }
+.f-steps-open .f-step:hover .f-no { opacity: 1; transform: none; }
+/* The ghost numeral needed the box's `overflow: hidden` to crop it. With no box
+   there is nothing to crop against, so it is dropped here rather than left to
+   overhang the paper. The small mono `.f-no` still numbers the step. */
+.f-steps-open .f-bignum { display: none; }
+.f-steps-open .f-step .f-step-foot { border-top: 0; padding-top: 10px; }
 /* The ghost numeral. Its negative tracking is paid back as padding, or the
    glyph overhangs the box being positioned and `overflow:hidden` clips the
    stem off the 4. Documented in kits-F.html at length; kept here because the
@@ -640,15 +754,10 @@
 .f-step > *:not(.f-bignum) { position: relative; z-index: 1; }
 
 /* ---------- BIOMARKER CARDS ---------- */
-.f-bios { display: grid; gap: 12px; grid-template-columns: 1fr; }
+.f-bios { display: grid; gap: 0 30px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .f-bios { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1040px) { .f-bios { grid-template-columns: repeat(3, 1fr); } }
-.f-bio {
-  background: var(--core);
-  border-radius: var(--radius-inset);
-  padding: 22px 20px;
-  box-shadow: inset 0 0 0 1px var(--hair);
-}
+.f-bio { border-top: 1px solid var(--hair); padding: 15px 0 0; }
 /* Declared no family before 2026-08-30, so it inherited sans from .f-page and
    would have stayed sans while every other heading went serif. */
 .f-bio h3 { font-family: var(--font-display); font-size-adjust: cap-height 0.71; font-size: 18px; letter-spacing: -0.01em; margin: 10px 0; font-weight: 600; line-height: 1.25; color: var(--ink); }
@@ -657,14 +766,9 @@
 /* ---------- FAQ, OPEN GRID ----------
    Standardised across all three kit pages (Keith, 2026-08-29). Every question
    visible, nothing behind a click. */
-.f-faqgrid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+.f-faqgrid { display: grid; gap: 0 34px; grid-template-columns: 1fr; }
 @media (min-width: 820px) { .f-faqgrid { grid-template-columns: repeat(2, 1fr); } }
-.f-faqgrid > div {
-  background: var(--sunk);
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: inset 0 0 0 1px var(--hair);
-}
+.f-faqgrid > div { border-top: 1px solid var(--hair); padding: 16px 0 0; }
 /* Also declared no family before 2026-08-30. At 15.5px a serif needs its tracking
    back at 0: negative tracking on a small serif closes the counters first. */
 .f-faqgrid h3 {
@@ -1335,9 +1439,9 @@
 }
 .f-oneoff { display: block; margin-top: 5px; font-family: var(--font-mono); font-size-adjust: none; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
 
-.f-spec { display: grid; gap: 10px; grid-template-columns: 1fr; margin: 20px 0; }
+.f-spec { display: grid; gap: 0 26px; grid-template-columns: 1fr; margin: 20px 0; }
 @media (min-width: 700px) { .f-spec { grid-template-columns: repeat(3, 1fr); } }
-.f-spec > div { background: var(--sunk); border-radius: 16px; padding: 14px 15px; box-shadow: inset 0 0 0 1px var(--hair); }
+.f-spec > div { border-top: 1px solid var(--hair); padding: 13px 0 0; }
 /* 🔴 2026-08-31: was --ink-3 at 10px on --sunk, measuring 4.10:1 against a
    4.5:1 floor, on 12 instances. The token was never wrong: the direction defines
    --ink-3 as the functional-text floor at 4.99:1 ON PAPER, and the defect was
@@ -1350,6 +1454,118 @@
   text-transform: uppercase; color: var(--ink-2);
 }
 .f-spec-v { display: block; font-family: var(--font-sans); font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink); }
+
+/* ============================================================================
+   THE PANEL, AND THE STRIP
+   Added 2026-09-02, Frame O2. /kits stated the same nine markers THREE times in
+   three treatments: the hero tray's marker line, each card's spec row, and the
+   comparison table. That is what a page does when it has no single instrument to
+   point at, so every section restates the facts for itself. This is the
+   instrument. It is stated once, at the top, and the cards refer to it.
+
+   THREE BANDS, NOT A GRID OF TICKS, AND THAT IS THE WHOLE POINT. The cells do not
+   gap vertically, so consecutive covered markers FUSE into one continuous bar:
+   Kit 1 is a solid band down the five hormone rows, Kit 2 down the four
+   deficiency rows, Kit 3 unbroken down all nine. The reader chooses from the
+   silhouette before reading a marker name, which is this page's entire job. The
+   rail is --sunk and the band is ink, so this is the readout's own construction
+   rather than something that resembles it.
+
+   NO NEEDLE, NO VALUE, NO RANGE, AND THAT IS A HARD LINE. The device's rule is
+   that a needle must measure something real, because an instrument face reading a
+   number that does not exist is the one thing this brand cannot ship. Nobody has
+   taken the test at this point in the journey. This draws COVERAGE, a fact about
+   the product, and restates what the comparison table already showed, so it ships
+   at zero new claims. The stronger version, the lab's band against ours per
+   marker, is Ewa's call and not a redraw's: those figures have never been
+   rendered to a customer. */
+.f-pan { margin-top: 26px; border-top: 1px solid var(--hair-2); }
+.f-panhead,
+.f-panrow,
+.f-panfoot { display: grid; grid-template-columns: 1fr 300px; gap: 28px; }
+.f-panhead { align-items: end; padding-bottom: 10px; }
+.f-panrow { align-items: stretch; }
+.f-panfoot { border-top: 1px solid var(--hair-2); padding-top: 12px; }
+/* THE RULE SITS ON THE TEXT COLUMN, NOT ACROSS THE ROW. A border drawn the full
+   width would slice every band into nine separate blocks, which is the
+   grid-of-ticks this replaces. */
+.f-pmark { padding: 13px 0; border-top: 1px solid var(--hair); }
+.f-pmark b { display: block; font-size: 15.5px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+.f-pmark span { display: block; font-size: 13px; line-height: 1.5; color: var(--ink-2); margin-top: 2px; }
+/* Flex, not grid: a grid child stretched by its row still sizes its own implicit
+   row to CONTENT, and these cells are empty, so they collapsed to a fraction of
+   the row height and the bands never joined. Measured, not assumed. */
+.f-ptrk { display: flex; gap: 8px; }
+.f-pc { flex: 1; background: var(--sunk); }
+.f-pc.f-on { background: var(--ink); }
+.f-pc.f-cap-t { border-radius: 5px 5px 0 0; }
+.f-pc.f-cap-b { border-radius: 0 0 5px 5px; }
+.f-pankits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+.f-pankits b { display: block; font-weight: 400; }
+.f-pankits i { display: block; font-style: normal; font-size: 15px; font-weight: 700; letter-spacing: -0.03em; margin-top: 3px; color: var(--ink); }
+.f-pantot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+.f-pantot span { font-size: 19px; font-weight: 700; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; color: var(--ink); }
+/* 🔴 THE TRACK NARROWS, IT NEVER STACKS. The first mobile rule stacked the names
+   above the bands, which reads fine and destroys the entire point: stacking puts a
+   gap between every row, so the three continuous bands break into nine separate
+   three-cell rows and the silhouette that lets a reader choose at a glance is
+   gone. Measured at 390: an 80px gap between consecutive cells where the whole
+   design depends on 0.
+   Narrowing keeps the instrument intact at every width. 108px of track is three
+   30px bars, which is still comfortably above the 24px minimum a coloured band
+   needs to read as a band rather than a dot. */
+@media (max-width: 860px) {
+  .f-panhead, .f-panrow, .f-panfoot { grid-template-columns: 1fr 108px; gap: 14px; }
+  .f-pmark span { font-size: 12.5px; }
+  .f-ptrk { gap: 5px; }
+  .f-pankits i { font-size: 13px; }
+  .f-pantot span { font-size: 16px; }
+}
+
+/* THE STRIP: the same band, miniaturised, on each kit card. The card's own slice
+   of the instrument above it, and what replaces the tick list. */
+.f-pstrip { display: flex; gap: 3px; margin-top: 14px; }
+.f-ps { height: 9px; flex: 1; background: var(--sunk); border-radius: 2px; }
+.f-ps.f-on { background: var(--ink); }
+.f-pscount { margin-top: 8px; }
+
+/* THE LIGHT KIT CARD. Three across rather than three full-width slabs, because
+   the panel above has already done the explaining, so the card carries only what
+   is unique to this kit: the photograph, the name, who it is for, its slice of
+   the panel, and the price. */
+.f-kgrid { display: grid; gap: 18px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .f-kgrid { grid-template-columns: repeat(3, 1fr); } }
+.f-kcard .f-core { padding: 0; display: flex; flex-direction: column; height: 100%; }
+.f-kbody { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+.f-kbody h3 { font-size: 22px; letter-spacing: -0.03em; margin: 10px 0 0; line-height: 1.15; max-width: none; }
+.f-kfoot { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 16px; }
+
+/* ---------- SPEC ROW, UNCONTAINED ----------
+   Added 2026-09-02 for /kits. Three grey recessed wells sitting INSIDE the kit
+   card: a box inside a box, which is the pattern that made the page read as an
+   interface while the homepage read as a document. The homepage has no nested
+   panel anywhere. The information is a spec table, so it takes a spec table's
+   print treatment: a rule above each column, and nothing else.
+
+   ⚠ Modifier rather than a change to `.f-spec`, for the same reason as
+   `.f-steps-open`: /kits/hormone-recovery draws the same class and is being
+   reworked in a later pass. Fold both in and delete the modifiers when it lands.
+
+   ✅ CONTRAST IMPROVES, it does not regress. `.f-spec-k` is `--ink-2`, fixed on
+   2026-08-31 to 6.78:1 specifically because `--ink-3` on the recessed `--sunk`
+   well measured 4.10:1 against a 4.5:1 floor. Removing the well moves the same
+   token onto the card's own lighter ground, so the ratio can only go up. The
+   2026-08-31 entry's point stands and is worth restating: the token was never
+   wrong, the pairing was, and this deletes the pairing. */
+/* .f-spec-open FOLDED INTO .f-spec 2026-09-02; no-op alias, see above. */
+.f-spec-open { }
+.f-spec-open > div {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 13px 0 0;
+  border-top: 1px solid var(--hair);
+}
 
 .f-kitfoot { border-top: 1px solid var(--hair); padding-top: 18px; margin-top: 4px; }
 
@@ -1754,6 +1970,32 @@
 @media (min-width: 900px) {
   .f-shot-r16.f-shot-tall img { aspect-ratio: 4 / 5; }
 }
+/* A BAND, for the kit cards on /kits. Added 2026-09-02.
+   The same three photographs as the homepage kit cards, matched by slug, but the
+   card they sit on is a different shape: /kits draws one wide horizontal card per
+   kit at the full 1180px container, where the homepage draws a narrow column in a
+   three-across bento. A 16:10 crop that reads as a panel at 272px reads as 738px
+   of photograph at 1180px and buries the price below the fold, so the crop opens
+   out with the card rather than staying fixed.
+
+   🔴 2.4/1 AND NOT 3/1, AND THE FIRST NUMBER WAS DERIVED THE WRONG WAY. 3/1 was
+   picked to land the photo at 393px, near the 343px the homepage's lead card
+   gives its own, i.e. chosen to match a HEIGHT. But `object-fit: cover` pays for
+   a wide box by discarding source height, and these sources are 1.51 and 1.33,
+   so 3/1 threw away 50% and 56% of the frame respectively, centred. Both men are
+   composed high in frame, so the half that went was the half with their heads in
+   it: two decapitated portraits, shipped, and caught by eye rather than by any
+   check. 2.4/1 keeps 63% and 55%.
+   **A crop ratio is a statement about the PHOTOGRAPHS, not about the box.** Deriving
+   one from a neighbouring layout's dimensions optimises the only variable that
+   cannot see the subject.
+
+   ⚠ Ratio alone does not fix it and did not: at 2.4/1 a centred crop still cuts
+   the top of img-6's hair. The band therefore has no default focal point and each
+   photograph carries its own (`--focal`, set per kit in the page data). Where a
+   subject sits high in frame, no ratio a card can afford will centre it. */
+.f-shot-band img { aspect-ratio: 16 / 10; object-position: var(--focal, 50% 50%); }
+@media (min-width: 900px) { .f-shot-band img { aspect-ratio: 2.4 / 1; } }
 /* ---------- PHOTO CAPTION ----------
    🔴 IT LEFT THE PHOTOGRAPH ON 2026-09-02. This was a frosted pill sitting on
    top of the image, seven of them across the page. A label overlaid on a photo
@@ -1812,8 +2054,29 @@
   color: var(--ink); margin-top: 12px; max-width: 24ch;
 }
 .f-kit ul { list-style: none; font-size: 14.5px; color: var(--ink-2); line-height: 1.75; margin-top: 14px; flex: 1; padding: 0; }
+/* 🔴 THE PRICE IS SANS, AND WAS MONO UNTIL 2026-09-02 BECAUSE OF A LEFTOVER FROM
+   A DIRECTION WE DID NOT CHOOSE. `kprice` appears in exactly one mockup in this
+   repository: `directions/v1-2026-08-27/A-specimen.html`, Direction A, rejected,
+   where it reads `.kprice{font-family:"JetBrains Mono",monospace;font-size:30px;
+   font-weight:700}`. Direction F's own homepage frame declares NO family for it
+   (`F-field.html:454` sets 32px/700/-0.04em and nothing else), so in the chosen
+   frame the price inherits the body sans, exactly as `/kits` renders it. The
+   build took F's size, weight and tracking and A's typeface: a hybrid nobody
+   decided on, and the resulting split had the same three products priced in two
+   different faces one click apart.
+
+   🔴 THE REASON IT IS WRONG IS NOT ONLY CONSISTENCY. Mono is this system's
+   INSTRUMENT voice, and every other mono numeral on the page is either something
+   a laboratory measured (`.f-mk-v`, "14.2 nmol/L") or furniture (`.f-blab`,
+   `.f-srule-n`, `.f-marg-fig`, `.f-no`). A price is neither. Setting £179 in the
+   face that carries blood results makes a commercial figure read as a reading.
+
+   `font-size-adjust` returns to the page's 0.53 by inheritance: `none` was
+   correct only for the mono, which is not size-adjusted. `tabular-nums` stays,
+   for the same reason `.f-price` has it: 99 / 119 / 179 align rather than
+   shuffle. */
 .f-kit .f-kprice {
-  font-family: var(--font-mono); font-size-adjust: none;
+  font-family: var(--font-sans);
   font-size: 32px; font-weight: 700; letter-spacing: -0.04em; margin-top: 16px;
   font-variant-numeric: tabular-nums;
 }

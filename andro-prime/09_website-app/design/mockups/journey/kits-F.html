@@ -1005,6 +1005,237 @@ table.cmp tbody tr:hover td.k3{background:var(--flag-f2)}
   <p class="note">Second instance of the "three questions, under a minute" line noted at the top of this frame. Two sites, one fact, which is the condition where a correction lands on one and not the other.</p>
 </div>
 
+<!-- ============ FRAME O2: /kits, RESTRUCTURED ============ -->
+<div class="flabel"><div class="in">
+  <b>Frame O2</b><span>/kits, restructured</span><span>hero, THE PANEL, three light cards, the money block moved after the choice, process, close</span>
+  <span class="hot">PROPOSAL, not a port of the live page</span>
+</div></div>
+
+<style>
+/* ------------------------------------------------------------------
+   FRAME O2 ONLY. Kept in its own block, mid-document, so the proposal
+   can be read or deleted as one thing. If it is adopted, these move
+   into the main sheet and this block goes.
+   ------------------------------------------------------------------ */
+
+/* THE PANEL. Nine markers, three kits, drawn as three BANDS on a shared
+   track rather than as ticks in a grid. The band is the readout's own
+   construction, which is the only visual language this product owns and
+   nobody else in the category has. Reading down, each kit's coverage is a
+   single unbroken bar of a different length, so the three products are
+   comparable as SHAPES before a word is read. */
+.pan{margin-top:26px;border-top:1px solid var(--hair-2)}
+.panhead{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:end;padding-bottom:10px}
+.pankits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.pankits b{display:block;font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:400}
+.pankits i{display:block;font-style:normal;font-size:15px;font-weight:700;letter-spacing:-.03em;margin-top:3px}
+.panrow{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:stretch}
+/* THE RULE SITS ON THE TEXT COLUMN, NOT ACROSS THE ROW. A border drawn the full
+   width would slice every band into nine separate blocks, which is the grid-of-ticks
+   this frame exists to replace. */
+.pmark{padding:13px 0;border-top:1px solid var(--hair)}
+.pmark b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.02em}
+.pmark span{display:block;font-size:13px;line-height:1.5;color:var(--ink-2);margin-top:2px}
+.ptrk{display:flex;gap:8px}
+/* Flex, not grid: a grid child stretched by the row still sizes its own implicit
+   row to CONTENT, and these cells are empty, so they collapsed to a fraction of the
+   row and the bands never joined. Measured, not assumed. */
+/* The rail is the recessed track. The band sits IN it, exactly as the
+   readout's band sits in its own well. No gap between rows, so consecutive
+   covered markers fuse into one continuous bar. */
+.pc{flex:1;background:var(--sunk);position:relative}
+.pc.on{background:var(--ink)}
+.pc.top{border-radius:5px 5px 0 0}
+.pc.bot{border-radius:0 0 5px 5px}
+.pc.top.bot{border-radius:5px}
+.panfoot{display:grid;grid-template-columns:1fr 300px;gap:28px;border-top:1px solid var(--hair-2);padding-top:12px}
+.panfoot .lab{font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.pantot{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.pantot span{font-size:19px;font-weight:700;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+
+/* THE STRIP. The same band, miniaturised, on each kit card: the card's own
+   slice of the instrument above it. It is what replaces the tick list. */
+.pstrip{display:flex;gap:3px;margin-top:14px}
+.ps{height:9px;flex:1;background:var(--sunk);border-radius:2px}
+.ps.on{background:var(--ink)}
+.pscount{font-family:"Geist Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:8px}
+
+/* THE LIGHT CARD. Three across, not three stacked slabs: the panel above has
+   already done the explaining, so the card carries only what is unique to
+   this kit. */
+.kgrid{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:900px){.kgrid{grid-template-columns:repeat(3,1fr)}}
+.kcard .core{padding:0;display:flex;flex-direction:column;height:100%}
+.kcard .shot{border-radius:var(--r-in) var(--r-in) 0 0;overflow:hidden;background:var(--sunk);aspect-ratio:16/10}
+.kcard .shot img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04)}
+.kbody{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
+.kcard h3{font-size:22px;letter-spacing:-.03em;margin:10px 0 0;line-height:1.15}
+.kwho{font-size:15px;color:var(--ink-2);line-height:1.45;margin-top:8px;flex:1}
+.kfoot{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:16px}
+.kfoot .price{font-size:27px;font-weight:700;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+</style>
+
+<p class="note hot"><b>WHY THIS FRAME EXISTS.</b> The Impeccable critique of the homepage found that nothing outside the copy made it identifiably ours, and the fix there was to spend the readout's vocabulary as page structure. Measuring <code>/kits</code> the same way says it now has the same defect: <b>19 instrument elements on the homepage against 4 here</b>, and all four of those are section openers. The kit cards themselves carry none. It also has <b>more pill-radius elements than the homepage (60 against 50)</b> and nine tick-list items the homepage has none of.</p>
+
+<p class="note hot"><b>AND THE DEFECT IS THE PAGE'S ARGUMENT SHAPE, NOT ITS DECORATION.</b> The homepage leads with the instrument: section 01 is the readout, an actual result, and everything after argues from it, with commerce arriving two thirds down. Frame O leads with price, then lists three products, then compares them. That is a catalogue, and catalogue shape reads as any direct-to-consumer brand whatever typeface it is set in.</p>
+
+<p class="note hot"><b>THE SYMPTOM IS THAT THE PANEL IS STATED THREE TIMES.</b> The same nine markers, from the same source, in three different treatments on one page: the hero tray's marker line, each card's "Markers tested" spec row, and the comparison table. That is what happens when a page has no single instrument to point at, so every section restates the facts for itself. This frame states it <b>once</b>, at the top, and lets everything below refer to it.</p>
+
+<div class="wrap sec">
+  <p class="blab">Section 01</p>
+  <h2>What each men's health blood test covers.</h2>
+  <p class="stand" style="margin-top:14px">Nine markers. Three ways to buy a slice of them. Every kit reads on the same lab, in the same units, so a result from one is comparable with a result from another.</p>
+
+  <div class="pan">
+    <div class="panhead">
+      <div class="lab" style="font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)">The panel</div>
+      <div class="pankits">
+        <div><b>Kit 1</b><i>&pound;99</i></div>
+        <div><b>Kit 2</b><i>&pound;119</i></div>
+        <div><b>Kit 3</b><i>&pound;179</i></div>
+      </div>
+    </div>
+
+    <div class="panrow">
+      <div class="pmark"><b>Total Testosterone</b><span>Total circulating testosterone in the blood</span></div>
+      <div class="ptrk"><span class="pc on top"></span><span class="pc"></span><span class="pc on top"></span></div>
+    </div>
+    <div class="panrow">
+      <div class="pmark"><b>SHBG</b><span>Sex hormone-binding globulin</span></div>
+      <div class="ptrk"><span class="pc on"></span><span class="pc"></span><span class="pc on"></span></div>
+    </div>
+    <div class="panrow">
+      <div class="pmark"><b>Free Androgen Index (FAI)</b><span>Your total testosterone expressed as a percentage of your SHBG</span></div>
+      <div class="ptrk"><span class="pc on"></span><span class="pc"></span><span class="pc on"></span></div>
+    </div>
+    <div class="panrow">
+      <div class="pmark"><b>Albumin</b><span>The most abundant transport protein in the blood</span></div>
+      <div class="ptrk"><span class="pc on"></span><span class="pc"></span><span class="pc on"></span></div>
+    </div>
+    <div class="panrow">
+      <div class="pmark"><b>Free Testosterone (Calc)</b><span>Calculated from Total T, SHBG and Albumin</span></div>
+      <div class="ptrk"><span class="pc on bot"></span><span class="pc"></span><span class="pc on"></span></div>
+    </div>
+    <div class="panrow">
+      <div class="pmark"><b>Vitamin D</b><span>25-hydroxyvitamin D (total)</span></div>
+      <div class="ptrk"><span class="pc"></span><span class="pc on top"></span><span class="pc on"></span></div>
+    </div>
+    <div class="panrow">
+      <div class="pmark"><b>Active B12</b><span>Holotranscobalamin (active form)</span></div>
+      <div class="ptrk"><span class="pc"></span><span class="pc on"></span><span class="pc on"></span></div>
+    </div>
+    <div class="panrow">
+      <div class="pmark"><b>hs-CRP (Inflammation)</b><span>High-sensitivity C-reactive protein</span></div>
+      <div class="ptrk"><span class="pc"></span><span class="pc on"></span><span class="pc on"></span></div>
+    </div>
+    <div class="panrow">
+      <div class="pmark"><b>Ferritin (Iron Storage)</b><span>Iron storage marker</span></div>
+      <div class="ptrk"><span class="pc"></span><span class="pc on bot"></span><span class="pc on bot"></span></div>
+    </div>
+
+    <div class="panfoot">
+      <div class="lab">Total markers</div>
+      <div class="pantot"><span>5</span><span>4</span><span>9</span></div>
+    </div>
+  </div>
+
+  <p class="note"><b>THE H2 IS CARRIED VERBATIM FROM FRAME O AND MUST BE.</b> "What each men's health blood test covers" contains <code>men's health blood test</code>, which <code>06_marketing/seo-ai-search</code> flags as an underserved opportunity at KD 9 and explicitly earmarks for kit-page intent. Merging the comparison table into section 01 moves this heading up the page; it does not delete it. Anything that drops the phrase is a ranking decision wearing the clothes of a design decision.</p>
+
+  <p class="note hot"><b>THREE BANDS, NOT A GRID OF TICKS, AND THE DIFFERENCE IS THE WHOLE POINT.</b> The cells do not gap vertically, so consecutive covered markers fuse into one continuous bar: Kit 1 is a solid band across the five hormone rows, Kit 2 a solid band across the four deficiency rows, Kit 3 an unbroken bar down all nine. The reader can choose from the silhouette before reading a marker name, which is this page's entire job. The rail is <code>--sunk</code> and the band is ink, which is the readout's own construction rather than a resemblance to it.</p>
+
+  <p class="note hot"><b>NO NEEDLE, NO VALUE, NO RANGE, AND THAT IS A HARD LINE.</b> DESIGN.md's rule on the device is that the needle must measure something real, because an instrument face reading a number that does not exist is the one thing a brand built on "here are your actual numbers" cannot ship. Nobody has taken the test at this point in the journey, so there is nothing to read. This draws COVERAGE, which is a fact about the product, and it restates data the comparison table already showed, so it ships at zero new claims. The same test <code>.f-marg</code> has to pass.</p>
+
+  <p class="note hot"><b>THE STRONGER VERSION IS NOT OURS TO SHIP AND IS NAMED HERE SO IT IS NOT QUIETLY SKIPPED.</b> Hanging the real ranges on each row, the laboratory's band against ours per marker, is what would genuinely read as health reporting rather than as a product page. Those figures exist and are Ewa-ratified in <code>04_products/results-engine/thresholds.md</code>, but they have never been rendered to a customer, so putting them on screen is new clinical content on a marketing page. Ewa, not a redraw.</p>
+
+  <p class="note"><b>FOUND WHILE DRAWING THIS, AND OUT OF SCOPE: the FAI badge contradicts itself across two documents.</b> PRODUCT.md's terminology entry says "Not interpreted" was invented and the engine has never returned it, and that the six allowed words come from the <code>BADGES</code> map, which yields "Reported". The Kit 3 page's header comment says the opposite: that the product's "Not interpreted" wins over the frame's "Reported" because it is a clinical ruling. Both cannot be current. This frame renders no verdict on any row, so it sidesteps the question rather than settling it, but somebody has to settle it.</p>
+</div>
+
+<div class="wrap sec" id="kits2">
+  <p class="blab">Section 02</p>
+  <h2>Three tests.<br><span class="grey">Different questions.</span></h2>
+</div>
+
+<div class="wrap">
+  <div class="kgrid">
+    <!-- KIT 1 -->
+    <div class="tray pick rise kcard">
+      <div class="core">
+        <div class="shot"><img alt="A man in his late forties standing in a back doorway at dawn with a mug of tea." src="../../../frontend/public/home/img-6.jpg"></div>
+        <div class="kbody">
+          <span class="kchip">Kit 1</span>
+          <h3>Testosterone<br>Health Check</h3>
+          <p class="kwho">If the question is testosterone.</p>
+          <div class="pstrip">
+            <span class="ps on"></span><span class="ps on"></span><span class="ps on"></span><span class="ps on"></span><span class="ps on"></span>
+            <span class="ps"></span><span class="ps"></span><span class="ps"></span><span class="ps"></span>
+          </div>
+          <div class="pscount">5 of 9 markers</div>
+          <div class="kfoot"><span class="price">&pound;99</span><a class="btn ghost sm" href="#">Order</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KIT 2 -->
+    <div class="tray pick rise kcard">
+      <div class="core">
+        <div class="shot"><img alt="A man in his early forties sitting on the bottom stair of a hallway after a run." src="../../../frontend/public/home/img-7.jpg"></div>
+        <div class="kbody">
+          <span class="kchip">Kit 2</span>
+          <h3>Energy &amp;<br>Recovery Check</h3>
+          <p class="kwho">If the question is energy and recovery.</p>
+          <div class="pstrip">
+            <span class="ps"></span><span class="ps"></span><span class="ps"></span><span class="ps"></span><span class="ps"></span>
+            <span class="ps on"></span><span class="ps on"></span><span class="ps on"></span><span class="ps on"></span>
+          </div>
+          <div class="pscount">4 of 9 markers</div>
+          <div class="kfoot"><span class="price">&pound;119</span><a class="btn ghost sm" href="#">Order</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KIT 3 -->
+    <div class="tray pick rise kcard" style="box-shadow:var(--amb),0 0 0 1.5px var(--flag)">
+      <div class="core">
+        <div class="shot"><img alt="A man's hands at a kitchen table holding a small plain sample collection tube." src="../../../frontend/public/home/img-3.jpg"></div>
+        <div class="kbody">
+          <span class="kchip flagchip">Kit 3 &middot; Most complete</span>
+          <h3>Hormone &amp;<br>Recovery Check</h3>
+          <p class="kwho">If you do not know which question it is.</p>
+          <div class="pstrip">
+            <span class="ps on"></span><span class="ps on"></span><span class="ps on"></span><span class="ps on"></span><span class="ps on"></span>
+            <span class="ps on"></span><span class="ps on"></span><span class="ps on"></span><span class="ps on"></span>
+          </div>
+          <div class="pscount">9 of 9 markers</div>
+          <div class="kfoot"><span class="price">&pound;179</span><a class="btn sm" href="#">Order</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="fine" style="margin-top:18px;text-align:center">Every kit arrives with a finger-prick collection kit and a pre-paid return label. Collection takes five minutes. Results land in your Andro Prime dashboard, not the lab portal.</p>
+
+  <p class="note hot"><b>THE TICK LIST IS GONE, AND IT WAS THE MOST GENERIC ELEMENT ON THE PAGE.</b> "Finger-prick collection kit / Pre-paid return label / 5-minute collection process" was identical on all three cards, so it differentiated nothing and cost nine of the page's sixty pill-radius elements. It is one fact about all three kits, so it is stated once, under all three. <b>The words are unchanged; only the placement is.</b></p>
+
+  <p class="note hot"><b>THE CARDS GOT LIGHT BECAUSE SECTION 01 DID THE EXPLAINING.</b> Gone from each card: the marker string (now the strip), the three spec wells, and the full blurb. What is left is what is unique to this kit: the photograph, the name, who it is for, its slice of the panel, and the price. Three cards across instead of three full-width slabs, so the choice is one glance rather than three scrolls.</p>
+
+  <p class="note hot"><b>THE BLURBS AND THE FOOT NOTES ARE NOT DELETED, THEY ARE UNPLACED, AND THAT IS AN OPEN QUESTION RATHER THAN A DECISION.</b> Each card currently carries an approved paragraph plus a conditional line ("If your result shows testosterone below 12 nmol/L..."). They are live marketing copy and a redraw is not the place to cut them. Either they move to the kit detail page, which already says the same thing, or the card keeps a shortened form, which is <b>a copy change with its own compliance pre-flight</b>. Drawing the card without them and not saying so is how approved copy disappears quietly.</p>
+
+  <p class="note"><b>Kit 3 keeps the accent ring and the solid button</b>, exactly as Frame O ruled: the emphasis moves to the accent rather than an inverted card, so the page never changes colour scheme mid-scroll. The strip makes the same argument a second way, since Kit 3 is the only unbroken bar.</p>
+</div>
+
+<div class="wrap" style="padding-top:30px;padding-bottom:10px">
+  <div class="invert rise">
+    <p class="blab blab-lg">What you pay</p>
+    <h2>One price.<br>Nothing hidden.</h2>
+    <p>The price on the card is everything you pay. No charge to see your own results, no surprise second test, no subscription unless you choose one. If a result needs action, the next step is a GP conversation, and we earn nothing from it.</p>
+  </div>
+  <p class="note hot"><b>APPROVED COPY, CARRIED VERBATIM, AND MOVED RATHER THAN CHANGED.</b> This is C1 under CA-026 and the source marks it "rendered verbatim". Not a word differs from Frame O. What differs is WHERE: it now lands after the choice rather than before it, so it reads as a promise about the thing you have just picked instead of a claim about products you have not seen yet. <b>Still the page's one inverted block</b>, which DESIGN.md caps at one per page.</p>
+</div>
+
+<p class="note"><b>Hero, process and the selector close are carried from Frame O unchanged and are not redrawn here.</b> The proposal is sections 01 to 03. Repeating three unchanged sections would make the diff harder to read, which is the opposite of what a comparison frame is for.</p>
+
+<p class="note hot"><b>WHAT THIS COSTS, STATED PLAINLY.</b> Frame O was approved on 2026-08-28 as six sections, cards then table. This is a structural inversion of that approval, not a detail fix, so it needs a fresh sign-off before anything is built. It also changes the page's heading order, and one of those headings carries a flagged keyword, so the SEO note above is a gate rather than a remark.</p>
+
 <!-- ============ FRAME P: /kits/testosterone ============ -->
 <div class="flabel"><div class="in">
   <b>Frame P</b><span>/kits/testosterone</span><span>Kit 1, eleven sections, bundles flag OFF</span>

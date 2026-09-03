@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { SectionRule } from '@/components/marketing/SectionRule'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
-import { FAI_REPORT_ONLY, PANEL_MARKERS } from '@/lib/kits/panel'
+import { FAI_REPORT_ONLY, PANEL_MARKERS, ALL_PANEL_MARKER_IDS, KIT_PANELS, panelCount } from '@/lib/kits/panel'
 
 /*
  * REBUILT IN DIRECTION F, 2026-08-29. First page of the app-wide rebuild.
@@ -295,17 +297,53 @@ export default function KitTestosteronePage() {
 
       {/* ---------------- THE REALITY ---------------- */}
       <div className="f-wrap f-sec">
+        <SectionRule n={1} of={5} />
         <p className="f-blab">The reality</p>
         <h2 className="f-h2">Stop guessing what&rsquo;s wrong.</h2>
       </div>
       <div className="f-wrap">
-        <div className="f-tray f-rise">
-          <div className="f-core grid gap-6">
-            <div>
+        {/* 🔴 THE PROSE LEFT ITS TRAY, 2026-09-02. Containment rule: a card holds a
+            transaction or an instrument, and an argument is neither. This block was
+            the page's opening argument sitting in a box, which is the pattern that
+            made these pages read as an interface while the homepage reads as a
+            document. The symptom grid below KEEPS its cards: those are a structured
+            set the reader scans rather than reads, and they carry the CA-025 routing.
+
+            The photograph is `img-6`, THE SAME ASSET this kit already uses on the
+            homepage kit card and on /kits, matched by slug. No new image, nothing
+            added to the CA-045 register, and the three surfaces selling Kit 1 now
+            show the same face. Focal point anchors to the top because the man is
+            composed high in frame and a centred crop takes his head off. */}
+        <div className="f-bento">
+          <div className="f-c-7 f-rise">
+            <div className="f-plain">
               <p className="f-sub">You&rsquo;re doing everything right. You&rsquo;re training. You&rsquo;re eating well. But your drive has gone, your training has stalled, and you don&rsquo;t feel like yourself anymore.</p>
               <p className="f-sub">When you ask a standard doctor, they run a basic test and tell you you&rsquo;re &ldquo;fine&rdquo;. Fine isn&rsquo;t good enough.</p>
               <p className="f-pull">The NHS sets its threshold to catch severe disease. That&rsquo;s not the same as optimal.</p>
             </div>
+          </div>
+          <div className="f-c-5 f-rise">
+            <div className="f-plate">
+              <div
+                className="f-shot f-shot-r43"
+                style={{ '--focal': '50% 0%' } as React.CSSProperties}
+              >
+                <Image
+                  src="/home/img-6.jpg"
+                  alt="A man in his late forties standing in a back doorway at dawn with a mug of tea, looking out over a terraced garden."
+                  width={800}
+                  height={600}
+                />
+              </div>
+              <span className="f-shot-cap">Ordinary Tuesday</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="f-wrap" style={{ paddingTop: 26 }}>
+        <div className="f-tray f-rise">
+          <div className="f-core">
             <div>
               <p className="f-blab">Symptoms</p>
               <div className="f-symp">
@@ -337,6 +375,7 @@ export default function KitTestosteronePage() {
 
       {/* ---------------- THE PROCESS ---------------- */}
       <div className="f-wrap f-sec">
+        <SectionRule n={2} of={5} />
         <p className="f-blab">The process</p>
         <h2 className="f-h2">Five minutes.<br /><span className="f-grey">No GP needed.</span></h2>
       </div>
@@ -359,8 +398,27 @@ export default function KitTestosteronePage() {
 
       {/* ---------------- THE DATA ---------------- */}
       <div className="f-wrap f-sec">
+        <SectionRule n={3} of={5} />
         <p className="f-blab">The data</p>
         <h2 className="f-h2">Five numbers.<br /><span className="f-grey">The full testosterone picture.</span></h2>
+      </div>
+      {/* The panel strip, the same instrument /kits leads with, scoped to this kit.
+          It says "these five of the nine we run" in the shape a reader has already
+          met one click earlier. No value, no range, no needle: nobody has taken the
+          test, so there is nothing to read, and this draws COVERAGE only. */}
+      <div className="f-wrap" style={{ paddingBottom: 22 }}>
+        <div className="f-pstrip" aria-hidden="true" style={{ maxWidth: 420, marginTop: 0 }}>
+          {ALL_PANEL_MARKER_IDS.map((id) => (
+            <span
+              key={id}
+              className={KIT_PANELS['testosterone'].includes(id) ? 'f-ps f-on' : 'f-ps'}
+            />
+          ))}
+        </div>
+        <p className="f-blab f-pscount">
+          {panelCount('testosterone')} of {ALL_PANEL_MARKER_IDS.length} markers &middot;{' '}
+          <Link href="/kits" style={{ textDecoration: 'underline' }}>see the full panel</Link>
+        </p>
       </div>
       <div className="f-wrap">
         <div className="f-bios">
@@ -376,6 +434,7 @@ export default function KitTestosteronePage() {
 
       {/* ---------------- THE NEXT STEP ---------------- */}
       <div className="f-wrap f-sec">
+        <SectionRule n={4} of={5} />
         <p className="f-blab">The next step</p>
         <h2 className="f-h2">Numbers you can act on.</h2>
       </div>
@@ -409,7 +468,10 @@ export default function KitTestosteronePage() {
       {/* ---------------- FAQ ----------------
           Open grid, standardised across all three kit pages (Keith, 2026-08-29).
           Kit 1 was the only one of the three hiding its questions behind a click. */}
-      <div className="f-wrap f-sec"><h2 className="f-h2">Frequently asked questions</h2></div>
+      <div className="f-wrap f-sec">
+        <SectionRule n={5} of={5} />
+        <h2 className="f-h2">Frequently asked questions</h2>
+      </div>
       <div className="f-wrap">
         <div className="f-faqgrid">
           {FAQ_ITEMS.map(({ question, answer }) => (

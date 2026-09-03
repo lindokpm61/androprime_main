@@ -2,7 +2,64 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-09-02 (🟢 **TWO HOMEPAGE TYPOGRAPHY DEFECTS FIXED, AND BOTH TURNED OUT TO BE
+_Last updated: 2026-09-03 (🟢 **THE DETAIL-PAGE PASS HAS STARTED, AND THE SYSTEM NOW HAS ONE
+CONTAINMENT GRAMMAR.** `/kits/testosterone` is the pilot: 5 needle openers, `img-6` as a plate beside
+uncontained argument prose (the SAME asset this kit uses on `/` and `/kits`, so nothing is added to
+CA-045), and the panel strip under "Five numbers" linking back to `/kits`. Then the four boxed prose
+grids (`.f-step`, `.f-spec`, `.f-bio`, `.f-faqgrid`) were folded into one print treatment, a rule
+above and nothing else, and the temporary `-open` modifiers were retired. ⚠ **This reaches
+`/how-it-works` too, by design**: it is an F page and the containment ruling is system-wide. Verified
+across 8 routes: no errors, no overflow, `tsc` clean.
+🔴 **I DESTROYED 1,573 OF 2,271 LINES OF `f-primitives.css` DOING IT, AND THE VERIFICATION PASSED.**
+The fold script located each modifier block by its opening comment and searched forward for the next
+top-level comment; the search overshot and the two deletions took **134 selectors** with them, including
+the grid system, footer, cookie banner and hero film. The post-check tested **brace balance**, which
+passed, because a balanced deletion is still balanced. It surfaced only when a grep for a grid class
+hit the backups and not the live file. Restored from `f-primitives.css.bak-preFold` (0 selectors
+missing) and redone with exact-string replacements only; the broken state is kept as
+`.broken-2026-09-03`. **The lesson is the invariant, not the loop:** for a deletion, count the units
+that must survive and compare, because syntax checks cannot see a well-formed deletion. Logged as
+observation 581, which notes the skill already documents this exact failure under a heading about the
+observation LOG, so its rules were applied there and not to the stylesheet in the same session.
+▶️ **NEXT: `/kits/energy-recovery` and `/kits/hormone-recovery`**, which still have 0 section rules and
+0 photographs, plus `rightFor` and the blurb's explanatory half to rehome, and `why` to add to the
+`/kits` panel. Earlier: 🟢 **FRAME O2 IS BUILT ON `/kits`, AND THE ANSWER TO "IS IT CONGRUENT" WAS
+NO UNTIL IT WAS.** Keith asked whether O2 was congruent with the homepage **on the dev server**.
+Measured: the mockup renders Geist headings with 0 section rules, the dev server renders Newsreader
+with 6 on `/`. **The journey frames predate the 2026-08-30 typeface ruling**, so judging congruence
+from the mockup judges the wrong type system, and O2 as drawn had also dropped the needle device.
+Both resolved by building it: `/kits` now leads with the panel (nine markers as three FUSED bands on a
+shared track, absorbing the old comparison table and the cards' spec rows), then three light cards
+each carrying a miniature strip, then the C1 money block moved AFTER the choice. **Pill-radius
+elements 60 to 30** (the homepage is 50), **tick-list items 9 to 0**, page height 7485px to 5338px.
+`tsc` clean, verified at 1440 and a true 390, bands fuse at both, no overflow. 🔴 **Building it found a
+rule that had NEVER worked: `.f-tray-flag`** (Kit 3's accent ring) sits at line 100 while `.f-tray`
+sets `box-shadow` at line 111, equal specificity, so the base overwrote the modifier and **Kit 3's
+ring never rendered once**. Third instance of the source-order tie this file already names twice
+(`.f-btn-ghost` transparent, `.f-blab` 30% oversized). Fixed on SPECIFICITY, `.f-tray.f-tray-flag`
+(0,2,0), not by moving lines. ⚠ Two mobile lessons recorded in DESIGN.md: the panel track **narrows
+and never stacks** (stacking gapped every row and broke the bands into nine separate rows, measured
+80px where the design needs 0), and `.f-fine`'s 66ch cap plus 0.04em tracking made the trust line
+wrap to three ragged lines. ▶️ **NEXT: the three kit detail pages**, then fold `.f-steps-open` and
+`.f-spec-open` into their base classes. ⚠ `kits-F.html` Frame O2 is the drawn proposal and Frame O is
+now stale against the code. Earlier: 🟢 **KEITH RULED THE COPY PRE-FLIGHT IS A SHIP GATE, NOT A STEP GATE, AND
+THE REGISTER THAT MAKES THAT SAFE NOW EXISTS.** Redesign work on `redesign/direction-f` is in test and
+is not subject to copy pre-flight at each step; the pre-flight runs once at the final stage and picks
+up everything needing change or re-approval. **Same shape as the CA-045 ruling of 2026-09-01: the gate
+governs SHIPPING, not creating**, and this branch deploys nothing. 🔴 **The risk the ruling creates is
+not the deferral, it is the amnesia**: a pre-flight run against the finished branch reads the copy that
+is THERE, never the copy that was moved, shortened, dropped or parked on the way. So
+`redesign-copy-register.md` now accumulates one line per step that touches customer-facing words, and
+the final pre-flight reads it first. Seeded with 8 open items, including the FAI verdict contradiction
+(item 6), which is **wrong on `main` today and independent of the redesign**. Design-only changes
+(typography, spacing, containment, colour) are explicitly out of scope for the register. 🟢 **FRAME O2
+IS DRAWN**, `kits-F.html:1008`: /kits restructured so the panel leads as one instrument (nine markers
+as three fused bands on a shared track), the cards go light and three-across carrying a miniature of
+it, and the C1 money block moves after the choice. Drawing it found two things: `men's health blood
+test` is an SEO-flagged underserved keyword (KD 9, kit-page intent) so that h2 is a gate not a remark,
+and **adding the frame silently restyled the APPROVED Frame O** because one of 17 new class names
+(`.prow`) already existed as its hero price rows. Renamed, Frame O verified intact. Frame O2 needs a
+fresh sign-off: it inverts an approval, unlike everything else this session. Earlier: 🟢 **TWO HOMEPAGE TYPOGRAPHY DEFECTS FIXED, AND BOTH TURNED OUT TO BE
 INHERITED RATHER THAN AUTHORED.** Keith asked whether /kits used the same fonts as /. Both pages paint
 the identical three faces, so the naive answer was yes; comparing COMPUTED styles across all six F
 routes instead found **13 headings rendering in the body sans**, eight on `/` including its own kit

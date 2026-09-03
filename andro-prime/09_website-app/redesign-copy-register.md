@@ -1,0 +1,57 @@
+# Redesign copy register: what the final pre-flight has to pick up
+
+_Last updated: 2026-09-02 (Frame O2 built on the branch; rows 1, 4, 9 and 10 are now live code rather than proposals.)_
+
+**The ruling this file exists to serve (Keith, 2026-09-02):** the redesign work on
+`redesign/direction-f` is in test and **is not subject to copy pre-flight rules at each step**. The
+pre-flight runs once, at the final stage, and picks up everything that needs changing or
+re-approving. This is the same shape as the CA-045 ruling of 2026-09-01: **the gate governs
+SHIPPING, not creating**, and this branch deploys nothing.
+
+🔴 **THE RISK THE RULING CREATES, AND THE ONLY REASON THIS FILE EXISTS.** Deferring the gate is
+fine. Deferring the gate with no record is not, because "we will catch it at the end" silently
+becomes "we no longer know what changed". A pre-flight run against the finished branch can only
+find what it can see: it reads the copy that is there, not the copy that was moved, shortened or
+dropped along the way, and not the questions that were parked. So every step that touches
+customer-facing words gets one line here, and the final pre-flight reads this file first.
+
+**What belongs here:** copy moved, shortened, cut, or newly written; a claim whose container or
+placement changed; an approved block that was relocated; a clinical or terminology question parked
+rather than answered. **What does not:** pure design and layout changes that leave the words alone
+(typography, spacing, containment, colour), which need no pre-flight at all.
+
+---
+
+## Open items
+
+| # | Surface | What changed | Words changed? | Owed to |
+| --- | --- | --- | --- | --- |
+| 1 | `/kits` | The "what arrives in the post" tick list moves from three per-card copies to one line under all three cards. **Built 2026-09-02.** | **No.** Placement only, and it was identical on all three cards. | Pre-flight, sanity check only |
+| 2 | `/kits` | **RESOLVED 2026-09-02 by tracing each orphaned field.** Five fields per kit came off the card. Three already have homes: `resultsTo` is absorbed by the new trust line; the conditional (`footLabel`/`footBody`) is covered by `/kits/testosterone`'s "The next step" plus its CA-026 D+ conformity line, and `/how-it-works` states the 12 nmol/L threshold three times; the blurb's ROUTING sentence ("Kit 2 is the better fit") is enforced harder at `/kits/testosterone:312`, a CA-025 scope block marked DO NOT REPOPULATE, and restated on `/kits` by the three parallel `who` lines. **Two are genuinely homeless: the blurb's explanatory half and `rightFor`.** Proposal: render `PANEL_MARKERS[id].why` in the panel alongside `measures`, which is existing approved copy that does the explanatory job better and is currently rendered nowhere on `/kits`; `rightFor` goes to the detail pages in the next pass. | **No new words** under the proposal: `why` is existing customer-facing copy in a new placement. | Pre-flight, placement check |
+| 3 | `/kits` | **Built 2026-09-02.** The C1 "One price. Nothing hidden." panel moves from before the kit choice to after it. | **No.** CA-026 C1 carried verbatim, container and position only. | Pre-flight, placement check |
+| 4 | `/kits` | **Built 2026-09-02.** Section 01 gains a standfirst: "Nine markers. Three ways to buy a slice of them. Every kit reads on the same lab, in the same units, so a result from one is comparable with a result from another." | **Yes, new.** Written for Frame O2. | Pre-flight |
+| 5 | `/kits` | **Built 2026-09-02.** The panel instrument renders each marker's `measures` string from `lib/kits/panel.ts` in a new position (section 01 rather than inside cards). | **No.** Existing customer-facing strings, new placement. | Pre-flight, placement check |
+| 6 | All kit surfaces | 🔴 **FAI verdict wording contradicts itself across two documents.** PRODUCT.md says "Not interpreted" was invented and the engine never returns it, and that the six allowed words come from the `BADGES` map, which yields "Reported". `/kits/hormone-recovery`'s header comment says the product's "Not interpreted" beats the frame's "Reported" because it is a clinical ruling (Ewa, `thresholds.md` item 8). Both cannot be current. | n/a, a ruling is missing | **Ewa.** Frame O2 renders no verdict, so it sidesteps rather than settles this |
+| 7 | `/kits`, `/test-selector` | Known pre-existing drift, carried as found and flagged in Frame O: "answer 3 questions" and "takes less than a minute" both describe a selector that is now five steps. | **Not yet.** Fixing it is new copy. | Pre-flight |
+| 8 | `/kits` | Kit card photographs `img-3`, `img-6`, `img-7` now appear on `/kits` as well as `/`. Already on the CA-045 register; this is a second placement of the same assets, not a new asset. | n/a | CA-045 signers, as a note |
+| 9 | `/kits` | Each light card carries a one-line "who it is for", taken **verbatim from the homepage's own kit cards**, matched by slug ("If the question is testosterone." etc). | **No.** Existing live copy, new placement. | Pre-flight, placement check
+| 10 | `/` (homepage) | 🔴 **Parked, not answered: whether that line owes the 30-day width of the offer window.** It is drafted without it, on the reading that the window is a TERM and belongs on the terms page, not in homepage fine print. The consequence of the omission is real: a man who declines and returns three months later finds no offer and was not told that could happen. | n/a, a ruling is missing | **Keith**, then pre-flight |
+| 11 | `/` (homepage) | ⚠ **Row 12 describes a route that is currently dark.** `/membership` is behind `MEMBERSHIP_ENABLED`, which is unset, so it 404s. The line must not ship ahead of the flag, or the homepage promises an offer that cannot be made. | n/a, a sequencing gate | Whoever merges the branch |
+| 12 | `/` (homepage) | **Built 2026-09-02.** The free layer gains a fine-print line naming the membership for the first time on an acquisition surface: "Holding that record over time is an optional membership. It is offered once your first result is back, never before, and you never need it to buy a kit or to read your own results." It exists because the section's approved lede ("what you pay for is the record") alludes to a charge this page is forbidden to sell, so the page named a paid thing and then went silent on it. Shape taken from the approved `/kits` C1 negation ("no subscription unless you choose one"); the words are new. No price, no CTA, no benefit list. | **Yes, new.** | Pre-flight |
+
+## Closed
+
+_None yet._
+
+---
+
+## How the final pre-flight should use this
+
+1. Read this table first, then run `/compliance-preflight` over the branch diff.
+2. Treat every row marked **Yes** or **Not yet** in the "Words changed?" column as copy needing
+   sign-off, whatever the scanner says: the scanner grades what is on the page and cannot know that
+   a line was shortened from an approved original.
+3. Row 6 is a blocker for any surface that renders an FAI verdict, and is independent of the
+   redesign: it is wrong on `main` today.
+4. Rows marked "placement only" still need a look, because CA-026 approvals attach to a claim **in
+   a context**, and moving a claim past the buying decision can change what it reads as.
