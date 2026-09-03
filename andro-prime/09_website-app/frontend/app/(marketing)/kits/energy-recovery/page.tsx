@@ -227,7 +227,7 @@ export default function KitEnergyRecoveryPage() {
       <div className="f-wrap" style={{ paddingTop: 62, paddingBottom: 44 }}>
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-11 lg:items-start">
           <div>
-            <div className="f-eyebrow mb-5"><i />Data first</div>
+            <div className="f-eyebrow mb-5">Data first</div>
 
             <h1 className="f-h1 mb-5">Sore for three days after a workout that used to take one.</h1>
 

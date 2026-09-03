@@ -193,7 +193,7 @@ export default function HowItWorksPage() {
       <section className="f-wrap f-sec f-sec-hero">
         <div className="f-rise">
           <div className="f-btns" style={{ marginBottom: 18 }}>
-            <span className="f-eyebrow"><i />Methodology</span>
+            <span className="f-eyebrow">Methodology</span>
             <span className="f-kchip">5 minutes. No GP needed.</span>
           </div>
           <h1 className="f-h1">

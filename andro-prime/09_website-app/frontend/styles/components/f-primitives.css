@@ -412,7 +412,13 @@
   text-transform: uppercase;
   color: var(--ink-2);
 }
-.f-eyebrow i { width: 5px; height: 5px; border-radius: var(--radius-pill); background: var(--ink); display: block; }
+/* 🔴 NO `.f-eyebrow i` RULE, DELIBERATELY. DESIGN.md: "A dot marks a STATE,
+   never a credential." Every eyebrow on the site labels a CATEGORY (Methodology,
+   Data first, Diagnostic kits, Kit 01 // Testosterone), which is further from a
+   state than the two footer chips that lost their dots for the same reason. The
+   five `<i />` were removed 2026-09-03 and the declaration went with them, so
+   re-adding one renders nothing and sends whoever did it here. The dot that
+   survives is `.f-navstat i`, because "UKAS lab online" genuinely is a state. */
 
 .f-kchip {
   @apply inline-flex items-center;

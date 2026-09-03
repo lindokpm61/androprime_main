@@ -211,7 +211,7 @@ export default function KitTestosteronePage() {
       >
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-11 lg:items-start">
           <div>
-            <div className="f-eyebrow mb-5"><i />Kit 01 // Testosterone</div>
+            <div className="f-eyebrow mb-5">Kit 01 // Testosterone</div>
 
             <h1 className="f-h1 mb-5">
               Your GP said normal.<br />

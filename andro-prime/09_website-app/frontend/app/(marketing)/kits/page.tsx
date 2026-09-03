@@ -238,7 +238,7 @@ export default function KitsPage() {
       <section className="f-wrap f-sec">
         <div className="f-herogrid f-rise">
           <div>
-            <div className="f-eyebrow"><i />Diagnostic kits</div>
+            <div className="f-eyebrow">Diagnostic kits</div>
             <h1 className="f-h1" style={{ marginTop: 18 }}>
               Stop guessing.<br />
               <span className="f-grey">Get the numbers.</span>

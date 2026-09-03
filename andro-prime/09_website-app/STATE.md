@@ -363,9 +363,32 @@ not a mechanical fix.
 questions" / "less than a minute" drift (the selector is five steps, wrong on a live page, needs its
 own pre-flight); "Order" as a CTA label that leads to a product page not a basket; the two
 section-header grammars, which DESIGN.md records as both correct; **the two contradictory kit
-recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3);
-and the eyebrow dot, which violates DESIGN.md's own 🔴 "a dot marks a STATE, never a credential" at 6
-call sites across 4 files.
+recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3).
+
+## ✅ The eyebrow dots came off too, which is the same ruling reaching five more places (2026-09-03)
+
+Follows directly from the entry above and from the footer-chip removal of 2026-09-02. DESIGN.md's
+🔴 "A dot marks a STATE, never a credential" was applied to the last places still breaking it: the
+`.f-eyebrow` dot, which the /kits critique caught as **the first element on that page**.
+
+**Five `<i />`, five files**, all labelling a category or an identifier and none a state: `Methodology`
+(`/how-it-works`), `Data first` (`/kits/energy-recovery`, `/kits/hormone-recovery`), `Diagnostic kits`
+(`/kits`), `Kit 01 // Testosterone` (`/kits/testosterone`). A category is further from a state than the
+footer chips that already lost theirs. ⚠ **The critique said six sites across four files and that was
+wrong**; the recount is five across five. The other `<i>` elements on the site are not credential dots
+and were left alone: `.f-bar > i` is a bar fill, the homepage readout's `f-k-lab` / `f-k-ours` /
+`f-k-you` are legend swatches, and **`.f-navstat i` survives**, because "UKAS lab online" genuinely is
+a state. Verified on all five routes: every `.f-eyebrow` now has 0 child elements, text and border
+intact, nav dot still 5px ink on each.
+
+`.f-eyebrow i` was deleted rather than left unused, which turned out to be the exact pattern the
+`.f-chip i` removal set the day before, for the reason its comment gives: "a live-looking rule for a
+removed element is what a later reader restores by accident." A 🔴 comment sits at the selector
+instead, so re-adding a dot renders nothing and sends whoever did it to the ruling.
+
+Design-only, so nothing is added to `redesign-copy-register.md`. ⚠ Noticed but **not** fixed, since it
+is unrelated and pre-existing: the amber-ruling comment at `f-primitives.css:1947` still points a
+reader at `.f-chip i`, which was deleted on 2026-09-02.
 
 ## ✅ The captions came off the photographs, and the credential dots came off the footer (2026-09-02)
 
