@@ -303,6 +303,26 @@ heading. ⚠ It must be re-asserted at (0,2,0) as `.f-page .f-blab`, because `.f
 beats a bare class: 37 of 51 labels silently rendered in the body sans before that was found. A
 larger named variant `.f-blab-lg` exists for the inverted panel's lead label.
 
+🔴 **ONE SECTION GRAMMAR, AND IT IS THE LABELLED ONE (ruled by Keith, 2026-09-03).** Every section
+that opens with a heading opens `[.f-srule] → .f-blab → h2 → lede`, on every F page. `/kits` already
+did; `/` did not, and shipped four heading sections with no label until this ruling. **A section may
+still open with an OBJECT instead of a heading** and takes no label when it does: the homepage's
+readout (01) and photo plate (03) are the two current cases, and that is variation in what leads a
+section, not a second grammar.
+
+The tell this fixes: a reader moving between `/` and `/kits` thirty seconds apart met a different
+document structure at every section boundary. Caught by the 2026-09-02 `/kits` critique, which
+reported it as "DESIGN.md records both as correct". ⚠ **It did not.** What the file recorded was one
+narrower thing, the invert panel's lead label being absent on the homepage pending a pre-flight, and
+the critique generalised that into a page-wide grammar with standing it never had. Both grammars were
+faithful ports: `F-field.html` draws six headings and zero labels, `kits-F.html` draws labels
+throughout, and nobody had reconciled the two mockups. **Where two pages disagree, check whether
+either disagreement was ever ruled, or whether both are just faithful.**
+
+⚠ The device is `.f-blab`, a bare mono line, NOT `.f-eyebrow`, which is the bordered pill and is a
+page-level label. The same critique used the two names interchangeably. One `.f-eyebrow` per page at
+most, in the hero; `.f-blab` at every section opener.
+
 **Sample report row.** Label, sub-label, value, status word, and a track with a filled bar. The
 status word and the bar are driven from the same value so they cannot disagree. **A report-only
 marker renders no bar at all**, because a coloured bar is a verdict.
@@ -328,8 +348,13 @@ nothing, and the page’s strongest claim was carrying the same weight as the se
 this as ruled rather than as drift, alongside the section-rhythm and heading-scale disagreements.
 
 ⚠ **The container changed and not one word did.** The copy is byte-identical to the pre-flighted
-text. The panel’s optional `.f-blab-lg` lead label is deliberately absent on the homepage: adding
-one is new customer-facing copy and needs a pre-flight, not a redraw.
+text.
+
+✅ **The lead label is no longer absent (ruled 2026-09-03).** It read "deliberately absent on the
+homepage: adding one is new customer-facing copy and needs a pre-flight, not a redraw", which was a
+statement about what a redraw may do, never a design ruling, and a critique later read it as one.
+Keith ruled the homepage adopts `/kits`' section grammar, so `.f-blab-lg` now carries "No conflict"
+here. See the section-grammar ruling above.
 
 Measured on ink `rgb(10,11,13)` at 1440 and 390: heading white **19.69:1**, body white at 0.78
 **11.93:1**, lead label white at 0.72 **10.22:1**. The `.f-receipt` rules were deleted in the same

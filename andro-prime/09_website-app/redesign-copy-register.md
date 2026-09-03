@@ -1,6 +1,6 @@
 # Redesign copy register: what the final pre-flight has to pick up
 
-_Last updated: 2026-09-02 (Frame O2 built on the branch; rows 1, 4, 9 and 10 are now live code rather than proposals.)_
+_Last updated: 2026-09-03 (Row 13: the homepage adopts `/kits`' section grammar, four new labels.)_
 
 **The ruling this file exists to serve (Keith, 2026-09-02):** the redesign work on
 `redesign/direction-f` is in test and **is not subject to copy pre-flight rules at each step**. The
@@ -38,6 +38,9 @@ rather than answered. **What does not:** pure design and layout changes that lea
 | 10 | `/` (homepage) | 🔴 **Parked, not answered: whether that line owes the 30-day width of the offer window.** It is drafted without it, on the reading that the window is a TERM and belongs on the terms page, not in homepage fine print. The consequence of the omission is real: a man who declines and returns three months later finds no offer and was not told that could happen. | n/a, a ruling is missing | **Keith**, then pre-flight |
 | 11 | `/` (homepage) | ⚠ **Row 12 describes a route that is currently dark.** `/membership` is behind `MEMBERSHIP_ENABLED`, which is unset, so it 404s. The line must not ship ahead of the flag, or the homepage promises an offer that cannot be made. | n/a, a sequencing gate | Whoever merges the branch |
 | 12 | `/` (homepage) | **Built 2026-09-02.** The free layer gains a fine-print line naming the membership for the first time on an acquisition surface: "Holding that record over time is an optional membership. It is offered once your first result is back, never before, and you never need it to buy a kit or to read your own results." It exists because the section's approved lede ("what you pay for is the record") alludes to a charge this page is forbidden to sell, so the page named a paid thing and then went silent on it. Shape taken from the approved `/kits` C1 negation ("no subscription unless you choose one"); the words are new. No price, no CTA, no benefit list. | **Yes, new.** | Pre-flight |
+
+| 13 | `/` (homepage) | **Built 2026-09-03.** Keith ruled one section grammar across the F pages and it is `/kits`' labelled one, so the homepage's four heading sections gain a `.f-blab` mono label each: **"The two ranges"** (02), **"Where to start"** (04), **"What's free"** (05), and **"No conflict"** (06, the `.f-blab-lg` lead label on the inverted receipt). Sections 01 and 03 open with an object and take no label. ⚠ Row 12's line sits in section 05, whose new label inherits its prohibitions: **"What's free" is a section name, not an offer**, and carries no price, no CTA, no benefit list, no "join", and does not lead on the trend or the series. ⚠ This row also **supersedes the standing note in two places** (`page.tsx` and `DESIGN.md`) that the invert panel's lead label was "deliberately absent pending a pre-flight"; it was a statement about what a redraw may do, and a critique later misread it as a design ruling. | **Yes, new.** Four labels, two to three words each. No claim in any of them. | Pre-flight |
+| 12b | `/` (homepage) | ⚠ **Pointer correction, no copy change.** The disclosure line's own code comment says it is "registered as item 9"; the row describing it is **item 12**, and item 9 is the `/kits` "who it is for" lines. The comment was committed as found in `c746368` and corrected here rather than silently edited. | **No.** | Nothing owed |
 
 ## Closed
 

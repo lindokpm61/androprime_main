@@ -463,6 +463,7 @@ export default function HomePage() {
                     says the same thing in words, so this adds no claim. */}
                 <Marginalia fig="Fig. 01" lines={['Four markers', 'Three splits']} />
                 <div>
+                <p className="f-blab">The two ranges</p>
                 <h2 className="f-h2">&ldquo;In range&rdquo; is a statistical band, not a health band.</h2>
                 <p className="f-lede">
                   A reference range describes where most men sit. It exists to identify clinical deficiency: the threshold at which you are officially recognised as ill. That is a useful line, and it is not the same line as being well.
@@ -525,6 +526,7 @@ export default function HomePage() {
           does not make him choose. */}
       <div className="f-wrap f-sec" id="kits">
         <SectionRule n={4} of={6} />
+        <p className="f-blab">Where to start</p>
         <h2 className="f-h2">You don&rsquo;t know which question you&rsquo;re asking yet.</h2>
         <p className="f-lede">
           That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.
@@ -571,6 +573,12 @@ export default function HomePage() {
           (`01_strategy/2026-08-26-membership-offer-window.md`). */}
       <div className="f-wrap f-sec" id="free">
         <SectionRule n={5} of={6} />
+        {/* 🔴 THIS LABEL MAY NOT BECOME AN OFFER. It sits above the free-layer
+            section and inherits every prohibition the disclosure line below
+            carries: no price, no CTA, no benefit list, no "join", and it may not
+            lead on the trend or the series. "What's free" names the section and
+            claims nothing. */}
+        <p className="f-blab">What&rsquo;s free</p>
         <h2 className="f-h2">We give the thinking away.</h2>
         <p className="f-lede">
           You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.
@@ -669,14 +677,21 @@ export default function HomePage() {
 
           ⚠ THE CONTAINER CHANGED AND NOT ONE WORD DID. Both sentences are
           byte-identical to the pre-flighted copy, which is the same rule the
-          /kits C1 panel states about itself. The panel’s optional
-          `.f-blab-lg` lead label is deliberately absent: adding one would be
-          new customer-facing copy and needs a pre-flight, not a redraw. */}
+          /kits C1 panel states about itself.
+
+          ✅ SUPERSEDED 2026-09-03, THE LEAD LABEL IS NOW PRESENT. It read
+          "deliberately absent: adding one would be new customer-facing copy and
+          needs a pre-flight, not a redraw", which was true of a redraw and is
+          not a design ruling. Keith ruled the homepage adopts /kits' section
+          grammar, so this is one of four new `.f-blab` labels; the two sentences
+          below are still byte-identical to the pre-flighted copy. The label
+          itself is NEW copy and is registered as such. */}
       <div className="f-wrap f-sec" style={{ paddingBottom: 0 }}>
         <SectionRule n={6} of={6} />
       </div>
       <div className="f-wrap">
         <div className="f-invert f-rise">
+          <p className="f-blab f-blab-lg f-invert-lab">No conflict</p>
           <h2 className="f-h2 f-invert-h">We do not sell you the answer.</h2>
           <p className="f-sub f-invert-p">
             Any result that needs a doctor goes to a GP, and earns us nothing. No result changes what we offer you or what it costs. We are not a route into a treatment we happen to sell, because we do not sell one.

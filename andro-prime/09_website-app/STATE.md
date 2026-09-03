@@ -361,9 +361,44 @@ not a mechanical fix.
 
 **Still owed from the same critique, and all of it blocked on a decision, not on work:** the "answer 3
 questions" / "less than a minute" drift (the selector is five steps, wrong on a live page, needs its
-own pre-flight); "Order" as a CTA label that leads to a product page not a basket; the two
-section-header grammars, which DESIGN.md records as both correct; **the two contradictory kit
+own pre-flight); "Order" as a CTA label that leads to a product page not a basket; **the two contradictory kit
 recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3).
+
+## 🟢 KEITH RULED ONE SECTION GRAMMAR, AND THE HOMEPAGE ADOPTED /KITS' (2026-09-03)
+
+The `/kits` critique's P1: `/kits` puts a mono label above every section heading and `/` puts none,
+which is the clearest structural tell between the two most important commercial surfaces. **Ruled:
+one grammar, the labelled one.** `[.f-srule] → .f-blab → h2 → lede` on every section that opens with
+a heading, on every F page. Written into DESIGN.md beside the `.f-blab` component definition, which
+is where someone looks.
+
+**Four new labels on `/`**, matching the two-to-three-word shape `/kits` already uses: **"The two
+ranges"** (02), **"Where to start"** (04), **"What's free"** (05), **"No conflict"** (06, as
+`.f-blab-lg f-invert-lab` on the receipt). Measured: the three body labels render 11.5px JetBrains
+Mono uppercase in `--ink-2`, identical to the existing ones; the lead label renders 18.56px at white
+0.72 on ink, which is the 10.22:1 DESIGN.md already recorded for that slot. The effect the critique
+predicted is real: `WHERE TO START` now sits in the same register as `04 / 06` on the rule above it,
+and they read as one line. **Registered as row 13**, so the final pre-flight picks up all four.
+⚠ Section 05's label inherits every prohibition its disclosure line carries: it is a section name,
+never an offer.
+
+⚠ **Sections 01 and 03 stay unlabelled, and that is the ruling, not an omission.** They open with an
+object, the readout and a photo plate, rather than a heading. What leads a section may vary; the
+grammar above a heading may not.
+
+🔴 **THREE OF THE CRITIQUE'S FOUR PREMISES FOR THIS FINDING WERE WRONG, AND THE FINDING WAS STILL
+RIGHT.** It named the device `.f-eyebrow`, which is the bordered pill and appears once per page in
+the hero; the section device is `.f-blab`. It said "DESIGN.md records both as correct", and DESIGN.md
+recorded one narrower thing, the invert panel's lead label being absent **pending a pre-flight**,
+which is a statement about what a redraw may do and not a design ruling; the critique generalised it
+into a page-wide grammar with standing it never had, and that framing is what made the finding look
+like a stalemate needing a ruling rather than a gap needing four words. And it said every `/` section
+opens `[rule] → h2 → lede`, which is true of four of six. **The lesson is not to distrust critiques.**
+It is that a finding's headline can be sound while its supporting detail is not, so the premises get
+checked before the options are drawn: the correct framing turned "one of them has to give" into "the
+homepage is under-labelled, here is what it costs to fix". Both notes claiming the lead label was
+deliberately absent were superseded in the same change, in `page.tsx` and DESIGN.md, because a fact
+half-corrected is louder than one left alone.
 
 ## ✅ The eyebrow dots came off too, which is the same ruling reaching five more places (2026-09-03)
 
