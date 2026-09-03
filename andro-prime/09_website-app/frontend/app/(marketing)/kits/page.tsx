@@ -64,8 +64,22 @@ type KitCard = {
       records why: inverting asked the page to change colour scheme mid-scroll,
       which is what stopped it working in dark mode. The value is the chip text. */
   flag?: string
-  /** Frame O gives Kit 2 a ghost button and Kits 1 and 3 a solid one, so the
-      middle option is not competing with the two it sits between. */
+  /** 🔴 THE SOLID BUTTON IS THE BUSINESS'S RECOMMENDATION, NOT A LAYOUT
+      DEVICE. It read "Frame O gives Kit 2 a ghost button and Kits 1 and 3 a
+      solid one, so the middle option is not competing with the two it sits
+      between", which is a statement about visual balance, and it was deciding
+      which product this company recommends. It also disagreed with the homepage,
+      which gives the solid button to Kit 3 alone and argues in its own h2 why:
+      "You don't know which question you're asking yet." Two pages, one click
+      apart, recommending different kits, and only one of them for a commercial
+      reason.
+
+      Ruled by Keith 2026-09-03: KIT 3 IS THE DEFAULT, on both pages. Kits 1 and
+      2 are ghost. The cards stay in price-ascending order here because this is a
+      catalogue, but the weight does not follow the order. If you are tempted to
+      even up the buttons for balance, that is the exact reasoning this replaced;
+      Kit 3 already carries the accent ring and the "Most complete" chip, and the
+      button is the third thing saying the same one thing. */
   ghostCta?: boolean
   /** The card photograph, added 2026-09-02.
    *
@@ -118,6 +132,7 @@ const KITS: KitCard[] = [
     who: 'If the question is testosterone.',
     focal: '50% 0%',
     alt: 'A man in his late forties standing in a back doorway at dawn with a mug of tea, looking out over a terraced garden.',
+    ghostCta: true,
     footLabel: 'If your result shows testosterone below 12 nmol/L',
     footBody: 'You will receive a specific next step, not a generic recommendation.',
     resultsTo:

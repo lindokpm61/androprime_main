@@ -398,7 +398,13 @@ table singles out one. Homepage card widths measure 561/272, not 549/260, and `/
 tall, not 573. Everything else in it verified exactly, including both price components
 (`.f-kprice` 32px/-1.28px against `.f-price` 35.2px/-1.584px).
 
-▶️ **STILL OPEN AND IT IS KEITH'S CALL: the two pages recommend different kits.** `/` gives the solid
+✅ **RULED 2026-09-03, KIT 3 IS THE DEFAULT ON BOTH PAGES.** `/kits` moves to a solid button on Kit 3
+alone, Kits 1 and 2 ghost; the cards stay price-ascending because it is a catalogue, but the weight no
+longer follows the order. Verified on both pages: `Hormone & Recovery Check` is the only ink-filled
+button on either. Registered as row 17 **even though no words changed**, because it steers toward the
+£179 product and fair presentation is asked of the whole presentation. The superseded rationale is
+recorded at the flag itself, with the warning that evening up the buttons "for balance" is exactly the
+reasoning that was replaced. The state before the ruling: `/` gave the solid
 button to Kit 3 alone and orders the cards 3, 1, 2; `/kits` gives solid buttons to Kits 1 and 3,
 ghosts Kit 2, and orders them 1, 2, 3. 🔴 **The two are not even reasoning on the same axis.** The
 homepage's rationale is commercial and is stated in its own h2: "You don't know which question you're
