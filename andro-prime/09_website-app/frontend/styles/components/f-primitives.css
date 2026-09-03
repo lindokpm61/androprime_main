@@ -1395,81 +1395,43 @@
    ============================================================================ */
 
 /* ============================================================================
-   THE DRIFTING MEASUREMENT RULE. Layer 2 of the direction's three, and the only
-   one that was never ported: `F-field.html:524`, `.rule-bg > .ticks`.
+   THE FIELD, ON `/kits` AS WELL AS `/`. Same component, same geometry, same
+   motion: horizontal gauge rows with the bands and the marker drifting across
+   them. Keith ruled 2026-09-03 that this is the thing tying the two pages
+   together, and he is right that nothing else was going to: `/` opened on a
+   full-bleed film with the field over it, `/kits` opened on flat white, and the
+   TYPE was carrying the whole handover between them at the same 65.6px on both.
 
-   It is here to answer a real finding: `/` opens on a full-bleed film with a
-   canvas data field behind 65.6px serif, `/kits` opened on flat white with the
-   same face at the same size, so the TYPE was carrying the entire handover
-   between the two pages and there was no shared texture in either first screen.
+   🔴 THIS REPLACED TWO WRONG ANSWERS IN A ROW, BOTH MINE, AND THE SEQUENCE IS
+   THE POINT. First the direction's layer 2 was ported faithfully as VERTICAL
+   hairlines, which is the same rhythm as the field rotated 90 degrees, because
+   `F-field.html` predates the ruling that made the measurement device the
+   system's spine. Then it was rotated horizontal, which fixed the axis and still
+   drew ruled paper rather than gauges: plain lines with no bands and no marker,
+   the texture of the instrument without the instrument. The answer was never a
+   gradient. It was the component that already existed.
 
-   🔴 THE LINES ARE HORIZONTAL, AND THE DIRECTION DRAWS THEM VERTICAL. Keith
-   caught this: `HeroField` on `/` draws HORIZONTAL GAUGE ROWS, one per 25px, each
-   a full-width track carrying a lab band, an action band and a marker, which is
-   the two-range readout repeated down the hero as texture. The first port of this
-   layer used the direction's vertical hairlines at 26px, so the two grounds were
-   the same rhythm rotated 90 degrees and read as related-but-wrong rather than as
-   one system. Every other instrument here is horizontal too: `.f-srule`'s track
-   and needle, `.f-pstrip`, the results bars. `F-field.html` predates the
-   2026-09-02 ruling that made the measurement device the system's spine, so
-   faithfulness to it was the weaker argument.
+   🔴 THE CLASS `.f-ticks` WAS ALREADY TAKEN, AND THE COLLISION SHIPPED. My rule
+   was a SECOND `.f-ticks` block in this file, and `/how-it-works` uses that class
+   on two `<ul>` marker lists. Source order gave the list its own `display` and
+   `padding` back, and silently kept `position: absolute`, `top: -60%`,
+   `height: 220%` and the drift animation from mine, so both lists were ripped out
+   of flow, sized 1440x2200, and **vanished from their cards**. The route returned
+   200 the whole time. This file already says "two rule blocks for one selector in
+   this file should be treated as a defect" at `.f-kchip`; it now has a third
+   instance to point at. Grep the class name before you write it, and never accept
+   an HTTP 200 as evidence that a page still looks right.
 
-   ⚠ NO BANDS ON THE ROWS, AND THAT IS MEASURED RATHER THAN CONSERVATIVE. Adding
-   the darker band segments that would make these read as real gauges was rendered
-   and rejected: the segments land on the body copy and read as STRIKETHROUGH,
-   struck straight through "you take at home" and "ISO 15189 accredited lab". The
-   homepage can carry the full gauge because its field sits at 0.34, its rows fade
-   near the headline by distance, and its type sits on a photographic film that
-   already separates it. Here there is no film and the tray occludes the right
-   half, so **the only place this ground is visible at all is directly behind the
-   type**, and anything with structure in it competes with reading. Horizontal
-   takes the axis and the language; the bands are declined for a reason specific
-   to this page, not on taste.
-
-   ⚠ TWO HONEST NOTES ABOUT THE PORT. In the direction this is the data field's
-   NO-JS FALLBACK (`.js .rule-bg { display: none }`), not a third simultaneous
-   layer, so using it as `/kits`' ground is a repurposing rather than a port. And
-   it is STATIC there; "drifting" is the brief's word (section 6, "non-photographic
-   motion"), so the animation below is written to that description, not copied.
-
-   Chosen over the two alternatives because it is the only one that costs nothing
-   on the CA-045 packet, which is unsent and is the merge blocker: reusing the
-   homepage film would have spent the homepage's one device on two pages, and
-   lifting a kit photograph above the fold would have demoted the price tray,
-   which is the first thing a first-timer reads. This is 1px hairlines and a
-   translate.
-
-   The ticks are `--hair-2` (ink at 16%) at 0.65, masked to nothing top and
-   bottom, and the drift is one 26px period per 20s, which is 1.3px/s. Seamless
-   because the distance travelled equals the pattern period. Quieter than the
-   vertical version's 0.85: a horizontal line runs ALONG the reading direction and
-   crosses a whole line of text rather than cutting between glyphs, so the same
-   ink reads heavier here. */
+   ⚠ THE COMPLIANCE POSITION IS UNCHANGED BUT IT NOW COVERS TWO SURFACES. The
+   field draws real range geometry from `thresholds.md`, and CA-045 questions 6
+   and 7 are open against it. Building on this branch is safe under Keith's
+   2026-09-01 ruling that the gate governs SHIPPING, not creating; what changes is
+   that the answer now applies to `/kits` as well as `/`. Registered as row 18. */
 .f-ruleground { position: relative; }
-.f-ruleground > * { position: relative; z-index: 1; }
-.f-rulebg {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 62%, transparent 92%);
-          mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 62%, transparent 92%);
-}
-.f-ticks {
-  position: absolute; left: 0; width: 100%; top: -60%; height: 220%;
-  background-image: repeating-linear-gradient(0deg, var(--hair-2) 0 1px, transparent 1px 26px);
-  opacity: 0.65;
-  animation: f-tickdrift 20s linear infinite;
-}
-@keyframes f-tickdrift { to { transform: translate3d(0, 26px, 0); } }
-/* Reduced motion lands exactly on the direction's own state: static ticks. */
-@media (prefers-reduced-motion: reduce) { .f-ticks { animation: none; } }
-/* ⚠ DAMPED ON NARROW SCREENS, AND THE REASON IS GEOMETRY RATHER THAN TASTE. The
-   mask holds full strength between 26% and 62% of the ground's height. That
-   ground measures 646px at 1440 and **1167px at 390**, because the hero stacks,
-   so the same percentages put roughly 420px of full-strength ticks directly
-   behind the lede on a phone and the grid starts competing with the body copy.
-   Measured on both, not assumed from the desktop view. The homepage's film has
-   the same shape of exception for the same reason, gating itself off below
-   641px. */
-@media (max-width: 899px) { .f-ticks { opacity: 0.45; } }
+/* Only the section is lifted. `.f-field` sets its own `position: absolute` and
+   `z-index: 1`, and a blanket `> *` rule would have overridden both and dropped
+   the canvas into flow. */
+.f-ruleground > section { position: relative; z-index: 2; }
 
 .f-herogrid { display: grid; gap: 30px; grid-template-columns: 1fr; }
 @media (min-width: 980px) {

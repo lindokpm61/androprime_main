@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { HeroField } from '@/components/marketing/HeroField'
 import { SectionRule } from '@/components/marketing/SectionRule'
 import { KIT_NAMES } from '@/lib/kits/names'
 import {
@@ -246,13 +247,18 @@ export default function KitsPage() {
       <JsonLd data={kitsSchema} />
 
       {/* ---------- HERO ---------- */}
-      {/* The ground is full-bleed and the section is not, so the rule sits in a
-          wrapper OUTSIDE `.f-wrap`. Constraining it to the 1180px measure would
-          draw a boxed texture with two hard edges, which is the opposite of a
-          ground. See `.f-ruleground` in f-primitives.css for why this layer is
-          here and what it was chosen over. */}
+      {/* The SAME field as `/`, not a texture that resembles it: horizontal gauge
+          rows with the bands and the marker drifting across them, from the same
+          component and the same geometry. It is the thing tying the two pages
+          together, and it is full-bleed, so it sits in a wrapper OUTSIDE
+          `.f-wrap`: constraining a ground to the 1180px measure draws a box with
+          two hard edges. `.f-field` brings its own mask, its own 0.34 opacity and
+          its own per-row fade near the headline band, so the type keeps contrast
+          over it without anything added here. ⚠ CA-045 q6/q7 are open against
+          this layer and now cover two surfaces; see `lib/home/fieldRows.ts` and
+          register row 18. */}
       <div className="f-ruleground">
-        <div className="f-rulebg" aria-hidden="true"><div className="f-ticks" /></div>
+        <HeroField />
       <section className="f-wrap f-sec">
         <div className="f-herogrid f-rise">
           <div>

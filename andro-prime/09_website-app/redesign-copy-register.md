@@ -1,6 +1,6 @@
 # Redesign copy register: what the final pre-flight has to pick up
 
-_Last updated: 2026-09-03 (Row 17: one recommendation across both pages, Kit 3.)_
+_Last updated: 2026-09-03 (Row 18: the hero data field now renders on `/kits` too, so CA-045 q6/q7 cover two surfaces.)_
 
 **The ruling this file exists to serve (Keith, 2026-09-02):** the redesign work on
 `redesign/direction-f` is in test and **is not subject to copy pre-flight rules at each step**. The
@@ -47,6 +47,8 @@ rather than answered. **What does not:** pure design and layout changes that lea
 | 16 | All kit surfaces | ⚠ **Not fixed, recorded so the pre-flight knows the scope.** The three product names have **66 hardcoded literal occurrences across 21 files**. Rows 14 and 15 route `/` and `/kits` through `lib/kits/names.ts`; the other 19 files still restate the strings, including `lib/pricing.ts`, `lib/account/getAccountData.ts`, `lib/account/exportResults.ts`, `lib/activate/getKitActivation.ts`, `lib/content/kitCTA.ts` and the three `/lp/*` pages. They all currently AGREE, which is exactly why the divergence was invisible until the homepage broke it. | n/a, a consolidation | Whoever picks up the naming sweep |
 
 | 17 | `/kits` | **Built 2026-09-03, and it is here despite changing no words, deliberately.** Keith ruled one recommendation across both pages: **Kit 3 is the default**, so `/kits` moves from solid buttons on Kits 1 and 3 to a solid button on **Kit 3 alone**. Previously the two pages recommended different kits one click apart, and only the homepage had a commercial reason for its choice; `/kits`' was written in its code as a layout-balance rule. ⚠ **Why a design-only change is registered anyway:** it steers toward the **£179** product, and fair-presentation questions are asked of the whole presentation, not only of the words. The argument for it is coverage, not price (Kit 3 is 9 of 9 markers, and the homepage argues the full panel is the honest default for a reader who does not yet know his question), but the pre-flight should see it rather than discover it. | **No words changed.** One boolean per card. | Pre-flight, presentation check |
+
+| 18 | `/kits` | **Built 2026-09-03, no words involved, registered because it moves an OPEN compliance question onto a second page.** The `HeroField` data layer now renders in the `/kits` hero as well as the homepage, so the two pages share one ground. It draws real range geometry from `04_products/results-engine/thresholds.md`, and **CA-045 questions 6 and 7 are open against exactly that** ("hero data field: display or texture", and "the hs-CRP and SHBG rows the page never shows"). Nothing is labelled, named or legible, and at 0.34 opacity with the per-row fade no individual band is readable, so the reading is texture-whose-source-is-real; that reading is not ours to ratify. Safe to build under the 2026-09-01 ruling that the gate governs SHIPPING not creating. ⚠ **What the answer has to cover has changed**: whatever Ewa rules on q6/q7 now applies to two surfaces, and the packet as drafted describes one. | **No words.** | **CA-045 signers**, as a scope note before the packet is sent |
 
 ## Closed
 

@@ -364,6 +364,40 @@ questions" / "less than a minute" drift (the selector is five steps, wrong on a 
 own pre-flight); "Order" as a CTA label that leads to a product page not a basket; **the two contradictory kit
 recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3).
 
+## 🟢 BOTH HEROES NOW RUN THE SAME FIELD, AND GETTING THERE TOOK TWO WRONG ANSWERS AND A SHIPPED BUG (2026-09-03)
+
+**Keith's call, and it was the right one:** put the actual homepage effect on `/kits` rather than a
+texture that resembles it. `HeroField` now renders in the `/kits` hero too, so both pages carry
+horizontal gauge rows with the bands and the marker drifting across them, from one component and one
+geometry. Verified: canvas 1800x808 at 1440, absolute at z-index 1 under a z-index 2 section, 0.34
+opacity, no overflow at 1440 or 390.
+
+🔴 **I gave two wrong answers first and the sequence is worth keeping.** The direction's layer 2 was
+ported faithfully as VERTICAL hairlines, because `F-field.html` predates the ruling that made the
+measurement device the system's spine, so fidelity reproduced a pre-ruling decision. Keith caught the
+axis; it was rotated HORIZONTAL, which fixed the axis and still drew ruled paper: plain lines, no
+bands, no marker, the texture of an instrument without the instrument. Both versions passed every check
+I ran, because those checks tested execution and never the decision. **The answer was never a gradient.
+It was the component that already existed**, twenty feet away, and I did not look for it because I was
+solving "add a texture" rather than "share the instrument".
+
+🔴 **AND THE FIRST ATTEMPT SHIPPED A CLASS-NAME COLLISION THAT DELETED CONTENT FROM ANOTHER PAGE.**
+`.f-ticks` was already the marker list on `/how-it-works`. My second `.f-ticks` block gave those two
+`<ul>`s `position: absolute`, `top: -60%`, `height: 220%` and a drift animation, so both were ripped
+out of flow at 1440x2200 and **vanished from their kit cards**; source order handed back only the
+properties the later rule re-declared. It shipped in `4f79912` and survived `edf5c8b`. ⚠ **My route
+sweep returned 200 for `/how-it-works` the entire time.** A 200 proves a page compiled, not that it
+still looks right, and I have now used that sweep three times this session as if it were a check.
+Restored and verified: the four lists are back in flow with 5/4/9/5 items. This stylesheet already
+ruled at `.f-kchip` that two rule blocks for one selector are a defect; this is its third instance, so
+the rule now has a "grep the class name before you write it" attached to it in DESIGN.md.
+
+⚠ **Compliance scope moved, and it is registered as row 18.** The field draws real range geometry from
+`thresholds.md`, and CA-045 q6 and q7 are open against exactly that. Building is safe under the
+2026-09-01 ruling that the gate governs shipping rather than creating. What changed is that **whatever
+Ewa rules now applies to two surfaces, and the packet as drafted describes one** — that is a scope note
+owed to the signers before it is sent, not a new question.
+
 ## 🟢 /KITS HAS A GROUND NOW: LAYER 2 OF THE HERO WAS NEVER PORTED, AND IT IS (2026-09-03)
 
 **B5, B6, B7 checked. Two were already answered and one was real.**

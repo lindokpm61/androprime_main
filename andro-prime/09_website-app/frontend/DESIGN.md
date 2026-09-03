@@ -806,57 +806,43 @@ content on a marketing page: Ewa, not a redraw.
 
 ### The hero grounds, and what carries the handover between them (2026-09-03)
 
-🔴 **A page's first screen must carry the measurement language in something other than the type.** `/`
-and `/kits` both opened on 65.6px Newsreader; `/` sat that type on a full-bleed film with the data
-field drifting behind it, `/kits` sat it on flat white. A reader crossing between them met the same
-face on two unrelated grounds, so **the typeface alone was carrying the handover**, and a typeface
-shared with every other page cannot say "same site" on its own.
+🔴 **BOTH HERO GROUNDS ARE THE SAME FIELD.** `/` and `/kits` both opened on 65.6px Newsreader; `/` sat
+that type on a full-bleed film with the data field drifting behind it, `/kits` sat it on flat white. A
+reader crossing between them met the same face on two unrelated grounds, so **the typeface alone was
+carrying the handover**, and a typeface shared with every other page cannot say "same site" on its own.
+`/kits` now renders the **same `HeroField` component**: horizontal gauge rows, one per 25px, each a
+full-width track carrying a lab band, an action band and a marker, with the bands drifting across the
+track at a per-row speed and phase. Not a texture that resembles the instrument, the instrument.
 
-`/kits` now carries **layer 2 of the direction's three, the drifting measurement rule**
-(`F-field.html:524`, `.rule-bg > .ticks`): 1px `--hair-2` **horizontal** hairlines every 26px at 0.65,
-on a 220%-tall element, masked to nothing top and bottom, drifting one 26px period per 20s. Class
 `.f-ruleground` wraps the hero OUTSIDE `.f-wrap`, because constraining a ground to the 1180px measure
-draws a box with two hard edges.
+draws a box with two hard edges. ⚠ Only the `<section>` is lifted to `z-index: 2`; `.f-field` sets its
+own `position: absolute` and `z-index: 1`, and a blanket `.f-ruleground > *` rule overrode both and
+dropped the canvas into flow. `.f-field` also brings its own mask, its own `opacity: 0.34` and its own
+per-row fade near the headline band, so the type keeps contrast over a moving ground with nothing added
+per page.
 
-🔴 **THE AXIS IS HORIZONTAL AND THE DIRECTION DRAWS IT VERTICAL.** `HeroField` on `/` draws
-horizontal gauge ROWS, one per 25px, each a full-width track carrying a lab band, an action band and a
-marker: the two-range readout repeated down the hero as texture. The first port used the direction's
-vertical hairlines at 26px, which made the two grounds the same rhythm rotated 90 degrees, reading as
-related-but-wrong rather than as one system. Every instrument here is horizontal: `.f-srule`'s track
-and needle, `.f-pstrip`, the results bars. `F-field.html` predates the ruling that made the measurement
-device the system's spine, so faithfulness to it was the weaker argument. **Caught by Keith, after the
-faithful port had already shipped.**
+⚠ **The compliance position is unchanged and now covers two surfaces.** The field draws real range
+geometry from `thresholds.md`, and CA-045 questions 6 and 7 are open against it. Building on this
+branch is safe under the 2026-09-01 ruling that the gate governs SHIPPING, not creating; what changed
+is that the answer now applies to `/kits` as well as `/`. Registered as row 18.
 
-⚠ **No bands on the rows, and that is measured rather than conservative.** Adding the darker band
-segments that would make these read as real gauges was rendered and rejected: they land on the body
-copy and read as **strikethrough**, struck straight through "you take at home" and "ISO 15189
-accredited lab". The homepage can carry the full gauge because its field sits at 0.34, its rows fade
-near the headline by distance, and its type sits on a photographic film that already separates it.
-Here there is no film and the tray occludes the right half, so **the only place this ground is visible
-at all is directly behind the type**. Horizontal takes the axis and the language; the bands are
-declined for a reason specific to this page. ⚠ It is also quieter than the vertical version was, 0.65
-against 0.85, because a horizontal line runs ALONG the reading direction and crosses a whole line of
-text rather than passing between glyphs, so the same ink reads heavier.
+🔴 **TWO WRONG ANSWERS PRECEDED THIS ONE, AND THE SEQUENCE IS THE LESSON.** First the direction's
+layer 2 was ported faithfully as **vertical** hairlines: `F-field.html` predates the ruling that made
+the measurement device the system's spine, so its axis was drawn before there was a house axis to
+conflict with, and fidelity reproduced a pre-ruling decision. Then it was rotated **horizontal**, which
+fixed the axis and still drew ruled paper: plain lines, no bands, no marker, the texture of an
+instrument without the instrument. Both passed every check that was run, because those checks tested
+execution and not the decision. **The answer was never a gradient; it was the component that already
+existed.** Before building a texture that evokes a device, check whether the device is already built.
 
-⚠ **Three things to know before reusing it.** It is the field's **no-JS fallback** in the direction
-(`.js .rule-bg { display: none }`), not a third simultaneous layer, so this is a repurposing. It is
-**static** there; "drifting" is the brief's word and the animation is written to that description, not
-copied. And 🔴 **it is not data**: unlike `HeroField`, which draws real range geometry and carries an
-open CA-045 question, this is a repeating gradient with no source. Nothing about it is a claim, so it
-adds nothing to any packet.
-
-⚠ **It is damped below 900px, and the reason is geometry.** The mask holds full strength between 26%
-and 62% of the ground's height, and that ground measures 646px at 1440 against **1167px at 390**
-because the hero stacks. The same percentages therefore put ~420px of full-strength ticks behind the
-lede on a phone. Measured on both, not judged from the desktop view; `opacity: 0.45` under 900px. The
-homepage's film has the same shape of exception, gating itself off below 641px.
-
-**Chosen over two alternatives, both rejected on cost rather than looks.** Reusing the homepage film on
-`/kits` would have been the strongest continuity and would have spent the homepage's one device on two
-pages, which is the "where each page spends its one" rule applied to a ground instead of a panel.
-Lifting a kit photograph above the fold would have demoted the price tray, which is the first thing a
-first-timer reads, and added an above-the-fold placement note to a CA-045 packet that is unsent and is
-the merge blocker.
+🔴 **AND THE FIRST ATTEMPT SHIPPED A CLASS-NAME COLLISION.** `.f-ticks` was already the marker list
+on `/how-it-works`. A second `.f-ticks` block in this stylesheet gave those two `<ul>`s
+`position: absolute`, `top: -60%`, `height: 220%` and a drift animation, which ripped them out of flow
+at 1440x2200 and **removed them from their cards entirely**. Source order returned only the properties
+the later rule re-declared. The route returned 200 throughout. This file already ruled at `.f-kchip`
+that "two rule blocks for one selector in this file should be treated as a defect"; this is its third
+instance. **Grep a class name before writing it, and never read an HTTP 200 as evidence that a page
+still looks right.**
 
 ## Motion
 
