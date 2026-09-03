@@ -114,7 +114,15 @@
    waiting for the next person who reorders a stylesheet. */
 .f-tray.f-tray-flag { box-shadow: var(--shadow-ambient), 0 0 0 1.5px var(--flag); }
 .f-tray-pick { transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
-.f-tray-pick:hover { transform: translateY(-3px); box-shadow: var(--shadow-ambient), 0 0 0 1.5px var(--flag); }
+/* 🔴 THE HOVER MUST NOT PAINT THE RING. It carried
+   `0 0 0 1.5px var(--flag)`, byte-identical to the `.f-tray-flag` rule above,
+   so the pointer FORGED the emphasis: Kit 1 hovered rendered identical to
+   Kit 3 at rest, and whichever card the cursor sat on acquired "Most
+   complete". It was also the one place --flag escaped its fence, painting on
+   all three transactions at once. The hover keeps the lift, which is what says
+   "this answers a pointer"; the ring stays exclusive to the flagged card,
+   which is what says "this one". Found by the 2026-09-02 /kits critique. */
+.f-tray-pick:hover { transform: translateY(-3px); box-shadow: var(--shadow-ambient-lift); }
 @media (prefers-reduced-motion: reduce) {
   .f-tray-pick, .f-tray-pick:hover { transition: none; transform: none; }
 }
@@ -497,7 +505,12 @@
   color: var(--ink);
   border: 1px solid var(--hair-2);
 }
-.f-btn-sm { padding: 10px 18px; font-size: 13.5px; }
+/* 44px MINIMUM, and this variant carries the primary conversion action. The
+   padding and face alone measured 42.3px at 390, on all three `Order` buttons
+   plus "Go to test selector" and "Full process breakdown". `.f-btn` is
+   `inline-flex items-center`, so a min-height centres the label rather than
+   pushing it down. */
+.f-btn-sm { padding: 10px 18px; font-size: 13.5px; min-height: 44px; }
 .f-btns { @apply flex flex-wrap items-center; gap: 12px; }
 
 .f-flagchip {
@@ -1537,6 +1550,14 @@
 @media (min-width: 900px) { .f-kgrid { grid-template-columns: repeat(3, 1fr); } }
 .f-kcard .f-core { padding: 0; display: flex; flex-direction: column; height: 100%; }
 .f-kbody { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+/* 🔴 A COLUMN FLEX PARENT STRETCHES ITS CHILDREN, AND inline-flex DOES NOT
+   SAVE THEM. `.f-kchip` and `.f-flagchip` are both inline-flex, but that sets
+   how they lay out INSIDE; align-self decides their cross-axis size HERE, and
+   it defaults to stretch. Measured 91px in the hero, where the parent is not a
+   column, against 316px in these cards: the same class was a chip in one place
+   and a banner in another, on one page. The amber instance was the largest
+   coloured area on the site, in the one saturated colour the system fences. */
+.f-kbody > .f-kchip, .f-kbody > .f-flagchip { align-self: flex-start; }
 .f-kbody h3 { font-size: 22px; letter-spacing: -0.03em; margin: 10px 0 0; line-height: 1.15; max-width: none; }
 .f-kfoot { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 16px; }
 

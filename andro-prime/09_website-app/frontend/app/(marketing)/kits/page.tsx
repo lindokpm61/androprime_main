@@ -558,7 +558,11 @@ export default function KitsPage() {
       </section>
 
       {/* ---------- SELECTOR CLOSE ---------- */}
-      <section className="f-wrap f-sec">
+      {/* NO `f-sec` HERE. `.f-sec` and `.f-close` both take `var(--f-sec-gap)`
+          as padding-top, so stacking them spent the gap twice and put a void
+          immediately before the final ask. The homepage puts `.f-close` on a
+          bare `.f-wrap` and measures 0px; this now matches it. */}
+      <section className="f-wrap">
         <div className="f-close">
           <p className="f-blab">Still not sure</p>
           <h2>Three questions. One clear recommendation.</h2>

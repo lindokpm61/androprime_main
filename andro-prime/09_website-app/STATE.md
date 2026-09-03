@@ -320,6 +320,53 @@ is 0.663 x the rendered height**, working back from the surrounding type rather 
 HTML: the class in the DOM still read `h-6` while the file on disk read `h-4`. Reading the class off
 the live DOM is what caught it; a screenshot alone would have been believed.
 
+## ✅ The pointer was forging the "Most complete" ring, plus three more from the /kits critique (2026-09-03)
+
+The 2026-09-02 dual-agent critique of `/kits` against `/`
+(`frontend/.impeccable/critique/2026-09-02T23-35-47Z__app-marketing-kits-page-tsx.md`, 26/36) produced
+four findings that needed no ruling and no copy pre-flight. All four are applied and measured in
+Chrome against the dev server; **nothing here touches copy**, so nothing is added to
+`redesign-copy-register.md`.
+
+🔴 **`.f-tray-pick:hover` was byte-identical to `.f-tray.f-tray-flag`**, so the pointer forged the
+page's single emphasis signal: Kit 1 hovered rendered identical to Kit 3 at rest, and whichever card
+the cursor sat on acquired "Most complete". It was also the one place `--flag` escaped its fence,
+painting on all three transactions. The hover now takes `--shadow-ambient-lift` only. **This is the
+same class of defect as the flag ring that never rendered, one day later and in the same three lines**:
+that one was a specificity tie, this one a duplicated value, and both were invisible because the
+result still looked like a working card. `.f-tray-pick` is used on `/kits` only, so the blast radius
+is one page.
+
+🔴 **`.f-kchip` and `.f-flagchip` stretched to card width**, because `inline-flex` sets how a box
+lays out inside and `align-self` decides its cross-axis size in the parent, which defaults to
+`stretch` in `.f-kbody`'s column. Measured **91px in the hero against 316px in the cards**: one class
+behaving as a chip in one place and a banner in another, on one page, with the amber instance the
+largest coloured area on the site. Now `align-self: flex-start`, measured 197px at content width.
+
+⚠ **`.f-btn-sm` measured 42.3px at 390**, under the 44px minimum, on all three `Order` buttons plus
+"Go to test selector" and "Full process breakdown". Now `min-height: 44px`, 0 buttons under 44 across
+the page. **This is site-wide by design**: the class is used in 7 files and every small button gains
+1.7px.
+
+✅ **The `/kits` close paid the section gap twice.** `.f-sec` and `.f-close` both take
+`var(--f-sec-gap)` as padding-top, so wrapping one in the other spent 260px immediately before the
+final ask; the homepage puts `.f-close` on a bare `.f-wrap`. `f-sec` dropped, now 0px + 130px and
+matching `/`.
+
+⚠ **One correction to the critique**, recorded because the entry will be read again: its P2 added
+"same pattern for the gap between the panel and section 02", and that does not hold. Every `.f-sec`
+on the page measures 130px top / 20px bottom, so panel-to-02 is the standard rhythm, not a doubling.
+The close was the only genuine double. Any void there is content ending short, which is a judgement,
+not a mechanical fix.
+
+**Still owed from the same critique, and all of it blocked on a decision, not on work:** the "answer 3
+questions" / "less than a minute" drift (the selector is five steps, wrong on a live page, needs its
+own pre-flight); "Order" as a CTA label that leads to a product page not a basket; the two
+section-header grammars, which DESIGN.md records as both correct; **the two contradictory kit
+recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3);
+and the eyebrow dot, which violates DESIGN.md's own 🔴 "a dot marks a STATE, never a credential" at 6
+call sites across 4 files.
+
 ## ✅ The captions came off the photographs, and the credential dots came off the footer (2026-09-02)
 
 A second taste-skill pass over the homepage, run against its Pre-Flight matrix and AI-Tells list with
