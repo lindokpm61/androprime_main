@@ -575,6 +575,36 @@ export default function HomePage() {
         <p className="f-lede">
           You should not have to pay to find out whether we are worth paying. What you pay for is the record: your numbers, held over time.
         </p>
+        {/* THE DISCLOSURE LINE, AND WHY A PROHIBITION ALONE WAS NOT ENOUGH.
+            The lede above names a paid thing ("what you pay for is the record")
+            and the rules below forbid this page from selling it, so before this
+            line existed the page alluded to a charge it never named. That reads
+            as concealment on the one page whose whole argument is that we do
+            not hide what we earn from. `/kits` had already solved the same
+            problem inside the C1 panel ("no subscription unless you choose
+            one"); this is the homepage's equivalent and it is deliberately the
+            same shape: a negation, not an offer.
+
+            🔴 WHAT THIS LINE MAY NOT BECOME. No price, no CTA, no benefit list,
+            no "join". Membership cannot be bought standalone and no acquisition
+            surface may sell or price it
+            (`01_strategy/2026-08-26-membership-offer-window.md` §5,
+            `07_sales/funnel/site-funnel-model.md` §2). It also may not lead on
+            the trend or the series (§1b, the cold-start constraint): this says
+            WHEN the offer exists, never what it is worth.
+
+            The 30-day width of the window is deliberately absent. That is a
+            term, and terms belong on the terms page, not in homepage fine
+            print. "Never before" is the shape; the window is the detail.
+
+            ⚠ NEW COPY, NOT A PORT. Registered as item 9 in
+            `redesign-copy-register.md` and owed to the final pre-flight. It
+            also describes a route that is currently dark: `/membership` is
+            behind MEMBERSHIP_ENABLED and 404s with the flag off, so this line
+            must not ship ahead of the flag. */}
+        <p className="f-fine mt-4">
+          Holding that record over time is an optional membership. It is offered once your first result is back, never before, and you never need it to buy a kit or to read your own results.
+        </p>
       </div>
       <div className="f-wrap">
         <div className="f-bento">
