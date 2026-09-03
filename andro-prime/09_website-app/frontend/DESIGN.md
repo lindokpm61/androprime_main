@@ -573,6 +573,29 @@ and lost to both `.f-lede` and Tailwind’s `mt-*`. It was invisible at desktop,
 showed only at 390. **A specificity bug inside a margin collapse presents as a responsive bug**,
 because both are "right at one width, wrong at the other".
 
+### 3. The gap states the relationship (added 2026-09-03)
+
+🔴 **`--f-sec-gap` is the boundary between two TOPICS, and not every boundary is one.** Where a section
+continues the one above it rather than changing subject, it takes `--f-sec-gap-cont`, which is
+`calc(var(--f-sec-gap) * 0.66)`, via `.f-sec.f-sec-cont`. Held as a fraction rather than a second
+literal so the two cannot drift apart.
+
+The case that produced it: on `/kits`, section 01 is the panel instrument and section 02 is the three
+products it measures. The full gap announced a new subject about a continuation, and a critique read
+the result as the page's best asset being followed by a dead zone. Measured ink to ink at 1440,
+before: **150 / 150 / 130 / 106**. After: **150 / 106 / 130 / 106**, so the continuation now matches
+the close.
+
+⚠ **The measurement that matters is ink to ink**, from the last element that actually paints to the
+next rule, NOT padding-box to padding-box. The same boundary read 150px, 190px or "the standard
+rhythm" depending on which reference was chosen, and only the ink-to-ink number answers a complaint
+phrased as "it looks like a dead zone". Padding values are exact and are not the gap anyone sees.
+
+⚠ **`.f-sec-cont` is written at (0,2,0) as `.f-sec.f-sec-cont`.** At (0,1,0) it ties with `.f-sec` and
+the winner is decided by source order, which is how `.f-btn-ghost` shipped transparent, how `.f-blab`
+shipped 30% oversized, and how `.f-tray-flag`'s ring never rendered at all. Three instances in one
+stylesheet is enough to stop writing modifiers that depend on where they sit.
+
 ## Containment: a card holds a transaction or an instrument
 
 Ruled 2026-09-02. **The structural half of the answer to "this could belong to a tech brand or a

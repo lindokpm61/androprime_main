@@ -378,9 +378,14 @@ residual 20px against the homepage is the preceding section's own padding-bottom
 last element that actually paints to the next rule: **150 / 150 / 130 / 106**. So 150px is the page's
 widest boundary, shared with rule 01, and the finding is exact. It is not a bug, it is **the default
 applied to a boundary that should not take it**: every other boundary on that page is a topic change,
-and the panel to the cards is the instrument followed by the things it measures. ▶️ **Still open, and
-it needs a rule rather than a value**: proposed as "the gap states the relationship, so a continuation
-takes the smaller value", tightening that one boundary to about the 106px the close uses.
+and the panel to the cards is the instrument followed by the things it measures. ✅ **RULED AND FIXED
+2026-09-03.** "The gap states the relationship": `--f-sec-gap` is the boundary between two TOPICS, and
+a section that continues the one above takes `--f-sec-gap-cont`, `calc(var(--f-sec-gap) * 0.66)`, via
+`.f-sec.f-sec-cont`. Held as a fraction, not a second literal, so the two cannot drift. Measured ink
+to ink at 1440, before **150 / 150 / 130 / 106**, after **150 / 106 / 130 / 106**: the continuation now
+matches the close. At 390, 68px. ⚠ The modifier is written `.f-sec.f-sec-cont` at (0,2,0) because at
+(0,1,0) it ties with `.f-sec` and source order decides, which is how three separate rules in that file
+have already shipped broken.
 
 🟢 **B7 was real and is fixed.** `/` opened on a full-bleed film plus the canvas data field; `/kits`
 opened on flat white with **zero** images, canvases or videos, both at 65.6px Newsreader. The type was

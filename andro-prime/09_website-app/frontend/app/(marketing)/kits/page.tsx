@@ -427,7 +427,10 @@ export default function KitsPage() {
           The cards are light because section 01 did the explaining. Gone from
           each: the marker string (now the strip), the three spec wells, and the
           full blurb. What is left is what is unique to this kit. */}
-      <section className="f-wrap f-sec" id="kits">
+      {/* `f-sec-cont`: this boundary is a continuation, not a topic change. The
+          panel above measures the three products below it, so the full section
+          gap announced a new subject about the same one. See `--f-sec-gap-cont`. */}
+      <section className="f-wrap f-sec f-sec-cont" id="kits">
         <SectionRule n={2} of={4} />
         <p className="f-blab">The full range</p>
         <h2 className="f-h2">

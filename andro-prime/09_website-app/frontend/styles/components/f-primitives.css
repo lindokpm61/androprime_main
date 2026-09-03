@@ -82,10 +82,26 @@
 :root {
   --f-sec-gap: 72px;
   --f-sec-below: 20px;
+  /* 🔴 THE GAP STATES THE RELATIONSHIP (ruled 2026-09-03). `--f-sec-gap` is the
+     boundary between two TOPICS. Some boundaries are not topic changes: on
+     `/kits`, section 01 is the panel instrument and section 02 is the products it
+     measures, so the full gap announced a new subject about a continuation. Held
+     as a fraction of the boundary rather than a second literal, so the two cannot
+     drift; 0.66 measured 106px of real whitespace against the topic boundary's
+     150px, which is the same gap the page's close already uses. */
+  --f-sec-gap-cont: calc(var(--f-sec-gap) * 0.66);
 }
 @media (min-width: 900px) {
   :root { --f-sec-gap: 130px; }
 }
+
+/* ⚠ WRITTEN AT (0,2,0), NOT (0,1,0), AND THE REASON IS THIS FILE'S OWN HISTORY.
+   `.f-sec-cont` alone ties with `.f-sec` on specificity and would be decided by
+   source order, which is how `.f-btn-ghost` shipped transparent, how `.f-blab`
+   shipped 30% oversized, and how `.f-tray-flag`'s ring never rendered at all.
+   Three instances in one stylesheet is enough to stop writing modifiers that
+   depend on where they sit. */
+.f-sec.f-sec-cont { padding-top: var(--f-sec-gap-cont); }
 
 /* The closing CTA is a section too: the direction seats `.close` inside a
    `.sec` and it takes the same rhythm. */
