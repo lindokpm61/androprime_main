@@ -511,6 +511,29 @@ once the trays came off there was nothing to float over. A plate takes its capti
 a kit card, where the image is full-bleed, the caption takes the card’s own 20px inset so it lines up
 with the body below it.
 
+🔴 **SATURATED COLOUR MEANS A CLINICAL VERDICT AND NOTHING ELSE (ruled 2026-09-03).** The status
+triad owns saturation: green optimal, amber borderline, red GP-block. A marketing surface may use ink,
+paper and the greys between them. If a thing is not a verdict about the reader's blood, it is not
+coloured. `--flag`, the marketing accent, is therefore **ink** and its two tints are ink at 3.5% and 7%.
+
+The defect this closes: `--flag` was `#E0A458` and `--color-status-warning` is `#d97706`, **two
+adjacent ambers carrying opposite meanings one click apart**. On `/`, amber said "this number of yours
+needs watching". On `/kits`, amber said "buy this one, it is £179". The 2026-09-02 pass separated the
+two TOKENS and nobody reads a token; to an eye moving between the pages there was one orange and it
+changed job. ⚠ **Separating the values was never going to fix it, because the values were not what was
+being confused.** This is the third time the same ruling has been made and the first time it has been
+made generally: accent red left the blog skin on 2026-08-29, the credential marks left amber for ink
+on 2026-09-02, and both times the decorative use yielded to the clinical one.
+
+Six surfaces follow the token: Kit 3's ring and chip, `.f-pull`'s rule, `.f-symp .f-route`, the step
+cards' ghost numeral, and `.f-col-hi`'s column tint. ⚠ **The tints are derived from the old composited
+LIGHTNESS, not the old alpha**: amber at .14 over paper is `rgb(251,242,232)`, and ink at .14 would be
+a mid grey. Ink at .05 was the first attempt and it pushed `.f-col-hi`'s 10.5px label to **4.48:1**,
+under the floor; .035 composites to `rgb(246,246,247)` and restores it to 4.63:1. Re-measure that
+label against any future change to these values, because it is the smallest text in the system sitting
+on a tint. Verified after the change: the only saturated colours left anywhere on the marketing routes
+are `.f-bar i.warn` and its optimal sibling, both inside the sample report.
+
 🔴 **A dot marks a STATE, never a credential.** The two footer chips lost theirs: UKAS accreditation
 and EFSA claim wording are either true or the chip should not exist, so a dot in front of them reads
 as a live indicator for something that has no live state. The nav dot survives, because "UKAS lab

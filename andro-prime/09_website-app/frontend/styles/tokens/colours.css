@@ -96,9 +96,45 @@
      accent-red ruling of 2026-08-29 drew this exact line for red.
 
      ========================================================== */
-  --flag:    #E0A458;
-  --flag-f:  rgba(224, 164, 88, 0.14);
-  --flag-f2: rgba(224, 164, 88, 0.26);
+/* 🔴 RULED 2026-09-03: SATURATED COLOUR MEANS A CLINICAL VERDICT AND NOTHING
+   ELSE. THE MARKETING ACCENT IS INK.
+
+   The note above separated the TOKENS and it did not separate the READING.
+   `--flag` was #E0A458 and `--color-status-warning` is #d97706: two adjacent
+   ambers carrying OPPOSITE meanings one click apart. On `/` amber said "this
+   number of yours needs watching". On `/kits` amber said "buy this one, it is
+   GBP 179". Nobody reads a token. To an eye moving between the two pages there
+   was one orange and it changed job, and no amount of separating the hex values
+   fixes that, because the defect is perceptual and the values were never the
+   thing being confused.
+
+   This is the same ruling made twice before and it is now made once, generally:
+   accent red left the blog skin on 2026-08-29 ("red is reserved for the
+   results-dashboard critical/GP-block status"), and the credential marks left
+   amber for ink on 2026-09-02. Both times the decorative use yielded to the
+   clinical one. The rule that decides every future case without a fourth
+   argument: **the status triad owns saturation. A marketing surface may use
+   ink, paper and the greys between them.** If a thing is not a verdict about
+   the reader's blood, it is not coloured.
+
+   The token keeps its name and its three call-site shapes, so all six surfaces
+   follow from here: Kit 3's ring and chip, `.f-pull`'s rule, `.f-symp .f-route`,
+   the step cards' ghost numeral, and `.f-col-hi`'s column tint. The tints are
+   NOT ink at the old alphas: amber at .14 is a pale wash and ink at .14 is a
+   mid grey, so they are re-derived to match the previous LIGHTNESS rather than
+   the previous number. */
+  --flag:    #0A0B0D;
+  /* 🔴 THESE ALPHAS ARE DERIVED FROM THE OLD COMPOSITED LIGHTNESS, NOT FROM
+     THE OLD ALPHA, AND THE FIRST ATTEMPT GOT IT WRONG. Amber at .14 over paper
+     composites to rgb(251,242,232); ink at .14 would be a mid grey. Ink at .05
+     was the first guess and it composited to rgb(243,243,243), which pushed
+     `.f-col-hi`'s 10.5px `--ink-3` label from 4.72:1 to **4.48:1**, under the
+     4.5 floor for text that size. Measured, not eyeballed. .035 composites to
+     rgb(246,246,246) and restores it. Any future change to these two values has
+     to be re-measured against that label, which is the smallest text in the
+     system that sits on a tint. */
+  --flag-f:  rgba(10, 11, 13, 0.035);
+  --flag-f2: rgba(10, 11, 13, 0.07);
 
   /* --- Two-range readout bands (the homepage instrument) ---
      Ported from design/mockups/directions/F-field.html:79-80. These are the

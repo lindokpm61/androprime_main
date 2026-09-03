@@ -523,7 +523,10 @@
   @apply inline-flex items-center;
   gap: 8px;
   background: var(--flag);
-  color: #0a0b0d;
+  /* Was the literal #0a0b0d, ink text on the amber fill. With `--flag` ruled to
+     ink on 2026-09-03 the chip is now ink-on-ink and the text has to invert.
+     Paper on #0A0B0D measures 19.69:1, against the 6.18:1 the amber fill gave. */
+  color: var(--paper);
   border-radius: var(--radius-pill);
   padding: 6px 14px;
   font-family: var(--font-mono); font-size-adjust: none;

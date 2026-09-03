@@ -364,6 +364,52 @@ questions" / "less than a minute" drift (the selector is five steps, wrong on a 
 own pre-flight); "Order" as a CTA label that leads to a product page not a basket; **the two contradictory kit
 recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3).
 
+## 🔴 AMBER MEANT TWO OPPOSITE THINGS, AND THE MARKETING ACCENT IS NOW INK (2026-09-03)
+
+**Ruled: saturated colour means a clinical verdict and nothing else.** The status triad owns
+saturation; a marketing surface gets ink, paper and the greys between. Written into DESIGN.md and into
+`tokens/colours.css` at the token itself.
+
+The defect: `--flag` was `#E0A458` and `--color-status-warning` is `#d97706`. **Two adjacent ambers,
+opposite meanings, one click apart.** On `/` amber said "this number of yours needs watching"; on
+`/kits` amber said "buy this one, it is £179". 🔴 **The 2026-09-02 pass separated the TOKENS and that
+was never going to fix it**, because nobody reads a token and the values were not what was being
+confused. The token file had even written the collision down in full ("the colour that says a result
+needs monitoring is the colour that highlights the £179 kit") and then solved it by adding a second
+hex. A perceptual defect does not have a hex-value fix.
+
+Third time this ruling has been made, first time generally: accent red left the blog skin 2026-08-29,
+credential marks left amber for ink 2026-09-02, and now the accent itself. Each time the decorative
+use yielded to the clinical one, and each time only for the case in front of us. The general form
+should stop the fourth: **if a thing is not a verdict about the reader's blood, it is not coloured.**
+
+Six surfaces follow the token and needed no edits of their own: Kit 3's ring and chip, `.f-pull`,
+`.f-symp .f-route`, the step cards' ghost numeral, `.f-col-hi`. Only `.f-flagchip` needed a second
+change, its hardcoded ink text inverting to paper, 19.69:1.
+
+⚠ **I got the tints wrong first and measured it, rather than shipping it.** They are derived from the
+old composited LIGHTNESS, not the old alpha: amber at .14 over paper is `rgb(251,242,232)` and ink at
+.14 is a mid grey. Ink at .05 composited to `rgb(243,243,243)` and pushed `.f-col-hi`'s 10.5px label
+from 4.72:1 to **4.48:1**, under the floor by 0.02. At .035 it composites to `rgb(246,246,247)` and
+measures 4.63:1. That label is the smallest text in the system sitting on a tint, so it is the one to
+re-measure against any future change to these values.
+
+Verified across 7 routes, `tsc` clean: **the only saturated colours left anywhere on the marketing
+site are `.f-bar i.warn` and its optimal sibling, both inside the sample report.** No copy-register
+row: colour is explicitly out of the register's scope, and this change reduces rather than adds
+emphasis on the £179 kit.
+
+## ✅ B4 WAS ALREADY FIXED THIS SESSION, AND THE CRITIQUE TEXT STILL SAYS OTHERWISE (2026-09-03)
+
+The `.f-tray-pick:hover` ring was fixed in `c1c6bb7`, the first commit of this session. The critique
+document still describes it as live because a critique is a snapshot and nothing rewrites it when the
+defect is fixed. Re-verified before touching anything: the rule now reads
+`box-shadow: var(--shadow-ambient-lift)` and a simulated hover on Kit 1 returns the lift with no ring.
+⚠ **The general risk this is an instance of:** a findings document is read as a description of the
+present long after it has become a description of the past, and it reads as authoritative because it
+is dated and specific. Re-test a finding's central claim before acting on it, especially when acting
+would mean "fixing" something twice.
+
 ## 🔴 THE PRODUCT NAMES HAD 66 CALL SITES AND ONE MODULE CLAIMING TO BE THEIR SOURCE (2026-09-03)
 
 Checking the critique's B2 row "the same product is called three different things" found something
