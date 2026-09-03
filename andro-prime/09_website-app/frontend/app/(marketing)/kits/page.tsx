@@ -246,6 +246,13 @@ export default function KitsPage() {
       <JsonLd data={kitsSchema} />
 
       {/* ---------- HERO ---------- */}
+      {/* The ground is full-bleed and the section is not, so the rule sits in a
+          wrapper OUTSIDE `.f-wrap`. Constraining it to the 1180px measure would
+          draw a boxed texture with two hard edges, which is the opposite of a
+          ground. See `.f-ruleground` in f-primitives.css for why this layer is
+          here and what it was chosen over. */}
+      <div className="f-ruleground">
+        <div className="f-rulebg" aria-hidden="true"><div className="f-ticks" /></div>
       <section className="f-wrap f-sec">
         <div className="f-herogrid f-rise">
           <div>
@@ -324,6 +331,7 @@ export default function KitsPage() {
           </div>
         </div>
       </section>
+      </div>{/* /.f-ruleground */}
 
       {/*
         ---------- MONEY BLOCK ----------

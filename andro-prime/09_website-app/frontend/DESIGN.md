@@ -781,6 +781,40 @@ reporting. Those figures exist and are Ewa-ratified, but they live in the source
 readout data and **have never been rendered to a customer**. Putting them on screen is new clinical
 content on a marketing page: Ewa, not a redraw.
 
+### The hero grounds, and what carries the handover between them (2026-09-03)
+
+🔴 **A page's first screen must carry the measurement language in something other than the type.** `/`
+and `/kits` both opened on 65.6px Newsreader; `/` sat that type on a full-bleed film with the data
+field drifting behind it, `/kits` sat it on flat white. A reader crossing between them met the same
+face on two unrelated grounds, so **the typeface alone was carrying the handover**, and a typeface
+shared with every other page cannot say "same site" on its own.
+
+`/kits` now carries **layer 2 of the direction's three, the drifting measurement rule**
+(`F-field.html:524`, `.rule-bg > .ticks`): 1px `--hair-2` hairlines every 26px on a 220%-wide element,
+masked to nothing top and bottom, drifting one 26px period per 20s. Class `.f-ruleground` wraps the
+hero OUTSIDE `.f-wrap`, because constraining a ground to the 1180px measure draws a box with two hard
+edges.
+
+⚠ **Three things to know before reusing it.** It is the field's **no-JS fallback** in the direction
+(`.js .rule-bg { display: none }`), not a third simultaneous layer, so this is a repurposing. It is
+**static** there; "drifting" is the brief's word and the animation is written to that description, not
+copied. And 🔴 **it is not data**: unlike `HeroField`, which draws real range geometry and carries an
+open CA-045 question, this is a repeating gradient with no source. Nothing about it is a claim, so it
+adds nothing to any packet.
+
+⚠ **It is damped below 900px, and the reason is geometry.** The mask holds full strength between 26%
+and 62% of the ground's height, and that ground measures 646px at 1440 against **1167px at 390**
+because the hero stacks. The same percentages therefore put ~420px of full-strength ticks behind the
+lede on a phone. Measured on both, not judged from the desktop view; `opacity: 0.45` under 900px. The
+homepage's film has the same shape of exception, gating itself off below 641px.
+
+**Chosen over two alternatives, both rejected on cost rather than looks.** Reusing the homepage film on
+`/kits` would have been the strongest continuity and would have spent the homepage's one device on two
+pages, which is the "where each page spends its one" rule applied to a ground instead of a panel.
+Lifting a kit photograph above the fold would have demoted the price tray, which is the first thing a
+first-timer reads, and added an above-the-fold placement note to a CA-045 packet that is unsent and is
+the merge blocker.
+
 ## Motion
 
 Added 2026-09-02, when the choreography was ported. The system had no motion section before that,

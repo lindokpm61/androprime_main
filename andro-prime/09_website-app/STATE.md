@@ -364,6 +364,44 @@ questions" / "less than a minute" drift (the selector is five steps, wrong on a 
 own pre-flight); "Order" as a CTA label that leads to a product page not a basket; **the two contradictory kit
 recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3).
 
+## 🟢 /KITS HAS A GROUND NOW: LAYER 2 OF THE HERO WAS NEVER PORTED, AND IT IS (2026-09-03)
+
+**B5, B6, B7 checked. Two were already answered and one was real.**
+
+✅ **B5 was fixed in `c1c6bb7`** at the start of the session. It claims a 280px gap at 1440 and 164px
+at 390; measured now, **150px and 92px**, with `.f-close` on a bare `.f-wrap` exactly as on `/`. The
+residual 20px against the homepage is the preceding section's own padding-bottom, not a second gap.
+
+⚠ **B6's number is right and my first answer to Keith was wrong.** I told him it was "the standard
+150px rhythm, nothing mechanical to fix" after measuring SECTION PADDING, then measured 190px from
+`.f-panelfoot`, which sounds like the bottom of the panel and is not. Measuring ink to ink, from the
+last element that actually paints to the next rule: **150 / 150 / 130 / 106**. So 150px is the page's
+widest boundary, shared with rule 01, and the finding is exact. It is not a bug, it is **the default
+applied to a boundary that should not take it**: every other boundary on that page is a topic change,
+and the panel to the cards is the instrument followed by the things it measures. ▶️ **Still open, and
+it needs a rule rather than a value**: proposed as "the gap states the relationship, so a continuation
+takes the smaller value", tightening that one boundary to about the 106px the close uses.
+
+🟢 **B7 was real and is fixed.** `/` opened on a full-bleed film plus the canvas data field; `/kits`
+opened on flat white with **zero** images, canvases or videos, both at 65.6px Newsreader. The type was
+carrying the whole handover. `/kits` now carries **layer 2 of the direction's three, the drifting
+measurement rule** — the one layer nobody had ported. `.f-ruleground` wraps the hero outside `.f-wrap`
+so the ground is full-bleed; verified 1440px wide at left 0, content above at z-index 1, no overflow at
+either width, and reduced motion resolves to `animation-name: none`, which is the direction's own
+static state.
+
+🔴 **It is not data.** Unlike `HeroField`, which draws real range geometry and carries an open CA-045
+question, this is a repeating gradient with no source, so it adds nothing to any packet. That mattered
+to the choice: reusing the homepage film would have spent the homepage's one device on two pages, and
+lifting a kit photograph above the fold would have demoted the price tray and added an above-the-fold
+placement note to a packet that is **unsent and is the merge blocker**.
+
+⚠ **Damped below 900px after looking at it, not before.** The mask holds full strength between 26% and
+62% of the ground's height, and the ground is 646px at 1440 against **1167px at 390** because the hero
+stacks, so the same percentages put ~420px of full-strength ticks behind the lede on a phone and the
+grid started competing with the body copy. `opacity: 0.45` under 900px. Caught only because the mobile
+screenshot was actually looked at; the desktop render gave no hint of it.
+
 ## 🔴 AMBER MEANT TWO OPPOSITE THINGS, AND THE MARKETING ACCENT IS NOW INK (2026-09-03)
 
 **Ruled: saturated colour means a clinical verdict and nothing else.** The status triad owns

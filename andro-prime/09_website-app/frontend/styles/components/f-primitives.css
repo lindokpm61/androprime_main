@@ -1378,6 +1378,57 @@
    /kits (Frame O) primitives. Added 2026-08-30.
    ============================================================================ */
 
+/* ============================================================================
+   THE DRIFTING MEASUREMENT RULE. Layer 2 of the direction's three, and the only
+   one that was never ported: `F-field.html:524`, `.rule-bg > .ticks`.
+
+   It is here to answer a real finding: `/` opens on a full-bleed film with a
+   canvas data field behind 65.6px serif, `/kits` opened on flat white with the
+   same face at the same size, so the TYPE was carrying the entire handover
+   between the two pages and there was no shared texture in either first screen.
+
+   ⚠ TWO HONEST NOTES ABOUT THE PORT. In the direction this is the data field's
+   NO-JS FALLBACK (`.js .rule-bg { display: none }`), not a third simultaneous
+   layer, so using it as `/kits`' ground is a repurposing rather than a port. And
+   it is STATIC there; "drifting" is the brief's word (section 6, "non-photographic
+   motion"), so the animation below is written to that description, not copied.
+
+   Chosen over the two alternatives because it is the only one that costs nothing
+   on the CA-045 packet, which is unsent and is the merge blocker: reusing the
+   homepage film would have spent the homepage's one device on two pages, and
+   lifting a kit photograph above the fold would have demoted the price tray,
+   which is the first thing a first-timer reads. This is 1px hairlines and a
+   translate.
+
+   The ticks are `--hair-2` (ink at 16%) at 0.85, masked to nothing top and
+   bottom, and the drift is one 26px period per 20s, which is 1.3px/s. Seamless
+   because the distance travelled equals the pattern period. */
+.f-ruleground { position: relative; }
+.f-ruleground > * { position: relative; z-index: 1; }
+.f-rulebg {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 62%, transparent 92%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 62%, transparent 92%);
+}
+.f-ticks {
+  position: absolute; left: -60%; top: 0; bottom: 0; width: 220%;
+  background-image: repeating-linear-gradient(90deg, var(--hair-2) 0 1px, transparent 1px 26px);
+  opacity: 0.85;
+  animation: f-tickdrift 20s linear infinite;
+}
+@keyframes f-tickdrift { to { transform: translate3d(26px, 0, 0); } }
+/* Reduced motion lands exactly on the direction's own state: static ticks. */
+@media (prefers-reduced-motion: reduce) { .f-ticks { animation: none; } }
+/* ⚠ DAMPED ON NARROW SCREENS, AND THE REASON IS GEOMETRY RATHER THAN TASTE. The
+   mask holds full strength between 26% and 62% of the ground's height. That
+   ground measures 646px at 1440 and **1167px at 390**, because the hero stacks,
+   so the same percentages put roughly 420px of full-strength ticks directly
+   behind the lede on a phone and the grid starts competing with the body copy.
+   Measured on both, not assumed from the desktop view. The homepage's film has
+   the same shape of exception for the same reason, gating itself off below
+   641px. */
+@media (max-width: 899px) { .f-ticks { opacity: 0.45; } }
+
 .f-herogrid { display: grid; gap: 30px; grid-template-columns: 1fr; }
 @media (min-width: 980px) {
   .f-herogrid { grid-template-columns: 1.35fr 1fr; gap: 44px; align-items: start; }
