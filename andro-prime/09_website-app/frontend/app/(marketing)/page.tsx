@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { KIT_NAMES } from '@/lib/kits/names'
 import { PRICING } from '@/lib/pricing'
 import { SectionRule, Marginalia } from '@/components/marketing/SectionRule'
 import { HeroField } from '@/components/marketing/HeroField'
@@ -185,9 +186,18 @@ const RECORD_STEPS = [
  * the register's evidence line already overstates the existing five, so these
  * two were made easier to clear rather than harder.
  */
+/* 🔴 THE NAMES COME FROM `lib/kits/names.ts`, NOT FROM HERE. This array used to
+   carry its own short titles ("Testosterone", "Energy & Recovery", "Hormone &
+   Recovery") while every other surface said "Testosterone Health Check" and so
+   on: the checkout, the account, the activation flow, the CIO payload, the
+   detail pages' breadcrumbs and `/kits` itself. The homepage was the only
+   dissenter, one click from the page it disagreed with. The three strings have
+   66 hardcoded occurrences across 21 files and the module that calls itself
+   their single source of truth had ONE consumer, so this is the second surface
+   to actually read from it. */
 const KITS = [
   {
-    slug: 'hormone-recovery', title: 'Hormone & Recovery', meta: `Kit 3 · nine markers`,
+    slug: 'hormone-recovery', title: KIT_NAMES['hormone-recovery'], meta: `Kit 3 · nine markers`,
     price: `£${PRICING.KIT_3.rrp}`, lead: true,
     who: 'If you do not know which question it is.',
     photo: '/home/img-3.jpg', cap: 'Five minutes, at home',
@@ -195,7 +205,7 @@ const KITS = [
     lines: ['Testosterone, free T, SHBG, albumin, FAI', 'Vitamin D, active B12, ferritin, hs-CRP'],
   },
   {
-    slug: 'testosterone', title: 'Testosterone', meta: `Kit 1 · five markers`,
+    slug: 'testosterone', title: KIT_NAMES['testosterone'], meta: `Kit 1 · five markers`,
     price: `£${PRICING.KIT_1.rrp}`, lead: false,
     who: 'If the question is testosterone.',
     photo: '/home/img-6.jpg', cap: 'Ordinary Tuesday',
@@ -203,7 +213,7 @@ const KITS = [
     lines: ['Total & free testosterone', 'SHBG, albumin, free androgen index'],
   },
   {
-    slug: 'energy-recovery', title: 'Energy & Recovery', meta: `Kit 2 · four markers`,
+    slug: 'energy-recovery', title: KIT_NAMES['energy-recovery'], meta: `Kit 2 · four markers`,
     price: `£${PRICING.KIT_2.rrp}`, lead: false,
     who: 'If the question is energy and recovery.',
     photo: '/home/img-7.jpg', cap: 'Not bouncing back',

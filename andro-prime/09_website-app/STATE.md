@@ -364,6 +364,50 @@ questions" / "less than a minute" drift (the selector is five steps, wrong on a 
 own pre-flight); "Order" as a CTA label that leads to a product page not a basket; **the two contradictory kit
 recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3).
 
+## 🔴 THE PRODUCT NAMES HAD 66 CALL SITES AND ONE MODULE CLAIMING TO BE THEIR SOURCE (2026-09-03)
+
+Checking the critique's B2 row "the same product is called three different things" found something
+larger underneath it. **`lib/kits/names.ts` declares itself "the single source of truth for slug ->
+display name" and had exactly ONE consumer** (`lib/results/processResult.ts`). The three strings have
+**66 hardcoded literal occurrences across 21 files**: `lib/pricing.ts` (so the checkout), the account
+export and dashboard, the activation flow, `kitCTA.ts`, the three `/lp/*` pages, the detail-page
+breadcrumbs, and `/kits` **twice** — a local `FULL_NAMES` map for the hero panel plus hand-written
+JSX card titles with a manual `<br />`.
+
+Twenty of the twenty-one agreed. **The homepage was the sole dissenter**, calling them
+"Testosterone", "Energy & Recovery" and "Hormone & Recovery" one click from the page saying
+"Testosterone Health Check". `/` and `/kits` now both read from the module; registered as rows 14 and
+15, with row 16 recording the other 19 files so the sweep has a scope. ⚠ **This is the shape where a
+one-string fix would have been actively harmful**: editing the homepage by hand makes 21 copies agree
+and leaves the 22nd free to diverge, and the copies agreeing is precisely what hid this for months.
+
+Two measured side effects, both improvements. Deleting `/kits`' hand-written `<br />` let the full
+names sit on **one** line at 368px, so the cards shrank 574px -> 549px; the break was forcing a wrap
+that was never needed. On `/`, the two narrow cards' heading now takes two lines at 1440 and one at
+390, cards stay equal height, no overflow. `tsc` clean.
+
+**Also fixed, same pass:** `/kits`' three card CTAs said "Order", which was a second label for one
+product set one click apart AND over-promised, since it leads to a product page and not a basket.
+They now say **"Start a baseline"**, the homepage's existing approved label. Measured 131px wide,
+44px tall, fits the card foot beside the price at both 1440 and 390.
+
+**Corrections to the B2 table, none of which change its conclusion:** it is **two** names, not three
+(`/kits`' hero panel and its card both say the long form; only `/` differs). The divergence is **3
+products for 3**, not just Testosterone: the homepage dropped the suffix from all of them, and the
+table singles out one. Homepage card widths measure 561/272, not 549/260, and `/kits` cards were 574
+tall, not 573. Everything else in it verified exactly, including both price components
+(`.f-kprice` 32px/-1.28px against `.f-price` 35.2px/-1.584px).
+
+▶️ **STILL OPEN AND IT IS KEITH'S CALL: the two pages recommend different kits.** `/` gives the solid
+button to Kit 3 alone and orders the cards 3, 1, 2; `/kits` gives solid buttons to Kits 1 and 3,
+ghosts Kit 2, and orders them 1, 2, 3. 🔴 **The two are not even reasoning on the same axis.** The
+homepage's rationale is commercial and is stated in its own h2: "You don't know which question you're
+asking yet", so Kit 3 is the honest default. `/kits`' rationale is written in its code as a VISUAL
+one: "Frame O gives Kit 2 a ghost button and Kits 1 and 3 a solid one, so the middle option is not
+competing with the two it sits between." A layout-balance rule is currently deciding which product
+the business recommends, and it disagrees with the argument the homepage makes thirty seconds
+earlier. That is the thing to rule on, not the button styling.
+
 ## 🟢 KEITH RULED ONE SECTION GRAMMAR, AND THE HOMEPAGE ADOPTED /KITS' (2026-09-03)
 
 The `/kits` critique's P1: `/kits` puts a mono label above every section heading and `/` puts none,

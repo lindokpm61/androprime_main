@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SectionRule } from '@/components/marketing/SectionRule'
+import { KIT_NAMES } from '@/lib/kits/names'
 import {
   ALL_PANEL_MARKER_IDS,
   KIT_PANELS,
@@ -41,11 +42,10 @@ const PRICES: Record<KitType, string> = {
   'hormone-recovery': '£179',
 }
 
-const FULL_NAMES: Record<KitType, string> = {
-  'testosterone': 'Testosterone Health Check',
-  'energy-recovery': 'Energy & Recovery Check',
-  'hormone-recovery': 'Hormone & Recovery Check',
-}
+/* NO LOCAL NAME MAP. `lib/kits/names.ts` calls itself the single source of
+   truth for slug -> display name and had ONE consumer; this page carried its
+   own copy, and a second one in the card titles below. The homepage carried a
+   third that disagreed. Import, never restate. */
 
 const NUMBER_LABEL: Record<KitType, string> = {
   'testosterone': 'Kit 1',
@@ -55,7 +55,6 @@ const NUMBER_LABEL: Record<KitType, string> = {
 
 type KitCard = {
   kit: KitType
-  title: React.ReactNode
   blurb: string
   rightFor: string
   footLabel: string
@@ -111,7 +110,6 @@ type KitCard = {
 const KITS: KitCard[] = [
   {
     kit: 'testosterone',
-    title: <>Testosterone<br />Health Check</>,
     blurb:
       'Your GP told you you’re normal. That’s not the same as good. This test shows exactly where your testosterone sits, including free testosterone and SHBG, which standard GP panels often skip. Results in 2 to 5 working days with a plain-English explanation of what they mean. If the main problem is tiredness, poor recovery or fogginess, Kit 2 is the better fit.',
     rightFor: 'Low drive, stalled training, “not myself” symptoms',
@@ -127,7 +125,6 @@ const KITS: KitCard[] = [
   },
   {
     kit: 'energy-recovery',
-    title: <>Energy &amp;<br />Recovery Check</>,
     blurb:
       'Sore for 3 days after a session that used to take 1. Tired all the time. Joints aching. This test looks at the four markers most likely to explain why: Vitamin D, Active B12 (Holotranscobalamin), inflammation (hs-CRP), and iron stores (Ferritin). If the issue is hormones, Kit 1 or Kit 3 is the better fit.',
     rightFor: 'Fatigue, slow recovery, aching joints, low mood',
@@ -145,7 +142,6 @@ const KITS: KitCard[] = [
   },
   {
     kit: 'hormone-recovery',
-    title: <>Hormone &amp;<br />Recovery Check</>,
     blurb:
       'Nine markers covering hormones, energy, recovery, and inflammation in one kit. The right choice when you are not sure whether the problem is testosterone, deficiency, or both. If there is ambiguity, start here.',
     rightFor: 'Full picture across hormones, energy, and recovery',
@@ -188,7 +184,7 @@ const kitsSchema = {
       itemListElement: ORDER.map((kit, i) => ({
         '@type': 'ListItem',
         position: i + 1,
-        name: `${FULL_NAMES[kit]}: ${PRICES[kit]}`,
+        name: `${KIT_NAMES[kit]}: ${PRICES[kit]}`,
         url: `${BASE_URL}/kits/${kit}`,
       })),
     },
@@ -279,7 +275,7 @@ export default function KitsPage() {
               {ORDER.map((kit) => (
                 <div className="f-prow" key={kit}>
                   <div>
-                    <h3 className="f-prow-t">{FULL_NAMES[kit]}</h3>
+                    <h3 className="f-prow-t">{KIT_NAMES[kit]}</h3>
                     <p className="f-prow-m">
                       {kit === 'hormone-recovery'
                         ? `All ${panelCount(kit)} markers · Full picture`
@@ -440,7 +436,7 @@ export default function KitsPage() {
                   ) : (
                     <span className="f-kchip">{NUMBER_LABEL[k.kit]}</span>
                   )}
-                  <h3>{k.title}</h3>
+                  <h3>{KIT_NAMES[k.kit]}</h3>
                   <p className="f-kwho">{k.who}</p>
 
                   {/* The card's own slice of the instrument above it. */}
@@ -462,7 +458,15 @@ export default function KitsPage() {
                       href={`/kits/${k.kit}`}
                       className={k.ghostCta ? 'f-btn f-btn-sm f-btn-ghost' : 'f-btn f-btn-sm'}
                     >
-                      Order
+                      {/* The homepage's label, not this page's. "Order" promised a
+                          basket and delivers a product page, and it was the second
+                          CTA label for one product set one click apart. Existing
+                          approved copy in a new placement, not new words. The bare
+                          label carries no arrow because "Order" carried none and
+                          every other button on THIS page uses a glyph, not the
+                          homepage's `.f-pip` circle; that divergence is real and is
+                          not this change. */}
+                      Start a baseline
                     </Link>
                   </div>
                 </div>
