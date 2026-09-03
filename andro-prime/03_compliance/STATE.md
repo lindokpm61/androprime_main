@@ -2,7 +2,7 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-_Last updated: 2026-09-02 (🟡 **THE CA-045 PACKET IS RAISED: a Gmail DRAFT to Ewa, nine items
+_Last updated: 2026-09-03 (🔴 **CA-045 SCOPE MOVED AND THE DRAFT HAS NOT CAUGHT UP.** The hero data field behind questions 6 and 7 now renders on `/kits` as well as `/`, so the answer will govern two surfaces while the drafted wording describes one. Same component, same `thresholds.md` source, same illegibility argument; different marker set on the second page, so the "rows the page never shows" asymmetry differs between them. **Free to correct while the packet is unsent, expensive after.** Nobody has re-read q6/q7 against two surfaces yet. Earlier: 🟡 **THE CA-045 PACKET IS RAISED: a Gmail DRAFT to Ewa, nine items
 as seven questions, NOT SENT.** Sending is Keith's act. Draft `r-3136750216544571074`; body and question
 map in `content-approval/ewa-packet-ca-045-homepage-imagery-2026-09-02.md`. Expected answer count is
 **7**, and fewer than seven letters back leaves the rest UNANSWERED. 🔴 **Building it corrected three
@@ -145,6 +145,22 @@ of this question.
 **Routing.** It sits with CA-045 rather than opening its own gate: same surface, same hero, same
 signers (Ewa and Keith), and the register row already covers the film and eight images. Add it to
 that row rather than creating CA-046, unless Ewa asks for it separately.
+
+🔴 **SCOPE CHANGED 2026-09-03: THE FIELD NOW RENDERS ON `/kits` AS WELL AS `/`, SO THIS QUESTION
+COVERS TWO SURFACES AND THE DRAFTED PACKET DESCRIBES ONE.** Keith ruled that the two pages should share
+the homepage's hero effect, because the typeface alone was carrying the handover between them, so
+`/kits` now renders the **same `HeroField` component with the same geometry** (`207d477`, on
+`redesign/direction-f`, which still deploys nothing). Nothing about the question itself changes: same
+component, same `thresholds.md` source, same illegibility argument, same two unshown markers. What
+changes is the **blast radius of the answer** — whatever Ewa rules on questions 6 and 7 now governs the
+kits page too, and `/kits` shows a different marker set from `/`, so the "rows the page never shows"
+asymmetry is not identical on the two surfaces and should be stated as such.
+
+⚠ **This is a scope note owed on the DRAFT before it is sent, not a new question and not CA-046.** The
+packet is still unsent (Gmail draft `r-3136750216544571074`), so the correction is free right now and
+expensive after. Mirrored as row 18 of `09_website-app/redesign-copy-register.md`. **Nobody has
+re-read the drafted q6/q7 wording against two surfaces yet** — that is the specific task, and it is
+Keith's, because sending is his act.
 ## 🔵 CA-045: scope ruled, and the row now covers eight assets (2026-09-01)
 
 **KEITH'S RULING, 2026-09-01: CA-045 governs SHIPPING, not creating.** New imagery may be generated

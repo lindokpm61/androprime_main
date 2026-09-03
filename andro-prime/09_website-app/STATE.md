@@ -359,10 +359,13 @@ on the page measures 130px top / 20px bottom, so panel-to-02 is the standard rhy
 The close was the only genuine double. Any void there is content ending short, which is a judgement,
 not a mechanical fix.
 
-**Still owed from the same critique, and all of it blocked on a decision, not on work:** the "answer 3
-questions" / "less than a minute" drift (the selector is five steps, wrong on a live page, needs its
-own pre-flight); "Order" as a CTA label that leads to a product page not a basket; **the two contradictory kit
-recommendations one click apart** (`/` gives the solid button to Kit 3 alone, `/kits` to Kits 1 and 3).
+**Still owed from the same critique** — and this list is shorter than it was when written earlier the
+same day, so read the entries below it before quoting this one. **Genuinely still owed:** the "answer 3
+questions" / "less than a minute" drift, where the selector is five steps and the wording is wrong on a
+live page; it needs its own copy pre-flight and is register row 7. ✅ **Resolved later the same day, and
+struck here rather than left to mislead:** "Order" as a CTA label became "Start a baseline" (`342eeec`,
+register row 15), and the two contradictory kit recommendations were ruled by Keith and are now one
+recommendation, Kit 3 on both pages (`922dd2b`, register row 17).
 
 ## 🟢 BOTH HEROES NOW RUN THE SAME FIELD, AND GETTING THERE TOOK TWO WRONG ANSWERS AND A SHIPPED BUG (2026-09-03)
 
