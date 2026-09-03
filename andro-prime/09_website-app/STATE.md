@@ -395,6 +395,24 @@ so the ground is full-bleed; verified 1440px wide at left 0, content above at z-
 either width, and reduced motion resolves to `animation-name: none`, which is the direction's own
 static state.
 
+🔴 **THE FIRST PORT HAD THE AXIS WRONG, AND KEITH CAUGHT IT AFTER IT SHIPPED.** The direction draws
+this layer as VERTICAL hairlines, so it was ported vertical. But `HeroField` on `/` draws **horizontal
+gauge rows**, one per 25px, each a full-width track with a lab band, an action band and a marker: the
+readout repeated down the hero as texture. Vertical hairlines at 26px against horizontal rows at 25px
+is the same rhythm rotated 90 degrees, which reads as related-but-wrong rather than as one system, and
+every other instrument in the system is horizontal too. `F-field.html` predates the 2026-09-02 ruling
+that made the measurement device the spine, so **faithfulness to the direction was the weaker
+argument and I took it without checking it against the ruling.** Now horizontal at 0.65, down from
+0.85, because a horizontal line crosses a whole line of text rather than passing between glyphs.
+
+⚠ **The full gauge was rendered and rejected on evidence.** Adding band segments to the rows, which is
+what would make them read as real gauges rather than ruled paper, puts darker segments straight
+through the body copy: "you take at home" and "ISO 15189 accredited lab" both came out struck through.
+The homepage carries the full gauge because its field is at 0.34, its rows fade near the headline by
+distance, and its type sits on a film that already separates it. Here there is no film and the tray
+occludes the right half, so the only visible ground is directly behind the type. **Rendering the
+rejected option is what made the reason legible; describing it would have sounded like caution.**
+
 🔴 **It is not data.** Unlike `HeroField`, which draws real range geometry and carries an open CA-045
 question, this is a repeating gradient with no source, so it adds nothing to any packet. That mattered
 to the choice: reusing the homepage film would have spent the homepage's one device on two pages, and

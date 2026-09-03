@@ -1403,6 +1403,29 @@
    same face at the same size, so the TYPE was carrying the entire handover
    between the two pages and there was no shared texture in either first screen.
 
+   🔴 THE LINES ARE HORIZONTAL, AND THE DIRECTION DRAWS THEM VERTICAL. Keith
+   caught this: `HeroField` on `/` draws HORIZONTAL GAUGE ROWS, one per 25px, each
+   a full-width track carrying a lab band, an action band and a marker, which is
+   the two-range readout repeated down the hero as texture. The first port of this
+   layer used the direction's vertical hairlines at 26px, so the two grounds were
+   the same rhythm rotated 90 degrees and read as related-but-wrong rather than as
+   one system. Every other instrument here is horizontal too: `.f-srule`'s track
+   and needle, `.f-pstrip`, the results bars. `F-field.html` predates the
+   2026-09-02 ruling that made the measurement device the system's spine, so
+   faithfulness to it was the weaker argument.
+
+   ⚠ NO BANDS ON THE ROWS, AND THAT IS MEASURED RATHER THAN CONSERVATIVE. Adding
+   the darker band segments that would make these read as real gauges was rendered
+   and rejected: the segments land on the body copy and read as STRIKETHROUGH,
+   struck straight through "you take at home" and "ISO 15189 accredited lab". The
+   homepage can carry the full gauge because its field sits at 0.34, its rows fade
+   near the headline by distance, and its type sits on a photographic film that
+   already separates it. Here there is no film and the tray occludes the right
+   half, so **the only place this ground is visible at all is directly behind the
+   type**, and anything with structure in it competes with reading. Horizontal
+   takes the axis and the language; the bands are declined for a reason specific
+   to this page, not on taste.
+
    ⚠ TWO HONEST NOTES ABOUT THE PORT. In the direction this is the data field's
    NO-JS FALLBACK (`.js .rule-bg { display: none }`), not a third simultaneous
    layer, so using it as `/kits`' ground is a repurposing rather than a port. And
@@ -1416,9 +1439,12 @@
    which is the first thing a first-timer reads. This is 1px hairlines and a
    translate.
 
-   The ticks are `--hair-2` (ink at 16%) at 0.85, masked to nothing top and
+   The ticks are `--hair-2` (ink at 16%) at 0.65, masked to nothing top and
    bottom, and the drift is one 26px period per 20s, which is 1.3px/s. Seamless
-   because the distance travelled equals the pattern period. */
+   because the distance travelled equals the pattern period. Quieter than the
+   vertical version's 0.85: a horizontal line runs ALONG the reading direction and
+   crosses a whole line of text rather than cutting between glyphs, so the same
+   ink reads heavier here. */
 .f-ruleground { position: relative; }
 .f-ruleground > * { position: relative; z-index: 1; }
 .f-rulebg {
@@ -1427,12 +1453,12 @@
           mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 62%, transparent 92%);
 }
 .f-ticks {
-  position: absolute; left: -60%; top: 0; bottom: 0; width: 220%;
-  background-image: repeating-linear-gradient(90deg, var(--hair-2) 0 1px, transparent 1px 26px);
-  opacity: 0.85;
+  position: absolute; left: 0; width: 100%; top: -60%; height: 220%;
+  background-image: repeating-linear-gradient(0deg, var(--hair-2) 0 1px, transparent 1px 26px);
+  opacity: 0.65;
   animation: f-tickdrift 20s linear infinite;
 }
-@keyframes f-tickdrift { to { transform: translate3d(26px, 0, 0); } }
+@keyframes f-tickdrift { to { transform: translate3d(0, 26px, 0); } }
 /* Reduced motion lands exactly on the direction's own state: static ticks. */
 @media (prefers-reduced-motion: reduce) { .f-ticks { animation: none; } }
 /* ⚠ DAMPED ON NARROW SCREENS, AND THE REASON IS GEOMETRY RATHER THAN TASTE. The

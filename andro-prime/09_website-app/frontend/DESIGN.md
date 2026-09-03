@@ -813,10 +813,30 @@ face on two unrelated grounds, so **the typeface alone was carrying the handover
 shared with every other page cannot say "same site" on its own.
 
 `/kits` now carries **layer 2 of the direction's three, the drifting measurement rule**
-(`F-field.html:524`, `.rule-bg > .ticks`): 1px `--hair-2` hairlines every 26px on a 220%-wide element,
-masked to nothing top and bottom, drifting one 26px period per 20s. Class `.f-ruleground` wraps the
-hero OUTSIDE `.f-wrap`, because constraining a ground to the 1180px measure draws a box with two hard
-edges.
+(`F-field.html:524`, `.rule-bg > .ticks`): 1px `--hair-2` **horizontal** hairlines every 26px at 0.65,
+on a 220%-tall element, masked to nothing top and bottom, drifting one 26px period per 20s. Class
+`.f-ruleground` wraps the hero OUTSIDE `.f-wrap`, because constraining a ground to the 1180px measure
+draws a box with two hard edges.
+
+🔴 **THE AXIS IS HORIZONTAL AND THE DIRECTION DRAWS IT VERTICAL.** `HeroField` on `/` draws
+horizontal gauge ROWS, one per 25px, each a full-width track carrying a lab band, an action band and a
+marker: the two-range readout repeated down the hero as texture. The first port used the direction's
+vertical hairlines at 26px, which made the two grounds the same rhythm rotated 90 degrees, reading as
+related-but-wrong rather than as one system. Every instrument here is horizontal: `.f-srule`'s track
+and needle, `.f-pstrip`, the results bars. `F-field.html` predates the ruling that made the measurement
+device the system's spine, so faithfulness to it was the weaker argument. **Caught by Keith, after the
+faithful port had already shipped.**
+
+⚠ **No bands on the rows, and that is measured rather than conservative.** Adding the darker band
+segments that would make these read as real gauges was rendered and rejected: they land on the body
+copy and read as **strikethrough**, struck straight through "you take at home" and "ISO 15189
+accredited lab". The homepage can carry the full gauge because its field sits at 0.34, its rows fade
+near the headline by distance, and its type sits on a photographic film that already separates it.
+Here there is no film and the tray occludes the right half, so **the only place this ground is visible
+at all is directly behind the type**. Horizontal takes the axis and the language; the bands are
+declined for a reason specific to this page. ⚠ It is also quieter than the vertical version was, 0.65
+against 0.85, because a horizontal line runs ALONG the reading direction and crosses a whole line of
+text rather than passing between glyphs, so the same ink reads heavier.
 
 ⚠ **Three things to know before reusing it.** It is the field's **no-JS fallback** in the direction
 (`.js .rule-bg { display: none }`), not a third simultaneous layer, so this is a repurposing. It is
