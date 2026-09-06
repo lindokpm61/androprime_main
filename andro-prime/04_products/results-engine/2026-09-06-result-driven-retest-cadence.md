@@ -177,6 +177,14 @@ bundle**, so no new sale is triggered by the bad news, and the sample exists **f
 > **A recheck at less than 90 days must be prepaid or included in an existing entitlement.
 > It may never trigger a new sale.**
 
+✅ **ADOPTED 2026-09-07 (Keith).** Recorded in its own dated file,
+`2026-09-07-fast-recheck-must-be-prepaid-or-included.md`, because it was adopted while this
+proposal as a whole is still PROPOSED, and a decision that lives only inside another document's
+body goes stale unnoticed. That file also scopes it: it governs **result-triggered** rechecks of
+an already-tested marker, and deliberately does not touch the complement cross-sell or the
+subscription-anchored seq-04 e5 prompt. It enumerates every live CTA and finds **no current
+violation**.
+
 That points this whole feature at bundles and the membership rather than at the shop. It costs
 revenue in the abstract and it is the version that survives an ASA reading, which is the same
 trade the conflict-free position takes everywhere else.
@@ -188,7 +196,7 @@ trade the conflict-free position takes everywhere else.
 | # | Item | Owner | Blocks |
 |---|---|---|---|
 | 1 | ~~**The anchor**: adopt the result landing as the anchor for every retest date (section 5)~~ ✅ **DONE 2026-09-07, adopted as stated.** Superseded by: the timed-bundle fallback when no result ever arrives (`2026-09-07-anchor-everything-to-the-result.md` §5) | Keith | Building the timed-bundle change |
-| 2 | **The prepaid-or-included constraint** (section 8): adopt or reject | Keith | Whether this feature can ever point at the shop |
+| 2 | ~~**The prepaid-or-included constraint** (section 8): adopt or reject~~ ✅ **ADOPTED 2026-09-07**, `2026-09-07-fast-recheck-must-be-prepaid-or-included.md` | Keith | Nothing. Settled: the feature points at bundles and the membership, never at the shop |
 | 3 | **The reduction ordering** (section 4): GP suppression versus shortest interval, and the low-T carve-out | **Ewa** | The whole-result date on any mixed panel |
 | 4 | Fill the map cell by cell | **Ewa**, via the 2026-07-17 table | Behaviour only, not the build |
 | 5 | Rewrite the 2026-07-17 table's justification before re-sending it | Keith | Item 4 |

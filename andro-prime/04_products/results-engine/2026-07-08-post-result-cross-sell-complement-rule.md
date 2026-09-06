@@ -39,3 +39,13 @@ Also swept (2026-07-08 follow-up): `04_products/kits/kit-3-plus.md` (dated note 
 **Confirmed out of scope (front-of-funnel, not post-result):** `09_website-app/docs/lp-architecture.md` internal-linking (Kit 1/2 → Kit 3 page links — Kit 3 is a valid front-of-funnel product) and `docs/lp-variant-specs.md` (which already lists a "strong Kit 3 upsell" as a thing to AVOID on LPs).
 
 **Out of scope (correctly untouched):** the affiliate "£10 Kit 3 upsell **bonus**" (a PT/influencer commission term, ~40 mentions across commission/financial/affiliate docs) and landing-page "demote the Kit 3 upsell link from hero" CRO notes — neither is post-result routing.
+
+---
+
+> **Companion rule added 2026-09-07 (Keith): `2026-09-07-fast-recheck-must-be-prepaid-or-included.md`.**
+> A **result-triggered recheck** falling under 90 days must be prepaid or included in an
+> entitlement the customer already holds, and may never trigger a new sale. **This rule is
+> explicitly unchanged by it.** A complement cross-sell offers the markers the kit did NOT
+> measure, so it re-tests nothing and is not a recheck; the honest "here is the panel we have
+> not checked" framing stays the compliant pattern. The two rules cover different halves of the
+> same principle: we do not monetise the moment a result lands.
