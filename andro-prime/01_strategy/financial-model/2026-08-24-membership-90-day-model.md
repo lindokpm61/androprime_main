@@ -14,7 +14,7 @@ built before any of this can happen).
 | Assumption | Value | Confidence |
 |---|---|---|
 | Entry kit | Kit 2, GBP 119 retail, **GBP 63.00 COGS** | 🟢 Vitall-quoted |
-| Membership | GBP 49/month, first 30 days included in the kit price | 🟠 Illustrative, not set |
+| Membership | GBP 49/month, first 30 days included in the kit price | 🟢 **The included month is ADOPTED** (Keith, 2026-08-27, `../2026-08-27-first-month-included-in-kit-price.md`). 🔴 **GBP 49 is not the price**: the build carries £47/mo (`lib/subscriptions/products.ts`, adopted for VAT-threshold stability). This model has never been rerun at £47. |
 | Payments in 90 days | Day 30, day 60, day 90 = **3 payments** | 🟢 Arithmetic |
 | Stripe | 1.5% + GBP 0.20 per transaction | 🟢 Standard UK |
 | **Day-30 conversion** | **50%** | 🔴 **A guess, and the single biggest number in this model** |

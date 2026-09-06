@@ -37,6 +37,15 @@ Everything else on this page is a task. This one is a product that has not been 
 | 6 | ~~Credit expiry and rollover (section 9a of the economics doc)~~ 🟢 **CLOSED 2026-08-24: dissolved, not answered.** The benefit is reframed from a credit the member owns to a membership entitlement conditional on being an active member on the stated retest date. No credit, so no expiry policy and no rollover question | Closed. Terms still need drafting, but there is no expiry term to defend |
 | 7 | **How much opening stock**, in months of cover per SKU | First Nutribl order |
 
+> ✅ **RELATED DECISION CLOSED (note added 2026-09-06).** Not a row above, but it lands on
+> rows 2 and 4: **the first 30 days of membership are included in the kit price** (Keith,
+> 2026-08-27, `../01_strategy/2026-08-27-first-month-included-in-kit-price.md`). It changes
+> what row 4 must describe (month one is not a paid month) and it moves the arithmetic
+> under row 2, because £47 was adopted for VAT-threshold stability and a free first month
+> shifts that. **Rows 2, 4 and 5 all remain open.** The build does not implement the
+> included month: there is no trial mechanic in the repo, so this is a launch blocker
+> sitting behind `MEMBERSHIP_ENABLED`.
+
 ## 2. Supply: nothing has been bought and no one has been contacted
 
 | Item | State |

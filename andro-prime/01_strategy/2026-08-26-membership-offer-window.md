@@ -6,6 +6,12 @@
 **Supersedes nothing.** It CLOSES four questions the 2026-08-24 thesis and the
 2026-08-25 adoption left open, listed in section 5.
 
+> ⚠️ **ONE ITEM IN SECTION 6 WAS CLOSED THE NEXT DAY (note added 2026-09-06).** The first
+> bullet of section 6, the free first month, was ruled by Keith on **2026-08-27**: the
+> **first 30 days are included in the kit price**. See
+> `2026-08-27-first-month-included-in-kit-price.md`. Section 6's body is unchanged and still
+> reads as it did on 2026-08-26; the forward-pointer sits with the bullet itself.
+
 ---
 
 ## 1. The decision, in five lines
@@ -97,6 +103,14 @@ Four items previously recorded as undecided:
   in the kit price"*; the build charges £47 from signup and there is no trial
   mechanic. **Still divergent, still undecided.** Keith's mechanic (offer made
   when results land, not at purchase) is compatible with either answer.
+  > ✅ **CLOSED 2026-08-27, forward-pointer added 2026-09-06.** Keith ruled that the
+  > **first 30 days ARE included in the kit price**. The bullet above is left as written
+  > because this is a dated decision record; it was accurate on 2026-08-26 and was
+  > overtaken the next day. Canonical record:
+  > `2026-08-27-first-month-included-in-kit-price.md`. The divergence resolves in favour
+  > of the models, so no forecast moves; **the build is now the side out of step**, and
+  > the three questions the ruling opens (anchor, auto-renew versus opt-in, and what a
+  > free month does to £47) are all still Keith's and all still open.
 - **Kit price under the membership model.** Gap-analysis decision #5, still open.
   The forecast uses Kit 2 at £119 as the paid entry; `04_products` keeps Kit 1
   at £99 as the Phase 0 launch kit.

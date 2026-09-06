@@ -12,6 +12,14 @@
 Kit at GBP 119 (Kit 2, GBP 63.00 COGS) as the paid entry, including the first 30 days of membership.
 Membership at GBP 49/month thereafter. One retest included per year.
 
+> ✅ **The included first month is ADOPTED** (Keith, 2026-08-27):
+> `../2026-08-27-first-month-included-in-kit-price.md`. This forecast assumed it before it
+> was ruled, so **the ruling moves nothing here**; it only converts the assumption into a
+> decision. 🔴 **GBP 49 is still wrong**: the build carries £47/mo
+> (`lib/subscriptions/products.ts`), adopted 2026-08-26 for VAT-threshold stability, and
+> this forecast has never been rerun at £47. A free first month also moves the VAT-threshold
+> arithmetic that £47 was chosen for. Both are open and both are Keith's.
+
 | Assumption | Value | Confidence |
 |---|---|---|
 | Day-30 conversion | 50% | 🔴 Guess |
