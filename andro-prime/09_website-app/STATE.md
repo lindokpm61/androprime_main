@@ -154,20 +154,82 @@ app typecheck 0 errors, `typecheck:scripts` still failing on the same two pre-ex
 
 ---
 
-## ▶️ PICK UP HERE (2026-09-02)
+## ▶️ PICK UP HERE (2026-09-06)
 
-Everything below is committed on `redesign/direction-f`. **The branch deploys nothing and nothing in
-it is live.** A long design session; the homepage is materially different from the one described
-further down this file, so read this block before the older entries.
+**Branch `redesign/direction-f`, HEAD `9fbf8d7`. `main` is at `7ecad99` and was NOT pushed to.**
+The branch deploys nothing; Coolify builds on `main` only, so no deploy has run and nothing here is
+live. Read this block before the older entries: the five F routes are materially different from the
+pages described further down.
 
-### What changed on 2026-09-02, in one list
+### The state in one line
 
-The retired-vocabulary scanner; the conflict-free receipt took the inverted ink panel; the footer
-stopped saying "wellness information service" in both places; amber now means caution only; the
-emptiest bento card; the direction's scroll choreography (36 dead reveals became live ones); a
-measurement device of our own (`.f-srule`, `.f-marg`); prose left its cards, twelve down to five; the
-hero data field; the body rhythm; the captions came off the photographs. DESIGN.md and PRODUCT.md
-were reconciled against all of it on the same day.
+**Six marketing routes are Direction F and all six are CURRENT with each other**: `/`, `/kits`, the
+three kit detail pages, and `/how-it-works`. The rest of the marketing surface is V2.0, which is why
+there is still no dark mode (DESIGN.md gap 1).
+
+### What changed on 2026-09-03 to 09-06
+
+The three kit detail pages caught up with the branch (shared `HeroField` ground, `.f-herogrid`,
+`f-sec-hero`, the `SectionRule` spine on Kits 2 and 3 which had none, the coverage strip,
+slug-matched photographs). Then the impeccable critique at **26/40, consistency scoring 1**, and its
+two P0s: the CA-026 conformity claim took the ink panel on all three kit pages, and every kit page
+got a real price object. The two-range readout now runs on all three. The dead hover lift was fixed
+with `@layer reveal`. The ghost numeral was dropped. Four consistency seams closed: `/kits` 0 to 7
+pips, the last two "Order" labels retired, four unlabelled sections labelled, one price scale across
+all five routes. DESIGN.md, PRODUCT.md and the copy register were reconciled in the same commit.
+
+### 🔴 THREE THINGS ARE OPEN AND EACH NEEDS A DECISION, NOT MORE WORK
+
+**1. Kit 3's sample demonstration is now milder than it was, and nobody chose that.**
+Substance: `redesign-copy-register.md` **row 22**. Kit 2's softening from four-flagged to a mixed
+result was Keith's call on 2026-09-04. Kit 3's followed MECHANICALLY from the lab-normal constraint,
+not from a judgement: Vitamin D 47 to 58 and hs-CRP 2.1 to 0.8, because both old values sat outside
+Vitall's reference interval and **"Lab normal" is the only approved lab-verdict string in the app**.
+Kit 3 now has no Action-needed row at all. **The options are: leave it mild, or restore one flagged
+row.** The only interesting candidate for the second is a Total Testosterone value between 8.64 and
+12, which is lab-normal AND GP-routed, so it states the page's own argument in one row. That is a
+clinical-demonstration decision and belongs to **Ewa**, not to a redraw.
+
+**2. `RelatedArticles` is the last visible seam, and "wait for the blog rebuild" is the wrong answer.**
+Substance: `frontend/DESIGN.md` **gap 4**, rediagnosed 2026-09-06. It is NOT V2.0 drift. It renders
+the blog's own RULED aesthetic in raw utility classes inside a shared component, escaping the
+`.blog-skin` namespace that exists to stop exactly that. Its six call sites span two deliberately
+different worlds: the three F kit pages, two V2.0 supplement pages, and every blog article. So
+restyling it in Direction F would break the blog, where the current look is the ruled one, and strand
+an F component in the supplement pages -- the same seam, moved. **The options are: (a) make it render
+in its HOST's world (a variant prop, or an F wrapper for product surfaces with `ArticleLayout`
+keeping the editorial one), which is correct either way and does not pre-empt anything; or (b) leave
+it until the blog decision.** ⚠ **`blog-F.html` Frame AO covers this component by name, but that
+frame states of ITSELF that it "does not overturn the 2026-08-27 ruling on its own", and that ruling
+stands until Keith rules again.** So this is not simply blocked behind scheduled work. **Option (a)
+does not depend on the blog decision and should not be sequenced behind it.**
+
+**3. CA-045 is still the only merge blocker, and its scope moved AGAIN.**
+See the section below for the packet itself. What changed on 2026-09-06: the `HeroField` layer now
+renders on **five** surfaces, not the two the 2026-09-03 note recorded (register **row 18**), and the
+three added are the pages a reader reaches with intent to buy. Separately, the two-range readout is a
+**new item the packet does not cover** (row 22). Both are commented on ClickUp task `869eur84c`.
+
+### ⚠ Four things that would bite the next session, learned the hard way here
+
+- **A page can be present, recent, self-described as current, and a generation behind.** Each kit
+  page opened with a REBUILT IN DIRECTION F banner that was true when written. The tell was
+  `git log -- <path>` against the branch head. Run that before deciding anything is done.
+- **A blocker is a claim.** One was raised here for Kits 1 and 3 and withdrawn the same day: the
+  ruling already existed in `resolveBarZones` and in the v2 approval record and had been rendering to
+  customers since June. **Read ClickUp before the repo**, and grep for the artefact the file already
+  names.
+- **`fullPage` screenshots do not fire the reveal observers**, so a correct page captures with
+  enormous voids that look like catastrophic failure. Walk the page in ~70% viewport steps first,
+  then query computed opacity after the walk to tell an artefact from a defect.
+- **A comment warning about a bug is not evidence of the bug.** The critique's ghost-numeral overhang
+  finding came from a dead block's warning comment plus a sign error, and the element was contained
+  on all four sides with 18 to 74px of clearance.
+
+### Not committed, deliberately
+
+`.impeccable/critique/` snapshots, `f-primitives.css.broken-2026-09-03`, and the packaging renders and
+`.bak` files from earlier sessions. Ask before adding any of them.
 
 ### 🟡 The merge blocker: the CA-045 packet is RAISED, and is sitting in drafts
 
