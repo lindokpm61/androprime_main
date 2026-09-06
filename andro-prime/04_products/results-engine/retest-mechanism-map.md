@@ -165,3 +165,17 @@ no longer exists.
 **Nothing in this file is a clinical decision and nothing in it changes code.** It
 records what the code does today, so the decisions above can be made against facts
 rather than against four documents written at different times.
+
+---
+
+## 7. A design answer to all of this (added 2026-09-06)
+
+Keith, reading the map: *"a retest can be fired at any time based on the results. If testosterone
+is low, a recheck can be fired within days as opposed to weeks or months."* Correct, and mechanism 1
+is already exactly that. **`2026-09-06-result-driven-retest-cadence.md` proposes generalising it**:
+one exhaustive `Record<ResultState, RetestRule>` that every mechanism in the table above reads from,
+so the cadence becomes a property of the result rather than of whichever mechanism fired.
+
+It closes owed items 1 and 2 in section 6 as a side effect (a result-driven cadence can only be
+anchored to the result, and the membership stops needing a cadence rule of its own). It does NOT
+close item 3, the one-shot.
