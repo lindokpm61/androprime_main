@@ -120,3 +120,33 @@ export function isFlaggedState(state: ResultState): boolean {
 export function anyFlagged(states: readonly ResultState[]): boolean {
   return states.some(isFlaggedState)
 }
+
+/**
+ * The colour a state is drawn in.
+ *
+ * Added 2026-09-06 for the app shell, and it lives HERE for the same reason
+ * `isFlaggedState` does: it is derived from the badge, so a marker cannot be
+ * amber on a track and outlined on its card. The alternative was a fourth list
+ * of "which states are bad", in a component, which is precisely what the header
+ * of this file was written to prevent.
+ *
+ * It keys off the badge LABEL rather than the state, because the label is the
+ * decision that was ratified and the state is an implementation detail. Adding
+ * a state cannot reach this function without first getting a badge, and every
+ * badge label is already accounted for below.
+ */
+export type ResultTone = 'ok' | 'warn' | 'crit' | 'flat'
+
+const TONE_BY_LABEL: Record<string, ResultTone> = {
+  Optimal: 'ok',
+  'In range': 'ok',
+  Monitor: 'warn',
+  'Action Needed': 'crit',
+  'See Your GP': 'crit',
+  // Carries no verdict at all, so it carries no colour either.
+  Reported: 'flat',
+}
+
+export function toneFor(state: ResultState): ResultTone {
+  return TONE_BY_LABEL[badgeFor(state).label] ?? 'flat'
+}

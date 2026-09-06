@@ -3,10 +3,8 @@ import { cookies } from 'next/headers'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getDashboardData } from '@/lib/results/getDashboardData'
 import { isKitScopeNoteEnabled, isGpHandoffEnabled } from '@/lib/flags'
-import { KitTabs } from '@/components/results-engine'
-import { DevFixtureBar } from '@/components/results-engine'
+import { DevFixtureBar, ResultsReadyView } from '@/components/results-engine'
 import { PasswordBanner } from '@/components/app/PasswordBanner'
-import { Logo } from '@/components/shared/Logo'
 import type { PreResultsOrderStatus, KitType } from '@/lib/results/types'
 import { urlFor } from '@/lib/hosts'
 import { numberWord, panelCount, panelSentenceList } from '@/lib/kits/panel'
@@ -328,96 +326,32 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
   const showHandoffLink = isGpHandoffEnabled() && hasGpReferral
 
   return (
-    <div className="bg-white min-h-[calc(100vh-5rem)]">
-      {showPasswordBanner && <PasswordBanner />}
-
-      {/* Status strip: static (one restrained live cue, no scroll) */}
-      <div className="w-full bg-black text-white h-8 flex items-center justify-between px-6 border-b-4 border-black">
-        <div className="flex items-center gap-3">
-          <span className="w-2 h-2 bg-white animate-pulse motion-reduce:animate-none" aria-hidden />
-          <span className="font-mono text-[11px] font-bold uppercase tracking-[0.15em]">Report generated</span>
-        </div>
-        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] hidden sm:block">
-          Analysis complete
-        </span>
-      </div>
-
-      <div className="flex min-h-[calc(100vh-5rem-2rem)]">
-
-        {/* Left sidebar */}
-        <aside className="hidden md:flex md:w-[25%] lg:w-[30%] xl:w-[28%] border-r-4 border-black bg-white flex-col sticky top-20 self-start h-[calc(100vh-5rem)]">
-          <div className="p-6 lg:p-8 xl:p-10 flex-1 flex flex-col overflow-y-auto">
-            {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
-
-            <div className="inline-flex items-center gap-3 px-4 py-2 border-2 border-black mb-8 w-max">
-              <span className="w-2 h-2 bg-black" />
-              <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase">
-                Report Generated
-              </span>
-            </div>
-
-            <h1 className="font-black font-sans text-black uppercase tracking-tighter leading-[0.85] mb-6" style={{ fontSize: 'clamp(2.5rem, 4vw, 4rem)' }}>
-              Your<br />Results
-            </h1>
-
-            <p className="font-serif text-base leading-relaxed border-l-4 border-black pl-4 mb-8">
-              We've processed your latest blood panel. Review your personalised biomarker insights
-              and what they mean for you.
-            </p>
-
-            <div className="mt-auto pt-8 border-t-2 border-black">
-              <Logo variant="dark" mark className="h-20 w-auto" />
-            </div>
-          </div>
-        </aside>
-
-        {/* Right content */}
-        <div className="w-full md:w-[75%] lg:w-[70%] xl:w-[72%] flex flex-col bg-white">
-          {/* kitScopeNote flag read server-side (KitTabs is a client component)
-              so it can be toggled without a rebuild, matching the dark-launch
-              pattern. Default OFF: KitTabs renders identically. Pending the
-              compliance pre-flight on the note wording (F5). */}
-          <KitTabs kits={data.kits} showKitScopeNote={isKitScopeNoteEnabled()} />
-
-          {/* GP handoff link (dark). Rendered above the footer when a result
-              routes to a GP referral and GP_HANDOFF_ENABLED is on. */}
-          {showHandoffLink && (
-            <div className="bg-gray-50 border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-              <div className="max-w-2xl">
-                <div className="font-mono text-xs font-bold tracking-[0.15em] uppercase mb-2">
-                  Taking this to your GP?
-                </div>
-                <p className="font-serif text-sm text-gray-600">
-                  Prepare a one-page summary of your results, with the reference
-                  ranges and questions to ask, that you can print or save as a PDF.
-                </p>
+    <ResultsReadyView
+      kits={data.kits}
+      showKitScopeNote={isKitScopeNoteEnabled()}
+      banner={showPasswordBanner ? <PasswordBanner /> : null}
+      sidebarTop={process.env.NODE_ENV !== 'production' ? <DevFixtureBar currentScenario={dev} /> : null}
+      belowTabs={
+        showHandoffLink ? (
+          <div className="bg-gray-50 border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div className="max-w-2xl">
+              <div className="font-mono text-xs font-bold tracking-[0.15em] uppercase mb-2">
+                Taking this to your GP?
               </div>
-              <a
-                href="/results-dashboard/handoff"
-                className="shrink-0 inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
-              >
-                Prepare GP summary
-              </a>
+              <p className="font-serif text-sm text-gray-600">
+                Prepare a one-page summary of your results, with the reference
+                ranges and questions to ask, that you can print or save as a PDF.
+              </p>
             </div>
-          )}
-
-          <footer className="bg-white border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-            <p className="font-mono text-xs font-bold tracking-[0.15em] uppercase">
-              Questions about your results?{' '}
-              <a
-                href="mailto:support@andro-prime.com"
-                className="underline hover:bg-black hover:text-white transition-colors px-1 ml-1"
-              >
-                Speak to our team
-              </a>
-            </p>
-            <div className="flex gap-8 font-mono text-xs font-bold tracking-[0.15em] uppercase" style={{ color: 'var(--color-gray-500)' }}>
-              <span>UKAS ISO 15189 accredited lab</span>
-            </div>
-          </footer>
-        </div>
-
-      </div>
-    </div>
+            <a
+              href="/results-dashboard/handoff"
+              className="shrink-0 inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
+            >
+              Prepare GP summary
+            </a>
+          </div>
+        ) : null
+      }
+    />
   )
 }

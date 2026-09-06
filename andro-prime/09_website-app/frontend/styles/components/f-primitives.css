@@ -2339,7 +2339,18 @@
 .f-bio .f-kithead { align-items: center; }
 .f-bio p { margin-top: 6px; }
 .f-bio .f-ticks li { font-size: 13px; }
-.f-bio .f-btn { width: 100%; }
+/* 🔴 SCOPED TO THE KIT MINI-CARD, NOT TO EVERY `.f-bio` (narrowed 2026-09-06).
+   The comment above says "on this page" and the selector said "on every page":
+   `.f-bio .f-btn { width: 100% }` made a full-bleed pill the default for any
+   button in any `.f-bio` anywhere. It went unnoticed while `/how-it-works` was
+   the only surface pairing the two, and it surfaced the moment `RelatedArticles`
+   grew an F variant on the same primitive -- three "Read the guide" links came
+   out as full-width pills, which is a transaction card's weight on an editorial
+   link, sitting immediately before the buy CTA.
+   `:has(.f-kithead)` is the honest test, because the price-and-chip head is what
+   actually makes one of these a kit card. Same technique as `.f-btn:has(.f-pip)`
+   above. A `.f-bio` without it keeps the button at content width. */
+.f-bio:has(.f-kithead) .f-btn { width: 100%; }
 
 /* Quote card, on the inverted panel. */
 .f-quotecard {

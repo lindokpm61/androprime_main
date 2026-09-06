@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { HeroField } from '@/components/marketing/HeroField'
 import { SectionRule } from '@/components/marketing/SectionRule'
 import { KIT_NAMES } from '@/lib/kits/names'
+import { SIZES_KGRID } from '@/lib/ui/image-sizes'
 import {
   ALL_PANEL_MARKER_IDS,
   KIT_PANELS,
@@ -466,7 +467,7 @@ export default function KitsPage() {
                   className="f-shot f-shot-r16"
                   style={{ '--focal': k.focal } as React.CSSProperties}
                 >
-                  <Image src={k.photo} alt={k.alt} width={800} height={500} />
+                  <Image src={k.photo} alt={k.alt} width={800} height={500} sizes={SIZES_KGRID} />
                 </div>
                 <span className="f-shot-cap">{k.cap}</span>
                 <div className="f-kbody">

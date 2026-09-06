@@ -27,6 +27,9 @@ export type ScenarioName =
   | 'multi-deficiency'
   | 'multi-deficiency-energy'
   | 'kit3-low-t-plus-vitamin-d-and-b12'
+  // The public demo's headline result: the man the homepage readout already
+  // shows. See `fixtures/demo-kit3-split.ts` and `lib/results/demo.ts`.
+  | 'demo-kit3-split'
 
 export interface SingleResult {
   resultId: string

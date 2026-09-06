@@ -10,6 +10,7 @@ import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
 import { KIT_NAMES } from '@/lib/kits/names'
 import { PRICING } from '@/lib/pricing'
+import { SIZES_BENTO_5 } from '@/lib/ui/image-sizes'
 import { ALL_PANEL_MARKER_IDS, KIT_PANELS, panelCount } from '@/lib/kits/panel'
 
 /*
@@ -566,6 +567,7 @@ export default function KitEnergyRecoveryPage() {
                   alt="A man in his early forties sitting on the bottom stair of a hallway after a run, still in running kit, catching his breath."
                   width={800}
                   height={600}
+                  sizes={SIZES_BENTO_5}
                 />
               </div>
               <span className="f-shot-cap">Not bouncing back</span>
@@ -740,7 +742,11 @@ export default function KitEnergyRecoveryPage() {
         </div>
       ) : (
         <>
+          {/* `variant="f"` since 2026-09-06. See the note on the same call in
+              `/kits/testosterone`: the component renders in its host's world now
+              and the host declares which world that is. */}
           <RelatedArticles
+            variant="f"
             slugs={['why-am-i-always-tired', 'crp-blood-test', 'low-vitamin-d-symptoms', 'inflammatory-markers-blood-test', '14-signs-of-vitamin-d-deficiency']}
             intro="The markers behind low energy and slow recovery, explained in plain English."
           />

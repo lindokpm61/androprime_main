@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { panelCardLabels } from '@/lib/kits/panel'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { HeroField } from '@/components/marketing/HeroField'
+import { SectionRule } from '@/components/marketing/SectionRule'
+import { SIZES_HEROGRID } from '@/lib/ui/image-sizes'
 
 /**
  * /how-it-works, rebuilt in Direction F on 2026-08-30 from
@@ -23,6 +27,21 @@ import { JsonLd } from '@/components/shared/JsonLd'
  */
 
 const BASE_URL = 'https://andro-prime.com'
+
+/* THE ARROW IS THE PIP, NOT A GLYPH, since 2026-09-06 -- the same change `/kits`
+   took the same day, and this page was the last route still carrying the bare
+   character. It had three: both hero CTAs' sibling on `/kits` and `/` render the
+   circled pip, so an identical label one click apart was drawn two ways. */
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
+
+/* THE SPINE. Eight numbered sections, hero and closing CTA excluded per the
+   homepage's convention. `/how-it-works` had THIRTEEN sections and zero position
+   markers while every sibling route carried the readout's own track as its
+   section opener, so it was the one F page a reader crossed into with no sense
+   of where they were. Counted once here rather than typed eight times: an
+   `of={8}` that disagrees with the number of call sites is a position indicator
+   that lies, and nothing would catch it. */
+const SECTIONS = 8
 
 const howItWorksSchema = {
   '@context': 'https://schema.org',
@@ -189,31 +208,97 @@ export default function HowItWorksPage() {
       {/* ---------- HERO ----------
           f-sec-hero, not plain f-sec: this hero is not viewport-height, so it
           gives back its top padding while the consent banner is up. Without it
-          both hero CTAs sat 83% under the banner at 390. */}
-      <section className="f-wrap f-sec f-sec-hero">
-        <div className="f-rise">
-          <div className="f-btns" style={{ marginBottom: 18 }}>
-            <span className="f-eyebrow">Methodology</span>
-            <span className="f-kchip">5 minutes. No GP needed.</span>
+          both hero CTAs sat 83% under the banner at 390.
+
+          THE GROUND, added 2026-09-06, and it is the SAME `HeroField` the other
+          five F routes run rather than a texture that resembles it. This page was
+          the sixth F route and the only one still opening on flat white, which is
+          the exact defect fixed on the three kit pages on 2026-09-03: the two
+          pages that link here open on the field, so the typeface alone was
+          carrying the handover.
+
+          It is full-bleed, so `.f-ruleground` sits OUTSIDE `.f-wrap`, and only the
+          `<section>` is lifted, because the stylesheet rule is
+          `.f-ruleground > section` and `.f-field` sets its own absolute position
+          and z-index.
+
+          ⚠ CA-045 q6/q7 are open against this layer and now cover SIX surfaces
+          rather than five. See `lib/home/fieldRows.ts` and register row 18. */}
+      <div className="f-ruleground">
+        <HeroField />
+        <section className="f-wrap f-sec f-sec-hero">
+          {/* `.f-herogrid`, matching the other five heroes. Four of them put the
+              sample readout in the right column; this page has no readout to put
+              there and had nothing at all, so the column was the natural home for
+              the photograph this route was missing. */}
+          <div className="f-herogrid f-rise">
+            <div>
+              <div className="f-btns" style={{ marginBottom: 18 }}>
+                <span className="f-eyebrow">Methodology</span>
+                <span className="f-kchip">5 minutes. No GP needed.</span>
+              </div>
+              <h1 className="f-h1">
+                Order.<br />Test.<br /><span className="f-grey">Know.</span>
+              </h1>
+              <p className="f-stand" style={{ marginTop: 20 }}>
+                A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results
+                are in your dashboard in 2 to 5 working days. In plain English, with a specific
+                recommendation based on your actual numbers.
+              </p>
+              <div className="f-btns" style={{ marginTop: 26 }}>
+                <Link href="/kits" className="f-btn">
+                  Choose your test {ARROW}
+                </Link>
+                <Link href="/test-selector" className="f-btn f-btn-ghost">
+                  Take the quiz
+                </Link>
+              </div>
+            </div>
+
+            {/* THE PAGE'S ONE PHOTOGRAPH, `img-8`, generated 2026-09-06.
+                `/how-it-works` was the only F route with zero photographs while
+                the other five carry one to five, so it read as a different site.
+
+                🔴 IT IS A NEW ASSET AND IT GOES ON THE CA-045 REGISTER. Every
+                previous addition avoided the gate by matching an existing image
+                by slug; there is no slug here and none of the seven fits, so this
+                one genuinely adds a tenth item to a packet that is still an
+                UNSENT DRAFT. Adding it now is free and adding it after the packet
+                goes is not: `03_compliance/STATE.md` says exactly that about the
+                q6/q7 scope change.
+
+                WHY THIS SUBJECT. The seven existing photographs are all a man in
+                a domestic setting, and the packet's questions 3 and 4 are both
+                "does an ordinary man beside tiredness copy imply he is unwell".
+                An eighth man would inherit that question. A postbox has no
+                person, no hands, no clinic, no blood and no sample in frame, so
+                it opens no judgement the packet is already asking, and it draws
+                the one step in the process ("post it back") that has no picture
+                anywhere on the site. The standfirst beside it already says
+                "a pre-paid envelope".
+
+                `--focal` is set rather than defaulted, per the ruling written the
+                day two portraits were decapitated: the 4:3 crop of a 4:3 source
+                is neutral today, but the field is required so the next reshape
+                cannot silently centre it. */}
+            <div className="f-plate">
+              <div
+                className="f-shot f-shot-r43"
+                style={{ '--focal': '50% 55%' } as React.CSSProperties}
+              >
+                <Image
+                  src="/home/img-8.jpg"
+                  alt="A traditional red pillar-box postbox on an ordinary British residential street early on an overcast morning, with a plain white envelope part-way into the letter slot."
+                  width={800}
+                  height={600}
+                  sizes={SIZES_HEROGRID}
+                />
+              </div>
+              <span className="f-shot-cap">Any postbox, any morning</span>
+            </div>
           </div>
-          <h1 className="f-h1">
-            Order.<br />Test.<br /><span className="f-grey">Know.</span>
-          </h1>
-          <p className="f-stand" style={{ marginTop: 20 }}>
-            A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results
-            are in your dashboard in 2 to 5 working days. In plain English, with a specific
-            recommendation based on your actual numbers.
-          </p>
-          <div className="f-btns" style={{ marginTop: 26 }}>
-            <Link href="/kits" className="f-btn">
-              Choose your test <span aria-hidden="true">&#8594;</span>
-            </Link>
-            <Link href="/test-selector" className="f-btn f-btn-ghost">
-              Take the quiz
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/*
         ---------- TRUST BAR ----------
@@ -234,6 +319,7 @@ export default function HowItWorksPage() {
 
       {/* ---------- FOUR STEPS ---------- */}
       <section className="f-wrap f-sec">
+        <SectionRule n={1} of={SECTIONS} />
         <p className="f-blab">The process</p>
         <h2 className="f-h2">Four steps.<br /><span className="f-grey">Done in a week.</span></h2>
         <p className="f-sub" style={{ marginTop: 12 }}>
@@ -241,7 +327,7 @@ export default function HowItWorksPage() {
           within 2 to 5 working days of the lab receiving it.
         </p>
 
-        <div className="f-steps" style={{ marginTop: 24 }}>
+        <div className="f-steps f-rise" style={{ marginTop: 24 }}>
           {steps.map((s) => (
             <div className="f-step" key={s.num}>
               <span className="f-no">{s.num}</span>
@@ -258,7 +344,8 @@ export default function HowItWorksPage() {
 
       {/* ---------- THE LAB ---------- */}
       <section className="f-wrap f-sec">
-        <div className="f-splitgrid">
+        <SectionRule n={2} of={SECTIONS} />
+        <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">The lab</p>
             <h2 className="f-h2">UKAS-accredited.<br />Not a device.<br /><span className="f-grey">An actual lab.</span></h2>
@@ -302,10 +389,11 @@ export default function HowItWorksPage() {
 
       {/* ---------- DASHBOARD ---------- */}
       <section className="f-wrap f-sec">
+        <SectionRule n={3} of={SECTIONS} />
         <p className="f-blab">Your dashboard</p>
         <h2 className="f-h2">Not a lab report.<br /><span className="f-grey">An actual answer.</span></h2>
 
-        <div className="f-tray" style={{ marginTop: 22 }}>
+        <div className="f-tray f-rise" style={{ marginTop: 22 }}>
           <div className="f-core">
             <div className="f-numlist">
               {dashboardSteps.map(({ n, title, desc }) => (
@@ -324,6 +412,7 @@ export default function HowItWorksPage() {
 
       {/* ---------- THREE KITS ---------- */}
       <section className="f-wrap f-sec">
+        <SectionRule n={4} of={SECTIONS} />
         <p className="f-blab">The three kits</p>
         <h2 className="f-h2">Start with what&rsquo;s bothering you most.</h2>
         <p className="f-sub" style={{ marginTop: 12 }}>
@@ -331,7 +420,7 @@ export default function HowItWorksPage() {
           right? Take the quiz.
         </p>
 
-        <div className="f-bios" style={{ marginTop: 24 }}>
+        <div className="f-bios f-rise" style={{ marginTop: 24 }}>
           {KITS.map((k) => (
             <div className="f-bio" key={k.slug}>
               <div className="f-kithead" style={{ marginBottom: 4 }}>
@@ -349,8 +438,14 @@ export default function HowItWorksPage() {
                   </li>
                 ))}
               </ul>
+              {/* "START A BASELINE", NOT "ORDER KIT N", 2026-09-06. The 2026-09-06
+                  pass retired the last two "Order" labels on `/kits`; these three
+                  were the ones nobody counted, on a third page pointing at the
+                  same destination. `/` and `/kits` both say "Start a baseline" for
+                  this link, so this is existing live copy in a new placement
+                  rather than new copy. Logged in `redesign-copy-register.md`. */}
               <Link href={`/kits/${k.slug}`} className="f-btn f-btn-sm f-btn-ghost" style={{ marginTop: 18, justifyContent: 'center' }}>
-                Order {k.number}
+                Start a baseline {ARROW}
               </Link>
             </div>
           ))}
@@ -358,14 +453,15 @@ export default function HowItWorksPage() {
 
         <div className="f-btns" style={{ marginTop: 20 }}>
           <Link href="/test-selector" className="f-btn f-btn-ghost f-btn-sm">
-            Not sure? Take the quiz <span aria-hidden="true">&#8594;</span>
+            Not sure? Take the quiz {ARROW}
           </Link>
         </div>
       </section>
 
       {/* ---------- AFTER YOUR RESULTS ---------- */}
       <section className="f-wrap f-sec">
-        <div className="f-splitgrid">
+        <SectionRule n={5} of={SECTIONS} />
+        <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">After your results</p>
             <h2 className="f-h2">The result is the start.<br /><span className="f-grey">Not the end.</span></h2>
@@ -404,7 +500,8 @@ export default function HowItWorksPage() {
         without a compliance pre-flight.
       */}
       <section className="f-wrap f-sec">
-        <div className="f-splitgrid">
+        <SectionRule n={6} of={SECTIONS} />
+        <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">Where we stand</p>
             <p className="f-stand" style={{ marginTop: 12, fontSize: 'clamp(1.25rem, 2.4vw, 1.7rem)' }}>
@@ -431,7 +528,11 @@ export default function HowItWorksPage() {
 
       {/* ---------- DR EWA ---------- */}
       <section className="f-wrap f-sec">
-        <div className="f-invert">
+        <SectionRule n={7} of={SECTIONS} />
+        {/* This page's ONE inverted panel, and DESIGN.md names this block as where
+            it spends it. Check that list before adding a second: the constraint is
+            per page and a second one silently costs the first its weight. */}
+        <div className="f-invert f-rise">
           <div className="f-splitgrid">
             <div>
               <p className="f-blab f-invert-lab">Clinical oversight</p>
@@ -471,10 +572,11 @@ export default function HowItWorksPage() {
 
       {/* ---------- FAQ ---------- */}
       <section className="f-wrap f-sec">
+        <SectionRule n={8} of={SECTIONS} />
         <p className="f-blab">Common questions</p>
         <h2 className="f-h2">Before you order.</h2>
 
-        <div className="f-faqgrid" style={{ marginTop: 22 }}>
+        <div className="f-faqgrid f-rise" style={{ marginTop: 22 }}>
           {faqItems.map(({ q, a }) => (
             <div key={q}>
               <h3>{q}</h3>
@@ -486,7 +588,7 @@ export default function HowItWorksPage() {
 
       {/* ---------- CLOSE ---------- */}
       <section className="f-wrap f-sec">
-        <div className="f-close">
+        <div className="f-close f-rise">
           <p className="f-blab">Ready when you are</p>
           <h2>Order. Test. Know.</h2>
           <p className="f-sub" style={{ margin: '0 auto' }}>
@@ -494,7 +596,7 @@ export default function HowItWorksPage() {
           </p>
           <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
             <Link href="/kits" className="f-btn">
-              See the tests <span aria-hidden="true">&#8594;</span>
+              See the tests {ARROW}
             </Link>
             <Link href="/test-selector" className="f-btn f-btn-ghost">
               Use the selector

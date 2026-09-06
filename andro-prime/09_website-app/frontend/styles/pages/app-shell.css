@@ -1,0 +1,290 @@
+/* ============================================================================
+   THE APP SHELL: the prototype's presentation layer, as real CSS.
+   Built 2026-09-06 from `design/prototypes/demo-account-interactive.html`.
+
+   WHAT THIS IS AND IS NOT. The prototype is the thesis of what is currently
+   offered, drawn as a phone. Its DATA was transcribed from `classifier.ts` and
+   could not stay current; its PRESENTATION is the part worth keeping, and this
+   file is that part rebuilt so the live engine drives it.
+
+   🔴 THE CENTRAL DEVICE IS THE TRACK, AND IT DRAWS TWO RANGES AT ONCE.
+   The coloured fill is OUR action bands (`ClassifiedResult.displayZones`). The
+   bracket underneath it is the LABORATORY's reference interval
+   (`referenceLow`/`referenceHigh`). Everything the business argues is in the
+   gap between those two marks, so they are deliberately drawn as different
+   kinds of object -- fill against outline -- rather than as two coloured bars a
+   reader has to be told apart.
+
+   🔴 EVERY TOKEN IS SCOPED UNDER `.ap-shell`. The prototype ships a full
+   light/dark token block at `:root` and defaults to DARK. The live site has no
+   dark mode and DESIGN.md already records a criticism of a ported dark
+   treatment, so `:root` is left alone and these live on the container. Dark is
+   a `[data-ap-theme="dark"]` block below rather than a rebuild, so turning it
+   on is a decision and not a project.
+   ============================================================================ */
+
+.ap-shell {
+  --ap-paper: #ffffff;
+  --ap-tray: #f1f2f4;
+  --ap-core: #ffffff;
+  --ap-sunk: #e7e9ec;
+  --ap-ink: #0a0b0d;
+  --ap-ink-2: #4a4f57;
+  --ap-ink-3: #6b7078;
+  --ap-hair: rgba(10, 11, 13, 0.1);
+  --ap-hair-2: rgba(10, 11, 13, 0.16);
+  --ap-ok: #059669;
+  --ap-warn: #d97706;
+  --ap-crit: #b91c1c;
+  --ap-ok-f: rgba(5, 150, 105, 0.18);
+  --ap-warn-f: rgba(217, 119, 6, 0.3);
+  --ap-crit-f: rgba(185, 28, 28, 0.22);
+  --ap-flat-f: rgba(10, 11, 13, 0.07);
+  --ap-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ap-r: 28px;
+  --ap-r-in: 22px;
+
+  background: var(--ap-tray);
+  color: var(--ap-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.ap-shell[data-ap-theme='dark'] {
+  --ap-paper: #0a0b0d;
+  --ap-tray: #141619;
+  --ap-core: #1a1d21;
+  --ap-sunk: #0e1013;
+  --ap-ink: #f5f6f7;
+  --ap-ink-2: #b9bdc4;
+  --ap-ink-3: #969ba3;
+  --ap-hair: rgba(245, 246, 247, 0.11);
+  --ap-hair-2: rgba(245, 246, 247, 0.18);
+  --ap-ok: #34d399;
+  --ap-warn: #fbbf24;
+  --ap-crit: #f87171;
+  --ap-ok-f: rgba(52, 211, 153, 0.2);
+  --ap-warn-f: rgba(251, 191, 36, 0.3);
+  --ap-crit-f: rgba(248, 113, 113, 0.26);
+  --ap-flat-f: rgba(245, 246, 247, 0.09);
+}
+
+/* ---------- the screen ---------- */
+.ap-screen { padding: 18px 16px 26px; }
+.ap-screen__head { margin-bottom: 18px; }
+.ap-screen__title {
+  font-size: 22px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+  color: var(--ap-ink); margin: 0;
+}
+.ap-lbl {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ap-ink-3); font-weight: 500;
+}
+.ap-group { margin-top: 22px; }
+.ap-group > .ap-lbl { display: block; margin-bottom: 10px; }
+
+/* ---------- the marker row ----------
+   Three columns, and the middle one is fixed so every value in the list shares
+   a decimal alignment. A list of numbers that do not line up is a list the eye
+   has to read one row at a time. */
+.ap-row {
+  width: 100%; display: grid; grid-template-columns: 1fr 84px 16px;
+  gap: 9px; align-items: center; text-align: left;
+  background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: 16px;
+  padding: 13px 14px; margin-bottom: 7px; cursor: pointer;
+  font-family: inherit; color: inherit;
+  transition: border-color 0.2s var(--ap-ease);
+}
+.ap-row:hover { border-color: var(--ap-hair-2); }
+.ap-row:focus-visible { outline: 2px solid var(--ap-ink); outline-offset: 2px; }
+.ap-row__name { font-size: 14px; font-weight: 600; line-height: 1.25; }
+.ap-row__verdict {
+  display: block; font-family: var(--font-mono), ui-monospace, monospace;
+  font-size-adjust: none; font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 700; margin-top: 4px;
+}
+.ap-row__verdict[data-tone='ok'] { color: var(--ap-ok); }
+.ap-row__verdict[data-tone='warn'] { color: var(--ap-warn); }
+.ap-row__verdict[data-tone='crit'] { color: var(--ap-crit); }
+.ap-row__verdict[data-tone='flat'] { color: var(--ap-ink-3); }
+.ap-row__val {
+  text-align: right; font-family: var(--font-mono), ui-monospace, monospace;
+  font-size-adjust: none; font-size: 15px; font-weight: 700; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.ap-row__unit { display: block; font-size: 9px; font-weight: 400; color: var(--ap-ink-3); margin-top: 2px; }
+.ap-chev { display: grid; place-items: center; color: var(--ap-ink-3); }
+.ap-chev svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; }
+
+/* ---------- the track ----------
+   Fill is ours, bracket is the laboratory's. See the file header. */
+.ap-track { position: relative; height: 15px; border-radius: 5px; background: var(--ap-sunk); overflow: hidden; margin-top: 2px; }
+.ap-zone { position: absolute; top: 0; bottom: 0; transition: background 0.3s var(--ap-ease); }
+.ap-zone[data-tone='ok'] { background: var(--ap-ok-f); }
+.ap-zone[data-tone='warn'] { background: var(--ap-warn-f); }
+.ap-zone[data-tone='crit'] { background: var(--ap-crit-f); }
+.ap-zone[data-tone='flat'] { background: var(--ap-flat-f); }
+.ap-zone[data-hidden='true'] { background: transparent; }
+
+.ap-pin {
+  position: absolute; top: 50%; width: 16px; height: 16px; margin-left: -8px;
+  transform: translateY(-50%); border-radius: 50%;
+  background: var(--ap-core); border: 4px solid var(--ap-warn);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+  transition: left 0.35s var(--ap-ease), border-color 0.3s var(--ap-ease);
+}
+.ap-pin[data-tone='ok'] { border-color: var(--ap-ok); }
+.ap-pin[data-tone='crit'] { border-color: var(--ap-crit); }
+.ap-pin[data-tone='flat'] { border-color: var(--ap-ink-2); }
+/* Report-only markers get a hollow pin: a number with no verdict behind it. */
+.ap-pin[data-hollow='true'] { background: transparent; border-style: dashed; border-color: var(--ap-ink-2); }
+
+.ap-labrow { position: relative; height: 11px; margin-top: 4px; }
+.ap-brk { position: absolute; top: 3px; height: 6px; border: 1.5px solid var(--ap-ink-3); border-top: none; }
+
+.ap-scale { position: relative; height: 14px; margin-top: 3px; }
+.ap-scale s {
+  position: absolute; text-decoration: none; transform: translateX(-50%);
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; color: var(--ap-ink-3); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ap-scale s[data-edge='l'] { transform: none; }
+.ap-scale s[data-edge='r'] { transform: translateX(-100%); }
+.ap-scale s[data-hard='true'] { color: var(--ap-ink); font-weight: 700; }
+
+.ap-legend { display: flex; flex-wrap: wrap; gap: 6px 13px; margin-top: 14px; }
+.ap-legend div {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 8.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ap-ink-3);
+}
+.ap-sw { width: 18px; height: 9px; border-radius: 2px; flex: none; }
+.ap-sw[data-tone='ok'] { background: var(--ap-ok-f); }
+.ap-sw[data-tone='warn'] { background: var(--ap-warn-f); }
+.ap-sw[data-tone='crit'] { background: var(--ap-crit-f); }
+.ap-sw[data-kind='brk'] { width: 18px; height: 6px; border: 1.5px solid var(--ap-ink-3); border-top: none; border-radius: 0; background: none; }
+.ap-sw[data-kind='ring'] { width: 12px; height: 12px; border-radius: 50%; border: 2px dashed var(--ap-ink-2); background: transparent; }
+
+/* ---------- marker detail ---------- */
+.ap-card { background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: var(--ap-r-in); padding: 17px 16px; margin-bottom: 11px; }
+.ap-bigval { display: flex; align-items: baseline; gap: 4px; margin: 8px 0 4px; }
+.ap-bigval b {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-weight: 700; font-size: 44px; letter-spacing: -0.045em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.ap-bigval span { font-size: 13px; color: var(--ap-ink-3); }
+.ap-badge {
+  display: inline-block; font-family: var(--font-mono), ui-monospace, monospace;
+  font-size-adjust: none; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 700; border-radius: 999px; padding: 7px 13px; border: 1.5px solid currentColor; margin-top: 9px;
+}
+.ap-badge[data-tone='ok'] { color: var(--ap-ok); }
+.ap-badge[data-tone='warn'] { color: var(--ap-warn); }
+.ap-badge[data-tone='crit'] { color: var(--ap-crit); }
+.ap-badge[data-tone='flat'] { color: var(--ap-ink-3); }
+
+.ap-sec { margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--ap-hair); }
+.ap-sec h4 { margin-bottom: 7px; }
+.ap-sec p { font-family: var(--font-serif), Georgia, serif; font-size: 13.5px; line-height: 1.75; color: var(--ap-ink-2); }
+.ap-action { border-radius: 16px; padding: 15px; margin-top: 11px; }
+.ap-action[data-tone='crit'] { background: var(--ap-crit-f); }
+.ap-action[data-tone='calm'] { background: var(--ap-flat-f); }
+.ap-action h4 { margin-bottom: 8px; }
+.ap-action[data-tone='crit'] h4 { color: var(--ap-crit); }
+.ap-action[data-tone='calm'] h4 { color: var(--ap-ink-3); }
+.ap-action p { font-family: var(--font-serif), Georgia, serif; font-size: 13px; line-height: 1.75; }
+
+.ap-back {
+  display: inline-flex; align-items: center; gap: 8px; background: none; border: none;
+  padding: 0 0 14px; cursor: pointer; color: var(--ap-ink-3); font-family: inherit;
+}
+.ap-back svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.4; }
+.ap-back:focus-visible { outline: 2px solid var(--ap-ink); outline-offset: 3px; }
+
+/* ---------- the compare switch ----------
+   The one control in the product that changes what is drawn rather than where
+   you are. It removes our bands and leaves the laboratory's interval alone. */
+.ap-compare {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--ap-core); border: 1px solid var(--ap-hair);
+  border-radius: 16px; padding: 14px 15px; margin-top: 16px;
+}
+.ap-compare input { margin-top: 2px; width: 18px; height: 18px; flex: none; accent-color: var(--ap-ink); cursor: pointer; }
+.ap-compare label { font-size: 13px; font-weight: 600; line-height: 1.3; cursor: pointer; }
+.ap-compare p { font-size: 12px; line-height: 1.6; color: var(--ap-ink-3); margin-top: 5px; }
+
+/* ---------- tab bar ---------- */
+.ap-tabbar {
+  position: sticky; bottom: 0; z-index: 5;
+  display: flex; background: var(--ap-core); border-top: 1px solid var(--ap-hair);
+  padding: 8px 6px calc(14px + env(safe-area-inset-bottom, 0px)); gap: 2px;
+}
+.ap-tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: none; border: none; padding: 6px 2px; cursor: pointer;
+  color: var(--ap-ink-3); font-family: var(--font-mono), ui-monospace, monospace;
+  font-size-adjust: none; font-size: 9px; letter-spacing: 0.09em; text-transform: uppercase;
+}
+.ap-tab svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.ap-tab[aria-selected='true'] { color: var(--ap-ink); font-weight: 700; }
+.ap-tab:focus-visible { outline: 2px solid var(--ap-ink); outline-offset: -2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-zone, .ap-pin, .ap-row { transition: none; }
+}
+
+/* ============================================================================
+   THE DEMO'S OWN CHROME. Everything below is the page AROUND the app, never the
+   app itself, and it is styled to read as a different object for that reason:
+   the prototype puts its controls on a rail beside the phone and labels them
+   "Not part of the product", because a real customer cannot move his own result
+   and must not be shown a control implying he can.
+   ============================================================================ */
+
+.ap-frame {
+  border: 1px solid var(--ap-hair, rgba(10, 11, 13, 0.1));
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 26px 60px -20px rgba(10, 11, 13, 0.16), 0 6px 18px -12px rgba(10, 11, 13, 0.1);
+  background: #f1f2f4;
+}
+
+.ap-note {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 2px 18px;
+}
+.ap-note__tag {
+  flex: none; align-self: flex-start;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700;
+  border: 1.5px solid currentColor; border-radius: 999px; padding: 5px 10px;
+}
+.ap-note p { font-size: 13px; line-height: 1.65; color: #4a4f57; }
+
+.ap-controls { margin: 0 0 18px; }
+.ap-controls__lbl {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase;
+  color: #6b7078; margin-bottom: 9px;
+}
+.ap-controls ul { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.ap-controls__opt {
+  display: block; border: 1px solid rgba(10, 11, 13, 0.16); border-radius: 999px;
+  padding: 8px 14px; font-size: 12.5px; font-weight: 600; line-height: 1.2;
+  text-decoration: none; color: #0a0b0d; transition: background 0.2s, color 0.2s;
+}
+.ap-controls__opt:hover { background: rgba(10, 11, 13, 0.05); }
+.ap-controls__opt[aria-current='true'] { background: #0a0b0d; color: #fff; border-color: #0a0b0d; }
+.ap-controls__blurb { font-size: 12.5px; line-height: 1.6; color: #6b7078; margin-top: 10px; }
+
+.ap-close {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 16px; margin-top: 22px; padding-top: 20px; border-top: 1px solid rgba(10, 11, 13, 0.1);
+}
+.ap-close p { font-size: 13px; line-height: 1.65; color: #4a4f57; max-width: 44ch; }
+.ap-close__cta {
+  flex: none; display: inline-block; background: #0a0b0d; color: #fff;
+  border-radius: 999px; padding: 12px 20px; text-decoration: none;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em;
+}

@@ -3,9 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { KIT_NAMES } from '@/lib/kits/names'
+import { ALL_PANEL_MARKER_IDS, KIT_PANELS } from '@/lib/kits/panel'
+import type { KitType } from '@/lib/results/types'
 import { PRICING } from '@/lib/pricing'
 import { SectionRule, Marginalia } from '@/components/marketing/SectionRule'
 import { HeroField } from '@/components/marketing/HeroField'
+import { SIZES_BENTO_3, SIZES_BENTO_5, SIZES_BENTO_6 } from '@/lib/ui/image-sizes'
 
 /*
  * REBUILT IN DIRECTION F, 2026-08-31.
@@ -195,7 +198,22 @@ const RECORD_STEPS = [
    66 hardcoded occurrences across 21 files and the module that calls itself
    their single source of truth had ONE consumer, so this is the second surface
    to actually read from it. */
-const KITS = [
+/* `slug` is typed rather than inferred, because it is now an INDEX into
+   `KIT_PANELS` for the panel strip below and not only a URL fragment. Left as
+   the inferred `string` it would widen and the lookup would not compile, which
+   is the check that keeps this array and the panel module in agreement. */
+const KITS: {
+  slug: KitType
+  title: string
+  meta: string
+  price: string
+  lead: boolean
+  who: string
+  photo: string
+  cap: string
+  alt: string
+  lines: string[]
+}[] = [
   {
     slug: 'hormone-recovery', title: KIT_NAMES['hormone-recovery'], meta: `Kit 3 · nine markers`,
     price: `£${PRICING.KIT_3.rrp}`, lead: true,
@@ -484,7 +502,7 @@ export default function HomePage() {
           <div className="f-c-5 f-rise">
             <div className="f-plate">
                 <div className="f-shot f-shot-r43">
-                  <Image src="/home/img-4.jpg" alt="A man in his early fifties at an office desk late in the afternoon, looking away from his monitor towards a window." width={800} height={600} />
+                  <Image src="/home/img-4.jpg" alt="A man in his early fifties at an office desk late in the afternoon, looking away from his monitor towards a window." width={800} height={600} sizes={SIZES_BENTO_5} />
                 </div>
                 <span className="f-shot-cap">Thursday, 4pm</span>
                 <div className="f-plate-b">
@@ -504,7 +522,7 @@ export default function HomePage() {
           <div className="f-c-5 f-rise">
             <div className="f-plate">
                 <div className="f-shot f-shot-r43">
-                  <Image src="/home/img-2.jpg" alt="A man in his fifties at a kitchen table in the evening, reading on a laptop." width={800} height={600} />
+                  <Image src="/home/img-2.jpg" alt="A man in his fifties at a kitchen table in the evening, reading on a laptop." width={800} height={600} sizes={SIZES_BENTO_5} />
                 </div>
                 <span className="f-shot-cap">The same test, later</span>
                 <div className="f-plate-b">
@@ -549,7 +567,11 @@ export default function HomePage() {
               <div className="f-tray" style={{ height: '100%' }}>
                 <div className="f-core f-cell f-kit" style={{ height: '100%', padding: 0 }}>
                   <div className={lead ? 'f-shot f-shot-r16' : 'f-shot f-shot-r16 f-shot-tall'}>
-                    <Image src={photo} alt={alt} width={800} height={500} />
+                    {/* The lead card spans 6 of 12 and the other two span 3, so
+                        they cannot share one `sizes`: quoting the lead's slot
+                        for a narrow card is exactly the 2x overdraw this was
+                        added to remove. */}
+                    <Image src={photo} alt={alt} width={800} height={500} sizes={lead ? SIZES_BENTO_6 : SIZES_BENTO_3} />
                   </div>
                   <span className="f-shot-cap">{cap}</span>
                   <div className="f-cell" style={{ flex: 1, padding: '24px 20px' }}>
@@ -559,6 +581,45 @@ export default function HomePage() {
                     <ul>
                       {lines.map((l) => <li key={l}>{l}</li>)}
                     </ul>
+
+                    {/* THE PANEL STRIP, 2026-09-06. `/` was the only surface
+                        selling kits without it: it shipped to `/kits` and to all
+                        three detail pages and stopped here, so the two kit-card
+                        components disagreed on the one device that carries the
+                        product's argument.
+
+                        🔴 IT GOES BELOW THE MARKER LIST, NOT INSTEAD OF IT, and
+                        that is the whole point rather than a compromise. The
+                        critique scored Recognition Rather Than Recall 2/10 on
+                        exactly this device: nine identical unlabelled cells whose
+                        only key is an 11.5px link to another page. That is true
+                        on `/kits` and on all three detail pages. Swapping the
+                        prose out for the strip would have made this the fourth
+                        surface with an unkeyed instrument; putting it under the
+                        prose makes `/` the first where the strip keys itself,
+                        because the list directly above names the filled cells in
+                        panel order. If these two components are ever reconciled,
+                        this is the arrangement to reconcile TOWARDS.
+
+                        NO `.f-pscount` HERE, unlike `/kits`. That label reads
+                        "5 of 9 markers" and `meta` two elements up already reads
+                        "Kit 1 · five markers". It would also cost ~22px against
+                        the ~20px of slack the tightest card has left.
+
+                        ALIGNMENT IS INHERITED, NOT ADDED. `.f-kit ul` carries
+                        `flex: 1`, so it absorbs the slack and everything after it
+                        is bottom-aligned; that is why the price and the button
+                        already land on the same pixel on all three cards at 1440.
+                        Sitting after the list, the strip gets that for free. */}
+                    <div className="f-pstrip" aria-hidden="true">
+                      {ALL_PANEL_MARKER_IDS.map((id) => (
+                        <span
+                          key={id}
+                          className={KIT_PANELS[slug].includes(id) ? 'f-ps f-on' : 'f-ps'}
+                        />
+                      ))}
+                    </div>
+
                     <div className="f-kprice">{price}</div>
                     <Link
                       href={`/kits/${slug}`}
@@ -629,7 +690,7 @@ export default function HomePage() {
           <div className="f-c-6 f-rise">
             <div className="f-plate">
                 <div className="f-shot f-shot-r16">
-                  <Image src="/home/img-1.jpg" alt="A man in his mid forties reading on his phone at a kitchen counter early in the morning." width={800} height={500} />
+                  <Image src="/home/img-1.jpg" alt="A man in his mid forties reading on his phone at a kitchen counter early in the morning." width={800} height={500} sizes={SIZES_BENTO_6} />
                 </div>
                 <span className="f-shot-cap">No email, no gate</span>
                 <div className="f-cell f-plate-b">
@@ -644,23 +705,31 @@ export default function HomePage() {
           <div className="f-c-6 f-rise">
             <div className="f-plate">
                 <div className="f-shot f-shot-r16">
-                  <Image src="/home/img-5.jpg" alt="A man in his early forties in an ordinary gym changing room, sitting on a bench putting on a trainer." width={800} height={500} />
+                  <Image src="/home/img-5.jpg" alt="A man in his early forties in an ordinary gym changing room, sitting on a bench putting on a trainer." width={800} height={500} sizes={SIZES_BENTO_6} />
                 </div>
                 <span className="f-shot-cap">A demo account</span>
                 <div className="f-cell f-plate-b">
                   <h3>See the app</h3>
                   <p>A demo account loaded with a sample result. Look at exactly what you get before you spend anything. We never put your data in it.</p>
-                  {/* 🔴 NO CTA, DELIBERATELY: THE DEMO ROUTE DOES NOT EXIST YET.
-                      The demo is a decided part of the free layer (thesis §10.1,
-                      ANSWERED 2026-08-24) and it is built only as an interactive
-                      prototype at `design/prototypes/demo-account-interactive.html`.
-                      There is no live route. The first draft of this page linked
-                      to `/results-dashboard/demo`, which was invented and would
-                      have shipped a dead link on the homepage.
-                      This card is the free layer's second leg and it is inert
-                      until that route exists. Building it is the thing that
-                      completes "give away the thinking". */}
-                  <p className="f-blab mt-4" style={{ marginBottom: 0 }}>Opening soon</p>
+                  {/* ✅ THE ROUTE NOW EXISTS, AND THIS CARD IS LIVE (2026-09-06).
+                      It sat inert with an "Opening soon" label because the demo
+                      was only an interactive prototype at
+                      `design/prototypes/demo-account-interactive.html`, and an
+                      earlier draft had linked to `/results-dashboard/demo`,
+                      which was invented and would have shipped a dead link on
+                      the homepage. `/demo` is real: `app/(demo)/demo/page.tsx`
+                      renders the actual dashboard through the actual classifier.
+                      It is the free layer's second leg, and wiring it is what
+                      completes "give away the thinking".
+
+                      🔴 THE ROUTE IS `noindex` UNTIL ITS COMPLIANCE GATE CLEARS,
+                      which does not affect this link: a visitor follows it
+                      normally, and the flag only keeps a public results report
+                      out of search while the copy is ruled on. This link and
+                      that gate ship together or not at all. */}
+                  <Link href="/demo" className="f-btn f-btn-ghost f-btn-sm mt-4 self-start">
+                    Open the demo {ARROW}
+                  </Link>
                 </div>
             </div>
           </div>

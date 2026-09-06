@@ -10,6 +10,7 @@ import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
 import { KIT_NAMES } from '@/lib/kits/names'
 import { PRICING } from '@/lib/pricing'
+import { SIZES_BENTO_5 } from '@/lib/ui/image-sizes'
 import { FAI_REPORT_ONLY, PANEL_MARKERS, ALL_PANEL_MARKER_IDS, KIT_PANELS, panelCount } from '@/lib/kits/panel'
 
 /*
@@ -535,6 +536,7 @@ export default function KitTestosteronePage() {
                   alt="A man in his late forties standing in a back doorway at dawn with a mug of tea, looking out over a terraced garden."
                   width={800}
                   height={600}
+                  sizes={SIZES_BENTO_5}
                 />
               </div>
               <span className="f-shot-cap">Ordinary Tuesday</span>
@@ -734,7 +736,13 @@ export default function KitTestosteronePage() {
         </div>
       ) : (
         <>
+          {/* `variant="f"` since 2026-09-06. This block used to render the blog's
+              aesthetic on a Direction F page: the largest single visual
+              discontinuity across the five F routes, and it sat between the FAQ
+              and the buy CTA. The component now renders in its host's world and
+              the host declares which world that is. */}
           <RelatedArticles
+            variant="f"
             slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms']}
             intro="What your testosterone numbers actually mean, and why a normal result is not the whole story."
           />

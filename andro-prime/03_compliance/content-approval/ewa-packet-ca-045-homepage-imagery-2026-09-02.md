@@ -3,8 +3,16 @@
 **Status: RAISED as a Gmail DRAFT, not sent.** Draft id `r-3136750216544571074`. Sending is
 Keith's act, not the assistant's. Nothing in CA-045 is approved by the existence of this packet.
 
-**Nine items, seven questions.** Expected answer count is **7**. A reply carrying fewer than seven
+**Ten items, eight questions.** Expected answer count is **8**. A reply carrying fewer than eight
 letters leaves the missing ones UNANSWERED; never infer a ruling from an adjacent answer.
+
+⚠ **AMENDED 2026-09-06, AND THE GMAIL DRAFT HAS NOT CAUGHT UP.** A new asset, `img-8`, was
+generated for `/how-it-works` and is question 8 below. It is the FIRST addition to this gate that
+could not avoid it: every previous one reused an image already on the register, matched by slug.
+The draft was already stale on q6/q7 (their scope moved from one surface to two, and is now six);
+it is now stale on the item count as well. **Rebuild the draft before sending.** This is the cheap
+moment: `03_compliance/STATE.md` says corrections are free while the packet is unsent and expensive
+after, and that is exactly why this went in now rather than at the end of the branch.
 
 | Question | Item(s) | Asset |
 |---|---|---|
@@ -15,10 +23,11 @@ letters leaves the missing ones UNANSWERED; never infer a ruling from an adjacen
 | 5 | img-7 | Kit 2 card, plus the trainer mark disclosed as Keith's call |
 | 6 | hero data field | display or texture |
 | 7 | hero data field | the hs-CRP and SHBG rows the page never shows |
+| 8 | img-8 | `/how-it-works` hero, a postbox with a plain envelope |
 
-**Attachments (10):** `q1-hero-film-frame.jpg`, `q2-img-3.jpg`, `q3-img-1.jpg`, `q3-img-2.jpg`,
+**Attachments (11):** `q1-hero-film-frame.jpg`, `q2-img-3.jpg`, `q3-img-1.jpg`, `q3-img-2.jpg`,
 `q3-img-4.jpg`, `q3-img-6.jpg`, `q4-img-5.jpg`, `q5-img-7.jpg`, `q6-hero-as-it-ships.png`,
-`q6-hero-field-revealed.png`. The last two were rendered for this packet: the hero field is a
+`q6-hero-field-revealed.png`, `q8-img-8.jpg`. The last two were rendered for this packet: the hero field is a
 canvas that exists only at run time, so no still of it existed anywhere. The "revealed" render has
 the 0.34 opacity and the vertical mask removed and **never ships**; it exists so the question can
 be answered on the artefact rather than on a description of it.
@@ -76,10 +85,11 @@ Attachments, in question order:
 - q4-img-5.jpg
 - q5-img-7.jpg
 - q6-hero-as-it-ships.png, q6-hero-field-revealed.png
+- q8-img-8.jpg
 
-Reply with just the letters, like this: 1: A 2: B 3: A 4: A 5: A 6: A 7: B
+Reply with just the letters, like this: 1: A 2: B 3: A 4: A 5: A 6: A 7: B 8: A
 
-Answering 1 to 7 with a letter is your sign-off on all nine items. There is no
+Answering 1 to 8 with a letter is your sign-off on all ten items. There is no
 separate approval question at the end.
 
 1. The film behind the headline.
@@ -232,6 +242,32 @@ B: Yes, remove hs-CRP and SHBG and draw only the four the page shows.
 C: Leave them, but only once both are added to the sample result as well. Note
    that this option changes the sample result on the homepage itself, so it is a
    copy change and a second pre-flight, not just a design tweak.
+
+8. The postbox.
+
+This is the newest image and the only one made specifically for a page rather
+than inherited: a red pillar box on an ordinary residential street on an
+overcast morning, with a plain white envelope part-way into the slot. There is
+no person in it, no hands, no clinic, no laboratory, no blood and no sample. The
+envelope is blank: no address, no writing, no printing, no logo. Nothing in the
+frame carries any lettering at all.
+
+It sits in the hero of `/how-it-works`, under the caption "Any postbox, any
+morning", beside the standfirst that already says "a finger-prick, a pre-paid
+envelope, and a UKAS ISO 15189-accredited lab".
+
+I want to say plainly why it is a postbox and not a man, because it is the one
+choice in this packet I made in order to avoid asking you something. Questions 3
+and 4 above both come down to whether a photograph of an ordinary man, sitting
+next to copy about being tired, implies that the man is unwell. An eighth
+photograph of a man would have inherited that question before you had answered
+it. This one cannot, because there is nobody in it.
+
+Does this image raise anything at all?
+
+A: No. Clear as it is.
+B: Clear, but not under this caption.
+C: Not clear, and tell me what you are seeing.
 
 Nothing ships until you answer. If any of these needs more than a letter from
 you, say so and I will send whatever you need to see.

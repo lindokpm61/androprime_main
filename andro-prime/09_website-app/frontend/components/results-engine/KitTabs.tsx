@@ -2,6 +2,7 @@
 
 import { useRef, useState, type KeyboardEvent } from 'react'
 import type { KitData } from '@/lib/results/types'
+import { isFlaggedState } from '@/lib/results/resultSeverity'
 import { MarkerCard } from './MarkerCard'
 
 const KIT_NAMES: Record<string, string> = {
@@ -61,9 +62,31 @@ export function KitTabs({ kits, showKitScopeNote = false, collapseEvidence = fal
   const activeKit = kits[activeKitIndex]
   const activeResult = activeKit.results[activeResultIndex]
 
-  const attentionCount = activeResult.markers.filter(
-    (m) => m.state !== 'optimal-testosterone' && m.state !== 'normal'
-  ).length
+  /*
+   * 🔴 FIXED 2026-09-06, AND IT WAS WRONG ON THE LIVE DASHBOARD, not just here.
+   *
+   * This was `m.state !== 'optimal-testosterone' && m.state !== 'normal'`: a
+   * hand-rolled list of the two states that mean "fine". The classifier does not
+   * emit one generic normal state, it emits a marker-specific one for each
+   * biomarker -- `normal-vitamin-d`, `normal-crp`, `normal-ferritin`,
+   * `normal-b12`, `normal-albumin`, `shbg-normal`, `ft-normal`, and
+   * `fai-reported`, which carries no verdict at all. Every one of those failed
+   * both tests and was counted as needing attention.
+   *
+   * So the summary line counted MARKERS, not flagged markers. A Kit 3 result
+   * with three Monitors and six fine said "9 markers need your attention"
+   * directly above six outlined "In range" badges, and an all-clear Kit 2 -- by
+   * `resultSeverity.ts`'s own account the most common result shipped -- said
+   * "4 markers need your attention" above four in-range cards.
+   *
+   * `isFlaggedState` is the canonical answer and already existed. It derives
+   * from the badge's `filled` property, and its header says why in as many
+   * words: "Deriving from it rather than listing the states again means this
+   * answer can never drift from what the customer sees on the result card."
+   * This component was the second list that module was written to prevent, and
+   * it had drifted. Do not reintroduce a local predicate here.
+   */
+  const attentionCount = activeResult.markers.filter((m) => isFlaggedState(m.state)).length
 
   // All-clear maintenance offer (dark): the classifier sets the maintenance-offer
   // CTA on every in-range card of an all-clear result. Render it once by picking

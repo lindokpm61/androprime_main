@@ -784,6 +784,38 @@ intent. Merging the table upward moves the heading; it must never drop the phras
 label / 5-minute collection process" was identical on all three cards, so it differentiated nothing
 and cost nine pills. One fact about all three kits, so it is stated once, under all three.
 
+### Where the strip goes on a card, and why `/` is the only one that gets it right (2026-09-06)
+
+`.f-pstrip` shipped to `/kits` and to all three detail pages on 2026-09-02 and stopped there, so the
+homepage was the only surface selling kits without it: two kit-card components, one click apart,
+disagreeing on the device that carries the product's argument. It is now on all four.
+
+🔴 **IT SITS BELOW THE MARKER PROSE, NOT INSTEAD OF IT, AND THAT IS A RULING RATHER THAN A
+COMPROMISE.** The 2026-09-03 critique scored Recognition Rather Than Recall **2/10** on this exact
+device: nine identical unlabelled cells with no key, whose only remedy is an 11.5px link in a 15px
+tap target to another page. That is true wherever the strip currently ships. The homepage kept its
+two-line marker list and took the strip underneath it, so the prose directly above names the filled
+cells in panel order and the instrument keys itself on the page it is drawn on. Swapping the prose
+out for the strip would have made `/` the fourth surface with an unkeyed instrument.
+
+**If the two card components are ever reconciled, reconcile TOWARDS this arrangement**, not towards
+`/kits`. The strip is the better silhouette and the prose is the better key; the pages that have one
+without the other are the ones to change.
+
+**No `.f-pscount` on the homepage.** `/kits` renders "5 of 9 markers" under its strip. The homepage
+card's `meta` two elements above already reads "Kit 1 · five markers", so the label would be a third
+statement of one fact, and it costs ~22px against the ~20px of slack the tightest card has left.
+
+**ALIGNMENT WAS ALREADY SOLVED AND NOBODY HAD NOTICED.** The open question this change was parked on
+was "what makes the three strips line up", and the answer was that nothing new had to.
+`.f-kit ul { flex: 1 }` makes the marker list the slack absorber, so every element after it is
+bottom-aligned; that is why the price and the button already landed on the same pixel on all three
+cards. Placed after the list, the strip inherits it. Measured at 1440 after the change: strip at
+y=659, price at y=684, button at y=735, **identical on all three**, cards 821px each. The cost is
+**23px of card height**, not the ~3px predicted from the slack figures, because the tightest card
+had only 20px to give and card height follows the tallest sibling. Predicted and measured are both
+recorded here because the prediction was wrong and the decision did not change.
+
 ### A modifier declared before its base class is dead
 
 Found while building the above, and **it had never worked**. `.f-tray-flag` gives Kit 3 its accent
@@ -1042,7 +1074,30 @@ Recorded so they are not rediscovered as surprises.
 7. ⚠ **The reconciler has two structural blind spots**, both recorded in `12_operations/CONTEXT.md`:
    its `RULED` table is consulted in only one of its emit branches, and its compare loop cannot see a
    declaration one side omits entirely. Do not read a clean run as a clean layer.
-4. 🔴 **`RelatedArticles` is the visible seam on every rebuilt page, and it is NOT V2.0 drift.**
+4. ✅ **CLOSED 2026-09-06. `RelatedArticles` now renders in its host's world.** The diagnosis is
+   kept below because it is the part that was twice got wrong.
+   🟢 **What shipped:** a `variant?: 'editorial' | 'f'` prop, defaulting to `editorial`, so the
+   three blog-world call sites are byte-identical to what they rendered before. The three kit pages
+   pass `variant="f"` and get `.f-bio` rows: hairline above, mono category label, Newsreader h3,
+   `--ink-2` body, `.f-btn-ghost.f-btn-sm` with a `.f-pip`. **No `SectionRule`**, deliberately: this
+   block sits in the page tail beside `.f-close` and the cross-sell tray, none of which is in the
+   numbered spine, and `.f-blab` without a rule is the established grammar there.
+   **There is no auto-detection and there should not be.** A server component cannot read React
+   context, and sniffing the pathname would couple the routing table to the design system: a page
+   moved from `/kits/x` to `/tests/x` would silently change appearance. The host declares its own
+   world, which is the one thing the host reliably knows.
+   🔴 **Building it exposed a page-specific rule declared globally**, and that is the more
+   reusable finding. `.f-bio .f-btn { width: 100% }` sat under a comment reading "Kit mini-cards on
+   this page" while its selector said every page. It was invisible for as long as `/how-it-works`
+   was the only surface pairing a button with a `.f-bio`, and it surfaced the instant a second one
+   existed: three editorial links rendered as full-bleed transaction pills immediately before the
+   buy CTA. Narrowed to `.f-bio:has(.f-kithead) .f-btn`, since the price-and-chip head is what
+   actually makes one of these a kit card. Verified both users after: mini-card buttons still 360px
+   of a 360px column, related-reading buttons 148px, all three tops equal.
+   **A comment that scopes a rule more narrowly than its selector does is not documentation, it is
+   an unenforced intention**, and it reads as correct until a second call site appears.
+
+   🔴 **The original diagnosis, kept: it is NOT V2.0 drift.**
    Rediagnosed 2026-09-06, because the earlier wording sent this toward the wrong fix. What it
    renders is the **blog's own ruled aesthetic** — cream-era hard borders, `font-black uppercase
    tracking-tighter`, Merriweather body, a drawn square-cap chevron — hand-coded in raw utility
@@ -1063,6 +1118,12 @@ Recorded so they are not rediscovered as surprises.
    ▶️ **The fix that is correct either way**: make the component render in its HOST's world (a
    variant prop, or an F-shaped wrapper for product surfaces with `ArticleLayout` keeping the
    editorial one). It does not pre-empt Frame AO and does not depend on the blog decision.
+   ✅ That is what was built. If the 2026-08-27 ruling is revisited and the blog moves to F, the
+   answer is to change `ArticleLayout`'s variant, not to rewrite the component again.
+   ⚠ **Still open and NOT this component's to fix:** the article titles and excerpts carry
+   straight quotes (`"within range"`, `doesn't`) where every F page uses curly. Those strings
+   come from MDX frontmatter on Ewa-signed articles, so changing them is a copy change with
+   its own pre-flight, not a restyle.
 5. ⚠ **The journey frames are owed a sweep** on container width and section rhythm, both of which the
    direction wins. Recorded in the reconciler's `RULED` table meanwhile.
 8. ✅ **CLOSED 2026-09-02, having been declared closed on 2026-08-31 with two instances left.**

@@ -11,6 +11,7 @@ import { isBundlesEnabled } from '@/lib/flags'
 import { KIT_NAMES } from '@/lib/kits/names'
 import { ALL_PANEL_MARKER_IDS, FAI_REPORT_ONLY, KIT_PANELS, PANEL_MARKERS, panelShortLabels, panelCount } from '@/lib/kits/panel'
 import { PRICING } from '@/lib/pricing'
+import { SIZES_BENTO_5 } from '@/lib/ui/image-sizes'
 import type { KitType } from '@/lib/results/types'
 
 /*
@@ -721,6 +722,7 @@ export default function KitHormoneRecoveryPage() {
                   alt="A man's hands at a kitchen table holding a small plain sample collection tube."
                   width={800}
                   height={600}
+                  sizes={SIZES_BENTO_5}
                 />
               </div>
               <span className="f-shot-cap">Five minutes, at home</span>
@@ -1009,7 +1011,11 @@ export default function KitHormoneRecoveryPage() {
         </div>
       ) : (
         <>
+          {/* `variant="f"` since 2026-09-06. See the note on the same call in
+              `/kits/testosterone`: the component renders in its host's world now
+              and the host declares which world that is. */}
           <RelatedArticles
+            variant="f"
             slugs={['myth-of-normal-range', 'low-vitamin-d-symptoms', 'inflammatory-markers-blood-test']}
             intro="Go deeper on the markers in this panel, from testosterone ranges to vitamin D and inflammation."
           />
