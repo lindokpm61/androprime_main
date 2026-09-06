@@ -88,12 +88,20 @@ as one thing:
 - **The result landing** (mechanisms 1, 2, 7)
 
 A slow lab separates purchase from result by days or weeks, so these are not
-three names for one moment. The 30-day membership offer window is anchored to the
-result, and the **2026-08-27 first-month ruling** puts a month of membership
-inside the kit price, anchored to purchase. `01_strategy/STATE.md` already carries
-this as the next decision and it is Keith's. **This table is the argument for
-resolving it: the anchor is not a membership detail, it is the field eight
-mechanisms and every retest email read from.**
+three names for one moment.
+
+> ✅ **RESOLVED 2026-09-07 (Keith): everything anchors to the RESULT LANDING.**
+> Decision doc: `../../01_strategy/2026-09-07-anchor-everything-to-the-result.md`.
+> Mechanisms 1, 2 and 7 already complied. Mechanisms 3, 4, 5 and 6 move, along
+> with the membership included month and `memberships.started_at`. **Mechanism 8
+> is the single carve-out**: seq-04 e5 measures supplement effect, so its clock
+> legitimately starts at `subscription_started` rather than at a result.
+>
+> 🔴 **It creates one new question, not yet decided.** Mechanism 3 anchored to the
+> result means `due_at` stays null until a result exists, so a customer who never
+> posts his sample never receives the prepaid second kit he paid for. Today it
+> ships at purchase + 90 regardless. Options and a recommendation are in §5 of the
+> decision doc; **nothing should be built on mechanism 3 until it is answered.**
 
 ---
 
@@ -179,7 +187,7 @@ no longer exists.
 
 | # | Item | Owner |
 |---|---|---|
-| 1 | **The anchor decision** (section 2). Blocks every retest email. | Keith |
+| 1 | ~~**The anchor decision** (section 2). Blocks every retest email.~~ ✅ **DECIDED 2026-09-07: the result landing.** Replaced by: the timed-bundle fallback when no result ever arrives (decision doc §5) | Keith |
 | 2 | 3a: make `memberHasMarkerToMove` consult the classifier, or accept 90 days for everyone and delete the 365 | Keith, then build |
 | 3 | 3b: advance the cycle on claim, or change the forecast and the copy to say one retest ever | Keith, then build |
 | 4 | 3c: decide whether a member gets a retest-due email at all | Keith |

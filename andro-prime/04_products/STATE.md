@@ -61,7 +61,7 @@ GP-routed result must not fall through to a date: that is the FAI-by-omission bu
 inert** (one cell is signed) and it **fixes defect 1 for free**, since `memberHasMarkerToMove`'s own
 comment says the fix is the classifier's verdict, which is what the lookup is.
 
-🔴 **Two calls are Keith's and one is Ewa's.** Keith: adopt the RESULT LANDING as the anchor (a
+🔴 **Two calls are Keith's and one is Ewa's.** ✅ **The anchor is DECIDED 2026-09-07: the RESULT LANDING** (Keith, `../01_strategy/2026-09-07-anchor-everything-to-the-result.md`), which also opens a new undecided question about timed bundles whose customer never posts a sample. Still owed from Keith: the prepaid-or-included constraint. Originally written as: adopt the RESULT LANDING as the anchor (a
 result-driven cadence has no other anchor, and it reaches the same answer the membership anchor
 recommendation reached by a different route); and adopt or reject the hard rule that **a recheck under
 90 days must be prepaid or included, never a new sale**, which is what keeps a fast recheck from

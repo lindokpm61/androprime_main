@@ -49,7 +49,10 @@ now out of step**, and section 5 records exactly how.
 Three things fall out of this ruling and none of them is decided. They are
 listed here so nobody reads an adopted decision as a complete one.
 
-1. **What the included month is ANCHORED to.** The included month would start at
+1. ✅ **DECIDED 2026-09-07: the RESULT LANDING** (Keith, *"anchor everything to
+   results"*). Doc: `2026-09-07-anchor-everything-to-the-result.md`. The included
+   month, the offer window and every retest date now share one anchor. **What was
+   open, as written on 2026-08-27:** The included month would start at
    PURCHASE; the 30-day offer window starts when the RESULT lands; and the code
    has a third anchor, `createMembership` stamping `started_at` and the retest
    date from STRIPE CHECKOUT. A slow lab puts all three out of step.

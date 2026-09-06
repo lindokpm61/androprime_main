@@ -116,8 +116,13 @@ moment at which the deciding value exists.
 That is the same conclusion the membership anchor recommendation in `01_strategy/STATE.md`
 already reached, from a completely different argument (an included month starting at purchase is
 30 days of an empty room). **Two independent lines of reasoning converging on the same anchor is
-the strongest evidence available that it is the right one**, and adopting this proposal would
-close that open decision as a side effect rather than as a separate exercise.
+the strongest evidence available that it is the right one.**
+
+> ✅ **DECIDED 2026-09-07 (Keith): "anchor everything to results".** Doc:
+> `../../01_strategy/2026-09-07-anchor-everything-to-the-result.md`. This section is satisfied and
+> is no longer a dependency. **The anchor was ruled on its own merits, not as a side effect of
+> adopting this proposal**, so sections 1 to 4 and 6 to 8 still need their own ruling and the
+> proposal as a whole remains PROPOSED.
 
 ---
 
@@ -182,7 +187,7 @@ trade the conflict-free position takes everywhere else.
 
 | # | Item | Owner | Blocks |
 |---|---|---|---|
-| 1 | **The anchor**: adopt the result landing as the anchor for every retest date (section 5) | Keith | Every retest email, and the membership included-month decision |
+| 1 | ~~**The anchor**: adopt the result landing as the anchor for every retest date (section 5)~~ ✅ **DONE 2026-09-07, adopted as stated.** Superseded by: the timed-bundle fallback when no result ever arrives (`2026-09-07-anchor-everything-to-the-result.md` §5) | Keith | Building the timed-bundle change |
 | 2 | **The prepaid-or-included constraint** (section 8): adopt or reject | Keith | Whether this feature can ever point at the shop |
 | 3 | **The reduction ordering** (section 4): GP suppression versus shortest interval, and the low-T carve-out | **Ewa** | The whole-result date on any mixed panel |
 | 4 | Fill the map cell by cell | **Ewa**, via the 2026-07-17 table | Behaviour only, not the build |

@@ -108,7 +108,7 @@ in the kit price. That means stage 9 is no longer "will you start paying £47," 
 already a member until [date], do you want to carry on." That is a materially easier
 conversation and it changes the emails from a sales sequence into a continuation sequence.
 It also means the window and the included month are the same 30 days, which is either an
-elegance or a collision depending on whether they are anchored to the same event. **Open:** the
+elegance or a collision depending on whether they are anchored to the same event. ✅ **CLOSED 2026-09-07: they anchor to the same event, the RESULT LANDING** (Keith, `../01_strategy/2026-09-07-anchor-everything-to-the-result.md`), so the collision below is resolved and stage 9 is unblocked. As written it was open: the
 included month starts at purchase, the window starts when the result lands, and a slow lab puts
 those out of step. Needs deciding before the emails are written.
 
@@ -123,7 +123,7 @@ those out of step. Needs deciding before the emails are written.
    without it.
 3. **Draw the journey as a flow with no visual design**, so the sequence is agreed before
    anything is styled.
-4. **Anchor the offer window and the included month to the same event, or decide they differ**,
+4. ~~**Anchor the offer window and the included month to the same event, or decide they differ**,~~ ✅ **DONE 2026-09-07: both anchor to the RESULT LANDING** (Keith, `../01_strategy/2026-09-07-anchor-everything-to-the-result.md`). The emails can now quote `lab_results.received_at`. Originally:
    because the emails depend on it.
 5. **Write the membership proposition**, then the stage-9 sequence, then compliance pre-flight.
 6. **Extend the mockup one stage at a time**, starting from design tokens.

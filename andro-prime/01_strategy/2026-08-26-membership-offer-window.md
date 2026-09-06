@@ -110,7 +110,7 @@ Four items previously recorded as undecided:
   > `2026-08-27-first-month-included-in-kit-price.md`. The divergence resolves in favour
   > of the models, so no forecast moves; **the build is now the side out of step**, and
   > the three questions the ruling opens (anchor, auto-renew versus opt-in, and what a
-  > free month does to £47) are all still Keith's and all still open.
+  > free month does to £47) were all Keith's. ✅ **The anchor is now DECIDED (2026-09-07): the RESULT LANDING**, `2026-09-07-anchor-everything-to-the-result.md`. The other two remain open.
 - **Kit price under the membership model.** Gap-analysis decision #5, still open.
   The forecast uses Kit 2 at £119 as the paid entry; `04_products` keeps Kit 1
   at £99 as the Phase 0 launch kit.
