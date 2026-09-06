@@ -96,7 +96,52 @@ That is arguably the clinically correct outcome, since a retest with no baseline
 compares nothing. It is not obviously the correct *commercial* or *consumer-law*
 outcome, and it is a change to what a paying customer receives.
 
-🔴 **OPEN, and it is Keith's. Three options:**
+✅ **DECIDED 2026-09-07 (Keith): option 1, the purchase + 180 backstop.**
+
+**The mechanic, specified.** `due_at` is **never null** for a timed bundle. At checkout it is
+stamped `purchase + 180`. When the result lands, the result hook overwrites it to
+`min(result + 90, purchase + 180)`.
+
+- **Normal case.** Result back by day 14, so `due_at` becomes about day 104. The retest is
+  anchored to the baseline exactly as the ruling intends.
+- **Never tests.** `due_at` stays at day 180 and the prepaid kit ships. Today's guarantee is
+  kept, and it fails in the customer's favour.
+- **Very late result.** `min()` is what makes the backstop a **ceiling rather than a target**.
+  A result landing at day 120 would otherwise push `due_at` to day 210, quietly moving a
+  guarantee outward that exists precisely to stop the kit being swallowed. Capping it means a
+  late tester gets his retest slightly sooner than 90 days after baseline, which is the cheaper
+  of the two errors.
+- **Result lands after dispatch.** No new code. The row has already left `scheduled`, and
+  `isTriggerMatured` only ever acts on `scheduled` rows.
+
+**Why this shape and not a second column.** `due_at` already exists, the result hook already
+writes it for Confirmation bundles, and the sweep already reads it. A `backstop_at` column would
+need a migration, a second predicate and a rule about which wins. One column, one write, no
+schema change.
+
+**New constant to add** (flagged, not written): `SECOND_DISPATCH_BACKSTOP_DAYS = 180` in
+`lib/bundles/config.ts`, beside `SECOND_DISPATCH_DELAY_DAYS`, so the value stays a single
+reviewable line the way `CONFIRMATION_INTERVAL_DAYS` does.
+
+🔴 **CORRECTION, same day: this does NOT unblock the timed-bundle build, and the sweep is why.**
+Grepping the compliance layer for the backstop turned up
+`../03_compliance/terms-and-conditions.md` §"Test Bundles", **approved by Keith and Ewa on
+2026-07-25 and synced live to `canonical-site/terms/index.html` on 2026-07-26**. It says:
+
+> *"**Timed bundles (Prove-It and Full-Picture):** the retest is sent automatically **about 90
+> days after your purchase**. This spacing lets your second set of results be compared against
+> your first."*
+
+**Anchoring timed bundles to the result contradicts that, and there is no version that does not.**
+The result always lands after the purchase, so any result-anchored date is later than
+purchase + 90. For a normal customer (result back around day 14) dispatch moves to about day 104.
+For a customer who never tests it moves to day 180, which is **twice the promised wait, in the one
+case the backstop was chosen to protect**. That is the opposite of failing in his favour.
+
+See §5a. **Nothing may be built on mechanism 3 until §5a is answered**, and my earlier
+"buildable" line was wrong.
+
+**The options as they were put, 2026-09-07:**
 
 1. **Ship anyway after a backstop period** (say purchase + 180 days), so the
    prepaid kit is never silently swallowed. Simplest, and it keeps today's
@@ -112,6 +157,54 @@ It preserves the existing promise, needs one constant rather than a new flow, an
 it fails in the customer's favour. **Nothing should be built on mechanism 3 until
 this is answered**, because the fallback determines the shape of the change.
 
+## 5a. 🔴 ESCALATE: the timed bundles collide with approved, published terms
+
+**Owner: Keith (business) and Ewa (clinical countersignature, as on the original).**
+**Status: OPEN. It blocks the mechanism 3 build and nothing else.**
+
+### The collision
+
+Live T&Cs promise timed-bundle retests **about 90 days after purchase**, with the stated
+rationale *"this spacing lets your second set of results be compared against your first."*
+Result-anchoring necessarily moves that date later. This is approved copy on a published page, so
+**it is not editable by a sweep** (decision-sweep invariant 2).
+
+**Mitigating fact:** `bundle_dispatches` holds **0 rows** and no bundle has ever been sold, so no
+customer is relying on the current promise. This is the cheapest moment this will ever be fixed.
+
+### Two options
+
+**A. Exempt the timed bundles. They stay anchored to purchase at 90 days.**
+Coherent, because for Prove-It and Full-Picture **the 90-day spacing is the product**, not a
+clinical cadence. A man buys "test now, retest 90 days later" as one package, and the terms say so
+in those words. Costs nothing: no terms change, no re-approval, no live-page edit. The Confirmation
+bundle is untouched either way, because it already anchors to the result.
+**Its real cost:** if his first result takes 30 days to come back, the two results sit only 60 days
+apart rather than 90, which is a genuinely weaker comparison. The clinical argument for
+result-anchoring is strongest where the interval is a clinical cadence and weakest here, but it is
+not zero.
+
+**B. Change the terms.** The promise becomes something like *"about 90 days after your first
+result, and in any case within 180 days of your purchase."* Clinically cleaner and it keeps the
+ruling universal. **Costs:** Keith and Ewa re-approval, an edit to `terms-and-conditions.md`, and a
+re-sync of the served `canonical-site/terms/index.html` (a mirrored store: both copies, or the
+served page is the one that goes stale). It also asks a customer to accept a longer worst case
+than he has today.
+
+**Not a third option:** setting the backstop to 90 rather than 180 collapses into A, since
+`min(result + 90, purchase + 90)` is always `purchase + 90`.
+
+### Recommendation: A, and record it as the third carve-out
+
+The ruling is doing its real work on the membership, where the anchor decides the included month
+and the retest date. The timed bundles are a **fixed-spacing product** whose interval was sold and
+approved as a purchase-relative promise. Exempting them costs one sentence in this file and breaks
+nothing; the alternative reopens approved clinical copy to gain a comparison window that is
+already adequate in the ordinary case.
+
+If A is taken, the carve-out list in §4 becomes two: seq-04 e5, and the timed bundles. The
+purchase + 180 backstop in §5 then becomes unnecessary, because `due_at` never goes null.
+
 ## 6. Code carriers (flagged, not changed)
 
 Application code is its own task with its own verification (decision-sweep
@@ -120,9 +213,9 @@ invariant 4). Nothing below has been edited.
 | File | What changes |
 |---|---|
 | `lib/membership/sync.ts` | `createMembership` takes the result date, not `new Date()`, for both `started_at` and `firstRetestDueAt`. The result is already readable via `latestResultReceivedAt`. |
-| `lib/bundles/checkout.ts` | `secondDispatchDueAt` stops stamping purchase + 90; the row is created with a null `due_at`. |
-| Result hook (`lib/results/processResult.ts`) | Gains the Prove-It / Full-picture branch that fills `due_at = result + 90`, alongside the Confirmation branch it already has. |
-| `lib/bundles/config.ts` | `SECOND_DISPATCH_DELAY_DAYS` keeps its value; only its origin moves. Plus whatever §5 decides. |
+| `lib/bundles/checkout.ts` | `secondDispatchDueAt` stamps **purchase + 180** (the backstop) instead of purchase + 90. Never null: see §5. |
+| Result hook (`lib/results/processResult.ts`) | Gains the Prove-It / Full-picture branch that overwrites `due_at` to **`min(result + 90, purchase + 180)`**, alongside the Confirmation branch it already has. |
+| `lib/bundles/config.ts` | `SECOND_DISPATCH_DELAY_DAYS` keeps its value of 90; only its origin moves. **Add `SECOND_DISPATCH_BACKSTOP_DAYS = 180`.** |
 
 🔴 **`BUNDLES_ENABLED` is LIVE** (Coolify, 2026-07-26) and the daily sweep runs in
 production, so mechanism 3 is a change to live behaviour, not to dark code.
@@ -140,7 +233,7 @@ that is true only until the first bundle sells.
 
 ## 8. Still open after this
 
-1. **The timed-bundle fallback** (§5). Keith. Blocks building mechanism 3.
+1. ~~**The timed-bundle fallback** (§5). Blocks building mechanism 3.~~ ✅ **DECIDED 2026-09-07: purchase + 180 backstop**, `due_at = min(result + 90, purchase + 180)`. Mechanism 3 is now buildable.
 2. **Confirm the mechanism 8 carve-out** (§4). Keith. One line.
 3. **Auto-renew versus opt-in at day 30** (2026-08-27 ruling §4.2). Keith.
 4. **What a free first month does to £47** and the VAT threshold. Keith, accountant.

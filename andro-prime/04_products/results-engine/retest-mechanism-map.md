@@ -97,11 +97,15 @@ three names for one moment.
 > is the single carve-out**: seq-04 e5 measures supplement effect, so its clock
 > legitimately starts at `subscription_started` rather than at a result.
 >
-> 🔴 **It creates one new question, not yet decided.** Mechanism 3 anchored to the
-> result means `due_at` stays null until a result exists, so a customer who never
-> posts his sample never receives the prepaid second kit he paid for. Today it
-> ships at purchase + 90 regardless. Options and a recommendation are in §5 of the
-> decision doc; **nothing should be built on mechanism 3 until it is answered.**
+> ✅ **The question it opened is also decided (2026-09-07): a purchase + 180
+> backstop.** Anchoring mechanism 3 to the result would have left `due_at` null
+> until a result existed, so a customer who never posted his sample would never
+> have received the prepaid second kit. Instead `due_at` is stamped
+> **purchase + 180** at checkout and the result hook overwrites it to
+> **`min(result + 90, purchase + 180)`**. The `min()` is what keeps the backstop a
+> ceiling rather than a target, so a late result can never push a guaranteed
+> dispatch further out. **Mechanism 3 is now buildable**; the new constant is
+> `SECOND_DISPATCH_BACKSTOP_DAYS = 180`.
 
 ---
 
@@ -187,7 +191,7 @@ no longer exists.
 
 | # | Item | Owner |
 |---|---|---|
-| 1 | ~~**The anchor decision** (section 2). Blocks every retest email.~~ ✅ **DECIDED 2026-09-07: the result landing.** Replaced by: the timed-bundle fallback when no result ever arrives (decision doc §5) | Keith |
+| 1 | ~~**The anchor decision** (section 2). Blocks every retest email.~~ ✅ **DECIDED 2026-09-07: the result landing**, and its follow-on (the timed-bundle backstop) is decided too: **purchase + 180**. Nothing here is owed | Closed |
 | 2 | 3a: make `memberHasMarkerToMove` consult the classifier, or accept 90 days for everyone and delete the 365 | Keith, then build |
 | 3 | 3b: advance the cycle on claim, or change the forecast and the copy to say one retest ever | Keith, then build |
 | 4 | 3c: decide whether a member gets a retest-due email at all | Keith |
