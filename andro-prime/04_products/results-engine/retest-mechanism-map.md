@@ -200,8 +200,8 @@ no longer exists.
 | 2 | 3a: make `memberHasMarkerToMove` consult the classifier, or accept 90 days for everyone and delete the 365 | Keith, then build |
 | 3 | 3b: advance the cycle on claim, or change the forecast and the copy to say one retest ever | Keith, then build |
 | 4 | 3c: decide whether a member gets a retest-due email at all | Keith |
-| 5 | Rewrite the 2026-07-17 pack's premise, then re-send | Keith, then Ewa |
-| 6 | The symptom overlay red-flag line (that pack's Q4b) | Ewa |
+| 5 | ~~Rewrite the 2026-07-17 pack's premise, then re-send~~ ✅ **Premise, §3a and §5 rewritten 2026-09-07**, and the sign-off email is DRAFTED (Gmail `r1901433818987540044`, five lettered questions). **Sending is Keith's act and has not happened.** | Keith to send |
+| 6 | The symptom overlay red-flag line (that pack's Q4b) — now **question 5 of the drafted email**, with a proposed red-flag list to accept, amend or replace | Ewa, once Keith sends |
 
 **Nothing in this file is a clinical decision and nothing in it changes code.** It
 records what the code does today, so the decisions above can be made against facts
