@@ -6,6 +6,42 @@ _Last updated: 2026-09-07 (🔴 **THE RETEST MECHANISM MAP IS BUILT, AND IT FOUN
 
 ---
 
+## 📧 The retest cadence pack is rewritten and a sign-off email is DRAFTED for Keith (2026-09-07)
+
+**Gmail draft id `r1901433818987540044`, subject "Retest timing: five questions". NOT SENT.
+Sending is Keith's act.** Expected reply: **five letters**. Anything fewer is a gap to chase, never
+to infer.
+
+**Why the pack needed rewriting before it could be sent.** `2026-07-17-retest-cadence-table.md` had
+been waiting on Ewa since July, and its §1 justification asked her to resolve a three-way copy
+contradiction (dashboard "3 months", cards "3-6 months", site "6 to 12 months") **that has since
+been fixed**: the classifier now reads "Retest in 6-12 months", `biomarker-copy.ts` has no "3-6
+months" string, and all four marketing surfaces say "6 to 12 months". Its §5 "what changes once you
+sign" listed work already done. Sent as written she would have ruled on a world that no longer
+exists. §1, §5 and the header are rewritten; **the bucket tables and the §2a symptom overlay, which
+are the actual substance, are untouched.**
+
+**The pack's stakes went UP, not down.** It is now the document that fills `RETEST_CADENCE`, the
+single state-keyed lookup proposed in `results-engine/2026-09-06-result-driven-retest-cadence.md`
+that every retest mechanism would read from. It moved from an alignment exercise to the blocking
+clinical input for machinery.
+
+**New section 3a, which did not exist before:** what the engine does when one panel carries both a
+GP-routed marker and a correctable deficiency. The table rules one marker at a time and a Kit 3
+carries nine. Three options are put to her with a worked example (CRP 14 plus vitamin D 38). This is
+the sharpest clinical question in the packet and it changes whole-panel behaviour, not copy.
+
+**The five questions:** the all-clear interval, the acting-on-a-finding interval, what GP-routed
+results get, the mixed-panel ordering (3a), and the straight-to-GP red-flag line she flagged in July.
+Blast radius is marked on three of them. The preamble states that answering all five **is** the
+sign-off, so there is no umbrella question to be silently dropped.
+
+**Deliberately kept out of her way:** Keith's prepaid-or-included rule is mentioned once, at the
+end, explicitly as something that constrains what we may do commercially with her answer and not
+what her answer should be.
+
+---
+
 ## 🔴 The retest mechanism map, and the three defects it exposes (2026-09-06)
 
 **New reference: `results-engine/retest-mechanism-map.md`.** Built by reading the code, not the docs.

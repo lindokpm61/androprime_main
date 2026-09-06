@@ -1,6 +1,9 @@
 # Retest cadence table — for Ewa sign-off
 
-**Status:** PROPOSED (drafted by Keith's team 2026-07-17). **Every interval below is a draft for Ewa to confirm, change, or reject. Nothing ships until Ewa signs.**
+**Status:** PROPOSED (drafted 2026-07-17; **premise, §3a and §5 rewritten 2026-09-07** because the
+copy drift this pack was written to fix had since been fixed, and the pack would have asked Ewa to
+rule on a state of the world that no longer existed). **Every interval below is a draft for Ewa to
+confirm, change, or reject. Nothing ships until Ewa signs.**
 **Owner workspace:** `04_products/results-engine`. Compliance authority: `03_compliance/CONTEXT.md` (Guardrail 1 — results copy is clinical, Ewa signs).
 **Why now:** raised from `09_website-app/docs/2026-07-17-retest-cta-mechanism-decision.md`. Related ClickUp task: `869e66e9c` (Ewa sign-off — the blocker for the whole retest-CTA fix).
 
@@ -8,15 +11,40 @@
 
 ## 1. Why this table is needed
 
-The app currently states **three different retest intervals for the same all-clear result**:
+> 🔄 **PREMISE REWRITTEN 2026-09-07. The original reason for this pack has been fixed, and a
+> different, larger reason has replaced it.** Read this section as current; the struck text below
+> is kept so the change is visible rather than silent.
 
-| Surface | What it says for a healthy result |
-|---|---|
-| Dashboard CTA button (`classifier.ts` `retestReminder`) | "Book a retest in **3 months**" |
-| Marketing site (how-it-works, FAQ, testosterone + hormone LPs) | retest reminder at "**6 to 12 months**" / "6 months" |
-| Result-card recommendation copy (`biomarker-copy.ts`) | optimal-T and default normal say "**3–6 months**"; B12 says "6–12 months" |
+**~~The app currently states three different retest intervals for the same all-clear result~~ — it
+no longer does.** Checked against the code on 2026-09-07: `classifier.ts` now reads
+`'Retest in 6-12 months'`, `biomarker-copy.ts` contains no "3-6 months" string, and the four
+marketing surfaces all say "6 to 12 months". **The copy layer agrees with itself.** That drift was
+corrected during ordinary work between July and September, and nobody updated this pack.
 
-They cannot all be right. This table sets **one signed interval per result state** so every surface can be aligned to it. Retest timing is a clinical judgement, so it is yours to set. Fill in the "Ewa — agreed" column (and the notes), and we align the button, the marketing copy, and the card copy to match.
+**The reason to sign it now is bigger than the drift it was written for.** A result-driven retest
+cadence has since been proposed (`2026-09-06-result-driven-retest-cadence.md`): one exhaustive
+lookup, keyed by result state, that **every mechanism in the product reads from** rather than each
+carrying its own constant. **This table is the document that fills that lookup, cell by cell.** It
+has moved from an alignment exercise to the blocking clinical input for a piece of machinery.
+
+That raises the stakes on two things:
+
+- **An unsigned cell cannot ship.** The design deliberately makes any cell you have not ruled on
+  return "no Andro Prime retest date, clinician-led", so nothing fires on your silence. But it also
+  means the feature stays dark until cells are filled.
+- **A new question comes with it**, about whole-panel results rather than single markers. It is
+  section 3a below and it is the one I would most want your eye on.
+
+**~~The original framing, kept for the record:~~**
+
+| Surface | What it said in July 2026 | Today |
+|---|---|---|
+| Dashboard CTA button (`classifier.ts` `retestReminder`) | "Book a retest in **3 months**" | ✅ "Retest in 6-12 months" |
+| Marketing site (how-it-works, FAQ, testosterone + hormone LPs) | "**6 to 12 months**" / "6 months" | ✅ All four say "6 to 12 months" |
+| Result-card copy (`biomarker-copy.ts`) | optimal-T and default normal "**3–6 months**" | ✅ No "3-6 months" string remains |
+
+Retest timing is a clinical judgement, so it is yours to set. Fill in the "Ewa — agreed" column (and
+the notes), and the lookup is built from it.
 
 ---
 
@@ -115,6 +143,39 @@ The "proposed cadence" here is the **default for someone in range and feeling we
 
 ---
 
+## 3a. NEW, added 2026-09-07: what happens when one panel carries two different answers
+
+**This is the question I would most want your eye on, and it did not exist when this pack was
+written**, because the table above rules on one marker at a time and a Kit 3 result carries nine.
+
+A man's panel can easily produce a **GP-routed marker** (bucket A) and a **correctable deficiency**
+(bucket B) in the same result. The system has to produce **one** retest date from nine states.
+
+**Proposed reduction rule, and the ordering is the whole question:**
+
+1. If any marker is **clinician-led** (bucket A), the automated retest is **suppressed**, EXCEPT
+2. a **confirmatory recheck always wins** and is never suppressed (today that is only the sub-12
+   testosterone bands, which you signed on 2026-07-26), then
+3. otherwise the **shortest interval** among the remaining markers wins.
+
+**Rule 1 is the one that needs you.** It means a man with, say, a high CRP routing him to a GP
+**and** a low vitamin D would get **no Andro Prime retest scheduled at all**, where today the
+deficiency alone would have scheduled one. The reasoning is that a man being sent to a doctor should
+not simultaneously be scheduled a kit by us, and that his GP may change everything anyway. **The
+cost is that a genuine, correctable deficiency stops being followed up by us.**
+
+Three ways it could go, and I have no view worth more than yours:
+
+- **(a) As proposed.** GP routing suppresses everything. Safest on the "do not compete with the
+  doctor" axis, weakest on deficiency follow-up.
+- **(b) Suppress the retest but keep the guidance.** No date, no kit, but the card still says what
+  the deficiency is and what to do about it. My instinct, but it is a clinical call.
+- **(c) Let the deficiency schedule normally.** The GP referral and the retest are about different
+  markers and do not conflict.
+
+**A related boundary, also yours:** is there any result where a GP referral and one of our retests
+should genuinely coexist, or is the GP referral always the end of our involvement for that panel?
+
 ## 4. The questions this table answers for you
 
 1. ~~**All-clear cadence:** is Bucket C 6 months, 12 months, or a range?~~ **SETTLED (Keith 2026-07-17): 6–12 months, already agreed and live on the marketing site.** The button/card fix is alignment to this, not a new decision.
@@ -131,10 +192,30 @@ If a single number per bucket is easier than per-row, just set the bucket-level 
 
 ## 5. What changes once you sign
 
-- The dashboard retest button gets Bucket C's interval (or drops the number entirely and just says "order your next kit").
-- The card-copy retest lines in `biomarker-copy.ts` ("3–6 months" etc.) are rewritten to match this table.
-- The marketing pages already say 6–12 months for all-clear; they stay if that matches your sign-off, or get updated if you change it.
-- Bucket B intervals feed the retest reminder mechanism if Phase 2 is built (`retest_due_at`).
+> 🔄 **Rewritten 2026-09-07. The four items that used to be here are DONE**, which is why this pack
+> stopped being urgent and then quietly became more important. The dashboard button, the card copy
+> and the marketing pages were all aligned to 6-12 months between July and September.
+
+What signing does now:
+
+- **It fills the cadence lookup.** Each row you rule on becomes one cell of
+  `RETEST_CADENCE`, the single map every retest mechanism in the product reads from
+  (`2026-09-06-result-driven-retest-cadence.md`). Today eight separate mechanisms each carry their
+  own interval and only one of them looks at the result.
+- **Unsigned cells stay inert by construction.** Anything you have not ruled on returns
+  "clinician-led, no Andro Prime date". Nothing fires on your silence, and nothing needs to be
+  held back manually.
+- **§3a decides what a mixed panel does**, which no current rule covers.
+- **The copy layer is already aligned**, so signing 6-12 months for bucket C changes no customer
+  copy at all. It just makes the value binding rather than incidental.
+
+**A constraint you should know about, because it limits what a fast interval can do.** Keith adopted
+a rule on 2026-09-07: **a result-triggered recheck under 90 days must be prepaid or included in
+something the customer already holds, and may never trigger a new sale**
+(`2026-09-07-fast-recheck-must-be-prepaid-or-included.md`). So where the clinically right answer is
+a fast recheck and the man holds no bundle or membership, the system offers the GP route or the long
+window, never a checkout. **You should rule on the clinically correct interval and ignore this**; it
+constrains what we may do commercially with your answer, not what your answer should be.
 
 No copy or code change is made against any row until this sheet is signed.
 
