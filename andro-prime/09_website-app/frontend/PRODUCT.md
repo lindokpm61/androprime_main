@@ -192,6 +192,19 @@ copy of the word list here or anywhere else: cite the map.**
   authority is `design/mockups/directions/F-field.html` and the implementation is
   `styles/components/f-primitives.css`. Recorded here as a product-level commitment because it was a
   ruling, not a preference. Visual specifics belong in DESIGN.md, not this file.
+  **Coverage as of 2026-09-06: five marketing routes** — `/`, `/kits` and the three kit detail
+  pages — plus `/how-it-works`. The remaining marketing surface is still V2.0, which is why no dark
+  mode is implemented (DESIGN.md gap 1).
+  🔴 **The blog is NOT a gap and must not be swept into one.** `styles/base/blog-skin.css` is a
+  written, namespaced exception to two brand non-negotiables — the global box-shadow ban and the
+  white-only marketing ground — deliberately scoped under `.blog-skin` so it cannot reach `/kits`.
+  A Direction F blog is drawn (`design/mockups/journey/blog-F.html`) and **does not overturn the
+  2026-08-27 ruling on its own; that ruling stands until Keith rules again.**
+  ⚠ **One shared component crosses that boundary today and should not**: `RelatedArticles` renders
+  the blog's aesthetic in raw utility classes rather than under the namespace, so it walks onto the
+  three kit detail pages on foot. Its six call sites span two deliberately-different visual worlds
+  (three Direction F kit pages, two V2.0 supplement pages, every blog article). The fix is to make it
+  render in its host's world, and it is **independent of whether the blog is ever rebuilt**.
 - **Typeface is ruled:** a serif display over a humanist sans (Keith, 2026-08-30).
 
 ## Evidence on Hand
@@ -238,6 +251,14 @@ copy of the word list here or anywhere else: cite the map.**
 
 1. **Conflict-free is the lead, and the record is its proof.** Demonstrate what the product refuses
    to do. Never open on the app itself.
+   ⚠ **A lead is carried by emphasis, not only by wording, and it was measurably not being carried
+   (fixed 2026-09-04).** The claim had a full-bleed inverted panel on `/` and `/kits` and a plain
+   white container with no heading on all three kit detail pages, so the argument this file calls the
+   brand lead was loudest where nothing is sold and quietest where £99 to £179 is asked for. Not one
+   word differed; the containers did. **Where a principle has a designated surface treatment, check
+   the treatment surface by surface** — the wording audit passes either way.
+   ⚠ The CA-026 conformity sentence differs per kit and is not a template fill; all three are
+   verbatim and a mechanical check now asserts every sentence is present in the rendered output.
 2. **The customer has not chosen a question yet.** Copy that assumes he knows whether it is
    testosterone or vitamin D is copy written for someone else. Precision about what a kit can and
    cannot tell him is the product, not a caveat on it.
@@ -249,6 +270,22 @@ copy of the word list here or anywhere else: cite the map.**
 5. **Say what the number means, then say what it does not.** "In range" means not clinically ill; it
    does not mean well. That distinction is the whole proposition and it must survive every
    compression.
+   ✅ **It is now SHOWN, not only said, on every surface that sells a kit (2026-09-04).** The
+   two-range readout draws the laboratory's reference band and our action band on one track, so the
+   same number visibly receives two verdicts. It had been on `/` alone: the homepage promised "two
+   ranges, you should see both" and the three pages a buyer actually pays on drew a single bar with
+   no reference range at all. **A proposition demonstrated only on the page that sells nothing is a
+   claim, not a demonstration.**
+   🔴 **What may be drawn is a clinical question, not a design one.** Every band position is
+   arithmetic from `04_products/results-engine/thresholds.md` and from `resolveBarZones` in
+   `lib/results/classifier.ts`, which is the ratified source for what a bar draws per marker. A
+   marker whose rule is a FLOOR rather than a band (Albumin, Free Testosterone) draws to the end of
+   the track, because `resolveBarZones` returns `upTo: null` and Ewa answered **"No"** to an albumin
+   upper band on 2026-08-07. FAI draws no track at all (ruling 8, report-only).
+   ⚠ **"Lab normal" is the only approved lab-verdict string in the app**, so every row on this device
+   must carry a value the laboratory would call normal. That is a vocabulary limit rather than a
+   flattering choice, and it is also the honest case: the device's argument is that the lab says
+   normal and we do not.
 
 ## Accessibility & Inclusion
 

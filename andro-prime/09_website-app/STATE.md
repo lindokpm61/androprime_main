@@ -2,7 +2,7 @@
 
 Volatile, dated status: what is live / verified / owed **right now**. Durable architecture and access mechanics are in `CONTEXT.md`; this file is the moving layer. Update the date whenever a line changes.
 
-_Last updated: 2026-09-03 (🟢 **THE DETAIL-PAGE PASS HAS STARTED, AND THE SYSTEM NOW HAS ONE
+_Last updated: 2026-09-06 (🟢 **THE DETAIL-PAGE PASS HAS STARTED, AND THE SYSTEM NOW HAS ONE
 CONTAINMENT GRAMMAR.** `/kits/testosterone` is the pilot: 5 needle openers, `img-6` as a plate beside
 uncontained argument prose (the SAME asset this kit uses on `/` and `/kits`, so nothing is added to
 CA-045), and the panel strip under "Five numbers" linking back to `/kits`. Then the four boxed prose
@@ -21,9 +21,12 @@ missing) and redone with exact-string replacements only; the broken state is kep
 that must survive and compare, because syntax checks cannot see a well-formed deletion. Logged as
 observation 581, which notes the skill already documents this exact failure under a heading about the
 observation LOG, so its rules were applied there and not to the stylesheet in the same session.
-▶️ **NEXT: `/kits/energy-recovery` and `/kits/hormone-recovery`**, which still have 0 section rules and
-0 photographs, plus `rightFor` and the blurb's explanatory half to rehome, and `why` to add to the
-`/kits` panel. Earlier: 🟢 **FRAME O2 IS BUILT ON `/kits`, AND THE ANSWER TO "IS IT CONGRUENT" WAS
+🟢 **2026-09-06: the dead hover lift is fixed with a native `@layer`** -- fourth instance of one specificity tie, so the fix is structural rather than a fifth modifier; unlayered beats layered, so every interaction rule now outranks the reveal by construction. Also: **four consistency seams closed** -- `/kits` went from 0 to 7 pips, the last two "Order" labels are retired, all four unlabelled sections have labels, the eyebrows name their product from `lib/kits/names.ts`, and there is now ONE price scale across the five routes. Still open: `RelatedArticles`, which is NOT a simple restyle. ✅ **The ghost numeral is DROPPED** (Keith, 2026-09-06) -- though not for the reported reason: the "overhangs on five routes" finding was wrong and is withdrawn, measured contained on all four sides with 18 to 74px of clearance. It went because it was a crop effect whose crop had gone. Seven dead `.f-steps-open` rules went with it. Earlier: 🟢 **2026-09-04: the critique's two P0s are fixed and ALL THREE kit pages now run the two-range readout.** I raised a blocker on Kits 1 and 3 that did not exist -- the floor-shaped-marker ruling was already in `resolveBarZones` and in the v2 approval record, and Keith caught it by pointing at ClickUp (register row 23).** Earlier: ✅ **DONE 2026-09-03: `/kits/energy-recovery` and `/kits/hormone-recovery` are caught up**, and Kit 1
+took the hero ground it was also missing. All five F heroes now run one `HeroField`; Kits 2 and 3 went
+from 0 section rules to 4 and 8, from 0 photographs to `img-7` and `img-3` (both already on the CA-045
+register, matched by slug), and both lost the inline hero padding that was putting their order buttons
+under the consent banner at 390. ▶️ **NEXT: still owed on `/kits`** — `rightFor` and the blurb's
+explanatory half to rehome, and `why` to add to the panel. Earlier: 🟢 **FRAME O2 IS BUILT ON `/kits`, AND THE ANSWER TO "IS IT CONGRUENT" WAS
 NO UNTIL IT WAS.** Keith asked whether O2 was congruent with the homepage **on the dev server**.
 Measured: the mockup renders Geist headings with 0 section rules, the dev server renders Newsreader
 with 6 on `/`. **The journey frames predate the 2026-08-30 typeface ruling**, so judging congruence
@@ -319,6 +322,387 @@ is 0.663 x the rendered height**, working back from the surrounding type rather 
 ⚠ The first attempt to verify this reported the old size, because the dev server was serving stale
 HTML: the class in the DOM still read `h-6` while the file on disk read `h-4`. Reading the class off
 the live DOM is what caught it; a screenshot alone would have been believed.
+
+## ✅ THE GHOST NUMERAL IS DROPPED, AND THE OVERHANG IT WAS DROPPED FOR NEVER EXISTED (2026-09-06)
+
+Asked to fix it. Measured it first, and it is not broken.
+
+**On every `.f-step` of `/kits`, all three kit pages and `/how-it-works`, at 1440 and 390, with the
+numeral forced to its hover geometry, it is CONTAINED on all four sides.** 88px tall in a column of
+128 to 230px, with 18 to 74px of clearance above and below and 21.6px on the right. Confirmed by a
+forced-visible render as well as by measurement, because a measurement can be wrong too.
+
+🔴 **THE CRITIQUE'S NUMBERS WERE RIGHT AND ITS SIGN WAS NOT.** It reported "97px tall in a
+177px column, hanging 43px above and 39px below". The magnitudes match mine almost exactly (47.1 and
+42.2) but they are CLEARANCE, not overhang: `stepTop - numTop` is negative when the numeral sits
+inside. A quantity computed and reported without its sign checked reads as precise evidence, and it
+is the most persuasive kind of wrong finding -- specific, numerate, and confidently stated.
+
+🔴 **AND THE THING THAT MADE IT PLAUSIBLE WAS A COMMENT WARNING ABOUT THE BUG.** The dead
+`.f-steps-open` block carried: *"The ghost numeral needed the box's `overflow: hidden` to crop it.
+With no box there is nothing to crop against, so it is dropped here rather than left to overhang the
+paper."* Once the modifier lost its call sites, that comment read as a live guard against a live
+defect. It was neither: the `padding-right` compensation and the 0.78 line-height already keep the
+glyph inside its column. **A warning about a bug is not evidence of the bug**, and a comment
+describing a risk outlives the conditions that created it exactly the way a stale blocker does.
+
+### What WAS real: seven dead rules, and a token that moved underneath a comment
+
+✅ **DELETED.** `.f-steps-open` (the empty alias plus five descendant rules) and `.f-spec-open`
+had **zero call sites** anywhere in app, components, content or lib, and both carried their own
+instruction to go: *"Remove once none remain"* and *"Fold both in and delete the modifiers when it
+lands."* The Kit 3 rework they were waiting for landed this session.
+
+⚠ **Deleted against a counted invariant, because this file has form.** On 2026-09-03 a deletion
+here destroyed 1,573 of 2,271 lines and passed a brace-balance check, because a balanced deletion is
+still balanced. So the expected selector count was written down BEFORE the delete: **the first run
+asserted 8 and fired**, because the block holds 6 selectors and not 7. Nothing was written; the
+number was corrected to 7 and re-run. That is the guard doing its job on a miscount that a syntax
+check could never have seen. Verified after: 372 selectors to 365, braces balanced, and all four
+routes still render 4 steps, 4 numerals and 4 step-feet with an unchanged 1px top rule.
+
+🔴 **THE REAL DEFECT, AND IT IS NOT THE ONE I WAS ASKED TO FIX.** `--flag` now resolves to
+**`#0a0b0d`**, i.e. ink, since the amber ruling. The numeral draws
+`-webkit-text-stroke: 1px var(--flag)` at `opacity: 0.75`, so a device designed as a faint amber
+ghost now renders as a hard INK outline crossing the body copy: at 1440 on `/kits/testosterone` the
+"1" strokes straight through "Dispatched same day. Fits through your letterbox."
+
+Its own comment still says *"the frame draws it hollow in the accent"* and *"Marketing surface, so
+the accent is permitted"*. **Both sentences describe a treatment that no longer exists.** This is the
+same class of miss the 2026-09-02 amber sweep already produced twice: the sweep enumerated `.f-ticks`
+and the footer dots, closed the gap, and left every other glyph-use of the token unexamined. **A rule
+and its inventory are two claims, and closing an entry verifies only the first.**
+
+✅ **KEITH RULED: DROP IT (2026-09-06), and it is done.** The numeral is deleted from all five
+call sites -- `/kits`, the three kit pages and `/how-it-works` -- along with its three CSS rules and
+the child-stacking rule whose only job was lifting content above it. Verified on all five routes at
+1440 and 390: **0 numerals, 4 steps, 4 mono indices, 4 step-feet, no overflow, nothing hidden**, and
+`.f-step` keeps its 1px top rule and `position: relative`.
+
+The deciding argument was not the ink miscalibration, which was only the thing that made it visible.
+**It was a crop effect whose crop had gone.** An outsized glyph bleeding off a box edge works because
+the edge cuts it; the 2026-09-02 containment fold removed the box deliberately, and the numeral lost
+its reason then. The author of that fold had already written the rule to hide it and left a note
+saying why -- the rule simply never fired, because the class was never applied. Keeping it would have
+overturned a decision on the grounds that nobody had noticed it was inert. Two further findings
+closed it: **there was no touch path at all** (DESIGN.md claimed one; no JavaScript referenced the
+step or the numeral), and it was `aria-hidden` with `.f-no` already numbering every step at rest.
+
+⚠ **The counted invariant fired TWICE during this work and was right both times.** First on the
+dead-rule deletion, where I predicted 8 selectors and the block held 7. Then on the numeral removal,
+where it reported 2 removed against an expected 3 -- because my own counter was matching a `{` inside
+the replacement COMMENT and scoring it as a selector. Stripping comments before counting gave the
+true 3, and the CSS was never written on either failed run. **A deletion invariant has to be computed
+on code with comments removed, or the guard measures the wrong thing and can fail in either
+direction.** This file destroyed 1,573 lines on 2026-09-03 with a brace check that passed.
+
+## 🟢 THE HOVER LIFT IS ALIVE AGAIN, AND THE FIX IS A CASCADE LAYER RATHER THAN A FIFTH MODIFIER (2026-09-06)
+
+`.js .f-rise.on` is (0,3,0) and sets `transform: translate3d(0,0,0)`. Every element-level hover in
+`f-primitives.css` is (0,2,0), so `.f-tray:hover` and `.f-tray-pick:hover` both lost, and on any
+element carrying BOTH `.f-tray` and `.f-rise` the lift was dead -- including **`/kits`' three
+transaction cards**, the three objects on the site where a pointer response most needs to say "this
+is choosable". The symptom was worse than nothing happening: the shadow still grew to
+`--shadow-ambient-lift` while the card stayed put, which reads as a rendering hiccup.
+
+🔴 **THIS WAS THE FOURTH INSTANCE OF ONE BUG, AND THE FIRST THREE ARE WHY THERE WAS A
+FOURTH.** `.f-btn-ghost` shipped transparent, `.f-blab` shipped 30% oversized, `.f-tray-flag`'s ring
+never rendered, now this. Each was fixed by writing the next rule one level higher. That works once,
+for the pair you are looking at, and leaves the next author the same trap plus an example of the
+workaround to copy.
+
+**The fix: `@layer reveal` around the two `.f-rise` rules, and nothing else moves.** The whole
+mechanism is that **unlayered beats layered regardless of specificity**, so every interaction rule in
+the file now outranks the reveal BY CONSTRUCTION -- including hover rules that do not exist yet.
+Nobody has to remember to join a layer, and no reorder can re-break it.
+
+⚠ **The layer name is load-bearing.** `base`, `components` and `utilities` are Tailwind 3
+build-time directives, not native layers, and this file is `@import`ed above `@tailwind base`; its own
+header records that using one of those names makes postcss error out. `reveal` passes through, and
+that was **verified in the served stylesheet** rather than assumed.
+
+⚠ **Only the two reveal rules are wrapped.** The readout's band and needle animations stay
+unlayered: they collide with nothing and they are the one piece of motion carrying the page's
+argument, so they are not going behind an untested cascade change for tidiness. The reduced-motion
+override stays unlayered too and now beats the reveal twice over.
+
+**Verified in a browser, because all three previous instances passed whatever check was run at the
+time.** `/kits` `.f-kcard` rest `matrix(1,0,0,1,0,0)` -> hover `matrix(1,0,0,1,0,-3)`; Kit 1
+`.f-tray.f-rise` -> `-2`; a control `.f-tray` with no `.f-rise` unchanged at `-2`. The reveal still
+hides 24 of 25 below-fold elements at load carrying the full `matrix(1,0,0,1,0,44)` travel and 7px
+blur, still resolves to 0 hidden after a scroll, and reduced motion still forces 0 hidden. No copy
+touched, no markup touched: one CSS block.
+
+▶️ **Still open from the critique:** `RelatedArticles` (see the note below on why it is NOT a
+simple restyle). The ghost-numeral finding is withdrawn; see the entry above it.
+
+## 🟢 THE CONSISTENCY FLOOR: FOUR CHEAP SEAMS CLOSED, MEASURED BEFORE AND AFTER (2026-09-06)
+
+The critique's Overall Impression named two things as the biggest opportunity and both were fixed on
+2026-09-04 (the conformity claim's container, and the two-ranges promise). What it left was the
+sentence before them: a reader crossing the five pages "will think they were built in a different
+order". **Re-measured rather than working from the critique's snapshot**, which mattered: the verdict
+pill and the price scale had already converged as side effects of the readout port, so two of the
+listed seams were already gone.
+
+Four closed, all verified at 1440 and 390 on all five routes:
+
+| Seam | Before | After |
+| --- | --- | --- |
+| `.f-pip` on `/kits` | **0 of 10 CTAs** | **7 of 10**, matching `/`'s 7 of 9 |
+| Bare **"Order"** label | 2, in Kit 3's comparison table | **0 site-wide** |
+| Unlabelled `h2.f-h2` sections | **4** (Kit 1 FAQ, Kit 2 FAQ, Kit 3 founders + FAQ) | **0 on all five routes** |
+| Price display scale | `.f-kprice` 32px on `/` against `.f-price` 35.2px on four surfaces | **one scale**: 35.2px at 1440, 27.2px at 390, everywhere |
+
+**The pip and the "Order" label were both finishing rulings that already existed**, which is why they
+needed no decision. `/kits`' own source recorded the pip divergence and deferred it in writing. And
+register row 15 removed "Order" from `/kits`' cards on 2026-09-03, for two reasons that applied
+equally to Kit 3's table: it is not the label the other two surfaces use for the same action on the
+same products, and it over-promises, because the link goes to a product page rather than a basket.
+**That table was simply missed by the sweep**, which is the ordinary way a ruling ends up 80% applied.
+
+### The eyebrows now name the product, and it fixed a second thing on the way
+
+They read `none / "Diagnostic kits" / "Kit 01 // Testosterone" / "Data first" / "Data first"` — two
+DIFFERENT products sharing an eyebrow that identified neither, one click apart. Now **"Kit 1 //
+Testosterone Health Check"**, **"Kit 2 // Energy & Recovery Check"**, **"Kit 3 // Hormone & Recovery
+Check"**, read from `lib/kits/names.ts` rather than typed.
+
+Two things fall out of reading from the module rather than retyping. The number is **unpadded**,
+matching `/kits`' `NUMBER_LABEL` and the homepage cards, so the site's only "Kit 01" is gone. And
+row 14 records that the SHORT forms were the unapproved variant, so Kit 1's eyebrow has moved ONTO
+approved copy rather than away from it. Verified none of the three wraps at 390.
+
+⚠ **New copy, registered as rows 24 to 26.** The four section labels ("Questions" x3, "The
+founders") are genuinely new strings and go to pre-flight; they are section NAMES in the existing
+grammar and carry no claim, benefit, marker, threshold or number.
+
+### Still open from the critique
+
+- 🔴 **`RelatedArticles` is still V2.0**, on all three kit pages and neither of the other two,
+  landing immediately before the buy CTA. Largest single visual discontinuity across the five pages,
+  and it contradicts five Direction F rulings at once. This is DESIGN.md gap 4 and it is now the
+  highest-value item left.
+- 🔴 **The hover lift is dead on every `.f-tray.f-rise`**, including `/kits`' three
+  transaction cards: `.js .f-rise.on` at (0,3,0) outranks `.f-tray:hover` at (0,2,0). **Fourth**
+  instance of the same specificity tie in this stylesheet, which is the argument for a native
+  `@layer` rather than a fifth modifier written one level higher.
+- 🔴 **The ghost numeral overhangs its column on hover** across five routes including
+  `/how-it-works`: `.f-steps-open .f-bignum { display: none }` survives at `f-primitives.css:752` but
+  `.f-steps-open` has no call sites, so the guard never applies.
+- ⚠ **`.f-pstrip` is still absent from the homepage cards**, so `/` remains the only surface
+  selling kits without it. Deliberately not fixed: the cards state coverage as approved prose and
+  `.f-kit ul { flex: 1 }` is what holds them to equal height, so it needs Keith's call on the copy.
+- ⚠ **Images ship oversized on `/` and `/kits`** (up to 3.2x rendered width; `w=828` is pinned in
+  the `/_next/image` request). Not a cohesion seam, but free performance.
+
+⚠ **One measurement flake worth recording so it is not chased again.** A fast scroll-walk reports
+Kit 1's closing cross-sell tray at `opacity: 0`; a slower walk reports zero hidden elements on both
+pages. The reveal observer had not fired yet, not a defect. Two passes at different speeds is what
+distinguishes them.
+
+## 🟢 THE CRITIQUE'S TWO P0s ARE FIXED, AND A BLOCKER I RAISED TURNED OUT TO BE ALREADY RULED (2026-09-04)
+
+Ran the impeccable critique dual-agent over `/` against the four kit surfaces. **26/40, consistency
+scoring 1.** The hero handover the 2026-09-03 pass built is genuinely fixed and measured clean: five
+heroes on one `HeroField`, h1 65.6px at 1440 and 38.4px at 390 on all five, rhythm 130 / 85.8
+everywhere, zero horizontal overflow on ten page-by-width combinations, zero real contrast failures
+(worst 4.98:1), focus 30/30. What the critique found is that the seams moved below the fold.
+
+### The two P0s, both fixed
+
+**1. THE CONFLICT-FREE CLAIM HAD LOST ITS CONTAINER ON THE THREE PAGES THAT TAKE MONEY.**
+`.f-invert` count across the five routes measured **4, 4, 0, 0, 0**. `/` gives this argument a
+full-bleed ink panel ("We do not sell you the answer."), `/kits` gives its C1 the same, and the three
+kit pages gave the CA-026 D+ line a plain white tray with no heading and a body clamp that exists
+nowhere in the type scale. **The claim PRODUCT.md names as the brand lead was shouted where nothing
+is sold and murmured where 99 to 179 pounds is asked for.** All three now carry it in `.f-invert`,
+one per page, which is the cap. Verified: ink ground `rgb(10,11,13)`, all three text tiers at
+**19.69:1**, heading 48px at 1440 and 30.4px at 390. It also gives Kits 2 and 3 the dark anchor they
+had nowhere on the page: neither previously carried an ink-filled area larger than a button.
+
+⚠ **NOT ONE WORD CHANGED, and a near-miss is worth recording.** The sentence splits across
+`.f-invert-h` and `.f-invert-p` at a sentence boundary with order preserved. Kit 2's split falls one
+sentence later than Kit 1's, because its mono label IS its first sentence and splitting earlier set
+the identical string twice, once in mono and once at 48px -- invisible to every measurement I ran and
+obvious in a screenshot. **Applying that same shift to Kit 3 deleted "The full panel follows the same
+two rules." outright**, because Kit 3's label is only a SUBSTRING of its first sentence. Caught,
+reverted, and there is now a mechanical check asserting every CA-026 sentence is present in the
+rendered JSX of all three pages. A rule that is right on one page and destructive on its sibling is
+the failure mode of applying a fix by pattern across a set.
+
+**2. THERE WAS NO PRICE OBJECT ON ANY KIT PAGE.** `.f-price` / `.f-kprice` / `.f-prow-p` counted 3 on
+`/` and 6 on `/kits` and **zero** on all three detail pages: the number existed only as a substring
+inside the button label and one FAQ answer, on the page that takes the money. The same price rendered
+in **8 distinct type treatments** across the five pages. Each hero now carries a `.f-price` reading
+from `lib/pricing.ts`, measured at 35.2px/700 -- identical to `/kits`. ⚠ The price now appears
+twice in each hero, once as the object and once inside the approved button label; flagged rather than
+fixed, because shortening that label is a copy change.
+
+### The readout, which is where the real find was
+
+Keith's answer to "does the dashboard show both ranges" was **yes**, which makes the kit pages the
+place the argument was being dropped: `/` promises "Two ranges. Nine markers. You should see both"
+and the page you buy from showed one bar, no lab band, no reference range, no needle.
+
+**`/kits/energy-recovery` now runs the homepage's own `.f-mk` / `.f-track` / `.f-band` / `.f-you`
+device.** Three of its four rows are carried verbatim from `/` -- Vitamin D 58, Active B12 45,
+Ferritin 62, geometry and verdicts included -- so they assert nothing that has not already been
+rendered to customers. hs-CRP is the one new row, derived from thresholds.md on a 0-10 scale, and
+**its two bands coincide**, the weakest claim the device can make. Verified rendering: 4 tracks, 4
+lab bands, 4 action bands, 4 needles, **2 splits**.
+
+⚠ **Every row is lab-normal by construction and that is a compliance choice, not a flattering
+one.** `f-v-lab` carries "Lab normal" on all four, byte-identical to `/`. A value the lab would call
+out-of-range needs a second lab-verdict string that exists nowhere in the approved set.
+
+✅ **The all-flagged demonstration is reversed (Keith, 2026-09-04).** Kit 2's four rows read
+Action needed / Monitor / Monitor / Monitor: every marker flagged, so the demonstration of the product
+was a man for whom nothing is fine, which is fear-shaped and sits badly beside "we sell certainty and
+clarity". Now two In range and two Monitor, both Monitors genuine splits. The panel also gained
+**"Nothing here is a diagnosis"** from `/`, which it did not carry while drawing bands and verdicts.
+
+### 🔴 I RAISED A BLOCKER THAT DID NOT EXIST, AND THE ANSWER WAS IN CLICKUP
+
+I stopped Kits 1 and 3 from taking the readout and wrote the reason into three documents: Albumin and
+Free Testosterone are FLOORS rather than bands (`<35 -> GP` with the upper "left open"; `< referenceLow`
+with no upper action), so drawing an action band meant inventing a bound Ewa had declined to set.
+**Keith said to check ClickUp. The ruling already existed, in two places.**
+
+1. `approval-record-biomarker-bands-v2-2026-08-07.md` has a row reading **"Albumin upper band | No |
+   No change"**. Ewa was ASKED and answered **No**. That is a decision, not an omission, and I read
+   thresholds.md's prose ("happy to leave that for now") as the latter.
+2. **`lib/results/classifier.ts:resolveBarZones` implements it**: Albumin returns
+   `[{critical, upTo: 35}, {optimal, upTo: null}]` and Free Testosterone
+   `[{critical, upTo: referenceLow}, {optimal, upTo: null}]`. `upTo: null` IS "to the end of the
+   track" -- the exact drawing I said I could not make -- and it has been **rendering to customers on
+   the dashboard since the 2026-06-16 sign-off**.
+
+CA-044 also records the bands as **APPROVED**; what is still pending on it is the card WORDING for
+`high-testosterone` and `high-vitamin-d`, which these rows never touch. I had read "CA-044 pending"
+without reading what was pending.
+
+🔴 **THE FAILURE MODE IS ONE I HAD LOGGED MYSELF, TWICE.** Observation 309: a negative
+existence claim ("there is no ruling for X") decays faster than any other kind of recorded fact and
+must be re-tested against the ARTEFACT, not the sentence about it -- here, one grep for
+`resolveBarZones`, which the kit pages' own header comments already NAMED. Observation 253: the
+repo's approvals hub is ClickUp and it should be read before the repo. I did neither, and the cost was
+a wrong blocker written confidently into a register row, a STATE entry and a DESIGN.md rule, each of
+which would have been read later as fact.
+
+**So all three kit pages now carry the readout.** Kit 1: 5 rows, 4 tracks, 1 split (Total T), FAI
+drawing no track. Kit 3: 9 rows, 8 tracks, 3 splits. Verified no band escapes its track on any row at
+either width. On Albumin and Free T our band renders WIDER than the lab's at the top, which is the
+ruling drawn honestly: above the lab's upper limit we take no action.
+
+⚠ **Two Kit 3 values changed and Keith should see it.** Vitamin D 47 -> 58 and hs-CRP 2.1 -> 0.8,
+because 47 sits below Vitall's 50-250 interval and 2.1 above its <1.00, and **"Lab normal" is the only
+lab-verdict string that exists anywhere in the app** -- an out-of-range value needs a second string
+nobody has approved. The consequence is that Kit 3's demonstration is now milder than it was, with no
+Action-needed row at all. Registered as row 23.
+
+### Three defects from the critique that were mine
+
+- 🔴 **`--focal` was declared six times and read zero times.** `object-position:
+  var(--focal)` lived only on `.f-shot-band img`, and `.f-shot-band` has no call sites -- the modifier
+  was retired and its one live declaration went with it. Every photograph computed `50% 50%`, and
+  three source comments (two written on 2026-09-03) claimed the focal point was anchoring the crop.
+  Nothing failed, because a centred crop is not an error, it is the wrong crop. Moved to `.f-shot img`
+  so any shot honours it; now computes **`50% 0%` on Kits 1 and 2 and `50% 40%` on Kit 3**. The ruling
+  this enforces was written the day two decapitated portraits were caught by eye, after a screenshot
+  pass had already signed the change off.
+- ⚠ **`.f-herogrid` turns at 980px, not 900.** The comment I put in all three kit pages justified
+  adopting it by saying "every other boundary in this system turns at 900px", which is the SECTION
+  RHYTHM's number and not this primitive's. 980 is deliberate -- at 1.35fr/1fr a 900 turn gives the
+  readout column ~383px against ~417px, and the readout stops being legible below about 400. The
+  reason now sits on the rule itself so nobody "corrects" it, and all four wrong comments are fixed.
+- ⚠ **`.f-pstrip` is on `/kits` and the three kit pages but NOT the homepage cards**, so `/` is
+  now the only surface selling kits without it. **Not fixed, deliberately:** the homepage cards state
+  coverage as two lines of approved prose, and `.f-kit ul { flex: 1 }` is the mechanism holding the
+  three cards to equal height. Replacing the list removes approved copy AND the height mechanism on a
+  signed-off surface. It belongs in the consistency sweep with Keith's call, not in a defect fix.
+
+### What the critique found that no scan could
+
+⚠ **The CLI detector returned 3 advisory findings and that is a WEAK CLEAN: 14 of 59 rules could
+fire.** `.tsx` is not in `HTML_EXTENSIONS`, so all five files route to the regex engine and the
+static-HTML, browser and visual engines never execute; the page-analyzer phase also silently skipped,
+because `isFullPage()` needs a doctype no route file has. The previous critique's "9 of 25"
+understated it. **The in-page overlay then fired 10 rules and 198 findings, every one invisible to the
+CLI** -- 79 undersized-text, 28 cramped-padding, 26 kicker-above-heading, 17 heading-rhythm. Two have
+one mechanical cause each: every `h2.f-h2` on the three kit pages has 30px above and 45px below, so
+each heading binds to the block above rather than the content it introduces; and the 9.5px instance is
+`.f-navstat` in the global nav, so it is on every page in the app.
+
+⚠ **`kicker-above-heading` (26) and `numbered-section-labels` (16) are NOT defects here.** The
+craft-floor bans both by default; this project's committed world rules for both -- Keith's 2026-09-03
+section-grammar ruling and the `.f-srule` measurement device -- and the skill's own rule is that the
+brief wins. Recorded so the next run does not "fix" them.
+
+Snapshot: `.impeccable/critique/2026-09-03T22-36-00Z__app-marketing-page-tsx.md`.
+
+## 🟢 THE THREE KIT PAGES WERE A GENERATION BEHIND, AND NOTHING IN THEM SAID SO (2026-09-03)
+
+Asked to build the individual kit pages. **All three already existed and were already Direction F**,
+rebuilt 2026-08-29 and 08-31. What they were was one generation behind: their last commit predated the
+four commits that gave `/` and `/kits` the shared hero ground, and `/kits/testosterone` had not been
+touched since `4f36c0e`.
+
+🔴 **THE PART WORTH KEEPING IS HOW CLOSE THIS CAME TO BEING ANSWERED "ALREADY DONE".** Each of the
+three files opens with a `REBUILT IN DIRECTION F` banner and a recent date. Each banner was true when
+it was written and nothing updates it, so reading the file confirms conformance to a direction the file
+last checked itself against days ago. An `ls` shows three files, a header shows the right direction, a
+route check returns 200, and all three of those are true of a page missing the layer you were asked
+about. **The check that actually found it was `git log -- <path>` against `git log` for the branch**,
+and the four commit messages in between named the missing work exactly. Logged as observation 595.
+
+### What was ported, and none of it was a new decision
+
+| | Kit 1 | Kit 2 | Kit 3 |
+| --- | --- | --- | --- |
+| `HeroField` + `.f-ruleground` | added | added | added |
+| `.f-herogrid` over the raw Tailwind grid | added | added | added |
+| `f-sec-hero` over an inline `paddingTop` | already had it | **added** | **added** |
+| `SectionRule` spine | had 5 | **0 → 4** | **0 → 8** |
+| `.f-pstrip` coverage strip | had it | **added, 4 of 9** | **added, 9 of 9** |
+| Photograph | had `img-6` | **`img-7`** | **`img-3`** |
+| Prose out of its tray | done 2026-09-02 | **done** | n/a, its tray holds an instrument |
+
+**The hero ground was most owed exactly here.** `/` and `/kits` are the two pages that link into these
+three, so this was the click where the ground disappeared, and it is the click a buyer actually makes.
+DESIGN.md now carries the rule that follows: **a ground belongs to the system, not to a page.**
+
+**Kits 2 and 3 had no measurement device at all** while this repo's own DESIGN.md calls it the one
+piece of visual language the product owns. Counting them meant writing down what Kit 1 had only
+established by hand: a content section is a block opening with an `h2.f-h2`; the CA-026 conformity line
+and the symptom panel take no rule. That gives 4 and 8, and the count is load-bearing because the
+needle's position is `n / of`. Kit 3's panel section also took `f-sec-cont`: "what the kit contains"
+followed by "the nine markers it contains" is a continuation, the same relationship `/kits` uses the
+tighter gap for.
+
+**Both photographs are third placements of assets already on the CA-045 register**, matched by slug to
+what `/` and `/kits` already show for the same two kits, with alt text and captions carried verbatim
+rather than re-derived. That is the 2026-09-02 lesson applied: `img-5`'s alt described the opposite of
+its photograph because it had been written from a filename.
+
+⚠ **CA-045 q6/q7 now cover FIVE surfaces, not two**, and the packet as drafted describes one. Register
+row 18 is widened and row 19 is added. This is a scope note owed to the signers before the packet is
+sent, and it is now the more expensive version of that note: the three pages that just took the field
+are the ones a reader arrives at with intent to buy.
+
+⚠ **Two hero fixes had never travelled sideways.** Kit 1 got the consent-banner fix on 2026-08-31 and
+the containment move on 2026-09-02; neither reached Kits 2 or 3, so both kept order buttons under the
+banner at 390 for three days. A fix applied to the pilot page of a three-page set is not applied to
+the set, and nothing in this repo was checking for that.
+
+**Verified by looking, not by status code.** `tsc` clean. Screenshots at 1440 and 390 on all three
+plus `/kits`: ground present with canvas absolute at z-index 1 under a z-index 2 section at 0.34
+opacity, `.f-herogrid` at 629.6/466.4 (1.35:1) at 1440 and one column at 390, section rules sequential
+and complete on every page, strips at 5/4/9 markers on, one photograph per page loading at natural
+size, **no horizontal overflow at either width**, and nothing left invisible after a full scroll.
+⚠ The first capture showed large voids and they were an artefact of `fullPage` never firing the
+`.f-rise` observers; walking the page before capturing is what distinguishes that from a real defect,
+and a screenshot alone would have reported a broken page.
 
 ## ✅ The pointer was forging the "Most complete" ring, plus three more from the /kits critique (2026-09-03)
 

@@ -1,10 +1,16 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
+import { HeroField } from '@/components/marketing/HeroField'
+import { SectionRule } from '@/components/marketing/SectionRule'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
+import { KIT_NAMES } from '@/lib/kits/names'
+import { PRICING } from '@/lib/pricing'
+import { ALL_PANEL_MARKER_IDS, KIT_PANELS, panelCount } from '@/lib/kits/panel'
 
 /*
  * REBUILT IN DIRECTION F, 2026-08-31.
@@ -47,6 +53,42 @@ import { isBundlesEnabled } from '@/lib/flags'
  * components, the bundles flag behaviour, the CA-038 self-flagged sentence, the
  * CA-026 D+ Kit 2 conformity line, and the sample-report values with their
  * engine-derived states.
+ *
+ * ---------------------------------------------------------------------------
+ * CAUGHT UP WITH THE SYSTEM, 2026-09-03. Rebuilt 2026-08-31, then stood still
+ * while `/` and `/kits` took four more commits, so this was a Direction F page a
+ * generation behind Direction F. The header banner above said REBUILT IN
+ * DIRECTION F and was true when written, which is why the gap was invisible from
+ * inside the file: the tell was `git log` for this path against `git log` for the
+ * branch. Kit 2 had drifted furthest of the three, because Kit 1 got fixes on
+ * 2026-08-31 and 2026-09-02 that were never ported sideways.
+ *
+ * FIVE CHANGES, all ports of decisions already ruled elsewhere:
+ *
+ *   1. THE HERO TAKES THE SHARED GROUND. `HeroField` inside `.f-ruleground`, the
+ *      same component and geometry as `/`, `/kits` and the other two kit pages.
+ *   2. `f-sec-hero` REPLACES THE INLINE `paddingTop: 62`. This page never got
+ *      Kit 1's 2026-08-31 consent-banner fix, so at 390 the order button sat
+ *      under the banner. An inline literal cannot be overridden by the class,
+ *      which is the whole reason that fix moved the value onto a token.
+ *   3. `.f-herogrid` REPLACES THE RAW TAILWIND GRID. Same 1.35fr/1fr pair, but
+ *      Tailwind's `lg` turns at 1024px and `.f-herogrid` turns at 980.
+ *   4. THE SECTION SPINE ARRIVES. Four `SectionRule`s, one per content section
+ *      between the hero and the close, following the convention DESIGN.md sets:
+ *      the hero takes no rule and the close takes no rule, so `of` counts what
+ *      is between them. This page and Kit 3 had NO measurement device at all
+ *      while `/`, `/kits` and Kit 1 all carried it, and DESIGN.md calls it the
+ *      one piece of visual language the product owns.
+ *   5. THE PROSE LEFT ITS TRAY AND A PHOTOGRAPH ARRIVED. Kit 1's 2026-09-02
+ *      containment move, ported: an argument is not a transaction or an
+ *      instrument, so it does not belong in a card. The symptom grid keeps its
+ *      tray. The photograph is `img-7`, already used for this kit on `/` and
+ *      `/kits` and already on the CA-045 register, matched by slug.
+ *
+ * NO NEW COPY. The photograph's alt text and caption are existing approved
+ * strings carried verbatim from `/kits`; the prose is the same two sentences in
+ * a different container. Registered in `09_website-app/redesign-copy-register.md`
+ * rows 18 and 19.
  */
 
 // Render per-request so isBundlesEnabled() reads BUNDLES_ENABLED from the live
@@ -167,25 +209,110 @@ const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
  * changed here without re-deriving its state is a mockup that contradicts the
  * product.
  */
-const SAMPLE_ROWS: {
-  label: string
-  sub: string
+/*
+ * THE SAMPLE READOUT, REBUILT AS THE TWO-RANGE DEVICE, 2026-09-04.
+ *
+ * WHY IT CHANGED. `/` opens on "Two ranges. Nine markers. You should see both",
+ * and then the page that actually takes the money showed ONE bar, no lab band,
+ * no reference range and no needle. The promise was made on the page that sells
+ * nothing and broken on the page that sells. This row set is now the same
+ * `.f-mk` / `.f-track` / `.f-band` / `.f-you` device the homepage uses, from the
+ * same geometry, so the argument survives the click.
+ *
+ * EVERY BAND POSITION IS ARITHMETIC FROM `04_products/results-engine/
+ * thresholds.md`, and THREE OF THESE FOUR ROWS ARE CARRIED VERBATIM FROM THE
+ * HOMEPAGE, values and verdicts included. That is deliberate: those three have
+ * already been rendered to customers with this exact geometry, so porting them
+ * adds no new clinical assertion. Only hs-CRP is new here, and its two bands
+ * COINCIDE, which is the weakest visual claim the device can make.
+ *
+ * EVERY ROW IS LAB-NORMAL BY CONSTRUCTION, and that is a compliance choice
+ * rather than a flattering one. `f-v-lab` carries the string "Lab normal" on all
+ * four rows, byte-identical to `/`. Choosing a value the lab would call
+ * out-of-range would have required inventing a second lab verdict string that
+ * exists nowhere in the approved set. The device's whole argument is "the lab
+ * says normal and we do not", so lab-normal rows are also the honest case.
+ *
+ * THE RESULT IS NOW MIXED, WHICH IS A DELIBERATE REVERSAL (Keith, 2026-09-04).
+ * The previous four rows read Action needed / Monitor / Monitor / Monitor: every
+ * marker flagged, so the demonstration of the product was a man for whom nothing
+ * is fine. For a reader arriving because he is not recovering, that is
+ * fear-shaped and it sits badly beside "we sell certainty and clarity". Two rows
+ * now read In range and two read Monitor. Both Monitors are genuine SPLITS, so
+ * the page still shows the product finding something a standard report misses.
+ *
+ * Do not adjust a number here without re-deriving its percentage. A value moved
+ * without its arithmetic is a page that contradicts the results engine.
+ */
+const READOUT: {
+  name: string
+  qualifier: string | null
   value: string
-  status: string
-  band: 'ok' | 'warn'
-  width: string
+  unit: string
+  labLeft: number
+  labWidth: number
+  oursLeft: number
+  oursWidth: number
+  you: number
+  lab: string
+  ours: string
+  split: boolean
 }[] = [
-  // Under 50 is `low-vitamin-d`. Amber zone, Action Needed badge. Badge and bar
-  // deliberately disagree in emphasis here: the zone is amber, the state is
-  // `low-vitamin-d`, and that badges ACTION NEEDED.
-  { label: 'Vitamin D', sub: 'Muscle function & energy', value: '44', status: 'Action needed', band: 'warn', width: '26%' },
-  // NG239: 25 to 70 is `borderline-b12`, badged Monitor.
-  { label: 'Active B12', sub: 'Cellular energy', value: '61', status: 'Monitor', band: 'warn', width: '56%' },
-  // Optimal closes at 1.0 (Ewa, CA-034 E1, threshold explicitly not moved), so
-  // 1.2 is `elevated-crp`, badged Monitor.
-  { label: 'hs-CRP', sub: 'Inflammation', value: '1.2', status: 'Monitor', band: 'warn', width: '68%' },
-  // 30 to 100 is `suboptimal-ferritin`, badged Monitor.
-  { label: 'Ferritin', sub: 'Iron stores', value: '38', status: 'Monitor', band: 'warn', width: '30%' },
+  {
+    // CARRIED FROM `/`. thresholds.md: <25 -> GP, <50 low, 50-250 normal, >250
+    // -> GP (Ewa 2026-08-07). Vitall male range 50-250 nmol/L. Scale 0-250.
+    //   lab      50 -> 20.0%, 250 -> 100%, width 80.0%
+    //   ours     50 -> 20.0%, 250 -> 100%, width 80.0%
+    //   marker   58 -> 23.2%
+    // The two ranges COINCIDE, which is why `.f-band-ours` is inset 2px
+    // vertically: at equal height it covered the lab band exactly.
+    // `normal-vitamin-d` badges In range.
+    name: 'Vitamin D', qualifier: 'muscle function & energy', value: '58', unit: 'nmol/L',
+    labLeft: 20, labWidth: 80, oursLeft: 20, oursWidth: 80, you: 23.2,
+    lab: 'Lab normal', ours: 'In range', split: false,
+  },
+  {
+    // CARRIED FROM `/`. NICE NG239 three-band, <25 low, 25-70 borderline, >70
+    // normal; Ewa re-ratified 2026-08-07 with the assay cut visible. Vitall
+    // assay cut is >37.5 pmol/L. Scale 0-100.
+    //   lab    37.5 -> 37.5%, 100 -> 100%, width 62.5%
+    //   ours     25 -> 25.0%,  70 ->  70%, width 45.0%
+    //   marker   45 -> 45.0%
+    // SPLIT: the assay calls 45 normal, NG239 calls it indeterminate. Same
+    // number, two verdicts. `borderline-b12` badges Monitor.
+    name: 'Active B12', qualifier: 'cellular energy', value: '45', unit: 'pmol/L',
+    labLeft: 37.5, labWidth: 62.5, oursLeft: 25, oursWidth: 45, you: 45,
+    lab: 'Lab normal', ours: 'Monitor', split: true,
+  },
+  {
+    // THE ONE NEW ROW ON THIS PAGE, and its bands coincide.
+    // thresholds.md hs-CRP: <=1 normal, >1-3 elevated, >3-10 moderate, >10 -> GP
+    // (AHA/CDC 2003 consensus banding, Ewa 2026-06-16 ruling 6 "no change").
+    // Vitall reference is <1.00 mg/L, matching our cut at 1 exactly (line 63 of
+    // thresholds.md records the match). Scale 0-10, chosen as the full
+    // actionable range up to the GP cut.
+    //   lab       0 ->  0.0%,   1 -> 10.0%, width 10.0%
+    //   ours      0 ->  0.0%,   1 -> 10.0%, width 10.0%
+    //   marker  0.8 ->  8.0%
+    // No split is POSSIBLE here at a lab-normal value: the lab's cut and ours
+    // are the same number, so agreement is the only truthful drawing.
+    // `normal-crp` badges In range.
+    name: 'hs-CRP', qualifier: 'inflammation', value: '0.8', unit: 'mg/L',
+    labLeft: 0, labWidth: 10, oursLeft: 0, oursWidth: 10, you: 8,
+    lab: 'Lab normal', ours: 'In range', split: false,
+  },
+  {
+    // CARRIED FROM `/`. thresholds.md: <30 -> GP, 30-100 borderline /
+    // indeterminate (Ewa ruling 5, 2026-06-16), 100-300 normal, >300 -> GP.
+    // Vitall male range 30-442 ug/L. Scale 0-450.
+    //   lab      30 ->  6.7%, 442 -> 98.2%, width 91.5%
+    //   ours     30 ->  6.7%, 100 -> 22.2%, width 15.5%
+    //   marker   62 -> 13.8%
+    // SPLIT. `suboptimal-ferritin` badges Monitor.
+    name: 'Ferritin', qualifier: 'iron stores', value: '62', unit: 'µg/L',
+    labLeft: 6.7, labWidth: 91.5, oursLeft: 6.7, oursWidth: 15.5, you: 13.8,
+    lab: 'Lab normal', ours: 'Monitor', split: true,
+  },
 ]
 
 const BIOMARKERS = [
@@ -223,17 +350,76 @@ export default function KitEnergyRecoveryPage() {
     <div className="f-page">
       <JsonLd data={kitSchema} />
 
-      {/* ---------------- HERO ---------------- */}
-      <div className="f-wrap" style={{ paddingTop: 62, paddingBottom: 44 }}>
-        <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-11 lg:items-start">
+      {/* ---------------- HERO ----------------
+          THE GROUND, ported 2026-09-03. The SAME `HeroField` as `/`, `/kits` and
+          the other two kit pages. `.f-ruleground` sits OUTSIDE `.f-wrap` because
+          constraining a full-bleed ground to the 1180px measure draws a box with
+          two hard edges, and the hero is a `<section>` because the stylesheet
+          lifts `.f-ruleground > section` alone: `.f-field` sets its own
+          `position: absolute` / `z-index: 1` and a blanket child rule would drop
+          the canvas into flow. Mask, opacity and the per-row fade near the
+          headline all come from `.f-field`, so nothing is added here for
+          contrast. ⚠ CA-045 q6/q7 are open against this layer; register row 18.
+
+          `f-sec-hero` REPLACES the inline `paddingTop: 62`, which is a fix this
+          page never got. Kit 1 moved its hero padding onto the class on
+          2026-08-31 because at 390 the consent banner covered 78% of the order
+          button; `--f-hero-pt` is given back while the banner is up and an
+          inline style cannot be overridden by the class. This page and Kit 3
+          kept the inline literal and therefore kept the defect. */}
+      <div className="f-ruleground">
+        <HeroField />
+      <section
+        className="f-wrap f-sec-hero"
+        style={{ ['--f-hero-pt' as string]: '62px', ['--f-hero-pt-lg' as string]: '62px', paddingBottom: 44 }}
+      >
+        {/* `.f-herogrid`, not the raw Tailwind grid it replaced: same 1.35fr/1fr
+            pair, but Tailwind's `lg` turns at 1024px and this one turns at 980.
+            ⚠ CORRECTED 2026-09-04. This comment used to say "every other boundary
+            in this system turns at 900px", which is the section rhythm's number
+            and not this primitive's. `.f-herogrid` turns at 980 on purpose, so
+            the readout column keeps ~417px rather than ~383px; the reason is now
+            recorded on the rule itself. The justification was wrong in three
+            files while the code was right in one, which is the cheaper direction
+            for that mistake to run but still a claim nobody had checked. */}
+        <div className="f-herogrid f-rise">
           <div>
-            <div className="f-eyebrow mb-5">Data first</div>
+            {/* THE EYEBROW NAMES THE PRODUCT, 2026-09-06. Across the five F routes these
+                read: none, "Diagnostic kits", "Kit 01 // Testosterone", "Data first",
+                "Data first" -- so two DIFFERENT products shared an eyebrow that
+                identified neither, one click apart.
+                Two things are fixed at once. The number is UNPADDED, matching
+                `/kits`' own `NUMBER_LABEL` ("Kit 1") and the homepage cards; Kit 1
+                was the only "Kit 01" on the site. And the name is read from
+                `lib/kits/names.ts` rather than typed, so this is not a 67th
+                hardcoded call site -- register row 16 counts 66 and row 14 records
+                that the SHORT forms ("Testosterone") were the unapproved variant,
+                which is what this eyebrow used to carry. */}
+              <div className="f-eyebrow mb-5">Kit 2 // {KIT_NAMES['energy-recovery']}</div>
 
             <h1 className="f-h1 mb-5">Sore for three days after a workout that used to take one.</h1>
 
             <p className="f-stand mb-7">
               An at-home blood test for tiredness and fatigue. Find out which deficiency is slowing you down: four biomarkers, one finger prick. Results in 2 to 5 working days, in plain English, with a specific recommendation based on your numbers.
             </p>
+
+            {/* THE PRICE, AS AN OBJECT, 2026-09-04. Before this there was no
+                price element on any of the three kit pages: `.f-price` /
+                `.f-kprice` / `.f-prow-p` counted 3 on `/` and 6 on `/kits` and
+                ZERO here, so the number existed only as a substring inside the
+                button label and in one FAQ answer. A reader arriving from either
+                of those pages met the price as a 32-35px typographic object and
+                landed on the page that takes the money with nothing to look at.
+
+                🔴 IT READS FROM `lib/pricing.ts`, NEVER A LITERAL. The register
+                already records that the three product names had 66 hardcoded call
+                sites and one module claiming to be their source; a price typed by
+                hand here would be the same defect on the more expensive field.
+
+                `.f-price` is the SAME class `/kits` uses, so the three surfaces
+                selling this kit now set its price in one type treatment rather
+                than the eight the critique measured across the five pages. */}
+            <p className="f-price" style={{ marginBottom: 18 }}>&pound;{PRICING.KIT_2.rrp}</p>
 
             {bundlesEnabled ? (
               // Bundle-forward hero: the Prove-It bundle is the primary action,
@@ -269,27 +455,50 @@ export default function KitEnergyRecoveryPage() {
           </div>
 
           {/* Sample report. A results panel: status bands, never the accent. */}
-          <div className="f-tray f-rise" style={{ marginBottom: 0 }}>
+          <div className="f-tray" style={{ marginBottom: 0 }}>
             <div className="f-core">
               <div className="flex items-center justify-between gap-3.5 pb-3.5 mb-1.5" style={{ borderBottom: '1px solid var(--hair-2)' }}>
                 <h2 className="f-h4" style={{ fontSize: 18 }}>Your results</h2>
-                <span className="f-kchip">Sample report</span>
+                {/* "Nothing here is a diagnosis" is carried from `/`, where it sits
+                    in `.f-ro-h` beside this same device. This panel drew bands and
+                    verdicts without it. Existing approved copy, new placement. */}
+                <span className="f-kchip">Nothing here is a diagnosis</span>
               </div>
 
-              <div className="f-rep">
-                {SAMPLE_ROWS.map(({ label, sub, value, status, band, width }) => (
-                  <div key={label}>
-                    <div className="f-row-top">
-                      <div>
-                        <span className="f-lab">{label}</span>
-                        <div className="f-sub2">{sub}</div>
+              {/* The key. Carried verbatim from `/`, and it is not optional: without
+                  it the chart asks the reader to infer which grey is the lab and
+                  which is ours, four rows running. Padding is zeroed because
+                  `.f-ro-k` carries its own for the homepage's edge-to-edge card
+                  and this one sits inside a normally padded `.f-core`. */}
+              <div className="f-ro-k" style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <span><i className="f-k-lab" aria-hidden="true" />Lab reference range</span>
+                <span><i className="f-k-ours" aria-hidden="true" />Our action band</span>
+                <span><i className="f-k-you" aria-hidden="true" />Your value</span>
+              </div>
+
+              <div>
+                {READOUT.map((m) => (
+                  <div key={m.name} className={m.split ? 'f-mk f-mk-split' : 'f-mk'}>
+                    <div className="f-mk-t">
+                      <div className="f-mk-n">
+                        {m.name}
+                        {m.qualifier ? <small>{m.qualifier}</small> : null}
                       </div>
-                      <div>
-                        <div className="f-val">{value}</div>
-                        <span className={band === 'warn' ? 'f-st f-st-hot' : 'f-st'}>{status}</span>
-                      </div>
+                      <div className="f-mk-v">{m.value}<i>{m.unit}</i></div>
                     </div>
-                    <div className="f-bar"><i className={band === 'warn' ? 'warn' : undefined} style={{ width }} /></div>
+                    <div
+                      className="f-track"
+                      role="img"
+                      aria-label={`${m.name} ${m.value} ${m.unit}. Laboratory reference range: ${m.lab}. Andro Prime action band: ${m.ours}.`}
+                    >
+                      <div className="f-band f-band-lab" style={{ left: `${m.labLeft}%`, width: `${m.labWidth}%` }} />
+                      <div className="f-band f-band-ours" style={{ left: `${m.oursLeft}%`, width: `${m.oursWidth}%` }} />
+                      <div className="f-you" style={{ left: `${m.you}%` }} />
+                    </div>
+                    <div className="f-verd">
+                      <span className="f-v-lab">{m.lab}</span>
+                      <span className="f-v-ours">{m.ours}</span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -303,10 +512,12 @@ export default function KitEnergyRecoveryPage() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
+      </div>{/* /.f-ruleground */}
 
       {/* ---------------- THE REALITY ---------------- */}
       <div className="f-wrap f-sec">
+        <SectionRule n={1} of={4} />
         <p className="f-blab">The reality</p>
         <h2 className="f-h2">
           You&rsquo;re doing everything right.<br />
@@ -314,9 +525,24 @@ export default function KitEnergyRecoveryPage() {
         </h2>
       </div>
       <div className="f-wrap">
-        <div className="f-tray f-rise">
-          <div className="f-core grid gap-6">
-            <div>
+        {/* 🔴 THE PROSE LEFT ITS TRAY, 2026-09-03, which is the same move Kit 1
+            made on 2026-09-02 and the reason its reality section reads as a
+            document while this one read as an interface. Containment rule: a
+            card holds a transaction or an instrument, and an argument is
+            neither. The symptom grid below KEEPS its tray, for the reason Kit 1
+            records: a structured set the reader scans is not an argument.
+
+            The photograph is `img-7`, THE SAME ASSET this kit already uses on
+            the homepage kit card and on /kits, matched by slug. No new image and
+            nothing added to the CA-045 register, and the three surfaces selling
+            Kit 2 now show the same face. Alt text and caption are carried
+            verbatim from /kits rather than rewritten, because that copy was
+            checked against the actual photograph. Focal point anchors to the top:
+            the man is composed high in frame (head running 9% to 32%) and a
+            centred 4:3 crop takes his head off. */}
+        <div className="f-bento">
+          <div className="f-c-7 f-rise">
+            <div className="f-plain">
               <p className="f-sub">You train. You eat well. You sleep. But your recovery has slowed, your energy tanks by mid-afternoon, and your joints ache in a way they didn&rsquo;t two years ago.</p>
               {/* PERMANENT SELF-FLAG, do not re-escalate. The deterministic scanner matches the
                   last three words of this sentence against its retest/efficacy table on every
@@ -328,18 +554,39 @@ export default function KitEnergyRecoveryPage() {
                   ruling rests on is the first thing a compression drops. */}
               <p className="f-sub">You&rsquo;re not injured. You&rsquo;re not lazy. Something in your blood is holding you back, and guessing won&rsquo;t fix it.</p>
             </div>
-            <div>
-              {/* RESTORED. Frame Q's label declares eight sections and the frame draws seven;
-                  this is the one it dropped. The live page carries it and Frame P draws the
-                  equivalent panel for Kit 1. No route card here: Kit 1's symptom grid carries
-                  one because it routes a tired reader AWAY to this kit, and the live Kit 2 page
-                  has no counterpart. Adding one would be new copy, not a port. */}
-              <p className="f-blab">Symptoms</p>
-              <div className="f-symp">
-                {SYMPTOMS.map(({ label, detail }) => (
-                  <div key={label}><b>{label}.</b> {detail}</div>
-                ))}
+          </div>
+          <div className="f-c-5 f-rise">
+            <div className="f-plate">
+              <div
+                className="f-shot f-shot-r43"
+                style={{ '--focal': '50% 0%' } as React.CSSProperties}
+              >
+                <Image
+                  src="/home/img-7.jpg"
+                  alt="A man in his early forties sitting on the bottom stair of a hallway after a run, still in running kit, catching his breath."
+                  width={800}
+                  height={600}
+                />
               </div>
+              <span className="f-shot-cap">Not bouncing back</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="f-wrap" style={{ paddingTop: 26 }}>
+        <div className="f-tray f-rise">
+          <div className="f-core">
+            {/* RESTORED. Frame Q's label declares eight sections and the frame draws seven;
+                this is the one it dropped. The live page carries it and Frame P draws the
+                equivalent panel for Kit 1. No route card here: Kit 1's symptom grid carries
+                one because it routes a tired reader AWAY to this kit, and the live Kit 2 page
+                has no counterpart. Adding one would be new copy, not a port. */}
+            <p className="f-blab">Symptoms</p>
+            <div className="f-symp">
+              {SYMPTOMS.map(({ label, detail }) => (
+                <div key={label}><b>{label}.</b> {detail}</div>
+              ))}
             </div>
           </div>
         </div>
@@ -347,8 +594,29 @@ export default function KitEnergyRecoveryPage() {
 
       {/* ---------------- THE DATA ---------------- */}
       <div className="f-wrap f-sec">
+        <SectionRule n={2} of={4} />
         <p className="f-blab">The data</p>
         <h2 className="f-h2">A blood test for tiredness.<br /><span className="f-grey">Four markers, four answers.</span></h2>
+      </div>
+      {/* The panel strip, the same instrument /kits leads with, scoped to this kit
+          and ported from Kit 1. It says "these four of the nine we run" in the
+          shape a reader has already met one click earlier. No value, no range, no
+          needle: nobody has taken the test, so there is nothing to read, and this
+          draws COVERAGE only. Derived from KIT_PANELS, so it cannot desync from
+          /kits or from the engine. */}
+      <div className="f-wrap" style={{ paddingBottom: 22 }}>
+        <div className="f-pstrip" aria-hidden="true" style={{ maxWidth: 420, marginTop: 0 }}>
+          {ALL_PANEL_MARKER_IDS.map((id) => (
+            <span
+              key={id}
+              className={KIT_PANELS['energy-recovery'].includes(id) ? 'f-ps f-on' : 'f-ps'}
+            />
+          ))}
+        </div>
+        <p className="f-blab f-pscount">
+          {panelCount('energy-recovery')} of {ALL_PANEL_MARKER_IDS.length} markers &middot;{' '}
+          <Link href="/kits" style={{ textDecoration: 'underline' }}>see the full panel</Link>
+        </p>
       </div>
       <div className="f-wrap">
         <div className="f-bios">
@@ -364,6 +632,7 @@ export default function KitEnergyRecoveryPage() {
 
       {/* ---------------- THE PROCESS ---------------- */}
       <div className="f-wrap f-sec">
+        <SectionRule n={3} of={4} />
         <p className="f-blab">The process</p>
         <h2 className="f-h2">Five minutes.<br /><span className="f-grey">No GP needed.</span></h2>
       </div>
@@ -374,7 +643,6 @@ export default function KitEnergyRecoveryPage() {
               deciding whether to buy is the first. Same ruling as Kit 1. */}
           {STEPS.map(({ n, t, b, metaK, metaV }) => (
             <div key={n} className="f-step f-rise">
-              <span className="f-bignum" aria-hidden="true">{n.replace(/^0/, '')}</span>
               <span className="f-no">{n}</span>
               <h3 className="f-h4 mt-2.5 mb-2">{t}</h3>
               <p className="f-sub" style={{ fontSize: 14.5 }}>{b}</p>
@@ -385,21 +653,56 @@ export default function KitEnergyRecoveryPage() {
       </div>
 
       {/* CONFORMITY LINE: D+ Kit 2 (CA-026), rendered VERBATIM. There is one of these
-          on each kit page and all three sentences differ; none is a template fill. */}
+          on each kit page and all three sentences differ; none is a template fill.
+
+          🔴 IT TOOK THE INK PANEL ON 2026-09-04, AND THE REASON IS WHERE IT WAS NOT.
+          `/` gives this same argument a full-bleed `.f-invert` ("We do not sell you
+          the answer.") and `/kits` gives its C1 the same. The three pages that
+          actually take money gave it a plain white tray with no heading, so the
+          claim PRODUCT.md names as the brand lead was shouted where nothing is sold
+          and murmured where £99 to £179 is asked for. Measured before the change:
+          `.f-invert` count across the five F routes was 4, 4, 0, 0, 0.
+
+          ⚠ NOT ONE WORD CHANGED, AND THE SPLIT IS AT A SENTENCE BOUNDARY WITH THE
+          ORDER PRESERVED. The first sentence becomes the heading and the remainder
+          becomes the paragraph, which is the homepage's own structure and is applied
+          identically on all three kit pages. A reordering would have been a copy
+          edit wearing a container's clothes. Registered as row 20.
+
+          This is also each page's ONE inverted block, which is the cap DESIGN.md
+          sets, and it gives Kits 2 and 3 the dark anchor they had nowhere on the
+          page: before this, neither carried an ink-filled area larger than a
+          button. */}
       <div className="f-wrap" style={{ paddingTop: 26 }}>
-        <div className="f-tray f-rise">
-          <div className="f-core">
-            <p className="f-blab">Some results need a doctor</p>
-            <p style={{ fontSize: 'clamp(1.15rem,2.2vw,1.5rem)', lineHeight: 1.45, letterSpacing: '-0.025em' }}>
-              Some results need a doctor. Low ferritin, for example, goes to a GP and earns us nothing. The rest get a plain-English reading, and what we offer alongside it is the same whether your numbers are flagged or fine.
-            </p>
-          </div>
+        <div className="f-invert f-rise">
+          <p className="f-blab f-blab-lg f-invert-lab">Some results need a doctor</p>
+          {/* ⚠ THE SPLIT IS ONE SENTENCE LATER THAN KIT 1'S, AND A SCREENSHOT IS
+              WHY. Splitting after sentence 1 put "Some results need a doctor" in
+              the mono label AND "Some results need a doctor." in the 48px
+              heading, one above the other: this page's approved label happens to
+              BE its first sentence, which no measurement catches and which reads
+              as a duplication bug. Order is still preserved and no word changed;
+              only the boundary moved. It also lands "earns us nothing" in the
+              heading, which is the sentence doing the work. */}
+          <h2 className="f-h2 f-invert-h">Low ferritin, for example, goes to a GP and earns us nothing.</h2>
+          <p className="f-sub f-invert-p">
+            The rest get a plain-English reading, and what we offer alongside it is the same whether your numbers are flagged or fine.
+          </p>
         </div>
       </div>
 
       {/* ---------------- FAQ ----------------
           Open grid, standardised across all three kit pages (Keith, 2026-08-29). */}
-      <div className="f-wrap f-sec"><h2 className="f-h2">Frequently asked questions</h2></div>
+      <div className="f-wrap f-sec">
+        <SectionRule n={4} of={4} />
+        {/* Section label added 2026-09-06. Keith's 2026-09-03 ruling is one section
+            grammar across the F pages and it is `/kits`' labelled one; `/` and
+            `/kits` label 4 of 4, and the three kit pages were leaving their FAQ
+            (and Kit 3 its founders) bare. "Questions" is a section NAME and carries
+            no claim. Registered as row 24. */}
+        <p className="f-blab">Questions</p>
+        <h2 className="f-h2">Frequently asked questions</h2>
+      </div>
       <div className="f-wrap">
         <div className="f-faqgrid">
           {FAQ_ITEMS.map(({ question, answer }) => (

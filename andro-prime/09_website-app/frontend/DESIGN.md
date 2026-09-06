@@ -327,8 +327,16 @@ most, in the hero; `.f-blab` at every section opener.
 status word and the bar are driven from the same value so they cannot disagree. **A report-only
 marker renders no bar at all**, because a coloured bar is a verdict.
 
-**Step card.** A ghost numeral at `opacity: 0` behind a mono index, a title, body, and a meta row.
-The ghost numeral reveals on hover; on touch, scroll position drives the same state.
+**Step card.** A rule above, a mono index, a title, body, and a meta row. Nothing else.
+🔴 **The ghost numeral was dropped 2026-09-06 (Keith).** It was an oversized outlined digit behind the
+body copy, revealed on hover, and it was a **crop effect whose crop had gone**: an outsized glyph
+bleeding off a box edge works because the edge cuts it, and the 2026-09-02 containment fold removed
+the box on purpose. The author of that fold had already written the rule to hide it, with the note
+*"with no box there is nothing to crop against"* — but the modifier class was never applied to any
+markup, so it never fired and the numeral survived by accident. ⚠ **The sentence that used to sit here
+claimed "on touch, scroll position drives the same state". No JavaScript anywhere referenced the step
+or the numeral**, so it was pointer-only on a site read largely on phones — a frame's behaviour
+described as if it had been built.
 
 **Comparison table.** Full-width, hairline row rules, hover tint, and a highlighted column via
 `.f-col-hi` using `flag-f2`. Its content is derived from `lib/kits/panel.ts` and `lib/pricing.ts`.
@@ -525,14 +533,49 @@ being confused.** This is the third time the same ruling has been made and the f
 made generally: accent red left the blog skin on 2026-08-29, the credential marks left amber for ink
 on 2026-09-02, and both times the decorative use yielded to the clinical one.
 
-Six surfaces follow the token: Kit 3's ring and chip, `.f-pull`'s rule, `.f-symp .f-route`, the step
-cards' ghost numeral, and `.f-col-hi`'s column tint. ⚠ **The tints are derived from the old composited
+Six surfaces followed the token: Kit 3's ring and chip, `.f-pull`'s rule, `.f-symp .f-route`, the step
+cards' ghost numeral, and `.f-col-hi`'s column tint. **Five, since 2026-09-06: the ghost numeral was
+deleted** (see Step card above), which resolves the miscalibration recorded below rather than tuning it. ⚠ **The tints are derived from the old composited
 LIGHTNESS, not the old alpha**: amber at .14 over paper is `rgb(251,242,232)`, and ink at .14 would be
 a mid grey. Ink at .05 was the first attempt and it pushed `.f-col-hi`'s 10.5px label to **4.48:1**,
 under the floor; .035 composites to `rgb(246,246,247)` and restores it to 4.63:1. Re-measure that
 label against any future change to these values, because it is the smallest text in the system sitting
 on a tint. Verified after the change: the only saturated colours left anywhere on the marketing routes
 are `.f-bar i.warn` and its optimal sibling, both inside the sample report.
+
+🔴 **ONE OF THOSE SIX WAS LISTED AND NOT RECALIBRATED, FOUND 2026-09-06 — AND THE SURFACE WAS THEN
+DELETED RATHER THAN RETUNED.** Kept in full, because the *shape* of the miss is the reusable part.
+ The rule above is that the
+new values come from the old **composited lightness**, not the old alpha, and it was applied to every
+TINT. The step cards' ghost numeral is not a tint: it is
+`-webkit-text-stroke: 1px var(--flag)` at `opacity: 0.75`, and that 0.75 was calibrated against amber.
+Ink at 0.75 is not a ghost. On `/kits/testosterone` at 1440 the outlined "1" now strokes straight
+through "Dispatched same day. Fits through your letterbox."
+
+Its own comment still reads *"the frame draws it hollow in the accent"* and *"Marketing surface, so
+the accent is permitted"* — **two sentences describing a treatment that no longer exists.** The token
+moved underneath a comment that was true when written, which is the same shape as a page carrying a
+REBUILT IN DIRECTION F banner four commits after it stopped being true.
+
+⚠ **THE LESSON IS ABOUT THE SHAPE OF THE SWEEP, NOT THE VALUE.** Listing a surface as "follows the
+token" is not the same as checking what the token does THERE. A fill and a 1px stroke need different
+alphas to read at the same weight, so one inventory covering both was always going to leave one of
+them wrong. When a token changes, group the call sites by **how the value is used** — fill, stroke,
+glyph, border — and recalibrate each group, because "six surfaces follow the token" describes
+membership and not treatment. This is the third time an amber ruling has been closed with instances
+still live (`.f-ticks`, then the nav and footer dots, now this).
+
+✅ **RESOLVED 2026-09-06: dropped.** Keith's call, taken on the argument above plus three findings —
+no touch path existed, it was `aria-hidden` and carried no information (`.f-no` already sets
+01/02/03/04 in mono at rest), and the crop that gave it its logic had been gone since 2026-09-02.
+Retuning to `opacity: 0.14` would have preserved a device whose premise had already been removed.
+
+⚠ **AND THE NUMERAL DOES NOT OVERHANG ITS COLUMN.** A 2026-09-03 critique reported it hanging 43px
+above and 39px below; measured on every step of five routes at 1440 and 390 with the numeral forced
+to hover geometry, it is contained on all four sides with 18 to 74px of clearance. The critique's
+magnitudes were right and its **sign** was not. The `.f-steps-open` comment warning about the risk was
+what made the finding plausible, and that block had been dead for four days. A warning about a bug is
+not evidence of the bug.
 
 🔴 **A dot marks a STATE, never a credential.** The two footer chips lost theirs: UKAS accreditation
 and EFSA claim wording are either true or the chip should not exist, so a dot in front of them reads
@@ -755,6 +798,56 @@ how `.f-blab` shipped 30% oversized."* Fixed the way that note prescribes, by wi
 **specificity** rather than by moving lines: `.f-tray.f-tray-flag` at (0,2,0). A modifier that only
 works from where it happens to sit is a bug waiting for the next person who reorders a stylesheet.
 
+### The fourth instance, and the point at which the instance stops being the bug (2026-09-06)
+
+`.js .f-rise.on` is **(0,3,0)** and sets `transform: translate3d(0,0,0)` as the reveal's resting
+state. Every element-level hover in the stylesheet is **(0,2,0)**: `.f-tray:hover` and
+`.f-tray-pick:hover` both set a transform, and both lost. So on any element carrying **both**
+`.f-tray` and `.f-rise` the lift silently died, including `/kits`' three transaction cards. The
+symptom was not nothing: the shadow still grew to `--shadow-ambient-lift` while the card did not
+move, which reads as a rendering hiccup rather than as a response. This document already calls that
+lift *"the whole reason the double bezel reads as an object rather than a drawing of one"*.
+
+🔴 **THE FIRST THREE WERE EACH FIXED BY WRITING THE NEXT RULE ONE LEVEL HIGHER, AND THAT IS WHY
+THERE WAS A FOURTH.** `.f-btn-ghost`, `.f-blab`, `.f-tray-flag`, now `.f-tray:hover`. Raising a
+specificity works exactly once, for exactly the pair you were looking at, and leaves the next author
+the same trap with one more example of the workaround to copy. Four is enough evidence that the
+instance is not the bug.
+
+**The fix is a native cascade layer, and the mechanism is one sentence: unlayered beats layered,
+always, regardless of specificity.** Only the reveal moves:
+
+```css
+@layer reveal {
+  .js .f-rise      { opacity: 0; transform: translate3d(0, 44px, 0); filter: blur(7px); ... }
+  .js .f-rise.on   { opacity: 1; transform: translate3d(0, 0, 0);  filter: blur(0); }
+}
+```
+
+Everything else in the file stays unlayered and therefore now outranks the reveal **by
+construction** — including hover rules that do not exist yet. That is the part a fifth modifier
+could never have bought: nobody has to remember to join a layer, and no future edit can re-break it
+by reordering.
+
+⚠ **THE LAYER NAME MUST NOT BE `base`, `components` OR `utilities`.** Those are Tailwind 3
+build-time directives, not native layers, and this file is `@import`ed at `globals.css:16` **above**
+`@tailwind base`; the file's own header records that using one of those names makes postcss error
+out for want of a matching directive. `reveal` passes through as a real cascade layer — verified in
+the served stylesheet, not assumed.
+
+⚠ **ONLY THOSE TWO RULES ARE WRAPPED.** The readout's band and needle animations stay unlayered:
+they collide with nothing, and they are the one piece of motion carrying the page's argument, so
+they do not go behind an untested cascade change for tidiness. The reduced-motion override also
+stays unlayered and therefore still beats both — a rule whose failure mode is a blank page must win,
+and now it wins twice over.
+
+**Verified in a browser rather than reasoned about**, because every one of the previous three
+instances passed whatever check was run at the time: `/kits` `.f-kcard` rest `matrix(1,0,0,1,0,0)` →
+hover `matrix(1,0,0,1,0,-3)`; Kit 1 `.f-tray.f-rise` → `-2`; a `.f-tray` with no `.f-rise`
+unchanged at `-2`. Reveal still hides 24 of 25 below-fold elements at load with the full
+`matrix(1,0,0,1,0,44)` travel and 7px blur, still resolves to 0 hidden after a scroll, and reduced
+motion still forces 0 hidden.
+
 ## The measurement device
 
 Added 2026-09-02. **The one piece of visual language the product owns and the category does not**, spent
@@ -771,14 +864,42 @@ neither register except in its words.
 
 | Component | What it is | Where |
 | --- | --- | --- |
-| `.f-srule` | The readout’s track, band and cased needle as a section opener, with the position in mono | Six section openers on `/`, four on `/kits` |
+| `.f-srule` | The readout’s track, band and cased needle as a section opener, with the position in mono | Six on `/`, four on `/kits`, five on Kit 1, four on Kit 2, eight on Kit 3 |
+
+**Where the two-range readout may be spent, added 2026-09-04.** `/` and all three kit detail pages
+draw it. Kit 1 shows 5 rows and 1 split, Kit 2 four rows and 2 splits, Kit 3 nine rows and 3 splits.
+
+🔴 **A MARKER WHOSE RULE IS A FLOOR DRAWS ITS BAND TO THE END OF THE TRACK, AND THAT IS RULED.**
+Albumin (`<35 -> GP`) and Free Testosterone (`< referenceLow`) have no upper action threshold.
+`lib/results/classifier.ts:resolveBarZones` returns `{ color: 'optimal', upTo: null }` for both, and
+`upTo: null` means exactly that; Ewa was asked for an albumin upper band on 2026-08-07 and answered
+**No**. So on those rows OUR band renders wider at the top than the lab reference interval, and that
+is correct: above the lab's upper limit we take no action. Do not "fix" it to match the lab.
+
+⚠ **`resolveBarZones` IS THE SOURCE FOR WHAT ANY BAR DRAWS, INCLUDING THIS ONE.** Before deciding
+that a marker cannot be drawn, read that function. It already encodes every ratified answer per marker,
+including the empty array that makes FAI draw no track at all. A blocker was raised on 2026-09-04
+against exactly this question and withdrawn the same day, because the ruling had been in the engine
+since June and rendering to customers on the dashboard the whole time.
+
+🔴 **THE ONE REAL CONSTRAINT IS VOCABULARY, NOT GEOMETRY.** `"Lab normal"` is the only
+lab-verdict string that exists in this app, so every row on this device must carry a value the lab
+would call normal. That is not a flattering choice; it is also the honest case, because the device's
+argument is "the lab says normal and we do not". A row needing any other lab verdict needs a new
+approved string first.
 | `.f-marg` | A print sidenote: figure reference and counts, in a 104px mono column beside the prose above 900px | `Fig. 01` on the argument section |
 
 **The numbering convention, so a second page does not invent its own** (2026-09-02, when `/kits` took
-the device). **The hero takes no rule and the closing CTA takes no rule**, so `of` is the count of
-content sections between them: six on `/`, four on `/kits`. The rule sits as the first child of its
-section. Getting this wrong is not cosmetic: the needle's position is `n / of`, so a hero counted in
-would put the first needle a fifth of the way along a page the reader has not started.
+the device; extended to all three kit detail pages 2026-09-03). **The hero takes no rule and the closing
+CTA takes no rule**, so `of` is the count of content sections between them: six on `/`, four on `/kits`,
+five on Kit 1, four on Kit 2, eight on Kit 3. The rule sits as the first child of its section. Getting
+this wrong is not cosmetic: the needle's position is `n / of`, so a hero counted in would put the first
+needle a fifth of the way along a page the reader has not started.
+
+**What counts as a content section, since two kit pages had to be counted from scratch:** a block that
+opens with an `<h2 class="f-h2">`. The CA-026 conformity line and the symptom panel take no rule and are
+not counted, because both are sub-blocks hanging off the section above them rather than subjects of their
+own. Kit 1 established that by hand; Kits 2 and 3 were counted to match rather than by eye.
 
 🔴 **The needle measures something real, and that is the point rather than a nicety.** A track with a
 mark at a decorative position would be an instrument face reading a number that does not exist, which
@@ -806,13 +927,29 @@ content on a marketing page: Ewa, not a redraw.
 
 ### The hero grounds, and what carries the handover between them (2026-09-03)
 
-🔴 **BOTH HERO GROUNDS ARE THE SAME FIELD.** `/` and `/kits` both opened on 65.6px Newsreader; `/` sat
+🔴 **EVERY HERO GROUND IS THE SAME FIELD.** `/` and `/kits` both opened on 65.6px Newsreader; `/` sat
 that type on a full-bleed film with the data field drifting behind it, `/kits` sat it on flat white. A
 reader crossing between them met the same face on two unrelated grounds, so **the typeface alone was
 carrying the handover**, and a typeface shared with every other page cannot say "same site" on its own.
 `/kits` now renders the **same `HeroField` component**: horizontal gauge rows, one per 25px, each a
 full-width track carrying a lab band, an action band and a marker, with the bands drifting across the
 track at a per-row speed and phase. Not a texture that resembles the instrument, the instrument.
+
+**Extended to the three kit detail pages, 2026-09-03, and that is where it was always most owed.** The
+click from `/` or `/kits` into `/kits/<slug>` is the one a buyer actually makes, and it was the click
+where the ground disappeared. All five heroes now run one component and one geometry. **The rule this
+sets: a ground belongs to the SYSTEM, not to a page.** Adding a hero to this app means adding
+`.f-ruleground` and `<HeroField />`, not deciding whether this particular page wants one.
+
+⚠ **AND THE THREE DETAIL PAGES SHOW HOW A PAGE GOES STALE WITHOUT LOOKING STALE.** Each was rebuilt in
+Direction F on 2026-08-29 or 08-31, each carried a REBUILT IN DIRECTION F banner in its own header, and
+each was true when written. Four commits later they were Direction F pages a generation behind Direction
+F, and nothing inside any of the three files said so. Two of them had never received Kit 1's
+consent-banner fix and put their order buttons under the banner at 390; two had no `SectionRule` at all
+while this document called the measurement device the system's spine. **A file's own claim to conform is
+evidence of what was true when it was written, and nothing updates it.** The check that finds this is one
+command: the target's last commit against the branch's, and the commits in between name the missing
+work.
 
 `.f-ruleground` wraps the hero OUTSIDE `.f-wrap`, because constraining a ground to the 1180px measure
 draws a box with two hard edges. ⚠ Only the `<section>` is lifted to `z-index: 2`; `.f-field` sets its
@@ -856,7 +993,7 @@ at all, and it is what makes the reduced-motion fallback honest rather than a de
 
 | | What | Trigger |
 | --- | --- | --- |
-| **Section reveal** | `.f-rise`: 44px travel, 7px blur resolving, 0.9s, staggered `(i%3)*90ms` | IntersectionObserver, 8% with a -12% bottom margin |
+| **Section reveal** | `.f-rise`: 44px travel, 7px blur resolving, 0.9s, staggered `(i%3)*90ms`. **In `@layer reveal` since 2026-09-06**, so interaction state outranks it by construction | IntersectionObserver, 8% with a -12% bottom margin |
 | **Readout draw-in** | lab band scales across the track, ours trails by 140ms, the value marker lands at 500ms; rows cascade 110ms apart via `--d` | IntersectionObserver, 35% |
 | **Hover** | tray and button lift to `--shadow-ambient-lift`, arrow pip nudges, photo greyscale eases to 0.72 | pointer |
 | Hero stagger | `mask-rise` / `fade-up` on headline, sub and CTAs | NOT PORTED |
@@ -905,7 +1042,27 @@ Recorded so they are not rediscovered as surprises.
 7. ⚠ **The reconciler has two structural blind spots**, both recorded in `12_operations/CONTEXT.md`:
    its `RULED` table is consulted in only one of its emit branches, and its compare loop cannot see a
    declaration one side omits entirely. Do not read a clean run as a clean layer.
-4. 🟠 **`RelatedArticles` is still V2.0** and is the visible seam on every rebuilt page.
+4. 🔴 **`RelatedArticles` is the visible seam on every rebuilt page, and it is NOT V2.0 drift.**
+   Rediagnosed 2026-09-06, because the earlier wording sent this toward the wrong fix. What it
+   renders is the **blog's own ruled aesthetic** — cream-era hard borders, `font-black uppercase
+   tracking-tighter`, Merriweather body, a drawn square-cap chevron — hand-coded in raw utility
+   classes inside a shared component. `styles/base/blog-skin.css` opens by calling itself *"a narrow,
+   documented exception to two brand non-negotiables"* (the global box-shadow ban and the white-only
+   marketing ground) and is namespaced under `.blog-skin` **specifically so it cannot leak into
+   `/kits`**. The namespace does its job; this component simply does not use it, so the language
+   walks onto the kit pages on foot.
+   **Its six call sites span two deliberately-different worlds:** the three Direction F kit pages,
+   `/supplements/collagen` and `/supplements/daily-stack` (V2.0, 0 and 1 `f-` classes), and
+   `ArticleLayout`, i.e. every blog article. **So restyling it in F is not the fix** — it would break
+   the blog, where the current look is the ruled one, and strand an F component in two V2.0
+   supplement pages. Same seam, moved.
+   ⚠ **A blog rebuild would redo this component**: `blog-F.html` Frame AO covers
+   "ArticleToc, ArticleFaq, RelatedArticles, NewsletterForm" by name. But that frame states of itself
+   that it **"does not overturn the 2026-08-27 ruling on its own"**, and that ruling stands until
+   Keith rules again — so this is not simply blocked behind scheduled work.
+   ▶️ **The fix that is correct either way**: make the component render in its HOST's world (a
+   variant prop, or an F-shaped wrapper for product surfaces with `ArticleLayout` keeping the
+   editorial one). It does not pre-empt Frame AO and does not depend on the blog decision.
 5. ⚠ **The journey frames are owed a sweep** on container width and section rhythm, both of which the
    direction wins. Recorded in the reconciler's `RULED` table meanwhile.
 8. ✅ **CLOSED 2026-09-02, having been declared closed on 2026-08-31 with two instances left.**

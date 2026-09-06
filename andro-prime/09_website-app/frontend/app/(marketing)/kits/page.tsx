@@ -35,6 +35,15 @@ import { JsonLd } from '@/components/shared/JsonLd'
 
 const BASE_URL = 'https://andro-prime.com'
 
+/* THE ARROW IS THE PIP, NOT A GLYPH, since 2026-09-06. This page was the ONLY
+   one of the five F routes with zero `.f-pip` circles: 0 of 10 CTAs, against 7
+   of 9 on `/` and 4, 3 and 2 on the three kit pages. Its own source recorded the
+   divergence and deferred it ("that divergence is real and is not this change").
+   It is the middle page of the funnel, so both crossings hit it, and a bare
+   `&#8594;` beside an identical label on the page either side of it is exactly
+   the "built in a different order" tell the 2026-09-03 critique named. */
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
+
 const ORDER: KitType[] = ['testosterone', 'energy-recovery', 'hormone-recovery']
 
 const PRICES: Record<KitType, string> = {
@@ -274,7 +283,7 @@ export default function KitsPage() {
             </p>
             <div className="f-btns" style={{ marginTop: 24 }}>
               <Link className="f-btn" href="#kits">
-                See the tests <span aria-hidden="true">&#8594;</span>
+                See the tests {ARROW}
               </Link>
               <Link className="f-btn f-btn-ghost" href="/test-selector">
                 Not sure which one?
@@ -330,7 +339,7 @@ export default function KitsPage() {
                   href="/test-selector"
                   style={{ marginTop: 14 }}
                 >
-                  Go to test selector <span aria-hidden="true">&#8594;</span>
+                  Go to test selector {ARROW}
                 </Link>
               </div>
             </div>
@@ -496,9 +505,11 @@ export default function KitsPage() {
                           approved copy in a new placement, not new words. The bare
                           label carries no arrow because "Order" carried none and
                           every other button on THIS page uses a glyph, not the
-                          homepage's `.f-pip` circle; that divergence is real and is
-                          not this change. */}
-                      Start a baseline
+                          homepage's `.f-pip` circle.
+                          RESOLVED 2026-09-06: the page now uses the pip, so this
+                          label matches `/`'s identical one in glyph as well as in
+                          words. */}
+                      Start a baseline {ARROW}
                     </Link>
                   </div>
                 </div>
@@ -570,9 +581,6 @@ export default function KitsPage() {
         <div className="f-steps" style={{ marginTop: 22 }}>
           {STEPS.map((s) => (
             <div className="f-step" key={s.n}>
-              <span className="f-bignum" aria-hidden="true">
-                {s.n.replace(/^0/, '')}
-              </span>
               <span className="f-no">{s.n}</span>
               <h3 className="f-h4 mt-2.5 mb-2">{s.h}</h3>
               <p className="f-sub" style={{ fontSize: 15 }}>
@@ -588,7 +596,7 @@ export default function KitsPage() {
 
         <div className="f-btns" style={{ marginTop: 20 }}>
           <Link href="/how-it-works" className="f-btn f-btn-ghost f-btn-sm">
-            Full process breakdown <span aria-hidden="true">&#8594;</span>
+            Full process breakdown {ARROW}
           </Link>
         </div>
       </section>
@@ -612,7 +620,7 @@ export default function KitsPage() {
           </p>
           <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
             <Link href="/test-selector" className="f-btn">
-              Use the selector <span aria-hidden="true">&#8594;</span>
+              Use the selector {ARROW}
             </Link>
           </div>
         </div>

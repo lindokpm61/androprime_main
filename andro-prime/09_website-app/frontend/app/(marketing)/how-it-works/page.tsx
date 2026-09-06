@@ -244,7 +244,6 @@ export default function HowItWorksPage() {
         <div className="f-steps" style={{ marginTop: 24 }}>
           {steps.map((s) => (
             <div className="f-step" key={s.num}>
-              <span className="f-bignum" aria-hidden="true">{s.num.replace(/^0/, '')}</span>
               <span className="f-no">{s.num}</span>
               <h3 className="f-h4 mt-2.5 mb-2">{s.title}</h3>
               <p className="f-sub" style={{ fontSize: 15 }}>{s.body}</p>
