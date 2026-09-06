@@ -3,6 +3,18 @@
 **Created:** 2026-08-24 | **Owner:** Keith | **Status:** WORKING MODEL. Nothing here is decided.
 **Question it answers:** if twenty people buy a kit, what is actually left after ninety days.
 
+> 🔄 **RERUN AT GBP 47 on 2026-09-07.** Built at GBP 49, which was a placeholder: Keith had already
+> ruled the sticker at **GBP 47** on 2026-08-24 on VAT-threshold grounds, and this model was never
+> updated. The rerun was validated by first reproducing every published figure at GBP 49 from the
+> stated assumptions, so the new numbers come from the same arithmetic rather than a re-estimate.
+> **Sections 2, 4, 5 and 7 carry new figures.** Two things are flagged rather than changed: the
+> conversion-sensitivity pair in §6, which does not reproduce from this model's own method and did not
+> before the price change either; and the "3 payments" assumption in §1, which the 2026-09-07 anchor
+> ruling may reduce to 2 (see the note under §2).
+>
+> **The headline effect: 90-day profit at twenty members falls from GBP 852 to GBP 793, and the GBP 40
+> CAC row changes sign.**
+
 **Read with:** `../../04_products/supplements/supplement-unit-economics-2026-08-24.md` (where the pricing
 came from), `../../10_launch-ops/2026-08-24-supplement-membership-gap-analysis.md` (what still has to be
 built before any of this can happen).
@@ -14,8 +26,8 @@ built before any of this can happen).
 | Assumption | Value | Confidence |
 |---|---|---|
 | Entry kit | Kit 2, GBP 119 retail, **GBP 63.00 COGS** | 🟢 Vitall-quoted |
-| Membership | GBP 49/month, first 30 days included in the kit price | 🟢 **The included month is ADOPTED** (Keith, 2026-08-27, `../2026-08-27-first-month-included-in-kit-price.md`). 🔴 **GBP 49 is not the price**: the build carries £47/mo (`lib/subscriptions/products.ts`, adopted for VAT-threshold stability). This model has never been rerun at £47. |
-| Payments in 90 days | Day 30, day 60, day 90 = **3 payments** | 🟢 Arithmetic |
+| Membership | **GBP 47/month**, first 30 days included in the kit price | 🟢 **Both halves are now decided.** The included month: Keith, 2026-08-27 (`../2026-08-27-first-month-included-in-kit-price.md`). The price: **GBP 47**, Keith 2026-08-24, on VAT-threshold grounds (`../2026-08-24-vertical-agnostic-monitoring-thesis.md` §11, and §6 of the year-1 forecast). **Reran at 47 on 2026-09-07**; the GBP 49 this model was built on was a placeholder that predated the ruling and was never a decision. |
+| Payments in 90 days | Day 30, day 60, day 90 = **3 payments** | 🟠 **Arithmetic, but see the anchor note below.** |
 | Stripe | 1.5% + GBP 0.20 per transaction | 🟢 Standard UK |
 | **Day-30 conversion** | **50%** | 🔴 **A guess, and the single biggest number in this model** |
 | Retest at day 90 | Included, Kit 2 again, GBP 63.00 | 🟠 A design choice, modelled both ways |
@@ -33,17 +45,27 @@ A member who buys a kit and converts at day 30:
 | Line | Amount |
 |---|---|
 | Kit | +119.00 |
-| 3 monthly payments at GBP 49 | +147.00 |
-| **Revenue** | **+266.00** |
+| 3 monthly payments at GBP 47 | +141.00 |
+| **Revenue** | **+260.00** |
 | Kit COGS | −63.00 |
 | Retest at day 90 | −63.00 |
 | Stripe on the kit | −1.99 |
-| Stripe on 3 subscriptions | −2.82 |
-| **Direct cost** | **−130.81** |
-| **Gross, per converting member** | **+135.19** |
+| Stripe on 3 subscriptions | −2.72 |
+| **Direct cost** | **−130.71** |
+| **Gross, per converting member** | **+129.29** |
 
-A member who **does not** convert at day 30 still leaves +54.01 (kit revenue less kit COGS and Stripe).
-**Nobody is loss-making.** That is what the included first month buys.
+A member who **does not** convert at day 30 still leaves +54.01 (kit revenue less kit COGS and Stripe),
+which the price change does not touch. **Nobody is loss-making.** That is what the included first month
+buys.
+
+> 🔵 **The 2026-09-07 anchor ruling puts a question mark over "3 payments".** The included month now
+> starts when the **result lands**, not at purchase (`../2026-09-07-anchor-everything-to-the-result.md`).
+> With a result back around day 14, the included month runs to about day 44 and the payments fall at
+> roughly day 44, 74 and 104: **two inside 90 days from purchase, not three.** Whether that matters
+> depends on whether "90 days" here means from purchase or from the result, which this model never had
+> to say because the two used to be the same date. **Not reworked**, because it is a modelling choice
+> rather than an error, but at two payments the per-member gross falls to about GBP 82 and the
+> twenty-member profit to about GBP 323. Worth settling before this model is quoted at anyone.
 
 ---
 
@@ -73,30 +95,32 @@ Ten convert at day 30, on the 50% assumption.
 | | Amount |
 |---|---|
 | 20 kits at GBP 119 | +2,380.00 |
-| 30 subscription payments (10 members x 3) | +1,470.00 |
-| **Revenue** | **+3,850.00** |
+| 30 subscription payments (10 members x 3) at GBP 47 | +1,410.00 |
+| **Revenue** | **+3,790.00** |
 | 20 kits at COGS | −1,260.00 |
 | Failed-sample reserve, 4% | −50.40 |
 | 10 retests at day 90 | −630.00 |
-| Stripe, all transactions | −68.00 |
+| Stripe, all transactions | −66.85 |
 | Fixed costs, 3 months | −990.00 |
-| **Total cost** | **−2,998.40** |
-| **Profit, 90 days** | **+851.60** |
+| **Total cost** | **−2,997.25** |
+| **Profit, 90 days** | **+792.75** |
 
-**About GBP 284 a month.** If the retest is annual rather than at day 90, it becomes **GBP 1,481.60**, or
-about GBP 494 a month.
+**About GBP 264 a month.** If the retest is annual rather than at day 90, it becomes **GBP 1,422.75**, or
+about GBP 474 a month.
 
 ### What CAC does to that
 
 | Cost per member acquired | 20 members | Profit left |
 |---|---|---|
-| GBP 0, organic only | 0 | 851.60 |
-| GBP 20 | 400 | 451.60 |
-| GBP 40 | 800 | **51.60** |
-| GBP 60 | 1,200 | **−348.40** |
+| GBP 0, organic only | 0 | 792.75 |
+| GBP 20 | 400 | 392.75 |
+| GBP 40 | 800 | **−7.25** |
+| GBP 60 | 1,200 | **−407.25** |
 
-**At GBP 40 of paid acquisition the whole ninety days nets fifty pounds.** At twenty members this only
-works organically.
+🔴 **The GBP 40 row changed sign when the price was corrected.** At GBP 49 it cleared GBP 51.60; at the
+real price of GBP 47 it loses GBP 7.25. **A two-pound price difference is the whole margin at this
+scale**, which is the clearest possible statement of how thin twenty members is. At twenty members this
+works organically or not at all.
 
 ---
 
@@ -106,12 +130,12 @@ Fixed costs held roughly flat, Customer.io nudged up.
 
 | Kit buyers | Converting | Revenue | Direct cost | Fixed | **Profit, 90 days** | Fixed as % of gross |
 |---|---|---|---|---|---|---|
-| 20 | 10 | 3,850 | 2,008 | 990 | **852** | 54% |
-| 50 | 25 | 9,625 | 5,021 | 1,050 | **3,554** | 23% |
-| 100 | 50 | 19,250 | 10,041 | 1,200 | **8,009** | 13% |
-| 200 | 100 | 38,500 | 20,082 | 1,500 | **16,918** | 8% |
+| 20 | 10 | 3,790 | 2,007 | 990 | **793** | 56% |
+| 50 | 25 | 9,475 | 5,018 | 1,050 | **3,407** | 24% |
+| 100 | 50 | 18,950 | 10,036 | 1,200 | **7,714** | 13% |
+| 200 | 100 | 37,900 | 20,073 | 1,500 | **16,328** | 8% |
 
-**The shape of the answer: fixed costs eat 54% of gross at twenty members and 13% at a hundred.** Twenty
+**The shape of the answer: fixed costs eat 56% of gross at twenty members and 13% at a hundred.** Twenty
 members is not a business, it is a validation exercise that happens to break even.
 
 ---
@@ -120,7 +144,12 @@ members is not a business, it is a validation exercise that happens to break eve
 
 In order.
 
-1. **Day-30 conversion.** Modelled at 50%. At 30% the twenty-member case makes GBP 380; at 70% it makes
+1. **Day-30 conversion.** Modelled at 50%. ⚠️ **The 30% and 70% figures below do not reproduce from
+   this model's own method and are left as written rather than silently replaced.** Re-running §4's
+   arithmetic gives about GBP 527 at 30% and GBP 1,177 at 70% (at GBP 49), against the GBP 380 and
+   GBP 1,320 printed here. The gap is not the price change; it predates it, and whatever produced these
+   two numbers is not the calculation in §4. **Treat the range as directional only until someone
+   re-derives it.** As written: at 30% the twenty-member case makes GBP 380; at 70% it makes
    GBP 1,320. **Nothing else in this model has that range, and no spreadsheet can tell you the answer.**
    It is decided by whether the app is any good, which is the thing that has to be built and run.
 2. **Whether the retest sits at day 90 or at 12 months.** GBP 630 on twenty members, and it is a product
@@ -133,8 +162,9 @@ In order.
 
 ## 7. The honest verdict
 
-**At twenty members: no, this is not worth doing for the money.** Eight hundred and fifty pounds over three
-months, before any value is put on Keith's time, and one modest paid-acquisition budget wipes it out.
+**At twenty members: no, this is not worth doing for the money.** Just under eight hundred pounds over
+three months, before any value is put on Keith's time, and one modest paid-acquisition budget does not
+merely wipe it out but takes it negative.
 
 **What twenty members buys is the answer to the only question that matters**, which is what percentage of
 people pay at day 30. That number decides whether the hundred-member row is real, and the hundred-member

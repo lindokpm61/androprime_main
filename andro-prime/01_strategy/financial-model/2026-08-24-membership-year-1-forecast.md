@@ -10,15 +10,19 @@
 ## 1. What is modelled
 
 Kit at GBP 119 (Kit 2, GBP 63.00 COGS) as the paid entry, including the first 30 days of membership.
-Membership at GBP 49/month thereafter. One retest included per year.
+Membership at **GBP 47/month** thereafter. One retest included per year.
 
-> ✅ **The included first month is ADOPTED** (Keith, 2026-08-27):
-> `../2026-08-27-first-month-included-in-kit-price.md`. This forecast assumed it before it
-> was ruled, so **the ruling moves nothing here**; it only converts the assumption into a
-> decision. 🔴 **GBP 49 is still wrong**: the build carries £47/mo
-> (`lib/subscriptions/products.ts`), adopted 2026-08-26 for VAT-threshold stability, and
-> this forecast has never been rerun at £47. A free first month also moves the VAT-threshold
-> arithmetic that £47 was chosen for. Both are open and both are Keith's.
+> ✅ **Both inputs are now settled, and one of them was settled inside this very document.**
+> The included first month: Keith, 2026-08-27, `../2026-08-27-first-month-included-in-kit-price.md`.
+> This forecast assumed it before it was ruled, so the ruling moved nothing here.
+>
+> 🔄 **The price is GBP 47 and this section used to say GBP 49, contradicting its own §6.** Section 6
+> has recorded *"the membership sticker is GBP 47, not GBP 39"* as Keith's 2026-08-24 decision since
+> the day this file was written. The model was built at 49 and never rerun, so the document argued
+> against itself: **§1 modelled a price §6 said was not the price.** GBP 49 was never a decision, only
+> a placeholder. **Rerun at 47 on 2026-09-07**, validated by first reproducing every published figure
+> at 49 from the stated assumptions, so the new numbers come from the same arithmetic and not a
+> re-estimate.
 
 | Assumption | Value | Confidence |
 |---|---|---|
@@ -39,20 +43,22 @@ Membership at GBP 49/month thereafter. One retest included per year.
 | Month | Kits | Paying members | Kit revenue | Subscription | Kit cost | Stripe | Fixed | Profit |
 |---|---|---|---|---|---|---|---|---|
 | 1 | 4 | 0 | 476 | 0 | 262 | 8 | 330 | **−124** |
-| 2 | 6 | 2 | 714 | 98 | 393 | 14 | 330 | **75** |
-| 3 | 9 | 5 | 1,071 | 238 | 590 | 22 | 330 | **367** |
-| 4 | 12 | 9 | 1,428 | 442 | 786 | 32 | 330 | **721** |
-| 5 | 16 | 14 | 1,904 | 705 | 1,048 | 45 | 330 | **1,185** |
-| 6 | 20 | 21 | 2,380 | 1,048 | 1,310 | 60 | 330 | **1,728** |
-| 7 | 25 | 30 | 2,975 | 1,464 | 1,638 | 78 | 330 | **2,394** |
-| 8 | 30 | 40 | 3,570 | 1,974 | 1,966 | 97 | 330 | **3,152** |
-| 9 | 35 | 52 | 4,165 | 2,571 | 2,293 | 119 | 330 | **3,994** |
-| 10 | 40 | 66 | 4,760 | 3,249 | 2,621 | 141 | 330 | **4,916** |
-| 11 | 45 | 82 | 5,355 | 4,001 | 2,948 | 166 | 330 | **5,912** |
-| 12 | 50 | 98 | 5,950 | 4,824 | 3,276 | 191 | 330 | **6,976** |
-| **Year 1** | **292** | **98** | **34,748** | **20,614** | **19,132** | **973** | **3,960** | **31,297** |
+| 2 | 6 | 2 | 714 | 94 | 393 | 14 | 330 | **71** |
+| 3 | 9 | 5 | 1,071 | 228 | 590 | 22 | 330 | **357** |
+| 4 | 12 | 9 | 1,428 | 424 | 786 | 32 | 330 | **704** |
+| 5 | 16 | 14 | 1,904 | 676 | 1,048 | 45 | 330 | **1,157** |
+| 6 | 20 | 21 | 2,380 | 1,005 | 1,310 | 59 | 330 | **1,686** |
+| 7 | 25 | 30 | 2,975 | 1,404 | 1,638 | 77 | 330 | **2,335** |
+| 8 | 30 | 40 | 3,570 | 1,893 | 1,966 | 96 | 330 | **3,072** |
+| 9 | 35 | 52 | 4,165 | 2,466 | 2,293 | 117 | 330 | **3,891** |
+| 10 | 40 | 66 | 4,760 | 3,116 | 2,621 | 139 | 330 | **4,786** |
+| 11 | 45 | 82 | 5,355 | 3,838 | 2,948 | 163 | 330 | **5,751** |
+| 12 | 50 | 98 | 5,950 | 4,627 | 3,276 | 188 | 330 | **6,783** |
+| **Year 1** | **292** | **98** | **34,748** | **19,771** | **19,131** | **960** | **3,960** | **30,468** |
 
-**Revenue GBP 55,362 · Cost GBP 24,065 · Profit GBP 31,297 · Margin 57%**
+**Revenue GBP 54,519 · Cost GBP 24,051 · Profit GBP 30,468 · Margin 56%**
+
+_(The monthly profit column sums to GBP 30,469; the one-pound difference is rounding.)_
 
 **Only month one is negative, at minus GBP 124.** It is cash-positive from month two onward and never
 returns.
@@ -65,9 +71,9 @@ Same conversion and churn; only the acquisition ramp changes.
 
 | Scenario | Kits year 1 | Members at M12 | Revenue | **Profit** | Margin |
 |---|---|---|---|---|---|
-| Slow (2 rising to 25/month) | 144 | 48 | 27,259 | **13,386** | 49% |
-| **Base (4 rising to 50/month)** | **292** | **98** | **55,362** | **31,297** | **57%** |
-| Strong (8 rising to 100/month) | 584 | 197 | 110,724 | **66,275** | 60% |
+| Slow (2 rising to 25/month) | 144 | 48 | 26,846 | **12,979** | 48% |
+| **Base (4 rising to 50/month)** | **292** | **98** | **54,519** | **30,468** | **56%** |
+| Strong (8 rising to 100/month) | 584 | 197 | 109,042 | **64,618** | 59% |
 
 ---
 
@@ -75,10 +81,15 @@ Same conversion and churn; only the acquisition ramp changes.
 
 Base ramp, varying the two behavioural guesses.
 
+⚠️ **These nine cells are AT GBP 49 and have not been individually rerun.** Only the centre cell was
+recomputed: at GBP 47 it is **30,468**, not 31,297. Every other cell falls by about 4% of its own
+subscription line, so roughly GBP 500 at 30% conversion and GBP 1,100 at 70%. The **shape** of the
+table, which is the only thing it is used for, is unchanged.
+
 | | Churn 5% | Churn 7% | Churn 10% |
 |---|---|---|---|
 | Conversion 30% | 23,762 | 23,209 | 22,448 |
-| Conversion 50% | 32,148 | **31,297** | 30,028 |
+| Conversion 50% | 32,148 | **31,297** _(30,468 at GBP 47)_ | 30,028 |
 | Conversion 70% | 40,535 | 39,246 | 37,469 |
 
 🔴 **This corrects the 90-day model.** That document called day-30 conversion "the single biggest number",
@@ -93,8 +104,8 @@ dominant term, because that is when compounding either works for you or against 
 
 ## 5. What year one is hiding
 
-**The kit is carrying the business, not the membership.** GBP 34,748 of kit revenue against GBP 20,614 of
-subscription, so 63% of year one is one-off sales. That inverts in year two as the member base compounds
+**The kit is carrying the business, not the membership.** GBP 34,748 of kit revenue against GBP 19,771 of
+subscription, so 64% of year one is one-off sales. That inverts in year two as the member base compounds
 and kit sales flatten. **Year one is a testing business with a subscription attached. Year two is the
 reverse, or the model has failed.**
 
@@ -106,15 +117,15 @@ business is by roughly that amount.
 **Supplement revenue is not modelled at all.** The shop sits outside the membership at member pricing, so
 anything it earns is upside on top of the above.
 
-**Keith's time is not costed.** GBP 31,297 of profit against a year of full-time founder work is below a
+**Keith's time is not costed.** GBP 30,468 of profit against a year of full-time founder work is below a
 salary. That is normal for year one and it should be said out loud rather than discovered.
 
 ---
 
 ## 6. Two cliffs worth seeing before they arrive
 
-🔴 **VAT.** The registration threshold is GBP 90,000 of taxable turnover. **The base case at GBP 55,362 is
-under it. The strong case at GBP 110,724 is over it**, and would trigger mandatory registration mid-year.
+🔴 **VAT.** The registration threshold is GBP 90,000 of taxable turnover. **The base case at GBP 54,519 is
+under it. The strong case at GBP 109,042 is over it**, and would trigger mandatory registration mid-year.
 If the membership is standard-rated at 20%, that is roughly GBP 18,000 off the strong case unless prices
 rise. Diagnostic testing may qualify as exempt medical care, but **a subscription that is mostly software
 and content probably is not**, and nobody has checked. **Get this answered before pricing is published, not
@@ -138,14 +149,14 @@ cut to the recurring line. See `../2026-08-24-vertical-agnostic-monitoring-thesi
 
 | CAC per kit buyer | Year-1 spend | Profit after |
 |---|---|---|
-| GBP 0 | 0 | **31,297** |
-| GBP 15 | 4,380 | **26,917** |
-| GBP 30 | 8,760 | **22,537** |
-| GBP 45 | 13,140 | **18,157** |
-| GBP 60 | 17,520 | **13,777** |
+| GBP 0 | 0 | **30,468** |
+| GBP 15 | 4,380 | **26,088** |
+| GBP 30 | 8,760 | **21,708** |
+| GBP 45 | 13,140 | **17,328** |
+| GBP 60 | 17,520 | **12,948** |
 
 Paid acquisition survives here in a way it did not in the 90-day model, because the kit margin covers it.
-At GBP 30 a member the base case still clears GBP 22,000. **That is the difference a 12-month view makes:
+At GBP 30 a member the base case still clears GBP 21,700. **That is the difference a 12-month view makes:
 CAC is affordable when you count the subscription tail, and unaffordable when you only count 90 days.**
 
 ---
