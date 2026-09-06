@@ -23,9 +23,9 @@ timings in Customer.io. Every value below was read from the file named, on
 
 | # | Mechanism | Constant / timing | Value | **Anchored to** | Date lands in | Gate | Live? |
 |---|---|---|---|---|---|---|---|
-| 1 | Confirmation bundle recheck | `CONFIRMATION_INTERVAL_DAYS` | **0 days** | The **first result** (trigger time) | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | Off. **Ewa signed the 0 on 2026-07-26.** |
-| 2 | Confirmation bank (all-clear) | `BANK_RECHECK_MONTHS` | **6 months** | The **first result** | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | Off |
-| 3 | Timed bundles (Prove-It, Full-picture) | `SECOND_DISPATCH_DELAY_DAYS` | **90 days** | **Purchase** | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | Off |
+| 1 | Confirmation bundle recheck | `CONFIRMATION_INTERVAL_DAYS` | **0 days** | The **first result** (trigger time) | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | 🔴 **LIVE.** Ewa signed the 0 on 2026-07-26. |
+| 2 | Confirmation bank (all-clear) | `BANK_RECHECK_MONTHS` | **6 months** | The **first result** | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | 🔴 **LIVE** |
+| 3 | Timed bundles (Prove-It, Full-picture) | `SECOND_DISPATCH_DELAY_DAYS` | **90 days** | **Purchase** | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | 🔴 **LIVE** |
 | 4 | Membership first retest, flagged marker | `FIRST_CYCLE_RETEST_DAYS` | **90 days** | **Stripe checkout** (`started_at`) | `memberships.next_retest_due_at` | `MEMBERSHIP_ENABLED` | Off |
 | 5 | Membership first retest, all-clear | `ANNUAL_RETEST_DAYS` | **365 days** | Stripe checkout | `memberships.next_retest_due_at` | `MEMBERSHIP_ENABLED` | 🔴 **Cannot fire. See 3a.** |
 | 6 | Membership second and later retests | `nextRetestAfter` (365) | **365 days** | Previous retest | nothing | `MEMBERSHIP_ENABLED` | 🔴 **Never called. See 3b.** |
@@ -35,6 +35,30 @@ timings in Customer.io. Every value below was read from the file named, on
 **Files:** 1, 2, 3 in `frontend/lib/bundles/config.ts`. 4, 5, 6 in
 `frontend/lib/membership/entitlement.ts`. 7 in `frontend/lib/results/processResult.ts`.
 8 in `frontend/email-templates/sequences/seq-04-subscriber-onboarding.md`.
+
+> 🔴 **Correction, 2026-09-06 (same day).** The first version of this table marked
+> mechanisms 1, 2 and 3 **Off**. That was wrong and it was never verified, only
+> assumed from the fact that they sit behind a flag. **`BUNDLES_ENABLED=true` was
+> set in Coolify on 2026-07-26** with `ACCOUNT_ADDRESS_ENABLED=true`, the app was
+> redeployed, the migration was applied to the live Supabase project, and the
+> QStash schedule (`scd_5YpFh9tnXmSe2uZewrHZ6iNT3rTW`, `0 6 * * *`) has been
+> POSTing to `andro-prime.com/api/jobs/bundle-sweep` daily ever since. All three
+> are **live**, and `09_website-app/STATE.md` said so the whole time.
+>
+> **What is actually true, checked against the live database on 2026-09-06:**
+> `bundle_dispatches` **0 rows**, `memberships` **0 rows**, `kit_orders` **3**,
+> `lab_results` **1**. So the bundle machinery is armed and has never fired,
+> because no bundle has been sold. Membership has no go-live record and no rows.
+>
+> **The distinction matters and it is not pedantry.** "Gated off" means a decision
+> stands between the defect and a customer. "Live with no traffic" means **the
+> next bundle sold starts the machinery with no further gate**, and the only
+> reason nothing has gone wrong is that nobody has bought one. Those are different
+> risk positions and this file asserted the safer one without checking.
+>
+> **A flag's presence in the code is not its value in production.** The value
+> lives in Coolify, and the only readable record of it in this repo is a dated
+> STATE entry. Read that before writing "off".
 
 ### What customer copy promises, which stores no date at all
 
@@ -127,7 +151,7 @@ Answering the question directly, because it is why this file was asked for.
 | A member, about their retest | `memberships.next_retest_due_at` | The only stored, member-specific retest date. Anchored to Stripe checkout, which section 2 says is probably the wrong anchor, and today it is always checkout + 90. |
 | An all-clear kit buyer | CIO `retest_due_at` | Result + 6 months. Needs `RETEST_REMINDER_ENABLED` on, which needs Ewa on the copy and campaign 23 out of draft. |
 | A supplement subscriber | nothing stored | seq-04 e5 is a relative delay from `subscription_started`. No date exists to quote; the email says "day 90" as prose. |
-| A bundle holder | `bundle_dispatches.due_at` | Present for all three bundle types, gated off. |
+| A bundle holder | `bundle_dispatches.due_at` | Present for all three bundle types and **live since 2026-07-26**, but 0 rows exist because no bundle has been sold. |
 
 **There is no single field meaning "this customer's next retest".** Four stores
 hold four partial answers under three gates. If one field is wanted, that is a
