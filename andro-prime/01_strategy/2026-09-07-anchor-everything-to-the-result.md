@@ -41,7 +41,7 @@ Against the eight mechanisms in `04_products/results-engine/retest-mechanism-map
 |---|---|---|---|
 | 1 | Confirmation recheck | Result | ✅ Already complies |
 | 2 | Confirmation bank | Result | ✅ Already complies |
-| 3 | Timed bundles (Prove-It, Full-picture) | **Purchase** | 🔄 **Moves.** See §5, it has a consequence |
+| 3 | Timed bundles (Prove-It, Full-picture) | **Purchase** | ⚠️ **EXEMPT (decided 2026-09-07, §5a).** Stays at purchase + 90. Live T&Cs promise that, and the 90-day spacing is the product |
 | 4 | Membership retest, flagged | **Stripe checkout** | 🔄 Moves |
 | 5 | Membership retest, all-clear | **Stripe checkout** | 🔄 Moves (and is separately unreachable) |
 | 6 | Membership later retests | Previous retest | 🔄 Moves (and is separately never called) |
@@ -54,7 +54,13 @@ Also moving: the **membership included month** (the 2026-08-27 ruling) and
 **Half the mechanisms already comply**, which is worth stating plainly: this
 ruling is less a change of direction than the majority position winning.
 
-## 4. The one carve-out, and it is not a loophole
+## 4. Two carve-outs, and neither is a loophole
+
+> **Scope, stated up front because the title says "everything".** The ruling reaches every date
+> that is a **clinical cadence**. It does not reach two mechanisms whose clocks legitimately start
+> elsewhere: the seq-04 e5 supplement prompt (below) and the **timed bundles** (§5a, decided
+> 2026-09-07). Both are recorded as decisions rather than left implied, because an unstated
+> exception is found later as a contradiction.
 
 **Mechanism 8, the seq-04 email 5 retest prompt, stays anchored to
 `subscription_started`, and it should.**
@@ -96,7 +102,14 @@ That is arguably the clinically correct outcome, since a retest with no baseline
 compares nothing. It is not obviously the correct *commercial* or *consumer-law*
 outcome, and it is a change to what a paying customer receives.
 
-✅ **DECIDED 2026-09-07 (Keith): option 1, the purchase + 180 backstop.**
+> ⚠️ **SUPERSEDED THE SAME DAY BY §5a. Read that first; this section is the record of a
+> decision that stood for about an hour.** Keith took the purchase + 180 backstop, the sweep
+> then found it contradicted live approved T&Cs, and he revised to **purchase + 90**, which is
+> the timed-bundle exemption. **Nothing in this section is to be built.** It is kept because the
+> reasoning is still the right reasoning for any future backstop, and because deleting a
+> superseded decision hides that the revision happened.
+
+~~**DECIDED 2026-09-07 (Keith): option 1, the purchase + 180 backstop.**~~
 
 **The mechanic, specified.** `due_at` is **never null** for a timed bundle. At checkout it is
 stamped `purchase + 180`. When the result lands, the result hook overwrites it to
@@ -119,9 +132,9 @@ writes it for Confirmation bundles, and the sweep already reads it. A `backstop_
 need a migration, a second predicate and a rule about which wins. One column, one write, no
 schema change.
 
-**New constant to add** (flagged, not written): `SECOND_DISPATCH_BACKSTOP_DAYS = 180` in
-`lib/bundles/config.ts`, beside `SECOND_DISPATCH_DELAY_DAYS`, so the value stays a single
-reviewable line the way `CONFIRMATION_INTERVAL_DAYS` does.
+~~**New constant to add:** `SECOND_DISPATCH_BACKSTOP_DAYS = 180` in `lib/bundles/config.ts`.~~
+**Not needed under §5a.** No constant is added and `SECOND_DISPATCH_DELAY_DAYS` keeps both its
+value and its origin.
 
 🔴 **CORRECTION, same day: this does NOT unblock the timed-bundle build, and the sweep is why.**
 Grepping the compliance layer for the backstop turned up
@@ -157,10 +170,33 @@ It preserves the existing promise, needs one constant rather than a new flow, an
 it fails in the customer's favour. **Nothing should be built on mechanism 3 until
 this is answered**, because the fallback determines the shape of the change.
 
-## 5a. 🔴 ESCALATE: the timed bundles collide with approved, published terms
+## 5a. ✅ RESOLVED: the timed bundles are exempt and stay at purchase + 90
 
-**Owner: Keith (business) and Ewa (clinical countersignature, as on the original).**
-**Status: OPEN. It blocks the mechanism 3 build and nothing else.**
+**Decided 2026-09-07 (Keith): "purchase + 90".** Since `min(result + 90, purchase + 90)` is
+always `purchase + 90`, choosing that value **is** option A below: the timed bundles are exempt
+from this ruling and remain anchored to purchase.
+
+**Consequences, all of them good:**
+
+- **The live T&Cs stay true, unchanged.** No edit to `terms-and-conditions.md`, no re-sync of
+  `canonical-site/terms/index.html`, and **no Ewa re-approval.** The escalation below closes with
+  no action.
+- **No code change for timed bundles.** `secondDispatchDueAt` keeps stamping purchase + 90 at
+  checkout, and the result hook does **not** touch Prove-It or Full-Picture rows. Today's
+  behaviour is already correct.
+- **`SECOND_DISPATCH_BACKSTOP_DAYS` is not needed.** `due_at` is never null for a timed bundle,
+  so there is nothing to backstop. The §5 mechanic is moot and is kept below only as the record
+  of what was considered.
+- **The carve-out list in §4 becomes two:** seq-04 e5, and the timed bundles.
+
+**What the ruling still does**, undiminished: the membership included month,
+`memberships.started_at` and both membership retest constants move from Stripe checkout to the
+result. That is where the anchor was actually doing work.
+
+**The escalation as it stood, kept as the record:**
+
+**Owner was: Keith (business) and Ewa (clinical countersignature, as on the original).**
+**Status: CLOSED 2026-09-07, no change to approved copy.**
 
 ### The collision
 
@@ -213,9 +249,13 @@ invariant 4). Nothing below has been edited.
 | File | What changes |
 |---|---|
 | `lib/membership/sync.ts` | `createMembership` takes the result date, not `new Date()`, for both `started_at` and `firstRetestDueAt`. The result is already readable via `latestResultReceivedAt`. |
-| `lib/bundles/checkout.ts` | `secondDispatchDueAt` stamps **purchase + 180** (the backstop) instead of purchase + 90. Never null: see §5. |
-| Result hook (`lib/results/processResult.ts`) | Gains the Prove-It / Full-picture branch that overwrites `due_at` to **`min(result + 90, purchase + 180)`**, alongside the Confirmation branch it already has. |
-| `lib/bundles/config.ts` | `SECOND_DISPATCH_DELAY_DAYS` keeps its value of 90; only its origin moves. **Add `SECOND_DISPATCH_BACKSTOP_DAYS = 180`.** |
+| `lib/bundles/checkout.ts` | ✅ **NO CHANGE.** Timed bundles are exempt (§5a), so `secondDispatchDueAt` keeps stamping purchase + 90. |
+| Result hook (`lib/results/processResult.ts`) | ✅ **NO CHANGE.** No Prove-It / Full-picture branch is added; the Confirmation branch it already has was always result-anchored. |
+| `lib/bundles/config.ts` | ✅ **NO CHANGE.** `SECOND_DISPATCH_DELAY_DAYS` keeps its value **and its origin**. No backstop constant is needed. |
+
+**So the entire bundle side of this ruling is a no-op**, and the only code that moves is
+`createMembership`. That is a much smaller change than the ruling first appeared to require, and
+it is the sweep of the compliance layer that shrank it.
 
 🔴 **`BUNDLES_ENABLED` is LIVE** (Coolify, 2026-07-26) and the daily sweep runs in
 production, so mechanism 3 is a change to live behaviour, not to dark code.
@@ -233,7 +273,7 @@ that is true only until the first bundle sells.
 
 ## 8. Still open after this
 
-1. ~~**The timed-bundle fallback** (§5). Blocks building mechanism 3.~~ ✅ **DECIDED 2026-09-07: purchase + 180 backstop**, `due_at = min(result + 90, purchase + 180)`. Mechanism 3 is now buildable.
+1. ~~**The timed-bundle fallback** (§5). Blocks building mechanism 3.~~ ✅ **CLOSED 2026-09-07: purchase + 90, i.e. the timed bundles are EXEMPT** (§5a). No terms change, no Ewa re-approval, no code change. Mechanism 3 keeps today's behaviour.
 2. **Confirm the mechanism 8 carve-out** (§4). Keith. One line.
 3. **Auto-renew versus opt-in at day 30** (2026-08-27 ruling §4.2). Keith.
 4. **What a free first month does to £47** and the VAT threshold. Keith, accountant.

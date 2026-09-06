@@ -25,7 +25,7 @@ timings in Customer.io. Every value below was read from the file named, on
 |---|---|---|---|---|---|---|---|
 | 1 | Confirmation bundle recheck | `CONFIRMATION_INTERVAL_DAYS` | **0 days** | The **first result** (trigger time) | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | 🔴 **LIVE.** Ewa signed the 0 on 2026-07-26. |
 | 2 | Confirmation bank (all-clear) | `BANK_RECHECK_MONTHS` | **6 months** | The **first result** | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | 🔴 **LIVE** |
-| 3 | Timed bundles (Prove-It, Full-picture) | `SECOND_DISPATCH_DELAY_DAYS` | **90 days** | **Purchase** | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | 🔴 **LIVE** |
+| 3 | Timed bundles (Prove-It, Full-picture) | `SECOND_DISPATCH_DELAY_DAYS` | **90 days** | **Purchase** (EXEMPT from the anchor ruling, 2026-09-07) | `bundle_dispatches.due_at` | `BUNDLES_ENABLED` | 🔴 **LIVE** |
 | 4 | Membership first retest, flagged marker | `FIRST_CYCLE_RETEST_DAYS` | **90 days** | **Stripe checkout** (`started_at`) | `memberships.next_retest_due_at` | `MEMBERSHIP_ENABLED` | Off |
 | 5 | Membership first retest, all-clear | `ANNUAL_RETEST_DAYS` | **365 days** | Stripe checkout | `memberships.next_retest_due_at` | `MEMBERSHIP_ENABLED` | 🔴 **Cannot fire. See 3a.** |
 | 6 | Membership second and later retests | `nextRetestAfter` (365) | **365 days** | Previous retest | nothing | `MEMBERSHIP_ENABLED` | 🔴 **Never called. See 3b.** |
@@ -90,22 +90,27 @@ as one thing:
 A slow lab separates purchase from result by days or weeks, so these are not
 three names for one moment.
 
-> ✅ **RESOLVED 2026-09-07 (Keith): everything anchors to the RESULT LANDING.**
-> Decision doc: `../../01_strategy/2026-09-07-anchor-everything-to-the-result.md`.
-> Mechanisms 1, 2 and 7 already complied. Mechanisms 3, 4, 5 and 6 move, along
-> with the membership included month and `memberships.started_at`. **Mechanism 8
-> is the single carve-out**: seq-04 e5 measures supplement effect, so its clock
-> legitimately starts at `subscription_started` rather than at a result.
+> ✅ **RESOLVED 2026-09-07 (Keith): every CLINICAL CADENCE anchors to the RESULT
+> LANDING.** Decision doc:
+> `../../01_strategy/2026-09-07-anchor-everything-to-the-result.md`.
+> Mechanisms 1, 2 and 7 already complied. **Mechanisms 4, 5 and 6 move**, along
+> with the membership included month and `memberships.started_at`. **Two carve-outs:**
+> mechanism 8 (seq-04 e5 measures supplement effect, so its clock legitimately
+> starts at `subscription_started`) and mechanism 3, below.
 >
-> ✅ **The question it opened is also decided (2026-09-07): a purchase + 180
-> backstop.** Anchoring mechanism 3 to the result would have left `due_at` null
-> until a result existed, so a customer who never posted his sample would never
-> have received the prepaid second kit. Instead `due_at` is stamped
-> **purchase + 180** at checkout and the result hook overwrites it to
-> **`min(result + 90, purchase + 180)`**. The `min()` is what keeps the backstop a
-> ceiling rather than a target, so a late result can never push a guaranteed
-> dispatch further out. **Mechanism 3 is now buildable**; the new constant is
-> `SECOND_DISPATCH_BACKSTOP_DAYS = 180`.
+> ⚠️ **Mechanism 3 is EXEMPT (Keith, 2026-09-07): timed bundles stay at
+> purchase + 90.** Anchoring them to the result would have contradicted the live
+> T&Cs, approved by Keith and Ewa on 2026-07-25 and published on `/terms` the next
+> day, which promise the retest *"about 90 days after your purchase"*. No
+> result-anchored date can satisfy that, since the result always lands after the
+> purchase. The 90-day spacing is the **product** for Prove-It and Full-Picture,
+> not a clinical cadence. **Result: no terms change, no Ewa re-approval, and no
+> code change at all on the bundle side.** Mechanisms 1 and 2 were already
+> result-anchored and are untouched.
+>
+> **So the anchor ruling's only code carrier is `createMembership`.** Four
+> mechanisms already complied, two are exempt, and the two membership constants
+> are what actually move.
 
 ---
 
@@ -191,7 +196,7 @@ no longer exists.
 
 | # | Item | Owner |
 |---|---|---|
-| 1 | ~~**The anchor decision** (section 2). Blocks every retest email.~~ ✅ **DECIDED 2026-09-07: the result landing**, and its follow-on (the timed-bundle backstop) is decided too: **purchase + 180**. Nothing here is owed | Closed |
+| 1 | ~~**The anchor decision** (section 2). Blocks every retest email.~~ ✅ **DECIDED 2026-09-07: the result landing**, with the timed bundles **exempt at purchase + 90**. No terms change, no code change on the bundle side. Nothing here is owed | Closed |
 | 2 | 3a: make `memberHasMarkerToMove` consult the classifier, or accept 90 days for everyone and delete the 365 | Keith, then build |
 | 3 | 3b: advance the cycle on claim, or change the forecast and the copy to say one retest ever | Keith, then build |
 | 4 | 3c: decide whether a member gets a retest-due email at all | Keith |
