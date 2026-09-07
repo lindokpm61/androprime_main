@@ -1,6 +1,7 @@
 import { buildDashboardFromScenario } from './buildDashboardFromScenario'
+import { SCENARIOS } from './fixtures'
 import { FIRST_CYCLE_RETEST_DAYS } from '@/lib/membership/entitlement'
-import type { DashboardData, ScenarioName } from './types'
+import type { DashboardData, ScenarioName, KitType } from './types'
 
 /*
  * THE PUBLIC DEMO'S SCENARIO SET AND JOURNEY STATES.
@@ -241,4 +242,80 @@ export function getDemoDashboard(result: DemoResult, journey: DemoJourney): Dash
     return buildDashboardFromScenario([result.scenario, result.retestScenario])
   }
   return buildDashboardFromScenario([result.scenario])
+}
+
+/* ------------------------------------------------- the engine, client-side */
+
+/*
+ * 🔄 RAW VALUES FOR THE CONTROL RAIL, added 2026-09-07 with the prototype port.
+ *
+ * The prototype's rail lets you drag a marker's value and watch the verdict
+ * change band. Reproducing that means re-classifying on every drag, which means
+ * the CLIENT needs the raw biomarkers rather than the classified output.
+ *
+ * 🟢 AND THAT MAKES THE PORT BETTER THAN THE PROTOTYPE, not a copy of it. The
+ * prototype's bands were TRANSCRIBED from `classifier.ts` into a literal in the
+ * page, which is why its own header says they cannot stay current. Here the
+ * slider calls the real `classify()`, so every verdict it produces is the
+ * engine's and it follows a threshold change automatically.
+ *
+ * ⚠ ONE KNOWN DIFFERENCE, and it does not touch a verdict.
+ * `isMaintenanceOfferEnabled()` reads `process.env.MAINTENANCE_OFFER_ENABLED`,
+ * which Next inlines as undefined in a client bundle, so client-side it is
+ * always false. That is the flag's OFF state and its own comment says OFF is
+ * "byte-identical to before this feature existed". It gates a CTA, never a
+ * band, an explanation or a state.
+ */
+export interface DemoMarkerSeed {
+  markerName: string
+  value: number
+  unit: string
+  referenceLow: number | null
+  referenceHigh: number | null
+}
+
+export interface DemoEngineInput {
+  kitType: KitType
+  userAge: number | null
+  symptomAnswers: { questionKey: string; answer: string | number | boolean }[]
+  /** The values on screen. The rail drives these. */
+  seeds: DemoMarkerSeed[]
+  collectedAt: string | null
+  /** The earlier result, when the member state has two. Never editable. */
+  baseline: DemoMarkerSeed[] | null
+  baselineCollectedAt: string | null
+}
+
+function seedsOf(name: ScenarioName): DemoMarkerSeed[] {
+  const f = SCENARIOS[name]
+  if (!f) return []
+  return f.payload.biomarkers.map((b) => ({
+    markerName: b.name,
+    value: b.value,
+    unit: b.unit,
+    referenceLow: b.referenceRange.low,
+    referenceHigh: b.referenceRange.high,
+  }))
+}
+
+/**
+ * Everything the client needs to re-run `classify()` itself. Still no database
+ * and still no user: this is the same closed fixture set, handed over raw.
+ */
+export function getDemoEngineInput(result: DemoResult, journey: DemoJourney): DemoEngineInput {
+  const twoPoint = journey.id === 'member' && result.retestScenario
+  const latest = twoPoint ? result.retestScenario! : result.scenario
+  const fixture = SCENARIOS[latest]
+  return {
+    kitType: fixture.payload.kitType,
+    userAge: fixture.testAge ?? null,
+    symptomAnswers: fixture.symptomAnswers.map((a) => ({
+      questionKey: a.questionKey,
+      answer: a.answer,
+    })),
+    seeds: seedsOf(latest),
+    collectedAt: fixture.payload.collectedAt ?? null,
+    baseline: twoPoint ? seedsOf(result.scenario) : null,
+    baselineCollectedAt: twoPoint ? (SCENARIOS[result.scenario].payload.collectedAt ?? null) : null,
+  }
 }

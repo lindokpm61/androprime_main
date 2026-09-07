@@ -380,3 +380,354 @@
 .ap-controls__opt[data-disabled='true'] {
   opacity: 0.4; cursor: not-allowed; background: transparent;
 }
+
+/* ============================================================================
+   THE PROTOTYPE'S STAGE, PORTED 2026-09-07.
+
+   WHY THIS EXISTS. The 2026-09-06 build rebuilt the prototype's SCREENS and
+   dropped its STAGE: the phone bezel, the control rail with its value slider and
+   band presets, the theme toggle and the closing notes. Keith read the result
+   and said it was "completely different from the actual prototype", which it
+   was. This block is the stage, ported.
+
+   THE TOKENS MOVE UP. They used to live on `.ap-shell`, which is INSIDE the
+   phone, so nothing outside it could use them. They are declared on `.ap-stage`
+   as well, and the dark rule reaches into `.ap-shell` so one toggle themes the
+   whole stage. `.ap-shell` keeps its own block, so it still works standalone.
+
+   STILL SCOPED, STILL NOT `:root`. The live site has no dark mode and DESIGN.md
+   records a criticism of a ported dark treatment. Dark here is the demo's own
+   affordance, on its own container, and it cannot leak to the site.
+   ============================================================================ */
+
+.ap-stage {
+  --ap-paper: #ffffff;
+  --ap-tray: #f1f2f4;
+  --ap-core: #ffffff;
+  --ap-sunk: #e7e9ec;
+  --ap-ink: #0a0b0d;
+  --ap-ink-2: #4a4f57;
+  --ap-ink-3: #6b7078;
+  --ap-hair: rgba(10, 11, 13, 0.1);
+  --ap-hair-2: rgba(10, 11, 13, 0.16);
+  --ap-ok: #059669;
+  --ap-warn: #d97706;
+  --ap-crit: #b91c1c;
+  --ap-ok-f: rgba(5, 150, 105, 0.18);
+  --ap-ok-f2: rgba(5, 150, 105, 0.32);
+  --ap-warn-f: rgba(217, 119, 6, 0.3);
+  --ap-crit-f: rgba(185, 28, 28, 0.22);
+  --ap-flat-f: rgba(10, 11, 13, 0.07);
+  --ap-bezel: #1c1f24;
+  --ap-amb: 0 26px 60px -20px rgba(10, 11, 13, 0.16), 0 6px 18px -12px rgba(10, 11, 13, 0.1);
+  --ap-wash-a: rgba(10, 11, 13, 0.05);
+  --ap-wash-b: rgba(10, 11, 13, 0.035);
+  --ap-ease: cubic-bezier(0.32, 0.72, 0, 1);
+
+  position: relative;
+  background: var(--ap-paper);
+  color: var(--ap-ink);
+  padding: 0 24px 90px;
+}
+
+.ap-stage[data-ap-theme='dark'],
+.ap-stage[data-ap-theme='dark'] .ap-shell {
+  --ap-paper: #0a0b0d;
+  --ap-tray: #141619;
+  --ap-core: #1a1d21;
+  --ap-sunk: #0e1013;
+  --ap-ink: #f5f6f7;
+  --ap-ink-2: #b9bdc4;
+  --ap-ink-3: #969ba3;
+  --ap-hair: rgba(245, 246, 247, 0.11);
+  --ap-hair-2: rgba(245, 246, 247, 0.18);
+  --ap-ok: #34d399;
+  --ap-warn: #fbbf24;
+  --ap-crit: #f87171;
+  --ap-ok-f: rgba(52, 211, 153, 0.2);
+  --ap-ok-f2: rgba(52, 211, 153, 0.34);
+  --ap-warn-f: rgba(251, 191, 36, 0.3);
+  --ap-crit-f: rgba(248, 113, 113, 0.26);
+  --ap-flat-f: rgba(245, 246, 247, 0.09);
+  --ap-bezel: #2a2e34;
+  --ap-amb: 0 26px 60px -20px rgba(0, 0, 0, 0.7), 0 6px 18px -12px rgba(0, 0, 0, 0.5);
+  --ap-wash-a: rgba(255, 255, 255, 0.045);
+  --ap-wash-b: rgba(255, 255, 255, 0.028);
+}
+
+/* The prototype's two atmosphere layers, scoped ABSOLUTE to the stage rather
+   than fixed to the viewport, so they cannot sit over the site nav or footer. */
+.ap-stage__wash {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(1100px 700px at 14% -8%, var(--ap-wash-a), transparent 62%),
+    radial-gradient(900px 620px at 94% 8%, var(--ap-wash-b), transparent 60%);
+}
+.ap-stage__inner { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
+
+/* ---------- the stage bar. No brandmark: the site nav sits directly above it,
+     and two wordmarks within 100px reads as a mistake rather than a design. */
+.ap-bar {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 15px 0 13px; border-bottom: 1px solid var(--ap-hair); margin-bottom: 30px;
+}
+.ap-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+  color: var(--ap-warn); border: 1.5px solid var(--ap-warn); border-radius: 999px; padding: 5px 12px;
+}
+.ap-chip i { width: 6px; height: 6px; border-radius: 50%; background: var(--ap-warn); flex: none; }
+.ap-bar__spring { flex: 1; }
+.ap-themebtn {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+  color: var(--ap-ink-2); background: var(--ap-tray); border: 1px solid var(--ap-hair);
+  border-radius: 999px; padding: 8px 15px; cursor: pointer;
+}
+.ap-themebtn:hover { color: var(--ap-ink); }
+
+.ap-intro { max-width: 70ch; padding-bottom: 34px; }
+.ap-intro h1 {
+  font-size: clamp(29px, 4.2vw, 44px); font-weight: 800;
+  letter-spacing: -0.035em; line-height: 1.04; text-wrap: balance; color: var(--ap-ink);
+}
+.ap-intro p { margin-top: 16px; color: var(--ap-ink-2); font-size: 16.5px; line-height: 1.7; }
+.ap-intro p b { color: var(--ap-ink); font-weight: 700; }
+
+/* ---------- the phone, and the rail beside it ---------- */
+.ap-split {
+  display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 38px; align-items: start; justify-items: center;
+}
+.ap-split > * { min-width: 0; }
+
+.ap-phonewrap { position: sticky; top: 110px; }
+.ap-phone {
+  width: 390px; height: 812px; background: var(--ap-bezel);
+  border-radius: 52px; padding: 11px; position: relative;
+  box-shadow: var(--ap-amb), 0 0 0 2px rgba(255, 255, 255, 0.05) inset;
+}
+.ap-viewport {
+  width: 100%; height: 100%; background: var(--ap-tray); border-radius: 42px;
+  overflow: hidden; display: flex; flex-direction: column; position: relative;
+}
+.ap-notch {
+  position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 112px; height: 26px; background: var(--ap-bezel);
+  border-radius: 0 0 16px 16px; z-index: 12;
+}
+.ap-sbar {
+  flex: none; height: 44px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 11.5px; font-weight: 700; color: var(--ap-ink);
+}
+.ap-sbar__icons { display: flex; gap: 5px; align-items: center; }
+.ap-sbar svg { width: 15px; height: 11px; fill: currentColor; }
+
+.ap-appbar { flex: none; display: flex; align-items: center; gap: 10px; padding: 2px 16px 12px; }
+.ap-appbar__ttl {
+  font-weight: 700; font-size: 19px; letter-spacing: -0.025em; flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ap-ink);
+}
+.ap-iconbtn {
+  width: 34px; height: 34px; flex: none; border-radius: 50%; border: 1px solid var(--ap-hair);
+  background: var(--ap-core); color: var(--ap-ink); display: flex; align-items: center;
+  justify-content: center; cursor: pointer; padding: 0;
+}
+.ap-iconbtn svg {
+  width: 16px; height: 16px; stroke: currentColor; fill: none;
+  stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+}
+/* An author `display` beats the UA sheet [hidden] rule. The prototype hit this
+   exact bug, its back arrow stayed on root tabs, and the comment is worth
+   carrying across with the code. */
+.ap-iconbtn[hidden], .ap-memberpill[hidden] { display: none; }
+.ap-memberpill {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 8.5px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700;
+  color: var(--ap-ok); border: 1.5px solid var(--ap-ok);
+  border-radius: 999px; padding: 4px 9px; flex: none;
+}
+/* The screens scroll INSIDE the phone, which is the point of drawing one: it
+   shows how much of the report fits on a real handset at once. */
+.ap-scrollarea { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0 14px 22px; scrollbar-width: thin; }
+.ap-scrollarea::-webkit-scrollbar { width: 5px; }
+.ap-scrollarea::-webkit-scrollbar-thumb { background: var(--ap-hair-2); border-radius: 5px; }
+
+/* ---------- the control rail: scaffolding, never product ---------- */
+.ap-rail { position: sticky; top: 110px; display: flex; flex-direction: column; gap: 13px; width: 100%; }
+.ap-railcard {
+  background: var(--ap-tray); border: 1px dashed var(--ap-hair-2);
+  border-radius: 20px; padding: 19px;
+}
+.ap-railcard .ap-lbl { display: block; margin-bottom: 6px; }
+.ap-railcard__hint { font-size: 12.5px; color: var(--ap-ink-3); line-height: 1.6; margin-bottom: 15px; }
+.ap-seg {
+  display: flex; flex-direction: column; gap: 5px;
+  background: var(--ap-sunk); padding: 4px; border-radius: 16px; margin-bottom: 14px;
+}
+.ap-seg a, .ap-seg span {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700;
+  color: var(--ap-ink-3); border-radius: 12px; padding: 11px 10px; text-align: left;
+  text-decoration: none; display: block;
+}
+.ap-seg a:hover { color: var(--ap-ink); }
+.ap-seg [aria-current='true'] {
+  background: var(--ap-core); color: var(--ap-ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+}
+.ap-seg [aria-disabled='true'] { opacity: 0.4; cursor: not-allowed; }
+
+.ap-slider { width: 100%; -webkit-appearance: none; appearance: none; background: transparent; cursor: grab; }
+.ap-slider:active { cursor: grabbing; }
+.ap-slider::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: var(--ap-sunk); }
+.ap-slider::-moz-range-track { height: 6px; border-radius: 3px; background: var(--ap-sunk); }
+.ap-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ap-ink); border: 3px solid var(--ap-core); margin-top: -9px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+}
+.ap-slider::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--ap-ink); border: 3px solid var(--ap-core);
+}
+.ap-sread {
+  display: flex; justify-content: space-between; align-items: baseline; margin-top: 11px;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 10px; color: var(--ap-ink-3);
+}
+.ap-sread b { font-size: 16px; color: var(--ap-ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+.ap-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 11px; }
+.ap-preset {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700;
+  background: var(--ap-core); color: var(--ap-ink-2); border: 1px solid var(--ap-hair);
+  border-radius: 999px; padding: 7px 11px; cursor: pointer;
+}
+.ap-preset:hover { color: var(--ap-ink); }
+.ap-preset[aria-pressed='true'] { background: var(--ap-ink); color: var(--ap-paper); border-color: var(--ap-ink); }
+.ap-fixnote {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ap-ink-3); margin-top: 10px; line-height: 1.65;
+}
+.ap-railhint { font-size: 12.5px; color: var(--ap-ink-3); line-height: 1.6; }
+
+.ap-watch { background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: 20px; padding: 17px 19px; }
+.ap-watch .ap-lbl { display: block; margin-bottom: 10px; }
+.ap-watch ol { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.7; color: var(--ap-ink-2); }
+.ap-watch li { margin-bottom: 9px; }
+.ap-watch li:last-child { margin-bottom: 0; }
+.ap-watch li b { color: var(--ap-ink); font-weight: 700; }
+
+/* ---------- the closing notes ---------- */
+.ap-notes { margin-top: 58px; border-top: 1px solid var(--ap-hair); padding-top: 32px; }
+.ap-notes h2 { font-size: 25px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 20px; color: var(--ap-ink); }
+.ap-ngrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.ap-ncard { background: var(--ap-tray); border: 1px solid var(--ap-hair); border-radius: 18px; padding: 21px; }
+.ap-ncard h3 {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ap-ink-3); font-weight: 500; margin-bottom: 10px;
+}
+.ap-ncard p { font-size: 13px; line-height: 1.7; color: var(--ap-ink-2); }
+.ap-ncard p b { color: var(--ap-ink); font-weight: 700; }
+.ap-ncard p + p { margin-top: 9px; }
+
+/* ---------- responsive: below 960 the bezel comes off ---------- */
+@media (max-width: 960px) {
+  .ap-split { grid-template-columns: 1fr; gap: 26px; }
+  .ap-phonewrap, .ap-rail { position: static; width: 100%; }
+  .ap-phone { width: 100%; max-width: 430px; height: 760px; margin: 0 auto; }
+}
+@media (max-width: 560px) {
+  .ap-stage { padding: 0 14px 60px; }
+  .ap-ngrid { grid-template-columns: 1fr; }
+  /* a real phone does not need a picture of a phone */
+  .ap-phone {
+    width: 100%; max-width: none; height: 78vh; min-height: 560px;
+    border-radius: 26px; padding: 0; box-shadow: var(--ap-amb);
+  }
+  .ap-viewport { border-radius: 26px; }
+  .ap-notch { display: none; }
+  .ap-sbar { height: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ap-stage * { animation: none !important; transition: none !important; }
+}
+
+/* ---------------------------------------------------------------------------
+   THREE THINGS THE FIRST PASS OF THE PORT MISSED, found by putting the two
+   renderings side by side at the same viewport rather than by reading either.
+   --------------------------------------------------------------------------- */
+
+/* 1. THE PROTOTYPE FOLLOWS THE SYSTEM, and only then the button. Its token block
+   sits under `prefers-color-scheme` with the manual choice overriding it, so it
+   opens dark on a dark machine. The port had a manual toggle only, which is why
+   it opened white next to a dark prototype. Three states, same as the original:
+   attribute absent = follow the system, 'light' and 'dark' = the reader decided. */
+@media (prefers-color-scheme: dark) {
+  .ap-stage:not([data-ap-theme='light']),
+  .ap-stage:not([data-ap-theme='light']) .ap-shell {
+    --ap-paper: #0a0b0d;
+    --ap-tray: #141619;
+    --ap-core: #1a1d21;
+    --ap-sunk: #0e1013;
+    --ap-ink: #f5f6f7;
+    --ap-ink-2: #b9bdc4;
+    --ap-ink-3: #969ba3;
+    --ap-hair: rgba(245, 246, 247, 0.11);
+    --ap-hair-2: rgba(245, 246, 247, 0.18);
+    --ap-ok: #34d399;
+    --ap-warn: #fbbf24;
+    --ap-crit: #f87171;
+    --ap-ok-f: rgba(52, 211, 153, 0.2);
+    --ap-ok-f2: rgba(52, 211, 153, 0.34);
+    --ap-warn-f: rgba(251, 191, 36, 0.3);
+    --ap-crit-f: rgba(248, 113, 113, 0.26);
+    --ap-flat-f: rgba(245, 246, 247, 0.09);
+    --ap-bezel: #2a2e34;
+    --ap-amb: 0 26px 60px -20px rgba(0, 0, 0, 0.7), 0 6px 18px -12px rgba(0, 0, 0, 0.5);
+    --ap-wash-a: rgba(255, 255, 255, 0.045);
+    --ap-wash-b: rgba(255, 255, 255, 0.028);
+  }
+}
+
+/* 2. THE COMPARE CONTROL IS A KNOB IN THE PROTOTYPE, not a checkbox, and it is
+   RED when on. That colour is doing work: switching it on is the reader taking
+   our bands away, and it should feel like removing something rather than
+   enabling a feature. */
+.ap-switch { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+.ap-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.ap-switch__knob {
+  width: 44px; height: 26px; border-radius: 999px; background: var(--ap-sunk);
+  flex: none; position: relative; margin-top: 2px; transition: background 0.22s var(--ap-ease);
+}
+.ap-switch__knob::after {
+  content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
+  border-radius: 50%; background: var(--ap-core); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.22s var(--ap-ease);
+}
+.ap-switch input:checked + .ap-switch__knob { background: var(--ap-crit); }
+.ap-switch input:checked + .ap-switch__knob::after { transform: translateX(18px); }
+.ap-switch input:focus-visible + .ap-switch__knob { outline: 2px solid var(--ap-ink); outline-offset: 3px; }
+.ap-switch__txt { font-size: 13px; line-height: 1.5; color: var(--ap-ink); }
+.ap-switch__txt p { display: block; color: var(--ap-ink-3); font-size: 11.5px; margin-top: 4px; line-height: 1.55; }
+
+/* 3. THE STATUS STRIP. The prototype opens every results screen with a dated
+   line saying the result is complete, which is what makes the waiting state and
+   the result state read as the same app at two moments rather than two designs. */
+.ap-statusstrip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: 999px;
+  padding: 8px 14px; margin-bottom: 12px;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ap-ink-2); font-weight: 700;
+}
+.ap-statusstrip i {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--ap-ok);
+  flex: none; animation: ap-pulse 2.6s var(--ap-ease) infinite;
+}
+@keyframes ap-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.32; } }

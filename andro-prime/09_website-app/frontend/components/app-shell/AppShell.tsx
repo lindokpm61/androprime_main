@@ -93,20 +93,47 @@ function flaggedOf(markers: ClassifiedResult[]): ClassifiedResult[] {
   return markers.filter((m) => badgeFor(m.state).filled)
 }
 
-type Tab = 'results' | 'plan' | 'record' | 'you'
+export type Tab = 'results' | 'plan' | 'record' | 'you'
 
+/** The phone app bar shows these, so they live beside the tabs that set them. */
+export const TAB_TITLES: Record<Tab, string> = {
+  results: 'Your results',
+  plan: 'Your plan',
+  record: 'Your record',
+  you: 'Account',
+}
+
+/*
+ * 🔄 CONTROLLED FROM 2026-09-07. Tab, open marker and the compare switch used to
+ * be local state here. The prototype port moved all three OUT, because the phone
+ * chrome and the control rail both need them: the app bar shows the tab title
+ * and a back arrow, and the rail only shows its value slider while a marker is
+ * open. State that two siblings read belongs above both of them.
+ */
 export interface AppShellProps {
   kits: KitData[]
   /** Which moment in the journey. Drives every empty state on every tab. */
   journey?: DemoJourneyId
   /** Derived in `lib/results/demo.ts` from the result date. Never typed here. */
   dates?: DemoDates | null
+  tab: Tab
+  onTab: (t: Tab) => void
+  openMarker: string | null
+  onOpenMarker: (m: string | null) => void
+  /** Owned by the rail, which is where the prototype puts the switch. */
+  compare: boolean
 }
 
-export function AppShell({ kits, journey = 'result', dates = null }: AppShellProps) {
-  const [tab, setTab] = useState<Tab>('results')
-  const [openMarker, setOpenMarker] = useState<string | null>(null)
-  const [compare, setCompare] = useState(false)
+export function AppShell({
+  kits,
+  journey = 'result',
+  dates = null,
+  tab,
+  onTab,
+  openMarker,
+  onOpenMarker,
+  compare,
+}: AppShellProps) {
 
   const results = kits[0]?.results ?? []
   /* The NEWEST result is the one on screen. In the member state there are two,
@@ -130,17 +157,10 @@ export function AppShell({ kits, journey = 'result', dates = null }: AppShellPro
           <MarkerScreen
             result={open}
             compare={compare}
-            onCompare={setCompare}
-            onBack={() => setOpenMarker(null)}
+            onBack={() => onOpenMarker(null)}
           />
         ) : (
-          <ResultsScreen
-            kits={kits}
-            markers={markers}
-            compare={compare}
-            onCompare={setCompare}
-            onOpen={setOpenMarker}
-          />
+          <ResultsScreen kits={kits} markers={markers} onOpen={onOpenMarker} />
         ))}
 
       {tab === 'plan' &&
@@ -170,8 +190,8 @@ export function AppShell({ kits, journey = 'result', dates = null }: AppShellPro
       <TabBar
         tab={tab}
         onTab={(t) => {
-          setTab(t)
-          setOpenMarker(null)
+          onTab(t)
+          onOpenMarker(null)
         }}
       />
     </div>
@@ -211,18 +231,26 @@ function WaitingScreen({ title, head, body }: { title: string; head: string; bod
 function ResultsScreen({
   kits,
   markers,
-  compare,
-  onCompare,
   onOpen,
 }: {
   kits: KitData[]
   markers: ClassifiedResult[]
-  compare: boolean
-  onCompare: (v: boolean) => void
   onOpen: (name: string) => void
 }) {
-  void kits
   const flagged = flaggedOf(markers).length
+  /* The dated strip the prototype opens every results screen with. It is what
+     makes the waiting state and this one read as the same app at two moments
+     rather than as two different designs. */
+  const results = kits[0]?.results ?? []
+  const latest = results[results.length - 1]
+  const isRetest = results.length > 1
+  const when = latest?.collectedAt
+    ? new Date(latest.collectedAt).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      })
+    : null
 
   const grouped = GROUP_ORDER.map((g) => ({
     group: g,
@@ -231,6 +259,12 @@ function ResultsScreen({
 
   return (
     <div className="ap-screen">
+      {when && (
+        <div className="ap-statusstrip">
+          <i aria-hidden="true" />
+          {isRetest ? 'Retest complete' : 'Result complete'} &middot; {when}
+        </div>
+      )}
       <div className="ap-screen__head">
         <span className="ap-lbl">Your results</span>
         <h1 className="ap-screen__title" style={{ marginTop: 6 }}>
@@ -250,8 +284,6 @@ function ResultsScreen({
           ))}
         </div>
       ))}
-
-      <CompareSwitch compare={compare} onCompare={onCompare} />
     </div>
   )
 }
@@ -285,12 +317,10 @@ function MarkerRow({ result, onOpen }: { result: ClassifiedResult; onOpen: (n: s
 function MarkerScreen({
   result,
   compare,
-  onCompare,
   onBack,
 }: {
   result: ClassifiedResult
   compare: boolean
-  onCompare: (v: boolean) => void
   onBack: () => void
 }) {
   const badge = badgeFor(result.state)
@@ -343,8 +373,6 @@ function MarkerScreen({
           <p>{result.recommendation}</p>
         </div>
       )}
-
-      <CompareSwitch compare={compare} onCompare={onCompare} />
     </div>
   )
 }
@@ -582,28 +610,6 @@ function RecordScreen({
           not registered to make.
         </p>
       </div>
-    </div>
-  )
-}
-
-/* ---------------- The compare switch ---------------- */
-
-function CompareSwitch({ compare, onCompare }: { compare: boolean; onCompare: (v: boolean) => void }) {
-  return (
-    <div className="ap-compare">
-      <input
-        id="ap-compare"
-        type="checkbox"
-        checked={compare}
-        onChange={(e) => onCompare(e.target.checked)}
-      />
-      <span>
-        <label htmlFor="ap-compare">Show what everyone else shows</label>
-        <p>
-          Removes our action bands and leaves the laboratory&rsquo;s reference range on its own. That
-          is the view a standard report gives you of the same number.
-        </p>
-      </span>
     </div>
   )
 }
