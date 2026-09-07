@@ -1,7 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AppShell } from '@/components/app-shell/AppShell'
-import { DEMO_RESULTS, resolveDemoResult, getDemoDashboard } from '@/lib/results/demo'
+import {
+  DEMO_RESULTS,
+  DEMO_JOURNEYS,
+  resolveDemoResult,
+  resolveDemoJourney,
+  journeyAvailable,
+  getDemoDashboard,
+  getDemoDates,
+} from '@/lib/results/demo'
+import type { DemoJourney, DemoResult } from '@/lib/results/demo'
 
 /*
  * /demo -- THE DEMO ACCOUNT, AS THE REAL THING.
@@ -33,11 +42,30 @@ import { DEMO_RESULTS, resolveDemoResult, getDemoDashboard } from '@/lib/results
  * links are wired, and it stays out of the index until that is ruled on. Flip
  * this line and delete this paragraph when it is.
  *
- * ⚠ THREE THINGS THE PROTOTYPE SHOWED THAT THIS DOES NOT: the plan tab, the
- * record tab and the member screens. Two of those are membership surfaces and
- * `/membership` is dark behind `MEMBERSHIP_ENABLED`. Demonstrating them would
- * mean marketing something that cannot currently be bought, which is the exact
- * prohibition the homepage's free-layer section already carries.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 🔄 2026-09-07: THE THREE THINGS THE PROTOTYPE SHOWED AND THIS DID NOT ARE NOW
+ * HERE, AND SO IS A FOURTH NOBODY HAD LISTED.
+ *
+ * This comment used to read: "THREE THINGS THE PROTOTYPE SHOWED THAT THIS DOES
+ * NOT: the plan tab, the record tab and the member screens. Two of those are
+ * membership surfaces and `/membership` is dark behind `MEMBERSHIP_ENABLED`."
+ * Comparing the two artefacts properly on 2026-09-07 found a FOURTH gap that
+ * neither this file nor `AppShell.tsx` had ever listed: the DAY 3 WAITING STATE.
+ * Nothing gated it. It was simply missed, and `state !== 'ready'` returning null
+ * is what made it unreachable.
+ *
+ * 🔴 KEITH'S RULING, which is why the membership surfaces are here rather than
+ * behind the flag: "This is a demo, so surely it isn't dependent on the
+ * membership flag being enabled as part of the website. So it should demonstrate
+ * everything that is available that we're planning to do, as a potential
+ * customer will look at that and have a real visual of what's behind the
+ * membership program." `MEMBERSHIP_ENABLED` exists to stop someone BUYING an
+ * unfinished membership; it is not a reason to stop him SEEING one.
+ *
+ * ⚠ THAT WIDENS THE OPEN COMPLIANCE ITEM AND DOES NOT CLEAR IT. CA-046 was
+ * raised about a full results report on an ungated surface. The member state
+ * adds a membership PRICE to that same surface, which is a different question
+ * and has not been asked. `noindex` stays until both are answered.
  */
 
 export const metadata: Metadata = {
@@ -48,17 +76,22 @@ export const metadata: Metadata = {
 }
 
 interface PageProps {
-  searchParams: Promise<{ r?: string }>
+  searchParams: Promise<{ r?: string; s?: string }>
 }
 
 export default async function DemoPage({ searchParams }: PageProps) {
-  const { r } = await searchParams
+  const { r, s } = await searchParams
   const current = resolveDemoResult(r)
-  const data = getDemoDashboard(current)
+  const journey = resolveDemoJourney(s, current)
+  const data = getDemoDashboard(current, journey)
 
   // A listed scenario always produces results; this is a type guard, not a state
   // the page can reach.
   if (data.state !== 'ready') return null
+
+  /* Anchored to the FIRST result, which is the one that started the membership.
+     In the member state there are two, and the second is the retest. */
+  const dates = getDemoDates(data.kits[0]?.results[0]?.collectedAt)
 
   return (
     <div className="mx-auto w-full max-w-[520px] px-4 pb-16">
@@ -69,9 +102,10 @@ export default async function DemoPage({ searchParams }: PageProps) {
           his own result and must not be shown a UI that implies he can. My first
           version put the switcher inside the app chrome, which quietly claimed
           the product has a scenario picker. */}
-      <DemoSwitcher currentId={current.id} blurb={current.blurb} />
+      <DemoSwitcher current={current} journey={journey} />
+      <JourneySwitcher current={current} journey={journey} />
       <div className="ap-frame">
-        <AppShell kits={data.kits} />
+        <AppShell kits={data.kits} journey={journey.id} dates={dates} />
       </div>
       <DemoFooter />
     </div>
@@ -104,7 +138,7 @@ function DemoNotice() {
  * Plain links, not a client component: each scenario is a distinct URL, so it is
  * shareable, back-buttonable, and works with JavaScript off.
  */
-function DemoSwitcher({ currentId, blurb }: { currentId: string; blurb: string }) {
+function DemoSwitcher({ current, journey }: { current: DemoResult; journey: DemoJourney }) {
   return (
     <nav aria-label="Sample results" className="ap-controls">
       <p className="ap-controls__lbl">Demo controls &middot; not part of the product</p>
@@ -112,8 +146,8 @@ function DemoSwitcher({ currentId, blurb }: { currentId: string; blurb: string }
         {DEMO_RESULTS.map((demo) => (
           <li key={demo.id}>
             <Link
-              href={`/demo?r=${demo.id}`}
-              aria-current={demo.id === currentId ? 'true' : undefined}
+              href={`/demo?r=${demo.id}&s=${journeyAvailable(journey, demo) ? journey.id : 'result'}`}
+              aria-current={demo.id === current.id ? 'true' : undefined}
               className="ap-controls__opt"
             >
               {demo.label}
@@ -121,7 +155,57 @@ function DemoSwitcher({ currentId, blurb }: { currentId: string; blurb: string }
           </li>
         ))}
       </ul>
-      <p className="ap-controls__blurb">{blurb}</p>
+      <p className="ap-controls__blurb">{current.blurb}</p>
+    </nav>
+  )
+}
+
+/*
+ * THE SECOND AXIS: WHEN, not what. Added 2026-09-07.
+ *
+ * The three results are all the same moment -- the day the first result lands --
+ * and that hid the two states a customer spends most of his time in: waiting for
+ * the lab, and being a member with a record. Most of this product is empty on
+ * day 3, and showing that honestly is a stronger demonstration than hiding it.
+ *
+ * ⚠ THE MEMBER STATE NEEDS A SECOND RESULT and only the headline scenario has a
+ * retest fixture, so it is disabled rather than hidden on the other two. Hiding
+ * it would silently change the control set between scenarios; disabling it says
+ * why. `resolveDemoJourney` also refuses the combination if it is typed straight
+ * into the URL.
+ */
+function JourneySwitcher({ current, journey }: { current: DemoResult; journey: DemoJourney }) {
+  return (
+    <nav aria-label="Point in the journey" className="ap-controls">
+      <p className="ap-controls__lbl">Where he is &middot; not part of the product</p>
+      <ul>
+        {DEMO_JOURNEYS.map((j) => {
+          const ok = journeyAvailable(j, current)
+          return (
+            <li key={j.id}>
+              {ok ? (
+                <Link
+                  href={`/demo?r=${current.id}&s=${j.id}`}
+                  aria-current={j.id === journey.id ? 'true' : undefined}
+                  className="ap-controls__opt"
+                >
+                  {j.label}
+                </Link>
+              ) : (
+                <span
+                  className="ap-controls__opt"
+                  aria-disabled="true"
+                  data-disabled="true"
+                  title="This result has no retest written for it, so there is no second point to show."
+                >
+                  {j.label}
+                </span>
+              )}
+            </li>
+          )
+        })}
+      </ul>
+      <p className="ap-controls__blurb">{journey.blurb}</p>
     </nav>
   )
 }

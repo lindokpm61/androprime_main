@@ -30,6 +30,8 @@ export type ScenarioName =
   // The public demo's headline result: the man the homepage readout already
   // shows. See `fixtures/demo-kit3-split.ts` and `lib/results/demo.ts`.
   | 'demo-kit3-split'
+  // The second point, 90 days on, so the demo's record tab has two.
+  | 'demo-kit3-retest'
 
 export interface SingleResult {
   resultId: string
