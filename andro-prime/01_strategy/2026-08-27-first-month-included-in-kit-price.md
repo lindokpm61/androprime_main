@@ -46,8 +46,10 @@ now out of step**, and section 5 records exactly how.
 
 ## 4. What it does NOT decide
 
-Three things fall out of this ruling and none of them is decided. They are
-listed here so nobody reads an adopted decision as a complete one.
+Three things fell out of this ruling. **Two were decided on 2026-09-07; the
+third is still open.** The original wording of each is kept underneath its
+ruling, so nobody reads a closed item as though it had never been open, and so
+the one recommendation that turned out to be wrong stays visible as an error.
 
 1. ✅ **DECIDED 2026-09-07: the RESULT LANDING** (Keith, *"anchor everything to
    results"*). Doc: `2026-09-07-anchor-everything-to-the-result.md`. The included
@@ -63,12 +65,22 @@ listed here so nobody reads an adopted decision as a complete one.
    the result exists if the kit sits in a drawer. It also gives the retest its
    clinically correct anchor (90 days after the baseline, not after a card was
    charged). **Owner: Keith.**
-2. **Auto-renew versus opt-in at day 30.** If month one is included and
-   automatic, does a card charge on day 31 by default?
+2. ✅ **DECIDED 2026-09-07: AUTO-RENEW.** The card is charged GBP 47 on day 31,
+   automatically, with a supporting price line on all kit pages (new site only).
+   Doc: `2026-09-07-auto-renew-at-day-30.md`. Keith: *"I don't see why an opt-in
+   is necessary, as we are sticking to our cadence that the first month is free,
+   and then on day 31, we charge them."*
+   🔴 **The recommendation below was WRONG and is kept as the record of the error.**
+   It collapsed **prominence** into **opt-in**, which are different obligations.
+   Numan's ASA ruling (A22-1153049) was for **burying** the subscription, not for
+   having one, and the adopted thesis already states the rule correctly as
+   *"prominent at the point of sale rather than in the T&Cs"*. **What was open, as
+   written on 2026-08-27:** If month one is included and automatic, does a card
+   charge on day 31 by default?
    *Assistant recommendation, not decided:* OPT-IN, on brand grounds rather than
    legal ones. A card charging on day 31 for something the kit page called
    "included" is the pattern the conflict-free position forbids. It costs
-   conversion, and that is the trade. **Owner: Keith.**
+   conversion, and that is the trade. ~~**Owner: Keith.**~~ **Closed.**
 3. **What it does to the GBP 47 price.** GBP 47 was adopted for VAT-threshold
    stability (`lib/subscriptions/products.ts`, Keith 2026-08-26). A free first
    month moves the threshold arithmetic. **Owner: Keith, with the accountant.**

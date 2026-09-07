@@ -275,7 +275,7 @@ that is true only until the first bundle sells.
 
 1. ~~**The timed-bundle fallback** (§5). Blocks building mechanism 3.~~ ✅ **CLOSED 2026-09-07: purchase + 90, i.e. the timed bundles are EXEMPT** (§5a). No terms change, no Ewa re-approval, no code change. Mechanism 3 keeps today's behaviour.
 2. **Confirm the mechanism 8 carve-out** (§4). Keith. One line.
-3. **Auto-renew versus opt-in at day 30** (2026-08-27 ruling §4.2). Keith.
+3. ~~**Auto-renew versus opt-in at day 30** (2026-08-27 ruling §4.2). Keith.~~ ✅ **CLOSED 2026-09-07: AUTO-RENEW.** The card is charged on day 31 automatically, with a price line on all kit pages (new site only) and a reminder around day 23 to 25 that doubles as the stage-9 continuation email. Doc: `2026-09-07-auto-renew-at-day-30.md`. 🔴 **It raised a compliance gap that is a launch gate:** the UK subscription-contracts regime (DMCC Act 2024 Part 4) appears nowhere in `03_compliance`. See `../03_compliance/2026-09-07-dmcca-subscription-regime-gap.md`.
 4. **What a free first month does to £47** and the VAT threshold. Keith, accountant.
 5. **Prepaid-or-included for sub-90-day rechecks** (cadence proposal §8). Keith.
 6. Defects 3a and 3b in `retest-mechanism-map.md`. Build, behind the flag.
