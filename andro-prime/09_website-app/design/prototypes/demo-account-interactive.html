@@ -20,6 +20,58 @@
      ============================================================ -->
 
 <!-- ============================================================
+     🔄 UPDATED 2026-09-07 FOR THREE RULINGS TAKEN THAT DAY. The drawing
+     was built on a model that has since been superseded, and since its whole
+     remaining job is to be "the drawing to argue from if membership opens",
+     a stale drawing is worse than no drawing.
+
+     WHAT WAS WRONG. The prototype showed day 14 as "first result, NOT a
+     member", with a PAYWALL asking him to start paying GBP 47 to unlock the
+     plan and the trend. Three rulings kill that screen:
+
+       1. 2026-08-27, the first 30 days of membership are INCLUDED in the kit
+          price. So he is already a member when the result lands.
+       2. 2026-09-07, every date anchors to the RESULT LANDING, not purchase
+          and not Stripe checkout (`01_strategy/2026-09-07-anchor-everything-
+          to-the-result.md`). So the included month starts on 14 Aug and the
+          retest is result + 90.
+       3. 2026-09-07, the membership AUTO-RENEWS on day 31
+          (`01_strategy/2026-09-07-auto-renew-at-day-30.md`). So day 31 is a
+          NOTICE that the card is about to be charged, not an ask.
+
+     The 2026-08-27 doc says it exactly: stage 9 "stops being 'will you start
+     paying GBP 47' and becomes 'you are already a member until [date], do you
+     want to carry on'. That is a continuation conversation, not a sales one."
+
+     WHAT CHANGED HERE. The day-14 state is now "month one running": the
+     member pill shows, the plan tab is OPEN because he is a member, and the
+     paywall is replaced by a continuation notice naming the charge date. The
+     "what is locked" card is replaced, because during month one nothing is.
+
+     🔴 A DATE ERROR THE RULINGS EXPOSED, now fixed. D2 was 22 Oct, which is
+     69 days after the result and 39 after the first charge, matching nothing.
+     The retest is result + 90 = 12 Nov 2026, which also makes the screen's own
+     line "60 days to move it" true for the first time: first charge 13 Sep
+     plus 60 days IS 12 Nov. The drawing was internally inconsistent and the
+     anchor ruling is what resolved it.
+
+     ⚠ NOT CHANGED, deliberately. Line ~844 says "Result complete 18 Aug"
+     while D1 is 14 Aug. One of those is wrong and nothing in the rulings says
+     which, so it is flagged rather than guessed at.
+
+     ⚠ THE ACCOUNT SCREEN ASSERTS AN ANNUAL RETEST THE BUILD DOES NOT DO.
+     "Your next included retest is 12 November 2027" is defect 3b in
+     `04_products/results-engine/retest-mechanism-map.md`: `nextRetestAfter`
+     is never called, so a member gets ONE retest ever. The drawing shows the
+     intended behaviour; the build does not implement it. Do not read this
+     screen as evidence that it works.
+
+     🔴 REPUBLISH THE ARTIFACT. The header below says this file is also
+     published at claude.ai and that the two drift if only one changes. This
+     edit has not been republished.
+     ============================================================ -->
+
+<!-- ============================================================
      THE DEMO ACCOUNT — interactive prototype
      Saved 2026-08-29 on Keith's instruction ("save this somewhere so we
      can refer back to it later"). Open it in a browser; it needs nothing.
@@ -28,9 +80,10 @@
      phone, built to answer the question the funnel model leaves open:
      `07_sales/funnel/site-funnel-model.md` lists the demo account as a
      surface whose state is "Does not exist". This is what it could be.
-     THREE STATES (day 3 waiting, day 14 first result, day 90 member),
+     THREE STATES (day 3 waiting, day 14 first result and month one
+     running, day 90 member),
      FOUR TABS (results, plan, record, account), all nine Kit 3 markers,
-     the marker detail, the month-one ask, and the two-point record.
+     the marker detail, the month-one notice, and the two-point record.
 
      WHAT IS REAL. Every band is transcribed from the live classifier,
      `frontend/lib/results/classifier.ts` (resolveState), and matches
@@ -53,8 +106,12 @@
      "tidy" them away:
        1. The free androgen index has NO band and NO verdict (CA-034 K1).
           The hollow dashed marker is the point, not an unfinished state.
-       2. The month-one ask gates the plan and the trend and NEVER the
-          numbers: right of access under UK GDPR.
+       2. Nothing gates the numbers, ever: right of access under UK GDPR.
+          (Until 2026-09-07 this read "the month-one ask gates the plan and
+          the trend and never the numbers". Month one no longer gates
+          anything, because it is included with the kit and it auto-renews.
+          The right-of-access point is the part that survives, and it is
+          still the reason the results tab has no lock on it.)
        3. On the two-point view the marker and the symptom are drawn side
           by side and never joined. Connecting them is a per-customer
           interpretation and is post-CQC.
@@ -526,7 +583,7 @@ header.intro p b{color:var(--ink);font-weight:700}
 
   <header class="intro">
     <h1>The whole app, on a phone.</h1>
-    <p>Every screen a customer actually reaches: waiting for the lab, all nine markers, the daily plan, the month-one ask, the record after a retest, and the account. <b>Tap through it as he would.</b> The panel beside it moves him between the three states and is not part of the product.</p>
+    <p>Every screen a customer actually reaches: waiting for the lab, all nine markers, the daily plan, the month-one notice, the record after a retest, and the account. <b>Tap through it as he would.</b> The panel beside it moves him between the three states and is not part of the product.</p>
   </header>
 
   <div class="stage">
@@ -567,7 +624,7 @@ header.intro p b{color:var(--ink);font-weight:700}
 
         <div class="seg" id="stateseg">
           <button type="button" data-state="waiting" aria-pressed="false">Day 3 · waiting for the lab</button>
-          <button type="button" data-state="result"  aria-pressed="true">Day 14 · first result, not a member</button>
+          <button type="button" data-state="result"  aria-pressed="true">Day 14 · first result, month one running</button>
           <button type="button" data-state="member"  aria-pressed="false">Day 90 · member, retest landed</button>
         </div>
 
@@ -603,7 +660,7 @@ header.intro p b{color:var(--ink);font-weight:700}
       <div class="ncard">
         <h3>Real</h3>
         <p><b>Every band is the live one</b>, from <b>classifier.ts</b> and the Ewa-approved thresholds. All nine Kit 3 markers are here, including the ones with no verdict.</p>
-        <p>Waiting-state copy, the plan screen and the month-one ask are lifted from the approved mockups, not rewritten.</p>
+        <p>Waiting-state copy and the plan screen are lifted from the approved mockups, not rewritten. <b>The month-one screen WAS rewritten, on 2026-09-07</b>, because the ruling that the month is included and auto-renews turned it from an ask into a notice.</p>
       </div>
       <div class="ncard">
         <h3>Mocked</h3>
@@ -612,7 +669,7 @@ header.intro p b{color:var(--ink);font-weight:700}
       </div>
       <div class="ncard">
         <h3>Three things to notice</h3>
-        <p><b>The numbers are never gated.</b> Month one locks the plan and the trend; the results stay open, because a person has a right of access to his own health data.</p>
+        <p><b>The numbers are never gated.</b> Month one locks nothing at all: it comes with the kit, so the plan and the trend are open from the moment the result lands. The results stay open whatever happens to the membership, because a person has a right of access to his own health data.</p>
         <p><b>The free androgen index has no verdict at all</b>, on purpose. <b>And the app never joins the marker to the symptom</b>, on the one screen where it would be easiest.</p>
       </div>
     </div>
@@ -627,7 +684,10 @@ header.intro p b{color:var(--ink);font-weight:700}
    `gp` marks the GP-referral set; `report` marks a marker we
    state and do not interpret.
    ============================================================ */
-const D1 = '14 Aug', D2 = '22 Oct';
+/* D2 is the retest: result + 90 per the 2026-09-07 anchor ruling.
+   Was '22 Oct', which matched no rule and contradicted the plan screen's
+   own "60 days to move it". 14 Aug + 90 = 12 Nov; 13 Sep + 60 = 12 Nov. */
+const D1 = '14 Aug', D2 = '12 Nov';
 const SYM = { name:'Energy, self-scored', a:4, b:7, min:0, max:10 };
 
 const MARKERS = [
@@ -841,7 +901,7 @@ const CHEV = '<span class="chev"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6
 function screenResults(){
   if (state.st === 'waiting') return screenWaiting();
   let out = '<div class="statusstrip"><i></i>' +
-    (isTwo() ? 'Retest complete · 22 Oct 2026' : 'Result complete · 18 Aug 2026') + '</div>';
+    (isTwo() ? 'Retest complete · 12 Nov 2026' : 'Result complete · 18 Aug 2026') + '</div>';
   if (isTwo())
     out += '<div class="card"><p><b>Nine markers, two purchases, one picture.</b> The panel a number came from is a detail on the row, not a place you have to navigate to.</p></div>';
 
@@ -935,22 +995,42 @@ function screenPlan(){
     'Your plan starts when your result does.',
     'There is nothing to work on yet, because there is no number to move. This fills in the moment your result lands.');
 
+  /* MONTH ONE IS RUNNING, so this is not a paywall. It was one until
+     2026-09-07: the kit now includes 30 days of membership, the clock starts
+     at the result, and day 31 charges automatically. So the plan is OPEN here
+     and the only thing owed to him is a clear notice of the charge date.
+     Keeping class="pay" for the card styling; it is a notice, not an ask. */
   if (state.st === 'result') return '' +
-    '<div class="pay"><h3>Your first month ends today.</h3>' +
-    '<p class="sub">You have one number to move and 60 days to move it.</p>' +
-    '<div class="price"><b>£47</b><span>/ month</span></div>' +
+    '<div class="pay"><h3>You are a member until 13 September.</h3>' +
+    '<p class="sub">It came with your kit. You have one number to move and 60 days to move it.</p>' +
+    '<div class="price"><b>£47</b><span>/ month from 13 Sep</span></div>' +
+    '<p class="sub"><b>On 13 September your card is charged £47 and it carries on monthly.</b> Cancel any time before then and nothing is taken.</p>' +
     '<ul>' +
-      '<li><i>+</i><span><b>Your retest on 22 October.</b> Included while you are a member. You need to be a member on that date. It is not a credit, it does not expire, and there is no balance to keep track of.</span></li>' +
+      '<li><i>+</i><span><b>Your retest on 12 November.</b> Included while you are a member. You need to be a member on that date. It is not a credit, it does not expire, and there is no balance to keep track of.</span></li>' +
       '<li><i>+</i><span>Your plan, your streak and your daily data, kept running.</span></li>' +
       '<li><i>+</i><span>Every marker explained against both ranges, ours and your lab’s.</span></li>' +
       '<li><i>+</i><span>Ask the clinician. Questions answered every month, published for all members.</span></li>' +
       '<li><i>+</i><span>Supplements at member price, only where we test the marker.</span></li>' +
     '</ul>' +
-    '<button class="btn" type="button">Keep going</button>' +
-    '<button class="btn ghost" type="button">Not right now</button>' +
+    '<button class="btn ghost" type="button">Manage membership</button>' +
     '<p class="foot">Your results are yours either way. Download them whenever you want, member or not.</p></div>' +
-    '<div class="card"><div class="ch">What is locked, and what is not</div>' +
-    '<p>Month one gates the <b>plan</b> and the <b>trend</b>. It never gates your numbers: under UK data protection law you have a right of access to your own health data, so the results tab stays open whatever you decide here.</p></div>';
+    '<div class="card"><div class="ch">Today · three taps</div>' +
+    '<div class="checks">' +
+      '<button class="chk" type="button" data-check="d3" aria-pressed="' + state.checks.d3 + '">' +
+        '<span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="cl">D3 capsule</span></button>' +
+      '<button class="chk" type="button" data-check="sun" aria-pressed="' + state.checks.sun + '">' +
+        '<span class="bx"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="cl">20 min daylight</span></button>' +
+    '</div>' +
+    '<div class="ch" style="margin:16px 0 0">Energy today</div>' +
+    '<div class="energy">' + Array.from({length:10},(_,i) =>
+      '<button class="ebtn" type="button" data-energy="' + (i+1) + '" aria-pressed="' + (state.energy===i+1) + '">' + (i+1) + '</button>').join('') + '</div>' +
+    '<p style="font-family:Merriweather,serif;font-size:12px;line-height:1.7;color:var(--ink-3);margin-top:13px">Day one. No streak yet, and nothing to chart until you have logged a few days.</p>' +
+    '</div>' +
+    '<div class="card"><div class="ch">Your one number to move</div>' +
+    '<div class="bigval"><b>31</b><span>nmol/L vitamin D</span></div>' +
+    '<p style="margin-top:8px">Your retest on 12 November is what says whether it moved. Ninety days after this result, sixty after your first payment.</p></div>' +
+    '<div class="card"><div class="ch">What month one includes, and what nothing gates</div>' +
+    '<p>Your first 30 days came with the kit, so the <b>plan</b> and the <b>trend</b> are open now. Nothing gates your numbers at any point: under UK data protection law you have a right of access to your own health data, so the results tab stays open whatever you decide about membership.</p></div>';
 
   /* member */
   const days = 22;
@@ -1006,7 +1086,7 @@ function screenRecord(){
         CHEV + '</button>';
     }).join('') +
     '<div class="card" style="margin-top:12px"><div class="ch">Your purchases</div>' +
-    '<p><b>14 Aug 2026</b> · Hormone &amp; Recovery, nine markers.<br><b>22 Oct 2026</b> · Retest, included with membership.</p></div>';
+    '<p><b>14 Aug 2026</b> · Hormone &amp; Recovery, nine markers.<br><b>12 Nov 2026</b> · Retest, included with membership.</p></div>';
 }
 
 function screenYou(){
@@ -1017,7 +1097,12 @@ function screenYou(){
 
   if (member) out += '<div class="card"><div class="ch">Membership</div>' +
     '<div class="bigval"><b>£47</b><span>/ month</span></div>' +
-    '<p style="margin-top:9px">Member since 13 September. Your next included retest is <b>22 October 2027</b>.</p>' +
+    /* "Member since" is the RESULT date, not the first charge: membership
+       begins when the result lands. 13 Sep is when the card was first charged.
+       ⚠ The 2027 line is DEFECT 3b (retest-mechanism-map.md): the build never
+       calls nextRetestAfter, so a member gets one retest ever. Drawn as
+       intended, not as built. */
+    '<p style="margin-top:9px">Member since 14 August. First payment 13 September. Your next included retest is <b>12 November 2027</b>.</p>' +
     '<button class="btn ghost" type="button">Manage membership</button></div>';
 
   if (state.st !== 'waiting'){
@@ -1062,7 +1147,13 @@ const TABS = [
 const TITLES = { results:'Your results', plan:'Your plan', record:'Your record', you:'Account' };
 
 function render(){
-  const member = isTwo();
+  /* The pill is MEMBERSHIP, which begins when the result lands (2026-08-27 +
+     the anchor ruling), not when a card is first charged. isTwo() is a
+     different question -- whether there are two data points -- and is left
+     alone because every value lookup depends on it. At day 3 he is not yet a
+     member: `memberships.started_at` moves to the result, so there is nothing
+     to be a member of until then. */
+  const member = state.st === 'result' || state.st === 'member';
   $('memberpill').hidden = !member;
 
   $('tabbar').innerHTML = TABS.map(t =>
@@ -1114,7 +1205,7 @@ const WATCH = {
   result: [
     'Open <b>Testosterone</b>. He is inside his lab’s range and under the cutoff, and the card routes him out of the business.',
     'Open <b>Free androgen index</b>. It has a hollow marker and <b>no verdict at all</b>, on purpose.',
-    'Go to <b>Plan</b>. Month one is the ask. Note what it does not lock: <b>the numbers stay open.</b>',
+    'Go to <b>Plan</b>. Month one is <b>included</b>, so it is a notice with a charge date, not an ask. Note what it does not lock: <b>nothing.</b>',
     'Flip the compare switch, then reopen testosterone. It becomes "within the normal range" and the page has nothing to say.'
   ],
   member: [
