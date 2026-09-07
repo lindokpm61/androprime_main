@@ -1,6 +1,7 @@
 import { buildDashboardFromScenario } from './buildDashboardFromScenario'
 import { SCENARIOS } from './fixtures'
 import { FIRST_CYCLE_RETEST_DAYS } from '@/lib/membership/entitlement'
+import type { CheckinEntry } from '@/lib/membership/checkin'
 import type { DashboardData, ScenarioName, KitType } from './types'
 
 /*
@@ -370,4 +371,76 @@ export function getDemoWaitingSteps(collectedAt: string | null | undefined): Dem
     },
     { title: 'Results ready', detail: 'No date yet', state: 'todo' },
   ]
+}
+
+/* -------------------------------------------------------- the check-in loop */
+
+/*
+ * 🔄 THE DEMO DRIVES THE REAL CHECK-IN MODULE, added 2026-09-07 (fourth pass).
+ *
+ * The first version of the member plan hand-rolled a streak, a counter row and
+ * an adherence chart, and used a 1-to-10 energy scale. All of that was wrong:
+ * `lib/membership/checkin.ts` already owns the loop, `CheckinRow` and
+ * `AdherenceChart` already render it, and the product's scale is 1 to 5. The
+ * demo now renders those components and computes the numbers with that module,
+ * so the two cannot disagree about what the loop is.
+ *
+ * 🔴 THE ENTRIES ARE SYNTHESISED, THE NUMBERS ARE NOT. This function fabricates
+ * a plausible 22 days of taps; `currentStreak`, `adherenceSeries` and
+ * `loggedWithin` then compute the streak and the chart from them. Nothing on
+ * screen is a typed-in "16 day streak". That matters because the mockup asserted
+ * both figures and they did not agree with each other.
+ *
+ * 🔴 "TODAY" IS THE DEMO'S TODAY, not the wall clock. Every function in
+ * `checkin.ts` takes `now` as an argument precisely so it can be driven from a
+ * table, and the member state is a fixed moment in 2026. Passing the real clock
+ * would make the chart drift every day and eventually show 22 empty bars.
+ */
+export interface DemoCheckin {
+  entries: CheckinEntry[]
+  /** The day the member state is standing on. Never `new Date()`. */
+  today: Date
+  /** A partly-completed day, so the row is not uniformly full or empty. */
+  answeredToday: Record<string, boolean | number>
+}
+
+/*
+ * Days the member missed, as offsets back from the demo today.
+ *
+ * They sit 8, 14 and 19 days back rather than 3, 9 and 16 for a reason a screen
+ * makes obvious and a table does not: `currentStreak` counts back from today, so
+ * a miss three days ago produces "19 days logged" beside "3 day streak", which
+ * reads as a broken habit rather than a kept one. The gaps still show on the
+ * chart; they are just old enough to be history.
+ */
+const DEMO_MISSED_DAYS = [8, 14, 19]
+
+export function getDemoCheckin(
+  questionKeys: readonly string[],
+  today: Date,
+  windowDays = 22
+): DemoCheckin {
+  const entries: CheckinEntry[] = []
+  for (let back = windowDays - 1; back >= 1; back -= 1) {
+    if (DEMO_MISSED_DAYS.includes(back)) continue
+    const at = addDays(today, -back)
+    at.setUTCHours(8, 5, 0, 0)
+    for (const key of questionKeys) {
+      entries.push({ questionKey: key, capturedAt: at.toISOString() })
+    }
+  }
+
+  /* Today is deliberately PART done: the supplement tap and the energy score in,
+     the behaviour tap still open. A row that is uniformly full reads as a
+     screenshot rather than as something a man is halfway through. */
+  const answeredToday: Record<string, boolean | number> = {}
+  const todayAt = new Date(today)
+  todayAt.setUTCHours(8, 5, 0, 0)
+  questionKeys.forEach((key, i) => {
+    if (i === 1) return
+    answeredToday[key] = key.endsWith('.energy') ? 4 : true
+    entries.push({ questionKey: key, capturedAt: todayAt.toISOString() })
+  })
+
+  return { entries, today, answeredToday }
 }

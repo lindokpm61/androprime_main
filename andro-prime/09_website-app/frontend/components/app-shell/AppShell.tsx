@@ -4,7 +4,10 @@ import { useState } from 'react'
 import { RangeTrack } from './RangeTrack'
 import { badgeFor, toneFor } from '@/lib/results/resultSeverity'
 import { KIT_PANELS, PANEL_MARKERS } from '@/lib/kits/panel'
-import { formatDemoDate, formatDemoDateShort, getDemoWaitingSteps } from '@/lib/results/demo'
+import { formatDemoDate, formatDemoDateShort, getDemoWaitingSteps, getDemoCheckin } from '@/lib/results/demo'
+import { markerToMove, questionsFor, currentStreak, adherenceSeries, loggedWithin } from '@/lib/membership/checkin'
+import { CheckinRow } from '@/components/membership/CheckinRow'
+import { AdherenceChart } from '@/components/membership/AdherenceChart'
 import type { DemoDates, DemoJourneyId } from '@/lib/results/demo'
 import type { ClassifiedResult, KitData, SingleResult } from '@/lib/results/types'
 
@@ -166,7 +169,12 @@ export function AppShell({
             body="There is nothing to work on yet, because there is no number to move. This fills in the moment your result lands."
           />
         ) : (
-          <PlanScreen markers={markers} journey={journey} dates={dates} />
+          <PlanScreen
+            markers={markers}
+            journey={journey}
+            dates={dates}
+            today={latest?.collectedAt ? new Date(latest.collectedAt) : null}
+          />
         ))}
 
       {tab === 'record' &&
@@ -477,24 +485,51 @@ function PlanScreen({
   markers,
   journey,
   dates,
+  today,
 }: {
   markers: ClassifiedResult[]
   journey: DemoJourneyId
   dates: DemoDates | null
+  today: Date | null
 }) {
-  const [energy, setEnergy] = useState<number | null>(null)
   const flagged = flaggedOf(markers)
   const member = journey === 'member'
+
+  /*
+   * 🔴 THE ENGINE PICKS THE MARKER, NEVER THIS FILE. `markerToMove` applies the
+   * documented order (severity first, and a named seam inside a severity band
+   * that is still owed Ewa's ruling). It returns null on purpose for an
+   * all-clear member, who gets no loop rather than a loop against a retest a
+   * year away, and for a man whose only flagged marker is hs-CRP, which has no
+   * behaviour we sell against.
+   */
+  const loop = (() => {
+    if (!today) return null
+    const marker = markerToMove(markers.map((m) => m.state))
+    if (!marker) return null
+    const questions = questionsFor(marker)
+    const keys = questions.map((q) => q.key)
+    const checkin = getDemoCheckin(keys, today)
+    return {
+      questions,
+      checkin,
+      streak: currentStreak(checkin.entries, checkin.today),
+      series: adherenceSeries(checkin.entries, questions.length, 22, checkin.today),
+      logged: loggedWithin(checkin.entries, 22, checkin.today),
+    }
+  })()
 
   return (
     <div className="ap-screen">
       <div className="ap-screen__head">
         <h1 className="ap-screen__title">
-          {flagged.length === 0
-            ? 'Nothing to work on.'
-            : flagged.length === 1
+          {loop
+            ? loop.questions.length > 0 && flagged.length === 1
               ? 'One number to move.'
-              : `${flagged.length} numbers to move.`}
+              : `${flagged.length} numbers to move.`
+            : flagged.length === 0
+              ? 'Nothing to work on.'
+              : 'No daily loop for this one.'}
         </h1>
       </div>
 
@@ -526,6 +561,34 @@ function PlanScreen({
         </div>
       )}
 
+      {/*
+       * 🔴 THE REFUSAL IS THE ARGUMENT, so it gets a card rather than an empty
+       * screen. `markerToMove` returns null when the flagged markers have no
+       * loop, and the two cases are the ones the module names: testosterone,
+       * which does not move on what we sell, and hs-CRP, which has no single
+       * behaviour to ask about. A demo that quietly showed nothing here would
+       * hide the most persuasive thing the product does, which is decline to
+       * sell someone a daily habit against a number it cannot move.
+       *
+       * ⚠ It states no threshold and no mechanism: it says there is no loop and
+       * why we do not offer one. The marker's own explanation is one tap away on
+       * the results tab, in the engine's words.
+       */}
+      {!loop && flagged.length > 0 && (
+        <div className="ap-card">
+          <span className="ap-lbl">Why there is nothing to tap</span>
+          <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
+            The daily loop only covers markers you can actually move, and only where there is a
+            behaviour we would ask you about: vitamin D, B12 and ferritin. Nothing you flag today is
+            one of those.
+          </p>
+          <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 10, color: 'var(--ap-ink-2)' }}>
+            We could give you a streak to keep anyway. It would not change the number, and the
+            retest would say so.
+          </p>
+        </div>
+      )}
+
       {/* 🔴 THE ENGINE WRITES THIS, NOT THIS FILE. Every marker below was flagged
           by `classify()` and every word under it is its own `recommendation`
           string from `biomarker-copy.ts`, which is Ewa-approved copy. The
@@ -550,28 +613,34 @@ function PlanScreen({
         </div>
       )}
 
-      {/* Behavioural self-report. Makes no claim about blood, which is why the
-          line under it says so out loud. */}
-      <div className="ap-card">
-        <span className="ap-lbl">Energy today</span>
-        <div className="ap-energy">
-          {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
-            <button
-              key={n}
-              type="button"
-              className="ap-energy__btn"
-              aria-pressed={energy === n}
-              onClick={() => setEnergy(n)}
-            >
-              {n}
-            </button>
-          ))}
+      {/* 🔴 THE REAL LOOP, NOT A DRAWING OF ONE. `markerToMove` picks the one
+          number this man is being asked to move, `questionsFor` gives that
+          marker's own three taps, and `CheckinRow` is the component the
+          logged-in member uses. An earlier version of this screen hand-rolled a
+          1-to-10 energy row; the product's scale is 1 to 5 and lives in
+          `SCALE_MIN`/`SCALE_MAX`, which is exactly the kind of thing a copy
+          drifts on and a shared component cannot.
+
+          `onSave` is what makes it safe here: the demo has no session, so a tap
+          that POSTed would take the 401 branch and bounce a visitor to a login
+          page. With the handler it reflects the tap and stores nothing. */}
+      {loop && (
+        <div className="ap-card">
+          <span className="ap-lbl">Today &middot; three taps</span>
+          <div style={{ marginTop: 10 }}>
+            <CheckinRow
+              questions={loop.questions}
+              answeredToday={loop.checkin.answeredToday}
+              onSave={() => {}}
+            />
+          </div>
+          <p style={{ fontSize: 12, lineHeight: 1.7, marginTop: 12, color: 'var(--ap-ink-3)' }}>
+            Three taps, all connected to the one marker you are moving. A member moving ferritin
+            would be asked for different things. This is about behaviour, not blood: nothing here
+            claims your result has changed, and the app never joins the two for you.
+          </p>
         </div>
-        <p style={{ fontSize: 12, lineHeight: 1.7, marginTop: 12, color: 'var(--ap-ink-3)' }}>
-          How you feel, logged daily. This is about behaviour, not blood: nothing here claims your
-          result has changed, and the app never joins the two for you.
-        </p>
-      </div>
+      )}
 
       {/* 🔴 BEHAVIOUR, NOT BLOOD, and the caption is load-bearing. The prototype
           draws a 22-day adherence chart here and captions it "this chart is about
@@ -583,15 +652,22 @@ function PlanScreen({
           "20 min daylight" are invented actions with no pre-flight and no
           clinical sign-off; the prototype's own header forbids lifting them to a
           live surface. The engine's own recommendations render above instead. */}
-      {member && (
+      {/* 🔴 COMPUTED BY `checkin.ts`, NOT TYPED. The mockup asserted "22 days
+          logged" beside "16 day streak" and the two did not agree with each
+          other. These come from `loggedWithin`, `currentStreak` and
+          `adherenceSeries` over a synthesised entry set, so they cannot
+          disagree, and `AdherenceChart` is the member's own component, legend
+          included: the "behaviour, not blood" line is not optional and ships
+          with the chart rather than beside it. */}
+      {member && loop && (
         <>
           <div className="ap-stats">
             <div className="ap-stat">
-              <b>22</b>
+              <b>{loop.logged.logged}</b>
               <span>Days logged</span>
             </div>
             <div className="ap-stat">
-              <b>16</b>
+              <b>{loop.streak}</b>
               <span>Day streak</span>
             </div>
             <div className="ap-stat">
@@ -600,26 +676,8 @@ function PlanScreen({
             </div>
           </div>
           <div className="ap-card">
-            <span className="ap-lbl">Adherence, 22 days</span>
-            <div className="ap-bars">
-              {Array.from({ length: 22 }, (_, i) => {
-                const missed = i === 4 || i === 11 || i === 17
-                return (
-                  <i
-                    key={i}
-                    data-miss={missed || undefined}
-                    style={{ height: missed ? '18%' : `${58 + ((i * 37) % 42)}%` }}
-                  />
-                )
-              })}
-            </div>
-            <div className="ap-barcap">
-              <span>Day 1</span>
-              <span>Day 22</span>
-            </div>
-            <p style={{ fontSize: 12, lineHeight: 1.7, marginTop: 12, color: 'var(--ap-ink-3)' }}>
-              This chart is about behaviour, not blood. Nothing here claims your result has changed.
-            </p>
+            <span className="ap-lbl">Adherence, {loop.logged.of} days</span>
+            <AdherenceChart series={loop.series} />
           </div>
         </>
       )}

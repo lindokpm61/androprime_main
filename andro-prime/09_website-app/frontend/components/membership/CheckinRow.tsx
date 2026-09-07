@@ -11,6 +11,18 @@ interface Props {
   questions: readonly CheckinQuestion[]
   /** What is already logged today, keyed by question. */
   answeredToday: Record<string, boolean | number>
+  /**
+   * Where a tap goes instead of the API. Omit it and the row behaves exactly as
+   * before: it POSTs, rolls back on failure, and sends a 401 to the login page.
+   *
+   * 🔴 IT EXISTS FOR THE PUBLIC DEMO, which has no session. Without it a tap on
+   * `/demo` would fetch, take the 401 branch, and redirect a visitor who has no
+   * account to a login page. The demo renders THIS component rather than a copy
+   * of it so the two cannot drift, and this is the one line that makes that
+   * safe. Never pass it from an authenticated surface: the loop is only worth
+   * anything if the taps are actually stored.
+   */
+  onSave?: (question: CheckinQuestion, answer: boolean | number) => void
 }
 
 /**
@@ -26,7 +38,7 @@ interface Props {
  * the row is operable from a keyboard and reads correctly to a screen reader
  * rather than being three tappable divs.
  */
-export function CheckinRow({ questions, answeredToday }: Props) {
+export function CheckinRow({ questions, answeredToday, onSave }: Props) {
   const [answers, setAnswers] = useState<Record<string, boolean | number>>(answeredToday)
   const [failed, setFailed] = useState<string | null>(null)
 
@@ -34,6 +46,12 @@ export function CheckinRow({ questions, answeredToday }: Props) {
     const previous = answers[question.key]
     setAnswers((current) => ({ ...current, [question.key]: answer }))
     setFailed(null)
+
+    // The demo: reflect the tap, store nothing, touch no network.
+    if (onSave) {
+      onSave(question, answer)
+      return
+    }
 
     try {
       const res = await fetch('/api/membership/checkin', {
