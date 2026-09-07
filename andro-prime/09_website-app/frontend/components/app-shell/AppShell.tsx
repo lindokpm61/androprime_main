@@ -777,7 +777,7 @@ function RecordScreen({
                 <span className="ap-move__word">{word}</span>
               </span>
               <span className="ap-move__vals">
-                <span className="ap-move__was">{p?.value ?? '—'}</span>
+                <span className="ap-move__was">{p?.value ?? '–'}</span>
                 <span className="ap-move__arw" aria-hidden="true">
                   &rarr;
                 </span>

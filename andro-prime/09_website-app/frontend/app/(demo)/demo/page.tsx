@@ -34,7 +34,7 @@ import {
  * Both must clear before this line changes.
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * 🔄 2026-09-07, TWO CORRECTIONS IN ONE DAY, and the second was Keith's.
+ * 🔄 2026-09-07, THREE CORRECTIONS IN ONE DAY, and the last two were Keith's.
  *
  * FIRST: the three things the prototype showed and this did not -- the plan tab,
  * the record tab and the member screens -- were built, and a FOURTH gap turned up
@@ -49,6 +49,17 @@ import {
  * toggle, the closing notes -- and everything added on top inherited that. The
  * two artefacts had been compared on STRUCTURE (which tabs, which states) and
  * never once on APPEARANCE. `DemoStage` is that stage, ported.
+ *
+ * THIRD, and it is the one worth remembering: that fidelity pass compared ONE
+ * pair of screenshots, the default state on the default tab, out of TWELVE
+ * state-and-tab combinations. Keith sent a screenshot of a different state
+ * showing a screen that had been invented rather than ported. Comparing all
+ * twelve at once then found five further gaps: the whole You tab, the member
+ * plan's counters and chart, the inline was-to-now on member rows, a title
+ * repeated on every screen, and a tab bar attached to the wrong flex parent.
+ * **One screenshot proves one cell.** If you change these screens, drive both
+ * artefacts through every cell and diff the text; the screenshots are for the
+ * cells where the text already disagrees.
  *
  * 🔴 KEITH'S RULING on why the membership surfaces are here rather than behind
  * the flag: "This is a demo, so surely it isn't dependent on the membership flag
