@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { RangeTrack } from './RangeTrack'
 import { badgeFor, toneFor } from '@/lib/results/resultSeverity'
 import { KIT_PANELS, PANEL_MARKERS } from '@/lib/kits/panel'
-import { formatDemoDate, formatDemoDateShort } from '@/lib/results/demo'
+import { formatDemoDate, formatDemoDateShort, getDemoWaitingSteps } from '@/lib/results/demo'
 import type { DemoDates, DemoJourneyId } from '@/lib/results/demo'
 import type { ClassifiedResult, KitData, SingleResult } from '@/lib/results/types'
 
@@ -148,11 +148,7 @@ export function AppShell({
     <div className="ap-shell">
       {tab === 'results' &&
         (waiting ? (
-          <WaitingScreen
-            title="Your results"
-            head="Your sample is with the lab."
-            body="Results come back within 2 to 5 working days of the lab receiving it. You will get an email the moment they land, and everything below fills in at once."
-          />
+          <WaitingResultsScreen collectedAt={latest?.collectedAt} />
         ) : open ? (
           <MarkerScreen
             result={open}
@@ -166,7 +162,6 @@ export function AppShell({
       {tab === 'plan' &&
         (waiting ? (
           <WaitingScreen
-            title="Your plan"
             head="Your plan starts when your result does."
             body="There is nothing to work on yet, because there is no number to move. This fills in the moment your result lands."
           />
@@ -177,7 +172,6 @@ export function AppShell({
       {tab === 'record' &&
         (waiting ? (
           <WaitingScreen
-            title="Your record"
             head="Nothing to compare yet."
             body="A record needs two points. Your first result is the first of them, and it is on its way."
           />
@@ -186,14 +180,83 @@ export function AppShell({
         ))}
 
       {tab === 'you' && <YouScreen kits={kits} journey={journey} dates={dates} />}
+    </div>
+  )
+}
 
-      <TabBar
-        tab={tab}
-        onTab={(t) => {
-          onTab(t)
-          onOpenMarker(null)
-        }}
-      />
+/* ---------------- Waiting ---------------- */
+
+/*
+ * 🔴 THE RESULTS TAB HAS A REAL WAITING SCREEN, and the first pass of the
+ * journey work did not port it. It gave all three tabs one generic empty state,
+ * which is what the prototype does for Plan and Record and is NOT what it does
+ * here. Keith caught it by putting the two side by side; the fidelity pass
+ * before that had compared one pair of screenshots, day-14 Results, out of
+ * twelve state-and-tab combinations.
+ *
+ * Why the tracker earns its place: it is the difference between "we have your
+ * sample" and "your sample is at this point and here is when to expect it". For
+ * about eleven days this screen IS the product, so a demo that skips it is
+ * demonstrating the easy part.
+ *
+ * ⚠ NO PERCENTAGE AND NO PROGRESS BAR, deliberately, and the prototype records
+ * the reason: a bar stuck at 60% for two days is worse than no bar. The tracker
+ * dates every completed step and refuses to date the one it cannot know.
+ */
+function WaitingResultsScreen({ collectedAt }: { collectedAt?: string | null }) {
+  const steps = getDemoWaitingSteps(collectedAt)
+
+  return (
+    <div className="ap-screen">
+      <div className="ap-statusstrip">
+        <i aria-hidden="true" />
+        Status &middot; analysing
+      </div>
+
+      <div className="ap-card">
+        <span className="ap-lbl">Where your sample is</span>
+        <p className="ap-lead" style={{ marginTop: 8 }}>
+          Your sample is being analysed.
+        </p>
+        <p className="ap-body">
+          The lab has had your sample for three days and is analysing it now. You will get an email
+          the moment it is done, and you do not need to check back.
+        </p>
+
+        {steps && (
+          <div className="ap-steps">
+            {steps.map((s) => (
+              <div className="ap-step" key={s.title} data-state={s.state}>
+                <span className="ap-step__line" aria-hidden="true" />
+                <span className="ap-step__bul" aria-hidden="true" />
+                <span>
+                  <span className="ap-step__t">{s.title}</span>
+                  <span className="ap-step__d">{s.detail}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <span className="ap-sect">Ready for when it lands</span>
+
+      <div className="ap-card">
+        <span className="ap-lbl">Why analysis takes days, not hours</span>
+        <p className="ap-body" style={{ marginTop: 8 }}>
+          Your sample is run in a batch against calibrated controls, and a result that fails its
+          control is run again rather than sent out. The wait is the second run you hope you do not
+          need.
+        </p>
+      </div>
+
+      <div className="ap-card">
+        <span className="ap-lbl">What a reference range is, and is not</span>
+        <p className="ap-body" style={{ marginTop: 8 }}>
+          A reference range describes where most men sit. It was built to flag illness, not to define
+          wellness, which is why we will show ours beside it.
+        </p>
+      </div>
     </div>
   )
 }
@@ -206,14 +269,13 @@ export function AppShell({
  * on day one, and it is not: for about eleven days it is a receipt and a
  * promise. Showing that is more persuasive than hiding it.
  */
-function WaitingScreen({ title, head, body }: { title: string; head: string; body: string }) {
+function WaitingScreen({ head, body }: { head: string; body: string }) {
   return (
     <div className="ap-screen">
+      {/* No title: the app bar above already carries it, and the prototype does
+          not repeat it inside an empty state. */}
       <div className="ap-screen__head">
-        <span className="ap-lbl">{title}</span>
-        <h1 className="ap-screen__title" style={{ marginTop: 6 }}>
-          {head}
-        </h1>
+        <h1 className="ap-screen__title">{head}</h1>
       </div>
       <div className="ap-empty">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -244,6 +306,10 @@ function ResultsScreen({
   const results = kits[0]?.results ?? []
   const latest = results[results.length - 1]
   const isRetest = results.length > 1
+  /* On a retest the prototype puts the earlier value on the row itself, so the
+     movement is legible without leaving the results tab. */
+  const previous = results.length > 1 ? results[results.length - 2] : null
+  const prevByName = new Map((previous?.markers ?? []).map((m) => [m.markerName, m]))
   const when = latest?.collectedAt
     ? new Date(latest.collectedAt).toLocaleDateString('en-GB', {
         day: 'numeric',
@@ -265,9 +331,10 @@ function ResultsScreen({
           {isRetest ? 'Retest complete' : 'Result complete'} &middot; {when}
         </div>
       )}
+      {/* No label here: the phone app bar already says "Your results", and the
+          prototype does not repeat it inside the screen. */}
       <div className="ap-screen__head">
-        <span className="ap-lbl">Your results</span>
-        <h1 className="ap-screen__title" style={{ marginTop: 6 }}>
+        <h1 className="ap-screen__title">
           {flagged === 0
             ? 'Nothing here needs action.'
             : flagged === 1
@@ -280,7 +347,12 @@ function ResultsScreen({
         <div className="ap-group" key={group}>
           <span className="ap-lbl">{group}</span>
           {rows.map((m) => (
-            <MarkerRow key={m.markerName} result={m} onOpen={onOpen} />
+            <MarkerRow
+              key={m.markerName}
+              result={m}
+              was={prevByName.get(m.markerName)?.value ?? null}
+              onOpen={onOpen}
+            />
           ))}
         </div>
       ))}
@@ -288,7 +360,15 @@ function ResultsScreen({
   )
 }
 
-function MarkerRow({ result, onOpen }: { result: ClassifiedResult; onOpen: (n: string) => void }) {
+function MarkerRow({
+  result,
+  was,
+  onOpen,
+}: {
+  result: ClassifiedResult
+  was?: number | null
+  onOpen: (n: string) => void
+}) {
   const badge = badgeFor(result.state)
   const tone = toneFor(result.state)
   return (
@@ -300,6 +380,9 @@ function MarkerRow({ result, onOpen }: { result: ClassifiedResult; onOpen: (n: s
         </span>
       </span>
       <span className="ap-row__val">
+        {was !== null && was !== undefined && was !== result.value && (
+          <span className="ap-row__was">{was} &rarr;</span>
+        )}
         {result.value}
         <span className="ap-row__unit">{result.unit}</span>
       </span>
@@ -406,8 +489,7 @@ function PlanScreen({
   return (
     <div className="ap-screen">
       <div className="ap-screen__head">
-        <span className="ap-lbl">Your plan</span>
-        <h1 className="ap-screen__title" style={{ marginTop: 6 }}>
+        <h1 className="ap-screen__title">
           {flagged.length === 0
             ? 'Nothing to work on.'
             : flagged.length === 1
@@ -491,6 +573,57 @@ function PlanScreen({
         </p>
       </div>
 
+      {/* 🔴 BEHAVIOUR, NOT BLOOD, and the caption is load-bearing. The prototype
+          draws a 22-day adherence chart here and captions it "this chart is about
+          behaviour, not blood. Nothing here claims your result has changed." That
+          sentence is the reason the chart is allowed to exist beside a set of
+          clinical results at all, so it ships with it or neither ships.
+
+          ⚠ THE PROTOTYPE'S DAILY TASKS ARE STILL NOT PORTED. "D3 capsule" and
+          "20 min daylight" are invented actions with no pre-flight and no
+          clinical sign-off; the prototype's own header forbids lifting them to a
+          live surface. The engine's own recommendations render above instead. */}
+      {member && (
+        <>
+          <div className="ap-stats">
+            <div className="ap-stat">
+              <b>22</b>
+              <span>Days logged</span>
+            </div>
+            <div className="ap-stat">
+              <b>16</b>
+              <span>Day streak</span>
+            </div>
+            <div className="ap-stat">
+              <b>{flagged.length}</b>
+              <span>{flagged.length === 1 ? 'Marker to move' : 'Markers to move'}</span>
+            </div>
+          </div>
+          <div className="ap-card">
+            <span className="ap-lbl">Adherence, 22 days</span>
+            <div className="ap-bars">
+              {Array.from({ length: 22 }, (_, i) => {
+                const missed = i === 4 || i === 11 || i === 17
+                return (
+                  <i
+                    key={i}
+                    data-miss={missed || undefined}
+                    style={{ height: missed ? '18%' : `${58 + ((i * 37) % 42)}%` }}
+                  />
+                )
+              })}
+            </div>
+            <div className="ap-barcap">
+              <span>Day 1</span>
+              <span>Day 22</span>
+            </div>
+            <p style={{ fontSize: 12, lineHeight: 1.7, marginTop: 12, color: 'var(--ap-ink-3)' }}>
+              This chart is about behaviour, not blood. Nothing here claims your result has changed.
+            </p>
+          </div>
+        </>
+      )}
+
       {dates && !member && (
         <div className="ap-card">
           <span className="ap-lbl">What month one includes, and what nothing gates</span>
@@ -532,10 +665,7 @@ function RecordScreen({
     return (
       <div className="ap-screen">
         <div className="ap-screen__head">
-          <span className="ap-lbl">Your record</span>
-          <h1 className="ap-screen__title" style={{ marginTop: 6 }}>
-            One point.
-          </h1>
+          <h1 className="ap-screen__title">One point.</h1>
         </div>
         <div className="ap-card">
           <p style={{ fontSize: 13.5, lineHeight: 1.7, color: 'var(--ap-ink-2)' }}>
@@ -569,8 +699,7 @@ function RecordScreen({
   return (
     <div className="ap-screen">
       <div className="ap-screen__head">
-        <span className="ap-lbl">Your record</span>
-        <h1 className="ap-screen__title" style={{ marginTop: 6 }}>
+        <h1 className="ap-screen__title">
           {moved === 0 ? 'Nothing moved.' : `${moved} of ${markers.length} moved.`}
         </h1>
       </div>
@@ -630,14 +759,20 @@ function YouScreen({
   const kitName = kits[0]?.kitType
   const waiting = journey === 'waiting'
   const member = journey === 'member'
+  /* The engine decides whether a GP row belongs here, never this file. */
+  const routesToGp = (latest?.markers ?? []).some((m) => toneFor(m.state) === 'crit')
 
   return (
     <div className="ap-screen">
-      <div className="ap-screen__head">
-        <span className="ap-lbl">Your account</span>
-        <h1 className="ap-screen__title" style={{ marginTop: 6 }}>
-          What we hold.
-        </h1>
+      <div className="ap-card">
+        <span className="ap-lbl">Account</span>
+        {/* A named persona, because an account screen with no account on it
+            demonstrates nothing. It is the repo's own ICP name and the page says
+            "sample data" twice above this point. */}
+        <p className="ap-name" style={{ marginTop: 8 }}>
+          Mark Ellison
+        </p>
+        <p className="ap-email">mark@example.com</p>
       </div>
 
       {/* 🔴 The membership card is the one place a PRICE appears on this route.
@@ -687,11 +822,65 @@ function YouScreen({
         </p>
       </div>
 
+      {/* The prototype's action rows. They do nothing here, which is true of
+          every control on this route, and they are what makes the account screen
+          an account screen rather than a paragraph about one.
+
+          The GP row appears only when the engine actually routed a marker out of
+          the business, so it cannot read as decoration. */}
+      {!waiting && routesToGp && (
+        <button type="button" className="ap-rowlink">
+          <span className="ap-rowlink__t">
+            <span className="ap-rowlink__n">GP handoff summary</span>
+            <span className="ap-rowlink__d">One page, written for a clinician &middot; ready</span>
+          </span>
+          <span className="ap-chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </span>
+        </button>
+      )}
+
+      {!waiting && (
+        <button type="button" className="ap-rowlink">
+          <span className="ap-rowlink__t">
+            <span className="ap-rowlink__n">Download my results</span>
+            <span className="ap-rowlink__d">Yours whatever you decide about membership</span>
+          </span>
+          <span className="ap-chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </span>
+        </button>
+      )}
+
+      {member && (
+        <button type="button" className="ap-rowlink">
+          <span className="ap-rowlink__t">
+            <span className="ap-rowlink__n">Ask the clinician</span>
+            <span className="ap-rowlink__d">Answered generally, published for all members</span>
+          </span>
+          <span className="ap-chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </span>
+        </button>
+      )}
+
+      {/* ⚠ THE MEMBER SHOP IS DELIBERATELY NOT PORTED. The prototype lists
+          "Vitamin D3 + K2, GBP 18.95, member price" here. Putting a supplement
+          PRICE on an ungated public surface is a third compliance question on
+          this route, on top of the results report (CA-046) and the membership
+          price, and nobody has asked it. Flagged in 03_compliance/STATE.md. */}
+
       <div className="ap-card">
         <span className="ap-lbl">Your data</span>
         <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
-          You can export your results as CSV or request erasure at any time from your account. Your
-          numbers are yours whether you buy anything else or not.
+          One UK data controller. Your results are never sold. You can export your results as CSV or
+          request erasure at any time, member or not.
         </p>
       </div>
     </div>
@@ -700,7 +889,15 @@ function YouScreen({
 
 /* ---------------- Tabs ---------------- */
 
-function TabBar({ tab, onTab }: { tab: Tab; onTab: (t: Tab) => void }) {
+/*
+ * 🔄 THE TAB BAR IS A SIBLING OF THE SCROLL AREA, NOT INSIDE IT (2026-09-07).
+ * It used to be the last child of the shell with `position: sticky; bottom: 0`,
+ * which meant the screen scrolled UNDER it and the last card on a long screen sat
+ * behind the tabs. The prototype makes it a flex sibling of the scroll region, so
+ * the content ends where the tabs begin. That is a structural difference, not a
+ * styling one, which is why it is exported rather than styled around.
+ */
+export function TabBar({ tab, onTab }: { tab: Tab; onTab: (t: Tab) => void }) {
   const TABS = [
     {
       id: 'results' as const,

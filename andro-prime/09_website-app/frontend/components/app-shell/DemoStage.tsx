@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { AppShell, TAB_TITLES } from './AppShell'
+import { AppShell, TabBar, TAB_TITLES } from './AppShell'
 import type { Tab } from './AppShell'
 import { barMaxFor } from './RangeTrack'
 import { classify } from '@/lib/results/classifier'
@@ -218,6 +218,14 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
                     compare={compare}
                   />
                 </div>
+
+                <TabBar
+                  tab={tab}
+                  onTab={(t) => {
+                    setTab(t)
+                    setOpenMarker(null)
+                  }}
+                />
               </div>
             </div>
           </div>

@@ -319,3 +319,55 @@ export function getDemoEngineInput(result: DemoResult, journey: DemoJourney): De
     baselineCollectedAt: twoPoint ? (SCENARIOS[result.scenario].payload.collectedAt ?? null) : null,
   }
 }
+
+/* ---------------------------------------------------------- waiting steps */
+
+/*
+ * 🔄 THE WAITING TRACKER, ported 2026-09-07 (second correction).
+ *
+ * The first pass of the journey work gave all three tabs one generic empty
+ * state. That is right for Plan and Record, which is what the prototype does
+ * there, and WRONG for Results, where the prototype draws a real screen: a
+ * status strip, "where your sample is", a dated four-step tracker, and two cards
+ * for when it lands. Keith spotted it by looking at the two side by side.
+ *
+ * 🔴 THE DATES ARE DERIVED, like every other date on this route. The prototype
+ * hand-typed 11 / 14 / 15 / 18 Aug, which is exactly the kind of literal that
+ * left its retest date matching no rule. These come off the fixture's collection
+ * date, and "expected by" is the SAME `RESULT_LAG_DAYS` that decides when the
+ * result lands in every other state, so the tracker cannot promise a date the
+ * rest of the page disagrees with.
+ *
+ * The clock times are texture and are deliberately fixed: a tracker whose times
+ * moved every render would read as live data, which this is not.
+ */
+export interface DemoStep {
+  title: string
+  detail: string
+  state: 'done' | 'now' | 'todo'
+}
+
+export function getDemoWaitingSteps(collectedAt: string | null | undefined): DemoStep[] | null {
+  if (!collectedAt) return null
+  const collected = new Date(collectedAt)
+  if (Number.isNaN(collected.getTime())) return null
+
+  const on = (offset: number, time: string) =>
+    `${addDays(collected, offset).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}, ${time}`
+  const expected = addDays(collected, RESULT_LAG_DAYS).toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  })
+
+  return [
+    { title: 'Kit dispatched', detail: on(-3, '16:40'), state: 'done' },
+    { title: 'Sample received', detail: on(1, '09:12'), state: 'done' },
+    {
+      title: 'Analysing',
+      detail: `Since ${on(2, '08:05')} · expected by ${expected}`,
+      state: 'now',
+    },
+    { title: 'Results ready', detail: 'No date yet', state: 'todo' },
+  ]
+}

@@ -215,8 +215,10 @@
 .ap-compare p { font-size: 12px; line-height: 1.6; color: var(--ap-ink-3); margin-top: 5px; }
 
 /* ---------- tab bar ---------- */
+/* Not sticky: it is a flex sibling of the scroll area now, so the screen ends
+   where the tabs begin instead of scrolling underneath them. */
 .ap-tabbar {
-  position: sticky; bottom: 0; z-index: 5;
+  flex: none; z-index: 5;
   display: flex; background: var(--ap-core); border-top: 1px solid var(--ap-hair);
   padding: 8px 6px calc(14px + env(safe-area-inset-bottom, 0px)); gap: 2px;
 }
@@ -731,3 +733,117 @@
   flex: none; animation: ap-pulse 2.6s var(--ap-ease) infinite;
 }
 @keyframes ap-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.32; } }
+
+/* ---------------------------------------------------------------------------
+   THE WAITING TRACKER, ported 2026-09-07 with the results waiting screen.
+
+   The first pass gave every tab one generic empty state. The prototype only
+   does that for Plan and Record; its Results tab draws this. The tell that it
+   matters: a dated tracker is the difference between "we have your sample" and
+   "your sample is at this exact point, and here is when to expect it".
+   --------------------------------------------------------------------------- */
+
+/* A section label that sits BETWEEN cards rather than inside one. */
+.ap-sect {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ap-ink-3); font-weight: 500; margin: 18px 4px 9px; display: block;
+}
+
+.ap-steps { margin-top: 17px; }
+.ap-step {
+  display: grid; grid-template-columns: 22px 1fr; gap: 11px;
+  padding-bottom: 16px; position: relative;
+}
+.ap-step:last-child { padding-bottom: 0; }
+.ap-step__bul {
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 2.5px solid var(--ap-hair-2); background: var(--ap-core); margin-top: 2px;
+}
+.ap-step[data-state='done'] .ap-step__bul { background: var(--ap-ink); border-color: var(--ap-ink); }
+.ap-step[data-state='now'] .ap-step__bul {
+  background: var(--ap-ok); border-color: var(--ap-ok);
+  animation: ap-pulse 2.6s var(--ap-ease) infinite;
+}
+.ap-step__line {
+  position: absolute; left: 6px; top: 17px; bottom: 0; width: 2px; background: var(--ap-hair);
+}
+.ap-step:last-child .ap-step__line { display: none; }
+.ap-step__t { font-size: 13px; font-weight: 600; line-height: 1.3; color: var(--ap-ink); display: block; }
+.ap-step[data-state='now'] .ap-step__t { font-weight: 700; }
+.ap-step__d {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ap-ink-3); margin-top: 4px; line-height: 1.6; display: block;
+}
+
+/* The waiting screen leads with a statement, not a label. */
+.ap-lead {
+  font-size: 17px; font-weight: 700; letter-spacing: -0.02em;
+  line-height: 1.25; color: var(--ap-ink); margin-bottom: 9px;
+}
+.ap-body { font-size: 13.5px; line-height: 1.75; color: var(--ap-ink-2); }
+.ap-body + .ap-body { margin-top: 10px; }
+
+/* ---------------------------------------------------------------------------
+   THE REST OF THE PROTOTYPE'S SCREENS, ported 2026-09-07 (third pass).
+
+   Found by comparing all TWELVE state-and-tab combinations rather than one.
+   The first fidelity pass compared day-14 Results only, which is why the You
+   tab, the member plan and the member results rows all survived it unported.
+   --------------------------------------------------------------------------- */
+
+/* A tappable row that goes somewhere. The prototype uses it for the GP handoff,
+   the download, the clinician question and the member shop. */
+.ap-rowlink {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: 16px;
+  padding: 14px 15px; margin-bottom: 7px; cursor: pointer;
+  font-family: inherit; color: inherit; text-align: left;
+}
+.ap-rowlink:hover { border-color: var(--ap-hair-2); }
+.ap-rowlink__t { flex: 1; min-width: 0; }
+.ap-rowlink__n { font-size: 13.5px; font-weight: 600; line-height: 1.3; color: var(--ap-ink); display: block; }
+.ap-rowlink__d {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ap-ink-3); margin-top: 4px; line-height: 1.5; display: block;
+}
+
+/* The three-up counters under the member plan. Behaviour, never blood. */
+.ap-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 11px; }
+.ap-stat {
+  background: var(--ap-core); border: 1px solid var(--ap-hair);
+  border-radius: 16px; padding: 14px 11px; text-align: center;
+}
+.ap-stat b {
+  display: block; font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 25px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-variant-numeric: tabular-nums; color: var(--ap-ink);
+}
+.ap-stat span {
+  display: block; font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 8px; letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--ap-ink-3); margin-top: 7px; line-height: 1.4;
+}
+
+/* The adherence chart. It plots CHECK-INS, not results, and the caption under it
+   says so: this is the one place a reader could mistake behaviour for blood. */
+.ap-bars { display: flex; align-items: flex-end; gap: 3px; height: 56px; margin-top: 4px; }
+.ap-bars i { flex: 1; background: var(--ap-ok-f2); border-radius: 2px; min-height: 4px; }
+.ap-bars i[data-miss='true'] { background: var(--ap-sunk); }
+.ap-barcap {
+  display: flex; justify-content: space-between; margin-top: 7px;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ap-ink-3);
+}
+
+/* The account identity block. */
+.ap-name { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; color: var(--ap-ink); }
+.ap-email { font-size: 12.5px; color: var(--ap-ink-3); margin-top: 4px; }
+
+/* The was-to-now pair the prototype puts on a member's result row. */
+.ap-row__was {
+  display: block; font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; color: var(--ap-ink-3); font-weight: 400; margin-bottom: 2px;
+}
