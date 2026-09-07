@@ -357,7 +357,21 @@ async function callSoft(endpoint, body, retries = 1) {
 // no link is a real GEO outcome that URL-only matching silently scores as zero.
 const OUR_DOMAIN = 'andro-prime.com'
 const OUR_NAMES = ['Andro Prime', 'AndroPrime', 'andro-prime.com']
-const ENGINES = ['aio', 'perplexity', 'chat_gpt']
+// VALID vs SWEPT are deliberately two lists. `claude` is a valid engine and is
+// probed on request, but it is NOT in the default sweep: promoting it there takes
+// the monthly cost from ~$1.08 to ~$2.44 (measured 2026-09-06, see LLM_CALL_COST)
+// and starts a second baseline, and both are Keith's call rather than a side effect
+// of making the probe work. Move it into DEFAULT_ENGINES the month that call is
+// made, and note the date. First reading, 2026-09-06: cited 0/24, mentioned 0.
+const ENGINES = ['aio', 'perplexity', 'chat_gpt', 'claude']
+const DEFAULT_ENGINES = ['aio', 'perplexity', 'chat_gpt']
+
+// Measured per-call cost, balance before/after. perplexity/chat_gpt 2026-08-15 and
+// re-confirmed by the 2026-09-06 sweep ($1.0956 / 72 calls with aio at $0.0155);
+// claude 2026-09-06 ($1.3648 / 24 calls). Claude is ~3.8x the others, which is the
+// whole reason it is not in DEFAULT_ENGINES: the full sweep with claude is ~$2.44
+// a month, not the ~$1.44 a flat per-call assumption implies.
+const LLM_CALL_COST = { perplexity: 0.0148, chat_gpt: 0.0148, claude: 0.0569 }
 
 // Registrable-domain match, so blog.andro-prime.com counts as ours and a
 // look-alike like andro-prime.com.evil.net does not.
@@ -496,11 +510,16 @@ async function cmdTrack(file, engines, dry, asJson, depth = 100) {
   const prompts = readPrompts(file)
   if (!prompts.length) { console.error(`No prompts in ${file}`); process.exit(1) }
   const plan = prompts.length * engines.length
-  // Both numbers are measured, balance before/after, 2026-08-15: responses $0.0148/call,
-  // aio $0.0155 at depth 100 (and $0.002 at the API default of 10 — see SERP_DEPTH_COST).
-  // The aio figure used to be estimated at $0.003 here and the real total came in 5x
-  // over it, which is the kind of gap that only shows up once someone reads the invoice.
-  const est = engines.reduce((s, e) => s + prompts.length * (e === 'aio' ? serpCost(depth) : 0.0148), 0)
+  // Every figure here is measured, balance before/after, never quoted from a price page.
+  // The estimate has now been wrong twice, the same way both times: a single constant
+  // stood in for a whole class of call. First `aio` was assumed to cost $0.003 and came
+  // in 5x over. Then the fix hardcoded ONE price for every llm_responses engine, so
+  // adding `claude` on 2026-09-06 estimated $0.36 and cost $1.3648, 3.8x over. A per
+  // engine table is the shape that stops it happening a third time: an engine with no
+  // measured price is an explicit gap rather than a silent inherit of its neighbour's.
+  const est = engines.reduce((s, e) => s + prompts.length * (e === 'aio' ? serpCost(depth) : (LLM_CALL_COST[e] ?? 0)), 0)
+  const unpriced = engines.filter((e) => e !== 'aio' && LLM_CALL_COST[e] == null)
+  if (unpriced.length) console.error(`  ⚠️  no measured price for: ${unpriced.join(', ')} — the estimate below EXCLUDES them and is a floor, not a total.`)
   console.error(`track: ${prompts.length} prompts x ${engines.length} engines = ${plan} calls, est ~$${est.toFixed(2)}${engines.includes('aio') ? ` (aio at depth ${depth})` : ''}`)
   if (dry) {
     console.error('--dry: nothing called, nothing spent, nothing written.')
@@ -1081,7 +1100,7 @@ switch (cmd) {
   case 'track': {
     const here = path.dirname(fileURLToPath(import.meta.url))
     const file = fileIdx >= 0 ? args[fileIdx + 1] : path.join(here, 'geo-prompts.txt')
-    const engines = flag('--engines', ENGINES.join(',')).split(',').map((s) => s.trim()).filter(Boolean)
+    const engines = flag('--engines', DEFAULT_ENGINES.join(',')).split(',').map((s) => s.trim()).filter(Boolean)
     const bad = engines.filter((e) => !ENGINES.includes(e))
     if (bad.length) { console.error(`Unknown engine(s): ${bad.join(', ')} (valid: ${ENGINES.join(', ')})`); process.exit(1) }
     const depth = Math.max(1, parseInt(flag('--depth', '100'), 10) || 100)

@@ -2,8 +2,113 @@
 
 Volatile status of the acquisition/content engine. Durable strategy + rules are in `CONTEXT.md` and the `seo-ai-search/` docs (`content-engine-roadmap.md` is the live-state authority; trust it over any count pinned here). Update the date on each change.
 
-_Last updated: 2026-08-21 (**WHATSAPP IS DEAD AS A CHANNEL: THE BSP RULING LANDED AND IT IS UNFAVOURABLE ON ALL FOUR SUBSTANTIVE QUESTIONS.** 360dialog replied 2026-08-21: both product lines sit inside "Medical and healthcare products"; the UK OTC country gap bites; promotional templates are barred to UK recipients **even with no catalog, no in-chat payments and checkout on our own site**; and utility/transactional messaging does not survive an unfavourable classification, with the exposure stated as **WABA-level restriction or block, not a lost feature**. No advance Integrity review exists and **no written Meta confirmation was obtainable** (that request went unanswered). Restrictions are Meta-level, so switching BSP changes nothing. **Recommendation: close the channel and stop spending on it.** Full exchange and our assessment: `correspondence/2026-08-21-360dialog-whatsapp-classification-ruling.md`. Keith's personal 1:1 WhatsApp messages to mates and PTs are unaffected: consumer-app traffic, not the Business Platform. Spotify assessed separately and recommended **only as a repurposing output of the filming day the camera lane already books**, never as a standalone podcast launch, with the real risk being that a podcast would be our only unscripted external surface. Earlier, 2026-08-17: **THE KEYWORD QUEUE IS RE-POINTED AT FAN-OUT SUB-QUERIES AND `our_rank` IS LIVE** — open items 5 and 6 both shipped. `fanout` reads Google's own decomposition of each tracked prompt and probes whether its top ten contains sites our size: 218 children, **125 WINNABLE across 17 of the 18 published articles, combined 58,990/mo**, 149 merged and 25 imported as queue candidates for the 4b gate, $0.85. These are mostly NOT new articles: every parent is an article we already publish, so the work is re-optimisation. The first pass said "32 WINNABLE" and that was a probe budget cap misread as a ceiling. The mechanism reproduced itself — nine domains cited in a parent's AI Overview while absent from its organic top 100. And the instrument's first reading is blunt: **we are absent from the organic top 100 on all 23 tracked queries**, not just the three diagnosed by hand. The monthly sweep goes $0.78 → $1.08 because the SERP endpoint's default depth is 10, not 100. Earlier: **TIER 2 APPROVED AS CA-037 AND BOTH MESSAGES SENT**: offshift by email (no bounce) and bloodtests.head-to-head.uk via its invited "Suggest a Provider" form, whose worker returned `emailError: null`; welzo, allhealthstore and bloodtestcompare DROPPED; truevitals recorded do-not-pitch. **Reddit reopened narrowly**, scoped to r/Testosterone results-interpretation threads with a topic-level disqualification rule, and `ongoing` is banned as a status. **maleoptimal is OFF the 2026-08-29 chase**: no route exists. Earlier: **THE INFORMATIONAL 0/54 IS DIAGNOSED AND IT IS NOT THE COPY**: we are not in the top 99 organic for any of the three queries pulled apart, the whole domain ranks 17 keywords with a best position of #22, and 16 of the 19 cited sources sit in the organic top 30 of the same query. The working assumption that our articles were competing and losing on answer quality is retired. Earlier: **GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Also 2026-08-15: **maleoptimal has NO REACHABLE ROUTE AT ALL, and that now includes their contact form.** A third address bounced `550 5.1.1 Address does not exist`: `maleoptimal@proton.me`, the mailbox their own `formsubmit.co` form posts to. The form therefore delivers nowhere, the by-hand submission is cancelled rather than owed, and dropping maleoptimal from the Tier 1 chase is recommended. Tier 1 is 3 of 3 reachable sites delivered. Under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
+_Last updated: 2026-09-06 (**SEARCH CONSOLE IS OPEN AND IT CORRECTS THREE CLAIMS THIS FILE MADE HOURS AGO.** Keith exported 90 days (6 Jun to 3 Sep, Web) and it is saved at `seo-ai-search/gsc-exports/2026-09-06-last-3-months/`, the first first-party search data this engine has ever had. **DataForSEO sees 12 keywords across 5 pages; Google records 292 queries across 38 pages, a 20x undercount**, and three things written earlier today from the paid index are WRONG: "13 of 18 articles rank for nothing" (**all 18 have impressions**, 744 between them), "no commercial page ranks at all" (**six do**, `/kits` at position 17.2), and "12 ranked keywords, ~17 visits a month" (**292 queries, 13 clicks in 90 days**). **The conclusion did not change, it hardened.** 277 non-brand queries, **zero in positions 1-19**, 3 in 20-49, 88 in 50-79, 186 in 80-100; best non-brand position **35**, median **88**, **zero non-brand clicks ever**. That is a wall, not a spread: eighteen articles written to different briefs over four months all land in the same band, and the only variable they share is the domain. **There is also no low-hanging fruit**: nothing sits at 15 or 25 where a title rewrite would tip it over. **AND THE 13 CLICKS ARE A MIRAGE: 8 are Nigerian** at position 3.08 on the brand string, against **UK 505 impressions at position 79.66 and ONE click**. Google also logs 37 impressions of brand-collision queries (`androerectest`, `androx prime`, `prime androguard`, `andro score x`), which is why brand CTR is 3.2% at position 3 instead of 20-30%. Read the number as **one click**, not thirteen. Impressions are up 37% (570 then 781 across the two 45-day halves), so Google is serving more, deeper. **Strongest cluster is FBC** (69 queries, 145 impr, avg pos 76.2) and **best positions are CRP** (48-56 on the NHS phrasings), neither is a pillar the fan-out programme prioritised. New Lane D item: `http://www.andro-prime.com/` holds its own 13 impressions at position 4.23, so a non-canonical variant is in the index. **Both artifacts were rewritten on this data** (Blog Visibility Panel, Zero to Cited). Earlier today: **THE BACKLINK PROFILE IS 100% SPAM, AND IT IS THE INPUT THE 2026-08-15 DIAGNOSIS NEVER HAD.** A `/v3/backlinks/summary/live` pull, the first ever run on this domain, returns **12 backlinks, 12 referring domains, domain spam score 60, and zero legitimate referring domains**. All 12 point at the homepage from PBN link-selling pages titled "Boost your Google rankings with Premium PBN & Link Building", each carrying 3,000 outbound links, with the anchor text "High Quality Dofollow Backlinks DA 50 PA 40 Premium PBN Network Service andro-prime.com Rank First Page Google Fast SEO Link Building Buy Backlinks Online Cheap". 11 of 12 are dofollow. First seen 2026-07-27, most recent 2026-08-30, so it is ongoing. **No instrument in `tools/dataforseo.mjs` measures links**, which is why five weeks of ranking diagnosis could establish "absent from the top 100 everywhere" and still not reach the cause. The 2026-09-06 `track` sweep is recorded and **nothing has moved**: cited 0/72 again, unranked on 23/23 again, +0 gained -0 lost, rank unchanged on every tracked query, AI Overview present on 22/24 SERPs, $1.10. One cell errored twice (aio `best finger prick blood test UK`, 40101 then 40106) and is recorded as an error, not a zero. Domain-level `ranked` is **12 keywords, best #71 absolute (#63 in-group), ~17 etv/month**, down from 17 keywords / best #22 on 2026-08-15, and every row flags `is_new`. **The head-to-head listing is VERIFIED and it is real**: `bloodtests.head-to-head.uk/providers/androprime/` returns 200 with four `rel="noopener"` links to us (homepage plus all three kits), **no `nofollow`**, and we appear on their homepage; DataForSEO has not crawled it yet, so it is not among the 12. That closes the item this file has carried as unverified since 2026-08-20. robots.txt is `Allow: /` with no AI-crawler block and `llms.txt` returns 200, so nothing technical is stopping a citation. Earlier, 2026-08-21: **WHATSAPP IS DEAD AS A CHANNEL: THE BSP RULING LANDED AND IT IS UNFAVOURABLE ON ALL FOUR SUBSTANTIVE QUESTIONS.** 360dialog replied 2026-08-21: both product lines sit inside "Medical and healthcare products"; the UK OTC country gap bites; promotional templates are barred to UK recipients **even with no catalog, no in-chat payments and checkout on our own site**; and utility/transactional messaging does not survive an unfavourable classification, with the exposure stated as **WABA-level restriction or block, not a lost feature**. No advance Integrity review exists and **no written Meta confirmation was obtainable** (that request went unanswered). Restrictions are Meta-level, so switching BSP changes nothing. **Recommendation: close the channel and stop spending on it.** Full exchange and our assessment: `correspondence/2026-08-21-360dialog-whatsapp-classification-ruling.md`. Keith's personal 1:1 WhatsApp messages to mates and PTs are unaffected: consumer-app traffic, not the Business Platform. Spotify assessed separately and recommended **only as a repurposing output of the filming day the camera lane already books**, never as a standalone podcast launch, with the real risk being that a podcast would be our only unscripted external surface. Earlier, 2026-08-17: **THE KEYWORD QUEUE IS RE-POINTED AT FAN-OUT SUB-QUERIES AND `our_rank` IS LIVE**: open items 5 and 6 both shipped. `fanout` reads Google's own decomposition of each tracked prompt and probes whether its top ten contains sites our size: 218 children, **125 WINNABLE across 17 of the 18 published articles, combined 58,990/mo**, 149 merged and 25 imported as queue candidates for the 4b gate, $0.85. These are mostly NOT new articles: every parent is an article we already publish, so the work is re-optimisation. The first pass said "32 WINNABLE" and that was a probe budget cap misread as a ceiling. The mechanism reproduced itself, nine domains cited in a parent's AI Overview while absent from its organic top 100. And the instrument's first reading is blunt: **we are absent from the organic top 100 on all 23 tracked queries**, not just the three diagnosed by hand. The monthly sweep goes $0.78 → $1.08 because the SERP endpoint's default depth is 10, not 100. Earlier: **TIER 2 APPROVED AS CA-037 AND BOTH MESSAGES SENT**: offshift by email (no bounce) and bloodtests.head-to-head.uk via its invited "Suggest a Provider" form, whose worker returned `emailError: null`; welzo, allhealthstore and bloodtestcompare DROPPED; truevitals recorded do-not-pitch. **Reddit reopened narrowly**, scoped to r/Testosterone results-interpretation threads with a topic-level disqualification rule, and `ongoing` is banned as a status. **maleoptimal is OFF the 2026-08-29 chase**: no route exists. Earlier: **THE INFORMATIONAL 0/54 IS DIAGNOSED AND IT IS NOT THE COPY**: we are not in the top 99 organic for any of the three queries pulled apart, the whole domain ranks 17 keywords with a best position of #22, and 16 of the 19 cited sources sit in the organic top 30 of the same query. The working assumption that our articles were competing and losing on answer quality is retired. Earlier: **GEO/AEO MEASUREMENT NOW EXISTS**: `track` built and the first baseline recorded, cited in 0 of 72 cells with AI Overview present on 24/24 queries. Also 2026-08-15: **maleoptimal has NO REACHABLE ROUTE AT ALL, and that now includes their contact form.** A third address bounced `550 5.1.1 Address does not exist`: `maleoptimal@proton.me`, the mailbox their own `formsubmit.co` form posts to. The form therefore delivers nowhere, the by-hand submission is cancelled rather than owed, and dropping maleoptimal from the Tier 1 chase is recommended. Tier 1 is 3 of 3 reachable sites delivered. Under CA-036, the first outreach ever sent on this workstream after five weeks at "not started"; chase date 2026-08-29; Tier 1 dropped to four sites. Earlier: AEO/GEO groundwork: llms.txt now lists all 18 published articles instead
 
+
+---
+
+## Search Console, 2026-09-06: the first first-party data, and what it corrected
+
+Keith exported 90 days from Google Search Console (6 Jun to 3 Sep 2026, Web search). Raw export
+committed to `seo-ai-search/gsc-exports/2026-09-06-last-3-months/` (Queries, Pages, Countries,
+Devices, Chart, Search appearance, Filters). **This is the first time this project has read its own
+search data**; the 2026-08-02 on-page review explicitly recorded that it had none and picked article
+priorities on editorial judgement instead.
+
+**Totals:** 1,351 impressions, 13 clicks, 0.96% CTR, 292 queries, 38 pages.
+
+**What it corrected, all three from the section below this one, all written the same day:**
+
+| Claim from DataForSEO | Search Console |
+|---|---|
+| 13 of 18 articles rank for nothing | **All 18 have impressions**, 744 combined, 0 clicks |
+| No commercial page ranks at all | **Six do.** `/kits` 77 impr @ 17.2, `/kits/testosterone` @ 50.8, `/supplements/daily-stack` @ 37.7, `/kits/hormone-recovery` @ 35.5, `/kits/energy-recovery` @ 55, `/supplements/collagen` @ 55 |
+| 12 ranked keywords, ~17 visits/month | **292 queries, 13 clicks in 90 days** |
+
+**The reading that survived, and got stronger.** Non-brand: 277 queries, 503 impressions, **0 clicks**.
+Position distribution: **0 in 1-19**, 3 in 20-49, 88 in 50-79, 186 in 80-100. Best 35, median 88.
+A content problem produces winners and losers; this is a flat band across eighteen articles written to
+different briefs by different methods over four months. **And there is no near-miss to optimise**: not
+one query sits at 15 or 25.
+
+**The geography finding is new and it changes how every dashboard number should be read.**
+
+| Country | Clicks | Impressions | Position |
+|---|---|---|---|
+| Nigeria | 8 | 224 | 3.08 |
+| United Kingdom | 1 | 505 | **79.66** |
+| United States | 0 | 210 | 25.50 |
+
+Eight of thirteen clicks are Nigerian. Alongside them Google logs 37 impressions of brand-collision
+queries for other products (`androerectest` 25, `androx prime`, `prime androguard`, `andro score x`,
+`androlab pricing`), which explains a 3.2% brand CTR at position 3 where 20-30% is normal. Mobile shows
+12 clicks at position 11.6 and desktop 1 click at 64.5, and the mobile line is that same Nigerian
+traffic. **No geo setting fixes this**: we rank at 3 there because nobody competes for the string, and
+the same missing authority puts us at 80 here. Report it as one click, not thirteen.
+
+**Clusters (non-brand, impression-weighted):** FBC/full blood count 69 queries, 145 impr, pos 76.2 ·
+inflammatory/CRP 73 queries, 117 impr, pos 85.0 · how-to-read-results 78 queries, 98 impr, pos 85.6 ·
+andropause 28 queries, 92 impr, pos 90.3. **FBC is the strongest and CRP holds the best individual
+positions** (48-56 on `crp blood test nhs`, `crp normal range nhs`, `crp normal range uk`). When
+authority does start arriving, point it at those two.
+
+**Trajectory:** impressions 570 in the first 45 days, 781 in the second, +37%. Crawling and serving are
+healthy. Clicks flat at zero on everything non-brand, which at position 80 is arithmetic rather than a
+copy failure.
+
+**New owed item:** `http://www.andro-prime.com/` is indexed separately from the canonical
+`https://andro-prime.com/`, holding 13 impressions at position 4.23. Check the redirect chain
+terminates in one hop on the canonical host.
+
+**Process change this forces:** the monthly `track` sweep must be paired with a GSC export, and the
+paid index must stop being treated as the measurement layer. It is a discovery tool for competitor and
+SERP questions; it is not a record of how we rank. Logged as skill observation 610.
+
+---
+
+## SEO / GEO reading, 2026-09-06: the blocker is authority, not content
+
+> ⚠️ **PARTLY SUPERSEDED the same day by the Search Console section above.** Its three DataForSEO-derived counts are wrong: "13 of 18 articles rank for nothing" (all 18 have impressions), "no commercial page ranks" (six do) and "12 ranked keywords / ~17 visits a month" (292 queries, 13 clicks in 90 days). **The conclusion it reaches is unchanged and is strengthened by the GSC data**, so the section is kept rather than rewritten; read the counts from the section above and the argument from here.
+
+Run on Keith's question "how are we doing on SEO and SERPs, and do we have LLM citations". Three
+instruments, $1.13 total.
+
+**1. Citations: still zero, and it is a clean zero.** `node dataforseo.mjs track` wrote
+`seo-ai-search/geo-snapshots/2026-09-06.csv`. Informational 0/54, commercial 0/18,
+mentioned-but-not-cited 0, across Google AI Overview, Perplexity and ChatGPT. Diff against the
+2026-08-15 baseline: **+0 gained, -0 lost, rank unchanged on every tracked query**. AI Overview was
+present on 22 of 24 SERPs, so the probe is seeing, not blind. **One cell errored twice** (aio
+`best finger prick blood test UK`: task 40101 on the sweep, task 40106 on the single-cell re-run at
+$0.00) and is recorded as an error rather than a zero; it is a commercial rank probe, and both other
+engines answered that same query cleanly.
+
+**2. Rankings: worse, not flat.** `node dataforseo.mjs ranked andro-prime.com` returns **12 ranked
+keywords, best position #71 `rank_absolute` (#63 `rank_group`), total ~17 etv/month**, against the 17
+keywords / best #22 recorded on 2026-08-15. Every row carries `rank_changes.is_new`, so these are
+fresh appearances rather than survivors. Five URLs carry all 12: `how-to-read-blood-test-results`,
+`fbc-blood-test`, `inflammatory-markers-blood-test`, `crp-blood-test`, `andropause-male-menopause`.
+Caveat on the comparison: Labs `ranked_keywords` reads DataForSEO's SERP index, whose per-keyword
+`last_updated_time` ranges here from 2026-06-12 to 2026-08-26, so it lags. The live `our_rank` column
+in the tracker is the more current read and it says unranked on all 23.
+
+**3. Links: the finding, and it is new information.** See the header. The operative number is **zero
+legitimate referring domains**. Nothing in the instrument suite measures this, which is the gap logged
+as skill observation 604 (ClickUp `869ex94v3`).
+
+**What this changes.** The fan-out programme (`fanout-staging-2026-08-15.csv`, 125 winnable children
+across 17 published articles) was scoped on the reading that the tracked head terms were unwinnable and
+the sub-queries were the way in. That reading is not wrong, but it is incomplete: a site with no link
+equity does not rank for the children either, and the fan-out verdicts measure only whether the top ten
+contains sites our size, never whether we could reach them from zero authority. **Do not read the
+re-optimisation backlog as blocked; read it as necessary but not sufficient.** The `head-to-head`
+listing is the first real referring domain the business has, and it arrived from the outreach
+workstream, not from content.
+
+**Owed:** decide whether the PBN links need a disavow file (the honest answer is probably not, Google
+discounts this pattern, but the decision should be recorded rather than defaulted); re-run the two
+errored-cell prompts on the next sweep; update the `bloodtests.head-to-head.uk` row in
+`seo-ai-search/geo-third-party-presence-outreach.md`, which still reads "submitted"; reply to Adam
+Groves, which needs `/compliance-preflight` first; update ClickUp `869ejbmb9`.
 
 ---
 
