@@ -141,6 +141,35 @@ Winnability uses the **SERP-gap read first** (US-authority / NHS-regional / char
 
 > Every keyword metric that drives selection — volume, KD, SERP, AI Overview, GEO — comes from **DataForSEO**. Semrush data is dated historical context and must never feed a priority, a coverage decision, or a brief. Each data row in `keywords.csv` carries `kd_source` and a pull date; a row without them is unverified and cannot be used for selection.
 
+
+### 9a. Scope correction, 2026-09-06: this rule covers DEMAND, not OUR OWN PERFORMANCE
+
+The single-source rule above is right and stays. It was **over-applied**, and the cost was a
+twentyfold measurement error that went unnoticed for five weeks.
+
+**The distinction, which is now the rule:**
+
+| Question | Authoritative source | Why |
+|---|---|---|
+| What is searched, how often, how hard, what the SERP contains, who competitors rank for, who the answer engines cite | **DataForSEO** | No first-party source can exist. This is what section 9 is about and nothing changes. |
+| Where **we** rank, what **we** get impressions and clicks on, which of **our** pages are served | **Google Search Console** | Google is the system of record for its own serving. A third-party index samples it. |
+
+**The evidence.** On 2026-09-06 DataForSEO's Labs index reported 12 ranked keywords across 5 pages.
+The GSC export for the same domain and window reported **292 queries across 38 pages**. Three
+statements derived from the paid index and written into `STATE.md` the same day were false: that 13
+of 18 articles ranked for nothing (all 18 have impressions), that no commercial page ranked (six do),
+and that the domain drew ~17 visits a month (13 clicks in 90 days). The strategic conclusion happened
+to survive, which is luck and not method.
+
+**Why it was not caught sooner.** A proxy that returns confident, well-formed, non-empty answers does
+not present as a proxy. The `2026-08-02` on-page review recorded in its own text that it had no
+Search Console access and was choosing article priorities on editorial judgement instead; that note
+was read as a caveat rather than a stop condition, because numbers were already arriving.
+
+**Operational consequence:** the monthly `track` sweep is paired with a GSC export, and no
+our-performance figure is quoted from the paid index again. Exports land in
+`gsc-exports/<date>-<window>/`. First one: `gsc-exports/2026-09-06-last-3-months/`.
+
 ---
 
 ## 10. Build checklist
