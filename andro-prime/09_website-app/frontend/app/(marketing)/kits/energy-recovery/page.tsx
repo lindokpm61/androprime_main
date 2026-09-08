@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { HeroField } from '@/components/marketing/HeroField'
-import { SectionRule } from '@/components/marketing/SectionRule'
+import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
@@ -348,7 +347,7 @@ export default function KitEnergyRecoveryPage() {
   const bundlesEnabled = isBundlesEnabled()
 
   return (
-    <div className="f-page">
+    <FPage>
       <JsonLd data={kitSchema} />
 
       {/* ---------------- HERO ----------------
@@ -368,23 +367,68 @@ export default function KitEnergyRecoveryPage() {
           button; `--f-hero-pt` is given back while the banner is up and an
           inline style cannot be overridden by the class. This page and Kit 3
           kept the inline literal and therefore kept the defect. */}
-      <div className="f-ruleground">
-        <HeroField />
-      <section
-        className="f-wrap f-sec-hero"
-        style={{ ['--f-hero-pt' as string]: '62px', ['--f-hero-pt-lg' as string]: '62px', paddingBottom: 44 }}
+      <FHero heroPad={62} padBottom={44}
+        aside={
+
+          /* Sample report. A results panel: status bands, never the accent. */
+          <div className="f-tray" style={{ marginBottom: 0 }}>
+            <div className="f-core">
+              <div className="flex items-center justify-between gap-3.5 pb-3.5 mb-1.5" style={{ borderBottom: '1px solid var(--hair-2)' }}>
+                <h2 className="f-h4" style={{ fontSize: 18 }}>Your results</h2>
+                {/* "Nothing here is a diagnosis" is carried from `/`, where it sits
+                    in `.f-ro-h` beside this same device. This panel drew bands and
+                    verdicts without it. Existing approved copy, new placement. */}
+                <span className="f-kchip">Nothing here is a diagnosis</span>
+              </div>
+
+              {/* The key. Carried verbatim from `/`, and it is not optional: without
+                  it the chart asks the reader to infer which grey is the lab and
+                  which is ours, four rows running. Padding is zeroed because
+                  `.f-ro-k` carries its own for the homepage's edge-to-edge card
+                  and this one sits inside a normally padded `.f-core`. */}
+              <div className="f-ro-k" style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <span><i className="f-k-lab" aria-hidden="true" />Lab reference range</span>
+                <span><i className="f-k-ours" aria-hidden="true" />Our action band</span>
+                <span><i className="f-k-you" aria-hidden="true" />Your value</span>
+              </div>
+
+              <div>
+                {READOUT.map((m) => (
+                  <div key={m.name} className={m.split ? 'f-mk f-mk-split' : 'f-mk'}>
+                    <div className="f-mk-t">
+                      <div className="f-mk-n">
+                        {m.name}
+                        {m.qualifier ? <small>{m.qualifier}</small> : null}
+                      </div>
+                      <div className="f-mk-v">{m.value}<i>{m.unit}</i></div>
+                    </div>
+                    <div
+                      className="f-track"
+                      role="img"
+                      aria-label={`${m.name} ${m.value} ${m.unit}. Laboratory reference range: ${m.lab}. Andro Prime action band: ${m.ours}.`}
+                    >
+                      <div className="f-band f-band-lab" style={{ left: `${m.labLeft}%`, width: `${m.labWidth}%` }} />
+                      <div className="f-band f-band-ours" style={{ left: `${m.oursLeft}%`, width: `${m.oursWidth}%` }} />
+                      <div className="f-you" style={{ left: `${m.you}%` }} />
+                    </div>
+                    <div className="f-verd">
+                      <span className="f-v-lab">{m.lab}</span>
+                      <span className="f-v-ours">{m.ours}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3.5 mt-4 pt-4" style={{ borderTop: '1px solid var(--hair-2)' }}>
+                <p className="f-sub" style={{ fontSize: 14.5, margin: 0 }}>
+                  <b style={{ color: 'var(--ink)' }}>Recommendation:</b> Your next step, based on your numbers
+                </p>
+                <span className="f-kchip">2 to 5 working days</span>
+              </div>
+            </div>
+          </div>
+        }
       >
-        {/* `.f-herogrid`, not the raw Tailwind grid it replaced: same 1.35fr/1fr
-            pair, but Tailwind's `lg` turns at 1024px and this one turns at 980.
-            ⚠ CORRECTED 2026-09-04. This comment used to say "every other boundary
-            in this system turns at 900px", which is the section rhythm's number
-            and not this primitive's. `.f-herogrid` turns at 980 on purpose, so
-            the readout column keeps ~417px rather than ~383px; the reason is now
-            recorded on the rule itself. The justification was wrong in three
-            files while the code was right in one, which is the cheaper direction
-            for that mistake to run but still a claim nobody had checked. */}
-        <div className="f-herogrid f-rise">
-          <div>
             {/* THE EYEBROW NAMES THE PRODUCT, 2026-09-06. Across the five F routes these
                 read: none, "Diagnostic kits", "Kit 01 // Testosterone", "Data first",
                 "Data first" -- so two DIFFERENT products shared an eyebrow that
@@ -453,78 +497,16 @@ export default function KitEnergyRecoveryPage() {
             <div className="f-trustrow">
               {TRUST.map((item) => <div key={item}>{item}</div>)}
             </div>
-          </div>
-
-          {/* Sample report. A results panel: status bands, never the accent. */}
-          <div className="f-tray" style={{ marginBottom: 0 }}>
-            <div className="f-core">
-              <div className="flex items-center justify-between gap-3.5 pb-3.5 mb-1.5" style={{ borderBottom: '1px solid var(--hair-2)' }}>
-                <h2 className="f-h4" style={{ fontSize: 18 }}>Your results</h2>
-                {/* "Nothing here is a diagnosis" is carried from `/`, where it sits
-                    in `.f-ro-h` beside this same device. This panel drew bands and
-                    verdicts without it. Existing approved copy, new placement. */}
-                <span className="f-kchip">Nothing here is a diagnosis</span>
-              </div>
-
-              {/* The key. Carried verbatim from `/`, and it is not optional: without
-                  it the chart asks the reader to infer which grey is the lab and
-                  which is ours, four rows running. Padding is zeroed because
-                  `.f-ro-k` carries its own for the homepage's edge-to-edge card
-                  and this one sits inside a normally padded `.f-core`. */}
-              <div className="f-ro-k" style={{ paddingLeft: 0, paddingRight: 0 }}>
-                <span><i className="f-k-lab" aria-hidden="true" />Lab reference range</span>
-                <span><i className="f-k-ours" aria-hidden="true" />Our action band</span>
-                <span><i className="f-k-you" aria-hidden="true" />Your value</span>
-              </div>
-
-              <div>
-                {READOUT.map((m) => (
-                  <div key={m.name} className={m.split ? 'f-mk f-mk-split' : 'f-mk'}>
-                    <div className="f-mk-t">
-                      <div className="f-mk-n">
-                        {m.name}
-                        {m.qualifier ? <small>{m.qualifier}</small> : null}
-                      </div>
-                      <div className="f-mk-v">{m.value}<i>{m.unit}</i></div>
-                    </div>
-                    <div
-                      className="f-track"
-                      role="img"
-                      aria-label={`${m.name} ${m.value} ${m.unit}. Laboratory reference range: ${m.lab}. Andro Prime action band: ${m.ours}.`}
-                    >
-                      <div className="f-band f-band-lab" style={{ left: `${m.labLeft}%`, width: `${m.labWidth}%` }} />
-                      <div className="f-band f-band-ours" style={{ left: `${m.oursLeft}%`, width: `${m.oursWidth}%` }} />
-                      <div className="f-you" style={{ left: `${m.you}%` }} />
-                    </div>
-                    <div className="f-verd">
-                      <span className="f-v-lab">{m.lab}</span>
-                      <span className="f-v-ours">{m.ours}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-3.5 mt-4 pt-4" style={{ borderTop: '1px solid var(--hair-2)' }}>
-                <p className="f-sub" style={{ fontSize: 14.5, margin: 0 }}>
-                  <b style={{ color: 'var(--ink)' }}>Recommendation:</b> Your next step, based on your numbers
-                </p>
-                <span className="f-kchip">2 to 5 working days</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      </div>{/* /.f-ruleground */}
+      </FHero>
 
       {/* ---------------- THE REALITY ---------------- */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={1} of={4} />
+      <FSection>
         <p className="f-blab">The reality</p>
         <h2 className="f-h2">
           You&rsquo;re doing everything right.<br />
           <span className="f-grey">Something&rsquo;s still off.</span>
         </h2>
-      </div>
+      </FSection>
       <div className="f-wrap">
         {/* 🔴 THE PROSE LEFT ITS TRAY, 2026-09-03, which is the same move Kit 1
             made on 2026-09-02 and the reason its reality section reads as a
@@ -595,11 +577,10 @@ export default function KitEnergyRecoveryPage() {
       </div>
 
       {/* ---------------- THE DATA ---------------- */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={2} of={4} />
+      <FSection>
         <p className="f-blab">The data</p>
         <h2 className="f-h2">A blood test for tiredness.<br /><span className="f-grey">Four markers, four answers.</span></h2>
-      </div>
+      </FSection>
       {/* The panel strip, the same instrument /kits leads with, scoped to this kit
           and ported from Kit 1. It says "these four of the nine we run" in the
           shape a reader has already met one click earlier. No value, no range, no
@@ -633,11 +614,10 @@ export default function KitEnergyRecoveryPage() {
       </div>
 
       {/* ---------------- THE PROCESS ---------------- */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={3} of={4} />
+      <FSection>
         <p className="f-blab">The process</p>
         <h2 className="f-h2">Five minutes.<br /><span className="f-grey">No GP needed.</span></h2>
-      </div>
+      </FSection>
       <div className="f-wrap">
         <div className="f-steps">
           {/* Step 04 is NOT inverted. On a four-up row an inverted last card reads as the
@@ -695,8 +675,7 @@ export default function KitEnergyRecoveryPage() {
 
       {/* ---------------- FAQ ----------------
           Open grid, standardised across all three kit pages (Keith, 2026-08-29). */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={4} of={4} />
+      <FSection>
         {/* Section label added 2026-09-06. Keith's 2026-09-03 ruling is one section
             grammar across the F pages and it is `/kits`' labelled one; `/` and
             `/kits` label 4 of 4, and the three kit pages were leaving their FAQ
@@ -704,7 +683,7 @@ export default function KitEnergyRecoveryPage() {
             no claim. Registered as row 24. */}
         <p className="f-blab">Questions</p>
         <h2 className="f-h2">Frequently asked questions</h2>
-      </div>
+      </FSection>
       <div className="f-wrap">
         <div className="f-faqgrid">
           {FAQ_ITEMS.map(({ question, answer }) => (
@@ -720,7 +699,7 @@ export default function KitEnergyRecoveryPage() {
         /* Bundle-forward CLOSE: the page ends on the single-vs-bundle offer. No trailing
            blog cards or competing-kit cross-sell, which pull focus off the buying
            decision. Keith direction 2026-07-24. */
-        <div className="f-wrap f-close" id="order">
+        <FClose id="order">
           <h2>Stop guessing why you&rsquo;re tired.<br />Find out.</h2>
           <p className="f-stand">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
           <div className="mx-auto max-w-3xl text-left">
@@ -739,7 +718,7 @@ export default function KitEnergyRecoveryPage() {
             />
           </div>
           <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>One-off purchase. Results in your personal dashboard. No GP needed.</p>
-        </div>
+        </FClose>
       ) : (
         <>
           {/* `variant="f"` since 2026-09-06. See the note on the same call in
@@ -751,14 +730,14 @@ export default function KitEnergyRecoveryPage() {
             intro="The markers behind low energy and slow recovery, explained in plain English."
           />
 
-          <div className="f-wrap f-close" id="order">
+          <FClose id="order">
             <h2>Stop guessing why you&rsquo;re tired.<br />Find out.</h2>
             <p className="f-stand">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
             <KitCheckoutButton kitType="energy-recovery" className="f-btn">
               Order the kit: £119 {ARROW}
             </KitCheckoutButton>
             <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>One-off purchase. Results in your personal dashboard. No GP needed.</p>
-          </div>
+          </FClose>
 
           <div className="f-wrap" style={{ paddingBottom: 26 }}>
             <div className="f-tray f-rise">
@@ -772,6 +751,6 @@ export default function KitEnergyRecoveryPage() {
           </div>
         </>
       )}
-    </div>
+    </FPage>
   )
 }

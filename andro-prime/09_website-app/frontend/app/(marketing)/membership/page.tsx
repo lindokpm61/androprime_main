@@ -9,8 +9,7 @@ import { KIT_NAMES } from '@/lib/kits/names'
 import { MEMBERSHIP_OFFER_WINDOW_DAYS } from '@/lib/membership/offer'
 import { FIRST_CYCLE_RETEST_DAYS, ANNUAL_RETEST_DAYS } from '@/lib/membership/entitlement'
 import { JsonLd } from '@/components/shared/JsonLd'
-import { HeroField } from '@/components/marketing/HeroField'
-import { SectionRule } from '@/components/marketing/SectionRule'
+import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { SIZES_HEROGRID } from '@/lib/ui/image-sizes'
 
 /**
@@ -119,7 +118,6 @@ const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
    convention `/` and `/how-it-works` established. Counted once: an `of={7}`
    that disagrees with the number of call sites is a position indicator that
    lies, and nothing would catch it. */
-const SECTIONS = 7
 
 /* ⚠ THE PRICE STRING ALREADY CARRIES ITS PERIOD. `PRODUCT_MAP.membership.price`
    is "£47/mo", so nothing on this page may append "a month" to it. Split here
@@ -285,7 +283,7 @@ export default function MembershipPage() {
   if (!isMembershipEnabled()) notFound()
 
   return (
-    <div className="f-page">
+    <FPage>
       <JsonLd data={membershipSchema} />
 
       {/* ---------- HERO ----------
@@ -297,11 +295,40 @@ export default function MembershipPage() {
 
           ⚠ CA-045 q6/q7 are open against this layer and this page makes it a
           SEVENTH surface. Register row 18 tracks the scope. */}
-      <div className="f-ruleground">
-        <HeroField />
-        <section className="f-wrap f-sec f-sec-hero">
-          <div className="f-herogrid f-rise">
-            <div>
+      <FHero
+        aside={
+
+            /* THE PAGE'S ONE PHOTOGRAPH, `img-9`, generated 2026-09-08
+                (gpt_image_2), and it goes on the CA-045 register as a NEW asset.
+
+                WHY THIS SUBJECT. The eight existing photographs are seven men in
+                domestic settings plus a postbox, and CA-045's questions 3 and 4
+                both ask whether an ordinary man beside tiredness copy implies he
+                is unwell. A ninth man would inherit that question. A ringed date
+                on a kitchen calendar has no person, no hands, no clinic, no blood
+                and no sample in frame, so it opens no judgement the packet is
+                already asking, and it draws the one thing this page is actually
+                about: a date, decided in advance, that somebody has written down.
+
+                `--focal` is set rather than defaulted, per the ruling written the
+                day two portraits were decapitated. */
+            <div className="f-plate">
+              <div
+                className="f-shot f-shot-r43"
+                style={{ '--focal': '50% 50%' } as React.CSSProperties}
+              >
+                <Image
+                  src="/home/img-9.jpg"
+                  alt="A plain paper wall calendar hanging in a domestic kitchen, with a single date in the middle of the grid ringed once in blue biro."
+                  width={800}
+                  height={600}
+                  sizes={SIZES_HEROGRID}
+                />
+              </div>
+              <span className="f-shot-cap">A date, written down</span>
+            </div>
+        }
+      >
               <div className="f-btns" style={{ marginBottom: 18 }}>
                 <span className="f-eyebrow">Membership</span>
                 <span className="f-kchip">No join button here</span>
@@ -341,40 +368,7 @@ export default function MembershipPage() {
                   How the test works
                 </Link>
               </div>
-            </div>
-
-            {/* THE PAGE'S ONE PHOTOGRAPH, `img-9`, generated 2026-09-08
-                (gpt_image_2), and it goes on the CA-045 register as a NEW asset.
-
-                WHY THIS SUBJECT. The eight existing photographs are seven men in
-                domestic settings plus a postbox, and CA-045's questions 3 and 4
-                both ask whether an ordinary man beside tiredness copy implies he
-                is unwell. A ninth man would inherit that question. A ringed date
-                on a kitchen calendar has no person, no hands, no clinic, no blood
-                and no sample in frame, so it opens no judgement the packet is
-                already asking, and it draws the one thing this page is actually
-                about: a date, decided in advance, that somebody has written down.
-
-                `--focal` is set rather than defaulted, per the ruling written the
-                day two portraits were decapitated. */}
-            <div className="f-plate">
-              <div
-                className="f-shot f-shot-r43"
-                style={{ '--focal': '50% 50%' } as React.CSSProperties}
-              >
-                <Image
-                  src="/home/img-9.jpg"
-                  alt="A plain paper wall calendar hanging in a domestic kitchen, with a single date in the middle of the grid ringed once in blue biro."
-                  width={800}
-                  height={600}
-                  sizes={SIZES_HEROGRID}
-                />
-              </div>
-              <span className="f-shot-cap">A date, written down</span>
-            </div>
-          </div>
-        </section>
-      </div>
+      </FHero>
 
       {/* ---------- PRICE FACTS ----------
           `.f-trustrow` already IS a card: it draws its own hairline grid, radius
@@ -391,8 +385,7 @@ export default function MembershipPage() {
       </section>
 
       {/* ---------- 01 · THE SHAPE OF IT ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={1} of={SECTIONS} />
+      <FSection>
         <p className="f-blab">The shape of it</p>
         <h2 className="f-h2">
           Four moments.<br /><span className="f-grey">One of them costs money.</span>
@@ -415,11 +408,10 @@ export default function MembershipPage() {
             </div>
           ))}
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- 02 · WHY IT STARTS AT THE RESULT ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={2} of={SECTIONS} />
+      <FSection>
         <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">The clock</p>
@@ -481,11 +473,10 @@ export default function MembershipPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- 03 · THE RETEST ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={3} of={SECTIONS} />
+      <FSection>
         <p className="f-blab">The retest</p>
         <h2 className="f-h2">
           A test on a date,<br /><span className="f-grey">not a credit in an account.</span>
@@ -535,7 +526,7 @@ export default function MembershipPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- 04 · WHAT IT COSTS ----------
           THE DISCLOSURE SECTION, and this page's ONE inverted panel. DESIGN.md
@@ -545,8 +536,7 @@ export default function MembershipPage() {
           the auto-renew ruling says the gap between what our buy button says and
           what the customer signed up for is wider on our pages than on any
           comparator's. */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={4} of={SECTIONS} />
+      <FSection>
         <div className="f-invert f-rise">
           <div className="f-splitgrid">
             <div>
@@ -579,11 +569,10 @@ export default function MembershipPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- 05 · WHAT IT NEVER GATES ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={5} of={SECTIONS} />
+      <FSection>
         <p className="f-blab">What it never gates</p>
         <h2 className="f-h2">
           Three things you keep<br /><span className="f-grey">whether you pay us or not.</span>
@@ -604,11 +593,10 @@ export default function MembershipPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- 06 · WHEN IT IS OFFERED ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={6} of={SECTIONS} />
+      <FSection>
         <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">The window</p>
@@ -665,11 +653,10 @@ export default function MembershipPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- 07 · QUESTIONS ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={7} of={SECTIONS} />
+      <FSection>
         <p className="f-blab">Questions</p>
         <h2 className="f-h2">Before you buy a kit.</h2>
 
@@ -681,12 +668,12 @@ export default function MembershipPage() {
             </div>
           ))}
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- CLOSE ----------
           Routes to the kit, because that is the only thing on offer here. */}
       <section className="f-wrap f-sec">
-        <div className="f-close f-rise">
+        <FClose inSection>
           <p className="f-blab">Start with a number</p>
           <h2>The test comes first.</h2>
           <p className="f-sub" style={{ margin: '0 auto' }}>
@@ -702,8 +689,8 @@ export default function MembershipPage() {
             </Link>
           </div>
           <p className="f-fine" style={{ margin: '18px auto 0' }}>{DISCLOSURE}</p>
-        </div>
+        </FClose>
       </section>
-    </div>
+    </FPage>
   )
 }

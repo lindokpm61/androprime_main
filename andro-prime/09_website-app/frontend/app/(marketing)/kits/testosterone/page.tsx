@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { HeroField } from '@/components/marketing/HeroField'
-import { SectionRule } from '@/components/marketing/SectionRule'
+import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
@@ -318,7 +317,7 @@ export default function KitTestosteronePage() {
   const bundlesEnabled = isBundlesEnabled()
 
   return (
-    <div className="f-page">
+    <FPage>
       <JsonLd data={kitSchema} />
 
       {/* ---------------- HERO ----------------
@@ -346,24 +345,69 @@ export default function KitTestosteronePage() {
 
           ⚠ CA-045 q6/q7 are open against this layer and now cover five surfaces
           rather than two. See `lib/home/fieldRows.ts` and register row 18. */}
-      <div className="f-ruleground">
-        <HeroField />
-      <section
-        className="f-wrap f-sec-hero"
-        style={{ ['--f-hero-pt' as string]: '62px', ['--f-hero-pt-lg' as string]: '62px', paddingBottom: 44 }}
+      <FHero heroPad={62} padBottom={44}
+        aside={
+
+          /* Sample report. A results panel: status bands, never the accent. */
+          <div className="f-tray" style={{ marginBottom: 0 }}>
+            <div className="f-core">
+              <div className="flex items-center justify-between gap-3.5 pb-3.5 mb-1.5" style={{ borderBottom: '1px solid var(--hair-2)' }}>
+                <h2 className="f-h4" style={{ fontSize: 18 }}>Your results</h2>
+                {/* Carried from `/`, where it sits in `.f-ro-h` beside this same
+                    device. This panel drew bands and verdicts without it. */}
+                <span className="f-kchip">Nothing here is a diagnosis</span>
+              </div>
+
+              {/* The key. Carried verbatim from `/`. Padding zeroed because
+                  `.f-ro-k` carries its own for the homepage's edge-to-edge card
+                  and this one sits inside a normally padded `.f-core`. */}
+              <div className="f-ro-k" style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <span><i className="f-k-lab" aria-hidden="true" />Lab reference range</span>
+                <span><i className="f-k-ours" aria-hidden="true" />Our action band</span>
+                <span><i className="f-k-you" aria-hidden="true" />Your value</span>
+              </div>
+
+              <div>
+                {READOUT.map((m) => (
+                  <div key={m.name} className={m.split ? 'f-mk f-mk-split' : 'f-mk'}>
+                    <div className="f-mk-t">
+                      <div className="f-mk-n">
+                        {m.name}
+                        {m.qualifier ? <small>{m.qualifier}</small> : null}
+                      </div>
+                      <div className="f-mk-v">{m.value}<i>{m.unit}</i></div>
+                    </div>
+                    {m.noTrack ? (
+                      <div className="f-bar-none" />
+                    ) : (
+                      <div
+                        className="f-track"
+                        role="img"
+                        aria-label={`${m.name} ${m.value} ${m.unit}. Laboratory reference range: ${m.lab}. Andro Prime action band: ${m.ours}.`}
+                      >
+                        <div className="f-band f-band-lab" style={{ left: `${m.labLeft}%`, width: `${m.labWidth}%` }} />
+                        <div className="f-band f-band-ours" style={{ left: `${m.oursLeft}%`, width: `${m.oursWidth}%` }} />
+                        <div className="f-you" style={{ left: `${m.you}%` }} />
+                      </div>
+                    )}
+                    <div className="f-verd">
+                      {m.lab ? <span className="f-v-lab">{m.lab}</span> : null}
+                      <span className="f-v-ours">{m.ours}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3.5 mt-4 pt-4" style={{ borderTop: '1px solid var(--hair-2)' }}>
+                <p className="f-sub" style={{ fontSize: 14.5, margin: 0 }}>
+                  <b style={{ color: 'var(--ink)' }}>Recommendation:</b> Further investigation advised
+                </p>
+                <span className="f-kchip">2 to 5 working days</span>
+              </div>
+            </div>
+          </div>
+        }
       >
-        {/* `.f-herogrid`, not the raw Tailwind grid it replaced. The declarations
-            were the same 1.35fr/1fr pair, but the breakpoint was not: Tailwind's
-            `lg` is 1024px and `.f-herogrid` turns at 980, so the hero is now on
-            the system's own breakpoint rather than the framework's. The reveal
-            moves here from the tray, matching `/kits`: two nested `.f-rise`
-            elements stagger against each other.
-            ⚠ CORRECTED 2026-09-04. This said the system "turns at 900px", which
-            is the SECTION RHYTHM's number, not this primitive's. `.f-herogrid`
-            turns at 980 deliberately so the readout column keeps ~417px, and the
-            reason now sits on the rule itself. */}
-        <div className="f-herogrid f-rise">
-          <div>
             {/* THE EYEBROW NAMES THE PRODUCT, 2026-09-06. Across the five F routes these
                 read: none, "Diagnostic kits", "Kit 01 // Testosterone", "Data first",
                 "Data first" -- so two DIFFERENT products shared an eyebrow that
@@ -434,76 +478,13 @@ export default function KitTestosteronePage() {
             <div className="f-trustrow">
               {TRUST.map((item) => <div key={item}>{item}</div>)}
             </div>
-          </div>
-
-          {/* Sample report. A results panel: status bands, never the accent. */}
-          <div className="f-tray" style={{ marginBottom: 0 }}>
-            <div className="f-core">
-              <div className="flex items-center justify-between gap-3.5 pb-3.5 mb-1.5" style={{ borderBottom: '1px solid var(--hair-2)' }}>
-                <h2 className="f-h4" style={{ fontSize: 18 }}>Your results</h2>
-                {/* Carried from `/`, where it sits in `.f-ro-h` beside this same
-                    device. This panel drew bands and verdicts without it. */}
-                <span className="f-kchip">Nothing here is a diagnosis</span>
-              </div>
-
-              {/* The key. Carried verbatim from `/`. Padding zeroed because
-                  `.f-ro-k` carries its own for the homepage's edge-to-edge card
-                  and this one sits inside a normally padded `.f-core`. */}
-              <div className="f-ro-k" style={{ paddingLeft: 0, paddingRight: 0 }}>
-                <span><i className="f-k-lab" aria-hidden="true" />Lab reference range</span>
-                <span><i className="f-k-ours" aria-hidden="true" />Our action band</span>
-                <span><i className="f-k-you" aria-hidden="true" />Your value</span>
-              </div>
-
-              <div>
-                {READOUT.map((m) => (
-                  <div key={m.name} className={m.split ? 'f-mk f-mk-split' : 'f-mk'}>
-                    <div className="f-mk-t">
-                      <div className="f-mk-n">
-                        {m.name}
-                        {m.qualifier ? <small>{m.qualifier}</small> : null}
-                      </div>
-                      <div className="f-mk-v">{m.value}<i>{m.unit}</i></div>
-                    </div>
-                    {m.noTrack ? (
-                      <div className="f-bar-none" />
-                    ) : (
-                      <div
-                        className="f-track"
-                        role="img"
-                        aria-label={`${m.name} ${m.value} ${m.unit}. Laboratory reference range: ${m.lab}. Andro Prime action band: ${m.ours}.`}
-                      >
-                        <div className="f-band f-band-lab" style={{ left: `${m.labLeft}%`, width: `${m.labWidth}%` }} />
-                        <div className="f-band f-band-ours" style={{ left: `${m.oursLeft}%`, width: `${m.oursWidth}%` }} />
-                        <div className="f-you" style={{ left: `${m.you}%` }} />
-                      </div>
-                    )}
-                    <div className="f-verd">
-                      {m.lab ? <span className="f-v-lab">{m.lab}</span> : null}
-                      <span className="f-v-ours">{m.ours}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-3.5 mt-4 pt-4" style={{ borderTop: '1px solid var(--hair-2)' }}>
-                <p className="f-sub" style={{ fontSize: 14.5, margin: 0 }}>
-                  <b style={{ color: 'var(--ink)' }}>Recommendation:</b> Further investigation advised
-                </p>
-                <span className="f-kchip">2 to 5 working days</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      </div>{/* /.f-ruleground */}
+      </FHero>
 
       {/* ---------------- THE REALITY ---------------- */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={1} of={5} />
+      <FSection>
         <p className="f-blab">The reality</p>
         <h2 className="f-h2">Stop guessing what&rsquo;s wrong.</h2>
-      </div>
+      </FSection>
       <div className="f-wrap">
         {/* 🔴 THE PROSE LEFT ITS TRAY, 2026-09-02. Containment rule: a card holds a
             transaction or an instrument, and an argument is neither. This block was
@@ -578,11 +559,10 @@ export default function KitTestosteronePage() {
       </div>
 
       {/* ---------------- THE PROCESS ---------------- */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={2} of={5} />
+      <FSection>
         <p className="f-blab">The process</p>
         <h2 className="f-h2">Five minutes.<br /><span className="f-grey">No GP needed.</span></h2>
-      </div>
+      </FSection>
       <div className="f-wrap">
         <div className="f-steps">
           {/* Step 04 is NOT inverted. On a four-up row an inverted last card reads as the
@@ -600,11 +580,10 @@ export default function KitTestosteronePage() {
       </div>
 
       {/* ---------------- THE DATA ---------------- */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={3} of={5} />
+      <FSection>
         <p className="f-blab">The data</p>
         <h2 className="f-h2">Five numbers.<br /><span className="f-grey">The full testosterone picture.</span></h2>
-      </div>
+      </FSection>
       {/* The panel strip, the same instrument /kits leads with, scoped to this kit.
           It says "these five of the nine we run" in the shape a reader has already
           met one click earlier. No value, no range, no needle: nobody has taken the
@@ -636,11 +615,10 @@ export default function KitTestosteronePage() {
       </div>
 
       {/* ---------------- THE NEXT STEP ---------------- */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={4} of={5} />
+      <FSection>
         <p className="f-blab">The next step</p>
         <h2 className="f-h2">Numbers you can act on.</h2>
-      </div>
+      </FSection>
       <div className="f-wrap">
         <div className="f-tray f-rise">
           <div className="f-core grid gap-5">
@@ -689,8 +667,7 @@ export default function KitTestosteronePage() {
       {/* ---------------- FAQ ----------------
           Open grid, standardised across all three kit pages (Keith, 2026-08-29).
           Kit 1 was the only one of the three hiding its questions behind a click. */}
-      <div className="f-wrap f-sec">
-        <SectionRule n={5} of={5} />
+      <FSection>
         {/* Section label added 2026-09-06. Keith's 2026-09-03 ruling is one section
             grammar across the F pages and it is `/kits`' labelled one; `/` and
             `/kits` label 4 of 4, and the three kit pages were leaving their FAQ
@@ -698,7 +675,7 @@ export default function KitTestosteronePage() {
             no claim. Registered as row 24. */}
         <p className="f-blab">Questions</p>
         <h2 className="f-h2">Frequently asked questions</h2>
-      </div>
+      </FSection>
       <div className="f-wrap">
         <div className="f-faqgrid">
           {FAQ_ITEMS.map(({ question, answer }) => (
@@ -714,7 +691,7 @@ export default function KitTestosteronePage() {
         /* Bundle-forward CLOSE: the page ends on the single-vs-bundle offer. No trailing
            blog cards or competing-kit cross-sell, which pull focus off the buying
            decision. Keith direction 2026-07-24. */
-        <div className="f-wrap f-close" id="order">
+        <FClose id="order">
           <h2>Find out where your testosterone actually sits.</h2>
           <p className="f-stand">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
           <div className="mx-auto max-w-3xl text-left">
@@ -733,7 +710,7 @@ export default function KitTestosteronePage() {
             />
           </div>
           <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>One-off purchase. Results in your personal dashboard. No GP needed.</p>
-        </div>
+        </FClose>
       ) : (
         <>
           {/* `variant="f"` since 2026-09-06. This block used to render the blog's
@@ -747,14 +724,14 @@ export default function KitTestosteronePage() {
             intro="What your testosterone numbers actually mean, and why a normal result is not the whole story."
           />
 
-          <div className="f-wrap f-close" id="order">
+          <FClose id="order">
             <h2>Find out where your testosterone actually sits.</h2>
             <p className="f-stand">A finger prick. A prepaid envelope. That&rsquo;s it.</p>
             <KitCheckoutButton kitType="testosterone" className="f-btn">
               Order the kit: £99 {ARROW}
             </KitCheckoutButton>
             <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>One-off purchase. Results in your personal dashboard. No GP needed.</p>
-          </div>
+          </FClose>
 
           <div className="f-wrap" style={{ paddingBottom: 26 }}>
             <div className="f-tray f-rise">
@@ -768,6 +745,6 @@ export default function KitTestosteronePage() {
           </div>
         </>
       )}
-    </div>
+    </FPage>
   )
 }

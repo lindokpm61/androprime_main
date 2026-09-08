@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { HeroField } from '@/components/marketing/HeroField'
-import { SectionRule } from '@/components/marketing/SectionRule'
+import { FPage, FSection, FHero, FClose } from '@/components/marketing/FPage'
 import { KIT_NAMES } from '@/lib/kits/names'
 import { SIZES_KGRID } from '@/lib/ui/image-sizes'
 import {
@@ -253,7 +252,7 @@ function markerLabel(id: PanelMarkerId): string {
 
 export default function KitsPage() {
   return (
-    <div className="f-page">
+    <FPage>
       <JsonLd data={kitsSchema} />
 
       {/* ---------- HERO ---------- */}
@@ -267,42 +266,15 @@ export default function KitsPage() {
           over it without anything added here. ⚠ CA-045 q6/q7 are open against
           this layer and now cover two surfaces; see `lib/home/fieldRows.ts` and
           register row 18. */}
-      <div className="f-ruleground">
-        <HeroField />
-      <section className="f-wrap f-sec">
-        <div className="f-herogrid f-rise">
-          <div>
-            <div className="f-eyebrow">Diagnostic kits</div>
-            <h1 className="f-h1" style={{ marginTop: 18 }}>
-              Stop guessing.<br />
-              <span className="f-grey">Get the numbers.</span>
-            </h1>
-            <p className="f-stand" style={{ marginTop: 18 }}>
-              Three men&rsquo;s health blood tests you take at home. Each one gives you specific
-              results from a UKAS ISO 15189 accredited lab, delivered in plain English, with a clear next step
-              based on what your data actually shows. No GP referral needed.
-            </p>
-            <div className="f-btns" style={{ marginTop: 24 }}>
-              <Link className="f-btn" href="#kits">
-                See the tests {ARROW}
-              </Link>
-              <Link className="f-btn f-btn-ghost" href="/test-selector">
-                Not sure which one?
-              </Link>
-            </div>
-            <p className="f-trust">
-              <span aria-hidden="true">&#10003;</span>
-              UKAS ISO 15189 accredited lab. No GP needed. Results in 2 to 5 working days of sample
-              receipt.
-            </p>
-          </div>
+      <FHero
+        aside={
 
-          {/*
+          /*
             Available-now panel. The frame drops V2.0's pulsing status dot on the
             UKAS chip: it is a status affordance on a marketing page, and the
             motion budget on this frame is spent on the load reveal. The chip
             stays, because "available now" is the thing a reader is checking.
-          */}
+          */
           <div className="f-tray" style={{ marginBottom: 0 }}>
             <div className="f-core">
               <div className="f-panelhead">
@@ -345,9 +317,32 @@ export default function KitsPage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      </div>{/* /.f-ruleground */}
+        }
+      >
+            <div className="f-eyebrow">Diagnostic kits</div>
+            <h1 className="f-h1" style={{ marginTop: 18 }}>
+              Stop guessing.<br />
+              <span className="f-grey">Get the numbers.</span>
+            </h1>
+            <p className="f-stand" style={{ marginTop: 18 }}>
+              Three men&rsquo;s health blood tests you take at home. Each one gives you specific
+              results from a UKAS ISO 15189 accredited lab, delivered in plain English, with a clear next step
+              based on what your data actually shows. No GP referral needed.
+            </p>
+            <div className="f-btns" style={{ marginTop: 24 }}>
+              <Link className="f-btn" href="#kits">
+                See the tests {ARROW}
+              </Link>
+              <Link className="f-btn f-btn-ghost" href="/test-selector">
+                Not sure which one?
+              </Link>
+            </div>
+            <p className="f-trust">
+              <span aria-hidden="true">&#10003;</span>
+              UKAS ISO 15189 accredited lab. No GP needed. Results in 2 to 5 working days of sample
+              receipt.
+            </p>
+      </FHero>
 
       {/*
         ---------- MONEY BLOCK ----------
@@ -370,8 +365,7 @@ export default function KitsPage() {
         Everything renders from KIT_PANELS and PANEL_MARKERS, so the instrument
         cannot desync from the kit pages or from the engine.
       */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={1} of={4} />
+      <FSection>
         <p className="f-blab">The panel</p>
         <h2 className="f-h2">What each men&rsquo;s health blood test covers.</h2>
         <p className="f-lede">
@@ -437,7 +431,7 @@ export default function KitsPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- SECTION 02: THE THREE KITS ----------
           The cards are light because section 01 did the explaining. Gone from
@@ -446,14 +440,13 @@ export default function KitsPage() {
       {/* `f-sec-cont`: this boundary is a continuation, not a topic change. The
           panel above measures the three products below it, so the full section
           gap announced a new subject about the same one. See `--f-sec-gap-cont`. */}
-      <section className="f-wrap f-sec f-sec-cont" id="kits">
-        <SectionRule n={2} of={4} />
+      <FSection cont id="kits">
         <p className="f-blab">The full range</p>
         <h2 className="f-h2">
           Three tests.<br />
           <span className="f-grey">Different questions.</span>
         </h2>
-      </section>
+      </FSection>
 
       <section className="f-wrap">
         <div className="f-kgrid">
@@ -557,8 +550,7 @@ export default function KitsPage() {
           just picked instead of a claim about products you have not seen yet.
           Still the page's one inverted block, which DESIGN.md caps at one per
           page. Logged in redesign-copy-register.md item 3. */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={3} of={4} />
+      <FSection>
         <div className="f-invert f-rise">
           <p className="f-blab f-blab-lg f-invert-lab">What you pay</p>
           <h2 className="f-h2 f-invert-h">
@@ -571,11 +563,10 @@ export default function KitsPage() {
             the next step is a GP conversation, and we earn nothing from it.
           </p>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- PROCESS ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={4} of={4} />
+      <FSection>
         <p className="f-blab">Process</p>
         <h2 className="f-h2">Order to results in under a week.</h2>
 
@@ -600,7 +591,7 @@ export default function KitsPage() {
             Full process breakdown {ARROW}
           </Link>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- SELECTOR CLOSE ---------- */}
       {/* NO `f-sec` HERE. `.f-sec` and `.f-close` both take `var(--f-sec-gap)`
@@ -608,7 +599,7 @@ export default function KitsPage() {
           immediately before the final ask. The homepage puts `.f-close` on a
           bare `.f-wrap` and measures 0px; this now matches it. */}
       <section className="f-wrap">
-        <div className="f-close">
+        <FClose inSection reveal={false}>
           <p className="f-blab">Still not sure</p>
           <h2>Three questions. One clear recommendation.</h2>
           {/*
@@ -624,8 +615,8 @@ export default function KitsPage() {
               Use the selector {ARROW}
             </Link>
           </div>
-        </div>
+        </FClose>
       </section>
-    </div>
+    </FPage>
   )
 }

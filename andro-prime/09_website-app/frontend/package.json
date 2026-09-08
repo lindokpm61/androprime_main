@@ -20,7 +20,7 @@
     "db:diff": ".\\node_modules\\.bin\\supabase.cmd db diff --workdir ..",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "typecheck:scripts": "tsc --noEmit -p tsconfig.scripts.json",
-    "test:design": "node scripts/verify-design-tokens.js && node scripts/verify-f-classes.js && node scripts/verify-modifier-specificity.js && node scripts/verify-on-ink.js && node scripts/verify-hero-field.js",
+    "test:design": "node scripts/verify-design-tokens.js && node scripts/verify-f-classes.js && node scripts/verify-modifier-specificity.js && node scripts/verify-f-scaffold.js && node scripts/verify-on-ink.js && node scripts/verify-hero-field.js",
     "test:design:live": "node scripts/verify-scroll-reveal.js && node scripts/audit-dark-contrast.js"
   },
   "dependencies": {

@@ -9,6 +9,7 @@ import ArticlePhoto from '@/components/marketing/ArticlePhoto'
 import BackToTop from '@/components/marketing/BackToTop'
 import { NewsletterForm } from '@/components/marketing/NewsletterForm'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
+import { FClose, FPage } from '@/components/marketing/FPage'
 
 /**
  * The article shell, rebuilt in Direction F on 2026-09-08 from
@@ -85,7 +86,7 @@ export default function ArticleLayout({
   const tocVisible = showToc && headings.length > 0
 
   return (
-    <div className="f-page">
+    <FPage>
       <header className="fb-read">
         {/* Meta bar: breadcrumb one side, category and read time the other. */}
         <div className="fb-metabar">
@@ -190,7 +191,7 @@ export default function ArticleLayout({
           existed nowhere else on the site and went with the rest of the
           brutalist furniture. */}
       <section className="f-wrap f-sec">
-        <div className="f-close">
+        <FClose inSection reveal={false}>
           <p className="f-blab">Start with a number</p>
           <h2>Find out where you actually stand.</h2>
           <p className="f-sub" style={{ margin: '0 auto' }}>
@@ -201,7 +202,7 @@ export default function ArticleLayout({
             <Link href="/kits" className="f-btn">See the tests {ARROW}</Link>
             <Link href="/test-selector" className="f-btn f-btn-ghost">Use the selector</Link>
           </div>
-        </div>
+        </FClose>
       </section>
 
       {/* ---------- NEWSLETTER ----------
@@ -222,6 +223,6 @@ export default function ArticleLayout({
       </section>
 
       <BackToTop />
-    </div>
+    </FPage>
   )
 }

@@ -454,6 +454,67 @@ lives in the interpretation COLUMN, not in the instrument card: it is interpreta
 instrument. It replaced `.f-ro-f` on 2026-09-02, which had also been supplying the instrument
 card’s bottom padding as a side effect.
 
+## How a page is assembled
+
+Added 2026-09-08. **A Direction F page composes four components; it does not copy class
+strings.** `components/marketing/FPage.tsx`:
+
+    <FPage>                          the page root, and it NUMBERS its own sections
+      <FHero aside={...}>            the ground, the hero section and the two-column grid
+      <FSection>                     a counted section header
+      <FClose>                       the closing ask
+
+Enforced by `scripts/verify-f-scaffold.js` in `npm test`: a file under
+`app/(marketing)` or `components/marketing` that hand-writes `.f-page`,
+`.f-ruleground`, a `.f-wrap.f-sec` carrying a `SectionRule`, or any `.f-close`
+fails the build and is told which component to use instead.
+
+### Why, and what the copies had already become
+
+The hero was hand-copied across seven files, and by the time it was collected it was
+wearing three different class strings:
+
+| Surface | What it wore |
+|---|---|
+| `/kits` | `f-wrap f-sec`, with no `f-sec-hero` at all |
+| `/membership`, `/how-it-works`, `/blog` | `f-wrap f-sec f-sec-hero`, the intended one |
+| the three kit pages | `f-wrap f-sec-hero`, with no `f-sec` |
+
+Neither deviation is visible in a diff of the page that drifted, because a copied class
+string carries no evidence of what it was copied from. Both had consequences.
+`.f-sec-hero` exists because at 390 the cookie banner covered 78% of the "Order the kit"
+button, and **`/kits` never got it**: measured on the migration, its hero was giving away
+60px it should have been reclaiming. And the kit pages dropping `.f-sec` is what made
+`.f-sec-hero` look like a modifier of `.f-sec` when it is in fact worn both ways, which is
+what cost those three heroes their entire padding earlier the same day when the standard
+modifier fix was applied to it.
+
+**The counter had drifted the same way.** `SectionRule` takes `n` and `of`, both counted by
+hand. Two of the seven pages had noticed the hazard and hoisted `of` into a `SECTIONS`
+constant with a comment explaining it; five had not. `FPage` now walks its own children and
+numbers every `FSection` that carries a rule, so `of` is a count rather than a literal and
+the constant is gone from both pages that had it.
+
+### The rule the components encode
+
+🔴 **A HERO WEARS `.f-sec` AND `.f-sec-hero`, ALWAYS.** `.f-sec-hero` gives the hero back to
+the reader while the consent banner is up; `.f-sec` supplies the rhythm underneath it.
+Since `.f-sec-hero.f-sec-hero` out-specifies `.f-sec`, wearing both costs nothing, and
+wearing one without the other is the drift above. `FHero` writes both and there is no prop
+to turn either off.
+
+⚠ **DEVIATIONS ARE PROPS, NOT MISSING CLASSES.** The three kit pages take a 62px hero pad
+and a 44px bottom instead of the direction's; they say so as `heroPad={62} padBottom={44}`.
+`/kits` and the article layout close without the reveal the other three closes have; they
+say so as `reveal={false}`. Whether that last one is intended is an open question for Keith
+rather than something to normalise quietly. A deviation written as a prop is legible in a
+diff and countable by a grep; a deviation written as an absent class is neither.
+
+**`/` is the one page that does not use `FHero`**, because its hero is the film layer rather
+than the shared field. One page and one assembly: an `FHero` variant with a single caller
+would be worse than the exception, which is listed in the check's own ALLOW table with its
+reason.
+
 ## Do's and Don'ts
 
 **Do**
@@ -1202,10 +1263,10 @@ Recorded so they are not rediscovered as surprises.
     dark-panel mechanism, and the hero field's geometry. Two more need a dev server and run on
     demand, `npm run test:design:live`: the scroll-reveal paths and the rendered dark-ground
     contrast sweep over 16 routes. **What is enforced is what a file can be read to prove.** Nothing
-    here checks that a page looks right, that spacing follows the rhythm, that a photograph is
-    cropped to its focal point, or that a new page uses the system at all — the hero assembly is
-    still hand-copied across 7 files and `SectionRule` still takes a hand-counted `of={N}` that
-    nothing validates. And `12_operations/automation/reconcile-f-css.js` is still wired into
+    here checks that a page looks right, that spacing follows the rhythm, or that a photograph
+    is cropped to its focal point. **Six checks now, not five:** `verify-f-scaffold.js` closed
+    the "does a new page use the system at all" half of this gap on 2026-09-08, and the hero
+    assembly and the section counter are no longer hand-copied. And `12_operations/automation/reconcile-f-css.js` is still wired into
     nothing and still reports **41 conflicts, 30 mockup-vs-mockup, 72 unpaired**; that disagreement
     is between the mockups and the build, which is a different question from whether the build is
     internally consistent, and it needs rulings rather than a green light.

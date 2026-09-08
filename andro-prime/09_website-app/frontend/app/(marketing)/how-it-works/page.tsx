@@ -3,8 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { panelCardLabels } from '@/lib/kits/panel'
 import { JsonLd } from '@/components/shared/JsonLd'
-import { HeroField } from '@/components/marketing/HeroField'
-import { SectionRule } from '@/components/marketing/SectionRule'
+import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { SIZES_HEROGRID } from '@/lib/ui/image-sizes'
 
 /**
@@ -41,7 +40,6 @@ const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
    of where they were. Counted once here rather than typed eight times: an
    `of={8}` that disagrees with the number of call sites is a position indicator
    that lies, and nothing would catch it. */
-const SECTIONS = 8
 
 const howItWorksSchema = {
   '@context': 'https://schema.org',
@@ -202,7 +200,7 @@ const faqItems = [
 
 export default function HowItWorksPage() {
   return (
-    <div className="f-page">
+    <FPage>
       <JsonLd data={howItWorksSchema} />
 
       {/* ---------- HERO ----------
@@ -224,38 +222,10 @@ export default function HowItWorksPage() {
 
           ⚠ CA-045 q6/q7 are open against this layer and now cover SIX surfaces
           rather than five. See `lib/home/fieldRows.ts` and register row 18. */}
-      <div className="f-ruleground">
-        <HeroField />
-        <section className="f-wrap f-sec f-sec-hero">
-          {/* `.f-herogrid`, matching the other five heroes. Four of them put the
-              sample readout in the right column; this page has no readout to put
-              there and had nothing at all, so the column was the natural home for
-              the photograph this route was missing. */}
-          <div className="f-herogrid f-rise">
-            <div>
-              <div className="f-btns" style={{ marginBottom: 18 }}>
-                <span className="f-eyebrow">Methodology</span>
-                <span className="f-kchip">5 minutes. No GP needed.</span>
-              </div>
-              <h1 className="f-h1">
-                Order.<br />Test.<br /><span className="f-grey">Know.</span>
-              </h1>
-              <p className="f-stand" style={{ marginTop: 20 }}>
-                A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results
-                are in your dashboard in 2 to 5 working days. In plain English, with a specific
-                recommendation based on your actual numbers.
-              </p>
-              <div className="f-btns" style={{ marginTop: 26 }}>
-                <Link href="/kits" className="f-btn">
-                  Choose your test {ARROW}
-                </Link>
-                <Link href="/test-selector" className="f-btn f-btn-ghost">
-                  Take the quiz
-                </Link>
-              </div>
-            </div>
+      <FHero
+        aside={
 
-            {/* THE PAGE'S ONE PHOTOGRAPH, `img-8`, generated 2026-09-06.
+            /* THE PAGE'S ONE PHOTOGRAPH, `img-8`, generated 2026-09-06.
                 `/how-it-works` was the only F route with zero photographs while
                 the other five carry one to five, so it read as a different site.
 
@@ -280,7 +250,7 @@ export default function HowItWorksPage() {
                 `--focal` is set rather than defaulted, per the ruling written the
                 day two portraits were decapitated: the 4:3 crop of a 4:3 source
                 is neutral today, but the field is required so the next reshape
-                cannot silently centre it. */}
+                cannot silently centre it. */
             <div className="f-plate">
               <div
                 className="f-shot f-shot-r43"
@@ -296,9 +266,29 @@ export default function HowItWorksPage() {
               </div>
               <span className="f-shot-cap">Any postbox, any morning</span>
             </div>
-          </div>
-        </section>
-      </div>
+        }
+      >
+              <div className="f-btns" style={{ marginBottom: 18 }}>
+                <span className="f-eyebrow">Methodology</span>
+                <span className="f-kchip">5 minutes. No GP needed.</span>
+              </div>
+              <h1 className="f-h1">
+                Order.<br />Test.<br /><span className="f-grey">Know.</span>
+              </h1>
+              <p className="f-stand" style={{ marginTop: 20 }}>
+                A finger-prick, a pre-paid envelope, and a UKAS ISO 15189-accredited lab. Your results
+                are in your dashboard in 2 to 5 working days. In plain English, with a specific
+                recommendation based on your actual numbers.
+              </p>
+              <div className="f-btns" style={{ marginTop: 26 }}>
+                <Link href="/kits" className="f-btn">
+                  Choose your test {ARROW}
+                </Link>
+                <Link href="/test-selector" className="f-btn f-btn-ghost">
+                  Take the quiz
+                </Link>
+              </div>
+      </FHero>
 
       {/*
         ---------- TRUST BAR ----------
@@ -318,8 +308,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* ---------- FOUR STEPS ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={1} of={SECTIONS} />
+      <FSection>
         <p className="f-blab">The process</p>
         <h2 className="f-h2">Four steps.<br /><span className="f-grey">Done in a week.</span></h2>
         <p className="f-sub" style={{ marginTop: 12 }}>
@@ -340,11 +329,10 @@ export default function HowItWorksPage() {
             </div>
           ))}
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- THE LAB ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={2} of={SECTIONS} />
+      <FSection>
         <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">The lab</p>
@@ -385,11 +373,10 @@ export default function HowItWorksPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- DASHBOARD ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={3} of={SECTIONS} />
+      <FSection>
         <p className="f-blab">Your dashboard</p>
         <h2 className="f-h2">Not a lab report.<br /><span className="f-grey">An actual answer.</span></h2>
 
@@ -408,11 +395,10 @@ export default function HowItWorksPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- THREE KITS ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={4} of={SECTIONS} />
+      <FSection>
         <p className="f-blab">The three kits</p>
         <h2 className="f-h2">Start with what&rsquo;s bothering you most.</h2>
         <p className="f-sub" style={{ marginTop: 12 }}>
@@ -456,11 +442,10 @@ export default function HowItWorksPage() {
             Not sure? Take the quiz {ARROW}
           </Link>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- AFTER YOUR RESULTS ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={5} of={SECTIONS} />
+      <FSection>
         <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">After your results</p>
@@ -492,15 +477,14 @@ export default function HowItWorksPage() {
             ))}
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/*
         ---------- WHERE WE STAND ----------
         A1 under CA-026. The claim below is rendered VERBATIM and is not editable
         without a compliance pre-flight.
       */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={6} of={SECTIONS} />
+      <FSection>
         <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">Where we stand</p>
@@ -524,11 +508,10 @@ export default function HowItWorksPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- DR EWA ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={7} of={SECTIONS} />
+      <FSection>
         {/* This page's ONE inverted panel, and DESIGN.md names this block as where
             it spends it. Check that list before adding a second: the constraint is
             per page and a second one silently costs the first its weight. */}
@@ -568,11 +551,10 @@ export default function HowItWorksPage() {
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- FAQ ---------- */}
-      <section className="f-wrap f-sec">
-        <SectionRule n={8} of={SECTIONS} />
+      <FSection>
         <p className="f-blab">Common questions</p>
         <h2 className="f-h2">Before you order.</h2>
 
@@ -584,11 +566,11 @@ export default function HowItWorksPage() {
             </div>
           ))}
         </div>
-      </section>
+      </FSection>
 
       {/* ---------- CLOSE ---------- */}
       <section className="f-wrap f-sec">
-        <div className="f-close f-rise">
+        <FClose inSection>
           <p className="f-blab">Ready when you are</p>
           <h2>Order. Test. Know.</h2>
           <p className="f-sub" style={{ margin: '0 auto' }}>
@@ -602,8 +584,8 @@ export default function HowItWorksPage() {
               Use the selector
             </Link>
           </div>
-        </div>
+        </FClose>
       </section>
-    </div>
+    </FPage>
   )
 }

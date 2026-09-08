@@ -5,6 +5,7 @@ import { AUTHORS, getAuthor } from '@/lib/authors'
 import { getAllArticles, formatArticleDate, type ArticleMeta } from '@/lib/blog'
 import AuthorBioCard from '@/components/marketing/AuthorBioCard'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { FPage } from '@/components/marketing/FPage'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -109,7 +110,7 @@ export default async function AuthorPage({ params }: Props) {
           and set every article title in uppercase black sans; it now uses the F
           section grammar and the same card list the index uses, so an author
           page reads as the same publication as the articles it lists. */}
-      <div className="f-page">
+      <FPage>
         <section className="f-wrap f-sec f-sec-hero">
           <p className="f-blab">
             {author.role === 'medical-reviewer' ? 'Medical reviewer' : 'Founder and author'}
@@ -130,7 +131,7 @@ export default async function AuthorPage({ params }: Props) {
             <p className="f-sub">No articles published yet. Check back soon.</p>
           )}
         </section>
-      </div>
+      </FPage>
     </>
   )
 }

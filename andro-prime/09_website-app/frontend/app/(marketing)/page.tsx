@@ -6,9 +6,10 @@ import { KIT_NAMES } from '@/lib/kits/names'
 import { ALL_PANEL_MARKER_IDS, KIT_PANELS } from '@/lib/kits/panel'
 import type { KitType } from '@/lib/results/types'
 import { PRICING } from '@/lib/pricing'
-import { SectionRule, Marginalia } from '@/components/marketing/SectionRule'
+import { Marginalia } from '@/components/marketing/SectionRule'
 import { HeroField } from '@/components/marketing/HeroField'
 import { SIZES_BENTO_3, SIZES_BENTO_5, SIZES_BENTO_6 } from '@/lib/ui/image-sizes'
+import { FPage, FSection, FClose } from '@/components/marketing/FPage'
 
 /*
  * REBUILT IN DIRECTION F, 2026-08-31.
@@ -289,7 +290,7 @@ const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
 
 export default function HomePage() {
   return (
-    <div className="f-page">
+    <FPage>
       <JsonLd data={homeSchema} />
 
       {/* ---------------- HERO ----------------
@@ -371,9 +372,7 @@ export default function HomePage() {
           The concrete mechanic of the monitoring thesis: two ranges on one
           screen. This is the only place on the site where the laboratory band
           and our action band are drawn together. */}
-      <div className="f-wrap f-sec" id="readout" style={{ paddingBottom: 0 }}>
-        <SectionRule n={1} of={6} />
-      </div>
+      <FSection id="readout" style={{ paddingBottom: 0 }} />
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-8 f-rise">
@@ -479,9 +478,7 @@ export default function HomePage() {
       </div>
 
       {/* ---------------- THE ARGUMENT ---------------- */}
-      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }}>
-        <SectionRule n={2} of={6} />
-      </div>
+      <FSection style={{ paddingBottom: 0 }} />
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-7 f-rise">
@@ -514,9 +511,7 @@ export default function HomePage() {
       </div>
 
       {/* ---------------- THE RECORD ---------------- */}
-      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }}>
-        <SectionRule n={3} of={6} />
-      </div>
+      <FSection style={{ paddingBottom: 0 }} />
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-5 f-rise">
@@ -552,14 +547,13 @@ export default function HomePage() {
           The nine-marker panel leads, per the direction brief section 4: a
           reader who has not chosen a question yet is served by the panel that
           does not make him choose. */}
-      <div className="f-wrap f-sec" id="kits">
-        <SectionRule n={4} of={6} />
+      <FSection id="kits">
         <p className="f-blab">Where to start</p>
         <h2 className="f-h2">You don&rsquo;t know which question you&rsquo;re asking yet.</h2>
         <p className="f-lede">
           That is the normal place to start, and it is why the full panel is the default. Finger-prick at home, five minutes, freepost back.
         </p>
-      </div>
+      </FSection>
       <div className="f-wrap">
         <div className="f-bento">
           {KITS.map(({ slug, title, meta, price, lead, lines, who, photo, cap, alt }) => (
@@ -642,8 +636,7 @@ export default function HomePage() {
           membership, and it must not: membership cannot be bought standalone
           and no acquisition surface may sell it
           (`01_strategy/2026-08-26-membership-offer-window.md`). */}
-      <div className="f-wrap f-sec" id="free">
-        <SectionRule n={5} of={6} />
+      <FSection id="free">
         {/* 🔴 THIS LABEL MAY NOT BECOME AN OFFER. It sits above the free-layer
             section and inherits every prohibition the disclosure line below
             carries: no price, no CTA, no benefit list, no "join", and it may not
@@ -684,7 +677,7 @@ export default function HomePage() {
         <p className="f-fine mt-4">
           Holding that record over time is an optional membership. It is offered once your first result is back, never before, and you never need it to buy a kit or to read your own results.
         </p>
-      </div>
+      </FSection>
       <div className="f-wrap">
         <div className="f-bento">
           <div className="f-c-6 f-rise">
@@ -765,9 +758,7 @@ export default function HomePage() {
           grammar, so this is one of four new `.f-blab` labels; the two sentences
           below are still byte-identical to the pre-flighted copy. The label
           itself is NEW copy and is registered as such. */}
-      <div className="f-wrap f-sec" style={{ paddingBottom: 0 }}>
-        <SectionRule n={6} of={6} />
-      </div>
+      <FSection style={{ paddingBottom: 0 }} />
       <div className="f-wrap">
         <div className="f-invert f-rise">
           <p className="f-blab f-blab-lg f-invert-lab">No conflict</p>
@@ -779,11 +770,11 @@ export default function HomePage() {
       </div>
 
       {/* ---------------- CLOSE ---------------- */}
-      <div className="f-wrap f-close">
+      <FClose>
         <h2>Find out what your blood is telling you.</h2>
         <p className="f-stand">UKAS ISO 15189 accredited lab. Results in 2 to 5 working days. Plain English.</p>
         <Link href="/test-selector" className="f-btn">Find your test in 60 seconds {ARROW}</Link>
-      </div>
-    </div>
+      </FClose>
+    </FPage>
   )
 }

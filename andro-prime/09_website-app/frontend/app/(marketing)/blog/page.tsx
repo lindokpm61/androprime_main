@@ -4,6 +4,7 @@ import { NewsletterForm } from '@/components/marketing/NewsletterForm'
 import BlogListings, { type BlogListItem } from '@/components/marketing/BlogListings'
 import { getAllArticles, formatArticleDate } from '@/lib/blog'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { FPage, FClose } from '@/components/marketing/FPage'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -76,7 +77,7 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="f-page">
+    <FPage>
       <JsonLd data={blogSchema} />
       <BlogListings articles={articles} />
 
@@ -88,7 +89,7 @@ export default async function BlogPage() {
           is kept, because it is a good one and it is specific to this page:
           every article circles the same point, so the index closes on it. */}
       <section className="f-wrap f-sec">
-        <div className="f-close f-rise">
+        <FClose inSection>
           <p className="f-blab">Stop reading, start measuring</p>
           <h2>A number you have watched move.</h2>
           <p className="f-sub" style={{ margin: '0 auto' }}>
@@ -101,7 +102,7 @@ export default async function BlogPage() {
             </Link>
             <Link href="/test-selector" className="f-btn f-btn-ghost">Use the selector</Link>
           </div>
-        </div>
+        </FClose>
       </section>
 
       {/* ---------- NEWSLETTER ----------
@@ -118,6 +119,6 @@ export default async function BlogPage() {
           <NewsletterForm theme="dark" source="blog-index" />
         </div>
       </section>
-    </div>
+    </FPage>
   )
 }

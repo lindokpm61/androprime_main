@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import { HeroField } from '@/components/marketing/HeroField'
+import { FHero } from '@/components/marketing/FPage'
 
 export interface BlogListItem {
   href: string
@@ -83,10 +83,7 @@ export default function BlogListings({ articles }: Props) {
           The shared `HeroField` ground, so the index hands over from `/` and
           `/kits` without a seam. It is the seventh surface to carry that layer;
           CA-045 q6/q7 are open against it and the copy register tracks scope. */}
-      <div className="f-ruleground">
-        <HeroField />
-        <section className="f-wrap f-sec f-sec-hero">
-          <div className="f-rise">
+      <FHero>
             <div className="f-btns" style={{ marginBottom: 18 }}>
               <span className="f-eyebrow">Research &amp; analysis</span>
               <span className="f-kchip">{articles.length} articles</span>
@@ -98,9 +95,7 @@ export default function BlogListings({ articles }: Props) {
               What your numbers actually mean, what a reference range is and is not, and what the
               evidence says about moving one. Written plainly, reviewed by a GMC-registered GP.
             </p>
-          </div>
-        </section>
-      </div>
+      </FHero>
 
       <section className="f-wrap" style={{ paddingBottom: 72 }}>
         <div className="fb-filters" role="group" aria-label="Filter articles by category">
