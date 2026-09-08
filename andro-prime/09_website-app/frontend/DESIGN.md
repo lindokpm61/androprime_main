@@ -505,10 +505,16 @@ to turn either off.
 
 ⚠ **DEVIATIONS ARE PROPS, NOT MISSING CLASSES.** The three kit pages take a 62px hero pad
 and a 44px bottom instead of the direction's; they say so as `heroPad={62} padBottom={44}`.
-`/kits` and the article layout close without the reveal the other three closes have; they
-say so as `reveal={false}`. Whether that last one is intended is an open question for Keith
-rather than something to normalise quietly. A deviation written as a prop is legible in a
-diff and countable by a grep; a deviation written as an absent class is neither.
+A deviation written as a prop is legible in a diff and countable by a grep; a deviation
+written as an absent class is neither.
+
+🔴 **AN IN-SECTION CLOSE ALWAYS TAKES THE REVEAL. Ruled by Keith, 2026-09-08.** Three of
+the five had `.f-rise` and two did not, `/kits` and the article layout. Nobody had chosen
+that: it was an absent class in a copied string, invisible in a diff and impossible to
+grep for. Collecting the assembly made it visible, briefly as a `reveal={false}` prop, and
+the ruling removed the PROP rather than the two exceptions. There is now no way to opt out
+by forgetting a class. Verified in a browser on both: hidden at load at opacity 0 and a
+44px offset, resolved to opacity 1 and no offset after scrolling to them.
 
 **`/` is the one page that does not use `FHero`**, because its hero is the film layer rather
 than the shared field. One page and one assembly: an `FHero` variant with a single caller

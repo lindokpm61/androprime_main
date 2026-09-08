@@ -599,7 +599,7 @@ export default function KitsPage() {
           immediately before the final ask. The homepage puts `.f-close` on a
           bare `.f-wrap` and measures 0px; this now matches it. */}
       <section className="f-wrap">
-        <FClose inSection reveal={false}>
+        <FClose inSection>
           <p className="f-blab">Still not sure</p>
           <h2>Three questions. One clear recommendation.</h2>
           {/*

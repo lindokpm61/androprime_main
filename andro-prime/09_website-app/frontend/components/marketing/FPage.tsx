@@ -149,17 +149,20 @@ type FCloseProps = {
    *  the wrap, because the section already supplies it. `/how-it-works`,
    *  `/membership` and `/blog` close this way. */
   inSection?: boolean
-  /** Only meaningful with `inSection`. The reveal is the default because three
-   *  of the five in-section closes have it; `/kits` and the article layout do
-   *  not, and they say so here rather than by omitting a class nobody notices
-   *  is missing. Whether that difference is intended is an open question for
-   *  Keith, recorded in STATE.md on 2026-09-08. */
-  reveal?: boolean
   style?: React.CSSProperties
 }
 
-export function FClose({ children, id, inSection, reveal = true, style }: FCloseProps) {
-  const cls = inSection ? (reveal ? 'f-close f-rise' : 'f-close') : 'f-wrap f-close'
+/**
+ * 🔴 AN IN-SECTION CLOSE ALWAYS TAKES THE REVEAL, AND THERE IS NO PROP TO TURN
+ * IT OFF. Ruled by Keith on 2026-09-08. Three of the five had `.f-rise` and two
+ * did not: `/kits` and the article layout. Nobody had chosen that, it was an
+ * absent class in a copied string, which is invisible in a diff and impossible
+ * to grep for. Collecting the assembly here made it visible, briefly as a
+ * `reveal={false}` prop, and the ruling removed the prop rather than the two
+ * exceptions. A page cannot now opt out of the reveal by forgetting a class.
+ */
+export function FClose({ children, id, inSection, style }: FCloseProps) {
+  const cls = inSection ? 'f-close f-rise' : 'f-wrap f-close'
   return (
     <div className={cls} id={id} style={style}>
       {children}

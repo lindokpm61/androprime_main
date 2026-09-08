@@ -191,7 +191,7 @@ export default function ArticleLayout({
           existed nowhere else on the site and went with the rest of the
           brutalist furniture. */}
       <section className="f-wrap f-sec">
-        <FClose inSection reveal={false}>
+        <FClose inSection>
           <p className="f-blab">Start with a number</p>
           <h2>Find out where you actually stand.</h2>
           <p className="f-sub" style={{ margin: '0 auto' }}>
