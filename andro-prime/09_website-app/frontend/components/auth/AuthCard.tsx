@@ -17,13 +17,16 @@ import { OAuthButtons } from '@/components/auth/OAuthButtons'
  * the marketing opt-in sentence and the four cross-link labels. The titles and
  * standfirsts arrive as props from the route files and are untouched.
  *
- * BEHAVIOUR CARRIED VERBATIM, and one piece of it is deliberately left wrong.
- * ⚠ The signup `age` field has `min={18}` and NO `required` attribute, while
- * `/auth/consent` and `/checkout/details` both make the same 18+ fact mandatory.
- * Frame X2 flags it and hands it to Keith as a behaviour question, so it is
- * reproduced exactly as it ships rather than quietly fixed inside a restyle:
- * adding one word here would change who can create an account, which is not a
- * redesign's call. See STATE.md.
+ * BEHAVIOUR CARRIED VERBATIM WITH ONE RULED EXCEPTION. 🔴 The signup `age` field
+ * is now `required`, and `signupAction` gained a hard server-side 18+ gate to go
+ * with it (Keith, 2026-09-08). Frame X2 found that the same eligibility fact was
+ * mandatory at two of its three collection points and optional at this one, and
+ * the ruling closed it rather than leaving the redesign to carry the asymmetry
+ * forward. Everything else here, every string and every branch, is what shipped.
+ *
+ * ⚠ The attribute is not the enforcement. `required` is a client-side
+ * convenience; the gate that matters is in `lib/auth/actions.ts`, mirroring
+ * `consentAction`'s check and its exact refusal wording.
  *
  * 🔴 THE PITCH PANEL WAS INK AND IS NOW LIGHT. See the auth block in
  * f-primitives.css for the reasoning: the inverted panel is spent once per page
@@ -159,14 +162,19 @@ export function AuthCard({
                   <>
                     <label className="f-formrow">
                       <span className="f-blab">Age</span>
-                      {/* ⚠ NO `required`, and that is what ships. See the note at
-                          the top of this file: it is Keith's call, not a
-                          restyle's. */}
+                      {/* `required` since 2026-09-08 (Keith), closing the
+                          asymmetry Frame X2 flagged: the same 18+ fact was
+                          mandatory on `/auth/consent` and `/checkout/details`
+                          and optional here. ⚠ THIS ATTRIBUTE IS NOT THE GATE.
+                          The gate is the server-side check in `signupAction`,
+                          which mirrors `consentAction`'s; this only saves the
+                          reader a round trip. */}
                       <input
                         className="f-inp"
                         name="age"
                         type="number"
                         min={18}
+                        required
                         placeholder="18+ only"
                       />
                     </label>

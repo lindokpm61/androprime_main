@@ -4,87 +4,6 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ NEWEST — the five `/auth/*` routes are Direction F, and the conformance report had been measuring PRODUCTION for them, 2026-09-08
-
-**16 of 36 measurable routes now, up from 11. 44%.** Read
-`design/route-conformance.md`, not this number.
-
-**Five routes, two surfaces, one batch.** Frame X2 is the finding that shaped it:
-four of the five are ONE component in four modes (`components/auth/AuthCard.tsx`)
-and the route files are 25-line wrappers passing a title, a standfirst and a
-server action. Only `/auth/consent` is its own page. Frame X2 also enumerates what
-changes between the modes and it is FIVE things: the heading, the standfirst,
-which fields render, the submit label, and which cross-links appear. The submit
-labels and cross-links are now data, so "each mode hides its own" is one filter
-rather than four hand-maintained conditionals.
-
-**Nothing new was needed for the fields.** `/test-selector` added the form layer
-yesterday and this route consumed it: `.f-inp`, `.f-consent`, `.f-blab`,
-`.f-kchip`, `.f-ticks`, `.f-btn:disabled`. That was the reason for naming those
-for what they are rather than for the page that first needed them, and it held.
-
-🔴 **THE CONFORMANCE REPORT HAD BEEN MEASURING A DIFFERENT DEPLOYMENT.** The site
-is one app on two hostnames, and `/auth` is served by `app.andro-prime.com`. The
-generator fetched everything from the apex, so those five routes 308'd to the
-PRODUCTION app host and it measured what `main` serves. It reported "0 classes,
-not rebuilt" with full confidence about the wrong deployment, and the redirect
-check could not see it because **a cross-host 308 keeps the same pathname** and
-the check compared pathnames.
-
-Fixed by measuring each route on the host that serves it: Chrome's
-`--host-resolver-rules` maps the app hostname onto the dev server so the request
-arrives with the real Host header. ⚠ **The conformance run now needs
-`NEXT_PUBLIC_APP_URL=http://app.andro-prime.com` on the dev server**, because the
-middleware redirects with absolute URLs and an `https://` one asks for TLS from a
-plain-HTTP dev server. Do NOT set it to `http://localhost:3000`: that makes the
-app host and the apex the same origin and the 28 marketing routes get routed
-away. The script's header carries all of this and its failure message names the
-remedy.
-
-**Three defects found, two of them mine:**
-
-1. **`.f-field` was already taken and I took it anyway.** It is the hero data
-   canvas: `position: absolute`, sized to the hero. Two unrelated components on
-   one selector at equal specificity, so source order decided and the hero won.
-   Both `<label>`s went absolute at 1320x986 and the email and password inputs
-   rendered outside the card. **Nothing failed**: the class exists so
-   `verify-f-classes` passed, and it is not a modifier pair so the specificity
-   checker passed. Renamed `.f-formrow`. Grep a class name before using it.
-2. **A 2px border on a 22px radius is a crescent, not an edge.** The message
-   banner's leading rule followed the curve and read as a half-drawn ring. The
-   banners' hierarchy moved onto elevation instead, which is this direction's own
-   device: the message is a raised core, the error is recessed with a mono key.
-   That also solves the problem that Frame X3's mechanism (give the message "the
-   one accent") no longer exists after the saturation ruling.
-3. **`verify-scroll-reveal.js` would have failed on auth**, since it asserts every
-   rebuilt route has reveal targets and the auth card deliberately has none: a
-   reveal in front of a password field is a delay. App-host routes are now
-   skipped there with the reason stated, and the check refuses to pass if its
-   filter ever empties the list.
-
-**`.f-page` and `FPage` are different things and the name hides it.** `.f-page` is
-the TYPE RAMP's root: without it an F surface renders in `globals.css`'s
-Merriweather at ~8% under the drawn size, silently. `FPage` is the marketing page
-assembly. `/auth/*` needs the first only, so `app/auth/layout.tsx` supplies it
-once for all five and `verify-f-scaffold.js` keeps them out of scope with its
-header note updated to say why rather than leaving them looking forgotten.
-
-⚠ **TWO THINGS OWED FROM KEITH, both raised by Frame X and neither actioned:**
-
-- **Should `/auth/signup`'s age field be `required`?** The same 18+ eligibility
-  fact is mandatory on `/auth/consent` and on `/checkout/details` and optional on
-  signup. Reproduced exactly as it ships, because adding one word changes who can
-  create an account and that is not a restyle's call.
-- **Should `/auth/consent` be renamed?** It is confirmed to be an age gate plus a
-  marketing opt-in, NOT the health-data consent. The stage inventory had recorded
-  it as the CA-018 route whose wording must not be disturbed; both halves were
-  wrong, and the health-data consent is on `/checkout/details`. Frame X notes both
-  are cheap now and awkward later.
-
-**Green:** `npm test` (EXIT 0), `test:design:live` 67 passed and 0 failing
-dark-ground nodes across 16 routes, production build clean. No copy changed, so
-no compliance pre-flight is owed.
-
 ## ▶️ PICK UP HERE — handoff from the 2026-09-08 evening session
 
 Keith asked for this session to be carried into the next chat. Everything below
@@ -261,6 +180,108 @@ toggle onto the phone. Nothing was changed pending Keith.
 
 
 ---
+
+## ▶️ NEWEST — the five `/auth/*` routes are Direction F, and the conformance report had been measuring PRODUCTION for them, 2026-09-08
+
+**16 of 36 measurable routes now, up from 11. 44%.** Read
+`design/route-conformance.md`, not this number.
+
+**Five routes, two surfaces, one batch.** Frame X2 is the finding that shaped it:
+four of the five are ONE component in four modes (`components/auth/AuthCard.tsx`)
+and the route files are 25-line wrappers passing a title, a standfirst and a
+server action. Only `/auth/consent` is its own page. Frame X2 also enumerates what
+changes between the modes and it is FIVE things: the heading, the standfirst,
+which fields render, the submit label, and which cross-links appear. The submit
+labels and cross-links are now data, so "each mode hides its own" is one filter
+rather than four hand-maintained conditionals.
+
+**Nothing new was needed for the fields.** `/test-selector` added the form layer
+yesterday and this route consumed it: `.f-inp`, `.f-consent`, `.f-blab`,
+`.f-kchip`, `.f-ticks`, `.f-btn:disabled`. That was the reason for naming those
+for what they are rather than for the page that first needed them, and it held.
+
+🔴 **THE CONFORMANCE REPORT HAD BEEN MEASURING A DIFFERENT DEPLOYMENT.** The site
+is one app on two hostnames, and `/auth` is served by `app.andro-prime.com`. The
+generator fetched everything from the apex, so those five routes 308'd to the
+PRODUCTION app host and it measured what `main` serves. It reported "0 classes,
+not rebuilt" with full confidence about the wrong deployment, and the redirect
+check could not see it because **a cross-host 308 keeps the same pathname** and
+the check compared pathnames.
+
+Fixed by measuring each route on the host that serves it: Chrome's
+`--host-resolver-rules` maps the app hostname onto the dev server so the request
+arrives with the real Host header. ⚠ **The conformance run now needs
+`NEXT_PUBLIC_APP_URL=http://app.andro-prime.com` on the dev server**, because the
+middleware redirects with absolute URLs and an `https://` one asks for TLS from a
+plain-HTTP dev server. Do NOT set it to `http://localhost:3000`: that makes the
+app host and the apex the same origin and the 28 marketing routes get routed
+away. The script's header carries all of this and its failure message names the
+remedy.
+
+**Three defects found, two of them mine:**
+
+1. **`.f-field` was already taken and I took it anyway.** It is the hero data
+   canvas: `position: absolute`, sized to the hero. Two unrelated components on
+   one selector at equal specificity, so source order decided and the hero won.
+   Both `<label>`s went absolute at 1320x986 and the email and password inputs
+   rendered outside the card. **Nothing failed**: the class exists so
+   `verify-f-classes` passed, and it is not a modifier pair so the specificity
+   checker passed. Renamed `.f-formrow`. Grep a class name before using it.
+2. **A 2px border on a 22px radius is a crescent, not an edge.** The message
+   banner's leading rule followed the curve and read as a half-drawn ring. The
+   banners' hierarchy moved onto elevation instead, which is this direction's own
+   device: the message is a raised core, the error is recessed with a mono key.
+   That also solves the problem that Frame X3's mechanism (give the message "the
+   one accent") no longer exists after the saturation ruling.
+3. **`verify-scroll-reveal.js` would have failed on auth**, since it asserts every
+   rebuilt route has reveal targets and the auth card deliberately has none: a
+   reveal in front of a password field is a delay. App-host routes are now
+   skipped there with the reason stated, and the check refuses to pass if its
+   filter ever empties the list.
+
+**`.f-page` and `FPage` are different things and the name hides it.** `.f-page` is
+the TYPE RAMP's root: without it an F surface renders in `globals.css`'s
+Merriweather at ~8% under the drawn size, silently. `FPage` is the marketing page
+assembly. `/auth/*` needs the first only, so `app/auth/layout.tsx` supplies it
+once for all five and `verify-f-scaffold.js` keeps them out of scope with its
+header note updated to say why rather than leaving them looking forgotten.
+
+✅ **BOTH QUESTIONS RULED BY KEITH, 2026-09-08, and both are implemented.**
+
+**1. `/auth/signup`'s age field is now `required`, and the gate is server-side.**
+The 18+ fact was mandatory at two of its three collection points and optional at
+signup. ⚠ **The attribute was never the fix**: `required` is a client-side
+convenience that a curl, a disabled-JS browser or a devtools edit walks straight
+past, so an eligibility requirement enforced only in markup is not enforced.
+`signupAction` gained the same hard check `consentAction` already had.
+
+Rather than make that two copies of one rule, the gate moved into
+`lib/auth/eligibility.ts` as a pure `parseEligibleAge()` plus a shared
+`UNDER_AGE_ERROR`, and both actions call it. That follows the convention
+`lib/hosts.ts` and `lib/quiz/wtp.ts` already state: keep the rule pure so a test
+can drive it.
+
+🔴 **NOTHING IN `npm test` HAD EVER TOUCHED THIS RULE.** No test imported
+`lib/auth/actions.ts`, so the place the gate existed was unverified and the place
+it did not exist was undetected. `scripts/test-age-gate.ts` now runs in
+`npm test`: 24 assertions, including a source-level regression check that both
+entry points reach the shared gate rather than re-implementing it.
+
+**Mutation-tested, four mutations, three killed.** The survivor is recorded in
+the test's header as an EQUIVALENT MUTANT so nobody tries to fix it: `Number('')`
+is 0, not NaN, so blank input falls through to the under-age branch and is
+refused there anyway. Removing the blank guard changes no observable behaviour.
+
+**2. `/auth/consent` keeps its name.** It is confirmed to be an age gate plus a
+marketing opt-in, NOT the health-data consent, which is on `/checkout/details`.
+A rename buys nothing a reader can see and costs a redirect plus every server
+action, middleware prefix and email link pointing at it. The correction lives in
+the page header and here instead, which is what the stage inventory needed and
+did not have.
+
+**Green:** `npm test` (EXIT 0), `test:design:live` 67 passed and 0 failing
+dark-ground nodes across 16 routes, production build clean. No copy changed, so
+no compliance pre-flight is owed.
 
 ## ▶️ /test-selector is Direction F, and it is the first F route with a form on it, 2026-09-08
 

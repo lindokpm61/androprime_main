@@ -17,11 +17,14 @@ import { consentAction } from '@/lib/auth/actions'
  * verbatim: the heading, the standfirst, the three pitch lines and the opt-in
  * sentence are the strings that ship.
  *
- * ⚠ TWO THINGS HANDED TO KEITH, NEITHER ACTIONED HERE. Whether this route should
- * be RENAMED now that it is confirmed to be an age gate rather than the health
- * consent; and the fact that its `age` field is `required` while
- * `/auth/signup`'s identical field is not. Both are recorded in STATE.md. A
- * restyle does not get to rename a route or change who can sign up.
+ * ✅ BOTH OPEN QUESTIONS ARE RULED (Keith, 2026-09-08). **The route keeps its
+ * name**, misleading as it is: a rename buys nothing a reader can see and costs a
+ * redirect plus every server action, middleware prefix and email link that points
+ * here. The correction lives in this header and in STATE.md instead, so the next
+ * reader is not misled the way the stage inventory was. And **`/auth/signup`'s
+ * age field is now `required`**, with a server-side 18+ gate in `signupAction`
+ * mirroring `consentAction`'s, so the same eligibility fact is enforced at all
+ * three of its collection points rather than two.
  *
  * The marketing opt-in sentence is also word-for-word the one on `/auth/signup`.
  * Left duplicated rather than lifted into a shared constant, because the two are

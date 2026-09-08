@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/supabase/env'
 import { APP_URL } from '@/lib/hosts'
+import { parseEligibleAge, UNDER_AGE_ERROR } from '@/lib/auth/eligibility'
 
 // The origin every auth email points back to.
 //
@@ -92,6 +93,25 @@ export async function signupAction(formData: FormData) {
   const password = getString(formData, 'password')
   const ageRaw = getString(formData, 'age')
   const marketingConsent = formData.get('marketingConsent') === 'on'
+
+  // 🔴 HARD 18+ GATE, added 2026-09-08 (Keith). Andro Prime is 18+ only, and
+  // until this ruling the same eligibility fact was mandatory at two of its
+  // three collection points and optional at this one: `/auth/consent` rejected a
+  // missing or under-age value server-side, `/checkout/details` re-checked a date
+  // of birth on submit, and signup stored `age: null` and carried on. The auth
+  // frame (design/mockups/journey/auth-F.html, Frame X2) flagged the asymmetry
+  // and Keith ruled it closed.
+  //
+  // THE `required` ATTRIBUTE ON THE FIELD IS NOT THE GATE. It is a client-side
+  // convenience that a curl, a disabled-JS browser or a devtools edit walks
+  // straight past, so an eligibility requirement enforced only there is not
+  // enforced. This mirrors `consentAction` below deliberately, wording included,
+  // rather than inventing a second phrasing for the same refusal.
+  const age = parseEligibleAge(ageRaw)
+  if (age === null) {
+    redirect(`/auth/signup?error=${encodeURIComponent(UNDER_AGE_ERROR)}`)
+  }
+
   const origin = await getOrigin()
 
   const supabase = await createSupabaseServerClient()
@@ -101,7 +121,7 @@ export async function signupAction(formData: FormData) {
     options: {
       emailRedirectTo: `${origin}/auth/callback`,
       data: {
-        age: ageRaw ? Number(ageRaw) : null,
+        age,
         marketing_consent: marketingConsent,
       },
     },
@@ -115,7 +135,7 @@ export async function signupAction(formData: FormData) {
     await supabase.from('users').upsert({
       id: data.session.user.id,
       email,
-      age: ageRaw ? Number(ageRaw) : null,
+      age,
       marketing_consent: marketingConsent,
     })
   }
@@ -169,9 +189,9 @@ export async function consentAction(formData: FormData) {
   // NOT gate on health-data processing consent: that is captured at the point of
   // purchase (checkout), where it is freely given, and must never be a wall in
   // front of results a customer has already paid for (UK GDPR "freely given").
-  const age = ageRaw ? Number(ageRaw) : null
-  if (age === null || Number.isNaN(age) || age < 18) {
-    const params = new URLSearchParams({ error: 'You must be 18 or over to use Andro Prime.' })
+  const age = parseEligibleAge(ageRaw)
+  if (age === null) {
+    const params = new URLSearchParams({ error: UNDER_AGE_ERROR })
     if (next) params.set('next', next)
     redirect(`/auth/consent?${params.toString()}`)
   }
