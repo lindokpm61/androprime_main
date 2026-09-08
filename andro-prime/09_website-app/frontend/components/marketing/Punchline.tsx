@@ -4,13 +4,18 @@ interface PunchlineProps {
   children: ReactNode
 }
 
-// Big, uppercase, left-bordered statement — the emphatic one-liner that lands a
-// section (e.g. "The test is the only honest answer."). Author inline, no blank
-// lines, so MDX passes raw text rather than wrapping it in a <p>.
+/**
+ * RUNG 4: the `--sunk` ground a third time, and the ACCENT rule is what lifts
+ * it. This is the first piece a reader's eye is PULLED to rather than led to.
+ *
+ * The emphatic one-liner that lands a section. Author it inline with no blank
+ * lines so MDX passes raw text rather than wrapping it in a <p>.
+ *
+ * ⚠ Note it is no longer uppercase. The V2.0 version set it in uppercase black
+ * sans; under the Direction F typography ruling the display face carries the
+ * emphasis, and uppercasing a display serif at this size reads as shouting
+ * rather than as landing.
+ */
 export default function Punchline({ children }: PunchlineProps) {
-  return (
-    <div className="my-12 px-6 py-4 border-l-8 border-black bg-gray-100 font-sans font-black uppercase tracking-tighter text-2xl md:text-3xl leading-tight text-black">
-      {children}
-    </div>
-  )
+  return <div className="fb-mx fb-punch">{children}</div>
 }

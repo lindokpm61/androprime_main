@@ -1,0 +1,901 @@
+/* ============================================================
+ DIRECTION F — THE BLOG
+ Source: design/mockups/journey/blog-F.html (frames AL to AQ, drawn 2026-08-29)
+ Tokens: styles/tokens/{colours,radius,shadows,typography}.css
+ Companion to: styles/components/f-primitives.css
+
+ ▶ READ THIS BEFORE CHANGING ANYTHING HERE.
+
+ A first attempt at an F blog LOST on 2026-08-27. Keith, verbatim: "I think
+ the old or the live blog style wins. There's a lot of detail missing from
+ the F blog you created, which at the moment I don't know if you can
+ capture."
+
+ That was a conditional verdict and it named its own condition: DETAIL. The
+ detail it meant is specific and countable. The live blog is not prose with a
+ skin on it, it is a TWELVE-PIECE EDITORIAL COMPONENT SYSTEM, and the first
+ draft collapsed all twelve into about two levels of emphasis. Read the live
+ blog's left-rule weights in order and the intent is obvious:
+
+     4px grey  ->  4px black  ->  6px black  ->  8px black
+
+ That is a deliberate four-step volume ladder, built by a writer who needed
+ four different loudnesses of aside inside one article. Flattening it is what
+ lost the first round. It was never a cream-versus-white argument.
+
+ ▶ SO THIS FILE'S ONE JOB: GIVE F A LADDER DEEP ENOUGH TO HOLD TWELVE PIECES.
+
+ F's grammar elsewhere on the site is trays plus hairlines plus one accent,
+ which is roughly two levels. Twelve pieces do not fit in two. F does have the
+ range, but it has to be spent on GROUND rather than on border weight, because
+ border weight is what the brutalist system already owned and doing it again
+ in a quieter key would just be a worse version of the thing that won.
+
+ EIGHT GROUNDS, quietest to loudest. This ordering is the whole design and it
+ is the thing to judge this file on:
+
+     GROUND                     RULE     PIECE
+     1  no fill ................ 2px hair  Caveat
+     2  --sunk ................. 3px ink   Note
+     3  --sunk ................. 5px ink   PullQuote
+     4  --sunk ................. 8px ink   Punchline
+     5  --sunk + foot .......... 5px ink   PublishedEvidence
+     6  --core + 1px hairline ...  ring    StatBox
+     7  --core + 1.5px ink ......  ring    SystemAlert
+     8  tray + ambient, --core inner ..... ClinicalInsight
+     8b tray + ambient, --sunk  inner ..... InlineKitCTA
+     9  INVERTED, --ink ground ........... EvidenceBox
+        mono chip on --ink ............... SysHeading
+        muted numeral / inverted ......... NumberedHeading
+
+ Rungs 1 to 4 share one axis (weight) and rungs 6 to 9 share another (ground),
+ which is what lets twelve pieces sit in a system with no colour to spend.
+
+ If you add a thirteenth piece, place it ON this ladder rather than inventing
+ a ninth ground. Two pieces at the same volume is fine and is why 8 and 8b
+ share a rung; a piece with no rung is how the ladder collapses again.
+
+ ▶ PROSE SITS ON THE GROUND, NOT IN A TRAY. This judgement survives from the
+ first draft and it was the one thing that draft got right: 2000 words inside
+ a widget reads as a widget and costs measure on a phone. Trays are reserved
+ for the things that INTERRUPT prose.
+
+ ▶ WHAT THIS FILE REPLACES. styles/base/blog-skin.css, an 80-line documented
+ licence to break two brand non-negotiables (the global box-shadow ban and the
+ white-only marketing ground) inside a `.blog-skin` namespace. That exception
+ is no longer needed: the 2026-08-29 token release permits radius and the
+ ambient shadow site-wide, so the blog stops being a special case and starts
+ being the same system as every other route. The cream #f4f4f0 ground goes
+ with it.
+
+ ▶ NAMESPACE. Everything is `fb-` (f-blog). It cannot collide with `f-`
+ primitives, with the V2.0 classes, or with the app's `ap-` set.
+
+ ▶ 🔴 THERE IS NO CHROMATIC ACCENT, AND THE LADDER IS BUILT ON WEIGHT BECAUSE
+ OF IT. `--flag` was ruled to INK on 2026-09-03: "saturated colour means a
+ clinical verdict and nothing else" (styles/tokens/colours.css). Amber said
+ "this number needs watching" on `/` and "buy the GBP 179 kit" on `/kits`, one
+ click apart, and no amount of separating hex values fixes a perceptual
+ collision.
+
+ That ruling is load-bearing HERE and the first draft of this file ignored it.
+ Rungs 3 and 4 were drawn as `--sunk` + an ink rule and `--sunk` + an accent
+ rule, which with `--flag` resolving to ink made them BYTE-IDENTICAL. Measured
+ in the browser, not read in the source: both computed to a 5px rgb(10,11,13)
+ border on rgb(231,233,236). That is the exact flattening that lost the first F
+ blog, reintroduced by a token change made three days after the mockup was drawn.
+
+ So the rules carry a WEIGHT ladder, which is what the live blog did and what
+ Keith's verdict was defending:
+
+     2px hairline -> 3px ink -> 5px ink -> 8px ink
+
+ Same four steps as the brutalist original (4px grey, 4px black, 6px, 8px),
+ re-expressed at F's weights. Weight is the only axis left once colour is
+ spent, so do not spend it carelessly: if you add a piece, give it a weight
+ that is not already taken, or give it a different GROUND.
+ ============================================================ */
+
+/* NOT wrapped in `@layer components`, for the same reason f-primitives is not:
+   this file is @imported from globals.css above the `@tailwind` directives, so
+   there is no matching layer directive to attach to and postcss errors out.
+   Landing outside the layer is also correct precedence: Tailwind utilities are
+   emitted afterwards and so win, which is what a component layer wants. */
+
+/* ---------- MEASURE ----------
+   720px, from the mockup. The live blog used max-w-3xl (768px) at 18px serif;
+   this runs 17.5px sans, so the slightly narrower measure lands in the same
+   character count. `.fb-wrap` is the full-width container for the index. */
+.fb-read { @apply mx-auto w-full px-5; max-width: 720px; }
+.fb-wrap { @apply mx-auto w-full px-5; max-width: 1180px; }
+
+/* ---------- ARTICLE: META BAR ---------- */
+.fb-metabar {
+  @apply flex flex-wrap items-center justify-between gap-3.5;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hair);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-crumb { @apply flex flex-wrap items-center gap-2.5; }
+.fb-crumb a { color: var(--ink-3); text-decoration: none; }
+.fb-crumb a:hover { color: var(--ink); }
+.fb-crumb .fb-now { color: var(--ink); }
+.fb-mchips { @apply flex flex-wrap gap-2; }
+.fb-mchip {
+  border-radius: 999px;
+  padding: 5px 11px;
+  background: var(--ink-ground);
+  color: var(--on-ink);
+}
+/* `.q` is the quiet variant: outline instead of fill. Written at (0,2,0) so it
+   beats `.fb-mchip` on specificity rather than on source order, which is the
+   failure that shipped `.f-btn-ghost` transparent and `.f-tray-flag`'s ring
+   invisible in f-primitives. Three instances there was enough to stop writing
+   modifiers that depend on where they sit. */
+.fb-mchip.fb-mchip-q {
+  background: transparent;
+  color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+}
+
+/* ---------- ARTICLE: HEADLINE ---------- */
+.fb-arthead { padding: 44px 0 28px; }
+.fb-arthead h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5.2vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+/* The standfirst. On the live blog this was a serif excerpt behind an 8px black
+   rule; here it keeps the gesture (a rule that breaks the left margin) at F's
+   weight, and takes the ACCENT because this is the one place on an article
+   where the accent marks "this is the argument". */
+.fb-stand {
+  font-family: var(--font-sans);
+  font-size: clamp(1.05rem, 2.1vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--ink-2);
+  padding-left: 18px;
+  border-left: 3px solid var(--ink);
+}
+
+/* ---------- ARTICLE: BYLINES ----------
+   On the live blog the author card OVERLAPS the headline block and carries the
+   brutal shadow. Here it is a hairline-gapped grid that breaks the measure: the
+   same gesture (this block is furniture, not prose) in F's materials.
+   The 1px gap IS the divider, drawn by the parent's background showing through. */
+.fb-bylines {
+  @apply grid gap-px;
+  grid-template-columns: 1fr;
+  background: var(--hair);
+  border-radius: var(--radius-inset);
+  overflow: hidden;
+}
+@media (min-width: 720px) { .fb-bylines { grid-template-columns: 1fr 1fr; } }
+.fb-byline {
+  @apply flex items-start gap-3.5;
+  background: var(--core);
+  padding: 20px;
+}
+.fb-byline-av {
+  @apply grid place-items-center shrink-0;
+  width: 44px; height: 44px;
+  border-radius: 13px;
+  background: var(--ink-ground);
+  color: var(--on-ink);
+  font-weight: 800; font-size: 15px; letter-spacing: -0.02em;
+}
+.fb-byline-r {
+  @apply block;
+  margin-bottom: 5px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-byline-n { @apply block; font-size: 15px; letter-spacing: -0.02em; font-weight: 600; color: var(--ink); }
+a.fb-byline-n:hover { text-decoration: underline; text-underline-offset: 3px; }
+.fb-byline-role { @apply block; font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+.fb-byline-dates {
+  @apply flex flex-wrap justify-between gap-2;
+  margin-top: auto; padding-top: 14px;
+  border-top: 1px solid var(--hair);
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-byline-dates b { color: var(--ink); font-weight: 600; }
+/* The right-hand cell holds reviewer AND dates, so it needs to be a column with
+   the dates pinned to the bottom; the left cell is a plain row. */
+.fb-byline-col { @apply flex flex-col; }
+
+/* ---------- ARTICLE: THE PHOTOGRAPH ----------
+   🔴 NOT DRAWN IN THE MOCKUP. blog-F.html covers the article, the twelve
+   pieces, the tail, the index and the author page, and it draws NO photograph,
+   while 10 of 18 published articles carry one. So this treatment is derived
+   rather than ported, and it is derived from `.f-shot` in f-primitives rather
+   than invented: same grayscale, same radius, same caption furniture as every
+   photograph on `/`, `/kits` and `/how-it-works`. A blog photo that looked
+   unlike a marketing photo would reintroduce exactly the seam this rebuild
+   exists to close.
+
+   It is full-measure and breaks nothing: the figure sits between the bylines
+   and the prose, which is where the live blog put it too. */
+.fb-figure { margin: 30px 0 4px; }
+.fb-shot {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-inset);
+  background: var(--sunk);
+  box-shadow: inset 0 0 0 1px var(--hair);
+  aspect-ratio: 16 / 9;
+}
+.fb-shot img {
+  @apply block w-full h-full;
+  object-fit: cover;
+  object-position: var(--focal, 50% 50%);
+  /* The brand mitigation, carried from ArticlePhoto's original: stock
+     photography is in the brand DON'T column, so it must read as editorial
+     rather than as generic stock. Same values as `.f-shot` so the two agree. */
+  filter: grayscale(1) contrast(1.04);
+  transition: transform 0.6s var(--ease), filter 0.6s var(--ease);
+}
+.fb-figure:hover .fb-shot img { transform: scale(1.035); filter: grayscale(0.72) contrast(1.02); }
+@media (prefers-reduced-motion: reduce) {
+  .fb-shot img { transition: none; }
+  .fb-figure:hover .fb-shot img { transform: none; }
+}
+/* The Unsplash attribution line. It is NOT decoration and may not be removed:
+   visible attribution plus UTM-tagged links are Unsplash API ToS. */
+.fb-credit {
+  @apply flex flex-wrap justify-end gap-1;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-credit a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+.fb-credit a:hover { color: var(--ink); }
+
+/* ---------- ARTICLE: PROSE ----------
+   Replaces `.article-prose` in globals.css, which was serif body on cream with
+   uppercase black headings. The switch to sans body is the F typography ruling
+   (Keith 2026-08-30: serif display over humanist sans), and it is the same
+   pairing every other F route runs, so an article now reads as the same
+   publication as the page that linked to it. */
+.fb-prose { padding-top: 30px; }
+.fb-prose > p {
+  font-size: 17.5px;
+  line-height: 1.72;
+  color: var(--ink-2);
+  margin-bottom: 22px;
+}
+/* The lead paragraph runs larger, carried from the live blog's own treatment.
+   `:first-child` NOT `:first-of-type`: an article whose body opens with a
+   component rather than a paragraph should not promote its first later
+   paragraph into a lead. */
+.fb-prose > p:first-child {
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 30px;
+}
+.fb-prose > p strong, .fb-prose > p b { color: var(--ink); font-weight: 600; }
+.fb-prose > h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1.12;
+  color: var(--ink);
+  margin: 38px 0 16px;
+}
+.fb-prose > h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  font-weight: 700; letter-spacing: -0.035em; line-height: 1.18;
+  color: var(--ink);
+  margin: 30px 0 12px;
+}
+.fb-prose > h4 {
+  font-family: var(--font-sans);
+  font-size: 17px; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 24px 0 8px;
+}
+.fb-prose > h2:first-child, .fb-prose > h3:first-child, .fb-prose > h4:first-child { margin-top: 0; }
+.fb-prose > ul, .fb-prose > ol {
+  font-size: 17.5px; line-height: 1.72; color: var(--ink-2);
+  margin: 0 0 22px; padding-left: 22px;
+}
+.fb-prose > ul { list-style: disc; }
+.fb-prose > ol { list-style: decimal; }
+.fb-prose > ul > li, .fb-prose > ol > li { margin-bottom: 8px; padding-left: 4px; }
+.fb-prose > ul > li::marker, .fb-prose > ol > li::marker { color: var(--ink-3); }
+.fb-prose a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--hair-2);
+}
+.fb-prose a:hover { text-decoration-color: var(--ink); }
+/* A bare URL pasted into prose is a single unbreakable token and will push the
+   page wide on a phone. `break-word` only breaks a word that cannot otherwise
+   fit, so ordinary link text is unaffected. */
+.fb-prose a { overflow-wrap: break-word; }
+
+/* 🔴 BUTTONS INSIDE PROSE. `.fb-prose a` is (0,2,0) and `.f-btn` is (0,1,0), so
+   the prose rule WINS and painted every in-article button's label `--ink` on an
+   `--ink` fill. InlineKitCTA's button rendered as a solid black pill with an
+   invisible label and a visible pip, on 17 of 18 articles. Nothing errored; it
+   simply looked like a decorative shape.
+
+   This is the same class of failure f-primitives records three times over
+   (`.f-btn-ghost` shipping transparent, `.f-blab` 30% oversized, `.f-tray-flag`'s
+   ring never rendering): a rule that ties or loses on specificity and is decided
+   by something other than intent. Written at (0,3,0) so it cannot be re-decided
+   by source order if either file is reordered. */
+.fb-prose a.f-btn { color: var(--paper); text-decoration: none; overflow-wrap: normal; }
+.fb-prose a.f-btn.f-btn-ghost { color: var(--ink); }
+.fb-prose > blockquote {
+  margin: 26px 0; padding-left: 18px;
+  border-left: 3px solid var(--hair-2);
+  font-size: 17.5px; line-height: 1.6; color: var(--ink-2); font-style: italic;
+}
+.fb-prose > hr { margin: 34px 0; border: 0; border-top: 1px solid var(--hair); }
+/* Anchor-wrapped headings (rehype-autolink-headings, behavior: 'wrap'). The
+   whole heading becomes a link, so it must not inherit the prose link
+   underline or every H2 would be underlined. */
+.fb-prose .heading-anchor { color: inherit; text-decoration: none; }
+.fb-prose .heading-anchor:hover { text-decoration-color: transparent; }
+
+/* GFM tables. `overflow-x` lives on a wrapper the component supplies, because a
+   table that scrolls itself still forces the page wide on a phone; the site
+   rule is that wide content scrolls inside its own container. */
+.fb-tablewrap { overflow-x: auto; margin: 26px 0; -webkit-overflow-scrolling: touch; }
+.fb-prose table {
+  width: 100%; border-collapse: collapse;
+  font-size: 15px; color: var(--ink-2);
+  border-radius: var(--radius-inset); overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.fb-prose table th, .fb-prose table td {
+  text-align: left; padding: 11px 14px; vertical-align: top;
+  border-bottom: 1px solid var(--hair);
+}
+.fb-prose table th {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--ink-3); font-weight: 600;
+  background: var(--sunk);
+}
+.fb-prose table td b, .fb-prose table td strong { color: var(--ink); font-weight: 600; }
+.fb-prose table tr:last-child td { border-bottom: 0; }
+
+/* ============================================================
+   THE EMPHASIS LADDER. Twelve pieces, eight grounds, quietest first.
+   Adding a piece? Put it on a rung. Do not invent a ninth ground.
+   ============================================================ */
+.fb-mx { margin: 26px 0; }
+
+/* RUNG 1 — Caveat. The quietest aside: no fill at all, hairline rule. */
+.fb-caveat {
+  padding-left: 16px;
+  border-left: 2px solid var(--hair-2);
+  font-style: italic;
+  font-size: 16.5px; line-height: 1.65;
+  color: var(--ink-3);
+}
+.fb-caveat p { margin: 0; }
+.fb-caveat p + p { margin-top: 12px; }
+
+/* RUNG 2 — Note. First rung with a ground. */
+.fb-note {
+  background: var(--sunk);
+  border-radius: 0 14px 14px 0;
+  border-left: 3px solid var(--ink);
+  padding: 18px 20px;
+  font-size: 16.5px; line-height: 1.65;
+  color: var(--ink-2);
+}
+.fb-note p { margin: 0; }
+.fb-note p + p { margin-top: 12px; }
+.fb-note strong { color: var(--ink); font-weight: 600; }
+
+/* RUNG 3 — PullQuote. Same ground, heavier rule, larger italic. */
+.fb-quote {
+  background: var(--sunk);
+  border-radius: 0 14px 14px 0;
+  border-left: 5px solid var(--ink);
+  padding: 20px 22px;
+  font-size: 20px; line-height: 1.42;
+  font-style: italic; font-weight: 600;
+  color: var(--ink);
+}
+
+/* RUNG 4 — Punchline. Same ground a third time; the RULE WEIGHT is what lifts
+   it, at the top of the 2/3/5/8 ladder. It was drawn with an accent rule and
+   that collapsed into rung 3 the moment `--flag` became ink; 8px is the fix and
+   it is also what the live blog used for this exact piece. */
+.fb-punch {
+  background: var(--sunk);
+  border-radius: 0 14px 14px 0;
+  border-left: 8px solid var(--ink);
+  padding: 20px 22px;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  line-height: 1.16; font-weight: 700; letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+/* RUNG 5 — PublishedEvidence. Shares rung 3's ground and weight and is
+   separated from it by having a FOOT at all: a sourced takeaway is a quote with
+   its provenance attached, so the divider is the distinguishing feature rather
+   than the loudness. */
+.fb-pub {
+  background: var(--sunk);
+  border-radius: 0 14px 14px 0;
+  border-left: 5px solid var(--ink);
+  padding: 20px 22px;
+}
+.fb-pub p { font-size: 16.5px; line-height: 1.62; color: var(--ink-2); margin: 0; }
+.fb-pub p + p { margin-top: 12px; }
+.fb-pub strong { color: var(--ink); font-weight: 600; }
+.fb-pub-src {
+  margin-top: 14px; padding-top: 12px;
+  border-top: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.06em; line-height: 1.55;
+  color: var(--ink-3);
+}
+
+/* RUNG 6 — StatBox. Leaves the sunk ladder and rises to --core: this is the
+   first piece that reads as an OBJECT sitting on the page rather than an
+   indentation of it. */
+.fb-stat {
+  background: var(--core);
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+  padding: 22px;
+}
+.fb-stat-k {
+  @apply block;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-stat-big {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800; letter-spacing: -0.05em; line-height: 1;
+  color: var(--ink);
+}
+.fb-stat p { font-size: 15.5px; line-height: 1.6; color: var(--ink-2); margin: 10px 0 0; }
+.fb-stat strong { color: var(--ink); font-weight: 600; }
+
+/* RUNG 7 — SystemAlert. Same --core object, INK ring at 1.5px against rung 6's
+   1px hairline. Deliberately NOT red:
+   red is the results dashboard's critical / GP-block status and a red box next
+   to health copy would collide with it (the 2026-08-29 accent ruling). This is
+   neutral guidance, not an alarm, which is also why the live blog drew it in
+   black rather than red. */
+.fb-alert {
+  background: var(--core);
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+  overflow: hidden;
+}
+.fb-alert-bd { padding: 22px 22px 20px; }
+.fb-alert-k {
+  @apply block;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-alert h2, .fb-alert h3, .fb-alert-h {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 9px;
+}
+.fb-alert p { font-size: 15.5px; line-height: 1.6; color: var(--ink-2); margin: 0; }
+.fb-alert p + p { margin-top: 11px; }
+.fb-alert h4 {
+  font-family: var(--font-sans);
+  font-size: 15px; font-weight: 700; color: var(--ink);
+  margin: 16px 0 6px; letter-spacing: -0.01em;
+}
+.fb-alert ul { list-style: disc; padding-left: 20px; margin: 11px 0 0; font-size: 15.5px; line-height: 1.6; color: var(--ink-2); }
+.fb-alert li { margin-bottom: 6px; }
+.fb-alert li::marker { color: var(--ink-3); }
+.fb-alert a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+/* The action bar. Full-bleed inside the ring: the one piece of the brutalist
+   original that survives literally, because a pinned bar at the foot of a
+   safety block does a job no softer treatment does.
+
+   🔴 THIS IS THE ELEMENT KEITH REPORTED, AND THE CAUSE WAS SPECIFICITY, NOT
+   COLOUR CHOICE. `.fb-alert p` is (0,1,1) and `.fb-alert-act` was (0,1,0), and
+   the bar is a <p>, so the light-card body rule WON and painted the safety line
+   `--ink-2` on an ink ground: measured 2.39:1 against a 4.5 requirement. On a
+   block whose text is "sudden or severe chest pain? call 999", that is the
+   worst possible place in the product for unreadable type.
+
+   Two fixes, both needed. `.f-on-ink` on the element supplies the ground and
+   the ramp; and this selector is now (0,2,0) so it cannot lose to `.fb-alert p`
+   again. Ground comes from the class, so no `background` here. */
+.fb-alert .fb-alert-act {
+  color: var(--on-ink);
+  padding: 13px; text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+}
+
+/* RUNG 8 — ClinicalInsight. The full tray, the only piece that leaves the page
+   plane and takes the ambient shadow. It is the reviewer's voice, so it is the
+   loudest NON-inverted rung. */
+.fb-clin {
+  background: var(--tray);
+  border-radius: var(--radius-container);
+  padding: 6px;
+  box-shadow: var(--shadow-ambient);
+}
+.fb-clin-in {
+  background: var(--core);
+  border-radius: var(--radius-inset);
+  padding: 24px 22px;
+}
+.fb-clin-k {
+  @apply block;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-clin-q {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  line-height: 1.32; font-style: italic; font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.fb-clin-foot {
+  @apply flex flex-wrap items-baseline gap-x-3 gap-y-1;
+  padding-top: 14px;
+  border-top: 1px solid var(--hair);
+}
+.fb-clin-foot b { font-size: 15px; letter-spacing: -0.02em; color: var(--ink); font-weight: 600; }
+.fb-clin-foot span { font-size: 13px; color: var(--ink-2); }
+
+/* RUNG 8b — InlineKitCTA. Shares the tray rung with ClinicalInsight and is
+   separated from it by its inner GROUND rather than by height, because the two
+   should read as equally loud and differently surfaced: one is the reviewer
+   talking, the other is us selling, and the sell must not be the taller of the
+   two on a page whose argument is that we have no conflict of interest.
+   ⚠ Drawn first with `--flag-f`, which was an amber wash when the mockup was
+   made and is now ink at 0.035 alpha, compositing to rgb(246,246,246). That is
+   LIGHTER than `--core` white's neighbours and lighter than `--sunk`, so the
+   wash was invisible against the tray. `--sunk` is the honest replacement. */
+.fb-cta { background: var(--tray); border-radius: var(--radius-container); padding: 6px; box-shadow: var(--shadow-ambient); }
+.fb-cta-in {
+  background: var(--sunk);
+  border-radius: var(--radius-inset);
+  padding: 24px 22px;
+  @apply flex flex-wrap items-center justify-between gap-4;
+}
+.fb-cta-body { flex: 1 1 300px; }
+.fb-cta-body p { font-size: 15.5px; line-height: 1.6; color: var(--ink-2); margin: 0; max-width: 46ch; }
+.fb-cta-body p + p { margin-top: 10px; }
+.fb-cta-body strong { color: var(--ink); font-weight: 600; }
+.fb-cta-body a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+/* RUNG 9 — EvidenceBox. Inverted. The loudest thing an article can do, and the
+   reason there is nothing above it: a second inverted block on one page costs
+   the first its weight, which is the same rule `.f-invert` carries on the
+   marketing routes. */
+/* Ground and text ramp both come from `.f-on-ink`, which the component adds.
+   The three `opacity` values that used to dim this panel's label, body and
+   source line are GONE: opacity over a dark ground composites toward the
+   background, so it darkened them instead of quieting them. The ramp does the
+   same job at measured contrast. */
+.fb-ev {
+  border-radius: 18px;
+  padding: 24px 22px;
+}
+.fb-ev-k {
+  @apply block;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-ev p { font-size: 16px; line-height: 1.62; margin: 0; color: var(--ink-2); }
+.fb-ev p + p { margin-top: 12px; }
+.fb-ev strong { font-weight: 600; color: var(--ink); }
+.fb-ev a { text-decoration: underline; text-underline-offset: 3px; }
+.fb-ev-src {
+  margin-top: 16px; padding-top: 13px;
+  border-top: 1px solid var(--hair-2);
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.05em; line-height: 1.55;
+  color: var(--ink-3);
+}
+
+/* SysHeading — a mono chip on ink, used as an opt-in section opener. Not a rung:
+   it is a heading, so it competes with H2s rather than with asides. */
+.fb-sys { margin: 38px 0 16px; }
+.fb-sys-chip {
+  @apply inline-block;
+  background: var(--ink-ground);
+  color: var(--on-ink);
+  border-radius: 9px;
+  padding: 7px 13px;
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+}
+.fb-sys h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1.12;
+  color: var(--ink);
+  margin-top: 12px;
+}
+
+/* NumberedHeading — accent numeral, plus an inverted `feature` variant. */
+.fb-num { @apply flex items-baseline gap-3.5; margin: 36px 0 14px; }
+.fb-num-n {
+  @apply shrink-0;
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+  /* `--ink-3`, not `--flag`. The numeral is furniture marking sequence, and at
+     full ink it competed with the heading it labels. */
+  color: var(--ink-3);
+}
+.fb-num h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1.16;
+  color: var(--ink);
+}
+/* (0,2,0), deliberately. `.fb-num-feat` alone would tie with `.fb-num` and be
+   decided by source order. See the note on `.fb-mchip-q`. */
+.fb-num.fb-num-feat {
+  @apply items-center;
+  border-radius: 18px;
+  padding: 20px 22px;
+}
+.fb-num.fb-num-feat h3 { color: var(--ink); }
+/* Ramp, not opacity: see the note on `.f-on-ink`. */
+.fb-num.fb-num-feat .fb-num-n { color: var(--ink-3); }
+
+/* References. Not on the ladder: it is the article's apparatus, and it sits at
+   the foot where nobody is reading for emphasis. Mono, sunk, auto-numbered. */
+.fb-refs {
+  background: var(--sunk);
+  border-radius: 18px;
+  padding: 22px;
+  margin: 40px 0 0;
+}
+.fb-refs-h {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+  padding-bottom: 12px; margin-bottom: 14px;
+  border-bottom: 1px solid var(--hair-2);
+}
+/* Auto-numbered [01], [02]... via a CSS counter, carried from blog-skin.css, so
+   authors keep writing a plain markdown list and the numbering cannot drift. */
+.fb-refs ul, .fb-refs ol { list-style: none; counter-reset: fbref; margin: 0; padding: 0; }
+/* 🔴 NOT `display: flex`, AND THE REASON IS THE MARKDOWN. A reference entry is
+   authored as a plain markdown list item, so it can contain any number of
+   children: a text node, an <a>, an <em>, another text node. Under flex, EVERY
+   ONE OF THOSE BECOMES A FLEX ITEM AND IS LAID OUT AS A COLUMN, which turned a
+   four-source list into a ragged grid with the citation in one column and its
+   URL in another. Found by rendering, not by reading: the CSS is valid and the
+   V2.0 original used flex too, but it only ever held a counter plus one text
+   run.
+
+   Relative + padding-left + an absolutely positioned marker is immune to the
+   child count, which is the property that actually matters for author-supplied
+   content. */
+.fb-refs li {
+  position: relative;
+  counter-increment: fbref;
+  margin: 0 0 12px;
+  padding-left: 38px;
+  font-family: var(--font-mono);
+  font-size: 12px; line-height: 1.65;
+  color: var(--ink-2);
+}
+.fb-refs li:last-child { margin-bottom: 0; }
+.fb-refs li::before {
+  content: "[" counter(fbref, decimal-leading-zero) "]";
+  position: absolute; left: 0; top: 0;
+  color: var(--ink-3);
+  font-weight: 600;
+}
+/* ⚠ `break-all`, NOT `break-word`, and this is the value the V2.0 skin already
+   used. Reference entries are bare URLs with no spaces, and `break-word` only
+   breaks BETWEEN words, so a 60-character URL still overflowed: measured at 390
+   the page ran 451px wide against a 390px viewport. `break-all` is acceptable
+   here precisely because the content is URLs in mono, where a mid-token break
+   is normal and readable. Do not "tidy" this back to break-word. */
+.fb-refs a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; word-break: break-all; }
+.fb-refs a:hover { color: var(--ink); }
+.fb-refs em { font-style: italic; }
+
+/* ---------- TAIL: TOC ---------- */
+.fb-toc {
+  background: var(--core);
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px var(--hair);
+  padding: 20px 22px;
+  margin-bottom: 30px;
+}
+.fb-toc-h {
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-toc ol { list-style: none; counter-reset: fbtoc; @apply grid gap-2.5; margin-top: 12px; }
+.fb-toc li { counter-increment: fbtoc; @apply flex gap-3; font-size: 15px; color: var(--ink-2); }
+.fb-toc li::before {
+  content: counter(fbtoc, decimal-leading-zero);
+  @apply shrink-0;
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--ink-3); padding-top: 3px;
+}
+.fb-toc a { color: inherit; text-decoration: none; }
+.fb-toc a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- TAIL: FAQ ----------
+   Hairline-gapped stack, same construction as `.fb-bylines`: the 1px gap is the
+   divider. `details`/`summary` so it works with JS off. */
+.fb-faq { @apply grid gap-px; background: var(--hair); border-radius: 18px; overflow: hidden; margin-top: 14px; }
+.fb-faq details { background: var(--core); }
+.fb-faq summary {
+  @apply flex items-center justify-between gap-3.5 cursor-pointer;
+  padding: 17px 20px;
+  list-style: none;
+  font-size: 15.5px; font-weight: 600; letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.fb-faq summary::-webkit-details-marker { display: none; }
+.fb-faq summary::after {
+  content: "+";
+  @apply shrink-0;
+  color: var(--ink-3); font-size: 18px; font-weight: 400; line-height: 1;
+  transition: transform 0.25s var(--ease);
+}
+.fb-faq details[open] summary::after { transform: rotate(45deg); }
+.fb-faq-a { padding: 0 20px 18px; font-size: 15.5px; line-height: 1.65; color: var(--ink-2); }
+.fb-faq-a p { margin: 0; }
+.fb-faq-a p + p { margin-top: 11px; }
+@media (prefers-reduced-motion: reduce) { .fb-faq summary::after { transition: none; } }
+
+/* ---------- TAIL: NEWSLETTER ---------- */
+.fb-news {
+  border-radius: var(--radius-inset);
+  padding: 26px 24px;
+}
+.fb-news-k {
+  @apply block;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+.fb-news h2, .fb-news-h {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1.16;
+  margin-bottom: 8px;
+}
+.fb-news p { font-size: 15px; line-height: 1.6; color: var(--ink-2); margin-bottom: 16px; max-width: 52ch; }
+
+/* ---------- INDEX ---------- */
+.fb-grid { @apply grid gap-3.5; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .fb-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1080px) { .fb-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.fb-pcard {
+  @apply flex flex-col gap-3;
+  background: var(--core);
+  border-radius: var(--radius-inset);
+  box-shadow: inset 0 0 0 1px var(--hair);
+  padding: 0 0 20px;
+  overflow: hidden;
+  transition: box-shadow 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.fb-pcard:hover { box-shadow: inset 0 0 0 1px var(--hair-2), var(--shadow-ambient); transform: translate3d(0, -2px, 0); }
+@media (prefers-reduced-motion: reduce) {
+  .fb-pcard { transition: none; }
+  .fb-pcard:hover { transform: none; }
+}
+/* The card photograph. 10 of 18 articles carry a real Unsplash photo; the rest
+   fall back to the generated OG card, which is already branded and must NOT be
+   grayscaled (it is artwork, not photography). `.fb-pshot-og` is that opt-out
+   and is written at (0,2,0) for the usual reason. */
+.fb-pshot { position: relative; overflow: hidden; background: var(--sunk); aspect-ratio: 16 / 9; }
+.fb-pshot img { @apply block w-full h-full; object-fit: cover; filter: grayscale(1) contrast(1.04); transition: transform 0.6s var(--ease), filter 0.6s var(--ease); }
+.fb-pcard:hover .fb-pshot img { transform: scale(1.04); filter: grayscale(0.7) contrast(1.02); }
+.fb-pshot.fb-pshot-og img { filter: none; }
+.fb-pcard:hover .fb-pshot.fb-pshot-og img { filter: none; }
+@media (prefers-reduced-motion: reduce) {
+  .fb-pshot img { transition: none; }
+  .fb-pcard:hover .fb-pshot img { transform: none; }
+}
+.fb-pbody { @apply flex flex-col gap-2.5; padding: 18px 20px 0; flex: 1; }
+.fb-pk { @apply flex flex-wrap items-center gap-2; }
+.fb-pcard h3 {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.18;
+  color: var(--ink);
+}
+.fb-pcard p { font-size: 14.5px; line-height: 1.58; color: var(--ink-2); }
+.fb-pfoot {
+  @apply flex flex-wrap justify-between gap-2;
+  margin-top: auto; padding: 12px 20px 0;
+  border-top: 1px solid var(--hair);
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-3);
+}
+/* The lead card spans the grid and takes an accent ring, which is the same
+   device `/kits` uses to mark the recommended kit. One per page. */
+.fb-pcard.fb-pcard-lead { grid-column: 1 / -1; box-shadow: inset 0 0 0 1.5px var(--ink); }
+@media (min-width: 760px) {
+  .fb-pcard.fb-pcard-lead { @apply flex-row; }
+  .fb-pcard.fb-pcard-lead .fb-pshot { width: 46%; aspect-ratio: auto; flex: none; }
+  .fb-pcard.fb-pcard-lead .fb-pbody { padding: 26px 26px 0; justify-content: center; }
+  .fb-pcard.fb-pcard-lead .fb-pfoot { padding: 12px 26px 0; }
+  .fb-pcard.fb-pcard-lead > div:last-child { @apply flex flex-col; flex: 1; padding-bottom: 22px; }
+}
+.fb-pcard.fb-pcard-lead h3 { font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing: -0.045em; }
+.fb-pcard.fb-pcard-lead p { font-size: 16px; line-height: 1.62; }
+
+/* Category filter pills. */
+.fb-filters { @apply flex flex-wrap gap-2; margin-bottom: 18px; }
+.fb-filter {
+  border-radius: 999px;
+  padding: 7px 14px;
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--ink-2);
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease);
+}
+.fb-filter:hover { color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink-3); }
+/* (0,2,0) so the selected state cannot lose to the base class on source order. */
+.fb-filter.fb-filter-on { background: var(--ink-ground); color: var(--on-ink); box-shadow: none; }
+@media (prefers-reduced-motion: reduce) { .fb-filter { transition: none; } }
+
+/* Pagination. */
+.fb-pager { @apply flex flex-wrap items-center justify-center gap-2; margin-top: 30px; }
+.fb-pager button {
+  border-radius: 999px; padding: 8px 14px; min-width: 40px;
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.1em;
+  color: var(--ink-2); background: transparent; cursor: pointer;
+}
+.fb-pager button:hover:not(:disabled) { color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink-3); }
+.fb-pager button:disabled { opacity: 0.38; cursor: default; }
+.fb-pager button[aria-current="page"] { background: var(--ink-ground); color: var(--on-ink); box-shadow: none; }
+
+/* ---------- AUTHOR PAGE ---------- */
+.fb-authhead { @apply flex flex-wrap items-start gap-5; }
+.fb-authav {
+  @apply grid place-items-center shrink-0;
+  width: 74px; height: 74px;
+  border-radius: 22px;
+  background: var(--ink-ground); color: var(--on-ink);
+  font-weight: 800; font-size: 25px; letter-spacing: -0.03em;
+}

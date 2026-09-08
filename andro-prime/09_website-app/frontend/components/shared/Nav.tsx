@@ -155,7 +155,7 @@ export function Nav({
   const links =
     variant === 'app'
       ? membershipEnabled
-        ? [...appLinks, { label: 'Membership', href: '/membership' }]
+        ? [...appLinks, { label: 'Membership', href: '/account/membership' }]
         : appLinks
       : marketingLinks
   const showLinks = variant !== 'lp'

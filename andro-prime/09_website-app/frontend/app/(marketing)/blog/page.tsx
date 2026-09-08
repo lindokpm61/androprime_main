@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { NewsletterForm } from '@/components/marketing/NewsletterForm'
 import BlogListings, { type BlogListItem } from '@/components/marketing/BlogListings'
-import { getAllArticles } from '@/lib/blog'
+import { getAllArticles, formatArticleDate } from '@/lib/blog'
 import { JsonLd } from '@/components/shared/JsonLd'
 
 const BASE_URL = 'https://andro-prime.com'
@@ -24,7 +24,10 @@ export default async function BlogPage() {
   const articles: BlogListItem[] = allArticles.map((a) => ({
     href: `/blog/${a.slug}`,
     category: a.category,
-    date: a.date,
+    // Formatted here, not in the card: BlogListItem.date is a DISPLAY value and
+    // the schema below deliberately reads `allArticles`, not this list, because
+    // datePublished must stay ISO 8601.
+    date: formatArticleDate(a.date),
     title: a.title,
     excerpt: a.excerpt,
     readTime: a.readTime,
@@ -73,59 +76,46 @@ export default async function BlogPage() {
   }
 
   return (
-    <div className="blog-skin">
+    <div className="f-page">
       <JsonLd data={blogSchema} />
       <BlogListings articles={articles} />
 
-      {/* PRIMARY CTA: route to a baseline kit (distinct from the email capture below) */}
-      <section className="bg-black text-white border-b-8 border-black py-20 md:py-28 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-dot-pattern opacity-20 pointer-events-none" aria-hidden="true" />
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <div className="inline-block border-2 border-white px-4 py-1 mb-8 font-mono text-xs uppercase tracking-widest">
-            System Directive: Baseline Check
-          </div>
-          <h2 className="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.95] mb-6">
-            Stop reading.<br />Start measuring.
-          </h2>
-          <p className="font-serif text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Every article here circles the same point: a single number means little, a number you have watched move means everything. Get your baseline.
+      {/* ---------- CLOSE ----------
+          The `.f-close` block every other F route ends on. The V2.0 version was
+          two stacked full-bleed bands, one black with an uppercase headline and
+          one white with an outlined envelope icon, both on a dot pattern. They
+          went with the rest of the brutalist furniture; the ARGUMENT they made
+          is kept, because it is a good one and it is specific to this page:
+          every article circles the same point, so the index closes on it. */}
+      <section className="f-wrap f-sec">
+        <div className="f-close f-rise">
+          <p className="f-blab">Stop reading, start measuring</p>
+          <h2>A number you have watched move.</h2>
+          <p className="f-sub" style={{ margin: '0 auto' }}>
+            Every article here circles the same point. A single number means little on its own; a
+            number you have watched move means a great deal. Get your baseline.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/#tests"
-              className="bg-white text-black hover:bg-transparent hover:text-white font-sans font-black uppercase tracking-widest text-sm px-10 py-5 border-4 border-white transition-colors"
-            >
-              Choose your test
+          <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
+            <Link href="/kits" className="f-btn">
+              See the tests <span className="f-pip" aria-hidden="true">&rarr;</span>
             </Link>
-            <Link
-              href="/test-selector"
-              className="border-4 border-white text-white hover:bg-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors"
-            >
-              Take the quiz
-            </Link>
+            <Link href="/test-selector" className="f-btn f-btn-ghost">Use the selector</Link>
           </div>
         </div>
       </section>
 
-      {/* NEWSLETTER BAND: email capture, not a kit purchase */}
-      <section className="bg-white text-black border-b-8 border-black py-16 md:py-24 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" aria-hidden="true" />
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <div className="w-16 h-16 border-4 border-black mx-auto flex items-center justify-center mb-6">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" className="text-black" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-              <polyline points="22,6 12,13 2,6" />
-            </svg>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-4 leading-tight">
-            Health Intelligence Newsletter
-          </h2>
-          <p className="font-serif text-base md:text-lg text-gray-600 mb-8 max-w-xl mx-auto">
-            Deep-dives on diagnostic markers, supplement protocols, and men&rsquo;s health research, direct to your inbox.
+      {/* ---------- NEWSLETTER ----------
+          Email capture, not a kit purchase: the lower rung for readers not ready
+          to test. This page's ONE inverted block. */}
+      <section className="f-wrap" style={{ paddingBottom: 80 }}>
+        <div className="fb-news f-on-ink" style={{ maxWidth: 720, margin: '0 auto' }}>
+          <span className="fb-news-k">Not ready to test?</span>
+          <h2 className="fb-news-h">The occasional plain-English read.</h2>
+          <p>
+            Deep dives on diagnostic markers and what the evidence actually says, direct to your
+            inbox. No schedule, no filler.
           </p>
-          <div className="max-w-md mx-auto">
-            <NewsletterForm theme="light" source="blog-index" />
-          </div>
+          <NewsletterForm theme="dark" source="blog-index" />
         </div>
       </section>
     </div>

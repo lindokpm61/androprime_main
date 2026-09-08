@@ -61,7 +61,7 @@ export function CheckinRow({ questions, answeredToday, onSave }: Props) {
       })
 
       if (res.status === 401) {
-        window.location.href = '/auth/login?next=/membership'
+        window.location.href = '/auth/login?next=/account/membership'
         return
       }
 

@@ -6,45 +6,34 @@ interface Props {
   headingLevel?: 2 | 3
 }
 
-// Accessible details/summary FAQ block for blog articles.
-// Renders semantically (HTML <details>): search engines and AI crawlers parse this
-// the same as FAQPage schema, no JS required. Matches the visual style of FaqAccordion
-// used on LPs while staying a server component.
+/**
+ * The article FAQ, rebuilt in Direction F.
+ *
+ * Still real <details>/<summary>: search engines and AI crawlers parse this the
+ * same as FAQPage schema and it works with JS off. That was right and is kept.
+ *
+ * The construction is the hairline-gapped stack `.fb-faq`, the same device as
+ * `.fb-bylines`: the 1px gap between rows IS the divider, drawn by the parent's
+ * background showing through, so there are no border rules to keep in sync.
+ * The V2.0 version drew 4px black rules top and bottom of every row.
+ */
 export default function ArticleFaq({ items, headingLevel = 2 }: Props) {
   if (!items || items.length === 0) return null
 
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
 
   return (
-    <section
-      aria-labelledby="article-faq-heading"
-      className="mt-16 pt-12 border-t-4 border-black not-prose"
-    >
-      <Heading
-        id="article-faq-heading"
-        className="text-3xl md:text-4xl font-sans font-black uppercase tracking-tighter text-black mb-8"
-      >
-        Frequently asked questions
+    <section aria-labelledby="article-faq-heading" className="mt-14">
+      <p className="f-blab">Common questions</p>
+      <Heading id="article-faq-heading" className="f-h2">
+        Frequently asked.
       </Heading>
-      <div className="border-t-4 border-black">
+      <div className="fb-faq">
         {items.map((item, i) => (
-          <details
-            key={i}
-            className="group border-b-4 border-black"
-          >
-            <summary
-              className="cursor-pointer list-none flex items-center justify-between gap-6 py-6 font-sans font-black uppercase text-lg md:text-xl tracking-tighter text-black"
-            >
-              <span>{item.q}</span>
-              <span
-                aria-hidden="true"
-                className="shrink-0 w-8 h-8 border-2 border-black flex items-center justify-center font-sans font-black text-xl group-open:rotate-45"
-              >
-                +
-              </span>
-            </summary>
-            <div className="pb-6 pr-14">
-              <p className="font-serif text-lg text-black leading-relaxed">{item.a}</p>
+          <details key={i}>
+            <summary>{item.q}</summary>
+            <div className="fb-faq-a">
+              <p>{item.a}</p>
             </div>
           </details>
         ))}

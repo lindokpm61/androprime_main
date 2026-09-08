@@ -229,6 +229,27 @@ function normalizeFrontmatter(data: Record<string, unknown>): ArticleFrontmatter
 }
 
 // ---------------------------------------------------------------------------
+/**
+ * ONE date formatter for every surface that shows an article date.
+ *
+ * `date` is DOCUMENTED as a display string ("12 Oct 2026") but is authored as
+ * an ISO string on some articles, so a surface that renders it raw shows
+ * "2026-08-07" while a surface that formats it shows "7 Aug 2026". Until
+ * 2026-09-08 exactly that was true: ArticleLayout had a private formatter and
+ * the blog index and author page had none, so the same article's date was drawn
+ * two different ways one click apart.
+ *
+ * Non-ISO input passes through unchanged, so legacy pre-formatted values are
+ * not broken.
+ */
+export function formatArticleDate(s: string | undefined): string {
+  if (!s) return ''
+  if (!/^\d{4}-\d{2}-\d{2}/.test(s)) return s
+  const d = new Date(s.slice(0, 10) + 'T00:00:00Z')
+  if (Number.isNaN(d.getTime())) return s
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
 // Public read API. Cached with tags so a publish/edit can revalidate precisely
 // via /api/revalidate (revalidateTag('blog') + revalidateTag(`article:<slug>`)),
 // with a 1h time-based backstop so a missed revalidate ping self-heals.

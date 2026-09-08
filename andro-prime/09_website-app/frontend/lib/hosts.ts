@@ -40,7 +40,10 @@ export const APP_ROUTE_PREFIXES = [
   '/results-dashboard',
   '/account',
   '/subscriptions',
-  '/membership',
+  // '/membership' is NOT here. It is the public marketing explainer and belongs
+  // on the apex; the member screen moved to /account/membership on 2026-09-08
+  // and is covered by '/account' above. Re-adding it would 307 the public page
+  // onto the app host, where it would render logged-out and then bounce home.
   '/founding-member-status',
   '/supplement-waitlist-status',
   '/order/confirmed',

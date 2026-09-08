@@ -3,39 +3,33 @@ import { ReactNode } from 'react'
 interface PublishedEvidenceProps {
   // Heading chip text. Defaults to the AI-extraction "key takeaway" framing.
   label?: string
-  // Optional sources line shown under a divider.
+  // Optional sources line shown under the accent foot.
   sources?: string
   // The takeaway body (a short, quotable summary).
   children: ReactNode
 }
 
-// Brutalist "if you only read this section" summary card. Built for AI-search
-// extraction: a self-contained takeaway plus the sources behind it.
+/**
+ * RUNG 5: the `--sunk` ground with an ink rule and an ACCENT FOOT.
+ *
+ * The accent moves to the foot rather than the rule on purpose. On the rung
+ * below, Punchline's accent rule says "this is the point". Here the same colour
+ * under a divider says "this is sourced", which is a different claim, and
+ * putting it in the same position would make the two pieces read as the same
+ * piece at different sizes.
+ *
+ * Built for AI-search extraction: a self-contained takeaway plus its sources.
+ */
 export default function PublishedEvidence({
   label = 'Published evidence',
   sources,
   children,
 }: PublishedEvidenceProps) {
   return (
-    <div className="bg-gray-100 p-6 md:p-8 border-l-8 border-black my-12">
-      <div className="font-mono text-sm font-bold uppercase tracking-widest mb-4 bg-black text-white inline-block px-2 py-1">
-        {label}
-      </div>
-      <div
-        className="
-          text-black
-          [&_p]:font-serif [&_p]:text-base [&_p]:leading-relaxed [&_p]:mb-4
-          [&_strong]:font-bold
-          [&_a]:underline [&_a]:underline-offset-4 [&_a]:decoration-2
-        "
-      >
-        {children}
-      </div>
-      {sources && (
-        <p className="font-serif text-sm leading-relaxed text-gray-600 border-t-2 border-gray-200 pt-4 mt-2">
-          {sources}
-        </p>
-      )}
+    <div className="fb-mx fb-pub">
+      <span className="fb-stat-k">{label}</span>
+      {children}
+      {sources && <p className="fb-pub-src">{sources}</p>}
     </div>
   )
 }

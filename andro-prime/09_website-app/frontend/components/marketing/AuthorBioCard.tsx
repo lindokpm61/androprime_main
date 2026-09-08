@@ -3,83 +3,98 @@ import type { Author } from '@/lib/authors'
 
 interface Props {
   author: Author
-  // variant: 'page' for the full author page rendering; 'inline' for an article-footer card.
+  // variant: 'page' for the full author page; 'inline' for an article-footer card.
   variant?: 'page' | 'inline'
-  // showLongBio: defaults to true for 'page' variant, false for 'inline'.
+  // showLongBio: defaults to true for 'page', false for 'inline'.
   showLongBio?: boolean
 }
 
-// Renders Keith / Ewa author card. Used on /authors/[slug] (variant='page')
-// and can be embedded under article bodies as an inline byline-credentials block.
+/**
+ * The author card, rebuilt in Direction F on 2026-09-08 (blog-F.html frame AQ).
+ *
+ * Renders Keith or Ewa. Used on /authors/[slug] (variant='page') and available
+ * as an inline byline-credentials block under an article body.
+ *
+ * ▶ WHAT CHANGED: the 2px black photo frame, the uppercase black sans name, the
+ * `data-label` V2.0 label class and the bordered-box `sameAs` links. The name is
+ * now the display serif, the photo takes the same grayscale plate treatment as
+ * every other photograph on the site, and the links are `.f-btn-ghost` pills so
+ * they match the buttons on the page the reader arrived from.
+ *
+ * ⚠ THE GMC LINK IS NOT DECORATION. `labelForSameAs` renders "Verify on GMC
+ * register" for the gmc-uk.org URL, and that link is the substantiation behind
+ * every "GMC-registered GP" claim on the site (registration 4758565, filed at
+ * 03_compliance/credentials/). Keep it visible and keep it labelled as a
+ * verification route, not as a generic social link.
+ *
+ * Raw <img>: `author.imgSrc` is currently a local placeholder path, but this
+ * matches the rest of the blog surface, which cannot use next/image because the
+ * article photography is remote and unconfigured. Consistency here is cheap.
+ */
 export default function AuthorBioCard({ author, variant = 'page', showLongBio }: Props) {
   const renderLong = showLongBio ?? variant === 'page'
   const paragraphs = author.longBio.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
-
   const isPage = variant === 'page'
 
   return (
-    <section className={isPage ? 'border-b-4 border-black pb-12 mb-12' : 'mt-16 pt-12 border-t-4 border-black not-prose'}>
-      <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-        <div className="shrink-0">
-          {/* TODO: replace with real photo. Falls back to placeholder. */}
+    <section className={isPage ? '' : 'mt-14'}>
+      <div className="fb-authhead">
+        <div
+          className="fb-shot shrink-0"
+          style={{
+            width: isPage ? 150 : 96,
+            height: isPage ? 150 : 96,
+            aspectRatio: 'auto',
+            borderRadius: isPage ? 26 : 18,
+          }}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={author.imgSrc}
-            alt={`${author.name}, ${author.bylineRole}`}
-            className={`${isPage ? 'w-40 h-40 md:w-48 md:h-48' : 'w-24 h-24'} border-2 border-black object-cover bg-gray-100`}
-          />
+          <img src={author.imgSrc} alt={`${author.name}, ${author.bylineRole}`} loading="lazy" decoding="async" />
         </div>
-        <div className="flex-1">
+
+        <div className="flex-1 min-w-[260px]">
           {!isPage && (
-            <p className="data-label text-[10px] mb-2">
+            <p className="f-blab">
               {author.role === 'medical-reviewer' ? 'Reviewed by' : 'Written by'}
             </p>
           )}
           {isPage ? (
-            <h1 className="text-3xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-[0.95] mb-3">
-              {author.name}
-            </h1>
+            <h1 className="f-h2" style={{ marginBottom: 8 }}>{author.name}</h1>
           ) : (
-            <h2 className="text-2xl font-sans font-black text-black uppercase tracking-tighter mb-2">
-              <Link href={`/authors/${author.slug}`} className="hover:underline">
-                {author.name}
-              </Link>
+            <h2 className="f-h4" style={{ marginBottom: 6 }}>
+              <Link href={`/authors/${author.slug}`}>{author.name}</Link>
             </h2>
           )}
-          <p className="font-sans font-black uppercase text-sm tracking-widest text-black mb-1">
-            {author.bylineRole}
-          </p>
+
+          <p className="fb-byline-role" style={{ marginTop: 0 }}>{author.bylineRole}</p>
           {author.credentials && (
-            <p className="data-label text-[11px] text-gray-600 mb-4">{author.credentials}</p>
+            <p className="f-fine" style={{ marginTop: 6 }}>{author.credentials}</p>
           )}
 
-          {renderLong ? (
-            <div className="space-y-4">
-              {paragraphs.map((p, i) => (
-                <p key={i} className="font-serif text-base md:text-lg text-black leading-relaxed">
-                  {p}
-                </p>
-              ))}
-            </div>
-          ) : (
-            <p className="font-serif text-base text-black leading-relaxed">{author.bio}</p>
-          )}
+          <div style={{ marginTop: 16 }}>
+            {renderLong ? (
+              paragraphs.map((p, i) => (
+                <p key={i} className="f-sub" style={{ marginBottom: 12 }}>{p}</p>
+              ))
+            ) : (
+              <p className="f-sub">{author.bio}</p>
+            )}
+          </div>
 
           {isPage && author.sameAs.length > 0 && (
-            <ul className="mt-6 flex flex-wrap gap-3 not-prose">
+            <div className="f-btns" style={{ marginTop: 20 }}>
               {author.sameAs.map((url) => (
-                <li key={url}>
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer me"
-                    className="inline-block border-2 border-black px-4 py-2 font-sans font-black uppercase tracking-widest text-xs text-black hover:bg-black hover:text-white transition-colors"
-                  >
-                    {labelForSameAs(url)}
-                  </a>
-                </li>
+                <a
+                  key={url}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  className="f-btn f-btn-ghost f-btn-sm"
+                >
+                  {labelForSameAs(url)}
+                </a>
               ))}
-            </ul>
+            </div>
           )}
         </div>
       </div>

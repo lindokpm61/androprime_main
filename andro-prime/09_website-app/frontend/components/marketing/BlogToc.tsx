@@ -4,33 +4,40 @@ interface BlogTocProps {
   headings: TocHeading[]
 }
 
-// Inline "SYS: On this page" table-of-contents card (brutalist template style).
-// Numbered, two-column grid of jump links to the article's H2 sections.
-// Placed in the MDX body via a closure-bound <BlogToc /> (headings injected in
-// [slug]/page.tsx), so it sits after the lead paragraph in the content flow.
+/**
+ * The in-body table of contents, rebuilt in Direction F on 2026-09-08.
+ *
+ * Distinct from `ArticleToc`, which is the automatic one (mobile disclosure plus
+ * desktop sticky sidebar) that `shouldShowToc()` decides on. This one is placed
+ * DELIBERATELY by an author, via a closure-bound <BlogToc /> injected in
+ * [slug]/page.tsx, so it sits wherever they put it in the content flow, usually
+ * after the lead paragraph.
+ *
+ * ⚠ Both can render on one article. That is by design, not a bug: the sidebar
+ * is navigation furniture and this is a contents block the author chose to
+ * show. They are styled to look related rather than identical.
+ *
+ * The "SYS:" chip is gone, as it is everywhere else on the blog now: a machine
+ * prefix on a page that no longer speaks that way. Two columns are kept, since
+ * a long H2 list in one column pushes the article body a long way down.
+ */
 export default function BlogToc({ headings }: BlogTocProps) {
   if (!headings || headings.length === 0) return null
 
   return (
-    <div className="border-4 border-black p-6 md:p-8 mb-16 bg-white brutal-shadow">
-      <h2 className="font-sans font-black uppercase text-2xl tracking-tighter mb-6 pb-4 border-b-4 border-black flex items-center gap-3">
-        <span className="font-mono text-sm bg-black text-white px-2 py-1">SYS:</span> On this page
-      </h2>
+    <div className="fb-toc" style={{ marginBottom: 30 }}>
+      <p className="fb-toc-h">On this page</p>
       <nav aria-label="On this page">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 font-mono text-xs md:text-sm font-bold uppercase tracking-widest">
-          {headings.map((h, i) => (
-            <a
-              key={h.id}
-              href={`#${h.id}`}
-              className="flex items-start gap-2 p-2 -ml-2 text-black hover:bg-black hover:text-white transition-colors group"
-            >
-              <span className="text-gray-400 group-hover:text-white shrink-0">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <span>{h.text}</span>
-            </a>
+        {/* Two columns from `md` up. `.fb-toc ol` is a 1-col grid; this
+            utility overrides it because Tailwind utilities are emitted after
+            the imported component layer and so win the cascade. */}
+        <ol className="md:!grid-cols-2">
+          {headings.map((h) => (
+            <li key={h.id}>
+              <a href={`#${h.id}`}>{h.text}</a>
+            </li>
           ))}
-        </div>
+        </ol>
       </nav>
     </div>
   )

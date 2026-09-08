@@ -36,7 +36,12 @@ export function NewsletterForm({ theme = 'dark', source = 'blog' }: NewsletterFo
     label: dark ? 'text-gray-300' : 'text-gray-600',
     checkbox: dark ? 'accent-white' : 'accent-black',
     button: dark
-      ? 'bg-white text-black border-white hover:bg-black hover:text-white disabled:bg-transparent disabled:text-gray-500 disabled:border-gray-600'
+      // `gray-400`, not `gray-500`. Disabled is the DEFAULT state of this button
+      // (it needs a valid email and consent first), so it is what a reader sees,
+      // and on the ink newsletter panel gray-500 measured 4.07:1 against a 4.5
+      // requirement. gray-400 is the nearest step that clears it and is the same
+      // lightness as the site's --on-ink-3.
+      ? 'bg-white text-black border-white hover:bg-black hover:text-white disabled:bg-transparent disabled:text-gray-400 disabled:border-gray-500'
       : 'bg-black text-white border-black hover:bg-white hover:text-black disabled:bg-transparent disabled:text-gray-400 disabled:border-gray-300',
     error: dark ? 'text-white' : 'text-black',
   }

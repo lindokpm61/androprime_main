@@ -2,9 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { AUTHORS, getAuthor } from '@/lib/authors'
-import { getAllArticles, type ArticleMeta } from '@/lib/blog'
+import { getAllArticles, formatArticleDate, type ArticleMeta } from '@/lib/blog'
 import AuthorBioCard from '@/components/marketing/AuthorBioCard'
-import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { JsonLd } from '@/components/shared/JsonLd'
 
 const BASE_URL = 'https://andro-prime.com'
@@ -105,31 +104,32 @@ export default async function AuthorPage({ params }: Props) {
   return (
     <>
       <JsonLd data={personSchema} />
-      <div className="bg-white pt-32 pb-24">
-        <div className="max-w-4xl mx-auto px-6">
-          <SectionEyebrow label={author.role === 'medical-reviewer' ? 'Medical Reviewer' : 'Founder & Author'} />
+      {/* Rebuilt in Direction F, 2026-09-08, from blog-F.html frame AQ. The V2.0
+          version opened on a bare `pt-32` white block with a V2.0 SectionEyebrow
+          and set every article title in uppercase black sans; it now uses the F
+          section grammar and the same card list the index uses, so an author
+          page reads as the same publication as the articles it lists. */}
+      <div className="f-page">
+        <section className="f-wrap f-sec f-sec-hero">
+          <p className="f-blab">
+            {author.role === 'medical-reviewer' ? 'Medical reviewer' : 'Founder and author'}
+          </p>
           <AuthorBioCard author={author} variant="page" />
+        </section>
 
+        <section className="f-wrap" style={{ paddingBottom: 80 }}>
           {articlesByAuthor.length > 0 && (
-            <AuthorArticleList
-              title="Articles by this author"
-              articles={articlesByAuthor}
-            />
+            <AuthorArticleList title="Articles by this author" articles={articlesByAuthor} />
           )}
 
           {articlesReviewed.length > 0 && (
-            <AuthorArticleList
-              title="Articles reviewed by this author"
-              articles={articlesReviewed}
-            />
+            <AuthorArticleList title="Articles reviewed by this author" articles={articlesReviewed} />
           )}
 
           {articlesByAuthor.length === 0 && articlesReviewed.length === 0 && (
-            <p className="font-serif text-lg text-gray-700 mt-8">
-              No articles published yet. Check back soon.
-            </p>
+            <p className="f-sub">No articles published yet. Check back soon.</p>
           )}
-        </div>
+        </section>
       </div>
     </>
   )
@@ -137,30 +137,27 @@ export default async function AuthorPage({ params }: Props) {
 
 function AuthorArticleList({ title, articles }: { title: string; articles: ArticleMeta[] }) {
   return (
-    <section className="mt-12">
-      <h2 className="text-2xl md:text-3xl font-sans font-black uppercase tracking-tighter text-black mb-6 pb-4 border-b-2 border-black">
-        {title}
-      </h2>
-      <ul className="space-y-6">
+    <section style={{ marginTop: 48 }}>
+      <p className="f-blab">{title}</p>
+      <div className="fb-grid f-rise" style={{ marginTop: 14 }}>
         {articles.map((a) => (
-          <li key={a.slug} className="border-b border-gray-200 pb-6 last:border-0">
-            <div className="data-label text-[10px] mb-2 flex flex-wrap gap-3">
-              <span>{a.category}</span>
-              <span>·</span>
-              <span>{a.date}</span>
-              <span>·</span>
+          <article key={a.slug} className="fb-pcard">
+            <div className="fb-pbody" style={{ paddingTop: 20 }}>
+              <div className="fb-pk">
+                <span className="fb-mchip fb-mchip-q">{a.category}</span>
+              </div>
+              <h3>
+                <Link href={`/blog/${a.slug}`}>{a.title}</Link>
+              </h3>
+              <p>{a.excerpt}</p>
+            </div>
+            <div className="fb-pfoot">
+              <span>{formatArticleDate(a.date)}</span>
               <span>{a.readTime}</span>
             </div>
-            <h3 className="text-xl md:text-2xl font-sans font-black uppercase tracking-tighter text-black mb-2 leading-tight">
-              <Link href={`/blog/${a.slug}`} className="hover:underline">
-                {a.title}
-              </Link>
-            </h3>
-            <p className="font-serif text-base text-black leading-relaxed">{a.excerpt}</p>
-          </li>
+          </article>
         ))}
-      </ul>
+      </div>
     </section>
   )
 }
-

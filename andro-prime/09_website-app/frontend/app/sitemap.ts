@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getAllArticles } from '@/lib/blog'
 import { getAllAuthors } from '@/lib/authors'
+import { isMembershipEnabled } from '@/lib/flags'
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -31,6 +32,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/privacy`,                       lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
     { url: `${BASE_URL}/terms`,                         lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
   ]
+
+  // /membership renders only when MEMBERSHIP_ENABLED is on and 404s otherwise,
+  // so listing it unconditionally would publish a sitemap entry for a 404. Added
+  // 2026-09-08 with the public page; it is a spoke off the kit pages' price line,
+  // hence a priority below them and above the policy pages.
+  if (isMembershipEnabled()) {
+    staticRoutes.push({
+      url: `${BASE_URL}/membership`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    })
+  }
 
   const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
     url: `${BASE_URL}/blog/${article.slug}`,

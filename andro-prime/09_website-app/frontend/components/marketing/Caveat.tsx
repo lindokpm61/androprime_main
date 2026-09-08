@@ -4,13 +4,17 @@ interface CaveatProps {
   children: ReactNode
 }
 
-// Muted, italic, left-bordered caveat note: the "be careful, this is suggestive
-// not diagnostic" aside that recurs through the articles. Rendered as a <div>
-// (MDX wraps text children in <p>, so a <p> wrapper would nest invalidly).
+/**
+ * RUNG 1 of the emphasis ladder (styles/components/f-blog.css): the quietest
+ * aside. No fill at all, a hairline rule, italic, `--ink-3`.
+ *
+ * This is the "suggestive, not diagnostic" caveat that recurs through the
+ * articles. It has to be the quietest piece in the system because it appears
+ * most often, and a caveat that shouts stops being read.
+ *
+ * Rendered as a <div>, not a <p>: MDX wraps text children in <p>, and a
+ * <p>-inside-<p> is invalid HTML and triggers a React hydration error.
+ */
 export default function Caveat({ children }: CaveatProps) {
-  return (
-    <div className="my-8 border-l-4 border-gray-200 pl-4 font-serif text-base md:text-lg leading-relaxed italic text-gray-600 [&_p]:my-0 [&_a]:underline [&_a]:underline-offset-4 [&_a]:decoration-2 [&_a]:text-gray-700 hover:[&_a]:text-black">
-      {children}
-    </div>
-  )
+  return <div className="fb-mx fb-caveat">{children}</div>
 }

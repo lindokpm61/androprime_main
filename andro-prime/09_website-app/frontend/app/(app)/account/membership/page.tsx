@@ -27,7 +27,19 @@ function plural(n: number, word: string): string {
 }
 
 /**
- * The membership screen. ONE route, THREE top-level states:
+ * The membership screen, the MEMBER-FACING one. ONE route, THREE top-level
+ * states.
+ *
+ * ⚠ MOVED 2026-09-08 from /membership to /account/membership. The bare
+ * /membership is now the PUBLIC marketing explainer that discloses the price and
+ * the day-31 charge (`app/(marketing)/membership/page.tsx`), and Next.js cannot
+ * serve two pages at one path. Nothing about this screen changed. Its auth gate
+ * still comes from middleware's '/account' prefix, which covers this by the
+ * startsWith arm, and its host routing from APP_ROUTE_PREFIXES' '/account' for
+ * the same reason; both files carry a note saying '/membership' must NOT be
+ * re-added, because doing so would drag the public page onto the app host.
+ *
+ * The three states:
  *
  *   1. MEMBER: the retest date, the trend, the loop, the clinician column.
  *   2. NOT A MEMBER, INSIDE THE 30-DAY OFFER WINDOW: the paywall.

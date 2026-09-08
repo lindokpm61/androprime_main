@@ -2447,3 +2447,62 @@
    and a literal is the honest thing there.
    ============================================================================ */
 .f-logo { color: var(--ink); }
+
+/* ============================================================
+   .f-on-ink — THE DARK-PANEL RAMP SWITCH
+   Added 2026-09-08. Reported by Keith against a SystemAlert action bar:
+   "you need to brighten the grayscale on the text where its background is
+   black on these panels... it makes it very difficult to read."
+
+   ▶ WHAT IT IS. One class that a dark panel opts into. It paints the dark
+   ground AND re-points the ink ramp at the on-ink ramp, so every descendant
+   rule that already says `var(--ink-2)` or `var(--ink-3)` resolves to a
+   readable light grey with NO edit to that rule. Custom properties inherit,
+   so the fix reaches the whole subtree from one declaration.
+
+   That is deliberately the shape of the fix. The alternative was to hunt down
+   every rule that renders text inside a dark panel and give it a second
+   colour, which is N edits, has to be redone for every new panel, and is
+   exactly how the problem arose: `.fb-alert p` was written for a light card
+   and inherited by a dark bar nobody re-checked.
+
+   ▶ HOW TO USE IT. Put it on the element that HAS the dark background, and
+   delete that element's own `background` declaration:
+
+       <p className="fb-alert-act f-on-ink">      not  background: var(--ink)
+
+   ▶ 🔴 WHY THE PANEL MUST NOT PAINT ITSELF WITH var(--ink). This class remaps
+   `--ink` ON ITSELF, so a rule saying `background: var(--ink)` on the same
+   element resolves to the remapped near-WHITE and the panel inverts. That is
+   why the ground comes from `--ink-ground`, which is computed once at :root
+   against the root `--ink` and inherited, so it survives the remap. If a dark
+   panel ever renders white, this is the cause.
+
+   ▶ 🔴 IT DOES NOT DIM WITH `opacity`, AND NOR SHOULD ANYTHING USING IT.
+   Text opacity over a dark ground is what made this hard to read in the first
+   place: it composites toward the BACKGROUND, so it darkens grey text on black
+   instead of lightening it, and the result is muddy rather than quiet. Quiet
+   is what `--ink-2` and `--ink-3` are for, and they are measured. If you want
+   a softer label on a dark panel, step down the ramp; do not reach for
+   opacity.
+
+   ▶ WHAT IT DOES NOT TOUCH. `--paper` stays white, because `color: var(--paper)`
+   on a dark ground is already correct and flipping it would invert every chip
+   and button that relies on it. Status colours are untouched for the reason
+   the accent ruling gives: they mean a clinical verdict and nothing else.
+   ============================================================ */
+.f-on-ink {
+  background: var(--ink-ground);
+  color: var(--on-ink);
+  --ink: var(--on-ink);
+  --ink-2: var(--on-ink-2);
+  --ink-3: var(--on-ink-3);
+  --hair: var(--on-ink-hair);
+  --hair-2: var(--on-ink-hair-2);
+}
+/* A dark panel's links have to survive the remap too: `--ink` is now near-white,
+   so an underline drawn in `--hair-2` is a faint white rather than a faint
+   black, which is what it should be. Stated rather than left implicit because
+   the value looks wrong in source and is right in the browser. */
+.f-on-ink a { color: var(--on-ink); text-decoration-color: var(--on-ink-hair-2); }
+.f-on-ink a:hover { text-decoration-color: var(--on-ink); }

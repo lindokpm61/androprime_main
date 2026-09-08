@@ -8,8 +8,19 @@ interface ClinicalInsightProps {
   role?: string
 }
 
-// Brutalist "Clinical Insight" pull-quote card — the reviewer's voice.
-// Black/white only; the floating block-shadow is enabled via `.blog-skin`.
+/**
+ * RUNG 8: the full tray. The only piece that leaves the page plane and takes
+ * the ambient shadow, which makes it the loudest NON-inverted rung.
+ *
+ * It is the reviewer's voice, so it earns the height: a clinician speaking is
+ * a different kind of interruption from the article explaining itself.
+ *
+ * The V2.0 version got its lift from an 8px hard offset shadow behind a 4px
+ * black border, which only existed because `.blog-skin` carved a documented
+ * exception to the global box-shadow ban. That exception is retired: the
+ * 2026-08-29 token release permits the ambient shadow site-wide, so this now
+ * uses the same tray/core pair as every other raised surface on the site.
+ */
 export default function ClinicalInsight({
   children,
   quote,
@@ -17,23 +28,13 @@ export default function ClinicalInsight({
   role = 'GMC-registered GP, Andro Prime medical reviewer',
 }: ClinicalInsightProps) {
   return (
-    <div className="my-16 p-8 md:p-12 border-4 border-black bg-white brutal-shadow relative overflow-hidden">
-      <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" aria-hidden="true" />
-      <div className="relative z-10">
-        <div className="font-mono text-[10px] font-bold uppercase tracking-widest mb-6 text-gray-500 bg-white border-2 border-black inline-block px-2 py-1">
-          Clinical Insight //
-        </div>
-        <div className="font-serif italic font-bold text-2xl md:text-3xl leading-snug mb-8 text-black">
-          {quote || children}
-        </div>
-        <footer className="font-sans font-bold text-sm uppercase tracking-widest border-t-4 border-black pt-4 flex flex-col sm:flex-row sm:items-center gap-2">
-          <span>{author}</span>
-          {role && (
-            <>
-              <span className="hidden sm:inline text-gray-400" aria-hidden="true">///</span>
-              <span className="text-gray-500 font-mono text-xs normal-case tracking-normal">{role}</span>
-            </>
-          )}
+    <div className="fb-mx fb-clin">
+      <div className="fb-clin-in">
+        <span className="fb-clin-k">Clinical insight</span>
+        <div className="fb-clin-q">{quote || children}</div>
+        <footer className="fb-clin-foot">
+          <b>{author}</b>
+          {role && <span>{role}</span>}
         </footer>
       </div>
     </div>

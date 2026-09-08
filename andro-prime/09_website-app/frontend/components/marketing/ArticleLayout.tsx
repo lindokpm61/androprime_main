@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { formatArticleDate } from '@/lib/blog'
 import type { ArticleFrontmatter, TocHeading } from '@/lib/blog'
 import { KIT_PRICE_RANGE } from '@/lib/pricing'
 import { getAuthor } from '@/lib/authors'
@@ -9,36 +10,74 @@ import BackToTop from '@/components/marketing/BackToTop'
 import { NewsletterForm } from '@/components/marketing/NewsletterForm'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 
-// ISO-date display formatter. Pre-formatted strings like "12 Oct 2026" pass through unchanged
-// so legacy articles aren't broken; ISO strings like "2026-05-27" get the en-GB editorial format.
-function formatDate(s: string | undefined): string {
-  if (!s) return ''
-  if (!/^\d{4}-\d{2}-\d{2}/.test(s)) return s
-  const d = new Date(s.slice(0, 10) + 'T00:00:00Z')
-  if (Number.isNaN(d.getTime())) return s
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-}
+/**
+ * The article shell, rebuilt in Direction F on 2026-09-08 from
+ * design/mockups/journey/blog-F.html (frames AL and AO).
+ *
+ * ▶ WHAT THIS REPLACES, AND WHY THE REPLACEMENT HAD TO BE THIS CAREFUL.
+ *
+ * A first attempt at an F blog LOST on 2026-08-27. Keith: "I think the old or
+ * the live blog style wins. There's a lot of detail missing from the F blog you
+ * created." The missing detail was the twelve-piece editorial component system
+ * flattened into about two levels of emphasis. The fix is not in this file, it
+ * is in styles/components/f-blog.css, which gives F an eight-ground ladder deep
+ * enough to hold all twelve. Read that file's header before changing any of it.
+ *
+ * ▶ WHAT CAME OFF, PIECE BY PIECE, all of it V2.0 brutalist furniture:
+ *   - `.blog-skin`, and with it the cream #f4f4f0 ground. The blog stops being
+ *     a documented exception to two brand non-negotiables and becomes the same
+ *     system as every other route.
+ *   - the 8px black frame, the 4px rules, `bg-dot-pattern` and `brutal-shadow`.
+ *   - the uppercase black sans headline, replaced by the display serif every
+ *     other F route uses.
+ *   - `text-stroke-white` / `stroke-fill-on-hover` on the closing CTA, a
+ *     wireframe-headline hover effect that existed nowhere else on the site.
+ *   - `.article-prose`, replaced by `.fb-prose`.
+ *
+ * ▶ WHAT SURVIVED ON PURPOSE:
+ *   - The breadcrumb, the category and read-time chips, the author + reviewer
+ *     card with published and updated dates, the ToC, the FAQ, the related
+ *     reading, the newsletter capture and the closing kit CTA. Every one of
+ *     those is DETAIL in the sense Keith's verdict meant, so the rebuild keeps
+ *     all of it and only restates it in F's materials.
+ *   - The photograph, which is the one thing the mockup does not draw. See
+ *     ArticlePhoto's header.
+ *
+ * ▶ ONE DEFECT FIXED IN PASSING. The page used to mount TWO back-to-top
+ * buttons, one here and one inside ArticleToc, overlapping at different scroll
+ * thresholds. ArticleToc's is deleted. See BackToTop's header.
+ */
+
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
 
 interface Props {
   frontmatter: ArticleFrontmatter
   children: React.ReactNode
-  // headings: H2 list for TOC. If empty or undefined, TOC is suppressed regardless of word count.
+  // headings: H2 list for the ToC. Empty or undefined suppresses it regardless
+  // of word count.
   headings?: TocHeading[]
   // showToc: computed in [slug]/page.tsx via shouldShowToc(). Defaults to false.
   showToc?: boolean
-  // relatedSlugs: candidate slugs for the "Related reading" section, priority order.
-  // Empty (e.g. on the preview route) suppresses the section. Published-only + 404-safe.
+  // relatedSlugs: candidates for "Related reading", priority order. Empty (e.g.
+  // on the preview route) suppresses the section. Published-only + 404-safe.
   relatedSlugs?: string[]
 }
 
-export default function ArticleLayout({ frontmatter, children, headings = [], showToc = false, relatedSlugs = [] }: Props) {
-  const { title, excerpt, category, date, dateModified, readTime, authorSlug, reviewerSlug, faq } = frontmatter
+export default function ArticleLayout({
+  frontmatter,
+  children,
+  headings = [],
+  showToc = false,
+  relatedSlugs = [],
+}: Props) {
+  const { title, excerpt, category, date, dateModified, readTime, authorSlug, reviewerSlug, faq } =
+    frontmatter
   const { photoSrc, photoAlt, photoCredit, photoCreditUrl } = frontmatter
 
   const author = authorSlug ? getAuthor(authorSlug) : undefined
   const reviewer = reviewerSlug ? getAuthor(reviewerSlug) : undefined
 
-  // Fallback for legacy frontmatter that hasn't been migrated to authorSlug yet.
+  // Fallback for legacy frontmatter not yet migrated to authorSlug.
   const displayName = author?.name ?? frontmatter.author ?? 'Andro Prime'
   const displayInitials = author?.initials ?? frontmatter.initials ?? 'AP'
   const displayRole = author?.bylineRole
@@ -46,164 +85,142 @@ export default function ArticleLayout({ frontmatter, children, headings = [], sh
   const tocVisible = showToc && headings.length > 0
 
   return (
-    <div className="blog-skin">
-      <header className="border-b-8 border-black">
-        {/* Meta bar: breadcrumb + category / read-time chips */}
-        <div className="border-b-4 border-black bg-dot-pattern">
-          <div className="max-w-3xl mx-auto px-6 py-4 flex flex-col md:flex-row md:justify-between md:items-center gap-4 font-mono text-xs font-bold uppercase tracking-widest">
-            <nav aria-label="Breadcrumb">
-              <ol className="flex flex-wrap items-center gap-2 text-gray-600">
-                <li>
-                  <Link href="/" className="hover:text-black hover:underline">Home</Link>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li>
-                  <Link href="/blog" className="hover:text-black hover:underline">Blog</Link>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li className="text-black truncate max-w-[40ch]" aria-current="page">{title}</li>
-              </ol>
-            </nav>
-            <div className="flex gap-4 shrink-0">
-              <span className="bg-black text-white px-3 py-1 flex items-center gap-2">
-                <span className="w-2 h-2 bg-white" aria-hidden="true" /> {category}
-              </span>
-              <span className="border-2 border-black px-3 py-1 bg-white">{readTime}</span>
-            </div>
+    <div className="f-page">
+      <header className="fb-read">
+        {/* Meta bar: breadcrumb one side, category and read time the other. */}
+        <div className="fb-metabar">
+          <nav aria-label="Breadcrumb">
+            <ol className="fb-crumb">
+              <li><Link href="/">Home</Link></li>
+              <li aria-hidden="true">/</li>
+              <li><Link href="/blog">Blog</Link></li>
+              <li aria-hidden="true">/</li>
+              <li className="fb-now truncate max-w-[32ch]" aria-current="page">{title}</li>
+            </ol>
+          </nav>
+          <div className="fb-mchips">
+            {category && <span className="fb-mchip">{category}</span>}
+            {readTime && <span className="fb-mchip fb-mchip-q">{readTime}</span>}
           </div>
         </div>
 
-        {/* Headline block */}
-        <div className="px-6 py-12 md:py-20 border-b-4 border-black relative overflow-hidden">
-          <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" aria-hidden="true" />
-          <div className="max-w-3xl mx-auto relative z-10">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              {title}
-            </h1>
-            <p className="font-serif text-xl md:text-2xl leading-snug text-black border-l-8 border-black pl-6 py-2">
-              {excerpt}
-            </p>
-          </div>
+        <div className="fb-arthead">
+          <h1>{title}</h1>
+          {/* The standfirst sits behind a 3px ink rule, keeping the live blog's
+              gesture (a rule that breaks the left margin to say "this is the
+              argument") at F's weight. NOT an accent: `--flag` was ruled to ink
+              on 2026-09-03, so there is no chromatic accent to spend here. */}
+          {excerpt && <p className="fb-stand">{excerpt}</p>}
         </div>
 
-        {/* Author + reviewer card: overlaps the headline block, floats on md+ */}
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row border-4 border-black bg-white md:-translate-y-4 brutal-shadow relative z-20">
-            {/* Written by: static card, subtle gray-50 hover fill */}
-            <div className="w-full md:w-1/2 p-6 md:p-8 flex items-start gap-4 border-b-4 md:border-b-0 md:border-r-4 border-black bg-white hover:bg-gray-50 transition-colors">
-              <div
-                className="shrink-0 w-12 h-12 border-4 border-black bg-black text-white flex items-center justify-center font-sans font-black text-lg"
-                aria-hidden="true"
-              >
-                {displayInitials}
-              </div>
-              <div className="flex flex-col font-mono text-sm uppercase tracking-widest gap-1">
-                <span className="text-[10px] text-gray-500">Written by</span>
-                {authorSlug ? (
-                  <Link href={`/authors/${authorSlug}`} className="font-bold text-black hover:underline decoration-2 underline-offset-2">
-                    {displayName}
-                  </Link>
-                ) : (
-                  <strong className="font-bold text-black">{displayName}</strong>
-                )}
-                {displayRole && (
-                  <span className="text-[10px] font-sans font-normal normal-case tracking-normal text-gray-600">{displayRole}</span>
-                )}
-              </div>
+        {/* Author and reviewer. The 1px grid gap IS the divider. */}
+        <div className="fb-bylines">
+          <div className="fb-byline">
+            <span className="fb-byline-av" aria-hidden="true">{displayInitials}</span>
+            <div>
+              <span className="fb-byline-r">Written by</span>
+              {authorSlug ? (
+                <Link href={`/authors/${authorSlug}`} className="fb-byline-n">{displayName}</Link>
+              ) : (
+                <b className="fb-byline-n">{displayName}</b>
+              )}
+              {displayRole && <span className="fb-byline-role">{displayRole}</span>}
             </div>
+          </div>
 
-            {/* Reviewed by + dates */}
-            <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between bg-white relative gap-6">
-              <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" aria-hidden="true" />
-              {reviewer && (
-                <div className="flex flex-col font-mono text-sm uppercase tracking-widest gap-1 relative z-10">
-                  <span className="text-[10px] text-gray-500">Reviewed by</span>
-                  <Link href={`/authors/${reviewer.slug}`} className="font-bold hover:underline decoration-2 underline-offset-2 text-black">
+          <div className="fb-byline fb-byline-col">
+            {reviewer && (
+              <div className="flex items-start gap-3.5">
+                <span className="fb-byline-av" aria-hidden="true">{reviewer.initials}</span>
+                <div>
+                  <span className="fb-byline-r">Reviewed by</span>
+                  <Link href={`/authors/${reviewer.slug}`} className="fb-byline-n">
                     {reviewer.name}
                   </Link>
-                  <span className="text-[10px] font-sans font-normal normal-case tracking-normal text-gray-600">{reviewer.bylineRole}</span>
+                  <span className="fb-byline-role">{reviewer.bylineRole}</span>
                 </div>
-              )}
-              <div className="font-mono text-[10px] font-bold uppercase tracking-widest pt-4 border-t-2 border-black relative z-10 flex flex-wrap justify-between gap-2">
-                <span className="text-gray-500">Published</span>
-                <span className="text-black">{formatDate(date)}</span>
-                {dateModified && dateModified !== date && (
-                  <>
-                    <span className="text-gray-500 w-full md:w-auto">Updated</span>
-                    <span className="text-black">{formatDate(dateModified)}</span>
-                  </>
-                )}
               </div>
+            )}
+            <div className="fb-byline-dates">
+              <span>Published</span>
+              <b>{formatArticleDate(date)}</b>
+              {dateModified && dateModified !== date && (
+                <>
+                  <span>Updated</span>
+                  <b>{formatArticleDate(dateModified)}</b>
+                </>
+              )}
             </div>
           </div>
         </div>
+
+        {/* The photograph. 10 of 18 published articles carry one; the other 8
+            simply have no figure and the prose starts straight after the
+            bylines, which is why this is a plain conditional and not a
+            placeholder. */}
+        {photoSrc && (
+          <ArticlePhoto
+            src={photoSrc}
+            alt={photoAlt ?? title}
+            credit={photoCredit}
+            creditUrl={photoCreditUrl}
+          />
+        )}
       </header>
 
-      {photoSrc && (
-        <ArticlePhoto
-          src={photoSrc}
-          alt={photoAlt ?? title}
-          credit={photoCredit}
-          creditUrl={photoCreditUrl}
-        />
-      )}
-
-      <article className="pt-12 pb-24">
-        <div className="max-w-3xl mx-auto px-6">
+      <article className="pb-16">
+        <div className="fb-read">
           {tocVisible && <ArticleToc headings={headings} />}
-          <div className="article-prose text-black">
-            {children}
-          </div>
+          <div className="fb-prose">{children}</div>
           {faq && faq.length > 0 && <ArticleFaq items={faq} />}
         </div>
       </article>
 
       {relatedSlugs.length > 0 && (
-        <RelatedArticles slugs={relatedSlugs} heading="Related reading" limit={3} />
+        <div className="fb-read">
+          <RelatedArticles slugs={relatedSlugs} heading="Related reading" limit={3} variant="f" />
+        </div>
       )}
 
-      <section className="py-20 md:py-28 bg-black text-white border-t-8 border-black relative overflow-hidden">
-        <div className="absolute inset-0 bg-dot-pattern opacity-20 pointer-events-none" aria-hidden="true" />
-        <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
-          <div className="inline-block border-2 border-white px-4 py-1 mb-8 font-mono text-xs uppercase tracking-widest">
-            System Directive: Baseline Check
-          </div>
-          <h2 className="stroke-fill-on-hover text-4xl md:text-6xl font-sans font-black tracking-tighter uppercase leading-tight mb-8">
-            Find out where you<br />
-            <span className="text-stroke-white">actually stand.</span>
-          </h2>
-          <p className="font-serif text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-            {KIT_PRICE_RANGE}. Five minutes. Results in 2 to 5 working days with plain-English interpretation from a GMC-registered GP.
+      {/* ---------- CLOSE ----------
+          The `.f-close` block every other F route ends on, so an article hands
+          the reader back to the site in the same shape `/kits` and
+          `/how-it-works` do. The V2.0 version was a full-bleed black band with
+          an outlined wireframe headline that filled on hover; that effect
+          existed nowhere else on the site and went with the rest of the
+          brutalist furniture. */}
+      <section className="f-wrap f-sec">
+        <div className="f-close">
+          <p className="f-blab">Start with a number</p>
+          <h2>Find out where you actually stand.</h2>
+          <p className="f-sub" style={{ margin: '0 auto' }}>
+            {KIT_PRICE_RANGE}. Five minutes at home, results in 2 to 5 working days, and a
+            plain-English reading of every marker against both ranges.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/#tests"
-              className="bg-white text-black hover:bg-transparent hover:text-white font-sans font-black uppercase tracking-widest text-sm px-10 py-5 border-4 border-white transition-colors"
-            >
-              Choose your test
-            </Link>
-            <Link
-              href="/test-selector"
-              className="border-4 border-white text-white hover:bg-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-10 py-5 transition-colors"
-            >
-              Take the quiz
-            </Link>
-          </div>
-
-          {/* Lowest-commitment rung of the cold-to-warm bridge: a passive newsletter
-              capture for readers not ready to test or buy. The quiz (above) is the
-              primary bridge; this catches everyone else so cold traffic doesn't leak. */}
-          <div className="mt-16 pt-10 border-t-2 border-white/20 max-w-md mx-auto">
-            <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-2">
-              Not ready to test?
-            </p>
-            <p className="font-serif text-base text-gray-300 mb-6 leading-relaxed">
-              Get the occasional plain-English read on men&rsquo;s health and what your bloods actually tell you.
-            </p>
-            <NewsletterForm theme="dark" source="article-footer" />
+          <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
+            <Link href="/kits" className="f-btn">See the tests {ARROW}</Link>
+            <Link href="/test-selector" className="f-btn f-btn-ghost">Use the selector</Link>
           </div>
         </div>
       </section>
+
+      {/* ---------- NEWSLETTER ----------
+          The lowest-commitment rung of the cold-to-warm bridge: a passive
+          capture for readers not ready to test. The selector above is the
+          primary bridge; this catches everyone else so cold traffic does not
+          leak. Inverted, which is this page's ONE invert. */}
+      <section className="fb-read" style={{ paddingBottom: 64 }}>
+        <div className="fb-news f-on-ink">
+          <span className="fb-news-k">Not ready to test?</span>
+          <h2 className="fb-news-h">The occasional plain-English read.</h2>
+          <p>
+            What your bloods actually tell you, what a reference range is and is not, and what moves
+            a number. No schedule, no filler.
+          </p>
+          <NewsletterForm theme="dark" source="article-footer" />
+        </div>
+      </section>
+
       <BackToTop />
     </div>
   )

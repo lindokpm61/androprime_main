@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
+import { HeroField } from '@/components/marketing/HeroField'
 
 export interface BlogListItem {
   href: string
@@ -22,12 +23,35 @@ interface Props {
 
 const PAGE_SIZE = 6
 
-function imgClass(usingOg: boolean) {
-  return usingOg
-    ? 'w-full h-full object-cover'
-    : 'w-full h-full object-cover grayscale contrast-125 opacity-80'
-}
-
+/**
+ * The blog index, rebuilt in Direction F on 2026-09-08 from
+ * design/mockups/journey/blog-F.html (frame AP).
+ *
+ * ▶ THE ONE STRUCTURAL CHANGE, and it is worth stating because it is not a
+ * restyle. The V2.0 index was a full-bleed alternating left/right stack: every
+ * article was a full-width band, image on one side, headline at 3xl to 5xl on
+ * the other, sides flipping every row. That is six screens of scrolling for six
+ * articles, and at 1440 a reader could see roughly one and a half of them.
+ *
+ * This is a card grid: one lead card spanning the row, then three-up. Twelve
+ * articles are now visible in about the space the old layout gave to two, which
+ * is what an index is for. The mockup draws it this way for the same reason.
+ *
+ * ▶ WHAT SURVIVED: the category filter, the pagination, the featured/lead
+ * distinction, the empty state, and the grayscale treatment on real photography
+ * with the generated OG card opting OUT of it. All of that is detail worth
+ * keeping and all of it is restated rather than dropped.
+ *
+ * ▶ THE PHOTOGRAPHS. `imgSrc` is a real Unsplash photo for 10 of 18 articles,
+ * and the generated branded OG card for the rest. `usingOg` drives the
+ * distinction: a real photo takes the editorial grayscale, the generated card
+ * does NOT, because it is artwork rather than photography and desaturating it
+ * would just dim the brand. That rule predates this rebuild and is preserved.
+ *
+ * Raw <img>, not next/image, for the reason ArticlePhoto's header sets out:
+ * the sources are remote images.unsplash.com URLs and next.config.ts declares
+ * no `images.remotePatterns`, so next/image would throw at request time.
+ */
 export default function BlogListings({ articles }: Props) {
   const categories = useMemo(() => {
     const set = new Set(articles.map((a) => a.category))
@@ -55,179 +79,151 @@ export default function BlogListings({ articles }: Props) {
 
   return (
     <>
-      {/* HEADER */}
-      <section className="border-b-8 border-black">
-        <div className="border-b-4 border-black bg-dot-pattern">
-          <div className="max-w-content mx-auto px-6 py-4 flex justify-between items-center font-mono text-xs font-bold uppercase tracking-[0.15em]">
-            <span className="bg-black text-white px-3 py-1">Research &amp; Analysis</span>
-            <span className="text-gray-600">Insights &amp; Protocols</span>
-          </div>
-        </div>
-        <div className="max-w-content mx-auto px-6 py-12 md:py-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-8 relative overflow-hidden">
-          <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" aria-hidden="true" />
-          <h1 className="relative z-10 text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-black text-black uppercase tracking-tighter leading-[0.85]">
-            Insights &amp;<br />Protocols
-          </h1>
-          <div className="relative z-10 w-full md:max-w-sm">
-            <p className="font-serif text-lg text-black mb-6">
-              Research, analysis, and evidence-based perspectives on male hormone optimisation.
-            </p>
-            <div className="flex flex-wrap gap-2" role="group" aria-label="Filter articles by category">
-              {categories.map((tag) => {
-                const isActive = tag === active
-                return (
-                  <button
-                    key={tag}
-                    type="button"
-                    onClick={() => selectCategory(tag)}
-                    aria-pressed={isActive}
-                    className={`px-4 py-2 font-sans font-black uppercase tracking-widest text-xs border-2 border-black transition-colors ${
-                      isActive
-                        ? 'bg-black text-white'
-                        : 'bg-white text-black hover:bg-black hover:text-white cursor-pointer'
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                )
-              })}
+      {/* ---------- HERO ----------
+          The shared `HeroField` ground, so the index hands over from `/` and
+          `/kits` without a seam. It is the seventh surface to carry that layer;
+          CA-045 q6/q7 are open against it and the copy register tracks scope. */}
+      <div className="f-ruleground">
+        <HeroField />
+        <section className="f-wrap f-sec f-sec-hero">
+          <div className="f-rise">
+            <div className="f-btns" style={{ marginBottom: 18 }}>
+              <span className="f-eyebrow">Research &amp; analysis</span>
+              <span className="f-kchip">{articles.length} articles</span>
             </div>
+            <h1 className="f-h1">
+              Insights<br />&amp; <span className="f-grey">protocols.</span>
+            </h1>
+            <p className="f-stand" style={{ marginTop: 20 }}>
+              What your numbers actually mean, what a reference range is and is not, and what the
+              evidence says about moving one. Written plainly, reviewed by a GMC-registered GP.
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      {/* EMPTY STATE */}
-      {!featured && (
-        <section className="border-b-8 border-black py-24 px-6 bg-dot-pattern">
-          <div className="max-w-content mx-auto text-center">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-gray-500 mb-4">
-              No results
-            </p>
-            <p className="font-serif text-xl text-black mb-8">
-              Nothing filed under {active} yet.
-            </p>
-            <button
-              type="button"
-              onClick={() => selectCategory('All')}
-              className="border-2 border-black px-4 py-2 font-sans font-black uppercase tracking-widest text-xs hover:bg-black hover:text-white transition-colors"
-            >
+      <section className="f-wrap" style={{ paddingBottom: 72 }}>
+        <div className="fb-filters" role="group" aria-label="Filter articles by category">
+          {categories.map((tag) => {
+            const isActive = tag === active
+            return (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => selectCategory(tag)}
+                aria-pressed={isActive}
+                className={isActive ? 'fb-filter fb-filter-on' : 'fb-filter'}
+              >
+                {tag}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* EMPTY STATE. Reachable only by filtering, so it names the filter and
+            offers the way back rather than reading as a site error. */}
+        {!featured && (
+          <div className="fb-stat" style={{ textAlign: 'center', padding: '48px 22px' }}>
+            <span className="fb-stat-k">No results</span>
+            <p style={{ marginBottom: 18 }}>Nothing filed under {active} yet.</p>
+            <button type="button" onClick={() => selectCategory('All')} className="f-btn f-btn-ghost f-btn-sm">
               Show all articles
             </button>
           </div>
-        </section>
-      )}
+        )}
 
-      {/* FEATURED */}
-      {featured && (
-        <section className="border-b-8 border-black flex flex-col lg:flex-row">
-          <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-between border-b-4 lg:border-b-0 lg:border-r-4 border-black bg-white">
-            <div>
-              <div className="flex flex-wrap gap-4 mb-8 font-mono text-xs font-bold uppercase tracking-[0.15em]">
-                <span className="bg-black text-white px-3 py-1">{featured.category}</span>
-                <span className="border-2 border-black px-3 py-1">{featured.date}</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter leading-[0.9] text-black mb-6">
-                <Link href={featured.href} className="hover:underline decoration-4 underline-offset-4">
-                  {featured.title}
-                </Link>
-              </h2>
-              <p className="font-serif text-lg lg:text-xl text-black leading-relaxed">
-                {featured.excerpt}
-              </p>
-            </div>
-            <div className="mt-10 pt-8 border-t-4 border-black flex justify-between items-end font-mono text-xs font-bold uppercase tracking-[0.15em]">
-              <Link href={featured.href} className="border-2 border-black px-3 py-2 hover:bg-black hover:text-white transition-colors">
-                Read article →
-              </Link>
-              <span>{featured.readTime}</span>
-            </div>
-          </div>
-          <Link href={featured.href} className="w-full lg:w-1/2 relative h-[300px] lg:h-auto bg-black p-4 group overflow-hidden block">
-            <span className="absolute inset-4 border-4 border-white z-20 pointer-events-none" aria-hidden="true" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={featured.imgSrc} alt={featured.imgAlt} className={imgClass(featured.usingOg)} />
-          </Link>
-        </section>
-      )}
-
-      {/* ARTICLE LIST: alternating left/right */}
-      {rest.length > 0 && (
-        <section className="flex flex-col">
-          {visible.map((a, i) => {
-            const reverse = i % 2 === 1
-            return (
-              <article
-                key={a.href}
-                className={`flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} w-full border-b-4 border-black bg-white hover:bg-gray-50 transition-colors duration-300`}
-              >
+        {(featured || visible.length > 0) && (
+          <div className="fb-grid f-rise">
+            {/* The lead card spans the row and takes the accent ring, the same
+                device `/kits` uses to mark the recommended kit. One per page. */}
+            {featured && (
+              <article className="fb-pcard fb-pcard-lead">
                 <Link
-                  href={a.href}
-                  className={`w-full md:w-1/3 h-56 md:h-auto border-b-4 md:border-b-0 ${reverse ? 'md:border-l-4' : 'md:border-r-4'} border-black relative overflow-hidden bg-black p-2 block`}
+                  href={featured.href}
+                  className={featured.usingOg ? 'fb-pshot fb-pshot-og' : 'fb-pshot'}
+                  tabIndex={-1}
+                  aria-hidden="true"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={a.imgSrc} alt={a.imgAlt} className={imgClass(a.usingOg)} />
-                  <span className={`absolute top-4 ${reverse ? 'right-4' : 'left-4'} bg-white text-black font-mono text-[10px] font-bold px-2 py-1 uppercase tracking-[0.15em]`}>
-                    {a.category}
-                  </span>
+                  <img src={featured.imgSrc} alt="" loading="eager" decoding="async" />
                 </Link>
-                <div className={`w-full md:w-2/3 p-8 lg:p-12 flex flex-col justify-center relative ${reverse ? 'md:items-end md:text-right' : ''}`}>
-                  <div className={`font-mono text-[10px] text-gray-500 mb-4 tracking-[0.15em] uppercase flex items-center gap-4 ${reverse ? 'justify-end' : ''}`}>
-                    <span>{a.date}</span>
-                    <span className="w-8 h-[2px] bg-gray-300" aria-hidden="true" />
-                    <span>{a.readTime}</span>
+                <div>
+                  <div className="fb-pbody">
+                    <div className="fb-pk">
+                      <span className="fb-mchip">{featured.category}</span>
+                      <span className="fb-mchip fb-mchip-q">Latest</span>
+                    </div>
+                    <h3>
+                      <Link href={featured.href}>{featured.title}</Link>
+                    </h3>
+                    <p>{featured.excerpt}</p>
                   </div>
-                  <h3 className="text-3xl lg:text-5xl font-sans font-black uppercase tracking-tighter leading-none mb-6">
-                    <Link href={a.href} className="hover:underline decoration-4 underline-offset-4">
-                      {a.title}
-                    </Link>
-                  </h3>
-                  <p className="font-serif text-base lg:text-lg text-gray-600 max-w-2xl">
-                    {a.excerpt}
-                  </p>
+                  <div className="fb-pfoot">
+                    <span>{featured.date}</span>
+                    <span>{featured.readTime}</span>
+                  </div>
                 </div>
               </article>
-            )
-          })}
-        </section>
-      )}
+            )}
 
-      {/* PAGINATION */}
-      {pageCount > 1 && (
-        <nav
-          aria-label="Article pages"
-          className="border-b-8 border-black bg-dot-pattern px-6 py-8 flex items-center justify-center gap-3 font-mono text-xs font-bold uppercase tracking-[0.15em]"
-        >
-          <button
-            type="button"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={safePage <= 1}
-            className="border-2 border-black px-4 py-2 bg-white hover:bg-black hover:text-white transition-colors disabled:opacity-30 disabled:pointer-events-none"
-          >
-            ← Prev
-          </button>
-          {Array.from({ length: pageCount }, (_, idx) => idx + 1).map((n) => (
+            {visible.map((a) => (
+              <article key={a.href} className="fb-pcard">
+                <Link
+                  href={a.href}
+                  className={a.usingOg ? 'fb-pshot fb-pshot-og' : 'fb-pshot'}
+                  tabIndex={-1}
+                  aria-hidden="true"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={a.imgSrc} alt="" loading="lazy" decoding="async" />
+                </Link>
+                <div className="fb-pbody">
+                  <div className="fb-pk">
+                    <span className="fb-mchip fb-mchip-q">{a.category}</span>
+                  </div>
+                  <h3>
+                    <Link href={a.href}>{a.title}</Link>
+                  </h3>
+                  <p>{a.excerpt}</p>
+                </div>
+                <div className="fb-pfoot">
+                  <span>{a.date}</span>
+                  <span>{a.readTime}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+
+        {pageCount > 1 && (
+          <nav aria-label="Article pages" className="fb-pager">
             <button
-              key={n}
               type="button"
-              onClick={() => setPage(n)}
-              aria-current={n === safePage ? 'page' : undefined}
-              className={`w-10 h-10 border-2 border-black transition-colors ${
-                n === safePage ? 'bg-black text-white' : 'bg-white text-black hover:bg-black hover:text-white'
-              }`}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={safePage <= 1}
             >
-              {String(n).padStart(2, '0')}
+              &larr; Prev
             </button>
-          ))}
-          <button
-            type="button"
-            onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
-            disabled={safePage >= pageCount}
-            className="border-2 border-black px-4 py-2 bg-white hover:bg-black hover:text-white transition-colors disabled:opacity-30 disabled:pointer-events-none"
-          >
-            Next →
-          </button>
-        </nav>
-      )}
+            {Array.from({ length: pageCount }, (_, idx) => idx + 1).map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => setPage(n)}
+                aria-current={n === safePage ? 'page' : undefined}
+              >
+                {String(n).padStart(2, '0')}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+              disabled={safePage >= pageCount}
+            >
+              Next &rarr;
+            </button>
+          </nav>
+        )}
+      </section>
     </>
   )
 }

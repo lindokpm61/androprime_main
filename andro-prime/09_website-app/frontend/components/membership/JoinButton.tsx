@@ -25,7 +25,7 @@ export function JoinButton({ children }: { children: React.ReactNode }) {
       })
 
       if (res.status === 401) {
-        window.location.href = '/auth/login?next=/membership'
+        window.location.href = '/auth/login?next=/account/membership'
         return
       }
 

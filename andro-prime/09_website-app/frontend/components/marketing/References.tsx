@@ -2,20 +2,25 @@ import { ReactNode } from 'react'
 
 interface ReferencesProps {
   // A markdown list of sources. Entries are auto-numbered [01], [02]... via the
-  // `.references-box` counter styles in blog-skin.css.
+  // `.fb-refs` CSS counter, so authors keep writing a plain markdown list and
+  // the numbering cannot drift from the list.
   children: ReactNode
 }
 
-// Brutalist "SYSTEM DB // REFERENCES" source box: bordered, gray, monospace.
+/**
+ * Not on the ladder: this is the article's APPARATUS. It sits at the foot,
+ * where nobody is reading for emphasis, so it takes the quiet `--sunk` ground
+ * and mono type and gets out of the way.
+ *
+ * The counter is carried over from blog-skin.css unchanged in behaviour, only
+ * renamed, because it was the right mechanism: numbering in CSS means an
+ * author reordering the list cannot produce wrong numbers.
+ */
 export default function References({ children }: ReferencesProps) {
   return (
-    <section id="references" aria-label="References" className="scroll-mt-24 my-16">
-      <div className="references-box p-6 md:p-8 border-4 border-black bg-gray-50 font-mono text-xs leading-relaxed text-gray-600 [&_a]:underline [&_a]:underline-offset-2 [&_a]:break-all hover:[&_a]:text-black [&_em]:italic">
-        <h2 className="font-mono font-bold uppercase tracking-widest text-black mb-4 border-b-2 border-gray-200 pb-2 inline-block">
-          System DB // References
-        </h2>
-        {children}
-      </div>
+    <section id="references" aria-label="References" className="fb-refs scroll-mt-24">
+      <h2 className="fb-refs-h">References</h2>
+      {children}
     </section>
   )
 }

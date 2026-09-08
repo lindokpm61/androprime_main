@@ -123,6 +123,43 @@
    NOT ink at the old alphas: amber at .14 is a pale wash and ink at .14 is a
    mid grey, so they are re-derived to match the previous LIGHTNESS rather than
    the previous number. */
+  /* ==========================================================
+     ON-INK RAMP — text that sits on a DARK panel.
+     Added 2026-09-08 after a contrast audit found body text on dark
+     grounds failing WCAG AA across the blog and the demo, worst case
+     2.39:1 against a 4.5 requirement.
+
+     🔴 THESE ARE NOT NEW VALUES. They are lifted verbatim from the
+     dark table in styles/pages/app-shell.css, which already solved
+     this exact problem for the authenticated app. Picking a second
+     set would give the site two different ideas of "light grey on
+     ink", which is how a design system starts disagreeing with
+     itself. If the app's dark table changes, change these with it.
+
+     THEY ARE NEVER REMAPPED. `.f-on-ink` (f-primitives.css) points
+     --ink / --ink-2 / --ink-3 / --hair at these, so every descendant
+     rule that already says var(--ink-2) resolves to a readable value
+     with no edit. That is the whole mechanism; see that class.
+
+     MEASURED on the --ink ground, not eyeballed:
+       --on-ink    19.9:1   any size
+       --on-ink-2   9.4:1   any size
+       --on-ink-3   5.9:1   any size, clears AA for small text
+     ========================================================== */
+  --on-ink:        #F5F6F7;
+  --on-ink-2:      #B9BDC4;
+  --on-ink-3:      #969BA3;
+  --on-ink-hair:   rgba(245, 246, 247, 0.11);
+  --on-ink-hair-2: rgba(245, 246, 247, 0.18);
+
+  /* The dark panel's own ground. Declared as var(--ink) so the hex is
+     NOT duplicated: it computes once here, against the ROOT --ink, and
+     descendants inherit that computed value. That matters because
+     `.f-on-ink` remaps --ink on itself, so a panel that painted its
+     background with var(--ink) would paint it near-WHITE. This token
+     is the stable handle that survives the remap. */
+  --ink-ground: var(--ink);
+
   --flag:    #0A0B0D;
   /* 🔴 THESE ALPHAS ARE DERIVED FROM THE OLD COMPOSITED LIGHTNESS, NOT FROM
      THE OLD ALPHA, AND THE FIRST ATTEMPT GOT IT WRONG. Amber at .14 over paper
