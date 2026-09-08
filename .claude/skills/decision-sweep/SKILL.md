@@ -133,7 +133,7 @@ new value and a store rejects the thing the docs prescribe. The person caught
 between them usually resolves the conflict by degrading the data, which is
 exactly what the change existed to prevent.
 
-Six carrier classes, each of which has already been missed:
+Ten carrier classes, numbered 0 to 9, each of which has already been missed:
 
 0. **Published artefacts, which are stores outside version control.** Any surface
    a human reads is a store, so "the docs are updated" means *every* store,
@@ -199,11 +199,101 @@ Six carrier classes, each of which has already been missed:
    copy it reached and assert against the other**. (Observation 98; see
    `publish-article` for the article-specific rule.)
 
+6. **Configuration that ENFORCES the decision.** Build config, bundler and
+   compiler options, CI workflow files, lint and formatter rules, feature-flag
+   defaults, `next.config`, `tsconfig`, `package.json` scripts. A superseded
+   decision surviving in prose is merely wrong; surviving in configuration makes
+   the new decision **impossible to implement**, silently, and it outranks every
+   document while never announcing itself. **Sweep the layer that enforces
+   before the layer that describes.** (Observation 502.)
+7. **Environment variables and feature flags — branches that do not look like
+   branches.** A state enumeration done by reading control flow finds the states
+   that look like control flow; a boolean assigned from `process.env` in one
+   file and consumed in another is invisible to that reading in both places, and
+   how much it changes is uncorrelated with how visible it is. Grep the variable
+   NAME across the repo and the deployment record, and rule each read. A flag's
+   presence in code is not its value in production — check what is actually
+   deployed. (Observations 479, 619, 634.)
+8. **Design tokens, and any document written in two registers.** A verdict
+   rendered as a word AND a colour is one claim in two places; text tools can
+   see the word, so the word is the half that gets fixed and the styling is the
+   half that survives. Worse, a design doc that carries prose for humans and a
+   table for machines has two call sites for every fact, and the structured
+   block LOOKS authoritative — it is machine-shaped and near the top, so it is
+   exactly what a reader trusts when they want a value. **Verify a value against
+   the artefact that RENDERS it, never against the document that describes it:**
+   the doc states what was decided, the token states what ships. (Observations
+   501, 655; links to 280.)
+9. **The generative source a surface was ported FROM.** Where a mockup, spec or
+   reference artefact is repeatedly the origin of ports, every fix applied to a
+   ported component has two call sites — the code and the mockup — and fixing
+   only the code sets a timer on the defect returning through the next port. A
+   correction applied downstream of a generative artefact does not travel back
+   up it. The tell is cheap and nobody checks it: two shipped pages rendering
+   the same component with different words. (Observations 545, 592, 481.)
+
 **This does not override invariant 4.** The sweep's job is to *find and report*
 every carrier; changing application code remains its own task with its own
 verification. But an executable carrier that was never enumerated is an
 unfinished sweep, not a respected boundary — flag it, name it in the report, and
 give it an owner.
+
+### Scoping a finding: the location is an accident, the signature is the scope
+
+A finding arrives attached to the artefact where it was noticed, and that
+attachment is an accident of where the checker happened to be pointed. Treating
+the location as the scope is the default failure, and it is invisible afterwards
+because the fixed instance is the one anybody re-reads. Four rules, each already
+paid for:
+
+- **Resolve to the SIGNATURE, not the instance, and record the match count.**
+  The resolution of a finding is a fix to every artefact matching the finding's
+  signature; only a recorded count distinguishes that from a fix to the one
+  place it was caught. A ruling applied to the page where it was caught left the
+  rest of the class untouched, and the status line said the ruling was applied.
+  (Observations 548, 280.)
+- **Derive the denominator; never write it from memory.** When a rule is
+  discovered in a sample and applied across a system, the sample's membership
+  silently becomes the rule's coverage unless the system is separately
+  enumerated — and the completeness claim in the status record is exactly the
+  sentence most likely to be written from the actor's own memory of what they
+  touched. A denominator that comes from the work rather than from the world
+  validates nothing. Make it an assertion that can fail. (Observation 602.)
+- **Narrowing and superseding fail differently, and only superseding gets
+  swept.** A superseded fact becomes false, so "what still says the old thing"
+  finds it. A NARROWED rule stays true in the general case, which is why it
+  survives every staleness search and why it is the more dangerous of the two:
+  it reads as authoritative, it is authoritative almost everywhere, and its one
+  exception is invisible from where it is written. **An absolute quantifier is a
+  promise about the whole domain, so any carve-out is a change to the rule
+  itself** — record it where the quantifier lives, not only where the exception
+  was decided. A new document asserting an exception is not propagation; it is
+  one half of a contradiction. (Observation 635.)
+- **Half of a compound decision is a different decision.** Applying three parts
+  of a four-part ruling is not a partial application, it is a combination nobody
+  evaluated — and the risk concentrates in the un-applied half, because the
+  status quo it preserves is usually the thing the decision was taken against.
+  "We applied the ruling" is not a checkable claim about a compound artefact;
+  "we applied these three of its four parts, and the fourth is still X" is.
+  (Observation 532.)
+
+Two more that bite during the APPLY step rather than the find step:
+
+- **A canonical module does not retire its copies.** Creating the single source
+  of truth is the easy half and the half that gets committed; deleting the local
+  ones is the half that removes the risk, and it is invisible from inside the
+  module. A refactor ending with a correct new abstraction and an uncounted set
+  of old ones has moved the defect and made it harder to find, because the
+  codebase now carries a confident comment saying it is handled. Count the old
+  call sites and close them, or the module's warning is not a migration.
+  (Observation 607.)
+- **Count the call sites before applying a prescribed fix.** A documented remedy
+  carries an unstated precondition, and prior successful applications are
+  evidence the precondition held those times, not that it always holds. The more
+  often a fix has worked, the more confidently it gets applied to the case where
+  it does not. Ask what the fix assumes and whether that holds here — applying it
+  to a majority and a silent minority in one pass is how a documented practice
+  produces its first regression. (Observation 647.)
 
 ### Two review rules for the code half
 
@@ -263,6 +353,19 @@ reversal was deliberate.
 4. **Docs sweep, not code sweep.** If code disagrees with the decision, stop
    and flag it — do not change application code as a side effect. Code changes
    are their own task with their own verification.
+
+   **This boundary is about blast radius and evidence, not about file
+   extension.** The invariant exists because changing application code needs a
+   build, a render and a test that a doc edit does not — not because `.ts` is a
+   forbidden suffix. Read literally it once fought a task a STATE file had
+   explicitly routed to this skill, and a boundary that misclassifies the work
+   it was pointed at is being read at the wrong grain. So: a config value, a
+   token, a flag default or a scanner table whose change is verified the same
+   way a doc is verified stays IN scope and is swept; anything whose change can
+   alter rendered behaviour goes on the flag list with a named owner, whatever
+   its extension. When in doubt, ask what evidence would prove the change safe;
+   if that evidence is a re-read, sweep it, and if it is a build or a
+   screenshot, flag it. (Observation 500.)
 5. **Stage by explicit path** (never `git add -A` / `git add .`). One commit
    per sweep.
 6. **No em dashes** in any customer-facing text you draft as replacement copy.
@@ -280,10 +383,23 @@ reversal was deliberate.
    literal term across `andro-prime/` (all workspaces), `09_website-app`
    (docs, site copy, email templates), and `.claude/skills/` (skills go stale
    too). Note the graph's docs layer only refreshes on a manual `/graphify`
-   run — grep is the authority for docs changed recently. **Cover all five
-   carrier classes above, not only prose** — executable constraints, code
-   readers of a changed data shape, audience surfaces, artefacts authoritative
-   over the skill, and mirrored stores.
+   run — grep is the authority for docs changed recently. **Cover all ten
+   carrier classes above, not only prose** — published artefacts, executable
+   constraints, code readers of a changed data shape, audience surfaces,
+   artefacts authoritative over the skill, mirrored stores, enforcing
+   configuration, env-var and feature-flag branches, design tokens and
+   two-register documents, and the generative sources pages were ported from.
+
+   **The search has to be able to SEE each class, or the class is documentation
+   rather than coverage.** A sweep once named a carrier class for published
+   pages and then searched `--include=*.md`, so the class it had written down
+   was structurally invisible to the pass that was meant to enumerate it, and
+   the report came out confidently wrong in exactly the direction the class
+   existed to prevent. Run the literal terms with **no extension filter at all**
+   across `andro-prime/`, and separately over `*.{ts,tsx,js,jsx,css,json,yml,
+   yaml,html,mdx,sql,toml,config.*}` so a zero-hit prose grep can never stand in
+   for a clean sweep. State in the report which file types were searched.
+   (Observation 406.)
 3. **Read the blast-radius set regardless of grep results** (table below).
    Rules are often paraphrased rather than quoted, so a zero-hit grep does not
    clear a file that the decision class says must be read.
@@ -328,9 +444,16 @@ reversal was deliberate.
 
 ## Definition of done
 
-- Zero live docs state the old fact as current (verified by re-grep).
-- All five carrier classes enumerated, including a named code-reader list even
-  when it is empty.
+- Zero live docs state the old fact as current (verified by re-grep, with no
+  extension filter — see step 2).
+- All ten carrier classes enumerated, including a named code-reader list even
+  when it is empty, and a named enforcing-configuration list even when it is
+  empty. "No config enforces this" is a recorded finding, not an unasked
+  question.
+- Every finding resolved to its SIGNATURE with a match count, not to the one
+  artefact it was caught in.
+- For a compound decision, the report names each part and its state
+  individually. "The ruling was applied" is not a checkable claim.
 - Owning STATE.md(s) updated and dated.
 - ESCALATE list delivered with named owners.
 - One commit, explicit paths, report sent.
