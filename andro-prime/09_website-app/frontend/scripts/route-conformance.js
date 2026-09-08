@@ -2,9 +2,33 @@
 /**
  * Measure every route against Direction F and write the answer into the repo.
  *
- *   npm run dev                              # in another terminal
+ *   # in another terminal, and BOTH env vars matter — see below
+ *   MEMBERSHIP_ENABLED=true NEXT_PUBLIC_APP_URL=http://app.andro-prime.com npm run dev
  *   node scripts/route-conformance.js        # writes design/route-conformance.md
  *   node scripts/route-conformance.js --base http://localhost:3001
+ *
+ * 🔴 TWO HOSTS, ONE APP, AND THAT CHANGES HOW THIS IS RUN (2026-09-08).
+ * `lib/hosts.ts` serves marketing from the apex and `/auth` plus the
+ * authenticated app from `app.andro-prime.com`. Each route is therefore fetched
+ * from the origin that OWNS it, with Chrome's `--host-resolver-rules` mapping the
+ * app hostname onto the dev server so the request arrives with the real Host
+ * header. Without that, an app-host route 308s to the PRODUCTION app host and
+ * this script measures a different deployment: before it was fixed, the five
+ * `/auth/*` rows read "0 classes, not rebuilt" while describing what `main`
+ * serves, and the redirect check could not see it because a cross-host 308 keeps
+ * the same pathname.
+ *
+ * ⚠ `NEXT_PUBLIC_APP_URL=http://app.andro-prime.com` ON THE DEV SERVER IS NOT
+ * OPTIONAL, and the failure is ugly rather than obvious. The resolver changes
+ * only where a NAME resolves; it does not change a scheme. The middleware
+ * redirects with ABSOLUTE urls built from that variable, so if it still says
+ * `https://`, every app-host route that redirects gets a TLS handshake against a
+ * plain-HTTP dev server and dies as `ERR_SSL_PROTOCOL_ERROR`. Setting it to the
+ * `http://` form makes the app's own absolute redirects match what the resolver
+ * can serve. Do NOT set it to `http://localhost:3000` instead: that makes the
+ * app host and the apex the same origin, and the middleware then routes the 28
+ * marketing routes away and they all fail. There is no single origin that serves
+ * both halves, by design.
  *
  * WHY THIS EXISTS. The rebuild is route by route, so "how many are done" is a
  * number somebody has to state, and a stated number goes stale silently. It did:
@@ -81,6 +105,50 @@ const EXCLUDED = {
   '/blog/preview/[slug]': 'internal preview of an unpublished draft',
   '/demo': 'runs the authenticated app shell (`ap-*`), not the marketing layer, so Direction F is the wrong question',
 }
+
+/* WHICH HOST SERVES WHAT. Mirrors APP_ROUTE_PREFIXES in lib/hosts.ts, which is
+   the single source of truth for the route→host mapping. Duplicated here rather
+   than imported because this is a plain CJS script and that module is TS with
+   path aliases; the guard below fails loudly if the two ever diverge, so the copy
+   cannot rot silently. */
+const APP_HOST = (process.env.NEXT_PUBLIC_APP_URL || 'https://app.andro-prime.com').replace(/\/+$/, '')
+const APP_PREFIXES = ['/auth', '/results-dashboard', '/account', '/subscriptions', '/founding-member-status', '/supplement-waitlist-status', '/order/confirmed', '/subscription/confirmed']
+{
+  // The copy above must equal the real list. A route silently added to
+  // lib/hosts.ts and not here would be measured on the wrong host and reported
+  // with confidence, which is the exact failure this whole patch is fixing.
+  const ts = fs.readFileSync(path.join(ROOT, 'lib', 'hosts.ts'), 'utf8')
+  const block = ts.match(/export const APP_ROUTE_PREFIXES = \[([\s\S]*?)\] as const/)
+  if (!block) die('could not find APP_ROUTE_PREFIXES in lib/hosts.ts. Fix this reader rather than trusting a pass.')
+  // Comments FIRST. The real array carries a long comment explaining why
+  // '/membership' is NOT in it, and a bare string match reads that quoted path
+  // as a member, so the guard failed on its own reader and reported a list
+  // containing the one route the comment exists to exclude.
+  const body = block[1].replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ')
+  const real = [...new Set([...body.matchAll(/'([^']+)'/g)].map((m) => m[1]))].sort()
+  const mine = [...APP_PREFIXES].sort()
+  if (JSON.stringify(real) !== JSON.stringify(mine)) {
+    die(`APP_PREFIXES here disagrees with lib/hosts.ts.\n  hosts.ts: ${real.join(' ')}\n  here:     ${mine.join(' ')}\nUpdate this script's copy.`)
+  }
+}
+/* Exact-or-segment-boundary, never a bare startsWith: '/accounts-payable' must
+   not match '/account'. Same rule lib/hosts.ts matchesPrefix applies. */
+const onAppHost = (url) => APP_PREFIXES.some((p) => url === p || url.startsWith(p + '/'))
+
+/* 🔴 THE HOSTNAME IS THE APP HOST'S; THE SCHEME AND PORT ARE THE DEV SERVER'S.
+   `APP_HOST` is `https://app.andro-prime.com`. Chrome's resolver MAP redirects
+   where the NAME resolves to, and changes nothing else, so navigating to the
+   https URL made Chrome open a TLS handshake against a plain-HTTP dev server and
+   every app-host route came back as a load failure. `--ignore-certificate-errors`
+   does not help: there is no certificate, there is no TLS at all.
+   So the fetch origin keeps the app HOSTNAME, which is the only part the
+   middleware reads, and takes its scheme from BASE. The Host header still says
+   `app.andro-prime.com`, which is the whole point. */
+const APP_RESOLVABLE = !/^(localhost|127\.|\[?::1)/.test(new URL(APP_HOST).hostname)
+const APP_FETCH_ORIGIN = APP_RESOLVABLE
+  ? `${new URL(BASE).protocol}//${new URL(APP_HOST).hostname}`
+  : APP_HOST
+const originFor = (url) => (onAppHost(url) ? APP_FETCH_ORIGIN : BASE)
 
 // Dark-launch flags call `notFound()` on the route itself, so with the flag off
 // the page 404s BY DESIGN. Scoring that as "not rebuilt" would be a lie about a
@@ -210,7 +278,18 @@ const COUNT = () => {
 
 ;(async () => {
   console.log(`Route conformance against ${BASE}, ${measured.length} routes\n`)
-  const browser = await puppeteer.launch({ executablePath: chrome, headless: 'new', args: ['--no-sandbox'] })
+  /* Map the app hostname onto whatever host:port BASE points at, so an app-host
+     route is fetched with its REAL Host header and the middleware serves it
+     instead of 308-ing to production. Only applied when the app host is a real
+     remote name; if somebody has already pointed NEXT_PUBLIC_APP_URL at
+     localhost, there is nothing to map. */
+  const appHostname = new URL(APP_HOST).hostname
+  const baseAuthority = new URL(BASE).host
+  const resolverArgs = APP_RESOLVABLE
+    ? [`--host-resolver-rules=MAP ${appHostname} ${baseAuthority}`]
+    : []
+  if (APP_RESOLVABLE) console.log(`  note  ${appHostname} mapped to ${baseAuthority}; app-host routes fetched from ${APP_FETCH_ORIGIN}`)
+  const browser = await puppeteer.launch({ executablePath: chrome, headless: 'new', args: ['--no-sandbox', ...resolverArgs] })
   const rows = []
   const seenClasses = new Set()
   for (const r of measured) {
@@ -219,10 +298,21 @@ const COUNT = () => {
     let status = 0
     let data = null
     let landed = ''
+    let landedOrigin = ''
     try {
-      const resp = await page.goto(BASE + r.href, { waitUntil: 'networkidle0', timeout: 180000 })
+      const resp = await page.goto(originFor(r.url) + r.href, { waitUntil: 'networkidle0', timeout: 180000 })
       status = resp ? resp.status() : 0
+      // 🔴 THE ORIGIN IS RECORDED, NOT JUST THE PATHNAME, since 2026-09-08.
+      // `middleware.ts` host-routes /auth, /account, /results-dashboard and the
+      // rest to the APP host (lib/hosts.ts APP_ROUTE_PREFIXES). That is a 308 to
+      // a different ORIGIN at the SAME path, so a pathname-only comparison saw
+      // no redirect at all and scored the route as rendered.
+      // What actually rendered was https://app.andro-prime.com, i.e. PRODUCTION,
+      // which serves `main`. So the five /auth/* rows read "0 classes, not
+      // rebuilt" while measuring a different deployment, confidently and
+      // silently. That is worse than the "not measured" it should have said.
       landed = new URL(page.url()).pathname
+      landedOrigin = new URL(page.url()).origin
       data = await page.evaluate(COUNT)
     } catch (e) {
       status = -1
@@ -236,12 +326,16 @@ const COUNT = () => {
     // The 404 surface is REACHED by a 404, so its expected status is 404 and a
     // redirect check against a deliberately unmatched path is meaningless.
     const expected = r.expectStatus || 200
-    const redirected = !r.expectStatus && landed && landed !== r.href
+    const offOrigin = !!landedOrigin && landedOrigin !== new URL(originFor(r.url)).origin
+    const redirected = !r.expectStatus && landed && (landed !== r.href || offOrigin)
     const flagged = status === 404 && r.url in FLAG_GATED
 
     let verdict
     let note = ''
     if (flagged) { verdict = 'not measured'; note = `404 with the dark-launch flag off; needs \`${FLAG_GATED[r.url]}\`` }
+    // Named separately from the login-redirect case because the remedy is
+    // different and knowable: run with the app host pointed at this dev server.
+    else if (offOrigin) { verdict = 'not measured'; note = `host-routed to \`${landedOrigin}\`, so what rendered was that deployment and not this branch; measurable with \`NEXT_PUBLIC_APP_URL=${BASE}\`` }
     else if (redirected) { verdict = 'not measured'; note = `redirects to \`${landed}\` for an anonymous visitor` }
     else if (status !== expected && (status < 200 || status >= 400)) verdict = 'ERROR'
     else verdict = own.length > 0 ? 'F' : 'not rebuilt'
@@ -262,6 +356,16 @@ const COUNT = () => {
   if (errors.length) {
     console.error(`\n${errors.length} route(s) failed to load: ${errors.map((e) => `${e.url} [${e.status}]`).join(', ')}`)
     console.error('Nothing written. A route that will not render is not evidence that it is un-rebuilt.')
+    // An app-host route that will not load is almost always the scheme mismatch
+    // the header describes, so name the remedy rather than leave the symptom.
+    const appFails = errors.filter((e) => onAppHost(e.url))
+    if (appFails.length && APP_RESOLVABLE) {
+      const h = new URL(APP_HOST).hostname
+      console.error(`\n${appFails.length} of them are served by ${h}, not by the apex.`)
+      console.error('The usual cause is the dev server advertising https for the app host, so the')
+      console.error('middleware\'s absolute redirects ask for TLS from a plain-HTTP server. Restart it as:')
+      console.error(`  MEMBERSHIP_ENABLED=true NEXT_PUBLIC_APP_URL=http://${h} npm run dev`)
+    }
     process.exit(1)
   }
 
@@ -386,7 +490,7 @@ ${orphan.length ? orphan.map((c) => `\`.${c}\``).join(', ') : '_none_'}
 ---
 
 _Generated by \`frontend/scripts/route-conformance.js\` on ${today}. ${rows.length} routes
-rendered at 1440px against a dev server.${flagsOn.length ? ` Dark-launch flags on for this run, inferred from the routes that rendered: ${flagsOn.map((x) => `\`${x}\``).join(', ')}.` : ' No dark-launch flags were on.'}_
+rendered at 1440px against a dev server, each on the host that serves it (\`${APP_PREFIXES.join('`, `')}\` on the app host, everything else on the apex).${flagsOn.length ? ` Dark-launch flags on for this run, inferred from the routes that rendered: ${flagsOn.map((x) => `\`${x}\``).join(', ')}.` : ' No dark-launch flags were on.'}_
 `
 
   fs.writeFileSync(OUT, md)

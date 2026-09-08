@@ -25,15 +25,14 @@ export function OAuthButtons({ nextPath }: { nextPath?: string }) {
   // registration needs configuring (incl. personal Microsoft accounts) before it
   // is enabled. Re-add a "Continue with Microsoft" button (provider: 'azure')
   // here once that is done. Google is the only stable OAuth provider for now.
+  // Direction F, 2026-09-08. The ghost pill, not a bordered square: this is a
+  // secondary route to the same place as the form below it, and `.f-btn-ghost`
+  // is the direction's secondary. Drawn as one button because Microsoft does not
+  // exist yet, and Frame X notes that putting an absent provider in a mockup is
+  // how a drawing starts specifying work nobody asked for.
   return (
-    <div className="space-y-3">
-      <button
-        type="button"
-        onClick={signInWithGoogle}
-        className="w-full border-2 border-black bg-white px-5 py-3 font-sans text-sm font-black uppercase tracking-widest text-black transition-colors hover:bg-gray-50"
-      >
-        Continue with Google
-      </button>
-    </div>
+    <button type="button" onClick={signInWithGoogle} className="f-btn f-btn-ghost f-btn-block">
+      Continue with Google
+    </button>
   )
 }

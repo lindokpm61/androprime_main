@@ -4,6 +4,87 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## ▶️ NEWEST — the five `/auth/*` routes are Direction F, and the conformance report had been measuring PRODUCTION for them, 2026-09-08
+
+**16 of 36 measurable routes now, up from 11. 44%.** Read
+`design/route-conformance.md`, not this number.
+
+**Five routes, two surfaces, one batch.** Frame X2 is the finding that shaped it:
+four of the five are ONE component in four modes (`components/auth/AuthCard.tsx`)
+and the route files are 25-line wrappers passing a title, a standfirst and a
+server action. Only `/auth/consent` is its own page. Frame X2 also enumerates what
+changes between the modes and it is FIVE things: the heading, the standfirst,
+which fields render, the submit label, and which cross-links appear. The submit
+labels and cross-links are now data, so "each mode hides its own" is one filter
+rather than four hand-maintained conditionals.
+
+**Nothing new was needed for the fields.** `/test-selector` added the form layer
+yesterday and this route consumed it: `.f-inp`, `.f-consent`, `.f-blab`,
+`.f-kchip`, `.f-ticks`, `.f-btn:disabled`. That was the reason for naming those
+for what they are rather than for the page that first needed them, and it held.
+
+🔴 **THE CONFORMANCE REPORT HAD BEEN MEASURING A DIFFERENT DEPLOYMENT.** The site
+is one app on two hostnames, and `/auth` is served by `app.andro-prime.com`. The
+generator fetched everything from the apex, so those five routes 308'd to the
+PRODUCTION app host and it measured what `main` serves. It reported "0 classes,
+not rebuilt" with full confidence about the wrong deployment, and the redirect
+check could not see it because **a cross-host 308 keeps the same pathname** and
+the check compared pathnames.
+
+Fixed by measuring each route on the host that serves it: Chrome's
+`--host-resolver-rules` maps the app hostname onto the dev server so the request
+arrives with the real Host header. ⚠ **The conformance run now needs
+`NEXT_PUBLIC_APP_URL=http://app.andro-prime.com` on the dev server**, because the
+middleware redirects with absolute URLs and an `https://` one asks for TLS from a
+plain-HTTP dev server. Do NOT set it to `http://localhost:3000`: that makes the
+app host and the apex the same origin and the 28 marketing routes get routed
+away. The script's header carries all of this and its failure message names the
+remedy.
+
+**Three defects found, two of them mine:**
+
+1. **`.f-field` was already taken and I took it anyway.** It is the hero data
+   canvas: `position: absolute`, sized to the hero. Two unrelated components on
+   one selector at equal specificity, so source order decided and the hero won.
+   Both `<label>`s went absolute at 1320x986 and the email and password inputs
+   rendered outside the card. **Nothing failed**: the class exists so
+   `verify-f-classes` passed, and it is not a modifier pair so the specificity
+   checker passed. Renamed `.f-formrow`. Grep a class name before using it.
+2. **A 2px border on a 22px radius is a crescent, not an edge.** The message
+   banner's leading rule followed the curve and read as a half-drawn ring. The
+   banners' hierarchy moved onto elevation instead, which is this direction's own
+   device: the message is a raised core, the error is recessed with a mono key.
+   That also solves the problem that Frame X3's mechanism (give the message "the
+   one accent") no longer exists after the saturation ruling.
+3. **`verify-scroll-reveal.js` would have failed on auth**, since it asserts every
+   rebuilt route has reveal targets and the auth card deliberately has none: a
+   reveal in front of a password field is a delay. App-host routes are now
+   skipped there with the reason stated, and the check refuses to pass if its
+   filter ever empties the list.
+
+**`.f-page` and `FPage` are different things and the name hides it.** `.f-page` is
+the TYPE RAMP's root: without it an F surface renders in `globals.css`'s
+Merriweather at ~8% under the drawn size, silently. `FPage` is the marketing page
+assembly. `/auth/*` needs the first only, so `app/auth/layout.tsx` supplies it
+once for all five and `verify-f-scaffold.js` keeps them out of scope with its
+header note updated to say why rather than leaving them looking forgotten.
+
+⚠ **TWO THINGS OWED FROM KEITH, both raised by Frame X and neither actioned:**
+
+- **Should `/auth/signup`'s age field be `required`?** The same 18+ eligibility
+  fact is mandatory on `/auth/consent` and on `/checkout/details` and optional on
+  signup. Reproduced exactly as it ships, because adding one word changes who can
+  create an account and that is not a restyle's call.
+- **Should `/auth/consent` be renamed?** It is confirmed to be an age gate plus a
+  marketing opt-in, NOT the health-data consent. The stage inventory had recorded
+  it as the CA-018 route whose wording must not be disturbed; both halves were
+  wrong, and the health-data consent is on `/checkout/details`. Frame X notes both
+  are cheap now and awkward later.
+
+**Green:** `npm test` (EXIT 0), `test:design:live` 67 passed and 0 failing
+dark-ground nodes across 16 routes, production build clean. No copy changed, so
+no compliance pre-flight is owed.
+
 ## ▶️ PICK UP HERE — handoff from the 2026-09-08 evening session
 
 Keith asked for this session to be carried into the next chat. Everything below
@@ -46,33 +127,42 @@ dark-ground contrast sweep.
 
 ### STILL OPEN: Thread 1, the route rebuild
 
-**11 of 36 measurable routes are Direction F.** Do not re-count by hand and do
-not trust this number: read `design/route-conformance.md`, which is generated by
-`npm run route-conformance` (needs `npm run dev` in another terminal) and guarded
-by `verify-route-conformance.js` in `npm test`.
+**16 of 36 measurable routes are Direction F.** Do not re-count by hand and do
+not trust this number: read `design/route-conformance.md`, generated by
+`npm run route-conformance` and guarded by `verify-route-conformance.js` in
+`npm test`. ⚠ **The generator now needs TWO env vars on the dev server**, because
+it measures each route on the host that serves it:
 
-✅ **`/test-selector` is done, 2026-09-08 late.** It was the suggested first route
-and it is now F end to end, page AND quiz. See the NEWEST entry below for what it
-changed in the system.
+```bash
+MEMBERSHIP_ENABLED=true NEXT_PUBLIC_APP_URL=http://app.andro-prime.com npm run dev
+```
 
-**Suggested next: the five `/auth/*` routes, as one batch.** Three reasons, and
-the first is new as of this session:
+✅ **`/test-selector` done, and the five `/auth/*` routes done**, both 2026-09-08.
+The first was the suggested first route; the second was the suggested batch. See
+the two NEWEST entries below.
 
-1. **F now has form controls.** `/test-selector` was the first route with a form
-   on it, so `.f-inp`, `.f-sel`, `.f-consent`, `.f-well`, `.f-btn:disabled` and
-   the two notice styles now exist. Before this they did not, and any
-   form-bearing route had to invent them. That unblocks `/auth/*`, `/contact`,
-   `/waitlist`, `/supplement-waitlist` and `/checkout/details` at a stroke.
-2. **One frame covers all five.** `design/mockups/journey/auth-F.html` draws
-   Frames X, X2 ("four routes, one component"), X3 and Y, and it draws them with
-   `.inp` and `.field`, which is the vocabulary that just landed.
-3. Five routes for one frame is the best count-per-frame left on the board.
+**Suggested next: `/checkout/details` and `/order/confirmed`, as one batch.**
+
+1. **One frame covers both.** `design/mockups/journey/buy-F.html`.
+2. **The form layer exists and is now proven twice.** `/test-selector` added it
+   and `/auth/*` consumed it without adding anything, so a third form route is
+   assembly rather than invention.
+3. It is the conversion path, and it is the last stretch of the buy journey still
+   on the old design now that `/`, `/kits`, the three kit pages and
+   `/test-selector` are all F.
+
+🔴 **`/checkout/details` CARRIES THE REAL HEALTH-DATA CONSENT (CA-018, Article
+9(2)(a)), gating payment.** This is the route the stage inventory wrongly
+attributed to `/auth/consent`. Its wording is approved and version-locked: restyle
+the container, do not touch a word, and do not touch the `isAtLeast18()` re-check
+on submit.
 
 ⚠ **`/faq`, `/about`, `/contact` and the `/supplements` group have NO journey
 frame.** Only 13 frames exist and none covers them, so those need design decided
-rather than ported, which is a different and slower job. The framed routes left
-are `/auth/*` (auth-F), `/activate` (act-F), `/checkout/details` and
-`/order/confirmed` (buy-F), the account and results routes, and `/lp/*` (gated).
+rather than ported, which is a different and slower job. Framed routes left:
+`/activate` (act-F), the checkout pair (buy-F), the account and results routes
+(account-F, results-F, results-states-F), and `/lp/*` (gated by the 2026-09-07
+auto-renew ruling, §4).
 
 **How to build a route now:**
 
@@ -80,22 +170,35 @@ are `/auth/*` (auth-F), `/activate` (act-F), `/checkout/details` and
    `components/marketing/FPage.tsx`. Do not hand-write `.f-page`,
    `.f-ruleground`, a counted `.f-wrap.f-sec`, or any `.f-close`:
    `verify-f-scaffold.js` fails the build if you do. `FSection` also takes
-   `narrow` now, for a single-column section; the rule stays at the full measure.
-2. Take the LAYOUT and CONTENT from the matching journey frame, and the STYLING
+   `narrow` for a single-column section; the rule stays at the full measure.
+   ⚠ **A SINGLE-CARD route is the exception**, added 2026-09-08 for `/auth/*`:
+   `.f-page` is the TYPE RAMP's root and every F surface needs it, while `FPage`
+   is the marketing page ASSEMBLY (hero, counted sections, close). A card with
+   none of those wears `.f-page` from a layout and stays out of the scaffold
+   check's scope. Read that check's header before assuming a route was forgotten.
+2. **Grep the class name before you invent it.** `.f-field` looked free, is the
+   hero data canvas, and taking it put two components on one selector at equal
+   specificity: the inputs rendered outside the card and every check passed.
+3. Take the LAYOUT and CONTENT from the matching journey frame, and the STYLING
    from the shipped tokens and components. **The frame's CSS is a source of
-   nothing**, ruled 2026-09-08; each frame now says so in a banner at the top.
-3. Judge it in a browser. Every F ruling has been made that way. 🔴 **A plain
-   `shot.js` full-page or `--selector` capture shows scroll-revealed content as
-   BLANK**, because the IntersectionObserver never fires for anything below the
-   fold in those modes. It looks exactly like a broken page and it is not. Shoot
-   with a viewport taller than the page (`--width 1440 --height 4200`) so every
-   reveal fires at load. To see a state behind a click, drive it with
-   puppeteer-core; `scripts/verify-scroll-reveal.js` has the launch pattern.
-4. 🔴 **Verify a colour against its token, never against `DESIGN.md`.** The doc's
-   front-matter table said `flag: "#E0A458"` for five days after the token became
-   `#0A0B0D`, and it produced two wrong CSS comments this session before a
-   screenshot caught it. Both stale copies are fixed; the habit is the fix.
-5. Re-run `npm run route-conformance` afterwards, or `npm test` will fail on the
+   nothing**, ruled 2026-09-08. Expect frame notes that predate a ruling: two on
+   test-selector-F and one on auth-F assume an amber accent that no longer exists.
+4. Judge it in a browser. ✅ **`shot.js` now captures at rest by default**
+   (commit `3ea5642`): it emulates `prefers-reduced-motion`, which this system
+   honours by never adding `.js`, then walks the scroll. **The tall-viewport
+   workaround this entry used to recommend is obsolete** — it existed because a
+   full-page or `--selector` capture used to render every below-fold `.f-rise`
+   element BLANK, which reads exactly like a broken page. `--motion` opts back
+   in. `--localstorage ap_cookie_consent=denied` gets the consent banner out of
+   the shot. For a state behind a click, drive it with puppeteer-core;
+   `scripts/verify-scroll-reveal.js` has the launch pattern.
+5. 🔴 **Verify a colour against its token, never against `DESIGN.md`.** Its
+   front-matter said `flag: "#E0A458"` for five days after the token became
+   `#0A0B0D`. Fixed, but the habit is the fix.
+6. 🔴 **Never run `npm run build` while a dev server is up.** They share `.next`
+   and the build wins; the corruption presents as 500s or an unstyled page, not
+   as a build error. A Bash guard now blocks it.
+7. Re-run `npm run route-conformance` afterwards, or `npm test` will fail on the
    stale report, which is the point of it.
 
 ⚠ **Two groups inside Thread 1 are gated, not merely unbuilt.** `/privacy` and
@@ -159,7 +262,7 @@ toggle onto the phone. Nothing was changed pending Keith.
 
 ---
 
-## ▶️ NEWEST — /test-selector is Direction F, and it is the first F route with a form on it, 2026-09-08
+## ▶️ /test-selector is Direction F, and it is the first F route with a form on it, 2026-09-08
 
 **11 of 36 measurable routes now, up from 10.** `/test-selector` was the suggested
 first route: `07_sales/funnel/site-funnel-model.md` §2 names it the primary route

@@ -51,13 +51,24 @@ function rebuiltRoutes() {
   const rows = section.split(/^## /m)[0].split('\n')
     .map((l) => (l.match(/^\|\s*`([^`]+)`/) || [])[1]).filter(Boolean);
   if (!rows.length) { console.error('ERROR: the Rebuilt table parsed to zero routes. Fix this parser rather than trusting a pass.'); process.exit(1); }
-  const out = [], skipped = [];
+  const out = [], skipped = [], offHost = [];
   for (const r of rows) {
+    // APP-HOST ROUTES ARE OUT OF SCOPE HERE, and it is not an oversight.
+    // `lib/hosts.ts` serves /auth and the authenticated app from
+    // app.andro-prime.com, so driving them from this origin gets a 308 rather
+    // than a page. More to the point there is nothing here to verify: the auth
+    // card carries NO `.f-rise` at all, deliberately, because a reveal on a form
+    // the reader came to use is a delay in front of a password field. This check
+    // exists to catch content left invisible by motion; a surface with no motion
+    // cannot fail it. `route-conformance.js` measures them, on the right host.
+    if (/^\/(auth|account|results-dashboard|subscriptions|founding-member-status|supplement-waitlist-status)(\/|$)/.test(r)) { offHost.push(r); continue; }
     if (!r.includes('[')) out.push(r);
     else if (EXAMPLES[r]) out.push(EXAMPLES[r]);
     else skipped.push(r);
   }
   if (skipped.length) console.log(`  note  skipped (no example URL in EXAMPLES): ${skipped.join(', ')}`);
+  if (offHost.length) console.log(`  note  skipped (served by the app host, and carry no reveal targets): ${offHost.join(', ')}`);
+  if (!out.length) { console.error('ERROR: every rebuilt route was skipped. Fix this filter rather than trusting a pass.'); process.exit(1); }
   return out;
 }
 const ROUTES = rebuiltRoutes();

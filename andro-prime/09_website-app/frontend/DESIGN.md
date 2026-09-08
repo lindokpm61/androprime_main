@@ -560,6 +560,76 @@ that crossed part of the page would disagree with every other section boundary o
 direction and carries its own gutter, so nested it gutters twice and the card came out 310px wide at
 390 against every other F card's 350.
 
+
+### The auth card, added 2026-09-08 with `/auth/*`
+
+**`.f-auth`, `.f-auth-pitch`, `.f-auth-form`, `.f-or`, `.f-formrow`, `.f-xlinks`,
+`.f-banner` (+ `.f-banner-msg` / `.f-banner-err` / `.f-banner-k`),
+`.f-btn.f-btn-block`.** Five routes, two surfaces: four of them are one component
+in four modes (`components/auth/AuthCard.tsx`) and only `/auth/consent` is its
+own page. It reuses the form layer `/test-selector` added and introduces no
+second vocabulary for fields.
+
+**`.f-auth` is gapless, because this is ONE card divided rather than two cards
+side by side.** `.f-splitgrid` is the two-cards-with-a-gap idiom and is the wrong
+one: the halves run to the card's own edges inside a `.f-core` at `padding: 0`,
+which is what the core's `overflow: hidden` then keeps inside the radius. The
+divider turns with the layout, a rule between the stacked halves at 390 and
+beside them from 900px.
+
+🔴 **THE PITCH PANEL IS LIGHT, AND IT USED TO BE INK.** Frame X draws both halves
+light and that is followed for two reasons beyond the drawing. The inverted panel
+is spent ONCE PER PAGE on a conformity statement (see "where each page spends its
+one"), and an auth pitch is not one. And the depth ladder runs tray → core, so a
+dark half INSIDE a `.f-core` puts the heaviest surface at the top of the stack
+where the ladder says the lightest goes. The two halves are separated by
+typography and by the divider, not by ground.
+
+🔴 **THE TWO BANNERS CARRY THEIR HIERARCHY IN ELEVATION, NOT COLOUR.** Frame X3
+argues, rightly, that the MESSAGE is the one to point at and the error is the one
+to keep quiet: an auth error is usually something the reader already knows (a
+wrong password), while a message explains why they are on this screen at all
+("check your email"). The frame implements that by giving the message "the one
+accent", and there is no accent to give since `--flag` became ink. So the message
+is a RAISED core (white, hairline ring, ambient shadow) and the error is RECESSED
+(`--sunk`, inset ring, mono key). Raised-versus-recessed is this direction's
+governing idea, so it is the distinction a reader is already trained on.
+
+⚠ **A border and a large radius do not combine.** The first attempt gave the
+message a 2px leading-edge rule, borrowing `.f-nudge`'s pointing device. On a
+22px radius the border follows the curve and renders as a crescent, reading as a
+partial ring somebody had half-drawn. `.f-nudge` gets away with it by having no
+radius at all. Reach for elevation instead.
+
+🔴 **`.f-formrow`, NOT `.f-field`, AND THIS IS WHY.** `.f-field` is the HERO DATA
+CANVAS: `position: absolute`, z-index 1, sized to the hero. It was the obvious
+name, the journey frame calls the element `.field`, and taking it put two
+unrelated components on one selector at equal specificity (0,1,0) so source order
+decided. The hero's rule won: both `<label>` elements went `position: absolute`
+at 1320x986 in the top-left of the viewport, and the email and password inputs
+rendered OUTSIDE the card. **Nothing failed.** `verify-f-classes` passed because
+the class exists; `verify-modifier-specificity` passed because it is not a
+modifier pair. This file already says two rule blocks for one selector should be
+treated as a defect; a name collision is that defect arriving by a different
+door. **Grep the class name before you use it.**
+
+### `.f-page` is the type ramp; `FPage` is the page assembly
+
+The shared name hides that these are different things, and the auth rebuild is
+where it matters. `.f-page` sets the sans family, the paper ground, the ink
+colour and `font-size-adjust: 0.53`, the optical-size compensation every
+font-size in `f-primitives.css` was calibrated against. Every F surface needs it
+or it renders in `globals.css`'s Merriweather at about 8% under the drawn size,
+silently. `FPage` is the marketing page assembly: a hero, counted sections, a
+close.
+
+`/auth/*` needs the first and not the second, so `app/auth/layout.tsx` supplies
+`.f-page` once for all five routes and `verify-f-scaffold.js` keeps them out of
+scope, with its header note updated to say so rather than leaving them looking
+like an oversight. **A single-card route is Direction F by wearing `.f-page` and
+the component layer.** If one ever grows a hero and numbered sections, move it
+under `(marketing)` and it comes into scope.
+
 ## How a page is assembled
 
 Added 2026-09-08. **A Direction F page composes four components; it does not copy class

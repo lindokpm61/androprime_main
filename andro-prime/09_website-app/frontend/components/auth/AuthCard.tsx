@@ -1,6 +1,36 @@
 import Link from 'next/link'
 import { OAuthButtons } from '@/components/auth/OAuthButtons'
 
+/**
+ * THE AUTH CARD, rebuilt in Direction F on 2026-09-08 from
+ * design/mockups/journey/auth-F.html Frames X, X2 and X3.
+ *
+ * ONE COMPONENT, FOUR ROUTES. `/auth/login`, `/auth/signup`, `/auth/reset` and
+ * `/auth/link` are 25-line wrappers around this file, passing a title, a
+ * standfirst and a server action. Frame X2 enumerates what changes between the
+ * modes and it is FIVE THINGS, no more: the heading, the standfirst, which
+ * fields render, the submit label, and which cross-links appear (each mode hides
+ * its own). Nothing else may vary, and the switches below are written so that a
+ * new mode has exactly five places to touch.
+ *
+ * COPY CARRIED VERBATIM. Every string here is the one that shipped, including
+ * the marketing opt-in sentence and the four cross-link labels. The titles and
+ * standfirsts arrive as props from the route files and are untouched.
+ *
+ * BEHAVIOUR CARRIED VERBATIM, and one piece of it is deliberately left wrong.
+ * ⚠ The signup `age` field has `min={18}` and NO `required` attribute, while
+ * `/auth/consent` and `/checkout/details` both make the same 18+ fact mandatory.
+ * Frame X2 flags it and hands it to Keith as a behaviour question, so it is
+ * reproduced exactly as it ships rather than quietly fixed inside a restyle:
+ * adding one word here would change who can create an account, which is not a
+ * redesign's call. See STATE.md.
+ *
+ * 🔴 THE PITCH PANEL WAS INK AND IS NOW LIGHT. See the auth block in
+ * f-primitives.css for the reasoning: the inverted panel is spent once per page
+ * on a conformity statement, and a dark half inside a `.f-core` inverts the
+ * tray → core depth ladder. Frame X draws both halves light.
+ */
+
 type AuthMode = 'login' | 'signup' | 'reset' | 'link'
 
 type AuthCardProps = {
@@ -13,6 +43,34 @@ type AuthCardProps = {
   nextPath?: string
 }
 
+/* THE PITCH LIST. Three claims, unchanged from what ships. They are here rather
+   than in the four route files because all four modes show the same three: it is
+   a statement about the product, not about the mode. */
+const PITCH = [
+  'Results in your private dashboard',
+  'EU data hosting: GDPR compliant',
+  'GP-set ranges and explanations',
+]
+
+/* The submit label, one of Frame X2's five differences. */
+const SUBMIT: Record<AuthMode, string> = {
+  login: 'Log In',
+  signup: 'Create Account',
+  reset: 'Send Reset Link',
+  link: 'Email me a sign-in link',
+}
+
+/* The cross-links, and each mode hides its own. Written as data so "each mode
+   hides its own" is one filter rather than four hand-maintained conditionals,
+   which is how the set drifts. "Back to site" has no mode and always renders. */
+const XLINKS: { mode?: AuthMode; href: string; label: string }[] = [
+  { mode: 'login', href: '/auth/login', label: 'Log in' },
+  { mode: 'signup', href: '/auth/signup', label: 'Create account' },
+  { mode: 'reset', href: '/auth/reset', label: 'Reset password' },
+  { mode: 'link', href: '/auth/link', label: 'Email me a sign-in link' },
+  { href: '/', label: 'Back to site' },
+]
+
 export function AuthCard({
   mode,
   title,
@@ -22,153 +80,119 @@ export function AuthCard({
   error,
   nextPath,
 }: AuthCardProps) {
+  // Which fields render: Frame X2's third difference. Password and the OAuth
+  // block are for the two modes that actually authenticate; reset and link only
+  // ever need an address to send to.
+  const wantsPassword = mode !== 'reset' && mode !== 'link'
+
   return (
-    <section className="min-h-screen bg-gray-50 px-6 py-24">
-      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="border-4 border-black bg-black p-8 text-white sm:p-12">
-          <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-gray-600 mb-8">
-            <span className="w-2 h-2 bg-white" />
-            <span className="data-label !text-gray-400 !text-[10px]">Andro Prime</span>
-          </div>
-          <h1 className="max-w-xl font-sans font-black text-4xl uppercase tracking-tighter leading-[0.9] sm:text-6xl">
-            {title}
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-gray-300 font-serif">
-            {description}
-          </p>
-          <div className="mt-12 space-y-4 border-t-2 border-gray-600 pt-10">
-            {[
-              'Results in your private dashboard',
-              'EU data hosting: GDPR compliant',
-              'GP-set ranges and explanations',
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-3">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" className="text-white shrink-0">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span className="data-label !text-gray-400">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="border-4 border-black bg-white p-8 sm:p-10">
-          {message ? (
-            <div className="mb-6 border-2 border-black bg-gray-100 px-4 py-3 text-sm font-serif text-black">
-              {message}
+    <section className="f-wrap" style={{ paddingTop: 52, paddingBottom: 52 }}>
+      <div className="f-tray">
+        {/* padding 0, so the two halves run to the card's own edges and the
+            divider is the full height of it. `.f-core` already clips, which is
+            what keeps the panels inside the 22px radius. */}
+        <div className="f-core" style={{ padding: 0 }}>
+          <div className="f-auth">
+            <div className="f-auth-pitch">
+              <span className="f-eyebrow">Andro Prime</span>
+              <h1 className="f-h2" style={{ marginTop: 16 }}>{title}</h1>
+              <p className="f-sub" style={{ marginTop: 12, marginBottom: 20 }}>{description}</p>
+              <ul className="f-ticks">
+                {PITCH.map((item) => (
+                  <li key={item}>
+                    <span aria-hidden="true">&#10003;</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-          ) : null}
 
-          {error ? (
-            <div className="mb-6 border-2 border-black bg-black px-4 py-3 text-white">
-              <span className="data-label !text-gray-400 mb-1 block">Error</span>
-              <span className="text-sm font-serif">{error}</span>
-            </div>
-          ) : null}
+            <div className="f-auth-form">
+              {/* Both banner strings arrive in the URL from whichever server
+                  action redirected here, so the text is not this component's and
+                  there is no fixed list of it. See lib/auth/actions.ts. */}
+              {message ? <div className="f-banner f-banner-msg">{message}</div> : null}
 
-          {mode !== 'reset' && mode !== 'link' ? (
-            <>
-              <OAuthButtons nextPath={nextPath} />
-              <div className="my-6 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gray-600" />
-                <span className="data-label text-xs text-gray-500">OR</span>
-                <div className="h-px flex-1 bg-gray-600" />
-              </div>
-            </>
-          ) : null}
+              {error ? (
+                <div className="f-banner f-banner-err" role="alert">
+                  <span className="f-banner-k">Error</span>
+                  {error}
+                </div>
+              ) : null}
 
-          <form action={action} className="space-y-5">
-            {nextPath ? <input type="hidden" name="next" value={nextPath} /> : null}
+              {wantsPassword ? (
+                <>
+                  <OAuthButtons nextPath={nextPath} />
+                  <div className="f-or">or</div>
+                </>
+              ) : null}
 
-            <label className="block">
-              <span className="data-label mb-2 block">Email</span>
-              <input
-                name="email"
-                type="email"
-                required
-                className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition-colors focus:bg-gray-100"
-                placeholder="you@andro-prime.com"
-              />
-            </label>
+              <form action={action}>
+                {nextPath ? <input type="hidden" name="next" value={nextPath} /> : null}
 
-            {mode !== 'reset' && mode !== 'link' ? (
-              <label className="block">
-                <span className="data-label mb-2 block">Password</span>
-                <input
-                  name="password"
-                  type="password"
-                  required
-                  minLength={8}
-                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition-colors focus:bg-gray-100"
-                  placeholder="Minimum 8 characters"
-                />
-              </label>
-            ) : null}
-
-            {mode === 'signup' ? (
-              <>
-                <label className="block">
-                  <span className="data-label mb-2 block">Age</span>
+                <label className="f-formrow">
+                  <span className="f-blab">Email</span>
                   <input
-                    name="age"
-                    type="number"
-                    min={18}
-                    className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none transition-colors focus:bg-gray-100"
-                    placeholder="18+ only"
+                    className="f-inp"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="you@andro-prime.com"
                   />
                 </label>
 
-                <label className="flex items-start gap-3 border-2 border-black px-4 py-4">
-                  <input
-                    name="marketingConsent"
-                    type="checkbox"
-                    className="mt-1 h-4 w-4 border-2 border-black"
-                  />
-                  <span className="text-sm leading-relaxed text-black">
-                    I’m happy to receive Andro Prime updates and educational emails.
-                  </span>
-                </label>
-              </>
-            ) : null}
+                {wantsPassword ? (
+                  <label className="f-formrow">
+                    <span className="f-blab">Password</span>
+                    <input
+                      className="f-inp"
+                      name="password"
+                      type="password"
+                      required
+                      minLength={8}
+                      placeholder="Minimum 8 characters"
+                    />
+                  </label>
+                ) : null}
 
-            <button
-              type="submit"
-              className="w-full border-4 border-black bg-black px-5 py-3 font-sans text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black"
-            >
-              {mode === 'login'
-                ? 'Log In'
-                : mode === 'signup'
-                  ? 'Create Account'
-                  : mode === 'link'
-                    ? 'Email me a sign-in link'
-                    : 'Send Reset Link'}
-            </button>
-          </form>
+                {mode === 'signup' ? (
+                  <>
+                    <label className="f-formrow">
+                      <span className="f-blab">Age</span>
+                      {/* ⚠ NO `required`, and that is what ships. See the note at
+                          the top of this file: it is Keith's call, not a
+                          restyle's. */}
+                      <input
+                        className="f-inp"
+                        name="age"
+                        type="number"
+                        min={18}
+                        placeholder="18+ only"
+                      />
+                    </label>
 
-          <div className="mt-6 flex flex-wrap gap-4 text-sm font-bold uppercase tracking-wide">
-            {mode !== 'login' ? (
-              <Link href="/auth/login" className="underline">
-                Log in
-              </Link>
-            ) : null}
-            {mode !== 'signup' ? (
-              <Link href="/auth/signup" className="underline">
-                Create account
-              </Link>
-            ) : null}
-            {mode !== 'reset' ? (
-              <Link href="/auth/reset" className="underline">
-                Reset password
-              </Link>
-            ) : null}
-            {mode !== 'link' ? (
-              <Link href="/auth/link" className="underline">
-                Email me a sign-in link
-              </Link>
-            ) : null}
-            <Link href="/" className="underline">
-              Back to site
-            </Link>
+                    <label className="f-consent">
+                      <input name="marketingConsent" type="checkbox" />
+                      <span>
+                        I&rsquo;m happy to receive Andro Prime updates and educational emails.
+                      </span>
+                    </label>
+                  </>
+                ) : null}
+
+                <button type="submit" className="f-btn f-btn-block" style={{ marginTop: 20 }}>
+                  {SUBMIT[mode]}
+                </button>
+              </form>
+
+              <div className="f-xlinks">
+                {XLINKS.filter((l) => l.mode !== mode).map((l) => (
+                  <Link key={l.href} href={l.href} className="f-kchip">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

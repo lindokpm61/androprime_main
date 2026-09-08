@@ -2783,3 +2783,153 @@
    (0,2,0) against the class's own (0,1,0), so this does not depend on sitting
    later in the file — the rule this stylesheet has now recorded five times. */
 .f-sec > .f-narrow { padding-left: 0; padding-right: 0; }
+
+/* ============================================================================
+   THE AUTH CARD — /auth/login, /auth/signup, /auth/reset, /auth/link and
+   /auth/consent, added 2026-09-08 from design/mockups/journey/auth-F.html
+   Frames X, X2, X3 and Y.
+
+   FIVE ROUTES, TWO SURFACES. Frame X2 is the finding that shapes this: four of
+   the five routes are ONE component in four modes (`components/auth/AuthCard`),
+   and the route files are 25-line wrappers passing a title, a standfirst and a
+   server action. Only `/auth/consent` is its own page. So the classes below are
+   written once and serve all five.
+
+   🔴 THE PITCH PANEL IS LIGHT, AND THAT IS A CHANGE FROM WHAT SHIPS. The live
+   card fills the left half with ink and white text. Frame X draws both halves
+   light, separated by a hairline, and that is followed for two reasons beyond
+   the drawing. The inverted panel is spent ONCE PER PAGE and reserved for a
+   conformity statement (see DESIGN.md, "where each page spends its one"); an
+   auth pitch is not one. And the depth ladder runs tray → core, so a dark half
+   INSIDE a `.f-core` would put the heaviest surface at the top of the stack
+   where the ladder says the lightest goes. The two halves are distinguished by
+   typography and by the divider, not by ground.
+
+   IT REUSES THE FORM LAYER /test-selector ADDED and adds no second vocabulary:
+   `.f-inp` for every field, `.f-consent` for the marketing opt-in, `.f-blab` for
+   the field labels, `.f-kchip` for the cross-links, `.f-ticks` for the pitch
+   list. That is the whole point of having named those for what they are rather
+   than for the page that first needed them.
+   ============================================================================ */
+
+/* ---- the split card ----------------------------------------------------- */
+
+/* Gapless, because this is ONE card divided rather than two cards side by side.
+   `.f-splitgrid` is the two-cards-with-a-gap idiom and is the wrong one here:
+   the frame draws a single `.f-core` at `padding: 0` with the halves running to
+   its edges, which is why the core carries `overflow: hidden` and the panels
+   supply their own padding. */
+.f-auth { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .f-auth { grid-template-columns: 1.05fr 0.95fr; } }
+/* The divider turns with the layout: a rule BETWEEN stacked halves on mobile,
+   a rule BESIDE them once they sit side by side. Drawn on the second child so a
+   one-column card (none currently) would carry no stray edge. */
+.f-auth > * + * { border-top: 1px solid var(--hair); }
+@media (min-width: 900px) { .f-auth > * + * { border-top: 0; border-left: 1px solid var(--hair); } }
+
+.f-auth-pitch { padding: 26px 22px; }
+.f-auth-form { padding: 26px 22px; }
+@media (min-width: 800px) {
+  .f-auth-pitch { padding: 34px 32px; }
+  .f-auth-form { padding: 34px 32px; }
+}
+
+/* ---- the OAuth divider -------------------------------------------------- */
+
+.f-or {
+  display: flex; align-items: center; gap: 14px;
+  margin: 18px 0;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3);
+}
+.f-or::before, .f-or::after { content: ''; flex: 1; height: 1px; background: var(--hair); }
+
+/* ---- a field with its own label ----------------------------------------- */
+
+/* 🔴 NAMED `.f-formrow` AND NOT `.f-field`, WHICH IS TAKEN. `.f-field` is the
+   HERO DATA CANVAS: `position: absolute`, z-index 1, sized to the hero. It was
+   the obvious name, the journey frame calls this element `.field`, and taking it
+   collided two unrelated components on one selector at equal specificity
+   (0,1,0), so source order decided and the hero's rule won. The result was two
+   `<label>` elements absolutely positioned at the top-left of the viewport at
+   1320x986, with the email and password inputs rendered OUTSIDE the card
+   entirely. Nothing failed: the class exists, so `verify-f-classes` passed, and
+   it is not a modifier pair, so the specificity checker passed too.
+   This file already says "two rule blocks for one selector in this file should
+   be treated as a defect". This was that defect, arriving by name collision
+   rather than by duplication. Grep before naming.
+
+   The label is `.f-blab`, whose bare rule sets no display and carries a 14px
+   bottom margin meant for a section opener. Inside a form it needs to be a block
+   and needs less air between it and the input it names. */
+.f-formrow { display: block; margin-bottom: 14px; }
+.f-formrow > .f-blab { display: block; margin-bottom: 7px; }
+/* The input fills its row. `.f-inp` carries `flex: 1` for the one place it sits
+   in a `.f-btns` row (the /test-selector capture), and `flex` is inert outside a
+   flex container, so a form row has to state the width itself. Stated here
+   rather than inline on six call sites. */
+.f-formrow > .f-inp { width: 100%; }
+
+/* ---- the cross-links ---------------------------------------------------- */
+
+.f-xlinks { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+
+/* ---- the two banners ---------------------------------------------------- */
+
+/* 🔴 THE FRAME'S ASYMMETRY IS KEPT AND ITS MECHANISM IS NOT AVAILABLE. Frame X3
+   argues, correctly, that the MESSAGE is the one to point at and the error is
+   the one to keep quiet: an auth error is usually something the reader already
+   knows (a wrong password), while a message explains why they are looking at
+   this screen at all ("check your email"). It implements that by giving the
+   message "the one accent".
+   There is no accent to give. `--flag` became ink on 2026-09-03 under the
+   saturation ruling, so tinting one banner amber and leaving the other grey now
+   renders as two nearly identical greys.
+
+   THE ASYMMETRY MOVES ONTO ELEVATION, WHICH IS THIS DIRECTION'S OWN HIERARCHY
+   DEVICE. The governing idea of F is "a recessed tray holding a raised core", so
+   raised-versus-recessed is the one distinction the system already spends
+   everywhere and the one a reader is already trained on by every other page. The
+   message is a RAISED core: white, hairline ring, ambient shadow. The error is
+   RECESSED: `--sunk`, inset ring, no shadow, plus a mono key. Same hierarchy the
+   frame wanted, no colour, and nothing to re-do at the next ruling.
+
+   ⚠ The first attempt gave the message a 2px rule on its leading edge, borrowing
+   `.f-nudge`'s device. It renders as a CRESCENT, not an edge: a 2px border on a
+   22px radius follows the curve, so it read as a partial ring somebody had
+   half-drawn. `.f-nudge` gets away with it because it has no radius at all. A
+   border and a large radius do not combine; reach for elevation instead. */
+.f-banner {
+  border-radius: var(--radius-inset);
+  padding: 13px 16px;
+  margin-bottom: 16px;
+  font-family: var(--font-sans); font-size: 14.5px; line-height: 1.55;
+  color: var(--ink);
+}
+/* Compounded onto the base, because both are always worn together: a bare
+   `.f-banner-msg` would be a modifier tying with its base at (0,1,0) and winning
+   only by sitting lower in the file, which is the defect this stylesheet has now
+   recorded five times. */
+.f-banner.f-banner-msg {
+  background: var(--core);
+  box-shadow: var(--shadow-ambient), inset 0 0 0 1px var(--hair-2);
+}
+.f-banner.f-banner-err {
+  background: var(--sunk);
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.f-banner .f-banner-k {
+  display: block; margin-bottom: 5px;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  /* --ink-2, not --ink-3: this key sits on `--sunk`, where --ink-3 measures
+     4.10:1. The same pairing that failed on twelve `.f-spec-k` instances. */
+  color: var(--ink-2);
+}
+
+/* ---- a full-width button ------------------------------------------------ */
+
+/* `.f-btn` is `inline-flex` and sized by its label, which is right for a CTA in
+   a row of them and wrong for the only action on a form. Compounded for the
+   reason `.f-banner-msg` is. */
+.f-btn.f-btn-block { display: flex; width: 100%; justify-content: center; }

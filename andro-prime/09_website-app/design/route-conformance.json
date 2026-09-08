@@ -33,7 +33,7 @@
       "href": "/account",
       "file": "app/(app)/account/page.tsx",
       "status": 200,
-      "classes": 0,
+      "classes": 22,
       "verdict": "not measured",
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
@@ -46,7 +46,7 @@
       "href": "/account/membership",
       "file": "app/(app)/account/membership/page.tsx",
       "status": 200,
-      "classes": 0,
+      "classes": 22,
       "verdict": "not measured",
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
@@ -72,12 +72,12 @@
       "href": "/auth/consent",
       "file": "app/auth/consent/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 17,
+      "verdict": "F",
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 19
       }
     },
     {
@@ -85,8 +85,8 @@
       "href": "/auth/link",
       "file": "app/auth/link/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 18,
+      "verdict": "F",
       "note": "",
       "source": {
         "scaffold": false,
@@ -98,8 +98,8 @@
       "href": "/auth/login",
       "file": "app/auth/login/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 20,
+      "verdict": "F",
       "note": "",
       "source": {
         "scaffold": false,
@@ -111,8 +111,8 @@
       "href": "/auth/reset",
       "file": "app/auth/reset/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 18,
+      "verdict": "F",
       "note": "",
       "source": {
         "scaffold": false,
@@ -124,8 +124,8 @@
       "href": "/auth/signup",
       "file": "app/auth/signup/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 21,
+      "verdict": "F",
       "note": "",
       "source": {
         "scaffold": false,
@@ -215,7 +215,7 @@
       "href": "/founding-member-status",
       "file": "app/(app)/founding-member-status/page.tsx",
       "status": 200,
-      "classes": 0,
+      "classes": 22,
       "verdict": "not measured",
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
@@ -410,7 +410,7 @@
       "href": "/results-dashboard",
       "file": "app/(app)/results-dashboard/page.tsx",
       "status": 200,
-      "classes": 0,
+      "classes": 22,
       "verdict": "not measured",
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
@@ -423,7 +423,7 @@
       "href": "/results-dashboard/handoff",
       "file": "app/(app)/results-dashboard/handoff/page.tsx",
       "status": 200,
-      "classes": 0,
+      "classes": 22,
       "verdict": "not measured",
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
@@ -449,7 +449,7 @@
       "href": "/subscriptions",
       "file": "app/(app)/subscriptions/page.tsx",
       "status": 200,
-      "classes": 0,
+      "classes": 22,
       "verdict": "not measured",
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
@@ -475,7 +475,7 @@
       "href": "/supplement-waitlist-status",
       "file": "app/(app)/supplement-waitlist-status/page.tsx",
       "status": 200,
-      "classes": 0,
+      "classes": 22,
       "verdict": "not measured",
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
@@ -571,13 +571,16 @@
     "/demo": "runs the authenticated app shell (`ap-*`), not the marketing layer, so Direction F is the wrong question"
   },
   "unused": [
+    "f-banner",
+    "f-banner-err",
+    "f-banner-k",
+    "f-banner-msg",
     "f-bar",
     "f-btn-on",
     "f-burger",
     "f-c-12",
     "f-chip",
     "f-chips",
-    "f-consent",
     "f-cookie",
     "f-cookieacts",
     "f-cookielink",
@@ -590,7 +593,6 @@
     "f-footer",
     "f-footlink",
     "f-in",
-    "f-inp",
     "f-kitaside",
     "f-kitfoot",
     "f-kitgrid",
@@ -678,10 +680,13 @@
     "fb-wrap"
   ],
   "stateOnly": [
+    "f-banner",
+    "f-banner-err",
+    "f-banner-k",
+    "f-banner-msg",
     "f-burger",
     "f-chip",
     "f-chips",
-    "f-consent",
     "f-cookie",
     "f-cookieacts",
     "f-cookielink",
@@ -692,7 +697,6 @@
     "f-footbar",
     "f-footer",
     "f-footlink",
-    "f-inp",
     "f-legal",
     "f-logo",
     "f-nav",

@@ -27,6 +27,23 @@
  * and are not held to it; when they are rebuilt they come into scope by being
  * moved, not by an edit here.
  *
+ * ⚠ THE AUTH ROUTES ARE DIRECTION F AND ARE DELIBERATELY NOT IN SCOPE, since
+ * 2026-09-08. That sentence above used to imply every rebuilt route eventually
+ * lands in `app/(marketing)`, and auth is the case that shows it does not.
+ * `.f-page` and `<FPage>` are different things and the shared name hides it:
+ * `.f-page` is the TYPE RAMP's root, which every F surface needs and which
+ * `app/auth/layout.tsx` supplies; `FPage` is the marketing PAGE ASSEMBLY, a hero
+ * plus counted sections plus a close. `/auth/*` is one centred card with none of
+ * those, so composing `FPage` would mean a section counter reading `of={0}` and
+ * a hero slot nothing fills. Moving auth under `(marketing)` would also wrap a
+ * password field in the marketing nav and footer, which Frame X draws it without.
+ *
+ * So the rule this check enforces is narrower than "every F route": a marketing
+ * page built from a hero and numbered sections must compose the scaffold. A
+ * single-card route is Direction F by wearing `.f-page` and the component layer,
+ * and is not held to an assembly it does not have. If a future auth route grows
+ * a hero and sections, move it and it comes into scope.
+ *
  * ALLOWED, and the reason is in ALLOW below. `/` builds its hero from a film
  * rather than the shared field, which is one page and one assembly, so it stays
  * hand-written rather than growing an `FHero` variant with a single caller.
