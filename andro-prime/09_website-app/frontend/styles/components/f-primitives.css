@@ -129,7 +129,7 @@
    the file. A modifier that only works from where it happens to sit is a bug
    waiting for the next person who reorders a stylesheet. */
 .f-tray.f-tray-flag { box-shadow: var(--shadow-ambient), 0 0 0 1.5px var(--flag); }
-.f-tray-pick { transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+.f-tray.f-tray-pick { transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
 /* 🔴 THE HOVER MUST NOT PAINT THE RING. It carried
    `0 0 0 1.5px var(--flag)`, byte-identical to the `.f-tray-flag` rule above,
    so the pointer FORGED the emphasis: Kit 1 hovered rendered identical to
@@ -138,9 +138,9 @@
    all three transactions at once. The hover keeps the lift, which is what says
    "this answers a pointer"; the ring stays exclusive to the flagged card,
    which is what says "this one". Found by the 2026-09-02 /kits critique. */
-.f-tray-pick:hover { transform: translateY(-3px); box-shadow: var(--shadow-ambient-lift); }
+.f-tray.f-tray-pick:hover { transform: translateY(-3px); box-shadow: var(--shadow-ambient-lift); }
 @media (prefers-reduced-motion: reduce) {
-  .f-tray-pick, .f-tray-pick:hover { transition: none; transform: none; }
+  .f-tray.f-tray-pick, .f-tray.f-tray-pick:hover { transition: none; transform: none; }
 }
 
 /* THE TRAY LIFTS ON HOVER. This was in the direction and the port dropped it,
@@ -504,11 +504,11 @@
 
 /* The ghost is a frosted panel in the direction, not a transparent hole, and
    its pip inverts because it sits on light rather than on ink. */
-.f-btn-ghost .f-pip { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.f-btn.f-btn-ghost .f-pip { background: color-mix(in srgb, var(--ink) 8%, transparent); }
 
 /* The small variant carries a proportionally smaller circle. */
-.f-btn-sm:has(.f-pip) { padding-right: 7px; padding-left: 16px; gap: 9px; }
-.f-btn-sm .f-pip { width: 24px; height: 24px; font-size: 11px; }
+.f-btn.f-btn-sm:has(.f-pip) { padding-right: 7px; padding-left: 16px; gap: 9px; }
+.f-btn.f-btn-sm .f-pip { width: 24px; height: 24px; font-size: 11px; }
 
 @media (prefers-reduced-motion: reduce) {
   .f-btn, .f-btn .f-pip { transition: none; }
@@ -521,7 +521,7 @@
    over the hero's near-white wash a fully transparent button reads as a plain
    white one. A duplicate rule for the same selector is not a style question, it
    is a bug waiting for whoever edits the wrong copy. */
-.f-btn-ghost {
+.f-btn.f-btn-ghost {
   background: color-mix(in srgb, var(--paper) 55%, transparent);
   backdrop-filter: blur(8px);
   color: var(--ink);
@@ -532,7 +532,7 @@
    plus "Go to test selector" and "Full process breakdown". `.f-btn` is
    `inline-flex items-center`, so a min-height centres the label rather than
    pushing it down. */
-.f-btn-sm { padding: 10px 18px; font-size: 13.5px; min-height: 44px; }
+.f-btn.f-btn-sm { padding: 10px 18px; font-size: 13.5px; min-height: 44px; }
 .f-btns { @apply flex flex-wrap items-center; gap: 12px; }
 
 .f-flagchip {
@@ -1057,7 +1057,7 @@
 .js .f-band { transform: scaleX(0); transform-origin: left center; }
 .js .f-you { opacity: 0; }
 .js .f-mk.on .f-band { animation: fBandIn 0.9s var(--ease) var(--d, 0ms) forwards; }
-.js .f-mk.on .f-band-ours { animation-delay: calc(var(--d, 0ms) + 140ms); }
+.js .f-mk.on .f-band.f-band-ours { animation-delay: calc(var(--d, 0ms) + 140ms); }
 .js .f-mk.on .f-you { animation: fYouIn 0.7s var(--ease) calc(var(--d, 0ms) + 500ms) forwards; }
 @keyframes fBandIn { to { transform: scaleX(1); } }
 @keyframes fYouIn {
@@ -1073,7 +1073,7 @@
   .js .f-band { transform: none; }
   .js .f-you { opacity: 1; }
   .js .f-mk.on .f-band,
-  .js .f-mk.on .f-band-ours,
+  .js .f-mk.on .f-band.f-band-ours,
   .js .f-mk.on .f-you { animation: none; }
 }
 
@@ -1417,8 +1417,16 @@
    floor keeps the hero off the floating nav shell at full lift.
    Only needed below 900px. Measured at 1440 the banner clears every CTA on all
    six routes by a wide margin, so desktop keeps the direction's spacing. */
-.f-sec-hero { padding-top: max(12px, calc(var(--f-hero-pt, 72px) - var(--f-consent-h, 0px))); }
-@media (min-width: 900px) { .f-sec-hero { padding-top: var(--f-hero-pt-lg, 130px); } }
+/* 🔴 WRITTEN AS (0,2,0) BY REPEATING THE CLASS, NOT AS `.f-sec.f-sec-hero`, AND
+   THE DIFFERENCE IS LOAD-BEARING. This variant is worn BOTH ways: with the base
+   on `/authors/[slug]` and `/how-it-works` (`f-wrap f-sec f-sec-hero`) and
+   WITHOUT it on all three kit pages (`f-wrap f-sec-hero`). Compounding onto
+   `.f-sec` was tried on 2026-09-08 and measured: the three kit heroes lost their
+   padding-top entirely, 62px to 0, because the selector no longer matched them.
+   Repeating the class buys the same specificity with no dependency on the markup.
+   A modifier that can stand alone has to raise itself. */
+.f-sec-hero.f-sec-hero { padding-top: max(12px, calc(var(--f-hero-pt, 72px) - var(--f-consent-h, 0px))); }
+@media (min-width: 900px) { .f-sec-hero.f-sec-hero { padding-top: var(--f-hero-pt-lg, 130px); } }
 
 /* ============================================================================
    /kits (Frame O) primitives. Added 2026-08-30.
@@ -1994,7 +2002,7 @@
    full-height lab band and agreement reads as containment. It earns its keep on
    every other row too: our band being INSIDE the lab's is the entire argument of
    the page, and the geometry now says so without the reader being told. */
-.f-band-ours { background: var(--ours); top: 2px; bottom: 2px; }
+.f-band.f-band-ours { background: var(--ours); top: 2px; bottom: 2px; }
 /* THE VALUE MARKER, rebuilt 2026-09-01. Keith: the marker is barely visible
    against the two greys, and he is right, and the cause was the band-contrast fix
    the day before. Raising --ours to 0.60 ink took solid-ink-on-that-band from

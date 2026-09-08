@@ -880,6 +880,36 @@ unchanged at `-2`. Reveal still hides 24 of 25 below-fold elements at load with 
 `matrix(1,0,0,1,0,44)` travel and 7px blur, still resolves to 0 hidden after a scroll, and reduced
 motion still forces 0 hidden.
 
+### The fifth instance was found by a script, and that is the point (2026-09-08)
+
+`.f-tray-pick` sets `transition: transform 0.3s, box-shadow 0.3s` at line 132. `.f-tray` sets
+`transition: box-shadow 0.7s, transform 0.7s` at line 150. Equal specificity, base declared later,
+so **the transaction cards on `/kits` had been hovering at the tray's 0.7s, not the 0.3s the pick
+rule asks for, since the day it was written.** Measured in the browser before and after, at 1440 and
+at 390, on all three cards.
+
+Nobody found it by reading. The four instances above were each found by someone noticing a page
+looked slightly wrong and then digging; this one was found by
+`scripts/verify-modifier-specificity.js` in its first run, along with nine other latent ties that
+nothing was going to notice because they all happen to be declared in a winning position TODAY.
+
+🔴 **THERE ARE TWO FIXES AND PICKING THE WRONG ONE BREAKS PAGES.** A modifier always worn with its
+base compounds onto it: `.f-tray.f-tray-pick`. A modifier that can stand alone must raise ITSELF by
+repeating its class: `.f-sec-hero.f-sec-hero`. `.f-sec-hero` is worn as `f-wrap f-sec f-sec-hero`
+on `/authors/[slug]` and `/how-it-works`, and as `f-wrap f-sec-hero` on all three kit pages.
+Compounding it onto `.f-sec` was tried, and the three kit heroes silently lost their padding-top
+entirely, **62px to 0**, because the selector stopped matching them. The script now counts the call
+sites and names which of the two fixes applies.
+
+⚠ **THE CHECK ITSELF WAS WRONG TWICE BEFORE IT WAS RIGHT, AND BOTH TIMES IT WAS GREEN.** One version
+could not see selectors inside `@media` blocks, because a global regex has to consume the `{` of
+`@media (...) {` and cannot then use that same brace as the anchor for the rule nested inside it.
+Another read class names by splitting on whitespace, so a template literal writing them flush
+against an interpolation, as Nav.tsx does with f-navshell and f-scrolled, contributed nothing.
+Both were found only because a third signal disagreed. **A checker that passes
+on arrival has proved nothing**; each of the four was mutation-tested — break the thing on purpose,
+confirm the check goes red, restore — and that is the acceptance test for the next one.
+
 ## The measurement device
 
 Added 2026-09-02. **The one piece of visual language the product owns and the category does not**, spent
@@ -1167,6 +1197,18 @@ Recorded so they are not rediscovered as surprises.
     the exact value the token’s own comment states as its floor for functional text on paper, and
     passes AA for the 12.5px it is set at.
     **A value that cannot be measured is usually a sign the design is wrong, not the ruler.**
+12. ⚠ **THE SYSTEM IS NOW PARTLY ENFORCED, AND THE BOUNDARY MATTERS.** Five checks run in
+    `npm test` (`npm run test:design`): token existence, class existence, modifier specificity, the
+    dark-panel mechanism, and the hero field's geometry. Two more need a dev server and run on
+    demand, `npm run test:design:live`: the scroll-reveal paths and the rendered dark-ground
+    contrast sweep over 16 routes. **What is enforced is what a file can be read to prove.** Nothing
+    here checks that a page looks right, that spacing follows the rhythm, that a photograph is
+    cropped to its focal point, or that a new page uses the system at all — the hero assembly is
+    still hand-copied across 7 files and `SectionRule` still takes a hand-counted `of={N}` that
+    nothing validates. And `12_operations/automation/reconcile-f-css.js` is still wired into
+    nothing and still reports **41 conflicts, 30 mockup-vs-mockup, 72 unpaired**; that disagreement
+    is between the mockups and the build, which is a different question from whether the build is
+    internally consistent, and it needs rulings rather than a green light.
 11. ⚠ **The gap numbers are not in order** (1, 2, 3, 6, 7, 4, 5, 8, 9, 10, 11) and are kept as they
     are on purpose: they are cited by number from STATE.md and from commit messages, so renumbering
     would break every reference for a tidiness nobody reads.
