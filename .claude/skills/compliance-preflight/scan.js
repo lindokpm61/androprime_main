@@ -369,12 +369,58 @@ const CODE_FILE = /\.(ts|tsx|js|jsx|mjs|cjs)$/i;
 // Conservative — a leading comment marker, a // before the match, or an unclosed
 // inline /* enclosing it. It can miss the middle lines of a multi-line block
 // comment; those still surface as HARD, which is the safe direction.
-function inCodeComment(line, idx) {
+//
+// BLOCK-COMMENT STATE IS TRACKED ACROSS LINES (2026-09-08, Observation 541).
+// The heuristic above is line-local, so it caught `//`, a leading `*` and an
+// inline `/* … */`, and missed the continuation lines of a block comment that
+// do not start with `*`. A flagged word inside a `/* … */` header in a `.tsx`
+// file was therefore classified REVIEW — the customer-copy bucket — alongside a
+// genuine finding in real page copy, and the summary presented the two
+// identically. The repo's own convention puts long explanatory headers in
+// `/* */` blocks, so the syntax the codebase uses most for exactly the prose
+// that triggers false positives was the one not covered.
+//
+// `blockCommentOpen(lines)` returns, per line index, whether the line BEGINS
+// inside an unterminated block comment. Conservative by construction: it counts
+// markers without parsing strings, so a `/*` inside a string literal can make
+// following lines read as commented. That direction is the safe one only for
+// false negatives on a HARD gate, so it is paired with the line-local test
+// rather than replacing it.
+function blockCommentOpen(lines) {
+  const state = new Array(lines.length).fill(false);
+  let open = false;
+  for (let i = 0; i < lines.length; i++) {
+    state[i] = open;
+    const l = lines[i];
+    let j = 0;
+    while (j < l.length - 1) {
+      if (!open && l[j] === '/' && l[j + 1] === '*') { open = true; j += 2; continue; }
+      if (open && l[j] === '*' && l[j + 1] === '/') { open = false; j += 2; continue; }
+      // `//` outside a block comment kills the rest of the line, so a `/*` in a
+      // trailing line comment must not open a block.
+      if (!open && l[j] === '/' && l[j + 1] === '/') break;
+      j++;
+    }
+  }
+  return state;
+}
+
+function inCodeComment(line, idx, openAtLineStart) {
+  if (openAtLineStart) {
+    // Inside a block comment unless it closed before the match on this line.
+    const close = line.slice(0, idx).lastIndexOf('*/');
+    if (close === -1) return true;
+  }
   const lead = line.trimStart();
-  if (lead.startsWith('//') || lead.startsWith('*') || lead.startsWith('/*')) return true;
+  // `{/* … */}` is the JSX form and is just as invisible to a customer.
+  if (lead.startsWith('//') || lead.startsWith('/*') || lead.startsWith('{/*')) return true;
+  // A leading `*` is a block-comment continuation — but `*/` CLOSES the block,
+  // so anything after it on that line is code. Matching a bare `*` here graded
+  // `*/ export const label = "We diagnose …"` as a comment.
+  if (lead.startsWith('*') && !lead.startsWith('*/')) return true;
   const before = line.slice(0, idx);
   if (before.includes('//')) return true;
-  const open = before.lastIndexOf('/*');
+  const open = Math.max(before.lastIndexOf('/*'), before.lastIndexOf('{/*'));
   const close = before.lastIndexOf('*/');
   return open !== -1 && open > close;
 }
@@ -384,6 +430,7 @@ for (const f of files) {
   if (!fs.existsSync(f)) { console.log(`SKIP  ${f} (not found)`); continue; }
   const lines = fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n').split('\n');
   const isCode = CODE_FILE.test(f);
+  const blockOpen = isCode ? blockCommentOpen(lines) : null;
   const folded = foldedMap(lines);
   const exc = parseExceptions(lines);
   scanned++;
@@ -428,9 +475,15 @@ for (const f of files) {
       // meaningful for a raw-line match. Frontmatter block scalars do not carry
       // inline HTML, so skipping this for a markup match costs nothing.
       const sent = (p.guard && !viaMarkup) ? logical(m.index) : null;
-      const negHere = NEG.test(viaMarkup ? stripped : ln);
+      // Sentence-scoped, not line-scoped (Observation 390). `m.index` indexes
+      // whichever string produced the match, so the sentence tested is the one
+      // the term is actually in — a negation in the previous sentence on the
+      // same paragraph line no longer clears it.
+      const physical = viaMarkup ? stripped : ln;
+      const negSentence = p.guard ? sentenceAt(physical, m.index) : '';
+      const negHere = p.guard && NEG.test(negSentence);
       if (p.guard && (negHere || (sent && NEG.test(sent)))) {
-        const src = negHere ? (viaMarkup ? stripped : text) : sent;
+        const src = negHere ? negSentence : sent;
         const note = negHere
           ? (viaMarkup ? ' (markup stripped)' : '')
           : ' (logical sentence rebuilt from a folded YAML block)';
@@ -445,7 +498,7 @@ for (const f of files) {
       // Skipped for a markup match: `m.index` indexes `stripped`, not `ln`, so
       // the comment test would read the wrong column. Reporting rather than
       // exempting is the safe direction.
-      if (isCode && !viaMarkup && inCodeComment(ln, m.index)) {
+      if (isCode && !viaMarkup && inCodeComment(ln, m.index, blockOpen[n])) {
         comment++; console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${m[0]}» inside a code comment — not customer-facing, gate NOT failed. Confirm it is not a rendered string in the judgement pass.\n   ${text.slice(0, 140)}`);
         continue;
       }
@@ -463,7 +516,19 @@ for (const f of files) {
       let m = ln.match(p.re);
       let viaMarkup = false;
       if (!m && hasMarkup) { m = stripped.match(p.re); viaMarkup = m !== null; }
-      if (m) { review++; console.log(`\n🟠 REVIEW ${f}:${n + 1}  «${m[0]}»${viaMarkup ? MARKUP_NOTE : ''}\n   ${p.why}\n   ${(viaMarkup ? stripped : text).slice(0, 140)}`); }
+      if (!m) continue;
+      // The CODE-COMMENT bucket was consulted for HARD and not for REVIEW, so a
+      // banned phrase in a `/* */` header landed in the customer-copy bucket
+      // beside a genuine finding and the summary presented the two identically.
+      // A reviewer who learns the REVIEW count is padded reaches for the edit
+      // that satisfies the misclassification. (Observation 541.)
+      if (isCode && !viaMarkup && inCodeComment(ln, m.index, blockOpen[n])) {
+        comment++;
+        console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${m[0]}» inside a code comment — not customer-facing, advisory only. Confirm it is not a rendered string in the judgement pass.\n   ${text.slice(0, 140)}`);
+        continue;
+      }
+      review++;
+      console.log(`\n🟠 REVIEW ${f}:${n + 1}  «${m[0]}»${viaMarkup ? MARKUP_NOTE : ''}\n   ${p.why}\n   ${(viaMarkup ? stripped : text).slice(0, 140)}`);
     }
 
     // A verdict field carrying a word the engine does not return.
@@ -471,7 +536,7 @@ for (const f of files) {
       const v = h.value.trim();
       if (!v) continue;
       if (VERDICTS.lower.has(v.toLowerCase())) continue;
-      if (isCode && inCodeComment(ln, h.index)) {
+      if (isCode && inCodeComment(ln, h.index, blockOpen[n])) {
         comment++;
         console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${h.field}: ‘${v}’» inside a code comment — not customer-facing, gate NOT failed.\n   ${text.slice(0, 140)}`);
         continue;
@@ -485,7 +550,7 @@ for (const f of files) {
 
     // The prose shape of the same defect: a retired verdict word, emphasised.
     for (const h of emphasisedRetiredHits(ln, RETIRED_LOWER)) {
-      if (isCode && inCodeComment(ln, h.index)) {
+      if (isCode && inCodeComment(ln, h.index, blockOpen[n])) {
         comment++;
         console.log(`\n🟡 CODE-COMMENT ${f}:${n + 1}  «${h.word}» emphasised inside a code comment — gate NOT failed.\n   ${text.slice(0, 140)}`);
         continue;

@@ -971,15 +971,56 @@ recorded at the bottom so a stale memory of them does not linger.
    `--payload-from <selector>` flag. Either way the report must name the mode it
    ran in, so a count carries its own scope. (Observation 284.)
 
-4. **The retest/efficacy regex misses every adjective and noun form of the word
-   it exists to catch.** It matches verb forms only, which is the default failure
-   mode because verbs are what the original example sentence used. Owed fix:
-   widen to `/\bfix\w*\b/i`, picking up fixable, fixability and fixer alongside
-   the existing four, and accept the extra REVIEW noise — this is a REVIEW-grade
-   heuristic whose whole job is raising a question, so a false positive costs one
-   line of reasoning and a miss costs a claim. Add the adjective and noun forms
-   as regression cases; the suite currently exercises verb forms only, which is
-   why the gap survived. (Observation 289.)
+4. **The red-flag substitution table in CONTEXT.md still lists verb forms only.**
+   The regex was widened (see 2026-09-08 below), so the SCANNER now catches the
+   noun and adjective forms; the table an author consults while writing does not
+   list them, so an author looking for their sentence finds nothing that matches
+   it and writes it anyway. Owed fix, and it belongs to the table rather than to
+   the code: add `treatment` (of a thing, not a patient) → handling · approach ·
+   pass; `diagnosis` / `diagnostic` → identification; `a fix` → a correction;
+   `curative` → resolving. Then state the rule above the table in a form that
+   survives the table being incomplete: **no word sharing a stem with a red-flag
+   term appears in commentary, in any part of speech.** (Observation 391.)
+
+### Fixed 2026-09-08
+
+- **The negation guard is scoped to the SENTENCE, not the physical line.** All
+  three consumers used to clear a guarded HARD term whenever a negator appeared
+  anywhere on the same line, and prose in these files is one paragraph per line,
+  so a negation attached to one sentence laundered a genuine claim in the next:
+  `This kit does not treat anything. It diagnoses low testosterone.` graded 🟢 OK
+  on both terms. `scan.js` already had a sentence-level test and it was defeated
+  by the line-level test sitting in front of it in the same boolean, so the fix
+  was removing a widening rather than adding machinery. **This makes a HARD gate
+  STRICTER**, which is the safe direction, and is called out here for symmetry
+  with the 2026-08-11 entry below. Measured blast radius: **zero verdict changes
+  across all 18 published articles** — 13 HARD and 53 REVIEW before and after,
+  byte-identical verdict lines; the only difference is that the evidence line now
+  quotes the sentence rather than the paragraph. (Observation 390.)
+
+- **Negative-quantifier subjects count as negations.** `NEG` covered `not`-forms
+  and missed the shape where the negation is in the subject, so
+  `"Nothing here is a diagnosis"` was 🔴 HARD while `"This is not a diagnosis"`,
+  `"We do not diagnose"` and the live footer all cleared — the scanner firing
+  hardest on the copy that most reduces the claim. Added: `nothing`, `none`,
+  `neither`, `nor`, `nowhere`, `no part of`, `at no point`, `in no way/sense`.
+  (Observation 495.)
+
+- **The CODE-COMMENT bucket now covers block comments and the REVIEW table.**
+  Two defects with one cause: the bucket was consulted for HARD hits and not for
+  REVIEW hits, so a flagged phrase in a `/* … */` header landed in the
+  customer-copy bucket beside a genuine finding and the summary presented them
+  identically; and the detector was line-local, so it missed the continuation
+  lines of a block comment that do not start with `*` — the style this repo uses
+  most for exactly the prose that trips the tables. Block state is now tracked
+  across lines, `{/* … */}` is recognised, and a line beginning `*/` is correctly
+  read as code again. (Observation 541.)
+
+  Suites for all three: `test-negation-scope.js` (22 cases) and
+  `test-code-comment.js` (11 cases, five adversarial). The retest/efficacy regex
+  was widened to `/\b(un)?fix(es|ed|ing|able|er|ers)?\b/` on 2026-08-16 and this
+  section listed it as still owed until today — a fix that lands during ordinary
+  work and is never marked reads as outstanding forever. (Observations 289, 253.)
 
 ### Fixed 2026-08-11
 

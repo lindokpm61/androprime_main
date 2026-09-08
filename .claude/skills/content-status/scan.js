@@ -98,7 +98,7 @@ const path = require('path');
 // body only, so it could never fire here. Verified 2026-08-05 — the same
 // hard-wrapped disclaimer is 🟢 OK in frontmatter and 🔴 HARD in the body from
 // the same scanner.
-const { HARD, NEG } = require('../compliance-preflight/compliance-tables');
+const { HARD, NEG, negatedAt } = require('../compliance-preflight/compliance-tables');
 
 // ── The state vocabularies. NOTHING IN THIS FILE GATES ON THEM ANY MORE, and that is not an
 // oversight: `status` no longer appears in frontmatter for either an asset or a rendition, so
@@ -417,7 +417,9 @@ function scanFile(file) {
       for (const p of HARD) {
         const m = text.match(p.re);
         if (!m) continue;
-        if (p.guard && NEG.test(text)) continue; // compliant negation/disclaimer.
+        // Sentence-scoped (Observation 390). Prose here is one paragraph per
+        // line, so a line-scoped guard let a negation launder the next sentence.
+        if (p.guard && negatedAt(text, m.index)) continue; // compliant negation/disclaimer.
         H('G5', `${file.split(path.sep).pop()}:${n} «${m[0]}» ${p.why}`, `${p.alt}  |  ${t.slice(0, 120)}`);
       }
     }

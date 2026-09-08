@@ -98,10 +98,59 @@ const REVIEW = [
 // scanner over the ALREADY-APPROVED vitamin D deck, whose "Signs aren’t
 // diagnoses." headline it failed. A checker whose false positives land on
 // known-good copy gets switched off. Suite: test-curly-negation.js.
+//
+// NEGATIVE-QUANTIFIER SUBJECTS ARE NEGATIONS TOO (widened 2026-09-08,
+// Observation 495). The list covered `not`-forms and missed the shape where the
+// negation lives in the SUBJECT rather than in the verb. Measured on four
+// phrasings that all mean the same thing: "They do not diagnose conditions"
+// (the live footer), "This is not a diagnosis" and "We do not diagnose" all
+// cleared, while **"Nothing here is a diagnosis" was graded HARD** — the
+// scanner firing hardest on the copy that most reduces the claim. The risk is
+// not that a bad line ships; it is that a HARD hit on a correct disclaimer
+// trains the writer to reword defensively around the scanner, or to delete the
+// disclaimer, which is the opposite of the rule's purpose. Suite:
+// test-folded-negation.js.
 const APOS = "['’‘`´]";
+const NEGATORS =
+  `do(es)?\\s+not|don${APOS}?t|doesn${APOS}?t|not|never|no|cannot|can${APOS}?t|isn${APOS}?t|aren${APOS}?t` +
+  `|nothing|none|neither|nor|nowhere|no part of|at no point|in no (way|sense)`;
 const NEG = new RegExp(
-  `\\b(do(es)?\\s+not|don${APOS}?t|doesn${APOS}?t|not|never|no|cannot|can${APOS}?t|isn${APOS}?t|aren${APOS}?t)\\b[^.]{0,40}\\b(diagnos|treat|cure)` +
+  `\\b(${NEGATORS})\\b[^.]{0,40}\\b(diagnos|treat|cure)` +
   `|(diagnos\\w*|treatment|cure)\\b[^.]{0,30}\\b(advice|only|informational|purposes)\\b` +
   `|informational purposes only|do(es)?\\s+not\\s+constitute|not a substitute`, 'i');
 
-module.exports = { HARD, REVIEW, NEG };
+// THE GUARD IS SCOPED TO THE SENTENCE, NOT THE LINE (2026-09-08, Observation
+// 390). All three consumers used to clear a guarded HARD term whenever a
+// negator appeared anywhere on the same PHYSICAL line. In these files prose is
+// one paragraph per line, so a negation attached to one sentence laundered a
+// genuine claim in the next one:
+//
+//     This kit does not treat anything. It diagnoses low testosterone.
+//
+// graded 🟢 OK on both terms. The second sentence is an unqualified medical
+// claim. `compliance-preflight/scan.js` already had a sentence-level test, and
+// it was defeated by the line-level test sitting in front of it in the same
+// boolean — the fix was not new machinery but removing a widening that had been
+// added additively and come to dominate.
+//
+// This makes a HARD gate STRICTER, which is the safe direction, and is called
+// out here rather than slipped in, the same way the 2026-08-11 curly-apostrophe
+// change was flagged for making it more permissive.
+const SENTENCE_BOUNDARY = '.!?\n';
+function sentenceAround(text, offset) {
+  if (typeof text !== 'string' || !text.length) return '';
+  let s = Math.max(0, Math.min(offset | 0, text.length - 1));
+  let e = s;
+  while (s > 0 && !SENTENCE_BOUNDARY.includes(text[s - 1])) s--;
+  while (e < text.length && !SENTENCE_BOUNDARY.includes(text[e])) e++;
+  return text.slice(s, Math.min(e + 1, text.length)).trim();
+}
+
+/** True when the term matched at `offset` sits inside a negation/disclaimer
+ *  SENTENCE. Callers pass the offset of their own match, so the sentence tested
+ *  is the one the term is actually in. */
+function negatedAt(text, offset) {
+  return NEG.test(sentenceAround(text, offset));
+}
+
+module.exports = { HARD, REVIEW, NEG, sentenceAround, negatedAt };

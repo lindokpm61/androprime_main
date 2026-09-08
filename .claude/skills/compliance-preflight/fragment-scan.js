@@ -35,7 +35,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { HARD, REVIEW, NEG } = require('./compliance-tables');
+const { HARD, REVIEW, NEG, negatedAt } = require('./compliance-tables');
 
 /* ------------------------------------------------------------------ args --- */
 
@@ -253,7 +253,9 @@ function literalFindings(text) {
   for (const rule of HARD) {
     const m = text.match(rule.re);
     if (!m) continue;
-    if (rule.guard && NEG.test(text)) continue;   // compliant disclaimer use
+    // Sentence-scoped (Observation 390): a negation in one sentence must not
+    // clear a bare claim in the next sentence of the same unit.
+    if (rule.guard && negatedAt(text, m.index)) continue;   // compliant disclaimer use
     hard.push({ term: m[0], why: rule.why, alt: rule.alt });
   }
   for (const rule of REVIEW) {
