@@ -4,160 +4,101 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff from the 2026-09-08 session
+## ▶️ PICK UP HERE — handoff from the 2026-09-08 evening session
 
 Keith asked for this session to be carried into the next chat. Everything below
-resolves without that conversation.
+resolves by grep, without that conversation.
 
-### What shipped this session (all on `redesign/direction-f`, which deploys nothing)
+### What shipped, all on `redesign/direction-f`, which DEPLOYS NOTHING
 
-1. **The public `/membership` page**, the seventh F route. Explains and discloses,
-   does not sell, has no join button and cannot have one. The member screen moved
-   to `/account/membership`.
-2. **The blog rebuilt in Direction F**, which overturned the 2026-08-27 ruling.
-   No article copy changed.
-3. **Dark-panel contrast fixed as a mechanism** (`.f-on-ink`), 12 failing text
-   nodes to 0 across 16 routes.
+`main` is untouched and the live site is unaffected. The branch is 87 commits
+ahead of `main`, and **CA-045 is still the only merge blocker** (needs Ewa and
+Keith; see `../03_compliance/STATE.md`).
 
-Each has its own entry below with the detail.
+**The whole Thread 2 menu is closed.** Keith chose B, then C, then D, and retired
+A. Four commits:
 
-### THE TWO OPEN THREADS, and the second is where the conversation stopped
+| Commit | What |
+|---|---|
+| `bd769ba` | **B.** Four design checks written and mutation-tested, plus two promoted, wired into `npm test` |
+| `78213af` | **C.** The page scaffold, `FPage`/`FHero`/`FSection`/`FClose`, and ten files migrated onto it |
+| `cae22a7` | Keith's ruling: every in-section close takes the reveal, and the opt-out prop is gone |
+| `8f38f38` | **A retired.** The journey frames are pictures, not a spec |
+| `8959a6d` | **D.** The route count is generated into `design/route-conformance.md` and guarded in `npm test` |
 
-**THREAD 1 — the route-coverage gap. 10 rebuilt, 26 not, 7 unmeasurable anonymously.**
+**Seven design checks now run in `npm run test:design`** (inside `npm test`), six
+of them needing no browser: token existence, class existence, modifier
+specificity, the scaffold, the dark-panel mechanism, the conformance report's
+freshness, and the hero field's geometry. Two more need a dev server and run on
+demand as `npm run test:design:live`: the scroll-reveal paths and the rendered
+dark-ground contrast sweep.
 
-🔴 **THIS COUNT IS NO LONGER MAINTAINED BY HAND.** It is generated into
-`design/route-conformance.md` by `npm run route-conformance`, and
-`verify-route-conformance.js` fails `npm test` when the repo stops matching it.
-That is option D, shipped 2026-09-08. **Read the generated file, not this table**,
-which is kept for the per-route notes it carries and nothing else.
+**Three live defects were found by the new checks, not by reading:**
 
-**The generator corrected this entry on its first run: it was 11, and it is 10.**
-`/not-found` was being counted as rebuilt and it is not. Its body is still pure
-V2.0 (`border-2 border-black`, `uppercase tracking-[0.18em]`, `data-label`); what
-made it look rebuilt is that it wears the F nav and footer, which every route
-wears, including the ones still on the old design. That is exactly the error the
-old hand method invited, since it worked by subtracting a remembered 21-class
-chrome; the generator excludes the chrome by LANDMARK instead.
+1. `.f-tray-pick` set a 0.3s transition that `.f-tray` overwrote with 0.7s, so
+   the `/kits` cards had hovered at the wrong speed since the rule was written.
+   Fifth instance of the specificity defect `DESIGN.md` records four times.
+2. `/kits` had never worn `.f-sec-hero`, so at 390 with the cookie banner up it
+   was giving away 60px the class exists to reclaim. Its whole page now sits
+   60px higher.
+3. **The route count was wrong: 11 rebuilt, not 10.** `/not-found` was counted as
+   Direction F; its body is still V2.0 and only its nav and footer are F.
 
-Also corrected: the 7 authenticated routes are **not measured**, not measured-as-
-zero. They redirect an anonymous visitor to `/auth/login`, so the old method was
-counting the login page's classes and calling the answer theirs. The report says
-so and gives a static source signal for each instead. **Not yet rebuilt:**
+### THE ONE OPEN THREAD: Thread 1, the route rebuild
 
-| Group | Routes | Note |
-|---|---|---|
-| Public marketing (all in sitemap) | `/faq` (492 lines), `/test-selector` (199 + 515 quiz), `/supplements`, `/supplements/daily-stack`, `/supplements/collagen`, `/about`, `/contact`, `/waitlist`, `/supplement-waitlist` | 9 routes |
-| Legal | `/privacy`, `/terms` | ⚠ NOT React pages: they read raw HTML out of `canonical-site/*/index.html`. Restyling touches **approved compliance copy** (T&Cs signed by Keith + Ewa 2026-07-25), so it is a gated job, not a design one |
-| Paid landing pages | `/lp/testosterone` (515), `/lp/energy-recovery` (412), `/lp/hormone-recovery` (731), `/lp/daily-stack` (246), `/lp/collagen` (266) | 2,170 lines, the biggest block. Also the pages the 2026-09-07 auto-renew ruling left explicitly undecided (§4) |
-| Checkout | `/checkout/details`, `/order/confirmed`, `/subscription/confirmed` | 3 |
-| Auth | `/auth/login`, `/auth/signup`, `/auth/reset`, `/auth/consent`, `/auth/link`, `/activate` | 6 |
-| Authenticated app | `/account`, `/account/membership`, `/results-dashboard`, `/results-dashboard/handoff`, `/subscriptions`, `/founding-member-status`, `/supplement-waitlist-status` | 7. ⚠ `/results-dashboard` is what a paying customer gets and still renders the old presentation at **15,736px of scroll at 390 with no overview**, against the demo's 2,872px |
-
-Not gaps: `/founding-member` (retired, 307s to `/kits`), `/admin/dashboard`,
-`/ops/content`, `/go` (internal, no public UI), and `/demo`, which runs the
-authenticated app shell (`ap-*`) rather than the marketing layer, so Direction F
-is the wrong question to ask of it.
+**10 of 36 measurable routes are Direction F.** Do not re-count by hand and do
+not trust this number: read `design/route-conformance.md`, which is generated by
+`npm run route-conformance` (needs `npm run dev` in another terminal) and guarded
+by `verify-route-conformance.js` in `npm test`.
 
 **Suggested first: `/test-selector`.** `07_sales/funnel/site-funnel-model.md` §2
-names it the primary route from both the blog and the homepage, so it currently
-sits between two rebuilt pages wearing the old design.
+names it the primary route from both the blog and the homepage, so it sits
+between two rebuilt pages wearing the old design.
 
-**THREAD 2 — formalising the design system so a new page adopts it automatically.
-🟢 **THE WHOLE MENU IS CLOSED, 2026-09-08.** Keith chose **B**, then **C**, then **D**, and retired **A**. Nothing here is outstanding.
+**How to build a route now, which changed this session:**
 
-Diagnosis: **the system is exceptionally documented and mechanically unenforced.**
-3,250 lines of F CSS and a 1,172-line `frontend/DESIGN.md`, against **15 tests in
-`npm test`, none of them design**, and **three checking scripts that exist and are
-wired into nothing**:
+1. Compose `FPage` / `FHero` / `FSection` / `FClose` from
+   `components/marketing/FPage.tsx`. Do not hand-write `.f-page`,
+   `.f-ruleground`, a counted `.f-wrap.f-sec`, or any `.f-close`:
+   `verify-f-scaffold.js` fails the build if you do.
+2. Take the LAYOUT and CONTENT from the matching journey frame
+   (`design/mockups/journey/test-selector-F.html`), and the STYLING from the
+   shipped tokens and components. **The frame's CSS is a source of nothing**,
+   ruled 2026-09-08; each frame now says so in a banner at the top. That frame in
+   particular renders in Geist with an amber chip, and both were ruled against
+   after it was drawn.
+3. Judge it in a browser. Every F ruling has been made that way.
+4. Re-run `npm run route-conformance` afterwards, or `npm test` will fail on the
+   stale report, which is the point of it.
 
-- `12_operations/automation/reconcile-f-css.js` — 🔴 **RETIRED 2026-09-08**, see the Thread 2 entry below. Was: works, currently **exits 2
-  (drift): 41 conflicts, 30 mockup-vs-mockup, 72 unpaired selectors**
-- `frontend/scripts/verify-hero-field.js` — orphaned
-- `frontend/scripts/verify-scroll-reveal.js` — orphaned
+⚠ **Two groups inside Thread 1 are gated, not merely unbuilt.** `/privacy` and
+`/terms` read raw HTML out of `canonical-site/*/index.html` and restyling touches
+compliance copy signed by Keith and Ewa on 2026-07-25. The five `/lp/*` pages are
+the ones the 2026-09-07 auto-renew ruling left explicitly undecided (§4).
 
-Evidence that prose is not holding: **this session broke six of the system's own
-documented rules while reading them.** Token names failed silently (13 wrong on
-the first pass; an undefined custom property is a silent zero, not an error);
-specificity decided against intent three more times, on top of the three
-`f-primitives.css` already records; a mockup had gone stale against a token ruled
-four days after it was drawn; and there was no dark-panel mechanism at all.
+### Owed from Keith, unchanged by this session
 
-**The four options as they were put to Keith, in cost order:**
-
-- **A. Wire in the three scripts that already exist.** An afternoon, no new code.
-  Will fail immediately at 41 conflicts, which is the point.
-- **B. Add the four checks that do not exist** — token existence, class existence,
-  specificity (every modifier must out-specify its base), and dark-ground contrast.
-  **All four were written this session as throwaways and are in the scratchpad,
-  i.e. they are lost unless promoted to `frontend/scripts/`.** Each caught real
-  defects. Roughly half a day.
-- **C. A page scaffold** (`<FPage>`, `<FHero>`, `<FSection>`, `<FClose>`) so a new
-  page composes the system instead of copy-pasting class strings. The hero
-  assembly is currently hand-copied across **7 files** and `SectionRule` takes a
-  hand-counted `of={N}` that nothing validates. This is the piece that literally
-  makes "each new page adopts the style" true.
-- **D. A committed route-conformance report**, so the count in Thread 1 cannot go
-  stale again the way "six routes" did.
-
-**Keith chose B on 2026-09-08 and it shipped** — see the newest entry below. The
-four checks exist, they are wired into `npm test`, and the first run found a
-fifth instance of the specificity defect plus nine more latent ties. **One
-correction to the cost estimate above: only ONE of the four throwaways survived
-in the scratchpad** (`contrast.js`); the other three had been run inline and
-were gone, so three of the four were written again.
-
-**C shipped the same day**, see the newest entry. The hero is no longer
-hand-copied and the section counter is no longer hand-typed.
-
-🔴 **A IS RETIRED. Keith ruled it out on 2026-09-08 and the reasoning is worth
-keeping.** A meant wiring in `reconcile-f-css.js`, the one of its three scripts
-that B did not absorb. It diffs the app against the 13 journey frames, and
-`DESIGN.md` already ranked those frames BELOW the implementation and recorded
-them as having drifted from the approved direction twice. So it ran the
-comparison the wrong way round: it checked what ships against a drawing that
-outranks nothing, which is exactly why its 41 conflicts needed rulings rather
-than fixes, and why 30 of them were frames disagreeing with each other rather
-than with the site.
-
-**The premise that justified it was that new pages would be DRAWN and then
-ported. They are not.** A page is now built from the shipped components and
-tokens and judged in a browser, which is how every F ruling has actually been
-made. Keith put it as: we take live pages and build them in alignment with the
-new site, so there is no further reconciliation. Under that method a frame's
-`<style>` block is never consulted, and whether it agrees with the app has no
-consequence.
-
-**The frames are kept as PICTURES**, because 8 of the 13 draw routes that do not
-exist yet (`test-selector`, `buy`, `auth`, `act`, `account`, `results`,
-`results-states`, `lp-sample`) and are the only drawn design those have. Each
-frame now carries a banner saying its CSS reaches nothing and that the layout is
-what it is for; the script carries its own retirement notice, so a future run
-does not read as a backlog.
-
-🟢 **D SHIPPED THE SAME DAY.** `design/route-conformance.md` is generated by
-`npm run route-conformance` and guarded by `verify-route-conformance.js` in
-`npm test`. It absorbed the one thing the reconciler reported that had real
-content, its unpaired selectors, now measured as **95 F classes that render on no
-route**: components waiting for a page, or dead. **It corrected the headline count
-on its first run, 11 to 10.** Detail in the newest entry.
-
-🔗 **Dependency worth carrying:** `frontend/DESIGN.md` gap #1 says dark mode is
-blocked by exactly Thread 1 — the F nav and footer are worn by every marketing
-route while only 11 are F, so enabling dark would give the rest a dark shell
-around light content. **Threads 1 and 2 and dark mode are one unlock, and
-Thread 1 gates dark mode.**
+**The `/demo` retest blocker.** The demo shows a Kit 3 first purchase with a Kit 2
+retest; `frontend/app/api/jobs/bundle-sweep/route.ts` dispatches
+`lastOrder.kit_type`, the same kit the customer last ordered. The two contradict
+each other and one must move. Three product decisions are written up as map
+defects **3d, 3e and 3f**; re-verified still open on 2026-09-08.
 
 ### Left in the working tree, NOT committed
 
-⚠ **Still true as of 2026-09-08 evening for the three `/demo` files below.** The
-design-check work of the same evening was committed separately and by path.
+`app/(demo)/demo/page.tsx`, `components/app-shell/DemoStage.tsx` and
+`styles/pages/app-shell.css` carry another session's uncommitted `/demo`
+preview-mode work plus six colour-literal fixes. Untouched by this session and
+deliberately not committed under a message that does not describe them.
 
-`styles/pages/app-shell.css`, `app/(demo)/demo/page.tsx` and
-`components/app-shell/DemoStage.tsx` carry **another session's uncommitted
-`/demo` preview-mode work** (written 02:18 to 02:21 on 2026-09-08) as well as
-this session's six colour-literal fixes in `app-shell.css`. They were left
-unstaged rather than committed under a message that does not describe them.
-**The `/demo` contrast fix is therefore in the working tree and not in git.**
+### Cheap orientation for the next session
+
+- `npm test` is green as of 2026-09-08 evening. Production build clean.
+- `design/route-conformance.md` is the route truth. `frontend/DESIGN.md` is the
+  system, and its authority list at the top says which artefacts outrank which.
+- `95` F classes render on no route: components waiting for a page, or dead. The
+  list is in the conformance report.
+
 
 ---
 
@@ -386,7 +327,7 @@ six colour literals only; stage by path.
 
 ---
 
-## ▶️ NEWEST — the BLOG is rebuilt in Direction F, 2026-09-08, and it overturns a standing ruling
+## ▶️ the BLOG is rebuilt in Direction F, 2026-09-08, and it overturns a standing ruling
 
 **This reverses the 2026-08-27 verdict.** Keith had ruled AGAINST the first F blog:
 *"I think the old or the live blog style wins. There's a lot of detail missing
@@ -474,7 +415,7 @@ three generalisable engineering lessons.
 
 ---
 
-## ▶️ NEWEST — the public `/membership` page, built 2026-09-08 (seventh Direction F route)
+## ▶️ the public `/membership` page, built 2026-09-08 (seventh Direction F route)
 
 **What shipped.** A **public marketing `/membership`** page in Direction F, and the
 route move that made room for it. `tsc` clean, `npm test` green (host-routing
