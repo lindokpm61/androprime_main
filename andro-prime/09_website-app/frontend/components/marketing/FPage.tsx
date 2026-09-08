@@ -55,6 +55,20 @@ type FSectionProps = {
   rule?: boolean
   /** `.f-sec-cont`: this boundary is a continuation, not a topic change. */
   cont?: boolean
+  /**
+   * `.f-narrow` (880px) instead of `.f-wrap` (1180px), for a section whose
+   * content is a single column that must not run the full measure. Added
+   * 2026-09-08 for `/test-selector`'s quiz, which Frames N2 to N4 draw in
+   * `.narrow` throughout: at the full measure a four-option answer list runs
+   * 1100px of line while its own question wraps at 800, and the card stops
+   * reading as one thing.
+   *
+   * The RULE still spans the full measure, because a position indicator that
+   * only crossed part of the page would disagree with every other section
+   * boundary on the site. `.f-narrow` was in the stylesheet with no call site
+   * until this; the frame is where it came from.
+   */
+  narrow?: boolean
   id?: string
   style?: React.CSSProperties
   className?: string
@@ -64,12 +78,16 @@ type FSectionProps = {
   of?: number
 }
 
-export function FSection({ children, rule = true, cont, id, style, className, n, of }: FSectionProps) {
+export function FSection({ children, rule = true, cont, narrow, id, style, className, n, of }: FSectionProps) {
   const cls = ['f-wrap', 'f-sec', cont ? 'f-sec-cont' : '', className || ''].filter(Boolean).join(' ')
   return (
     <section className={cls} id={id} style={style}>
       {rule && n !== undefined && of !== undefined ? <SectionRule n={n} of={of} /> : null}
-      {children}
+      {/* The section stays `.f-wrap` so the rule above keeps the site's measure;
+          only the CONTENT narrows. `.f-sec > .f-narrow` drops the nested class's
+          own gutter, or a narrow section would inset its card 20px further than
+          every other card on the site at 390. */}
+      {narrow ? <div className="f-narrow">{children}</div> : children}
     </section>
   )
 }

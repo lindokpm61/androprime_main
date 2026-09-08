@@ -11,7 +11,7 @@ colors:
   sunk: "#E7E9EC"
   hair: "rgba(10, 11, 13, 0.10)"
   hair-2: "rgba(10, 11, 13, 0.16)"
-  flag: "#E0A458"
+  flag: "#0A0B0D"
   flag-f: "rgba(224, 164, 88, 0.14)"
   flag-f2: "rgba(224, 164, 88, 0.26)"
   lab: "rgba(10, 11, 13, 0.20)"
@@ -145,8 +145,9 @@ very large, very low-opacity ambient shadow. Nothing is hard-edged, nothing is f
 carries a drop shadow.
 
 It reads as measurement equipment because the product is measurement. The page is mostly white and
-grey; the only saturated colour in the entire system is a single amber, and it is fenced. A serif
-display sits over a humanist sans, and small monospace labels mark the parts that are data.
+grey; **the only saturated colour in the system is the clinical status triad, and it is fenced to a
+results or sample-report panel.** A serif display sits over a humanist sans, and small monospace
+labels mark the parts that are data.
 
 Its own description, from the direction file: *Soft Structuralism, asymmetrical bento.* The four
 places it deliberately spends its permission are radius (28px squircle with a concentric inner
@@ -168,8 +169,28 @@ a recessed section ground. `core` #FFFFFF is a raised card sitting inside a tray
 the deepest inset: bar tracks and wells. Hairlines `hair` and `hair-2` are ink at 10% and 16%, used
 as inset rings rather than borders.
 
-**Amber, once, and fenced.** `flag` #E0A458 is the only saturated colour in the system. It marks a
-borderline or flagged state and a "most complete" chip. **Text on it is always `ink`, never white.**
+🔴 **`flag` IS INK, #0A0B0D, AND IT HAS BEEN SINCE 2026-09-03.** The token kept its name and lost
+its amber. It still marks the one thing a marketing surface is emphasising: Kit 3's ring and chip,
+`.f-pull`'s rule, `.f-symp .f-route`, `.f-col-hi`'s column tint, and `/test-selector`'s default-route
+chip. **Text on a `flag` fill is `paper`, never ink**, which is the opposite of what it was: paper
+on #0A0B0D measures 19.69:1 against the 6.18:1 the amber fill gave. The tints (`flag-f`, `flag-f2`) are
+re-derived to the OLD COMPOSITED LIGHTNESS rather than the old alpha, because amber at .14 is a pale
+wash and ink at .14 is a mid grey.
+
+The ruling, from `tokens/colours.css`, and it decides every future case: **the status triad owns
+saturation. A marketing surface may use ink, paper and the greys between them. If a thing is not a
+verdict about the reader's blood, it is not coloured.** What it fixed was perceptual rather than
+numeric: `--flag` #E0A458 and `--color-status-warning` #d97706 are two adjacent ambers carrying
+opposite meanings one click apart, so on `/` amber said "this number of yours needs watching" and on
+`/kits` it said "buy this one, it is £179". Nobody reads a token.
+
+⚠ **This section said "Amber, once, and fenced. `flag` #E0A458 ... text on it is always ink, never
+white" until 2026-09-08, five days after the ruling**, as did the front-matter colour table at the
+top of this file and the Overview above. The prose that argued about the accent was swept; the places
+that merely STATED its value were not. Both stale copies were read as current while building
+`/test-selector` and produced two CSS comments reasoning about an amber that does not exist, plus a
+form error drafted in `--color-status-critical` that the ruling's own sentence excludes. Verify a
+colour against the token, never against this file.
 
 🔴 **The status triad is not decoration and is fenced by rule.** `status-optimal`, `status-warning`
 and `status-critical` carry clinical meaning and may appear **only** on range-bar fills and status
@@ -462,6 +483,82 @@ readout’s, because the field is illegible by design and drift would otherwise 
 lives in the interpretation COLUMN, not in the instrument card: it is interpretation rather than
 instrument. It replaced `.f-ro-f` on 2026-09-02, which had also been supplying the instrument
 card’s bottom padding as a side effect.
+
+
+### Form controls, added 2026-09-08 with `/test-selector`
+
+🔴 **THE DIRECTION HAD NO FORM CONTROLS UNTIL THE SEVENTH ROUTE.** Every route rebuilt before
+`/test-selector` was reading matter: headings, trays, tables, photographs, links. Nothing in the
+component layer styled an `input`, a `select` or a `checkbox`, so the first page with a form on it
+would have rendered UA-default fields inside Direction F cards. They are named for what they are
+rather than for that page, so `/contact`, `/waitlist`, `/checkout/details` and the five `/auth/*`
+routes inherit them rather than each inventing a set.
+
+| Class | What |
+|---|---|
+| `.f-inp` | A text field. Pill, `core` ground, hairline inset ring, no border. |
+| `.f-sel` | A native `select`, same treatment. Native appearance is kept deliberately: a custom arrow is a second control to keep accessible. |
+| `.f-consent` | A checkbox row. The whole row is the `<label>`, which is what satisfies WCAG 2.2 SC 2.5.8 rather than padding a 17px box up to 24px and knocking it off its text baseline. |
+| `.f-pinput` | A currency field: a static prefix glyph and a transparent input sharing one pill. |
+| `.f-well` | A `sunk` ground inside a `.f-core`, for a FORM specifically. |
+| `.f-nudge` / `.f-err` | The two notices. Both ink; see the `flag` ruling in Colors. |
+| `.f-tlink` | A link set in running text. |
+| `.f-btn:disabled` | The first disabled state in the direction. |
+
+**Nothing suppresses a focus ring, and nothing in this layer may.** The Focus block is the only
+source of one and every control inherits it; `border-radius: inherit` in that rule is why the ring on
+a currency field traces the pill rather than boxing it. There is no `outline: none` anywhere in the
+section and adding one is a defect.
+
+**`.f-btn:disabled` does not use `opacity`.** Fading an ink pill takes its white label down together
+with its ground and lands the pair in the middle, which is the muddy result `.f-on-ink` argues
+against for the same reason. The button instead LOSES the ink fill, which is what actually reads as
+inactive, and keeps readable text: `--ink-2` on `--sunk` is 7.8:1. WCAG exempts an inactive control
+from contrast; there is no reason to take the exemption when the state has to be read to be
+understood. It is `:disabled` rather than an `.f-btn-off` class because the state is already in the
+DOM, it out-specifies `.f-btn` at (0,2,0) on its own, and a class would be a second source of truth
+that can disagree with the attribute the browser acts on.
+
+⚠ **`--ink-2` on a well, never `--ink-3`.** `--ink-3` is the functional-text floor at 4.99:1 **on
+paper**; against `--sunk` it measures 4.10:1, which is the defect fixed on twelve `.f-spec-k`
+instances on 2026-08-31. `.f-well .f-blab` and `.f-well .f-fine` therefore re-point at `--ink-2`.
+
+### The question card
+
+**`.f-qcard`, `.f-qnum`, `.f-qprog`, `.f-qbar`, `.f-opts` / `.f-opt`, `.f-rescap`.** The quiz card is
+a tray holding a core, and under the containment ruling it has earned one: it holds a transaction.
+
+🔴 **`.f-qnum` IS THE GHOST NUMERAL THE STEP CARD LOST, AND THE DIFFERENCE IS THE CROP.** The step
+card's oversized digit was dropped on 2026-09-06 because the 2026-09-02 containment fold removed the
+box it was cropped against, and an uncropped outsized glyph is just a big grey digit. Here the box is
+real, so the crop exists and the device works for the exact reason the step card's stopped working.
+`overflow: hidden` on `.f-qcard` is therefore load-bearing, not tidiness. It is `color-mix`, not
+`opacity`, so the glyph's own antialiasing is not faded.
+
+`.f-qcard > *:not(.f-qnum)` is positioned, because an absolutely positioned box paints later than
+in-flow blocks whatever the source order, and a negative `z-index` would drop the numeral behind
+`.f-core`'s own white ground rather than behind the text.
+
+**The visible counter is the numeral and the bar; "Question N of 3" is `sr-only`.** An 8px track
+states progress to a sighted reader and states nothing at all to a screen reader. Both the numeral
+and the bar disappear at step 4, which is correct: what follows question 3 is not a fourth question,
+and telling a reader they are on question 4 of 3 is how an optional block starts feeling compulsory.
+
+`.f-qbar` has **no `overflow: hidden`**, for the reason `.f-track` has none: the fill carries its own
+radius and never exceeds 100%, and clipping a track is what removed the readout marker's declared
+overhang.
+
+### `FSection narrow`
+
+Added 2026-09-08. `.f-narrow` (880px) instead of `.f-wrap` (1180px) for a section whose content is a
+single column. At the full measure a four-option answer list runs 1100px of line while its own
+question wraps at 800, and the card stops reading as one object.
+
+**The RULE still spans the full measure.** Only the content narrows, because a position indicator
+that crossed part of the page would disagree with every other section boundary on the site.
+`.f-sec > .f-narrow` drops the nested class's own `px-5`: `.f-narrow` is a top-level container in the
+direction and carries its own gutter, so nested it gutters twice and the card came out 310px wide at
+390 against every other F card's 350.
 
 ## How a page is assembled
 

@@ -236,150 +236,160 @@ export function TestSelectorQuiz() {
     }
   }
 
+  /* THE CARD IS A TRAY, AND UNDER THE CONTAINMENT RULING IT HAS EARNED ONE: it
+     holds a transaction. `.f-qcard` adds the crop the position numeral is cut by
+     (`.f-core` already clips, so the numeral is bled deliberately, not by
+     accident) and lifts the content above it. */
   return (
-    <div id="quiz-card" className="bg-white border-4 border-black p-8 md:p-16">
+    <div id="quiz-card" className="f-tray">
+      <div className="f-core f-qcard">
+        {/* THE POSITION NUMERAL. The visible counter on steps 1 to 3, and absent
+            from 4 and 5 for the reason Frame N2 gives: what follows question 3 is
+            not a fourth question, and telling a reader they are on question 4 of
+            3 is how an optional block starts feeling compulsory. */}
+        {step < 4 && (
+          <span className="f-qnum" aria-hidden="true">
+            {step}
+          </span>
+        )}
 
-      {/* Progress Bar Header */}
-      {step < 4 && (
-        <div className="flex flex-col md:flex-row md:items-center gap-6 mb-12 pb-8 border-b-4 border-black">
-          <span className="data-label text-sm shrink-0 w-40">Question {step} of 3</span>
-          <div className="flex-grow h-3 bg-gray-200 border-2 border-black relative w-full">
-              <div
-                className="absolute top-0 left-0 h-full bg-black"
-                style={{ width: `${progressPercent}%` }}
-              ></div>
+        {step < 4 && (
+          <div className="f-qprog">
+            {/* Rendered sr-only rather than dropped: an 8px bar states progress to
+                a sighted reader and states nothing at all to a screen reader. */}
+            <span className="sr-only">Question {step} of 3</span>
+            <span className="f-qbar">
+              <i style={{ width: `${progressPercent}%` }} />
+            </span>
           </div>
-        </div>
-      )}
+        )}
 
-      {step === 1 && (
-        <div className="quiz-step is-active">
-            <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">What is your main reason for testing?</h2>
-            <div className="grid gap-4">
-                {/* DISPLAY LETTER IS NOT THE STORED VALUE. Options render in the
-                    order a reader should meet them; the values stay a/b/c/d so
-                    every answer already captured keeps its meaning. Option B
-                    below stores 'd'. */}
-                <button type="button" onClick={() => handleQ1('a')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option A</span>
-                    <span className="block text-xl font-serif text-black">My drive has gone, or I have lost my edge in a way that feels hormonal.</span>
-                </button>
-                <button type="button" onClick={() => handleQ1('d')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option B</span>
-                    <span className="block text-xl font-serif text-black">I am knackered, foggy, or just do not feel like myself anymore.</span>
-                </button>
-                <button type="button" onClick={() => handleQ1('b')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option C</span>
-                    <span className="block text-xl font-serif text-black">I am training hard but not recovering like I used to. Tired, sore, or running on empty.</span>
-                </button>
-                <button type="button" onClick={() => handleQ1('c')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option D</span>
-                    <span className="block text-xl font-serif text-black">No specific complaint. I just want to know where I stand.</span>
-                </button>
+        {step === 1 && (
+          <div>
+            <h2 className="f-h2">What is your main reason for testing?</h2>
+            <div className="f-opts">
+              {/* DISPLAY LETTER IS NOT THE STORED VALUE. Options render in the
+                  order a reader should meet them; the values stay a/b/c/d so
+                  every answer already captured keeps its meaning. Option B
+                  below stores 'd'. */}
+              <button type="button" onClick={() => handleQ1('a')} className="f-opt">
+                <span className="f-opt-k">Option A</span>
+                <span className="f-opt-t">My drive has gone, or I have lost my edge in a way that feels hormonal.</span>
+              </button>
+              <button type="button" onClick={() => handleQ1('d')} className="f-opt">
+                <span className="f-opt-k">Option B</span>
+                <span className="f-opt-t">I am knackered, foggy, or just do not feel like myself anymore.</span>
+              </button>
+              <button type="button" onClick={() => handleQ1('b')} className="f-opt">
+                <span className="f-opt-k">Option C</span>
+                <span className="f-opt-t">I am training hard but not recovering like I used to. Tired, sore, or running on empty.</span>
+              </button>
+              <button type="button" onClick={() => handleQ1('c')} className="f-opt">
+                <span className="f-opt-k">Option D</span>
+                <span className="f-opt-t">No specific complaint. I just want to know where I stand.</span>
+              </button>
             </div>
-        </div>
-      )}
+          </div>
+        )}
 
-      {step === 2 && (
-        <div className="quiz-step is-active">
-            <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">Are you physically active?</h2>
-            <div className="grid gap-4">
-                <button type="button" onClick={() => handleQ2('a')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option A</span>
-                    <span className="block text-xl font-serif text-black">Yes. I train regularly.</span>
-                </button>
-                <button type="button" onClick={() => handleQ2('b')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option B</span>
-                    <span className="block text-xl font-serif text-black">Not much. Mostly desk-based and not training consistently.</span>
-                </button>
+        {step === 2 && (
+          <div>
+            <h2 className="f-h2">Are you physically active?</h2>
+            <div className="f-opts">
+              <button type="button" onClick={() => handleQ2('a')} className="f-opt">
+                <span className="f-opt-k">Option A</span>
+                <span className="f-opt-t">Yes. I train regularly.</span>
+              </button>
+              <button type="button" onClick={() => handleQ2('b')} className="f-opt">
+                <span className="f-opt-k">Option B</span>
+                <span className="f-opt-t">Not much. Mostly desk-based and not training consistently.</span>
+              </button>
             </div>
-        </div>
-      )}
+          </div>
+        )}
 
-      {step === 3 && (
-        <div className="quiz-step is-active">
-            <h2 className="text-3xl md:text-5xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">Have you had blood tests like this before?</h2>
-            <div className="grid gap-4">
-                <button type="button" onClick={() => handleQ3('a')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option A</span>
-                    <span className="block text-xl font-serif text-black">Not in years, or never.</span>
-                </button>
-                <button type="button" onClick={() => handleQ3('b')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option B</span>
-                    <span className="block text-xl font-serif text-black">Yes. I have had testosterone tested and it came back borderline or low.</span>
-                </button>
-                <button type="button" onClick={() => handleQ3('c')} className="quiz-option w-full text-left p-6 md:p-8 border-2 border-black bg-white hover:bg-gray-50 transition-colors">
-                    <span className="block data-label text-gray-500 mb-3">Option C</span>
-                    <span className="block text-xl font-serif text-black">Yes. I have had general health bloods done but nothing specific.</span>
-                </button>
+        {step === 3 && (
+          <div>
+            <h2 className="f-h2">Have you had blood tests like this before?</h2>
+            <div className="f-opts">
+              <button type="button" onClick={() => handleQ3('a')} className="f-opt">
+                <span className="f-opt-k">Option A</span>
+                <span className="f-opt-t">Not in years, or never.</span>
+              </button>
+              <button type="button" onClick={() => handleQ3('b')} className="f-opt">
+                <span className="f-opt-k">Option B</span>
+                <span className="f-opt-t">Yes. I have had testosterone tested and it came back borderline or low.</span>
+              </button>
+              <button type="button" onClick={() => handleQ3('c')} className="f-opt">
+                <span className="f-opt-k">Option C</span>
+                <span className="f-opt-t">Yes. I have had general health bloods done but nothing specific.</span>
+              </button>
             </div>
-        </div>
-      )}
+          </div>
+        )}
 
-      {/* STEP 4: recommendation (PRICE HIDDEN) + optional WTP block. The
-          Van Westendorp read is only clean if it is un-anchored, so no £
-          appears anywhere on this step (07_sales/funnel/site-funnel-model.md
-          §4). Skip and submit both advance to the price reveal at step 5. */}
-      {step === 4 && result && (
-        <div className="result-card is-active">
-            <div className="data-label mb-8 flex items-center gap-4">
-                <span className="w-12 h-[2px] bg-black"></span>
-                Your Result
+        {/* STEP 4: recommendation (PRICE HIDDEN) + optional WTP block. The
+            Van Westendorp read is only clean if it is un-anchored, so no £
+            appears anywhere on this step (07_sales/funnel/site-funnel-model.md
+            §4). Skip and submit both advance to the price reveal at step 5.
+
+            🔴 THE ONLY POUND SIGNS ON THIS STEP ARE THE READER'S OWN, in the four
+            input prefixes. Nothing renders `result.price` here, and nothing may. */}
+        {step === 4 && result && (
+          <div>
+            <p className="f-blab">Your result</p>
+            <div className="f-rescap">
+              <div>
+                {/* `.f-flagchip`, the ink-filled pill, on every kit's result and
+                    not just one of them. The old markup gave Kit 3 an inverted
+                    chip and the other two a plain one, so the dearest kit was the
+                    only recommendation that arrived emphasised. A reader routed
+                    to Kit 1 got the quieter answer for no reason they could see. */}
+                <span className="f-flagchip">{result.label}</span>
+                <h2 className="f-h2" style={{ marginTop: 12 }}>{result.title}</h2>
+              </div>
             </div>
-            <div className="mb-8 border-b-4 border-black pb-8">
-                <div className={`inline-flex items-center gap-2 px-3 py-1.5 border-2 border-black font-sans font-black uppercase text-xs tracking-widest mb-4 ${result.kit === 'kit3' ? 'bg-black text-white' : 'text-black'}`}>
-                    <span className={`w-2 h-2 rounded-none ${result.kit === 'kit3' ? 'bg-white' : 'bg-black'}`}></span> {result.label}
-                </div>
-                <h2 className="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9]">{result.title}</h2>
-            </div>
 
-            <p className="text-xl font-serif text-black mb-10 leading-relaxed">
-                {result.reason}
-            </p>
+            <p className="f-sub">{result.reason}</p>
 
-            <div className="border-4 border-black bg-gray-50 p-8">
-              <div className="data-label mb-3">Optional: 60 seconds before your price</div>
-              <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-3 leading-[0.95]">
-                Help us price this fairly.
-              </h3>
-              <p className="text-base font-serif text-black mb-8 leading-relaxed">
+            <div className="f-well">
+              <p className="f-blab">Optional: 60 seconds before your price</p>
+              <h3 className="f-h4" style={{ marginTop: 10 }}>Help us price this fairly.</h3>
+              <p className="f-sub" style={{ marginTop: 10, marginBottom: 20 }}>
                 Many men choose to retest later to see how their numbers
                 have moved. We are working out a fair price for {result.wtpConcept}. Before
                 we show you our price, tell us what feels right to you. It changes nothing
                 about your recommendation.
               </p>
 
-              <div className="data-label mb-4">What price would feel:</div>
-              <div className="grid gap-4">
-                {([
-                  ['So cheap you would doubt the quality', wtpTooCheap, setWtpTooCheap],
-                  ['A bargain: great value for the money', wtpBargain, setWtpBargain],
-                  ['Getting expensive, but you would still consider it', wtpExpensive, setWtpExpensive],
-                  ['Too expensive to consider', wtpTooExpensive, setWtpTooExpensive],
-                ] as const).map(([label, value, setter]) => (
-                  <label key={label} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <span className="flex items-center border-2 border-black bg-white w-32 shrink-0">
-                      <span className="pl-3 font-mono font-bold text-black">&pound;</span>
-                      <input
-                        type="text"
-                        inputMode="decimal"
-                        value={value}
-                        onChange={(e) => setter(e.target.value)}
-                        className="w-full px-2 py-3 font-mono text-base text-black focus:outline-none bg-white"
-                        aria-label={`Price in pounds: ${label}`}
-                      />
-                    </span>
-                    <span className="font-serif text-base text-black">{label}</span>
-                  </label>
-                ))}
-              </div>
+              <p className="f-blab" style={{ marginBottom: 12 }}>What price would feel:</p>
+              {([
+                ['So cheap you would doubt the quality', wtpTooCheap, setWtpTooCheap],
+                ['A bargain: great value for the money', wtpBargain, setWtpBargain],
+                ['Getting expensive, but you would still consider it', wtpExpensive, setWtpExpensive],
+                ['Too expensive to consider', wtpTooExpensive, setWtpTooExpensive],
+              ] as const).map(([label, value, setter]) => (
+                <label key={label} className="f-wtprow">
+                  <span className="f-pinput">
+                    <span aria-hidden="true">&pound;</span>
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      value={value}
+                      onChange={(e) => setter(e.target.value)}
+                      aria-label={`Price in pounds: ${label}`}
+                    />
+                  </span>
+                  <span className="f-wtplab">{label}</span>
+                </label>
+              ))}
 
-              <label className="block mt-6">
-                <span className="data-label block mb-2">Your age band</span>
+              <label className="block" style={{ marginTop: 20 }}>
+                <span className="f-blab" style={{ display: 'block', marginBottom: 9 }}>Your age band</span>
                 <select
+                  className="f-sel"
                   value={ageBand}
                   onChange={(e) => setAgeBand(e.target.value)}
-                  className="border-2 border-black px-4 py-3 font-sans text-base text-black bg-white w-full sm:w-60 focus:outline-none"
                 >
                   <option value="">Select your age band</option>
                   {AGE_BANDS.map((band) => (
@@ -389,86 +399,73 @@ export function TestSelectorQuiz() {
               </label>
 
               {wtpShowNudge && (
-                <p className="mt-4 text-sm font-serif text-black">
+                <p className="f-nudge">
                   Just checking: these usually run lowest to highest. Adjust if you like, or carry on.
                 </p>
               )}
 
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <div className="f-btns" style={{ marginTop: 22 }}>
                 <button
                   type="button"
                   onClick={handleWtpSubmit}
                   disabled={!wtpComplete}
-                  className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:text-white"
+                  className="f-btn"
                 >
                   See the price
                 </button>
-                <button
-                  type="button"
-                  onClick={handleWtpSkip}
-                  className="bg-white text-black hover:bg-gray-100 border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors"
-                >
+                <button type="button" onClick={handleWtpSkip} className="f-btn f-btn-ghost">
                   Skip, just show the price
                 </button>
               </div>
             </div>
-        </div>
-      )}
+          </div>
+        )}
 
-      {step === 5 && result && (
-        <div className="result-card is-active">
-            <div className="data-label mb-8 flex items-center gap-4">
-                <span className="w-12 h-[2px] bg-black"></span>
-                Your Result
-            </div>
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b-4 border-black pb-8">
-                <div>
-                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 border-2 border-black font-sans font-black uppercase text-xs tracking-widest mb-4 ${result.kit === 'kit3' ? 'bg-black text-white' : 'text-black'}`}>
-                        <span className={`w-2 h-2 rounded-none ${result.kit === 'kit3' ? 'bg-white' : 'bg-black'}`}></span> {result.label}
-                    </div>
-                    <h2 className="text-4xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9]">{result.title}</h2>
-                </div>
-                <div className="text-5xl font-sans font-black text-black shrink-0">{result.price}</div>
+        {step === 5 && result && (
+          <div>
+            <p className="f-blab">Your result</p>
+            <div className="f-rescap">
+              <div>
+                <span className="f-flagchip">{result.label}</span>
+                <h2 className="f-h2" style={{ marginTop: 12 }}>{result.title}</h2>
+              </div>
+              <span className="f-price">{result.price}</span>
             </div>
 
-            <p className="text-xl font-serif text-black mb-12 leading-relaxed">
-                {result.reason}
-            </p>
+            <p className="f-sub">{result.reason}</p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                <Link href={result.href} className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">
-                  Order {result.label}
+            <div className="f-btns" style={{ marginTop: 24 }}>
+              <Link href={result.href} className="f-btn">
+                Order {result.label} <span className="f-pip" aria-hidden="true">&rarr;</span>
+              </Link>
+              {result.kit !== 'kit3' ? (
+                <Link href="/kits/hormone-recovery" className="f-btn f-btn-ghost">
+                  Or get full picture (Kit 3)
                 </Link>
-                {result.kit !== 'kit3' ? (
-                  <Link href="/kits/hormone-recovery" className="bg-white text-black hover:bg-gray-100 border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">
-                    Or get full picture (Kit 3)
-                  </Link>
-                ) : (
-                  <Link href="/kits/hormone-recovery" className="bg-white text-black hover:bg-gray-100 border-2 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 text-center transition-colors">
-                    Read more about Kit 3
-                  </Link>
-                )}
+              ) : (
+                <Link href="/kits/hormone-recovery" className="f-btn f-btn-ghost">
+                  Read more about Kit 3
+                </Link>
+              )}
             </div>
 
             {/* Soft inline email capture: result is already shown above, this is
                 optional. Consent is unticked by default (UK GDPR); the result is
                 visible whether or not they opt in. */}
             {captureStatus === 'done' ? (
-              <div className="border-4 border-black bg-gray-50 p-8 mb-10">
-                <div className="data-label mb-3">Sent</div>
-                <p className="text-lg font-serif text-black">
+              <div className="f-well">
+                <p className="f-blab">Sent</p>
+                <p className="f-sub" style={{ marginTop: 10 }}>
                   Check your inbox. Your result and what to do next are on the way.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleCaptureSubmit} className="border-4 border-black bg-gray-50 p-8 mb-10">
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter mb-2 leading-[0.95]">
-                  Want this emailed to you?
-                </h3>
-                <p className="text-base font-serif text-black mb-6">
+              <form onSubmit={handleCaptureSubmit} className="f-well">
+                <h3 className="f-h4">Want this emailed to you?</h3>
+                <p className="f-sub" style={{ marginTop: 8, marginBottom: 18 }}>
                   We&rsquo;ll send your result and a short series on what to do next.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 mb-5">
+                <div className="f-btns">
                   <input
                     type="email"
                     inputMode="email"
@@ -476,40 +473,42 @@ export function TestSelectorQuiz() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address"
-                    className="form-input-brutal flex-1 border-4 border-black px-6 py-4 font-sans text-base focus:outline-none placeholder-gray-400 bg-white"
+                    aria-label="Your email address"
+                    className="f-inp"
                   />
-                  <button
-                    type="submit"
-                    disabled={!canSubmit}
-                    className="bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 transition-colors whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-black disabled:hover:text-white"
-                  >
+                  <button type="submit" disabled={!canSubmit} className="f-btn">
                     {captureStatus === 'submitting' ? 'Sending…' : 'Send it to me'}
                   </button>
                 </div>
-                <label className="flex items-start gap-3 text-sm font-serif text-black cursor-pointer">
+                <label className="f-consent">
                   <input
                     type="checkbox"
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}
-                    className="mt-1 w-4 h-4 shrink-0 accent-black"
                   />
                   <span>
                     Yes, email me my result and a short series on next steps. I can
                     unsubscribe at any time. See our{' '}
-                    <Link href="/privacy" className="underline hover:no-underline">Privacy Policy</Link>.
+                    <Link href="/privacy">Privacy Policy</Link>.
                   </span>
                 </label>
+                {/* role="alert" rather than a red tint. The saturation ruling
+                    (tokens/colours.css, 2026-09-03) leaves this ink, so the
+                    announcement has to do the work the colour used to. */}
                 {captureStatus === 'error' && (
-                  <p className="mt-4 text-sm font-sans font-black uppercase tracking-widest text-black">
-                    Something went wrong. Please try again.
-                  </p>
+                  <p className="f-err" role="alert">Something went wrong. Please try again.</p>
                 )}
               </form>
             )}
 
-            <button type="button" onClick={reset} className="data-label text-gray-500 hover:text-black transition-colors underline">Retake the quiz</button>
-        </div>
-      )}
+            <p style={{ marginTop: 22 }}>
+              <button type="button" onClick={reset} className="f-tlink">
+                Retake the quiz
+              </button>
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

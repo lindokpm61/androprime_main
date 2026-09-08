@@ -24,10 +24,22 @@
  * around by subtracting 21.
  *
  * WHAT IT ALSO REPORTS. The F classes that exist in the stylesheets and appear
- * on NO route. That is the one output the retired `reconcile-f-css.js` had that
- * carried real information (its "unpaired selectors"), except measured against
- * rendered routes rather than against drawings, which is what makes it mean
- * "waiting for a page" rather than "disagrees with a mockup".
+ * on NO route this run could reach. That is the one output the retired
+ * `reconcile-f-css.js` had that carried real information (its "unpaired
+ * selectors"), except measured against rendered routes rather than against
+ * drawings, which is what makes it mean "waiting for a page" rather than
+ * "disagrees with a mockup".
+ *
+ * ⚠ IT IS SPLIT IN TWO, since 2026-09-08, AND THE SPLIT IS THE POINT. The list
+ * used to be published under "either waiting for a page, or dead", which was
+ * wrong about 78 of its 105 entries. A class is absent from these counts for
+ * three innocent reasons besides being dead: the shared chrome is excluded by
+ * landmark on purpose (`.f-nav`, `.f-footer`), a control can sit behind an
+ * interaction this run never performs (`/test-selector`'s form is at step 4 of
+ * five), and an error or success block needs a request to have resolved. So the
+ * discriminator is whether any marketing SOURCE file still asks for the class,
+ * using the same static read `sourceSignal` does. Only the group in no source
+ * file is a deletion candidate, and even there a route may simply be unbuilt.
  *
  * THE STALENESS GUARD IS SEPARATE AND STATIC. `verify-route-conformance.js` runs
  * in `npm test`, needs no browser, and fails if the route set on disk no longer
@@ -262,6 +274,34 @@ const COUNT = () => {
   )].sort()
 
   const unused = [...definedClasses].filter((c) => !seenClasses.has(c)).sort()
+
+  /* THE THIRD CASE, added 2026-09-08. A class can be absent from every rendered
+     route and still be neither waiting nor dead: it can be behind an
+     interaction. This renderer loads each route once, anonymously, and never
+     clicks, so a form control that appears at step 4 of a five-step quiz is
+     invisible to it.
+     The discriminator is the SOURCE, using the same static read that supplies
+     the not-measured routes' second opinion: a class written in a marketing
+     source file is being rendered by SOMETHING, whatever this run could reach.
+     Naming the two groups separately is the whole point, because "dead" invites
+     a deletion and "reachable only by interacting" forbids one. */
+  const inSource = new Set()
+  for (const dir of [path.join(ROOT, 'app'), path.join(ROOT, 'components')]) {
+    const walk = (d) => {
+      if (!fs.existsSync(d)) return
+      for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+        const p = path.join(d, e.name)
+        if (e.isDirectory()) { if (!['node_modules', '.next', '.git', '.impeccable', 'out'].includes(e.name)) walk(p) }
+        else if (/\.(tsx|ts)$/.test(e.name)) {
+          const s = fs.readFileSync(p, 'utf8')
+          for (const m of s.matchAll(/(?<![A-Za-z0-9_-])((?:f|fb)-[a-z][a-z0-9-]*)(?![A-Za-z0-9_-])/g)) inSource.add(m[1])
+        }
+      }
+    }
+    walk(dir)
+  }
+  const stateOnly = unused.filter((c) => inSource.has(c))
+  const orphan = unused.filter((c) => !inSource.has(c))
   const today = new Date().toISOString().slice(0, 10)
   const denom = f.length + not.length
   const pct = Math.round((f.length / denom) * 100)
@@ -310,12 +350,38 @@ ${Object.entries(EXCLUDED).map(([k, v]) => `| \`${k}\` | ${v} |`).join('\n')}
 
 ## F classes defined and rendered nowhere (${unused.length})
 
-These exist in the stylesheets and appear on no route. Each is either a component
-waiting for a page that has not been rebuilt, or dead. This replaces the retired
-\`reconcile-f-css.js\` "unpaired selectors" figure, measured against rendered routes
-rather than against the journey frames.
+These exist in the stylesheets and appear on no route THIS RUN COULD REACH. Each
+route is loaded once, anonymously, and never interacted with, so the list below is
+split by whether any marketing source file still asks for the class. This replaces
+the retired \`reconcile-f-css.js\` "unpaired selectors" figure, measured against
+rendered routes rather than against the journey frames.
 
-${unused.length ? unused.map((c) => `\`.${c}\``).join(', ') : '_none_'}
+### Asked for by a source file, so not dead (${stateOnly.length})
+
+**Do not read this group as deletable.** Something renders them; this run did not
+see them, and there are three separate reasons for that, so absence here is not
+evidence of absence:
+
+1. **Excluded by design.** A route's class set deliberately omits the shared
+   chrome, counted by landmark, so \`.f-nav\`, \`.f-footer\` and the cookie banner's
+   classes render on every route and appear in none of the counts.
+2. **Behind an interaction.** Each route is loaded once and never clicked. The
+   form controls on \`/test-selector\` are at step 4 of a five-step quiz.
+3. **Behind a request state.** An error or success block needs a POST to have
+   failed or succeeded.
+
+⚠ The old wording put all of these under "waiting for a page, or dead", which was
+wrong about most of the list: it is ${stateOnly.length} of ${unused.length}.
+
+${stateOnly.length ? stateOnly.map((c) => `\`.${c}\``).join(', ') : '_none_'}
+
+### In no source file at all (${orphan.length})
+
+Either a component waiting for a page that has not been rebuilt, or dead. This is
+the group to read when looking for something to delete, and even here a class may
+be waiting: ${not.length} routes are still on the old design.
+
+${orphan.length ? orphan.map((c) => `\`.${c}\``).join(', ') : '_none_'}
 
 ---
 
@@ -324,7 +390,7 @@ rendered at 1440px against a dev server.${flagsOn.length ? ` Dark-launch flags o
 `
 
   fs.writeFileSync(OUT, md)
-  fs.writeFileSync(OUT_JSON, JSON.stringify({ generated: today, base: BASE, rows, excluded: EXCLUDED, unused }, null, 2) + '\n')
-  console.log(`\n${f.length} of ${denom} measurable routes Direction F (${pct}%), ${unmeasured.length} not measurable anonymously, ${unused.length} classes rendered nowhere`)
+  fs.writeFileSync(OUT_JSON, JSON.stringify({ generated: today, base: BASE, rows, excluded: EXCLUDED, unused, stateOnly, orphan }, null, 2) + '\n')
+  console.log(`\n${f.length} of ${denom} measurable routes Direction F (${pct}%), ${unmeasured.length} not measurable anonymously, ${unused.length} classes not rendered (${stateOnly.length} asked for by a source file, ${orphan.length} in no source)`)
   console.log(`wrote ${path.relative(path.resolve(ROOT, '..', '..', '..'), OUT).split(path.sep).join('/')}`)
 })().catch((e) => { console.error(e); process.exit(1) })

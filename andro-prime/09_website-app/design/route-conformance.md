@@ -1,6 +1,6 @@
 # Route conformance: Direction F
 
-**10 of 36 measurable routes are Direction F (28%).** Measured 2026-09-08.
+**11 of 36 measurable routes are Direction F (31%).** Measured 2026-09-08.
 A further **7** could not be measured anonymously; they are listed below with the reason.
 
 <!-- GENERATED FILE. Do not edit by hand: run `npm run route-conformance` with a dev
@@ -12,7 +12,7 @@ the shared chrome. The chrome is excluded by landmark (`<header>`, `<footer>`, t
 cookie banner) rather than by subtracting a remembered class count, because the nav
 and footer are worn by every route including the ones still on the old design.
 
-## Rebuilt (10)
+## Rebuilt (11)
 
 | Route | F classes | Source |
 |---|---|---|
@@ -26,8 +26,9 @@ and footer are worn by every route including the ones still on the old design.
 | `/kits/hormone-recovery` | 90 | `app/(marketing)/kits/hormone-recovery/page.tsx` |
 | `/kits/testosterone` | 79 | `app/(marketing)/kits/testosterone/page.tsx` |
 | `/membership` | 51 | `app/(marketing)/membership/page.tsx` |
+| `/test-selector` | 44 | `app/(marketing)/test-selector/page.tsx` |
 
-## Not rebuilt (26)
+## Not rebuilt (25)
 
 | Route | F classes | Source |
 |---|---|---|
@@ -55,7 +56,6 @@ and footer are worn by every route including the ones still on the old design.
 | `/supplements/collagen` | 0 | `app/(marketing)/supplements/collagen/page.tsx` |
 | `/supplements/daily-stack` | 0 | `app/(marketing)/supplements/daily-stack/page.tsx` |
 | `/terms` | 0 | `app/(marketing)/terms/page.tsx` |
-| `/test-selector` | 0 | `app/(marketing)/test-selector/page.tsx` |
 | `/waitlist` | 0 | `app/(marketing)/waitlist/page.tsx` |
 
 ## Not measured (7)
@@ -85,14 +85,40 @@ page's classes would score every gated route with whatever `/auth/login` wears.
 | `/blog/preview/[slug]` | internal preview of an unpublished draft |
 | `/demo` | runs the authenticated app shell (`ap-*`), not the marketing layer, so Direction F is the wrong question |
 
-## F classes defined and rendered nowhere (95)
+## F classes defined and rendered nowhere (105)
 
-These exist in the stylesheets and appear on no route. Each is either a component
-waiting for a page that has not been rebuilt, or dead. This replaces the retired
-`reconcile-f-css.js` "unpaired selectors" figure, measured against rendered routes
-rather than against the journey frames.
+These exist in the stylesheets and appear on no route THIS RUN COULD REACH. Each
+route is loaded once, anonymously, and never interacted with, so the list below is
+split by whether any marketing source file still asks for the class. This replaces
+the retired `reconcile-f-css.js` "unpaired selectors" figure, measured against
+rendered routes rather than against the journey frames.
 
-`.f-bar`, `.f-btn-on`, `.f-burger`, `.f-c-12`, `.f-chip`, `.f-chips`, `.f-cookie`, `.f-cookieacts`, `.f-cookielink`, `.f-cookiewrap`, `.f-core-dark`, `.f-drawer`, `.f-foot`, `.f-footbar`, `.f-footer`, `.f-footlink`, `.f-in`, `.f-kitaside`, `.f-kitfoot`, `.f-kitgrid`, `.f-kitprice`, `.f-kittitle`, `.f-lab`, `.f-legal`, `.f-logo`, `.f-narrow`, `.f-nav`, `.f-navcta`, `.f-navcta-wrap`, `.f-navlinks`, `.f-navlogin`, `.f-navright`, `.f-navshell`, `.f-navstat`, `.f-oneoff`, `.f-out`, `.f-rep`, `.f-row-top`, `.f-scrolled`, `.f-shot-band`, `.f-spec-open`, `.f-st`, `.f-st-hot`, `.f-stat`, `.f-sub2`, `.f-total`, `.f-tray-dark`, `.f-val`, `.fb-alert`, `.fb-alert-act`, `.fb-alert-bd`, `.fb-alert-h`, `.fb-alert-k`, `.fb-arthead`, `.fb-authav`, `.fb-byline`, `.fb-byline-av`, `.fb-byline-col`, `.fb-byline-dates`, `.fb-byline-n`, `.fb-byline-r`, `.fb-bylines`, `.fb-caveat`, `.fb-clin`, `.fb-clin-foot`, `.fb-clin-in`, `.fb-clin-k`, `.fb-clin-q`, `.fb-credit`, `.fb-crumb`, `.fb-cta`, `.fb-cta-body`, `.fb-cta-in`, `.fb-figure`, `.fb-mchips`, `.fb-metabar`, `.fb-note`, `.fb-now`, `.fb-num`, `.fb-num-feat`, `.fb-num-n`, `.fb-pshot-og`, `.fb-pub`, `.fb-pub-src`, `.fb-punch`, `.fb-refs`, `.fb-refs-h`, `.fb-stand`, `.fb-stat`, `.fb-stat-big`, `.fb-stat-k`, `.fb-sys`, `.fb-sys-chip`, `.fb-tablewrap`, `.fb-wrap`
+### Asked for by a source file, so not dead (78)
+
+**Do not read this group as deletable.** Something renders them; this run did not
+see them, and there are three separate reasons for that, so absence here is not
+evidence of absence:
+
+1. **Excluded by design.** A route's class set deliberately omits the shared
+   chrome, counted by landmark, so `.f-nav`, `.f-footer` and the cookie banner's
+   classes render on every route and appear in none of the counts.
+2. **Behind an interaction.** Each route is loaded once and never clicked. The
+   form controls on `/test-selector` are at step 4 of a five-step quiz.
+3. **Behind a request state.** An error or success block needs a POST to have
+   failed or succeeded.
+
+⚠ The old wording put all of these under "waiting for a page, or dead", which was
+wrong about most of the list: it is 78 of 105.
+
+`.f-burger`, `.f-chip`, `.f-chips`, `.f-consent`, `.f-cookie`, `.f-cookieacts`, `.f-cookielink`, `.f-cookiewrap`, `.f-drawer`, `.f-err`, `.f-foot`, `.f-footbar`, `.f-footer`, `.f-footlink`, `.f-inp`, `.f-legal`, `.f-logo`, `.f-nav`, `.f-navcta`, `.f-navcta-wrap`, `.f-navlinks`, `.f-navlogin`, `.f-navright`, `.f-navshell`, `.f-navstat`, `.f-nudge`, `.f-pinput`, `.f-rescap`, `.f-scrolled`, `.f-sel`, `.f-stat`, `.f-tlink`, `.f-well`, `.f-wtplab`, `.f-wtprow`, `.fb-alert`, `.fb-alert-act`, `.fb-alert-bd`, `.fb-alert-h`, `.fb-alert-k`, `.fb-arthead`, `.fb-byline`, `.fb-byline-av`, `.fb-byline-col`, `.fb-byline-dates`, `.fb-byline-n`, `.fb-byline-r`, `.fb-bylines`, `.fb-caveat`, `.fb-clin`, `.fb-clin-foot`, `.fb-clin-in`, `.fb-clin-k`, `.fb-clin-q`, `.fb-credit`, `.fb-crumb`, `.fb-cta`, `.fb-cta-body`, `.fb-cta-in`, `.fb-figure`, `.fb-mchips`, `.fb-metabar`, `.fb-note`, `.fb-now`, `.fb-num`, `.fb-num-feat`, `.fb-num-n`, `.fb-pshot-og`, `.fb-pub`, `.fb-pub-src`, `.fb-punch`, `.fb-refs`, `.fb-refs-h`, `.fb-stand`, `.fb-stat`, `.fb-stat-k`, `.fb-sys`, `.fb-sys-chip`
+
+### In no source file at all (27)
+
+Either a component waiting for a page that has not been rebuilt, or dead. This is
+the group to read when looking for something to delete, and even here a class may
+be waiting: 25 routes are still on the old design.
+
+`.f-bar`, `.f-btn-on`, `.f-c-12`, `.f-core-dark`, `.f-in`, `.f-kitaside`, `.f-kitfoot`, `.f-kitgrid`, `.f-kitprice`, `.f-kittitle`, `.f-lab`, `.f-oneoff`, `.f-out`, `.f-rep`, `.f-row-top`, `.f-shot-band`, `.f-spec-open`, `.f-st`, `.f-st-hot`, `.f-sub2`, `.f-total`, `.f-tray-dark`, `.f-val`, `.fb-authav`, `.fb-stat-big`, `.fb-tablewrap`, `.fb-wrap`
 
 ---
 

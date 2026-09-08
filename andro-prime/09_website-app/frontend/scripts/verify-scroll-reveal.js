@@ -7,11 +7,60 @@
  */
 const puppeteer = require('d:/Androprime_main/andro-prime/09_website-app/frontend/node_modules/puppeteer-core');
 const fs = require('fs');
-const OUT = 'C:/Users/antid/AppData/Local/Temp/claude/d--Androprime-main/5c9f61d2-ec33-4fca-8018-9ef1aec46289/scratchpad';
+/* The reduced-motion screenshot's destination. Was a hard-coded scratchpad path
+   from the session that wrote this file; that directory is long gone, so the
+   screenshot call threw on any machine but that one, at the very end of a check
+   that takes two minutes to reach it. os.tmpdir() always exists. */
+const OUT = require('os').tmpdir();
 const CHROME = ['C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'].find((p) => fs.existsSync(p));
 
-const ROUTES = ['/', '/kits', '/kits/testosterone', '/kits/energy-recovery', '/kits/hormone-recovery', '/how-it-works'];
+/* THE ROUTE LIST IS READ FROM THE GENERATED CONFORMANCE REPORT, NOT TYPED HERE.
+   It was a literal of six when ten routes were rebuilt, so this check had
+   quietly stopped covering /blog, /blog/[slug], /authors/[slug] and /membership,
+   and would have missed /test-selector too. That is the same defect the route
+   count had before `route-conformance.js`: a number, or here a list, that has to
+   be remembered. The report's "Rebuilt" table is the generated answer, so a route
+   that becomes Direction F comes into this check by being rebuilt.
+
+   Dynamic segments are given a real example, because /blog/[slug] is not a URL.
+   A route in the report with no example here is skipped and SAID to be skipped,
+   rather than silently dropped. */
+const EXAMPLES = { '/authors/[slug]': '/authors/dr-ewa-lindo' };
+/* /blog/[slug] is RESOLVED from the listing rather than written down: a
+   hand-picked slug can be unpublished, and the first guess here (a plausible
+   'what-is-shbg') 404d, which would have failed this check with a message about
+   motion rather than about the example. */
+async function resolveBlogExample(browser) {
+  const p = await browser.newPage();
+  try {
+    await p.goto('http://localhost:3000/blog', { waitUntil: 'networkidle0', timeout: 120000 });
+    const href = await p.evaluate(() => {
+      const a = [...document.querySelectorAll('a[href^="/blog/"]')]
+        .map((el) => el.getAttribute('href'))
+        .find((h) => h && h !== '/blog/' && !h.includes('/preview/'));
+      return a || null;
+    });
+    return href;
+  } finally { await p.close(); }
+}
+function rebuiltRoutes() {
+  const md = fs.readFileSync(require('path').join(__dirname, '..', '..', 'design', 'route-conformance.md'), 'utf8');
+  const section = md.split(/^## Rebuilt/m)[1];
+  if (!section) { console.error('ERROR: no "## Rebuilt" table in design/route-conformance.md. Run `npm run route-conformance`.'); process.exit(1); }
+  const rows = section.split(/^## /m)[0].split('\n')
+    .map((l) => (l.match(/^\|\s*`([^`]+)`/) || [])[1]).filter(Boolean);
+  if (!rows.length) { console.error('ERROR: the Rebuilt table parsed to zero routes. Fix this parser rather than trusting a pass.'); process.exit(1); }
+  const out = [], skipped = [];
+  for (const r of rows) {
+    if (!r.includes('[')) out.push(r);
+    else if (EXAMPLES[r]) out.push(EXAMPLES[r]);
+    else skipped.push(r);
+  }
+  if (skipped.length) console.log(`  note  skipped (no example URL in EXAMPLES): ${skipped.join(', ')}`);
+  return out;
+}
+const ROUTES = rebuiltRoutes();
 let pass = 0, fail = 0;
 const t = (d, got, want) => {
   const ok = JSON.stringify(got) === JSON.stringify(want);
@@ -63,9 +112,20 @@ const visibility = () => {
   }
 
   console.log('\nMotion ON: hidden at first, revealed on arrival\n');
+  {
+    const blog = await resolveBlogExample(browser);
+    if (blog) ROUTES.push(blog);
+    else console.log('  note  /blog/[slug] skipped: no article link found on /blog');
+  }
   for (const route of ROUTES) {
     const p = await newPage(browser);
-    await p.goto('http://localhost:3000' + route, { waitUntil: 'networkidle0', timeout: 120000 });
+    const resp = await p.goto('http://localhost:3000' + route, { waitUntil: 'networkidle0', timeout: 120000 });
+    // A bad EXAMPLE must not read as a broken page. Without this, a 404 fails
+    // "has reveal targets" and sends the reader looking at the motion layer.
+    if (resp && resp.status() !== 200) {
+      fail++; console.log(`  FAIL ${route}: returned ${resp.status()}, so this is a bad example URL, not a motion defect`);
+      await p.close(); continue;
+    }
     await new Promise((r) => setTimeout(r, 1400));
     const top = await p.evaluate(visibility);
     t(`${route}: .js gate is on`, top.js, true);

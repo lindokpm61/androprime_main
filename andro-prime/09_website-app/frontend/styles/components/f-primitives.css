@@ -2514,3 +2514,272 @@
    the value looks wrong in source and is right in the browser. */
 .f-on-ink a { color: var(--on-ink); text-decoration-color: var(--on-ink-hair-2); }
 .f-on-ink a:hover { text-decoration-color: var(--on-ink); }
+
+/* ============================================================================
+   THE SELECTOR — /test-selector, added 2026-09-08 from
+   design/mockups/journey/test-selector-F.html frames N2, N3 and N4.
+
+   🔴 THIS IS THE FIRST F SURFACE WITH FORM CONTROLS ON IT. Every route rebuilt
+   before this one was reading matter: headings, trays, tables, photographs and
+   links. Nothing in the 2,500 lines above styles an `input`, a `select` or a
+   `checkbox`, so a quiz built out of the existing vocabulary would have rendered
+   UA-default fields inside Direction F cards. The controls below are therefore
+   NEW system surface rather than a page's private CSS, and they are named for
+   what they are (`.f-inp`, `.f-sel`, `.f-consent`) rather than for this page, so
+   /contact, /waitlist and the auth routes inherit them when they are rebuilt.
+
+   THE CONTAINMENT RULING IS SATISFIED, NOT BYPASSED. "A card holds a transaction
+   or an instrument." The quiz card holds a transaction: three questions, a price
+   study and an email capture. `.f-well` nests one more surface inside it for the
+   two FORMS specifically, which is the same justification one level down. Prose
+   in here still takes the print treatment and gets no box.
+
+   NOTHING SUPPRESSES A FOCUS RING. The focus block above is the only source of
+   one, and every control here inherits it; `border-radius: inherit` in that rule
+   is why a ring on the pound field traces the pill rather than boxing it. There
+   is no `outline: none` in this section and there must not be one.
+   ============================================================================ */
+
+/* ---- the card interior -------------------------------------------------- */
+
+/* `overflow: hidden` is load-bearing: it is the EDGE the position numeral is cut
+   by. DESIGN.md dropped the step card's ghost numeral on 2026-09-06 because the
+   containment fold had removed the box it cropped against, and an uncropped
+   oversized glyph is just a big grey digit. Here the box is real, the quiz being
+   a card under the containment ruling, so the crop exists and the numeral works
+   for the reason the step card's stopped working. */
+.f-qcard { position: relative; overflow: hidden; }
+/* Positioned, so in-flow content paints ABOVE an absolutely positioned sibling.
+   Without this the numeral sits over the question text: an absolutely positioned
+   box paints later than in-flow blocks whatever the source order, and a negative
+   z-index would drop it behind `.f-core`'s own white ground instead. */
+.f-qcard > *:not(.f-qnum) { position: relative; z-index: 1; }
+.f-qnum {
+  position: absolute; top: -26px; right: 2px; z-index: 0;
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
+  font-size: clamp(7rem, 15vw, 11.5rem); line-height: 1; font-weight: 500;
+  /* color-mix, not `opacity`: opacity fades the glyph's own antialiasing, and it
+     is the device `.f-on-ink` forbids for a related reason. A mixed colour is one
+     value and composites once. */
+  color: color-mix(in srgb, var(--ink) 7%, transparent);
+  pointer-events: none; user-select: none;
+}
+
+/* ---- progress ----------------------------------------------------------- */
+
+/* The visible counter is the numeral and the bar. "Question N of 3" is rendered
+   `sr-only` rather than dropped, because an 8px bar states progress to a sighted
+   reader and states nothing at all to a screen reader. */
+.f-qprog {
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding-bottom: 20px; border-bottom: 1px solid var(--hair); margin-bottom: 26px;
+}
+.f-qbar {
+  position: relative; flex: 1; min-width: 140px; height: 8px;
+  border-radius: 999px; background: var(--sunk);
+  box-shadow: inset 0 1px 2px rgba(10, 11, 13, 0.10);
+}
+/* No `overflow: hidden` on the track, for the reason `.f-track` has none: the
+   fill carries its own radius and never exceeds 100%, and clipping a track is
+   what removed the readout marker's declared overhang. */
+.f-qbar i {
+  position: absolute; top: 0; bottom: 0; left: 0;
+  border-radius: 999px; background: var(--ink);
+  transition: width 0.45s var(--ease);
+}
+
+/* ---- the answers -------------------------------------------------------- */
+
+.f-opts { display: grid; gap: 10px; margin-top: 22px; }
+.f-opt {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  background: var(--core); border: 0; border-radius: var(--radius-inset);
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+  padding: 17px 20px;
+  transition: box-shadow 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.f-opt:hover { background: var(--tray); box-shadow: inset 0 0 0 1.5px var(--ink); transform: translate3d(0, -1px, 0); }
+.f-opt-k {
+  display: block; margin-bottom: 7px;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2);
+}
+.f-opt-t { display: block; font-family: var(--font-sans); font-size: 16.5px; line-height: 1.5; color: var(--ink); }
+
+/* ---- the result caption ------------------------------------------------- */
+
+.f-rescap {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+  border-bottom: 1px solid var(--hair); padding-bottom: 20px; margin-bottom: 20px;
+}
+@media (min-width: 700px) {
+  .f-rescap { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 26px; }
+}
+
+/* ---- the well: a form inside the card ----------------------------------- */
+
+.f-well {
+  background: var(--sunk); border-radius: var(--radius-inset);
+  box-shadow: inset 0 0 0 1px var(--hair);
+  padding: 22px; margin-top: 26px;
+}
+@media (min-width: 700px) { .f-well { padding: 26px 28px; } }
+/* 🔴 --ink-2, NEVER --ink-3, on this ground. The direction defines --ink-3 as the
+   functional-text floor at 4.99:1 ON PAPER; against --sunk it measures 4.10:1,
+   which is the defect fixed on twelve `.f-spec-k` instances on 2026-08-31.
+   --ink-2 on --sunk is 7.8:1. */
+.f-well .f-blab, .f-well .f-fine { color: var(--ink-2); }
+
+/* ---- the price fields --------------------------------------------------- */
+
+.f-wtprow { display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
+@media (min-width: 560px) { .f-wtprow { flex-direction: row; align-items: center; gap: 16px; } }
+.f-pinput {
+  display: inline-flex; align-items: center; flex: none; width: 126px;
+  background: var(--core); border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+}
+.f-pinput > span {
+  flex: none; padding-left: 15px;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 13.5px; color: var(--ink-2);
+}
+.f-pinput input {
+  width: 100%; min-width: 0; background: transparent; border: 0;
+  padding: 11px 15px 11px 6px;
+  font-family: var(--font-mono); font-size-adjust: none; font-size: 14.5px; color: var(--ink);
+}
+.f-wtplab { font-family: var(--font-sans); font-size: 15px; line-height: 1.5; color: var(--ink); }
+
+/* ---- the shared controls ------------------------------------------------ */
+
+.f-inp {
+  flex: 1; min-width: 0;
+  background: var(--core); border: 0; border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+  padding: 13px 20px;
+  font-family: var(--font-sans); font-size: 15.5px; color: var(--ink);
+}
+.f-inp::placeholder { color: var(--ink-3); }
+/* `appearance: none` and a drawn chevron, which is the one place in this system
+   an arrow is NOT the typographic glyph. That ruling exists because the button's
+   pip is set in the button's own face and should follow the type ruling; a
+   `select`'s indicator has no text slot to sit in without wrapping the control in
+   extra markup. Left native, Chrome ignores the pill and draws its own ~8px
+   rounded box with its own grey arrow, so the one control a reader MUST touch to
+   enable the CTA was the one that did not look like it belonged to the set.
+   The chevron is a background, so it is decorative by construction and the
+   control stays a plain native `select` with all of its semantics. */
+.f-sel {
+  display: block; width: 100%; max-width: 268px;
+  appearance: none;
+  background-color: var(--core);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' fill='none' stroke='%234A4F57' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  border: 0; border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+  padding: 12px 40px 12px 18px;
+  font-family: var(--font-sans); font-size: 15px; color: var(--ink); cursor: pointer;
+}
+/* The whole row is the `<label>`, so the tap target is the row rather than the
+   17px box. WCAG 2.2 SC 2.5.8 is met by the label, which is why the box is not
+   padded up to 24px and made to sit off its own text baseline. */
+.f-consent {
+  display: flex; align-items: flex-start; gap: 12px; margin-top: 16px; cursor: pointer;
+  font-family: var(--font-sans); font-size: 14.5px; line-height: 1.6; color: var(--ink-2);
+}
+.f-consent input { flex: none; margin-top: 3px; width: 17px; height: 17px; accent-color: var(--ink); }
+.f-consent a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--hair-2); }
+.f-consent a:hover { text-decoration-color: var(--ink); }
+
+/* ---- the two notices ---------------------------------------------------- */
+
+/* 🔴 BOTH OF THESE ARE INK, AND THAT IS THE 2026-09-03 SATURATION RULING, NOT A
+   MISSING COLOUR. `tokens/colours.css` settles every future case in one line:
+   *"the status triad owns saturation. A marketing surface may use ink, paper and
+   the greys between them. If a thing is not a verdict about the reader's blood,
+   it is not coloured."* `--flag` is `#0A0B0D` for that reason — it kept its name
+   and lost its amber.
+
+   A hint that four typed prices are not in ascending order, and a failed form
+   POST, are both emphatically not verdicts about anybody's blood. So the nudge
+   takes `--flag`, which is the ruling's own handle for a marketing emphasis, and
+   the error takes ink.
+
+   ⚠ THE ERROR WAS DRAFTED IN `--color-status-critical` AND THAT WAS WRONG. The
+   precedent reached for was `membership__checkin-error`, which does carry a form
+   failure in the critical token — but it lives in `styles/pages/membership.css`,
+   outside the F layer, and predates the ruling. A pre-ruling call site is not a
+   licence. Since the colour is what an error usually leans on, the markup carries
+   `role="alert"` instead, which announces it rather than tinting it, and is the
+   better mechanism regardless. */
+.f-nudge {
+  margin-top: 16px; padding-left: 13px; border-left: 2px solid var(--flag);
+  font-family: var(--font-sans); font-size: 14.5px; line-height: 1.6; color: var(--ink);
+}
+.f-err {
+  margin-top: 14px; padding-left: 13px; border-left: 2px solid var(--ink);
+  font-family: var(--font-sans); font-size: 14.5px; line-height: 1.6;
+  font-weight: 600; color: var(--ink);
+}
+
+/* ---- a link set in running text ----------------------------------------- */
+
+.f-tlink { color: var(--ink); text-decoration: underline; text-decoration-color: var(--hair-2); text-underline-offset: 3px; }
+.f-tlink:hover { text-decoration-color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .f-opt, .f-qbar i { transition: none; }
+  .f-opt:hover { transform: none; }
+}
+
+/* ---- the disabled CTA --------------------------------------------------- */
+
+/* The first real disabled state in the direction. "See the price" stays off
+   until all four figures and an age band are in, which is the frame's whole
+   reason for drawing that button dimmed rather than as a spinner.
+
+   NOT `opacity`. Fading an ink pill takes its white label down together with its
+   ground and lands the pair in the middle, which is the muddy result `.f-on-ink`
+   already argues against. The button instead LOSES the ink fill, which is what
+   actually says inactive, and keeps readable text: `--ink-2` on `--sunk` is
+   7.8:1, where `--ink-3` on the same ground is the 4.10:1 that failed on twelve
+   `.f-spec-k` instances. WCAG exempts an inactive control from contrast; there is
+   no reason to take the exemption when the state has to be READ to be understood.
+
+   `:disabled` rather than an `.f-btn-off` modifier class: the state is already in
+   the DOM, it out-specifies `.f-btn` at (0,2,0) on its own, and a class would be
+   a second source of truth that can disagree with the attribute the browser acts
+   on. */
+/* 🔴 THE RING IS NOT DECORATION: IT IS WHAT SURVIVES THE GROUND. Drafted with
+   `box-shadow: none`, which made the button INVISIBLE in the one place it
+   actually renders disabled. "Send it to me" is disabled until the address is
+   valid and the box is ticked, and it sits inside `.f-well`, whose ground is
+   `--sunk` — the same value the disabled fill uses. A `--sunk` pill on a `--sunk`
+   well is unstyled text, and it read as exactly that: no shape, no edge, nothing
+   to say it was a control at all. Caught by screenshot; no check would have.
+   The hairline carries the pill's shape on any ground, so the state now reads on
+   paper, on `--tray` and on `--sunk` alike. */
+.f-btn:disabled {
+  background: var(--sunk);
+  color: var(--ink-2);
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+  cursor: not-allowed;
+}
+/* Repeats the ring rather than clearing the shadow, or hovering a disabled
+   button would erase the very edge that makes it visible on a well. */
+.f-btn:disabled:hover { box-shadow: inset 0 0 0 1px var(--hair-2); }
+.f-btn:disabled:active { transform: none; }
+.f-btn:disabled .f-pip { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+
+/* `.f-narrow` NESTED INSIDE A SECTION'S WRAP, added 2026-09-08 with FSection's
+   `narrow` prop. `.f-narrow` is a top-level container in the direction and
+   carries its own `px-5`, so used inside `.f-wrap` it gutters twice: at 390 the
+   card came out 310px wide against every other F card's 350. The section keeps
+   the full measure so its position rule still lines up with every other section
+   boundary on the site; only the column inside it narrows.
+
+   (0,2,0) against the class's own (0,1,0), so this does not depend on sitting
+   later in the file — the rule this stylesheet has now recorded five times. */
+.f-sec > .f-narrow { padding-left: 0; padding-right: 0; }
