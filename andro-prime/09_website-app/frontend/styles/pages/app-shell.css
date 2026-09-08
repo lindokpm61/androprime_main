@@ -282,29 +282,38 @@
   font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700;
   border: 1.5px solid currentColor; border-radius: 999px; padding: 5px 10px;
 }
-.ap-note p { font-size: 13px; line-height: 1.65; color: #4a4f57; }
+/* 🔴 SIX HARDCODED RAMP HEXES WERE REPLACED WITH TOKENS HERE ON 2026-09-08, and
+   the reason is that a literal cannot flip. `[data-ap-theme='dark']` re-points
+   every `--ap-*` token, so anything reading a token themes for free and anything
+   written as `#4a4f57` stays dark grey on a dark ground forever. A contrast
+   audit measured `.ap-note p` at 2.39:1 and `.ap-controls__lbl` at 3.95:1
+   against a 4.5 requirement, both on `/demo`. They were the only two failures on
+   that route and both had the same single cause.
+   The values are unchanged in light mode: #4a4f57 IS --ap-ink-2 and #6b7078 IS
+   --ap-ink-3, so this is a no-op on the light theme and a fix on the dark one. */
+.ap-note p { font-size: 13px; line-height: 1.65; color: var(--ap-ink-2); }
 
 .ap-controls { margin: 0 0 18px; }
 .ap-controls__lbl {
   font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
   font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase;
-  color: #6b7078; margin-bottom: 9px;
+  color: var(--ap-ink-3); margin-bottom: 9px;
 }
 .ap-controls ul { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
 .ap-controls__opt {
   display: block; border: 1px solid rgba(10, 11, 13, 0.16); border-radius: 999px;
   padding: 8px 14px; font-size: 12.5px; font-weight: 600; line-height: 1.2;
-  text-decoration: none; color: #0a0b0d; transition: background 0.2s, color 0.2s;
+  text-decoration: none; color: var(--ap-ink); transition: background 0.2s, color 0.2s;
 }
 .ap-controls__opt:hover { background: rgba(10, 11, 13, 0.05); }
-.ap-controls__opt[aria-current='true'] { background: #0a0b0d; color: #fff; border-color: #0a0b0d; }
-.ap-controls__blurb { font-size: 12.5px; line-height: 1.6; color: #6b7078; margin-top: 10px; }
+.ap-controls__opt[aria-current='true'] { background: var(--ap-ink); color: var(--ap-paper); border-color: var(--ap-ink); }
+.ap-controls__blurb { font-size: 12.5px; line-height: 1.6; color: var(--ap-ink-3); margin-top: 10px; }
 
 .ap-close {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 16px; margin-top: 22px; padding-top: 20px; border-top: 1px solid rgba(10, 11, 13, 0.1);
 }
-.ap-close p { font-size: 13px; line-height: 1.65; color: #4a4f57; max-width: 44ch; }
+.ap-close p { font-size: 13px; line-height: 1.65; color: var(--ap-ink-2); max-width: 44ch; }
 .ap-close__cta {
   flex: none; display: inline-block; background: #0a0b0d; color: #fff;
   border-radius: 999px; padding: 12px 20px; text-decoration: none;
@@ -1133,3 +1142,133 @@
  * design decision inside it, and `02_brand/DESIGN.md` already records a
  * criticism of a ported dark treatment, so the palette is not a given either.
  */
+
+/* ---------------------------------------------------------------------------
+   PREVIEW MODE (2026-09-08). Two proposals, shown behind `?preview=` so they can
+   be judged without touching what /demo renders by default.
+
+   🔴 EVERY RULE BELOW IS SCOPED TO `.ap-phonewrap--device` OR `.ap-attract`, AND
+   NEITHER EXISTS IN THE TREE WITHOUT THE QUERY FLAG. Nothing here can reach the
+   twelve state-and-tab cells that were measured on 2026-09-08.
+
+   WHY THE DEVICE IS DRAWN AND NOT PHOTOGRAPHED. The stage carries a theme
+   toggle, so a generated photo of a phone needs TWO assets lit for two grounds
+   and still breaks the moment someone flips it. Drawn, it themes with
+   everything else, stays crisp at any density, weighs nothing, and needs no
+   CA-045 register row, because nothing was generated.
+   --------------------------------------------------------------------------- */
+
+.ap-phonewrap--device { perspective: 1900px; perspective-origin: 62% 38%; }
+
+.ap-phonewrap--device .ap-phone {
+  transform: rotateY(-9deg) rotateX(2.5deg);
+  transform-style: preserve-3d;
+  transition: transform 640ms var(--ap-ease), box-shadow 640ms var(--ap-ease);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.20),
+    40px 36px 74px -30px rgba(0, 0, 0, 0.58),
+    0 0 0 2px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* Straightens the moment anyone reaches for it. The tilt is an invitation to
+   pick the thing up, not a posture to read nine biomarkers in. */
+.ap-phonewrap--device:hover .ap-phone,
+.ap-phonewrap--device:focus-within .ap-phone {
+  transform: rotateY(0deg) rotateX(0deg);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.18),
+    0 30px 60px -34px rgba(0, 0, 0, 0.50),
+    0 0 0 2px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* The lit edge. One hairline gradient around the rim does more for "this is an
+   object" than any amount of drop shadow, because it is the only cue that
+   reports where the light is. */
+.ap-phonewrap--device .ap-phone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  z-index: 20;
+  background: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.58) 0%,
+    rgba(255, 255, 255, 0.07) 26%,
+    rgba(255, 255, 255, 0) 54%,
+    rgba(255, 255, 255, 0.13) 80%,
+    rgba(255, 255, 255, 0.42) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* Glass. Sits over the screen and lifts on hover, so the reading state is the
+   clean one: a glare across a bilirubin value would be a design that fights its
+   own content. Inset and radius match `.ap-viewport` exactly. */
+.ap-phonewrap--device .ap-phone::after {
+  content: '';
+  position: absolute;
+  inset: 11px;
+  border-radius: 42px;
+  pointer-events: none;
+  z-index: 13;
+  opacity: 1;
+  transition: opacity 640ms var(--ap-ease);
+  background: linear-gradient(
+    116deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.055) 17%,
+    rgba(255, 255, 255, 0) 41%
+  );
+}
+.ap-phonewrap--device:hover .ap-phone::after,
+.ap-phonewrap--device:focus-within .ap-phone::after { opacity: 0.18; }
+
+/* ---------- the attract loop's status line ---------- */
+
+.ap-attract {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  min-height: 20px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size-adjust: none;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--ap-ink-3);
+}
+
+.ap-attract__dots { display: inline-flex; gap: 5px; flex: none; }
+.ap-attract__dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.26;
+  transition: opacity 320ms var(--ap-ease), transform 320ms var(--ap-ease);
+}
+.ap-attract__dots i[data-on] { opacity: 1; transform: scale(1.4); }
+
+/* Stopped is a state worth drawing: the handover has to be visible or the
+   reader sits waiting for a screen that is already his. */
+.ap-attract:not([data-live]) .ap-attract__dots i { opacity: 0.16; }
+.ap-attract:not([data-live]) .ap-attract__dots i[data-on] { opacity: 0.7; transform: none; }
+
+/* A real phone does not need a picture of a phone, and it does not need one
+   tilted either. Same reasoning as the base rule at 560px. */
+@media (max-width: 560px) {
+  .ap-phonewrap--device { perspective: none; }
+  .ap-phonewrap--device .ap-phone { transform: none; box-shadow: var(--ap-amb); }
+  .ap-phonewrap--device .ap-phone::before,
+  .ap-phonewrap--device .ap-phone::after { display: none; }
+}
+
+/* The stage-wide reduced-motion rule already kills the transitions above. The
+   LOOP is a JavaScript timer and CSS cannot reach it, so it is disabled in
+   `DemoStage` on the same media query. */

@@ -1,18 +1,19 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { AppShell, TabBar, TAB_TITLES } from './AppShell'
 import type { DemoRow, Tab } from './AppShell'
 import { barMaxFor } from './RangeTrack'
 import { classify } from '@/lib/results/classifier'
 import { badgeFor } from '@/lib/results/resultSeverity'
-import { DEMO_JOURNEYS } from '@/lib/results/demo'
+import { DEMO_JOURNEYS, getDemoDates } from '@/lib/results/demo'
 import { useDemoTheme } from './DemoTheme'
 import type {
   DemoDates,
   DemoEngineInput,
   DemoJourney,
+  DemoJourneyId,
   DemoMarkerSeed,
 } from '@/lib/results/demo'
 import type { ClassifiedResult } from '@/lib/results/types'
@@ -54,13 +55,38 @@ import type { ClassifiedResult } from '@/lib/results/types'
  * "byte-identical to before this feature existed". It gates a CTA, never a band.
  */
 
+/*
+ * PREVIEW FLAGS (2026-09-08). Two proposals Keith asked to see before anything
+ * is decided. Both are opt-in from the URL and both are OFF by default:
+ * `?preview=device`, `?preview=attract`, `?preview=both`.
+ *
+ * 🔴 WITH NO FLAG, NOTHING BELOW RUNS AND NOTHING RENDERS DIFFERENTLY. No timer
+ * is started, no observer is attached, and the device modifier class is absent,
+ * so every rule guarding it is unreachable. That is the whole reason these are
+ * query flags rather than a rewrite of the component: the twelve state-and-tab
+ * cells verified on 2026-09-08 are still exactly what `/demo` renders.
+ */
+export interface DemoPreview {
+  /** A drawn device body with a resting tilt, in place of the flat bezel. */
+  device: boolean
+  /** Walk the journey on a timer until the reader touches it. */
+  attract: boolean
+}
+
+const NO_PREVIEW: DemoPreview = { device: false, attract: false }
+
+/* Long enough to read a screen, short enough that all three land inside the
+   time someone spends deciding whether this page is worth their attention. */
+const ATTRACT_STEP_MS = 4500
+
 export interface DemoStageProps {
   engine: DemoEngineInput
   journey: DemoJourney
   dates: DemoDates | null
+  preview?: DemoPreview
 }
 
-export function DemoStage({ engine, journey, dates }: DemoStageProps) {
+export function DemoStage({ engine, journey, dates, preview = NO_PREVIEW }: DemoStageProps) {
   /*
    * THREE THEME STATES, which is what the prototype has: null follows the
    * machine, 'light' and 'dark' are the reader overruling it.
@@ -75,8 +101,76 @@ export function DemoStage({ engine, journey, dates }: DemoStageProps) {
   const [openMarker, setOpenMarker] = useState<string | null>(null)
   const [compare, setCompare] = useState(false)
 
-  const member = journey.id === 'member'
-  const waiting = journey.id === 'waiting'
+  /* ------------------------------------------------------------------ attract
+   * THE LOOP DRIVES THE REAL JOURNEY STATE OVER THE REAL ENGINE OUTPUT. It is
+   * not a recording of the page, and that distinction is the entire argument
+   * for building it here rather than rendering a video: when a band moves, this
+   * moves, exactly as the rest of the page does. A video of a demo is the
+   * 1,153-line transcribed prototype again, in a format nobody can diff.
+   *
+   * `autoId` is null until the loop actually advances something, so the default
+   * render resolves `activeJourney` to the server's journey by identity.
+   */
+  const [autoId, setAutoId] = useState<DemoJourneyId | null>(null)
+  const [handedOver, setHandedOver] = useState(false)
+  const [inView, setInView] = useState(false)
+  const [motionOk, setMotionOk] = useState(false)
+  const phoneRef = useRef<HTMLDivElement | null>(null)
+
+  const activeJourney = useMemo(
+    () => (autoId ? DEMO_JOURNEYS.find((j) => j.id === autoId) ?? journey : journey),
+    [autoId, journey]
+  )
+  /* Derived, never carried: the same pure function the server called, so a
+     looped state cannot show a date the URL-driven state would not. */
+  const activeDates = useMemo(() => (autoId ? getDemoDates(autoId) : dates), [autoId, dates])
+
+  const attractRunning = preview.attract && motionOk && inView && !handedOver
+
+  useEffect(() => {
+    if (!preview.attract) return
+    setMotionOk(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  }, [preview.attract])
+
+  /* Only plays while it is on screen. A loop that starts on load has already
+     finished by the time anyone scrolls down to the thing it was advertising. */
+  useEffect(() => {
+    if (!preview.attract) return
+    const el = phoneRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setInView(true)
+      return
+    }
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.4 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [preview.attract])
+
+  /* The first touch of anything hands over for good, and it never restarts.
+     A screen that keeps moving under someone who is reading it is worse than
+     one that never moved at all. */
+  useEffect(() => {
+    if (!attractRunning) return
+    const stop = () => setHandedOver(true)
+    window.addEventListener('pointerdown', stop, { passive: true })
+    window.addEventListener('keydown', stop)
+    return () => {
+      window.removeEventListener('pointerdown', stop)
+      window.removeEventListener('keydown', stop)
+    }
+  }, [attractRunning])
+
+  useEffect(() => {
+    if (!attractRunning) return
+    const order = DEMO_JOURNEYS.map((j) => j.id)
+    const tick = window.setInterval(() => {
+      setAutoId((prev) => order[(order.indexOf(prev ?? journey.id) + 1) % order.length])
+    }, ATTRACT_STEP_MS)
+    return () => window.clearInterval(tick)
+  }, [attractRunning, journey.id])
+
+  const member = activeJourney.id === 'member'
+  const waiting = activeJourney.id === 'waiting'
 
   /* The editable point. In the member state that is the retest; otherwise the
      first result. Keyed by marker name so a value survives a tab change. */
@@ -181,7 +275,30 @@ export function DemoStage({ engine, journey, dates }: DemoStageProps) {
 
         <div className="ap-split">
           {/* ---------------- the phone ---------------- */}
-          <div className="ap-phonewrap">
+          <div
+            ref={phoneRef}
+            className={preview.device ? 'ap-phonewrap ap-phonewrap--device' : 'ap-phonewrap'}
+          >
+            {/* Says what is happening, so a screen that moves on its own reads as
+                deliberate rather than as a fault, and says when it has STOPPED,
+                or the handover is invisible and the reader sits waiting.
+
+                🔴 ABOVE THE DEVICE, NOT BELOW IT. The phone is 812px tall and
+                starts around 480px down, so anything after it is off-screen on a
+                1100px viewport: the first version put the one line explaining the
+                movement in the only place the reader watching the movement
+                cannot see. */}
+            {preview.attract && (
+              <p className="ap-attract" data-live={attractRunning ? 'true' : undefined}>
+                <span className="ap-attract__dots" aria-hidden="true">
+                  {DEMO_JOURNEYS.map((j) => (
+                    <i key={j.id} data-on={j.id === activeJourney.id ? 'true' : undefined} />
+                  ))}
+                </span>
+                {attractRunning ? 'Playing through the journey. Touch it to take over.' : 'Yours to drive.'}
+              </p>
+            )}
+
             <div className="ap-phone">
               <div className="ap-notch" aria-hidden="true" />
               <div className="ap-viewport">
@@ -231,8 +348,8 @@ export function DemoStage({ engine, journey, dates }: DemoStageProps) {
                 <div className="ap-scrollarea">
                   <AppShell
                     rows={rows}
-                    journey={journey.id}
-                    dates={dates}
+                    journey={activeJourney.id}
+                    dates={activeDates}
                     tab={tab}
                     openMarker={openMarker}
                     onOpenMarker={setOpenMarker}
@@ -271,7 +388,7 @@ export function DemoStage({ engine, journey, dates }: DemoStageProps) {
                   <Link
                     key={j.id}
                     href={`/demo?s=${j.id}`}
-                    aria-current={j.id === journey.id ? 'true' : undefined}
+                    aria-current={j.id === activeJourney.id ? 'true' : undefined}
                   >
                     {j.label}
                   </Link>
@@ -316,7 +433,7 @@ export function DemoStage({ engine, journey, dates }: DemoStageProps) {
             <div className="ap-watch">
               <span className="ap-lbl">What to watch</span>
               <ol>
-                {WATCH[journey.id].map((t, i) => (
+                {WATCH[activeJourney.id].map((t, i) => (
                   <li key={i}>{t}</li>
                 ))}
               </ol>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { DemoStage } from '@/components/app-shell/DemoStage'
+import type { DemoPreview } from '@/components/app-shell/DemoStage'
 import { resolveDemoJourney, getDemoEngineInput, getDemoDates } from '@/lib/results/demo'
 
 /*
@@ -97,11 +98,28 @@ export const metadata: Metadata = {
  * carrying `?r=gp` lands on the demo instead of on nothing.
  */
 interface PageProps {
-  searchParams: Promise<{ s?: string }>
+  searchParams: Promise<{ s?: string; preview?: string }>
+}
+
+/*
+ * `?preview=` -- ADDED 2026-09-08, AND IT IS A LOOKING-AT-IT FLAG, NOT A
+ * FEATURE. Keith asked to see two proposals before deciding either: a drawn
+ * device body with a resting tilt, and an attract loop that walks the journey
+ * until the reader touches it. Values: `device`, `attract`, `both`.
+ *
+ * 🔴 ANYTHING ELSE, INCLUDING NOTHING, IS OFF. The default render is byte for
+ * byte the one verified across twelve state-and-tab cells, which is what lets
+ * these be evaluated without putting the verified page at risk. Delete this
+ * parameter and its `DemoPreview` prop together when the two are decided; do
+ * not let it decay into a permanent switch nobody remembers owning.
+ */
+function resolveDemoPreview(value?: string): DemoPreview {
+  const both = value === 'both'
+  return { device: both || value === 'device', attract: both || value === 'attract' }
 }
 
 export default async function DemoPage({ searchParams }: PageProps) {
-  const { s } = await searchParams
+  const { s, preview } = await searchParams
   const journey = resolveDemoJourney(s)
 
   /* Both purchases go over every time; the journey decides what is rendered.
@@ -112,7 +130,12 @@ export default async function DemoPage({ searchParams }: PageProps) {
 
   return (
     <>
-      <DemoStage engine={engine} journey={journey} dates={dates} />
+      <DemoStage
+        engine={engine}
+        journey={journey}
+        dates={dates}
+        preview={resolveDemoPreview(preview)}
+      />
       <DemoFooter />
     </>
   )
