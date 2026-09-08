@@ -114,16 +114,28 @@ in `/wrap`, which loads only when the work is over*. The full procedures stay in
   into a commit subject and costs a commit-and-amend. Use a heredoc, a
   single-line `-m`, or `git commit -F <file>`. Windows-style switches (`/Query`)
   passed through it get reinterpreted as filesystem paths.
-- **Its working directory persists between calls.** A relative path that
-  resolved correctly earlier can silently resolve somewhere else later and
-  return empty output that reads as a genuine negative result. This rule has
-  been in context and been walked into anyway, twice, because the moment of use
-  is one argument inside a long command rather than a decision point anyone
-  pauses at — so **make the shape of the command carry the guarantee** instead
-  of relying on recall: any search meant to be repo-wide either `cd`s to the
-  repo root **in the same call** or passes an absolute search path. Where a
-  negative result would be load-bearing, echo the resolved working directory
-  beside it, so the scope of the negative is visible in the output.
+- **Its working directory persists between calls, including between calls issued
+  together in one batch.** A relative path that resolved correctly earlier can
+  silently resolve somewhere else later, and the wrong-directory result is not
+  reliably an error: it can be empty output that reads as a genuine negative, or
+  exit 0 that reads as a PASS. This rule was in context and walked into anyway
+  nine times, because the moment of use is one argument inside a long command
+  rather than a decision point anyone pauses at. **It is now enforced
+  mechanically** — `.claude/hooks/bash-guard.js` rejects a `cd` to a
+  non-absolute path before the call runs. Write `cd "$(git rev-parse
+  --show-toplevel)/<subdir>" && …`, or pass an absolute path and no `cd` at all.
+  Where a result is load-bearing, print `pwd` in the same invocation so the
+  directory sits beside the verdict, for passes as much as failures.
+- **Never read `$?` through a pipe.** A pipeline reports its LAST stage's status,
+  so `| head` or `| tail` — added to keep the output readable — replaces the
+  result being read, and the replacement is almost always success. Four "build
+  passed, exit 0" reports were read from exactly that shape. Redirect instead:
+  `cmd > out.log 2>&1; echo "EXIT=$?"; tail -30 out.log`, which also keeps the
+  full log for the failure case. `${PIPESTATUS[0]}` recovers the real status
+  where a pipeline is genuinely wanted. **Enforced by
+  `.claude/hooks/bash-guard.js`.** Same family: `rm -f` with a relative path
+  succeeds whether or not the file was there, so any `&& echo` chained to it
+  fabricates a confirmation — use an absolute path and verify by postcondition.
 - **It is Git Bash (MSYS), which rewrites leading-slash ARGUMENTS into Windows
   paths before the program sees them.** `--dest /lp/testosterone` reached the
   script as `C:/Program Files/Git/lp/testosterone` and produced a live-looking
@@ -143,19 +155,26 @@ in `/wrap`, which loads only when the work is over*. The full procedures stay in
   with its cwd set to the intended output directory — the Workspace CLI errors on
   an absolute `--output` path and drops an empty `download.html` into the working
   directory on a rejected download, which lands in the repo.
-- **Use the Write tool, not a heredoc, for any file containing backslashes,
-  Windows paths or dense escaping.** A quoted heredoc through the Bash tool
-  stripped every backslash from a Windows executable path, producing
-  `spawn C:Program FilesGoogleChromeApplicationchrome.exe ENOENT` — an error
-  pointing at Chrome rather than at the write. Reserve heredocs for prose such as
-  commit messages. Escaping bugs introduced while writing a file surface later, at
-  run time, disguised as a fault in whatever the file references.
+- **A heredoc may write to a command's stdin and nothing else. Any heredoc whose
+  target is a file on disk is a Write call.** The old form of this rule scoped
+  itself to backslashes and dense escaping, then carved out "prose such as commit
+  messages" — and prose is what kept breaking it, seven times, because the
+  carve-out was assessed instantly and the content test only on inspection. The
+  discriminator is now **destination, not content**, which is the one property
+  available before the call. A quoted heredoc through the Bash tool strips
+  backslashes silently (`spawn C:Program FilesGoogleChromeApplicationchrome.exe
+  ENOENT`, an error pointing at Chrome rather than at the write) and fails on
+  quoting past ~30 lines with no line attribution. **Enforced by
+  `.claude/hooks/bash-guard.js`**, which rejects a file-targeted heredoc, any
+  heredoc body containing a backslash, and any body over 30 lines. The
+  replacement, which has worked every time: Write the content to the scratchpad,
+  then `cat <file> >> <target>` in one Bash call.
 - **Before calling the Workflow tool or spawning parallel agents, read
   `.claude/skills/multi-agent-orchestration/SKILL.md`.** The Workflow tool ships
   its own long, confident authoring guide, which leaves no felt gap for the skill
   to fill, so description matching does not activate it — a four-track fleet was
   launched without it and the pre-flight then found four real defects.
-- **Stopping a backgrounded `next dev` does not always kill it, and the survivor corrupts the next `next build`.** Three times in one session the task was stopped, `.next` was deleted, and the build then failed with `Cannot find module '../chunks/ssr/[turbopack]_runtime.js'` — a stray `next dev` had re-created turbopack artefacts into `.next` while the webpack build ran, and the error names Chrome-adjacent internals rather than the real cause. `dev` and `build` share `.next`. Before any `npm run build`, kill by PORT and by process, not by task id: `Get-NetTCPConnection -LocalPort 3000 -State Listen` then `Stop-Process`, plus a `Win32_Process` sweep for a `node.exe` whose CommandLine matches `next` and `dev`. A build failing on `[turbopack]_runtime.js` is this, not the code.
+- **Stopping a backgrounded `next dev` does not always kill it, and the survivor corrupts the next `next build`.** Three times in one session the task was stopped, `.next` was deleted, and the build then failed with `Cannot find module '../chunks/ssr/[turbopack]_runtime.js'` — a stray `next dev` had re-created turbopack artefacts into `.next` while the webpack build ran, and the error names Chrome-adjacent internals rather than the real cause. `dev` and `build` share `.next`. Before any `npm run build`, kill by PORT and by process, not by task id: `Get-NetTCPConnection -LocalPort 3000 -State Listen` then `Stop-Process`, plus a `Win32_Process` sweep for a `node.exe` whose CommandLine matches `next` and `dev`. A build failing on `[turbopack]_runtime.js` is this, not the code. **Enforced by `.claude/hooks/bash-guard.js`**, which refuses a build command while anything is listening on 3000/3001 and prints the kill command; the same collision also presents as a silently unstyled screenshot, which reads as a CSS regression rather than as a tooling fault.
 - **A push to `main` IS a deploy.** Coolify auto-builds every non-flag-gated
   change. This is true of every mid-session push, not only the one at close-out.
   Never report "nothing deployed" after a push — the only true statement is "a

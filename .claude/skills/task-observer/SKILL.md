@@ -668,6 +668,23 @@ stale everywhere that process does not run, and the board mirror cannot catch it
 agreement about a stale answer. Reconciliation detects divergence, never shared
 staleness. (Observation 253.)
 
+**Re-wording is only a valid response the first time. The second recurrence
+changes the MEDIUM.** When an observation is actioned by improving a rule's
+wording and the same behaviour recurs, the next action must not be another edit
+to that rule. Improving the wording is the cheapest-looking response, produces a
+visible diff, and closes the entry, while leaving the enforcement gap exactly
+where it was — so the backlog fills with restatements of one unenforced rule and
+each looks like progress. The 2026-09-08 review found twenty-five OPEN entries
+that were all the same finding: six shell-mechanics rules, correctly worded,
+prominently placed, several of them re-worded after a previous instance, walked
+past between eight and fourteen times each. Every one of those entries had
+independently concluded that a `PreToolUse` matcher was the answer, and none had
+been built. **Count the recurrences and convert at the second**: a rule violated
+while it was in context is evidence about the medium, not about the reader.
+Where the conversion is a hook or a script rather than prose, that is the
+review's deliverable — mark the whole cluster ACTIONED against it, not one entry
+at a time. (Observations 642, 656, and the enforcement family they close.)
+
 When acting: small, clearly-additive, low-risk changes (a new rule, a
 clarification, a factual fix) may be applied directly. Substantial changes
 (restructuring, new capabilities, changed methodology) and all new-skill
