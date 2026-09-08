@@ -155,6 +155,7 @@ in `/wrap`, which loads only when the work is over*. The full procedures stay in
   its own long, confident authoring guide, which leaves no felt gap for the skill
   to fill, so description matching does not activate it — a four-track fleet was
   launched without it and the pre-flight then found four real defects.
+- **Stopping a backgrounded `next dev` does not always kill it, and the survivor corrupts the next `next build`.** Three times in one session the task was stopped, `.next` was deleted, and the build then failed with `Cannot find module '../chunks/ssr/[turbopack]_runtime.js'` — a stray `next dev` had re-created turbopack artefacts into `.next` while the webpack build ran, and the error names Chrome-adjacent internals rather than the real cause. `dev` and `build` share `.next`. Before any `npm run build`, kill by PORT and by process, not by task id: `Get-NetTCPConnection -LocalPort 3000 -State Listen` then `Stop-Process`, plus a `Win32_Process` sweep for a `node.exe` whose CommandLine matches `next` and `dev`. A build failing on `[turbopack]_runtime.js` is this, not the code.
 - **A push to `main` IS a deploy.** Coolify auto-builds every non-flag-gated
   change. This is true of every mid-session push, not only the one at close-out.
   Never report "nothing deployed" after a push — the only true statement is "a

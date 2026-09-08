@@ -27,11 +27,16 @@ export type ScenarioName =
   | 'multi-deficiency'
   | 'multi-deficiency-energy'
   | 'kit3-low-t-plus-vitamin-d-and-b12'
-  // The public demo's headline result: the man the homepage readout already
-  // shows. See `fixtures/demo-kit3-split.ts` and `lib/results/demo.ts`.
-  | 'demo-kit3-split'
-  // The second point, 90 days on, so the demo's record tab has two.
-  | 'demo-kit3-retest'
+  // The public demo's two purchases. Kit 3 first, then a Kit 2 retest ninety
+  // days on -- Keith's ruling, 2026-09-07 -- so only four of the nine markers
+  // ever get a second point. See `lib/results/demo.ts`.
+  //
+  // These replaced `demo-kit3-split` / `demo-kit3-retest` on 2026-09-07, when
+  // the demo was rebuilt from the prototype. The pair they replaced held the
+  // man the homepage readout shows; these hold the prototype's man, which is
+  // the one its screens were drawn for. The fixtures carry the full reasoning.
+  | 'demo-kit3-baseline'
+  | 'demo-kit2-retest'
 
 export interface SingleResult {
   resultId: string

@@ -52,7 +52,8 @@ export function Footer() {
             {/* Brand column */}
             <div>
               <Link href="/" className="inline-flex" aria-label="Andro Prime home">
-                <Logo variant="dark" className="h-5 w-auto" />
+                {/* See the note in Nav.tsx: on the ink token, not a literal. */}
+                <Logo variant="auto" className="h-5 w-auto f-logo" />
               </Link>
               {/* SELF-DESCRIPTION, NOT A DISCLAIMER, and the two do different jobs
                   in one paragraph. Sentence one says what the company IS and is

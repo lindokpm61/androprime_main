@@ -1,6 +1,10 @@
 # Retest mechanism map: every rule that stamps a retest date, and which ones disagree
 
 **Status:** REFERENCE, living. Built 2026-09-06 by reading the code, not the docs.
+**Last extended:** 2026-09-08 — defects **3d, 3e and 3f** added from two questions Keith
+asked about ordering a retest through the app. All three were found by reading the code,
+and all three are about the same missing thing: **there is no customer-initiated route to
+a retest anywhere in the product**, for a member or a non-member.
 **Owner workspace:** `04_products/results-engine`.
 **Read with:** `2026-07-17-retest-cadence-table.md`, which is the other axis and is
 **still unsigned**. See the warning in section 5 before sending it to Ewa again.
@@ -114,7 +118,7 @@ three names for one moment.
 
 ---
 
-## 3. Three defects the map exposes
+## 3. Six defects the map exposes
 
 ### 3a. The all-clear member gets a 90-day retest, and the code says he must not
 
@@ -156,6 +160,89 @@ buyers. A member's retest is a real dispatched kit that arrives through
 it through the **address-check** sequence, not through a retest reminder. There is
 no email today that tells a member their retest date is coming, which is the
 `next_retest_due_at` value this table exists to make quotable.
+
+
+### 3d. A member cannot claim his retest early, and paying to go early DUPLICATES it rather than consuming it
+
+**Raised by Keith, 2026-09-08:** *"What if a member wants to order his retest earlier
+than the retest order period? For instance, a retest that is set for three months, he
+then wants to order his retest two days after his initial results. What then?"*
+
+**Nothing happens, and there is no mechanism for it to happen through.**
+`entitlementState` returns `pending` and `app/(app)/membership/page.tsx` renders that
+as prose -- *"88 days away"* -- with no button, no request, and no contact link on the
+block. `next_retest_due_at` is written in **exactly one place**, the `INSERT` in
+`createMembership` (`lib/membership/sync.ts:81`), and is never updated by any route,
+job or screen. The admin dashboard touches `kit_orders` only, so support has no
+override either: bringing a date forward means editing Supabase by hand.
+
+🔴 **The defect is not the missing button. It is what the only available workaround
+does.** His one self-serve option is to buy another kit at full price from `/kits`, and
+**that purchase does not consume the entitlement**: `retest_claimed_at` is written only
+by the nightly sweep. So the sweep still fires on the original date, sees `due`, and
+dispatches a **second physical kit** -- of `lastOrder.kit_type`, which is now the kit he
+just bought himself. He pays twice, receives two kits, and the included one arrives 88
+days after he stopped needing it.
+
+⚠ **It also collides with an adopted rule.**
+`2026-09-07-fast-recheck-must-be-prepaid-or-included.md` says a result-triggered recheck
+inside 90 days *"must be prepaid or included in an entitlement the customer already
+holds. It may never trigger a new sale."* That rule was scoped to **system-triggered**
+rechecks, so this case is not literally in breach. It is the same shape and more
+awkward: the man **already holds** the entitlement, the rule's own justification ("the
+kit is already paid for") is satisfied, and the software's only answer is a new sale.
+
+🔴 **THE REASON THE FIX IS NOT A "RETEST NOW" BUTTON.** There is a real clinical argument
+for the wait: two days after a result, vitamin D and ferritin have not moved, and
+retesting them spends a kit to learn nothing. But the opposite case is the one that
+matters. A man whose testosterone came back low needs a **second morning sample for his
+GP**, and Ewa signed `CONFIRMATION_INTERVAL_DAYS = 0` -- immediately -- for exactly that.
+That 0-day recheck lives in the **Confirmation bundle** (mechanism 1), which is a
+separate purchase; a member who bought a plain kit plus membership does not have it.
+
+**So the system cannot today tell "he is impatient" from "he is the case Ewa signed a
+same-day recheck for". Both get "88 days away".** The fix is a rule about WHICH RESULT
+STATES may pull the date forward, which is section 7's proposal, not a control on the
+membership page.
+
+⚠ Compounding: the date is anchored to **Stripe checkout, not the result** (section 2),
+and per 3a every member gets 90 days regardless of whether he has a marker to move. So
+the interval he is waiting out may not be his interval at all.
+
+### 3e. A non-member has no way to reorder a kit, anywhere in the app
+
+**Raised by Keith, 2026-09-08**, asking how a customer who needs another testosterone kit
+orders one.
+
+**There is no reorder path.** No "order again", no repurchase, no order history. The
+account page (`app/(app)/account/page.tsx`) offers exactly three links: the results
+dashboard, subscriptions, and a `mailto:` to support. The only in-app pointer is the
+results dashboard CTA **"Retest in 6-12 months" -> `/kits`**, which lands him on the
+public catalogue index rather than on the kit he actually took.
+
+From there he buys as a brand-new customer: full price, re-enter the address, no order
+history, nothing carried across. Nothing in the checkout path recognises him as a
+returning customer.
+
+### 3f. A flagged result never suggests a retest; only an all-clear does
+
+Found while answering 3e, and it is the sharper half of it.
+
+`CTAS.retestReminder` is attached in three places in `classifier.ts`:
+`optimal-testosterone`, the three SHBG states, and the closing `normal` fallback. Every
+one of those is a result with **nothing to sell against**. A man whose testosterone came
+back low or equivocal gets `CTAS.gpReferral` instead, correctly per CA-014 -- and
+therefore **no retest prompt at all, ever, anywhere in the product**.
+
+The email that would otherwise catch him does not run either: mechanism 7 sits behind
+`RETEST_REMINDER_ENABLED` (off, CIO campaign 23 in draft) and stamps `retest_due_at`
+only on a **whole-result all-clear**.
+
+🔴 **So the man most likely to need a second test is the one the product never invites to
+take one, on either surface.** This is not a bug in any single rule -- CA-014 is right
+that a GP-routed result must carry no upsell -- it is a gap between two rules that are
+each correct: "no upsell on a GP referral" and "tell people when to retest" have been
+implemented as though they were the same decision.
 
 ---
 
@@ -202,6 +289,9 @@ no longer exists.
 | 4 | 3c: decide whether a member gets a retest-due email at all | Keith |
 | 5 | ~~Rewrite the 2026-07-17 pack's premise, then re-send~~ ✅ **Premise, §3a and §5 rewritten 2026-09-07**, and the sign-off email is DRAFTED (Gmail `r1901433818987540044`, five lettered questions). **Sending is Keith's act and has not happened.** | Keith to send |
 | 6 | The symptom overlay red-flag line (that pack's Q4b) — now **question 5 of the drafted email**, with a proposed red-flag list to accept, amend or replace | Ewa, once Keith sends |
+| 7 | 3d: decide which result states may pull a member's retest date forward, and make a self-bought kit **consume** the entitlement rather than run alongside it. The second half is a defect fix and needs no ruling; the first half is section 7's proposal and needs Ewa on the intervals | Keith, then Ewa, then build |
+| 8 | 3e: decide whether a returning customer gets a reorder path at all, and whether it is priced differently from a first purchase | Keith, then build |
+| 9 | 3f: decide what a GP-routed result says about retesting, given CA-014 forbids a kit upsell on it. A date with no purchase attached is the obvious candidate and is Ewa's to word | Keith to scope, Ewa to word |
 
 **Nothing in this file is a clinical decision and nothing in it changes code.** It
 records what the code does today, so the decisions above can be made against facts

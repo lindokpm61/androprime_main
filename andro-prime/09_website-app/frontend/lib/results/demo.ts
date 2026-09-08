@@ -1,187 +1,147 @@
-import { buildDashboardFromScenario } from './buildDashboardFromScenario'
 import { SCENARIOS } from './fixtures'
 import { FIRST_CYCLE_RETEST_DAYS } from '@/lib/membership/entitlement'
 import type { CheckinEntry } from '@/lib/membership/checkin'
-import type { DashboardData, ScenarioName, KitType } from './types'
+import type { KitType, ScenarioName } from './types'
 
 /*
- * THE PUBLIC DEMO'S SCENARIO SET AND JOURNEY STATES.
+ * THE PUBLIC DEMO'S DATA MODEL. Rebuilt from scratch 2026-09-07.
  *
- * 🔴 WHY THIS FILE EXISTS RATHER THAN REUSING `?dev=`. `getDashboardData` has a
- * fixture branch, and it is guarded by `process.env.NODE_ENV !== 'production'`
- * for a good reason: it takes an ARBITRARY scenario name off the query string.
- * Opening that in production would not be a demo, it would be a public endpoint
- * that renders any fixture in the repository, including the ones written to
- * exercise GP-referral and sample-failure paths. The guard stays exactly as it
- * is. This module is a separate, deliberately production-enabled path with a
- * CLOSED SET: an unknown id falls back to the default rather than reaching the
- * registry, so the URL cannot select anything that is not listed here.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 🔴 WHY IT WAS REBUILT RATHER THAN PATCHED. Keith, 2026-09-07: *"rebuild the
+ * demo from scratch, following page for page the prototype. Exactly. So the
+ * initial buy is Kit 3 and the rebuy or retest is Kit 2 ... I think we are, with
+ * this current version of the demo, in a complete mess."*
  *
- * 🔴 IT READS NO DATABASE AND TAKES NO USER. `buildDashboardFromScenario` runs
- * the real `classify()` over fixture values and returns a `DashboardData`; there
- * is no Supabase client on this path and no user id to pass one. That is what
- * makes the homepage's promise -- "We never put your data in it" -- structurally
- * true rather than a policy someone has to remember.
+ * The reference is `design/prototypes/demo-account-interactive.html`. Two things
+ * follow from that instruction and they are the shape of this file:
  *
- * ⚠ THE THREE ENTRIES ARE AN ARGUMENT, NOT A SAMPLE. They were chosen so the
- * demo cannot be read as the flattering case: one result where the laboratory
- * and our action bands disagree, one where there is nothing to do, and one that
- * routes to a GP and earns the business nothing. Removing the second or the
- * third turns this from a demonstration into a pitch.
+ *   1. THE MAN IS THE PROTOTYPE'S MAN. Testosterone 10.5, vitamin D 31. Not the
+ *      homepage's man (14.2 / 58), which is what the previous build carried.
+ *      Keith chose this explicitly, having been shown what it costs: `/`'s
+ *      sample readout and the demo now show different people. The fixtures
+ *      carry the full note.
+ *   2. THE RETEST IS A DIFFERENT KIT. Kit 3 buys nine markers; the included
+ *      retest is a four-marker Kit 2. So **only four of the nine ever get a
+ *      second point**, which no previous version of this file could express --
+ *      it stacked two same-kit results and assumed every marker had a pair.
  *
- * ────────────────────────────────────────────────────────────────────────────
- * 🔄 JOURNEY STATES ADDED 2026-09-07 (Keith). The demo previously had one axis,
- * the result, and every entry on it was the same moment in time: day 14. The
- * prototype has always had a second axis, and Keith's ruling on why it belongs
- * here is the reason it now exists in the product rather than only in a drawing:
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 🔴 IT READS NO DATABASE AND TAKES NO USER. Everything below resolves to two
+ * fixtures and hands their raw values to the client, which runs the real
+ * `classify()` over them. There is no Supabase client anywhere on this path and
+ * no user id to give one. That is what makes the homepage's promise -- "We never
+ * put your data in it" -- a property of the code rather than a policy someone
+ * has to remember.
  *
- *   "This is a demo, so surely it isn't dependent on the membership flag being
- *    enabled as part of the website. So it should demonstrate everything that is
- *    available that we're planning to do, as a potential customer will look at
- *    that and have a real visual of what's behind the membership program."
+ * 🔴 AND THERE IS NO LONGER A RESULT SWITCHER. The URL carries one parameter,
+ * `?s=`, naming the moment in the journey. An unknown value falls back to the
+ * default rather than reaching the fixture registry, so the query string cannot
+ * select anything not listed here.
  *
- * 🔴 SO THE JOURNEY IS DELIBERATELY NOT GATED ON `MEMBERSHIP_ENABLED`. That flag
- * stops a customer BUYING a membership that is not finished. It is not a reason
- * to stop him SEEING what one is. The two are different questions and the demo
- * answers the second.
- *
- * ⚠ WHAT THAT WIDENS. `/demo` already carries an open compliance item (CA-046)
- * for putting a full results report on an ungated surface. The member state puts
- * a membership PRICE on that same surface, which is a second thing to rule on
- * and not the thing CA-046 was raised about. The route stays `noindex` until
- * both clear. See `03_compliance/STATE.md`.
+ * ⚠ WHAT IS STILL OPEN WITH COMPLIANCE. `/demo` puts a full results report AND a
+ * membership price on an ungated surface (CA-046, and the widening recorded in
+ * `03_compliance/STATE.md`). The route stays `noindex` until both clear. This
+ * rebuild does not change that and adds one more thing to the packet: the demo's
+ * headline screen now routes a man to his GP, where the previous build's did
+ * not.
  */
 
-export interface DemoResult {
-  /** URL id, e.g. `/demo?r=split`. Stable: it will end up in links. */
-  id: string
-  scenario: ScenarioName
-  /** Switcher label. */
-  label: string
-  /** One line under the switcher saying what this result shows. */
-  blurb: string
-  /**
-   * The second point, when one exists. Only the headline result has a retest
-   * fixture, so only the headline result can show the member state; the others
-   * would need their own retests written and none has been. `journeyFor` is
-   * what stops the URL reaching a combination that has no data behind it.
-   */
-  retestScenario?: ScenarioName
-}
+/* ------------------------------------------------------------- the purchases */
 
-export const DEMO_RESULTS: DemoResult[] = [
-  {
-    id: 'split',
-    scenario: 'demo-kit3-split',
-    retestScenario: 'demo-kit3-retest',
-    label: 'Lab normal, three to monitor',
-    blurb:
-      'Kit 3, nine markers. Every value here is inside the laboratory reference range. Three of them sit outside the action bands our GP approved, and the report says so.',
-  },
-  {
-    id: 'all-clear',
-    scenario: 'optimal-testosterone',
-    label: 'Nothing to act on',
-    blurb:
-      'Kit 1, five markers, all of them where you would want them. This is what the report looks like when there is nothing to tell you, and nothing to sell you.',
-  },
-  {
-    id: 'gp',
-    scenario: 'low-testosterone',
-    label: 'A result that goes to a GP',
-    blurb:
-      'Kit 1, with testosterone below the action threshold. The next step here is a conversation with a doctor, not a product. That result earns us nothing.',
-  },
-]
+/*
+ * TWO PURCHASES, TWO KITS. Named separately rather than as a list, because they
+ * are not interchangeable: the first defines the panel the whole app is drawn
+ * against, and the second is a subset of it arriving ninety days later.
+ */
+export const DEMO_BASELINE_SCENARIO: ScenarioName = 'demo-kit3-baseline'
+export const DEMO_RETEST_SCENARIO: ScenarioName = 'demo-kit2-retest'
 
-export const DEFAULT_DEMO_ID = DEMO_RESULTS[0].id
-
-/* ---------------------------------------------------------------- journey */
+/* ------------------------------------------------------------------ journey */
 
 export type DemoJourneyId = 'waiting' | 'result' | 'member'
 
 export interface DemoJourney {
   id: DemoJourneyId
-  /** Switcher label. Carries the day so the passage of time is legible. */
+  /** The switcher label, carried VERBATIM from the prototype's state seg. */
   label: string
-  /** One line saying what this moment is. */
-  blurb: string
 }
 
+/*
+ * THE THREE STATES, with the prototype's own labels.
+ *
+ * ⚠ ITS DAY NUMBERS ARE LOOSE AND ARE KEPT ANYWAY. Day 3, day 14 and day 90 do
+ * not all count from the same event in the drawing: day 90 is measured from the
+ * result (14 Aug + 90 = 12 Nov, which is exact), day 14 is roughly from the
+ * order, and day 3 is roughly from dispatch. They are kept verbatim because they
+ * are the vocabulary the drawing is discussed in and because rewriting them
+ * would make this switcher unrecognisable next to it. Every DATE on the screens
+ * is derived from the fixtures below and is exact; only these three labels are
+ * the prototype's approximations.
+ */
 export const DEMO_JOURNEYS: DemoJourney[] = [
-  {
-    id: 'waiting',
-    label: 'Day 3 · waiting for the lab',
-    blurb:
-      'The sample is posted and nothing has come back. Most of the app is empty at this point, and pretending otherwise would be the wrong demonstration.',
-  },
-  {
-    id: 'result',
-    label: 'Day 14 · first result, month one running',
-    blurb:
-      'The result has landed, which is the moment membership starts and the included 30 days begin. Everything is open. Nothing has been charged yet.',
-  },
-  {
-    id: 'member',
-    label: 'Day 104 · member, retest landed',
-    blurb:
-      'Three months on, one payment taken and the included retest back. This is the only state where a record exists, because a record needs two points.',
-  },
+  { id: 'waiting', label: 'Day 3 · waiting for the lab' },
+  { id: 'result', label: 'Day 14 · first result, month one running' },
+  { id: 'member', label: 'Day 90 · member, retest landed' },
 ]
 
 export const DEFAULT_JOURNEY_ID: DemoJourneyId = 'result'
 
-/* ------------------------------------------------------------- resolution */
-
-/** Resolves a URL id to a listed result. Anything unknown gets the default. */
-export function resolveDemoResult(id?: string): DemoResult {
-  return DEMO_RESULTS.find((r) => r.id === id) ?? DEMO_RESULTS[0]
+/** Resolves a URL id to a journey state. Anything unknown gets the default. */
+export function resolveDemoJourney(id?: string): DemoJourney {
+  return (
+    DEMO_JOURNEYS.find((j) => j.id === id) ??
+    DEMO_JOURNEYS.find((j) => j.id === DEFAULT_JOURNEY_ID)!
+  )
 }
 
-/**
- * Resolves a URL id to a journey state THAT THIS RESULT CAN ACTUALLY SHOW.
- * Asking for the member state on a result with no retest fixture falls back to
- * the first result rather than rendering a half-empty record, so no combination
- * reachable from the URL is one we have no data for.
- */
-export function resolveDemoJourney(id: string | undefined, result: DemoResult): DemoJourney {
-  const wanted = DEMO_JOURNEYS.find((j) => j.id === id)
-  if (!wanted) return DEMO_JOURNEYS.find((j) => j.id === DEFAULT_JOURNEY_ID)!
-  if (wanted.id === 'member' && !result.retestScenario) {
-    return DEMO_JOURNEYS.find((j) => j.id === 'result')!
-  }
-  return wanted
-}
-
-/** Whether a journey state has data behind it for this result. */
-export function journeyAvailable(journey: DemoJourney, result: DemoResult): boolean {
-  return journey.id !== 'member' || Boolean(result.retestScenario)
-}
-
-/* ------------------------------------------------------------------ dates */
+/* ------------------------------------------------------------------- dates */
 
 /*
  * HOW LONG THE LAB TAKES, in the demo. The kit pages promise the report "within
  * 2 to 5 working days of the lab receiving your sample", so four days is inside
- * what is already said publicly. It exists because the anchor ruling turns on
- * `received_at` and NOT `collected_at` -- deliberately, per that field's own
- * comment: "the window is about how long ago he learned something, not how long
- * ago he bled" -- and a fixture only carries a collection date.
+ * what is already said publicly. It exists because a fixture only carries a
+ * COLLECTION date, and every customer-facing date anchors to the RESULT
+ * (`01_strategy/2026-09-07-anchor-everything-to-the-result.md`) -- deliberately,
+ * because the window is about how long ago he learned something, not how long
+ * ago he bled.
+ *
+ * 🔴 IT ALSO RESOLVES A CONTRADICTION THE PROTOTYPE FLAGS AND DECLINES TO FIX.
+ * Its waiting tracker says the sample arrived on 14 August and the results were
+ * expected on 18 August, while every other screen treats 14 August as the day
+ * the RESULT landed. Its own header says one of those is wrong and that nothing
+ * in the rulings settles which. Deriving both from one collection date settles
+ * it: collected 10 Aug, received 11 Aug, analysing from 12 Aug, result 14 Aug.
  */
 const RESULT_LAG_DAYS = 4
 
-/** The included month, per the 2026-08-27 ruling. */
-const INCLUDED_MONTH_DAYS = 30
+/*
+ * THE INCLUDED MONTH, AND THE OFF-BY-ONE THAT WAS IN THE PREVIOUS BUILD.
+ *
+ * `01_strategy/2026-09-07-auto-renew-at-day-30.md`: *"The first 30 days are
+ * included in the kit price, and on day 31 the card is charged."* The result day
+ * is day 1. So day 30, the last included day, is result + 29, and day 31, the
+ * first charge, is result + 30.
+ *
+ * 🔴 The previous build had `includedMonthEnds = result + 30` and then charged
+ * the day after that, which is day 32. It went unnoticed because nothing checked
+ * the arithmetic against the ruling; the prototype had it right (14 Aug result,
+ * charged 13 Sep) and the build disagreed with it by a day.
+ */
+const INCLUDED_DAYS = 30
 
 export interface DemoDates {
-  /** When the result landed. Everything else is anchored to this. */
+  /** When the first result landed. Every other date is anchored to this. */
   resultReceived: Date
-  /** Last day of the included month. The card is charged the next day. */
+  /** Day 30: the last day covered by the kit price. */
   includedMonthEnds: Date
-  /** First payment, i.e. day 31. Auto-renew ruling, 2026-09-07. */
+  /** Day 31: the first charge. Auto-renew ruling, 2026-09-07. */
   firstCharge: Date
-  /** The included retest. `FIRST_CYCLE_RETEST_DAYS` from the result. */
+  /** The included retest, `FIRST_CYCLE_RETEST_DAYS` after the first result. */
   retestDue: Date
+  /** When the retest result landed. Null until it has. */
+  retestReceived: Date | null
+  /** Days between the two results. The record's own caption reads this. */
+  daysApart: number
 }
 
 function addDays(d: Date, n: number): Date {
@@ -190,26 +150,35 @@ function addDays(d: Date, n: number): Date {
   return out
 }
 
+function parse(iso: string | null | undefined): Date | null {
+  if (!iso) return null
+  const d = new Date(iso)
+  return Number.isNaN(d.getTime()) ? null : d
+}
+
 /*
- * EVERY DATE THE DEMO SHOWS IS DERIVED HERE, FROM THE RESULT, and the retest
- * interval is imported from `entitlement.ts` rather than typed. That is the
- * 2026-09-07 anchor ruling expressed as code: "every customer-facing date is
- * anchored to the moment the lab result comes back." If `FIRST_CYCLE_RETEST_DAYS`
- * changes, this demo changes with it and cannot quietly go stale, which is
- * exactly how the prototype's old hand-typed "22 Oct" came to match no rule.
+ * EVERY DATE THE DEMO SHOWS IS DERIVED HERE, and the retest interval is imported
+ * from `entitlement.ts` rather than typed. That is the anchor ruling expressed as
+ * code: move `FIRST_CYCLE_RETEST_DAYS` and this demo moves with it. It is exactly
+ * how the prototype's old hand-typed "22 Oct" came to match no rule at all.
  */
-export function getDemoDates(collectedAt: string | null | undefined): DemoDates | null {
-  if (!collectedAt) return null
-  const collected = new Date(collectedAt)
-  if (Number.isNaN(collected.getTime())) return null
+export function getDemoDates(journey: DemoJourneyId): DemoDates | null {
+  const collected = parse(SCENARIOS[DEMO_BASELINE_SCENARIO].payload.collectedAt)
+  if (!collected) return null
 
   const resultReceived = addDays(collected, RESULT_LAG_DAYS)
-  const includedMonthEnds = addDays(resultReceived, INCLUDED_MONTH_DAYS)
+  const retestCollected = parse(SCENARIOS[DEMO_RETEST_SCENARIO].payload.collectedAt)
+  const retestReceived = retestCollected ? addDays(retestCollected, RESULT_LAG_DAYS) : null
+
   return {
     resultReceived,
-    includedMonthEnds,
-    firstCharge: addDays(includedMonthEnds, 1),
+    includedMonthEnds: addDays(resultReceived, INCLUDED_DAYS - 1),
+    firstCharge: addDays(resultReceived, INCLUDED_DAYS),
     retestDue: addDays(resultReceived, FIRST_CYCLE_RETEST_DAYS),
+    retestReceived: journey === 'member' ? retestReceived : null,
+    daysApart: retestReceived
+      ? Math.round((retestReceived.getTime() - resultReceived.getTime()) / 86400000)
+      : 0,
   }
 }
 
@@ -218,54 +187,43 @@ export function formatDemoDate(d: Date): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-/** "12 Nov". Short form, for the column headers on the record tab. */
+/** "12 Nov". Short form, for the record's column headers and the plots. */
 export function formatDemoDateShort(d: Date): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 }
 
-/* ------------------------------------------------------------- dashboards */
+/** "14 Aug 2026". The status strip's format, which is neither of the others. */
+export function formatDemoDateMed(d: Date): string {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+}
 
-/**
- * Builds the dashboard for a listed result at a point in its journey. No
- * database, no user.
- *
- * The member state passes BOTH scenarios. `buildDashboardFromScenario` stacks
- * results of the same kit type into one `KitData`, so that is all it takes to
- * get a two-point record; no new machinery was needed for it.
- *
- * The waiting state still builds the result. Nothing renders it -- the shell
- * branches on the journey before it looks at any marker -- but it keeps the kit
- * type available for the screens that name the panel, and it keeps this
- * function's return type honest instead of introducing a second empty shape.
- */
-export function getDemoDashboard(result: DemoResult, journey: DemoJourney): DashboardData {
-  if (journey.id === 'member' && result.retestScenario) {
-    return buildDashboardFromScenario([result.scenario, result.retestScenario])
-  }
-  return buildDashboardFromScenario([result.scenario])
+/** "13 September". No year: the charge is inside the reader's own month or two. */
+export function formatDemoDateNoYear(d: Date): string {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })
 }
 
 /* ------------------------------------------------- the engine, client-side */
 
 /*
- * 🔄 RAW VALUES FOR THE CONTROL RAIL, added 2026-09-07 with the prototype port.
+ * 🔄 RAW VALUES, BECAUSE THE RAIL RE-CLASSIFIES ON EVERY DRAG.
  *
  * The prototype's rail lets you drag a marker's value and watch the verdict
- * change band. Reproducing that means re-classifying on every drag, which means
- * the CLIENT needs the raw biomarkers rather than the classified output.
+ * change band. Reproducing that means the CLIENT needs the raw biomarkers rather
+ * than a classified payload.
  *
  * 🟢 AND THAT MAKES THE PORT BETTER THAN THE PROTOTYPE, not a copy of it. The
  * prototype's bands were TRANSCRIBED from `classifier.ts` into a literal in the
- * page, which is why its own header says they cannot stay current. Here the
- * slider calls the real `classify()`, so every verdict it produces is the
- * engine's and it follows a threshold change automatically.
+ * page, which is why its own header says they cannot stay current and warns that
+ * where the two disagree the prototype is wrong by construction. Here the slider
+ * calls the real `classify()`, so every verdict it produces is the engine's and
+ * follows a threshold change the same day.
  *
  * ⚠ ONE KNOWN DIFFERENCE, and it does not touch a verdict.
  * `isMaintenanceOfferEnabled()` reads `process.env.MAINTENANCE_OFFER_ENABLED`,
- * which Next inlines as undefined in a client bundle, so client-side it is
- * always false. That is the flag's OFF state and its own comment says OFF is
- * "byte-identical to before this feature existed". It gates a CTA, never a
- * band, an explanation or a state.
+ * which Next inlines as undefined in a client bundle, so client-side it is always
+ * false. That is the flag's OFF state and its own comment says OFF is
+ * "byte-identical to before this feature existed". It gates a CTA, never a band,
+ * an explanation or a state.
  */
 export interface DemoMarkerSeed {
   markerName: string
@@ -276,15 +234,16 @@ export interface DemoMarkerSeed {
 }
 
 export interface DemoEngineInput {
-  kitType: KitType
+  /** Kit 3. The panel the whole app is drawn against. */
+  baselineKit: KitType
+  /** Kit 2. Four of the nine, ninety days later. */
+  retestKit: KitType
   userAge: number | null
   symptomAnswers: { questionKey: string; answer: string | number | boolean }[]
-  /** The values on screen. The rail drives these. */
-  seeds: DemoMarkerSeed[]
-  collectedAt: string | null
-  /** The earlier result, when the member state has two. Never editable. */
-  baseline: DemoMarkerSeed[] | null
-  baselineCollectedAt: string | null
+  /** The nine, as first measured. Fixed: history does not move. */
+  baselineSeeds: DemoMarkerSeed[]
+  /** The four that were retested. The rail's slider drives these. */
+  retestSeeds: DemoMarkerSeed[]
 }
 
 function seedsOf(name: ScenarioName): DemoMarkerSeed[] {
@@ -300,37 +259,35 @@ function seedsOf(name: ScenarioName): DemoMarkerSeed[] {
 }
 
 /**
- * Everything the client needs to re-run `classify()` itself. Still no database
- * and still no user: this is the same closed fixture set, handed over raw.
+ * Everything the client needs to run `classify()` itself, for both purchases.
+ * Still no database and still no user: the same closed fixture pair, handed over
+ * raw.
+ *
+ * BOTH POINTS ARE ALWAYS SENT, in every journey state. The waiting and result
+ * states simply do not render the retest. Sending it conditionally would mean a
+ * second payload shape and a second set of branches for no saving worth having:
+ * four markers is a few hundred bytes.
  */
-export function getDemoEngineInput(result: DemoResult, journey: DemoJourney): DemoEngineInput {
-  const twoPoint = journey.id === 'member' && result.retestScenario
-  const latest = twoPoint ? result.retestScenario! : result.scenario
-  const fixture = SCENARIOS[latest]
+export function getDemoEngineInput(): DemoEngineInput {
+  const baseline = SCENARIOS[DEMO_BASELINE_SCENARIO]
+  const retest = SCENARIOS[DEMO_RETEST_SCENARIO]
   return {
-    kitType: fixture.payload.kitType,
-    userAge: fixture.testAge ?? null,
-    symptomAnswers: fixture.symptomAnswers.map((a) => ({
+    baselineKit: baseline.payload.kitType,
+    retestKit: retest.payload.kitType,
+    userAge: baseline.testAge ?? null,
+    symptomAnswers: baseline.symptomAnswers.map((a) => ({
       questionKey: a.questionKey,
       answer: a.answer,
     })),
-    seeds: seedsOf(latest),
-    collectedAt: fixture.payload.collectedAt ?? null,
-    baseline: twoPoint ? seedsOf(result.scenario) : null,
-    baselineCollectedAt: twoPoint ? (SCENARIOS[result.scenario].payload.collectedAt ?? null) : null,
+    baselineSeeds: seedsOf(DEMO_BASELINE_SCENARIO),
+    retestSeeds: seedsOf(DEMO_RETEST_SCENARIO),
   }
 }
 
 /* ---------------------------------------------------------- waiting steps */
 
 /*
- * 🔄 THE WAITING TRACKER, ported 2026-09-07 (second correction).
- *
- * The first pass of the journey work gave all three tabs one generic empty
- * state. That is right for Plan and Record, which is what the prototype does
- * there, and WRONG for Results, where the prototype draws a real screen: a
- * status strip, "where your sample is", a dated four-step tracker, and two cards
- * for when it lands. Keith spotted it by looking at the two side by side.
+ * THE WAITING TRACKER, from the prototype's `screenWaiting`.
  *
  * 🔴 THE DATES ARE DERIVED, like every other date on this route. The prototype
  * hand-typed 11 / 14 / 15 / 18 Aug, which is exactly the kind of literal that
@@ -348,10 +305,9 @@ export interface DemoStep {
   state: 'done' | 'now' | 'todo'
 }
 
-export function getDemoWaitingSteps(collectedAt: string | null | undefined): DemoStep[] | null {
-  if (!collectedAt) return null
-  const collected = new Date(collectedAt)
-  if (Number.isNaN(collected.getTime())) return null
+export function getDemoWaitingSteps(): DemoStep[] | null {
+  const collected = parse(SCENARIOS[DEMO_BASELINE_SCENARIO].payload.collectedAt)
+  if (!collected) return null
 
   const on = (offset: number, time: string) =>
     `${addDays(collected, offset).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}, ${time}`
@@ -364,11 +320,7 @@ export function getDemoWaitingSteps(collectedAt: string | null | undefined): Dem
   return [
     { title: 'Kit dispatched', detail: on(-3, '16:40'), state: 'done' },
     { title: 'Sample received', detail: on(1, '09:12'), state: 'done' },
-    {
-      title: 'Analysing',
-      detail: `Since ${on(2, '08:05')} · expected by ${expected}`,
-      state: 'now',
-    },
+    { title: 'Analysing', detail: `Since ${on(2, '08:05')} · expected by ${expected}`, state: 'now' },
     { title: 'Results ready', detail: 'No date yet', state: 'todo' },
   ]
 }
@@ -376,25 +328,34 @@ export function getDemoWaitingSteps(collectedAt: string | null | undefined): Dem
 /* -------------------------------------------------------- the check-in loop */
 
 /*
- * 🔄 THE DEMO DRIVES THE REAL CHECK-IN MODULE, added 2026-09-07 (fourth pass).
+ * THE DEMO DRIVES THE REAL CHECK-IN MODULE.
  *
- * The first version of the member plan hand-rolled a streak, a counter row and
- * an adherence chart, and used a 1-to-10 energy scale. All of that was wrong:
- * `lib/membership/checkin.ts` already owns the loop, `CheckinRow` and
- * `AdherenceChart` already render it, and the product's scale is 1 to 5. The
- * demo now renders those components and computes the numbers with that module,
- * so the two cannot disagree about what the loop is.
+ * 🔴 THIS IS THE ONE PLACE THE REBUILD DELIBERATELY DOES NOT COPY THE PROTOTYPE,
+ * and Keith chose it on 2026-09-07 ("prototype layout, approved copy"). The
+ * drawing's plan tab has two invented daily tasks -- "D3 capsule", "20 min
+ * daylight" -- and a 1-to-10 energy scale. None of it has had a pre-flight or a
+ * clinical sign-off, its own header forbids lifting it to a live surface, and
+ * `03_compliance/STATE.md` records that it was held back for exactly that
+ * reason. `lib/membership/checkin.ts` already owns this loop, its questions are
+ * the approved ones, and the product's scale is 1 to 5.
  *
- * 🔴 THE ENTRIES ARE SYNTHESISED, THE NUMBERS ARE NOT. This function fabricates
- * a plausible 22 days of taps; `currentStreak`, `adherenceSeries` and
+ * 🟢 THE SUBSTITUTION IS ALMOST INVISIBLE, which is why it was the right call.
+ * The vitamin D loop's approved questions are "Did you take your vitamin D
+ * today?" and "Did you spend time outdoors in daylight today?", labelled D3 and
+ * Daylight. That is the prototype's own pair of taps, in Ewa's words instead of
+ * a mockup's.
+ *
+ * 🔴 THE ENTRIES ARE SYNTHESISED, THE NUMBERS ARE NOT. This fabricates a
+ * plausible 22 days of taps; `currentStreak`, `adherenceSeries` and
  * `loggedWithin` then compute the streak and the chart from them. Nothing on
- * screen is a typed-in "16 day streak". That matters because the mockup asserted
- * both figures and they did not agree with each other.
+ * screen is a typed-in "16 day streak". That matters because the prototype
+ * asserts both figures and they do not agree with each other: it draws misses on
+ * days 5, 12 and 18 of 22 and still prints a 16-day streak beside them.
  *
  * 🔴 "TODAY" IS THE DEMO'S TODAY, not the wall clock. Every function in
  * `checkin.ts` takes `now` as an argument precisely so it can be driven from a
  * table, and the member state is a fixed moment in 2026. Passing the real clock
- * would make the chart drift every day and eventually show 22 empty bars.
+ * would make the chart drift daily and eventually show 22 empty bars.
  */
 export interface DemoCheckin {
   entries: CheckinEntry[]
@@ -405,13 +366,13 @@ export interface DemoCheckin {
 }
 
 /*
- * Days the member missed, as offsets back from the demo today.
+ * Days the member missed, as offsets back from the demo's today.
  *
- * They sit 8, 14 and 19 days back rather than 3, 9 and 16 for a reason a screen
- * makes obvious and a table does not: `currentStreak` counts back from today, so
- * a miss three days ago produces "19 days logged" beside "3 day streak", which
- * reads as a broken habit rather than a kept one. The gaps still show on the
- * chart; they are just old enough to be history.
+ * They sit 8, 14 and 19 days back rather than the prototype's 5, 12 and 18, for
+ * a reason a screen makes obvious and a table does not: `currentStreak` counts
+ * back from today, so a miss five days ago produces "19 days logged" beside a
+ * "5 day streak", which reads as a broken habit rather than a kept one. The gaps
+ * still show on the chart; they are just old enough to be history.
  */
 const DEMO_MISSED_DAYS = [8, 14, 19]
 

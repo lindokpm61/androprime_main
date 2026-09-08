@@ -2423,3 +2423,27 @@
   display: inline-block;
   padding-block: 3px;
 }
+
+
+/* ============================================================================
+   THE BRAND MARK'S INK, added 2026-09-08.
+
+   The logo is an inline SVG and its fill used to be a literal `#000000`. On the
+   demo route, whose nav and footer are themed by re-declaring `--ink`, that made
+   the mark the one element on the chrome that stayed black on a black ground.
+   Keith: "in dark mode on the demo page, the logo should also change to white."
+
+   `<Logo variant="auto">` emits `fill="currentColor"` and this pins the colour to
+   the ink token, so the mark follows whatever theme its container is in and is
+   never at the mercy of an inherited grey.
+
+   ⚠ ON LIGHT SURFACES THIS IS A 3-VALUE CHANGE, and it is the correct direction:
+   `--ink` is #0A0B0D, the Direction F ramp that `tokens/colours.css` describes as
+   replacing "pure #000000 as the text default". The logo was the last thing on
+   the nav and the footer still painting pure black.
+
+   Only the nav and footer call sites use it. `/activate` and the results-ready
+   view still pass `variant="dark"`, deliberately: they are not themed surfaces
+   and a literal is the honest thing there.
+   ============================================================================ */
+.f-logo { color: var(--ink); }

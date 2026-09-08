@@ -12,8 +12,8 @@ import lowB12 from './low-b12'
 import multiDeficiency from './multi-deficiency'
 import multiDeficiencyEnergy from './multi-deficiency-energy'
 import kit3LowTPlusVitaminDAndB12 from './kit3-low-t-plus-vitamin-d-and-b12'
-import demoKit3Split from './demo-kit3-split'
-import demoKit3Retest from './demo-kit3-retest'
+import demoKit3Baseline from './demo-kit3-baseline'
+import demoKit2Retest from './demo-kit2-retest'
 
 export const SCENARIOS: Record<ScenarioName, ScenarioFixture> = {
   'low-testosterone': lowTestosterone,
@@ -28,6 +28,6 @@ export const SCENARIOS: Record<ScenarioName, ScenarioFixture> = {
   'multi-deficiency': multiDeficiency,
   'multi-deficiency-energy': multiDeficiencyEnergy,
   'kit3-low-t-plus-vitamin-d-and-b12': kit3LowTPlusVitaminDAndB12,
-  'demo-kit3-split': demoKit3Split,
-  'demo-kit3-retest': demoKit3Retest,
+  'demo-kit3-baseline': demoKit3Baseline,
+  'demo-kit2-retest': demoKit2Retest,
 }

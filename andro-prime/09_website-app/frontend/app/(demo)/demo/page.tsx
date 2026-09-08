@@ -1,19 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { DemoStage } from '@/components/app-shell/DemoStage'
-import {
-  resolveDemoResult,
-  resolveDemoJourney,
-  getDemoEngineInput,
-  getDemoDates,
-} from '@/lib/results/demo'
+import { resolveDemoJourney, getDemoEngineInput, getDemoDates } from '@/lib/results/demo'
 
 /*
  * /demo -- THE DEMO ACCOUNT, AS THE REAL THING.
  * Built 2026-09-06. Journey states added 2026-09-07. Stage ported 2026-09-07.
  *
- * WHAT THIS PAGE IS NOW. A thin server shell: it resolves which result and which
- * moment in the journey the URL asks for, hands the raw fixture values to
+ * WHAT THIS PAGE IS NOW. A thin server shell: it resolves which moment in the
+ * journey the URL asks for, hands the raw fixture values to
  * `DemoStage`, and gets out of the way. Everything visible is in
  * `components/app-shell/` -- `DemoStage` for the phone and the control rail,
  * `AppShell` for the screens inside it.
@@ -61,6 +56,23 @@ import {
  * artefacts through every cell and diff the text; the screenshots are for the
  * cells where the text already disagrees.
  *
+ * FOURTH AND FIFTH, both Keith, and both about what the demo is FOR. The rail
+ * had a second switcher listing three sample results, and two of the three were
+ * Kit 1 -- a five-marker panel on the page whose job is to show the product. It
+ * is gone, and the demo is built on Kit 3 alone: "you should be building it on
+ * the one that gives the demo the most value."
+ *
+ * SIXTH, AND IT REPLACED EVERYTHING ABOVE. Keith, later the same day: *"rebuild
+ * the demo from scratch, following page for page the prototype. Exactly. So the
+ * initial buy is Kit 3 and the rebuy or retest is Kit 2 ... I think we are, with
+ * this current version of the demo, in a complete mess."* The data model, the
+ * screens, the stage and the fixtures were all rewritten against
+ * `design/prototypes/demo-account-interactive.html`. Two decisions inside that
+ * rebuild were his and are recorded where they bite: the demo now carries the
+ * PROTOTYPE'S man rather than the homepage's (`fixtures/demo-kit3-baseline.ts`),
+ * and the plan tab follows the prototype's layout with the engine's approved
+ * copy rather than its invented daily tasks (`components/app-shell/AppShell.tsx`).
+ *
  * 🔴 KEITH'S RULING on why the membership surfaces are here rather than behind
  * the flag: "This is a demo, so surely it isn't dependent on the membership flag
  * being enabled as part of the website. So it should demonstrate everything that
@@ -77,23 +89,30 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
+/*
+ * 🔄 ONE PARAMETER SINCE 2026-09-07. There was a second, `?r=`, selecting one of
+ * three sample results. Keith removed it: the demo is built on Kit 3, the
+ * nine-marker panel, because that is the one that shows the most of the product.
+ * An unrecognised `?s=` still falls back rather than erroring, so an old link
+ * carrying `?r=gp` lands on the demo instead of on nothing.
+ */
 interface PageProps {
-  searchParams: Promise<{ r?: string; s?: string }>
+  searchParams: Promise<{ s?: string }>
 }
 
 export default async function DemoPage({ searchParams }: PageProps) {
-  const { r, s } = await searchParams
-  const result = resolveDemoResult(r)
-  const journey = resolveDemoJourney(s, result)
-  const engine = getDemoEngineInput(result, journey)
+  const { s } = await searchParams
+  const journey = resolveDemoJourney(s)
 
-  /* Anchored to the FIRST result, which is the one that started the membership.
-     In the member state there are two, and the second is the retest. */
-  const dates = getDemoDates(engine.baselineCollectedAt ?? engine.collectedAt)
+  /* Both purchases go over every time; the journey decides what is rendered.
+     Every date is anchored to the FIRST result, which is the moment membership
+     starts, and derived from the fixtures rather than typed. */
+  const engine = getDemoEngineInput()
+  const dates = getDemoDates(journey.id)
 
   return (
     <>
-      <DemoStage engine={engine} result={result} journey={journey} dates={dates} />
+      <DemoStage engine={engine} journey={journey} dates={dates} />
       <DemoFooter />
     </>
   )

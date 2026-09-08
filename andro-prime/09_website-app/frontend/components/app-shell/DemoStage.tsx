@@ -1,32 +1,37 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { AppShell, TabBar, TAB_TITLES } from './AppShell'
-import type { Tab } from './AppShell'
+import type { DemoRow, Tab } from './AppShell'
 import { barMaxFor } from './RangeTrack'
 import { classify } from '@/lib/results/classifier'
 import { badgeFor } from '@/lib/results/resultSeverity'
-import { DEMO_RESULTS, DEMO_JOURNEYS, journeyAvailable } from '@/lib/results/demo'
+import { DEMO_JOURNEYS } from '@/lib/results/demo'
+import { useDemoTheme } from './DemoTheme'
 import type {
   DemoDates,
   DemoEngineInput,
   DemoJourney,
   DemoMarkerSeed,
-  DemoResult,
 } from '@/lib/results/demo'
-import type { ClassifiedResult, KitData, SingleResult } from '@/lib/results/types'
+import type { ClassifiedResult } from '@/lib/results/types'
 
 /*
- * THE PROTOTYPE'S STAGE. Ported 2026-09-07.
+ * THE PROTOTYPE'S STAGE. Rebuilt 2026-09-07.
  *
- * 🔴 WHY THIS FILE EXISTS. The 2026-09-06 build rebuilt the prototype's SCREENS
- * faithfully and dropped its STAGE entirely: the phone bezel, the control rail
- * with its value slider and band presets, the theme toggle, the closing notes.
- * Keith read the result and said it was "completely different from the actual
- * prototype". It was, and this is the part that was missing.
+ * The phone bezel, the control rail and the closing notes, following
+ * `design/prototypes/demo-account-interactive.html` panel for panel. Its rail is
+ * three cards and this is those three cards:
  *
- * 🟢 THE SLIDER IS BETTER HERE THAN IN THE PROTOTYPE, and that is the one place
+ *   1. DEMO CONTROLS -- the label, the "not part of the product" hint, the three
+ *      journey states, and the value slider, WHICH ONLY APPEARS WHILE A MARKER
+ *      IS OPEN. That last part is easy to miss and it matters: a slider with
+ *      nothing to drive is a control that does nothing.
+ *   2. THE COMPARE SWITCH.
+ *   3. WHAT TO WATCH -- a numbered walkthrough, different in each state.
+ *
+ * 🟢 THE SLIDER IS BETTER HERE THAN IN THE PROTOTYPE, and it is the one place
  * this deliberately does not copy. The prototype TRANSCRIBED the bands from
  * `classifier.ts` into a literal in the page, which is why its own header says
  * they cannot stay current and warns that where the two disagree the prototype
@@ -35,7 +40,12 @@ import type { ClassifiedResult, KitData, SingleResult } from '@/lib/results/type
  *
  * 🔴 STILL NO DATABASE AND NO USER. `classify()` is a pure function over values;
  * the seeds arrive as props from a server component that read a closed fixture
- * set. Nothing here can reach Supabase and there is no user id to hand it.
+ * pair. Nothing here can reach Supabase and there is no user id to hand it.
+ *
+ * 🔴 ONLY THE RETEST IS EDITABLE, IN THE MEMBER STATE. History does not move,
+ * which is the prototype's own rule, and the rail says so out loud. In the
+ * result state the slider drives the first result, because that is the only
+ * reading on screen.
  *
  * ⚠ ONE ENGINE DIFFERENCE, and it cannot touch a verdict.
  * `isMaintenanceOfferEnabled()` reads `process.env.MAINTENANCE_OFFER_ENABLED`,
@@ -46,79 +56,89 @@ import type { ClassifiedResult, KitData, SingleResult } from '@/lib/results/type
 
 export interface DemoStageProps {
   engine: DemoEngineInput
-  result: DemoResult
   journey: DemoJourney
   dates: DemoDates | null
 }
 
-export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
+export function DemoStage({ engine, journey, dates }: DemoStageProps) {
   /*
    * THREE THEME STATES, which is what the prototype has: null follows the
-   * machine, 'light' and 'dark' are the reader overruling it. The first pass of
-   * this port had a manual toggle only, so it opened white beside a prototype
-   * that opens dark, and that was the most visible difference between them.
+   * machine, 'light' and 'dark' are the reader overruling it.
    *
-   * `systemDark` cannot be read during render: there is no `matchMedia` on the
-   * server and guessing would hydrate wrong. It is read after mount and only
-   * drives the BUTTON LABEL, because the colours themselves are done in CSS by
-   * `prefers-color-scheme`, which needs no JavaScript and cannot flash.
+   * 🔴 THE STATE LIVES ABOVE THIS COMPONENT, in `DemoTheme`, because the nav and
+   * the footer need it too and they are rendered by the route's layout. Holding
+   * it here is what left them white while the stage went dark.
    */
-  const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
-  const [systemDark, setSystemDark] = useState(false)
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    setSystemDark(mq.matches)
-    const onChange = (e: MediaQueryListEvent) => setSystemDark(e.matches)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
-  const dark = theme ? theme === 'dark' : systemDark
+  const { setChoice, dark } = useDemoTheme()
+
   const [tab, setTab] = useState<Tab>('results')
   const [openMarker, setOpenMarker] = useState<string | null>(null)
   const [compare, setCompare] = useState(false)
-  /* Only the LATEST result is editable. History does not move, which is the
-     prototype's own rule and the reason the rail says so out loud. */
-  const [values, setValues] = useState<Record<string, number>>(() =>
-    Object.fromEntries(engine.seeds.map((s) => [s.markerName, s.value]))
+
+  const member = journey.id === 'member'
+  const waiting = journey.id === 'waiting'
+
+  /* The editable point. In the member state that is the retest; otherwise the
+     first result. Keyed by marker name so a value survives a tab change. */
+  const [baselineValues, setBaselineValues] = useState<Record<string, number>>(() =>
+    Object.fromEntries(engine.baselineSeeds.map((s) => [s.markerName, s.value]))
+  )
+  const [retestValues, setRetestValues] = useState<Record<string, number>>(() =>
+    Object.fromEntries(engine.retestSeeds.map((s) => [s.markerName, s.value]))
   )
 
-  const kits = useMemo<KitData[]>(() => {
-    const run = (seeds: DemoMarkerSeed[], override: boolean): ClassifiedResult[] =>
+  /*
+   * THE NINE ROWS, AND WHY THEY ARE BUILT HERE RATHER THAN BY
+   * `buildDashboardFromScenario`.
+   *
+   * 🔴 THE TWO PURCHASES ARE DIFFERENT KITS. That helper stacks results of the
+   * SAME kit type into one `KitData` and assumes every marker has a pair, which
+   * is exactly what stops being true when the retest is a Kit 2. So the two
+   * results are classified SEPARATELY -- each as the real kit it is, which is
+   * also what the engine would see in production -- and then joined by marker
+   * name. Five of the nine find no partner and carry `previous: null`.
+   */
+  const rows = useMemo<DemoRow[]>(() => {
+    const run = (
+      kit: DemoEngineInput['baselineKit'],
+      seeds: DemoMarkerSeed[],
+      overrides: Record<string, number> | null
+    ): ClassifiedResult[] =>
       classify({
-        kitType: engine.kitType,
+        kitType: kit,
         biomarkers: seeds.map((s) => ({
           ...s,
-          value: override ? (values[s.markerName] ?? s.value) : s.value,
+          value: overrides ? (overrides[s.markerName] ?? s.value) : s.value,
         })),
         symptomAnswers: engine.symptomAnswers,
         qualifierResponses: [],
         userAge: engine.userAge,
       })
 
-    const latest: SingleResult = {
-      resultId: 'demo-latest',
-      collectedAt: engine.collectedAt,
-      markers: run(engine.seeds, true),
-      hasQualifierPending: false,
-    }
-    if (!engine.baseline) return [{ kitType: engine.kitType, results: [latest] }]
+    const baseline = run(engine.baselineKit, engine.baselineSeeds, member ? null : baselineValues)
 
-    const baseline: SingleResult = {
-      resultId: 'demo-baseline',
-      collectedAt: engine.baselineCollectedAt,
-      markers: run(engine.baseline, false),
-      hasQualifierPending: false,
+    if (!member) {
+      return baseline.map((r) => ({ latest: r, previous: null, kit: engine.baselineKit }))
     }
-    return [{ kitType: engine.kitType, results: [baseline, latest] }]
-  }, [engine, values])
 
-  const markers = kits[0]?.results[kits[0].results.length - 1]?.markers ?? []
-  const open = markers.find((m) => m.markerName === openMarker) ?? null
-  const waiting = journey.id === 'waiting'
-  const member = journey.id === 'member'
+    const retest = run(engine.retestKit, engine.retestSeeds, retestValues)
+    const byName = new Map(retest.map((r) => [r.markerName, r]))
+
+    return baseline.map((first) => {
+      const second = byName.get(first.markerName)
+      return second
+        ? { latest: second, previous: first, kit: engine.retestKit }
+        : { latest: first, previous: null, kit: engine.baselineKit }
+    })
+  }, [engine, member, baselineValues, retestValues])
+
+  const open = openMarker ? rows.find((r) => r.latest.markerName === openMarker) ?? null : null
+  /* Only a re-measured marker can be dragged in the member state: the others
+     have no second point, and moving history is the one thing the rail refuses. */
+  const editable = open ? (member ? open.previous !== null : true) : false
 
   return (
-    <div className="ap-stage" data-ap-theme={theme ?? undefined}>
+    <div className="ap-stage">
       <div className="ap-stage__wash" aria-hidden="true" />
       <div className="ap-stage__inner">
         <div className="ap-bar">
@@ -130,7 +150,7 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
           <button
             type="button"
             className="ap-themebtn"
-            onClick={() => setTheme(dark ? 'light' : 'dark')}
+            onClick={() => setChoice(dark ? 'light' : 'dark')}
           >
             {dark ? 'Light' : 'Dark'}
           </button>
@@ -152,8 +172,8 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
         <header className="ap-intro">
           <h1>The whole app, on a phone.</h1>
           <p>
-            Every screen a customer actually reaches: waiting for the lab, every marker on his panel,
-            the daily plan, the month-one notice, the record after a retest, and the account.{' '}
+            Every screen a customer actually reaches: waiting for the lab, all nine markers, the
+            daily plan, the month-one notice, the record after a retest, and the account.{' '}
             <b>Tap through it as he would.</b> The panel beside it moves him between the three states
             and is not part of the product.
           </p>
@@ -197,7 +217,9 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
                       <path d="M15 18l-6-6 6-6" />
                     </svg>
                   </button>
-                  <span className="ap-appbar__ttl">{open ? open.markerName : TAB_TITLES[tab]}</span>
+                  <span className="ap-appbar__ttl">
+                    {open ? open.latest.markerName : TAB_TITLES[tab]}
+                  </span>
                   {/* Membership begins when the RESULT lands, not at purchase and
                       not when a card is first charged. So the pill is off on day 3
                       and on from day 14. */}
@@ -208,11 +230,10 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
 
                 <div className="ap-scrollarea">
                   <AppShell
-                    kits={kits}
+                    rows={rows}
                     journey={journey.id}
                     dates={dates}
                     tab={tab}
-                    onTab={setTab}
                     openMarker={openMarker}
                     onOpenMarker={setOpenMarker}
                     compare={compare}
@@ -221,6 +242,7 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
 
                 <TabBar
                   tab={tab}
+                  markerOpen={open !== null}
                   onTab={(t) => {
                     setTab(t)
                     setOpenMarker(null)
@@ -237,54 +259,40 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
               <p className="ap-railcard__hint">
                 Not part of the product. A real member cannot move his own result, and there is no
                 state switcher in his account. This is here so you can walk the whole journey without
-                waiting fifteen weeks.
+                waiting thirteen weeks.
               </p>
 
+              {/* 🔴 ONE AXIS, THE JOURNEY. There was a second nav here that
+                  switched between three sample results, two of them Kit 1. Keith
+                  removed it on 2026-09-07: the demo is built on Kit 3 because
+                  that is the panel that shows the most of the product. */}
               <nav className="ap-seg" aria-label="Point in the journey">
-                {DEMO_JOURNEYS.map((j) =>
-                  journeyAvailable(j, result) ? (
-                    <Link
-                      key={j.id}
-                      href={`/demo?r=${result.id}&s=${j.id}`}
-                      aria-current={j.id === journey.id ? 'true' : undefined}
-                    >
-                      {j.label}
-                    </Link>
-                  ) : (
-                    <span
-                      key={j.id}
-                      aria-disabled="true"
-                      title="This result has no retest written for it, so there is no second point to show."
-                    >
-                      {j.label}
-                    </span>
-                  )
-                )}
-              </nav>
-
-              <nav className="ap-seg" aria-label="Sample results">
-                {DEMO_RESULTS.map((d) => (
+                {DEMO_JOURNEYS.map((j) => (
                   <Link
-                    key={d.id}
-                    href={`/demo?r=${d.id}&s=${journeyAvailable(journey, d) ? journey.id : 'result'}`}
-                    aria-current={d.id === result.id ? 'true' : undefined}
+                    key={j.id}
+                    href={`/demo?s=${j.id}`}
+                    aria-current={j.id === journey.id ? 'true' : undefined}
                   >
-                    {d.label}
+                    {j.label}
                   </Link>
                 ))}
               </nav>
-              <p className="ap-railhint">{result.blurb}</p>
-            </div>
 
-            {open && !waiting && (
-              <MarkerControl
-                result={open}
-                member={member}
-                onValue={(v) =>
-                  setValues((prev) => ({ ...prev, [open.markerName]: v }))
-                }
-              />
-            )}
+              {/* The prototype's `#markerctl`: present only while a marker is
+                  open, because a slider with nothing to drive is a dead control. */}
+              {open && !waiting && (
+                <MarkerControl
+                  result={open.latest}
+                  editable={editable}
+                  member={member}
+                  onValue={(v) => {
+                    const name = open.latest.markerName
+                    if (member) setRetestValues((p) => ({ ...p, [name]: v }))
+                    else setBaselineValues((p) => ({ ...p, [name]: v }))
+                  }}
+                />
+              )}
+            </div>
 
             <div className="ap-railcard">
               <label className="ap-switch">
@@ -328,15 +336,16 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
                 verdict is recomputed by the engine, not looked up in a table.
               </p>
               <p>
-                Every explanation, every recommendation and every verdict word is the engine&rsquo;s
-                own copy, not written for this page.
+                All nine markers are here, including the one with no verdict. Every explanation,
+                every recommendation and every verdict word is the engine&rsquo;s own copy, not
+                written for this page.
               </p>
             </div>
             <div className="ap-ncard">
               <h3>Mocked</h3>
               <p>
                 <b>The result, the account and every interaction.</b> No login, no database, nothing
-                ingested. The values come from a closed set of fixtures and are recomputed in your
+                ingested. The values come from a closed pair of fixtures and are recomputed in your
                 browser.
               </p>
               <p>
@@ -353,8 +362,8 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
                 right of access to his own health data.
               </p>
               <p>
-                <b>Some markers get no verdict at all</b>, on purpose. <b>And the app never joins a
-                marker to a symptom</b>, on the one screen where it would be easiest.
+                <b>The free androgen index has no verdict at all</b>, on purpose. <b>And the app
+                never joins a marker to a symptom</b>, on the one screen where it would be easiest.
               </p>
             </div>
           </div>
@@ -380,10 +389,12 @@ export function DemoStage({ engine, result, journey, dates }: DemoStageProps) {
  */
 function MarkerControl({
   result,
+  editable,
   member,
   onValue,
 }: {
   result: ClassifiedResult
+  editable: boolean
   member: boolean
   onValue: (v: number) => void
 }) {
@@ -401,9 +412,20 @@ function MarkerControl({
     if (z.upTo === null) break
   }
 
+  if (!editable) {
+    return (
+      <p className="ap-fixnote">
+        {result.markerName} was not re-measured: the included retest is a Kit 2 and this marker is
+        not on it. There is one reading, and one reading does not move.
+      </p>
+    )
+  }
+
   return (
-    <div className="ap-railcard">
-      <span className="ap-lbl">{result.markerName}</span>
+    <div className="ap-markerctl">
+      <span className="ap-lbl">
+        {member ? 'Retest value' : 'Result value'} &middot; {result.markerName}
+      </span>
       <p className="ap-railcard__hint">
         Drag it. The verdict, the bands and the copy below are recomputed by the engine.
       </p>
@@ -439,7 +461,7 @@ function MarkerControl({
       </div>
       <p className="ap-fixnote">
         {member
-          ? 'The baseline is fixed. History does not move, so the slider only drives the retest.'
+          ? 'The first result is fixed. History does not move, so the slider only drives the retest.'
           : `Current verdict: ${badgeFor(result.state).label}`}
       </p>
     </div>
@@ -455,26 +477,27 @@ const ZONE_WORD: Record<string, string> = {
 }
 
 /*
- * The walkthrough. It points at things that are TRUE OF THE ENGINE rather than
- * of a drawing, so it cannot go stale the way the prototype's list did: that one
- * said "Month one is the ask" for nine days after the ask became a notice.
+ * The walkthrough, following the prototype's `WATCH` list state for state. Each
+ * line points at something TRUE OF THE ENGINE rather than of a drawing, so it
+ * cannot go stale the way the prototype's did: that one said "Month one is the
+ * ask" for nine days after the ask became a notice.
  */
 const WATCH: Record<string, string[]> = {
   waiting: [
-    'Most of the app is empty, and it says so rather than inventing something to show.',
+    'The tracker dates every completed step and refuses to date the one it cannot know.',
+    'No percentage and no progress bar, because a number stuck at 60% for two days is worse than no number.',
     'Every tab has its own empty state. The plan has no number to move yet; the record has one point coming, not two.',
-    'No progress bar, because a bar stuck at 60% for two days is worse than no bar.',
   ],
   result: [
-    'Open any flagged marker, then drag the slider in this rail. The verdict, the bands and the copy are recomputed by the live engine.',
-    'Flip "show what everyone else shows". Our bands disappear and the laboratory interval stays exactly where it was. That gap is the whole argument.',
+    'Open Testosterone. He is inside his laboratory’s range and under the number a GP acts on, and the card routes him out of the business.',
+    'Open Free Androgen Index. It has a hollow marker and no verdict at all, on purpose.',
+    'Flip "show what everyone else shows", then reopen testosterone. Our bands disappear, the laboratory interval stays exactly where it was, and the page has nothing left to say.',
     'Go to Plan. Month one is included with the kit, so it is a notice with a charge date, not an ask. Note what it locks: nothing.',
-    'Some markers carry no verdict at all, on purpose.',
   ],
   member: [
-    'Go to Record. Two points, and the only words on it are Risen, Fallen and Unchanged.',
-    'The nutritional markers moved and testosterone did not. A demo where everything improves is a pitch.',
-    'Nothing joins the change to a cause. That is an interpretation we are not registered to make.',
-    'The account names the retest it can stand behind and no other.',
+    'Open Vitamin D. 31 to 58, crossed out of the low band. That is the retest paying out.',
+    'Open Testosterone. There is no second point at all: the included retest is a Kit 2, and the hormone markers are not on it.',
+    'On any re-measured marker, look at the two plots. His energy rose too, and the app never says one caused the other.',
+    'Go to Record for all nine markers across both purchases, and note that only four of them moved.',
   ],
 }

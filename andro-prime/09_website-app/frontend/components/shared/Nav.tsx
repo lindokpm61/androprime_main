@@ -191,7 +191,9 @@ export function Nav({
           className="flex items-center"
           ariaLabel="Andro Prime home"
         >
-          <Logo variant="dark" className="h-4 w-auto" />
+          {/* `auto` + `.f-logo` puts the mark on the `--ink` token, so it
+              follows a theme instead of being a literal black. See Logo.tsx. */}
+          <Logo variant="auto" className="h-4 w-auto f-logo" />
         </HostLink>
 
         {showLinks && (

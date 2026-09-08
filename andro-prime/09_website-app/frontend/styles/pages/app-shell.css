@@ -15,61 +15,67 @@
    kinds of object -- fill against outline -- rather than as two coloured bars a
    reader has to be told apart.
 
-   🔴 EVERY TOKEN IS SCOPED UNDER `.ap-shell`. The prototype ships a full
-   light/dark token block at `:root` and defaults to DARK. The live site has no
-   dark mode and DESIGN.md already records a criticism of a ported dark
-   treatment, so `:root` is left alone and these live on the container. Dark is
-   a `[data-ap-theme="dark"]` block below rather than a rebuild, so turning it
-   on is a decision and not a project.
+   🔴 EVERY TOKEN IS SCOPED UNDER `.ap-stage`, WHICH IS THE ONE CONTAINER THE
+   ROUTE ACTUALLY RENDERS. The prototype ships a full light/dark token block at
+   `:root` and defaults to DARK. The live site has no dark mode and DESIGN.md
+   already records a criticism of a ported dark treatment, so `:root` is left
+   alone and these live on the container. Dark is a `[data-ap-theme="dark"]`
+   block below rather than a rebuild, so turning it on is a decision and not a
+   project.
+
+   ⚠ THERE USED TO BE A SECOND TOKEN TABLE, on `.ap-shell`, and it caused a real
+   defect: the rebuilt `DemoStage` stopped rendering that class, so the radius
+   tokens declared only there resolved to nothing and every card computed to a
+   0px radius beside neighbours that kept their literal values. An undefined
+   custom property is a silent zero, not an error. One table, on the element in
+   the tree. Do not add a second.
    ============================================================================ */
 
-.ap-shell {
-  --ap-paper: #ffffff;
-  --ap-tray: #f1f2f4;
-  --ap-core: #ffffff;
-  --ap-sunk: #e7e9ec;
-  --ap-ink: #0a0b0d;
-  --ap-ink-2: #4a4f57;
-  --ap-ink-3: #6b7078;
-  --ap-hair: rgba(10, 11, 13, 0.1);
-  --ap-hair-2: rgba(10, 11, 13, 0.16);
-  --ap-ok: #059669;
-  --ap-warn: #d97706;
-  --ap-crit: #b91c1c;
-  --ap-ok-f: rgba(5, 150, 105, 0.18);
-  --ap-warn-f: rgba(217, 119, 6, 0.3);
-  --ap-crit-f: rgba(185, 28, 28, 0.22);
-  --ap-flat-f: rgba(10, 11, 13, 0.07);
-  --ap-ease: cubic-bezier(0.32, 0.72, 0, 1);
-  --ap-r: 28px;
-  --ap-r-in: 22px;
+/*
+ * 🔴 `.ap-shell` USED TO DECLARE ITS OWN COPY OF EVERY TOKEN AND IT IS GONE.
+ * Nothing renders that class -- the rebuilt `DemoStage` puts the screens
+ * straight inside `.ap-viewport` -- so the block was a second, unapplied token
+ * table sitting beside the live one on `.ap-stage`. That is precisely how
+ * `--ap-r-in` came to be missing from the container that needed it while
+ * looking, to anyone reading this file, as though it were declared. One table,
+ * on the element that is actually in the tree.
+ */
 
-  background: var(--ap-tray);
-  color: var(--ap-ink);
-  font-family: var(--font-sans), system-ui, sans-serif;
-}
+/* ---------- the screen ----------
+   🔴 THE SCREEN OWNS THE VERTICAL RHYTHM. Every panel used to carry its own
+   `margin-bottom` or `margin-top`, six different rules plus four inline
+   overrides in the JSX, and the result measured 0, 7, 8, 9, 11, 12, 14 and 22px
+   between panels across the twelve cells -- INCLUDING TWO PAIRS THAT TOUCHED at
+   0px, because a bottom margin and a top margin had each been left to the other
+   element. Nothing warns about that: a gap is whatever the two neighbours
+   happen to agree on, and neither of them is wrong on its own.
 
-.ap-shell[data-ap-theme='dark'] {
-  --ap-paper: #0a0b0d;
-  --ap-tray: #141619;
-  --ap-core: #1a1d21;
-  --ap-sunk: #0e1013;
-  --ap-ink: #f5f6f7;
-  --ap-ink-2: #b9bdc4;
-  --ap-ink-3: #969ba3;
-  --ap-hair: rgba(245, 246, 247, 0.11);
-  --ap-hair-2: rgba(245, 246, 247, 0.18);
-  --ap-ok: #34d399;
-  --ap-warn: #fbbf24;
-  --ap-crit: #f87171;
-  --ap-ok-f: rgba(52, 211, 153, 0.2);
-  --ap-warn-f: rgba(251, 191, 36, 0.3);
-  --ap-crit-f: rgba(248, 113, 113, 0.26);
-  --ap-flat-f: rgba(245, 246, 247, 0.09);
-}
-
-/* ---------- the screen ---------- */
+   So the gap is a property of the SEQUENCE, not of the panel. Adjacent-sibling
+   rules, one place, three values:
+     11px  the base -- one block to the next
+      7px  a run of the same kind of item (rows, links, compact cards)
+     22px  a labelled group or a section heading, which needs air above it
+   A panel that needs to sit at a distance of its own is a smell; add a case
+   here rather than a margin on the panel, or the next reader inherits eight
+   values again. */
 .ap-screen { padding: 18px 16px 26px; }
+
+.ap-screen > * + * { margin-top: 11px; }
+
+/* A run of like items sits tighter than two unlike blocks do. */
+.ap-screen > .ap-row + .ap-row,
+.ap-screen > .ap-rowlink + .ap-rowlink,
+.ap-screen > .ap-card[data-compact='true'] + .ap-card[data-compact='true'] {
+  margin-top: 7px;
+}
+
+/* A labelled block opens with air above it. */
+.ap-screen > .ap-group,
+.ap-screen > .ap-sect { margin-top: 22px; }
+/* ...and a label sits close to the thing it labels. */
+.ap-screen > .ap-sect + * { margin-top: 9px; }
+/* Nothing pushes the first panel away from the screen's own padding. */
+.ap-screen > *:first-child { margin-top: 0; }
 .ap-screen__head { margin-bottom: 18px; }
 .ap-screen__title {
   font-size: 22px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
@@ -80,27 +86,28 @@
   font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--ap-ink-3); font-weight: 500;
 }
-.ap-group { margin-top: 22px; }
 .ap-group > .ap-lbl { display: block; margin-bottom: 10px; }
+/* The rows inside a marker group are a run, like the ones at screen level. */
+.ap-group > .ap-row + .ap-row { margin-top: 7px; }
 
 /* ---------- the marker row ----------
    Three columns, and the middle one is fixed so every value in the list shares
    a decimal alignment. A list of numbers that do not line up is a list the eye
    has to read one row at a time. */
 .ap-row {
-  width: 100%; display: grid; grid-template-columns: 1fr 84px 16px;
+  width: 100%; display: grid; grid-template-columns: 1fr 76px 16px;
   gap: 9px; align-items: center; text-align: left;
   background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: 16px;
-  padding: 13px 14px; margin-bottom: 7px; cursor: pointer;
+  padding: 13px 14px; cursor: pointer;
   font-family: inherit; color: inherit;
   transition: border-color 0.2s var(--ap-ease);
 }
 .ap-row:hover { border-color: var(--ap-hair-2); }
 .ap-row:focus-visible { outline: 2px solid var(--ap-ink); outline-offset: 2px; }
-.ap-row__name { font-size: 14px; font-weight: 600; line-height: 1.25; }
+.ap-row__name { font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
 .ap-row__verdict {
   display: block; font-family: var(--font-mono), ui-monospace, monospace;
-  font-size-adjust: none; font-size: 9px; letter-spacing: 0.1em;
+  font-size-adjust: none; font-size: 8.5px; letter-spacing: 0.1em;
   text-transform: uppercase; font-weight: 700; margin-top: 4px;
 }
 .ap-row__verdict[data-tone='ok'] { color: var(--ap-ok); }
@@ -109,10 +116,15 @@
 .ap-row__verdict[data-tone='flat'] { color: var(--ap-ink-3); }
 .ap-row__val {
   text-align: right; font-family: var(--font-mono), ui-monospace, monospace;
-  font-size-adjust: none; font-size: 15px; font-weight: 700; letter-spacing: -0.02em;
+  font-size-adjust: none; font-size: 16px; font-weight: 700; letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums; line-height: 1.1;
 }
-.ap-row__unit { display: block; font-size: 9px; font-weight: 400; color: var(--ap-ink-3); margin-top: 2px; }
+/* `<u>` is the prototype's own element here and it must not underline: the
+   underline reads as a link on a row that is already a button. */
+.ap-row__unit {
+  display: block; text-decoration: none; font-size: 8.5px; font-weight: 400;
+  color: var(--ap-ink-3); margin-top: 2px;
+}
 .ap-chev { display: grid; place-items: center; color: var(--ap-ink-3); }
 .ap-chev svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; }
 
@@ -166,7 +178,11 @@
 .ap-sw[data-kind='ring'] { width: 12px; height: 12px; border-radius: 50%; border: 2px dashed var(--ap-ink-2); background: transparent; }
 
 /* ---------- marker detail ---------- */
-.ap-card { background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: var(--ap-r-in); padding: 17px 16px; margin-bottom: 11px; }
+/* The track's distance from the badge above it. Intra-card spacing, so it is
+   NOT part of the screen's panel rhythm; it is a class rather than an inline
+   style so it is greppable with everything else. */
+.ap-trackwrap { margin-top: 17px; }
+.ap-card { background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: var(--ap-r-in); padding: 17px 16px; }
 .ap-bigval { display: flex; align-items: baseline; gap: 4px; margin: 8px 0 4px; }
 .ap-bigval b {
   font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
@@ -225,10 +241,14 @@
 .ap-tab {
   flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
   background: none; border: none; padding: 6px 2px; cursor: pointer;
-  color: var(--ap-ink-3); font-family: var(--font-mono), ui-monospace, monospace;
-  font-size-adjust: none; font-size: 9px; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--ap-ink-3); font-family: inherit;
+  font-size: 9.5px; font-weight: 600; letter-spacing: 0.02em;
 }
-.ap-tab svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.ap-tab svg {
+  width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.9;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.ap-tab[aria-selected='true'] svg { stroke-width: 2.4; }
 .ap-tab[aria-selected='true'] { color: var(--ap-ink); font-weight: 700; }
 .ap-tab:focus-visible { outline: 2px solid var(--ap-ink); outline-offset: -2px; }
 
@@ -298,7 +318,7 @@
    same moment: day 14. These classes serve the two moments that were missing --
    waiting for the lab, and being a member with a record -- plus the month-one
    notice that replaced the prototype's paywall when the auto-renew ruling
-   landed. Tokens are the ones already scoped under `.ap-shell`; nothing new is
+   landed. Tokens are the ones already scoped under `.ap-stage`; nothing new is
    defined at `:root`.
    ============================================================================ */
 
@@ -306,8 +326,10 @@
    the demo is more persuasive for admitting it than for hiding it. */
 .ap-empty {
   display: flex; flex-direction: column; align-items: center; text-align: center;
-  gap: 14px; padding: 44px 24px; margin-top: 4px;
-  background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: 14px;
+  gap: 14px; padding: 44px 24px;
+  background: var(--ap-core); border: 1px solid var(--ap-hair);
+  /* An outer panel in card position, so it takes the card's radius. */
+  border-radius: var(--ap-r-in);
 }
 .ap-empty svg {
   width: 30px; height: 30px; flex: none;
@@ -318,8 +340,10 @@
 /* The month-one notice. NOT a paywall: the month is included and the card is
    charged automatically, so this states a date rather than asking a question. */
 .ap-notice {
-  background: var(--ap-core); border: 1px solid var(--ap-hair-2); border-radius: 14px;
-  padding: 20px 18px; margin-top: 4px;
+  /* The prototype's `.pay`, which takes `var(--r-in)` there too. */
+  background: var(--ap-core); border: 1px solid var(--ap-hair-2);
+  border-radius: var(--ap-r-in);
+  padding: 20px 18px;
 }
 .ap-notice h3 {
   font-size: 19px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.25;
@@ -345,7 +369,7 @@
 .ap-move {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 13px 15px; background: var(--ap-core);
-  border: 1px solid var(--ap-hair); border-radius: 12px; margin-top: 7px;
+  border: 1px solid var(--ap-hair); border-radius: 14px; margin-top: 7px;
 }
 .ap-move__name {
   display: flex; flex-direction: column; gap: 3px;
@@ -379,10 +403,10 @@
    and said it was "completely different from the actual prototype", which it
    was. This block is the stage, ported.
 
-   THE TOKENS MOVE UP. They used to live on `.ap-shell`, which is INSIDE the
-   phone, so nothing outside it could use them. They are declared on `.ap-stage`
-   as well, and the dark rule reaches into `.ap-shell` so one toggle themes the
-   whole stage. `.ap-shell` keeps its own block, so it still works standalone.
+   THE TOKENS LIVE HERE, on the outermost container, so the phone and the rail
+   read the same table and one toggle themes the whole stage. They used to be
+   duplicated onto an inner `.ap-shell` as well; that container is no longer
+   rendered and its copy has been removed. See the radius note in this block.
 
    STILL SCOPED, STILL NOT `:root`. The live site has no dark mode and DESIGN.md
    records a criticism of a ported dark treatment. Dark here is the demo's own
@@ -413,14 +437,31 @@
   --ap-wash-b: rgba(10, 11, 13, 0.035);
   --ap-ease: cubic-bezier(0.32, 0.72, 0, 1);
 
+  /* 🔴 THE RADIUS SCALE, AND IT LIVES HERE BECAUSE OF A REAL BUG.
+     These two were declared only on `.ap-shell`, a container the rebuilt
+     `DemoStage` does not render. `.ap-card` asks for `var(--ap-r-in)`, the
+     variable resolved to nothing, and the declaration fell back to the initial
+     value: EVERY CARD ON EVERY SCREEN COMPUTED TO 0px while its neighbours kept
+     their literal radii, so the app read as a mix of rounded and square panels.
+     Keith spotted it on the rendered page. Nothing failed and nothing warned:
+     an undefined custom property is not an error, it is a silent zero.
+
+     THREE TIERS, and every panel picks one rather than a number of its own:
+       --ap-r-in  22px  an outer panel sitting on the tray (card, notice, empty)
+       16px             a row or an action block
+       14px             a block nested inside a panel (plot, movement, taps)
+     Outside the phone the stage keeps the prototype's own 20px rail and 18px
+     note cards. If you add a panel, take a tier; do not invent a fourth. */
+  --ap-r: 28px;
+  --ap-r-in: 22px;
+
   position: relative;
   background: var(--ap-paper);
   color: var(--ap-ink);
   padding: 0 24px 90px;
 }
 
-.ap-stage[data-ap-theme='dark'],
-.ap-stage[data-ap-theme='dark'] .ap-shell {
+[data-ap-theme='dark'] .ap-stage {
   --ap-paper: #0a0b0d;
   --ap-tray: #141619;
   --ap-core: #1a1d21;
@@ -657,8 +698,7 @@
    it opened white next to a dark prototype. Three states, same as the original:
    attribute absent = follow the system, 'light' and 'dark' = the reader decided. */
 @media (prefers-color-scheme: dark) {
-  .ap-stage:not([data-ap-theme='light']),
-  .ap-stage:not([data-ap-theme='light']) .ap-shell {
+  .ap-themed:not([data-ap-theme='light']) .ap-stage {
     --ap-paper: #0a0b0d;
     --ap-tray: #141619;
     --ap-core: #1a1d21;
@@ -710,7 +750,7 @@
 .ap-statusstrip {
   display: flex; align-items: center; gap: 8px;
   background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: 999px;
-  padding: 8px 14px; margin-bottom: 12px;
+  padding: 8px 14px;
   font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
   font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--ap-ink-2); font-weight: 700;
@@ -734,7 +774,7 @@
 .ap-sect {
   font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
   font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--ap-ink-3); font-weight: 500; margin: 18px 4px 9px; display: block;
+  color: var(--ap-ink-3); font-weight: 500; margin: 0 4px; display: block;
 }
 
 .ap-steps { margin-top: 17px; }
@@ -785,7 +825,7 @@
 .ap-rowlink {
   display: flex; align-items: center; gap: 12px; width: 100%;
   background: var(--ap-core); border: 1px solid var(--ap-hair); border-radius: 16px;
-  padding: 14px 15px; margin-bottom: 7px; cursor: pointer;
+  padding: 14px 15px; cursor: pointer;
   font-family: inherit; color: inherit; text-align: left;
 }
 .ap-rowlink:hover { border-color: var(--ap-hair-2); }
@@ -803,7 +843,7 @@
    adherence chart, when `AdherenceChart` already exists). The demo renders the
    real components now, so these were not just unused, they encoded a wrong
    answer. Their styles come from `styles/pages/membership.css`. */
-.ap-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 11px; }
+.ap-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .ap-stat {
   background: var(--ap-core); border: 1px solid var(--ap-hair);
   border-radius: 16px; padding: 14px 11px; text-align: center;
@@ -869,3 +909,227 @@
 .ap-stage .membership__chart-axis { color: var(--ap-ink-3); }
 .ap-stage .membership__chart-legend { color: var(--ap-ink-3); }
 .ap-stage .membership__checkin-error { color: var(--ap-crit); }
+
+
+/* ============================================================================
+   THE PANELS THE FROM-SCRATCH REBUILD NEEDED, 2026-09-07.
+
+   Everything below serves a panel that exists in
+   `design/prototypes/demo-account-interactive.html` and had no CSS here,
+   because the 2026-09-06 build rendered a smaller set of screens. Tokens are
+   the ones already scoped on `.ap-stage`; nothing new at `:root`.
+   ============================================================================ */
+
+/* ---------- buttons inside the phone ----------
+   One class, two variants. The prototype has a solid button and a ghost, and
+   both are inert here: every control on this route does nothing, which is what
+   the rail says out loud. */
+.ap-btn {
+  display: inline-block; margin-top: 13px; padding: 11px 17px;
+  border-radius: 999px; border: 1px solid var(--ap-ink); background: var(--ap-ink);
+  color: var(--ap-paper); font-family: inherit; font-size: 12.5px; font-weight: 700;
+  letter-spacing: 0.01em; cursor: pointer;
+}
+.ap-btn[data-variant='ghost'] { background: transparent; color: var(--ap-ink); }
+.ap-btn:focus-visible { outline: 2px solid var(--ap-ink); outline-offset: 3px; }
+
+/* ---------- provenance, attribution, receipt ----------
+   Three small lines the prototype carries and the first build dropped. They are
+   the only places the report says where a number or a judgement came from. */
+.ap-prov {
+  margin-top: 13px; padding-top: 11px; border-top: 1px solid var(--ap-hair);
+  font-size: 11.5px; line-height: 1.65; color: var(--ap-ink-3);
+}
+.ap-attrib {
+  margin-top: 11px;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ap-ink-3);
+}
+.ap-receipt {
+  margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--ap-hair-2);
+  font-size: 12px; line-height: 1.6; color: var(--ap-ink-2);
+}
+
+/* ---------- the two-point panels ---------- */
+.ap-move__pt { display: flex; flex-direction: column; gap: 2px; }
+.ap-move__pt span {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ap-ink-3);
+}
+.ap-move__pt b {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 19px; font-weight: 700; letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums; color: var(--ap-ink);
+}
+/* History is drawn quieter than now, on the row as well as on the track. */
+.ap-move__pt[data-old='true'] b { color: var(--ap-ink-3); font-weight: 500; }
+.ap-move { flex-wrap: wrap; }
+
+.ap-crossed {
+  margin-top: 11px; font-size: 12.5px; line-height: 1.6; color: var(--ap-ink-2);
+}
+.ap-sep {
+  margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--ap-hair);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 12.5px; line-height: 1.75; color: var(--ap-ink-3);
+}
+.ap-sep[data-continued='true'] { border-top: none; padding-top: 0; margin-top: 8px; }
+
+/* ---------- the two plots ----------
+   Drawn side by side and never joined. That is the third thing the prototype
+   says must not be tidied away: connecting a marker to a symptom is a
+   per-customer interpretation and is post-CQC. */
+.ap-plots { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 14px; }
+.ap-plot {
+  background: var(--ap-sunk); border-radius: 14px; padding: 11px 10px 6px;
+  color: var(--ap-ink);
+}
+.ap-plot[data-symptom='true'] { color: var(--ap-ink-3); }
+.ap-plot__t {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ap-ink-3); margin-bottom: 3px; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.ap-plot svg { width: 100%; height: auto; display: block; }
+.ap-plot text { font-family: var(--font-mono), ui-monospace, monospace; }
+
+/* ---------- the earlier reading, on the track ---------- */
+.ap-conn {
+  position: absolute; top: 50%; height: 3px; margin-top: -1.5px;
+  background: var(--ap-ink-3); opacity: 0.5; border-radius: 2px;
+}
+.ap-pin[data-ghost='true'] {
+  background: transparent; border-color: var(--ap-ink-3); border-width: 3px;
+  width: 13px; height: 13px; margin-left: -6.5px; box-shadow: none; opacity: 0.75;
+}
+.ap-sw[data-kind='ghost'] {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 3px solid var(--ap-ink-3); background: transparent; opacity: 0.75;
+}
+
+/* ---------- the month-one inclusions list ---------- */
+.ap-incl { list-style: none; padding: 0; margin: 15px 0 0; display: grid; gap: 10px; }
+.ap-incl li { display: flex; gap: 10px; align-items: flex-start; }
+.ap-incl i {
+  flex: none; width: 17px; height: 17px; border-radius: 50%; margin-top: 2px;
+  display: grid; place-items: center; font-style: normal; font-weight: 700;
+  font-size: 11px; background: var(--ap-flat-f); color: var(--ap-ink-2);
+}
+.ap-incl span { font-size: 12.5px; line-height: 1.65; color: var(--ap-ink-2); }
+
+/* ---------- small print under a panel ---------- */
+.ap-note-sm {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 12px; line-height: 1.7; color: var(--ap-ink-3); margin-top: 12px;
+}
+
+/* ---------- the empty state's heading ---------- */
+.ap-empty__t {
+  font-size: 16px; font-weight: 700; letter-spacing: -0.02em;
+  line-height: 1.3; color: var(--ap-ink);
+}
+
+/* ---------- variants of existing blocks ---------- */
+/* The record's rows carry "was → now" in the value column, which does not fit
+   the results list's fixed 76px. The prototype widens exactly these rows and
+   this is that rule; everything else about them is a normal marker row,
+   including that they are buttons and open the detail. */
+.ap-row[data-wide='true'] { grid-template-columns: 1fr auto 16px; }
+/* The one-point record's per-marker cards, which are tighter than a full card.
+   Their SPACING is handled by the run rule at the top of this file. */
+.ap-card[data-compact='true'] { padding: 13px 15px; }
+.ap-card[data-compact='true'] .ap-move { margin-top: 8px; }
+
+/* The rail's value slider only appears while a marker is open, so it needs its
+   own top rule rather than inheriting the card's. */
+.ap-markerctl { margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--ap-hair); }
+
+@media (max-width: 560px) {
+  .ap-plots { grid-template-columns: 1fr; }
+}
+
+
+/* ============================================================================
+   THE CHROME'S DARK TABLE, 2026-09-08.
+
+   🔴 THE PROBLEM KEITH REPORTED: "on the demo page, the header and footer are in
+   light mode." They were. The toggle set its attribute on `.ap-stage`, which
+   holds the phone and the rail and nothing else; the nav and the footer are
+   rendered by `app/(demo)/layout.tsx` as SIBLINGS of the stage, so no selector
+   inside it could reach them. The attribute now lives on `.ap-themed`, a wrapper
+   in that layout containing all three, and `DemoTheme.tsx` owns the state.
+
+   🟢 WHY THIS IS NINE LINES AND NOT A REWRITE OF TWO COMPONENTS. `Nav` and
+   `Footer` carry no literal colours at all -- no Tailwind `bg-white`, no hex.
+   They are `f-*` classes reading the Direction F semantic tokens, and those
+   tokens are the same vocabulary, role for role, as the demo's own `--ap-*` set:
+   a page ground, a raised card, a recessed tray, a three-step ink ramp, two
+   hairlines. So the dark treatment is a re-declaration of the table, using the
+   demo's existing dark palette so the chrome and the stage cannot disagree.
+
+   ⚠ SCOPED TO THIS ROUTE GROUP, AND THAT IS A LIMIT, NOT AN OVERSIGHT. This
+   stylesheet is imported only by the demo's layout, and the attribute is never
+   written to `<html>`. Doing that would leave the whole site dark after a
+   client-side navigation off `/demo`, and there is no site-wide dark mode for it
+   to land in. See the note at the end of this block for what one would cost.
+   ============================================================================ */
+
+.ap-themed { background: var(--paper); color: var(--ink); min-height: 100vh; }
+
+/* The reader's explicit choice. */
+.ap-themed[data-ap-theme='dark'] {
+  --ink:   #f5f6f7;
+  --ink-2: #b9bdc4;
+  --ink-3: #969ba3;
+  --paper: #0a0b0d;
+  --core:  #1a1d21;
+  --tray:  #141619;
+  --sunk:  #0e1013;
+  --hair:   rgba(245, 246, 247, 0.11);
+  --hair-2: rgba(245, 246, 247, 0.18);
+  /* The marketing accent is ink-black in light. Left as ink so it inverts with
+     the ramp rather than becoming an invisible dark mark on a dark ground. */
+  --flag:   #f5f6f7;
+  --flag-f: rgba(245, 246, 247, 0.06);
+}
+
+/* Following the machine, which is the state most readers are in. Same table. */
+@media (prefers-color-scheme: dark) {
+  .ap-themed:not([data-ap-theme='light']) {
+    --ink:   #f5f6f7;
+    --ink-2: #b9bdc4;
+    --ink-3: #969ba3;
+    --paper: #0a0b0d;
+    --core:  #1a1d21;
+    --tray:  #141619;
+    --sunk:  #0e1013;
+    --hair:   rgba(245, 246, 247, 0.11);
+    --hair-2: rgba(245, 246, 247, 0.18);
+    --flag:   #f5f6f7;
+    --flag-f: rgba(245, 246, 247, 0.06);
+  }
+}
+
+/*
+ * ⚠ WHAT A SITE-WIDE TOGGLE WOULD ACTUALLY TAKE, measured 2026-09-08 so the next
+ * person does not have to guess, because the answer is two different sizes.
+ *
+ * THE DIRECTION F ROUTES ARE READY. `/`, `/kits`, the three kit pages,
+ * `/how-it-works`, `/not-found`, the nav, the footer and the cookie banner are
+ * driven entirely by the tokens above. They would theme from one more copy of
+ * this table, promoted out of this file. The work there is not the tokens; it is
+ * the ~10 places in `f-primitives.css` that hardcode `rgba(255,255,255,...)` for
+ * components that ALREADY have a dark treatment (`.f-invert-*`, `.f-core-dark`,
+ * `.f-symp .f-dark`) and would end up dark-on-dark.
+ *
+ * 🔴 EVERYTHING ELSE IS A MIGRATION, NOT A THEME. The older routes -- blog,
+ * account, auth, checkout, results-dashboard, supplements, the LPs, admin --
+ * carry **2,375 literal Tailwind colour utilities across 88 files**
+ * (`border-black` 592, `text-black` 484, `bg-white` 352, `bg-black` 276,
+ * `text-white` 226, and a gray ramp). None of those read a token, so no amount
+ * of re-declaring variables reaches them; each one has to become a semantic
+ * class or gain a `dark:` variant. That is a design-system migration with a real
+ * design decision inside it, and `02_brand/DESIGN.md` already records a
+ * criticism of a ported dark treatment, so the palette is not a given either.
+ */

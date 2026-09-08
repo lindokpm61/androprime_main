@@ -1,72 +1,102 @@
 'use client'
 
-import { useState } from 'react'
 import { RangeTrack } from './RangeTrack'
 import { badgeFor, toneFor } from '@/lib/results/resultSeverity'
-import { KIT_PANELS, PANEL_MARKERS } from '@/lib/kits/panel'
-import { formatDemoDate, formatDemoDateShort, getDemoWaitingSteps, getDemoCheckin } from '@/lib/results/demo'
-import { markerToMove, questionsFor, currentStreak, adherenceSeries, loggedWithin } from '@/lib/membership/checkin'
+import type { ResultTone } from '@/lib/results/resultSeverity'
+import { KIT_PANELS, PANEL_MARKERS, numberWord } from '@/lib/kits/panel'
+import { kitName } from '@/lib/kits/names'
+import { PRODUCT_MAP } from '@/lib/subscriptions/products'
+import {
+  formatDemoDate,
+  formatDemoDateShort,
+  formatDemoDateMed,
+  formatDemoDateNoYear,
+  getDemoWaitingSteps,
+  getDemoCheckin,
+} from '@/lib/results/demo'
+import {
+  markerToMove,
+  questionsFor,
+  currentStreak,
+  adherenceSeries,
+  loggedWithin,
+} from '@/lib/membership/checkin'
 import { CheckinRow } from '@/components/membership/CheckinRow'
 import { AdherenceChart } from '@/components/membership/AdherenceChart'
 import type { DemoDates, DemoJourneyId } from '@/lib/results/demo'
-import type { ClassifiedResult, KitData, SingleResult } from '@/lib/results/types'
+import type { ClassifiedResult, KitType } from '@/lib/results/types'
 
 /*
- * THE APP SHELL: the prototype's presentation layer, driven by the live engine.
- * Built 2026-09-06 from `design/prototypes/demo-account-interactive.html`.
+ * THE APP SHELL. Rebuilt from scratch 2026-09-07, screen by screen, against
+ * `design/prototypes/demo-account-interactive.html`.
  *
- * WHAT THE PROTOTYPE GOT RIGHT AND THE CURRENT DASHBOARD DOES NOT. Nine markers
- * render as nine full-page essays, which is 15,736px of scroll at 390 with no
- * overview at any point. A man cannot answer "how did I do" without reading the
- * whole report. The prototype answers it in one screen: a grouped list, one line
- * per marker, value and verdict aligned down the page, and the essay one tap
- * away for the markers he cares about.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 🔴 THE BRIEF WAS THE PROTOTYPE, NOT AN IMPROVEMENT ON IT. Keith: *"rebuild the
+ * demo from scratch, following page for page the prototype. Exactly ... I think
+ * we are, with this current version of the demo, in a complete mess."* So every
+ * panel below is one panel of that file, in its order, under its heading. The
+ * checklist that has to keep passing is TWELVE CELLS -- three journey states
+ * times four tabs -- plus the marker detail in one-point and two-point form.
+ * One screenshot proves one cell; drive all twelve before calling this done.
+ *
+ * 🔴 THREE PLACES DELIBERATELY DEPART FROM IT, and all three are one rule: where
+ * the prototype invents clinical content and the engine already has approved
+ * content, the engine wins. Keith ruled that shape himself on 2026-09-07, when
+ * he chose "prototype layout, approved copy" for the plan tab.
+ *
+ *   1. THE VERDICT WORDS. The prototype draws its own six -- TAKE TO A GP / NO
+ *      ACTION / CONTEXT / NO VERDICT / SUPPORT / UNRESOLVED. The engine's are
+ *      Ewa-ratified (`resultSeverity.ts`, 2026-08-07, including the ruling that
+ *      retired "Optimal" for merely in-range). A mockup does not overturn a
+ *      clinical sign-off.
+ *   2. THE DAILY TAPS. "D3 capsule" and "20 min daylight" are invented and
+ *      unsigned; `lib/membership/checkin.ts` holds the approved pair and the
+ *      product's real 1-to-5 scale. The substitution is nearly invisible: the
+ *      approved labels are "D3" and "Daylight".
+ *   3. THE MEMBER SHOP. The prototype sells "Vitamin D3 + K2, £18.95 member
+ *      price". No such product exists -- every supplement in
+ *      `lib/subscriptions/products.ts` is RETIRED -- so drawing it would put an
+ *      invented product at an invented price on a public surface. The panel and
+ *      its compliance note are kept; the row points at the waitlist that does
+ *      exist.
+ *
+ * ⚠ ONE PANEL IS OMITTED ON PURPOSE. The prototype's account screen says *"Your
+ * next included retest is 12 November 2027."* That is DEFECT 3b in
+ * `04_products/results-engine/retest-mechanism-map.md`: nothing calls
+ * `nextRetestAfter`, so the build gives a member ONE retest ever while the copy
+ * sells one a year. The prototype's own header flags it as drawn-not-built. This
+ * screen states the retest it can stand behind and no other.
  *
  * 🔴 EVERY WORD OF CLINICAL CONTENT COMES FROM THE ENGINE. `explanation`,
- * `educationContext` and `recommendation` are `biomarker-copy.ts` strings, the
- * verdict is `BADGES`, the colour is `toneFor` derived from that badge, and the
- * track's positions come from `displayZones` and the laboratory's own interval.
- * Nothing in this file states a threshold, a band or a verdict of its own.
- *
- * ⚠ THE PROTOTYPE'S OWN VERDICT WORDS ARE NOT USED, DELIBERATELY. It draws
- * "TAKE TO A GP / NO ACTION / CONTEXT / NO VERDICT / SUPPORT / UNRESOLVED".
- * The engine's six are Ewa-ratified (`resultSeverity.ts`, 2026-08-07, including
- * the ruling that retired "Optimal" for merely in-range). A mockup does not
- * overturn a clinical sign-off, so the ratified six ship and the prototype's set
- * is a question for her rather than a decision taken here.
- *
- * ───────────────────────────────────────────────────────────────────────────
- * 🔄 FOUR TABS AND THREE JOURNEY STATES, 2026-09-07. This file used to say
- * "TWO TABS, NOT FOUR... Plan and Record are membership surfaces, and membership
- * is dark behind `MEMBERSHIP_ENABLED`". Two things changed and both are rulings:
- *
- *   1. THE PLAN RECLASSIFIED. The first 30 days of membership are included in
- *      the kit price (2026-08-27) and the month runs from the result landing
- *      (anchor ruling). So the plan is open to every kit buyer for 30 days
- *      without paying anything extra, which makes demonstrating it a
- *      demonstration of something ON SALE TODAY, not of something unbuyable.
- *   2. KEITH RULED THE DEMO IS NOT THE FLAG'S BUSINESS: "This is a demo, so
- *      surely it isn't dependent on the membership flag... it should demonstrate
- *      everything that is available that we're planning to do, as a potential
- *      customer will look at that and have a real visual of what's behind the
- *      membership program." `MEMBERSHIP_ENABLED` stops someone BUYING an
- *      unfinished membership. It is not a reason to stop him SEEING one.
- *
- * 🔴 SO NOTHING HERE READS `MEMBERSHIP_ENABLED`, ON PURPOSE. If you are about to
- * add a flag check to this component, read the ruling above first.
- *
- * ⚠ THE PLAN SCREEN STATES NO ACTION OF ITS OWN. The prototype drew invented
- * daily tasks ("D3 capsule", "20 min daylight") which have had no pre-flight and
- * no clinical sign-off; its own header says so and forbids lifting them to a
- * live surface. So the plan here is built from the ENGINE's `recommendation`
- * strings for the markers the engine itself flagged. The only non-engine input
- * is a 1-to-10 energy check-in, which is behavioural self-report and makes no
- * claim about blood.
+ * `educationContext` and `recommendation` are `biomarker-copy.ts` strings; the
+ * verdict is `BADGES`; the tone is `toneFor`; the track's geometry is
+ * `displayZones` plus the laboratory's own interval. Nothing here states a
+ * threshold, a band or a verdict of its own, and the prototype's transcribed
+ * band table is reproduced nowhere.
  */
+
+/* ------------------------------------------------------------- the row model */
+
+/**
+ * One marker, as the demo shows it: the newest reading, and the earlier one
+ * where a second purchase produced it.
+ *
+ * 🔴 `previous` IS NULL FOR FIVE OF THE NINE, AND THAT IS THE POINT. The first
+ * purchase is Kit 3 and the included retest is Kit 2 (Keith, 2026-09-07), so the
+ * hormone markers have one reading and the energy markers have two. Every screen
+ * branches on this rather than on the journey state, which is what stops a
+ * "was → now" appearing over a number that was never re-measured.
+ */
+export interface DemoRow {
+  latest: ClassifiedResult
+  previous: ClassifiedResult | null
+  /** Which purchase the newest reading came from. A detail on the row. */
+  kit: KitType
+}
 
 /* Which group a marker belongs to, derived from `KIT_PANELS` rather than typed:
    Kit 1's panel is the hormone group and Kit 2's is the energy group, which is
-   exactly the split the prototype drew. */
+   exactly the split the prototype draws. */
 const GROUP_OF: Record<string, string> = (() => {
   const out: Record<string, string> = {}
   for (const id of KIT_PANELS['testosterone']) out[PANEL_MARKERS[id].name] = 'Hormone'
@@ -91,10 +121,61 @@ function isReportOnly(r: ClassifiedResult): boolean {
   return badgeFor(r.state).label === 'Reported'
 }
 
-/** The markers the ENGINE flagged. Never a judgement made in this file. */
-function flaggedOf(markers: ClassifiedResult[]): ClassifiedResult[] {
-  return markers.filter((m) => badgeFor(m.state).filled)
+/** Whether the ENGINE routed this result to a GP. Never a judgement made here. */
+function goesToGp(r: ClassifiedResult): boolean {
+  return r.primaryCta?.type === 'gp-referral' || r.secondaryCta?.type === 'gp-referral'
 }
+
+/** Whether the value sits inside the laboratory's own printed interval. */
+function insideLabRange(r: ClassifiedResult): boolean {
+  if (r.referenceLow !== null && r.value < r.referenceLow) return false
+  if (r.referenceHigh !== null && r.value > r.referenceHigh) return false
+  return true
+}
+
+/** Trims trailing zeroes the way the prototype's `fmt` does: 58.0 reads 58. */
+function num(v: number): string {
+  return Number(v.toFixed(3)).toString()
+}
+
+/*
+ * The row's verdict word.
+ *
+ * With `compare` on our bands are gone, and the only thing left to say is
+ * whether the number is inside the interval the laboratory printed. That is a
+ * statement about the lab's own range rather than a clinical verdict of ours,
+ * which is why these two strings are not in `BADGES` and do not need to be.
+ */
+function verdictWord(r: ClassifiedResult, compare: boolean): string {
+  if (isReportOnly(r)) return badgeFor(r.state).label
+  if (compare) return insideLabRange(r) ? 'In range' : 'Out of range'
+  return badgeFor(r.state).label
+}
+
+function verdictTone(r: ClassifiedResult, compare: boolean): ResultTone {
+  if (isReportOnly(r)) return 'flat'
+  if (compare) return insideLabRange(r) ? 'flat' : 'crit'
+  return toneFor(r.state)
+}
+
+/*
+ * Risen / Fallen / Unchanged, and nothing else, ever.
+ *
+ * 🔴 DESCRIPTIVE, NEVER EVALUATIVE. A rise is not good on every marker and
+ * hs-CRP is the counter-example two rows away, so this returns a direction and a
+ * magnitude and no adjective. The prototype makes the same point in its own
+ * comment and it is one of the three things it says must not be tidied away.
+ */
+function movementWord(previous: ClassifiedResult, latest: ClassifiedResult): string {
+  const d = latest.value - previous.value
+  // A tenth of the smaller reading, so "unchanged" scales with the marker
+  // instead of calling a 0.008 move on free testosterone a change.
+  const noise = Math.abs(previous.value) * 0.005
+  if (Math.abs(d) <= noise) return 'Unchanged'
+  return `${d > 0 ? 'Risen' : 'Fallen'} ${num(Math.abs(d))} ${latest.unit}`
+}
+
+/* ------------------------------------------------------------------- chrome */
 
 export type Tab = 'results' | 'plan' | 'record' | 'you'
 
@@ -106,152 +187,274 @@ export const TAB_TITLES: Record<Tab, string> = {
   you: 'Account',
 }
 
-/*
- * 🔄 CONTROLLED FROM 2026-09-07. Tab, open marker and the compare switch used to
- * be local state here. The prototype port moved all three OUT, because the phone
- * chrome and the control rail both need them: the app bar shows the tab title
- * and a back arrow, and the rail only shows its value slider while a marker is
- * open. State that two siblings read belongs above both of them.
- */
-export interface AppShellProps {
-  kits: KitData[]
-  /** Which moment in the journey. Drives every empty state on every tab. */
-  journey?: DemoJourneyId
-  /** Derived in `lib/results/demo.ts` from the result date. Never typed here. */
-  dates?: DemoDates | null
-  tab: Tab
-  onTab: (t: Tab) => void
-  openMarker: string | null
-  onOpenMarker: (m: string | null) => void
-  /** Owned by the rail, which is where the prototype puts the switch. */
-  compare: boolean
-}
+const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
+  {
+    id: 'results',
+    label: 'Results',
+    icon: (
+      <>
+        <path d="M4 19V5" />
+        <path d="M4 12h5l2-5 3 10 2-5h4" />
+      </>
+    ),
+  },
+  {
+    id: 'plan',
+    label: 'Plan',
+    icon: (
+      <>
+        <rect x="3" y="4" width="18" height="17" rx="3" />
+        <path d="M8 2v4M16 2v4M3 10h18" />
+        <path d="M8.5 15.5l2 2 4-4" />
+      </>
+    ),
+  },
+  {
+    id: 'record',
+    label: 'Record',
+    icon: (
+      <>
+        <path d="M3 3v18h18" />
+        <path d="M7 15l4-4 3 3 5-6" />
+      </>
+    ),
+  },
+  {
+    id: 'you',
+    label: 'You',
+    icon: (
+      <>
+        <circle cx="12" cy="8" r="4" />
+        <path d="M5 21a7 7 0 0 1 14 0" />
+      </>
+    ),
+  },
+]
 
-export function AppShell({
-  kits,
-  journey = 'result',
-  dates = null,
+/*
+ * ⚠ NO TAB IS CURRENT WHILE A MARKER IS OPEN, which is the prototype's rule:
+ * `aria-current="(state.tab === t.id && state.marker === null)"`. The detail is
+ * a screen pushed on top of a tab rather than a tab of its own, and leaving the
+ * tab lit says the opposite. It also matters now that the detail is reachable
+ * from TWO tabs -- Results and Record -- because a lit tab would name the wrong
+ * one half the time.
+ */
+export function TabBar({
   tab,
   onTab,
-  openMarker,
-  onOpenMarker,
-  compare,
-}: AppShellProps) {
-
-  const results = kits[0]?.results ?? []
-  /* The NEWEST result is the one on screen. In the member state there are two,
-     and showing the older one as "your results" would be plainly wrong. */
-  const latest = results[results.length - 1]
-  const previous = results.length > 1 ? results[results.length - 2] : null
-  const markers = latest?.markers ?? []
-  const open = markers.find((m) => m.markerName === openMarker) ?? null
-  const waiting = journey === 'waiting'
-
+  markerOpen = false,
+}: {
+  tab: Tab
+  onTab: (t: Tab) => void
+  markerOpen?: boolean
+}) {
   return (
-    <div className="ap-shell">
-      {tab === 'results' &&
-        (waiting ? (
-          <WaitingResultsScreen collectedAt={latest?.collectedAt} />
-        ) : open ? (
-          <MarkerScreen
-            result={open}
-            compare={compare}
-            onBack={() => onOpenMarker(null)}
-          />
-        ) : (
-          <ResultsScreen kits={kits} markers={markers} onOpen={onOpenMarker} />
-        ))}
-
-      {tab === 'plan' &&
-        (waiting ? (
-          <WaitingScreen
-            head="Your plan starts when your result does."
-            body="There is nothing to work on yet, because there is no number to move. This fills in the moment your result lands."
-          />
-        ) : (
-          <PlanScreen
-            markers={markers}
-            journey={journey}
-            dates={dates}
-            today={latest?.collectedAt ? new Date(latest.collectedAt) : null}
-          />
-        ))}
-
-      {tab === 'record' &&
-        (waiting ? (
-          <WaitingScreen
-            head="Nothing to compare yet."
-            body="A record needs two points. Your first result is the first of them, and it is on its way."
-          />
-        ) : (
-          <RecordScreen latest={latest} previous={previous} dates={dates} />
-        ))}
-
-      {tab === 'you' && <YouScreen kits={kits} journey={journey} dates={dates} />}
+    <div className="ap-tabbar" role="tablist" aria-label="Sections">
+      {TABS.map((t) => (
+        <button
+          key={t.id}
+          type="button"
+          role="tab"
+          className="ap-tab"
+          aria-selected={t.id === tab && !markerOpen}
+          onClick={() => onTab(t.id)}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            {t.icon}
+          </svg>
+          {t.label}
+        </button>
+      ))}
     </div>
   )
 }
 
-/* ---------------- Waiting ---------------- */
+const CHEV = (
+  <span className="ap-chev" aria-hidden="true">
+    <svg viewBox="0 0 24 24">
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  </span>
+)
+
+/* -------------------------------------------------------------------- shell */
+
+export interface AppShellProps {
+  /** The nine markers, newest reading first, earlier reading where one exists. */
+  rows: DemoRow[]
+  journey: DemoJourneyId
+  dates: DemoDates | null
+  tab: Tab
+  openMarker: string | null
+  onOpenMarker: (name: string | null) => void
+  compare: boolean
+}
+
+export function AppShell({
+  rows,
+  journey,
+  dates,
+  tab,
+  openMarker,
+  onOpenMarker,
+  compare,
+}: AppShellProps) {
+  const open = openMarker ? rows.find((r) => r.latest.markerName === openMarker) ?? null : null
+
+  if (open) {
+    return <MarkerScreen row={open} journey={journey} dates={dates} compare={compare} />
+  }
+  if (tab === 'plan') return <PlanScreen rows={rows} journey={journey} dates={dates} />
+  if (tab === 'record')
+    return (
+      <RecordScreen rows={rows} journey={journey} dates={dates} onOpenMarker={onOpenMarker} />
+    )
+  if (tab === 'you') return <YouScreen rows={rows} journey={journey} dates={dates} />
+  return (
+    <ResultsScreen
+      rows={rows}
+      journey={journey}
+      dates={dates}
+      compare={compare}
+      onOpenMarker={onOpenMarker}
+    />
+  )
+}
+
+/* ====================================================== RESULTS ============ */
 
 /*
- * 🔴 THE RESULTS TAB HAS A REAL WAITING SCREEN, and the first pass of the
- * journey work did not port it. It gave all three tabs one generic empty state,
- * which is what the prototype does for Plan and Record and is NOT what it does
- * here. Keith caught it by putting the two side by side; the fidelity pass
- * before that had compared one pair of screenshots, day-14 Results, out of
- * twelve state-and-tab combinations.
- *
- * Why the tracker earns its place: it is the difference between "we have your
- * sample" and "your sample is at this point and here is when to expect it". For
- * about eleven days this screen IS the product, so a demo that skips it is
- * demonstrating the easy part.
- *
- * ⚠ NO PERCENTAGE AND NO PROGRESS BAR, deliberately, and the prototype records
- * the reason: a bar stuck at 60% for two days is worse than no bar. The tracker
- * dates every completed step and refuses to date the one it cannot know.
+ * The prototype's `screenResults`, panel for panel:
+ *   status strip · [member: the two-purchases card] · grouped marker rows ·
+ *   the "Your data" card.
  */
-function WaitingResultsScreen({ collectedAt }: { collectedAt?: string | null }) {
-  const steps = getDemoWaitingSteps(collectedAt)
+function ResultsScreen({
+  rows,
+  journey,
+  dates,
+  compare,
+  onOpenMarker,
+}: {
+  rows: DemoRow[]
+  journey: DemoJourneyId
+  dates: DemoDates | null
+  compare: boolean
+  onOpenMarker: (name: string | null) => void
+}) {
+  if (journey === 'waiting') return <WaitingScreen />
+
+  const member = journey === 'member'
+  const landed = member ? dates?.retestReceived : dates?.resultReceived
+
+  const groups = GROUP_ORDER.map((g) => ({
+    name: g,
+    rows: rows.filter((r) => (GROUP_OF[r.latest.markerName] ?? 'Other') === g),
+  })).filter((g) => g.rows.length > 0)
 
   return (
     <div className="ap-screen">
       <div className="ap-statusstrip">
         <i aria-hidden="true" />
-        Status &middot; analysing
+        {member ? 'Retest complete' : 'Result complete'}
+        {landed ? ` · ${formatDemoDateMed(landed)}` : ''}
+      </div>
+
+      {member && (
+        <div className="ap-card">
+          <p className="ap-body">
+            <b>Nine markers, two purchases, one picture.</b> The panel a number came from is a detail
+            on the row, not a place you have to navigate to.
+          </p>
+        </div>
+      )}
+
+      {groups.map((g) => (
+        <div className="ap-group" key={g.name}>
+          <span className="ap-lbl">{g.name}</span>
+          {g.rows.map((r) => (
+            <button
+              key={r.latest.markerName}
+              type="button"
+              className="ap-row"
+              onClick={() => onOpenMarker(r.latest.markerName)}
+            >
+              <span>
+                <span className="ap-row__name">{r.latest.markerName}</span>
+                <span className="ap-row__verdict" data-tone={verdictTone(r.latest, compare)}>
+                  {verdictWord(r.latest, compare)}
+                </span>
+              </span>
+              <span className="ap-row__val">
+                {r.previous && (
+                  <span className="ap-row__was">{num(r.previous.value)} &rarr;</span>
+                )}
+                {num(r.latest.value)}
+                <u className="ap-row__unit">{r.latest.unit}</u>
+              </span>
+              {CHEV}
+            </button>
+          ))}
+        </div>
+      ))}
+
+      <div className="ap-card">
+        <span className="ap-lbl">Your data</span>
+        <p className="ap-body">
+          Your numbers are yours. Download them whenever you like, member or not.
+        </p>
+        <button type="button" className="ap-btn" data-variant="ghost">
+          Download my results
+        </button>
+      </div>
+    </div>
+  )
+}
+
+/*
+ * The prototype's `screenWaiting`, panel for panel:
+ *   status strip · "Where your sample is" with the four-step tracker ·
+ *   "Ready for when it lands" · two explainer cards.
+ *
+ * 🔴 IT DRAWS A REAL SCREEN RATHER THAN AN EMPTY STATE, and that is the whole
+ * point of the day-3 cell: most of the app IS empty at this moment, and the
+ * results tab is the one place with something honest to say.
+ */
+function WaitingScreen() {
+  const steps = getDemoWaitingSteps() ?? []
+  return (
+    <div className="ap-screen">
+      <div className="ap-statusstrip">
+        <i aria-hidden="true" />
+        Status · analysing
       </div>
 
       <div className="ap-card">
         <span className="ap-lbl">Where your sample is</span>
-        <p className="ap-lead" style={{ marginTop: 8 }}>
-          Your sample is being analysed.
-        </p>
+        <p className="ap-lead">Your sample is being analysed.</p>
         <p className="ap-body">
           The lab has had your sample for three days and is analysing it now. You will get an email
           the moment it is done, and you do not need to check back.
         </p>
 
-        {steps && (
-          <div className="ap-steps">
-            {steps.map((s) => (
-              <div className="ap-step" key={s.title} data-state={s.state}>
-                <span className="ap-step__line" aria-hidden="true" />
-                <span className="ap-step__bul" aria-hidden="true" />
-                <span>
-                  <span className="ap-step__t">{s.title}</span>
-                  <span className="ap-step__d">{s.detail}</span>
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="ap-steps">
+          {steps.map((s) => (
+            <div className="ap-step" key={s.title} data-state={s.state}>
+              <span className="ap-step__line" aria-hidden="true" />
+              <span className="ap-step__bul" aria-hidden="true" />
+              <span>
+                <span className="ap-step__t">{s.title}</span>
+                <span className="ap-step__d">{s.detail}</span>
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <span className="ap-sect">Ready for when it lands</span>
+      <div className="ap-sect">Ready for when it lands</div>
 
       <div className="ap-card">
         <span className="ap-lbl">Why analysis takes days, not hours</span>
-        <p className="ap-body" style={{ marginTop: 8 }}>
+        <p className="ap-body">
           Your sample is run in a batch against calibrated controls, and a result that fails its
           control is run again rather than sent out. The wait is the second run you hope you do not
           need.
@@ -260,7 +463,7 @@ function WaitingResultsScreen({ collectedAt }: { collectedAt?: string | null }) 
 
       <div className="ap-card">
         <span className="ap-lbl">What a reference range is, and is not</span>
-        <p className="ap-body" style={{ marginTop: 8 }}>
+        <p className="ap-body">
           A reference range describes where most men sit. It was built to flag illness, not to define
           wellness, which is why we will show ours beside it.
         </p>
@@ -269,427 +472,412 @@ function WaitingResultsScreen({ collectedAt }: { collectedAt?: string | null }) 
   )
 }
 
-/* ---------------- The empty states ---------------- */
+/* ====================================================== MARKER ============= */
 
 /*
- * The waiting state is most of the app, and drawing it honestly is the point.
- * A demo that only ever shows the full dashboard implies the product is useful
- * on day one, and it is not: for about eleven days it is a receipt and a
- * promise. Showing that is more persuasive than hiding it.
+ * The prototype's `screenMarker`, panel for panel:
+ *   the value card (sub, big value, badge, track, legend, provenance) ·
+ *   [two points: the movement card with both plots] ·
+ *   the meaning card (what it means, the evidence, attribution, the action).
  */
-function WaitingScreen({ head, body }: { head: string; body: string }) {
-  return (
-    <div className="ap-screen">
-      {/* No title: the app bar above already carries it, and the prototype does
-          not repeat it inside an empty state. */}
-      <div className="ap-screen__head">
-        <h1 className="ap-screen__title">{head}</h1>
-      </div>
-      <div className="ap-empty">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 7v5l3 2" strokeLinecap="round" />
-        </svg>
-        <p>{body}</p>
-      </div>
-    </div>
-  )
-}
-
-/* ---------------- Results: the list ---------------- */
-
-function ResultsScreen({
-  kits,
-  markers,
-  onOpen,
-}: {
-  kits: KitData[]
-  markers: ClassifiedResult[]
-  onOpen: (name: string) => void
-}) {
-  const flagged = flaggedOf(markers).length
-  /* The dated strip the prototype opens every results screen with. It is what
-     makes the waiting state and this one read as the same app at two moments
-     rather than as two different designs. */
-  const results = kits[0]?.results ?? []
-  const latest = results[results.length - 1]
-  const isRetest = results.length > 1
-  /* On a retest the prototype puts the earlier value on the row itself, so the
-     movement is legible without leaving the results tab. */
-  const previous = results.length > 1 ? results[results.length - 2] : null
-  const prevByName = new Map((previous?.markers ?? []).map((m) => [m.markerName, m]))
-  const when = latest?.collectedAt
-    ? new Date(latest.collectedAt).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      })
-    : null
-
-  const grouped = GROUP_ORDER.map((g) => ({
-    group: g,
-    rows: markers.filter((m) => (GROUP_OF[m.markerName] ?? 'Other') === g),
-  })).filter((g) => g.rows.length > 0)
-
-  return (
-    <div className="ap-screen">
-      {when && (
-        <div className="ap-statusstrip">
-          <i aria-hidden="true" />
-          {isRetest ? 'Retest complete' : 'Result complete'} &middot; {when}
-        </div>
-      )}
-      {/* No label here: the phone app bar already says "Your results", and the
-          prototype does not repeat it inside the screen. */}
-      <div className="ap-screen__head">
-        <h1 className="ap-screen__title">
-          {flagged === 0
-            ? 'Nothing here needs action.'
-            : flagged === 1
-              ? 'One marker to look at.'
-              : `${flagged} markers to look at.`}
-        </h1>
-      </div>
-
-      {grouped.map(({ group, rows }) => (
-        <div className="ap-group" key={group}>
-          <span className="ap-lbl">{group}</span>
-          {rows.map((m) => (
-            <MarkerRow
-              key={m.markerName}
-              result={m}
-              was={prevByName.get(m.markerName)?.value ?? null}
-              onOpen={onOpen}
-            />
-          ))}
-        </div>
-      ))}
-    </div>
-  )
-}
-
-function MarkerRow({
-  result,
-  was,
-  onOpen,
-}: {
-  result: ClassifiedResult
-  was?: number | null
-  onOpen: (n: string) => void
-}) {
-  const badge = badgeFor(result.state)
-  const tone = toneFor(result.state)
-  return (
-    <button type="button" className="ap-row" onClick={() => onOpen(result.markerName)}>
-      <span>
-        <span className="ap-row__name">{result.markerName}</span>
-        <span className="ap-row__verdict" data-tone={tone}>
-          {badge.label}
-        </span>
-      </span>
-      <span className="ap-row__val">
-        {was !== null && was !== undefined && was !== result.value && (
-          <span className="ap-row__was">{was} &rarr;</span>
-        )}
-        {result.value}
-        <span className="ap-row__unit">{result.unit}</span>
-      </span>
-      <span className="ap-chev" aria-hidden="true">
-        <svg viewBox="0 0 24 24">
-          <path d="M9 18l6-6-6-6" />
-        </svg>
-      </span>
-    </button>
-  )
-}
-
-/* ---------------- Results: one marker ---------------- */
-
 function MarkerScreen({
-  result,
-  compare,
-  onBack,
-}: {
-  result: ClassifiedResult
-  compare: boolean
-  onBack: () => void
-}) {
-  const badge = badgeFor(result.state)
-  const tone = toneFor(result.state)
-  const reportOnly = isReportOnly(result)
-  const sub = subFor(result.markerName)
-
-  return (
-    <div className="ap-screen">
-      <button type="button" className="ap-back" onClick={onBack}>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
-        <span className="ap-lbl">All results</span>
-      </button>
-
-      <div className="ap-card">
-        <span className="ap-lbl">{result.markerName}</span>
-        {sub && (
-          <p style={{ fontSize: 12, color: 'var(--ap-ink-3)', marginTop: 4, lineHeight: 1.5 }}>{sub}</p>
-        )}
-
-        <div className="ap-bigval">
-          <b>{result.value}</b>
-          <span>{result.unit}</span>
-        </div>
-        <span className="ap-badge" data-tone={tone}>
-          {badge.label}
-        </span>
-
-        <div style={{ marginTop: 16 }}>
-          <RangeTrack result={result} compare={compare} reportOnly={reportOnly} tone={tone} />
-        </div>
-      </div>
-
-      <div className="ap-card">
-        <div className="ap-sec" style={{ marginTop: 0, paddingTop: 0, borderTop: 'none' }}>
-          <h4 className="ap-lbl">What this means</h4>
-          <p>{result.explanation}</p>
-        </div>
-        <div className="ap-sec">
-          <h4 className="ap-lbl">The evidence</h4>
-          <p>{result.educationContext}</p>
-        </div>
-      </div>
-
-      {result.recommendation && (
-        <div className="ap-action" data-tone={tone === 'crit' ? 'crit' : 'calm'}>
-          <h4 className="ap-lbl">What to do</h4>
-          <p>{result.recommendation}</p>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/* ---------------- Plan ---------------- */
-
-/*
- * 🔴 MONTH ONE IS NOT A PAYWALL, AND THIS SCREEN IS WHERE THAT SHOWS. Until the
- * 2026-09-07 rulings the prototype drew an ASK here: pay GBP 47 to unlock the
- * plan and the trend. Three rulings replaced it with a NOTICE:
- *   - the first 30 days are included in the kit price (2026-08-27),
- *   - the month starts when the RESULT lands (anchor ruling),
- *   - the card is charged automatically on day 31 (auto-renew ruling).
- * So the plan is open, and the only thing owed to the customer here is a plain
- * statement of when he will be charged and how to stop it. The 2026-08-27 doc
- * puts it exactly: a continuation conversation, not a sales one.
- */
-function PlanScreen({
-  markers,
+  row,
   journey,
   dates,
-  today,
+  compare,
 }: {
-  markers: ClassifiedResult[]
+  row: DemoRow
   journey: DemoJourneyId
   dates: DemoDates | null
-  today: Date | null
+  compare: boolean
 }) {
-  const flagged = flaggedOf(markers)
+  const r = row.latest
+  const badge = badgeFor(r.state)
+  const tone = verdictTone(r, compare)
+  const reportOnly = isReportOnly(r)
+  const sub = subFor(r.markerName)
+  const gp = goesToGp(r) && !compare
+  const two = journey === 'member' && row.previous !== null
+
+  return (
+    <div className="ap-screen">
+      <div className="ap-card">
+        {sub && <span className="ap-lbl">{sub}</span>}
+        <div className="ap-bigval">
+          <b>{num(r.value)}</b>
+          <span>{r.unit}</span>
+        </div>
+        <span className="ap-badge" data-tone={tone}>
+          {compare && !reportOnly
+            ? insideLabRange(r)
+              ? 'Within the normal range'
+              : 'Outside the reference range'
+            : badge.label}
+        </span>
+
+        <div className="ap-trackwrap">
+          <RangeTrack
+            result={r}
+            compare={compare}
+            reportOnly={reportOnly}
+            tone={tone}
+            previousValue={two ? row.previous!.value : undefined}
+          />
+        </div>
+
+        {/* 🔴 PROVENANCE, AND IT NAMES NO THRESHOLD. The prototype writes a
+            bespoke sentence per marker citing BSSM, NICE NG239 and so on. Those
+            strings are not in the engine, and typing them here would recreate
+            exactly the transcription its own header warns about. This states the
+            two things that are true of every row and verifiable from the data on
+            it: where the interval came from, and whose bands sit beside it. */}
+        <p className="ap-prov">
+          Reference range returned by the laboratory with this result. The action bands beside it are
+          ours.
+        </p>
+      </div>
+
+      {two && dates && (
+        <div className="ap-card">
+          <span className="ap-lbl">Movement · two points, {dates.daysApart} days apart</span>
+          <MoveRow
+            previous={row.previous!}
+            latest={r}
+            fromDate={dates.resultReceived}
+            toDate={dates.retestReceived ?? dates.retestDue}
+          />
+          {!reportOnly && (
+            <p className="ap-crossed">
+              {badgeFor(row.previous!.state).label === badge.label
+                ? `Same band as ${formatDemoDateShort(dates.resultReceived)}`
+                : `Moved from “${badgeFor(row.previous!.state).label}” into “${badge.label}”`}
+            </p>
+          )}
+
+          <div className="ap-plots">
+            <TwoPointPlot
+              title={r.markerName}
+              a={row.previous!.value}
+              b={r.value}
+              fromDate={dates.resultReceived}
+              toDate={dates.retestReceived ?? dates.retestDue}
+            />
+            <TwoPointPlot
+              title="Energy, self-scored"
+              a={DEMO_ENERGY_THEN}
+              b={DEMO_ENERGY_NOW}
+              min={1}
+              max={5}
+              fromDate={dates.resultReceived}
+              toDate={dates.retestReceived ?? dates.retestDue}
+              symptom
+            />
+          </div>
+
+          <p className="ap-sep">
+            {compare
+              ? 'A trend line is not what makes this different. The other providers all draw one. The second range is the part they do not.'
+              : 'Two lines, shown next to each other. We do not tell you that one caused the other, because that is an interpretation of your result and it is not ours to make.'}
+          </p>
+          <p className="ap-sep" data-continued="true">
+            Two points is not a trend. It is the smallest number that can answer whether anything
+            moved. Both samples are ours, taken the same way: we do not chart a number we did not
+            produce.
+          </p>
+        </div>
+      )}
+
+      <div className="ap-card">
+        <span className="ap-lbl">{compare && !reportOnly ? 'What this means' : 'What the difference means'}</span>
+
+        {compare && !reportOnly ? (
+          <p className="ap-body">
+            Your result is {insideLabRange(r) ? 'within' : 'outside'} the laboratory reference range
+            of {labRangeText(r)}.
+          </p>
+        ) : (
+          <>
+            <p className="ap-body">{r.explanation}</p>
+            {r.educationContext && (
+              <div className="ap-sec">
+                <h4 className="ap-lbl">The evidence</h4>
+                <p>{r.educationContext}</p>
+              </div>
+            )}
+            <div className="ap-attrib">Andro Prime clinical logic · signed by Dr Ewa Lindo</div>
+          </>
+        )}
+
+        {compare && !reportOnly ? (
+          <div className="ap-action" data-tone="calm">
+            <h4 className="ap-lbl">What happens now</h4>
+            <p>No action indicated.</p>
+          </div>
+        ) : (
+          r.recommendation && (
+            <div className="ap-action" data-tone={gp ? 'crit' : 'calm'}>
+              <h4 className="ap-lbl">{gp ? 'This one goes to your GP' : 'What happens now'}</h4>
+              <p>{r.recommendation}</p>
+              {gp && (
+                <>
+                  {/* Carried verbatim from the approved kit-page copy; copy
+                      register row 30 records it as already-signed wording. */}
+                  <div className="ap-receipt">A result that goes to a GP earns us nothing.</div>
+                  <button type="button" className="ap-btn">
+                    Download the GP summary
+                  </button>
+                </>
+              )}
+            </div>
+          )
+        )}
+      </div>
+    </div>
+  )
+}
+
+function labRangeText(r: ClassifiedResult): string {
+  if (r.referenceLow !== null && r.referenceHigh !== null) {
+    return `${num(r.referenceLow)} to ${num(r.referenceHigh)} ${r.unit}`
+  }
+  if (r.referenceHigh !== null) return `under ${num(r.referenceHigh)} ${r.unit}`
+  if (r.referenceLow !== null) return `above ${num(r.referenceLow)} ${r.unit}`
+  return 'the interval printed with this result'
+}
+
+/*
+ * The self-scored energy at each of the two results.
+ *
+ * ⚠ SYNTHESISED, AND BEHAVIOURAL RATHER THAN CLINICAL. It is the member's own
+ * 1-to-5 answer to `ENERGY_QUESTION`, which is self-report and makes no claim
+ * about blood. The prototype uses 4 and 7 on a 1-to-10 scale; these are the same
+ * shape on the product's actual scale. Drawn BESIDE the marker and never joined
+ * to it: connecting the two is a per-customer interpretation and is post-CQC.
+ */
+const DEMO_ENERGY_THEN = 2
+const DEMO_ENERGY_NOW = 4
+
+function MoveRow({
+  previous,
+  latest,
+  fromDate,
+  toDate,
+}: {
+  previous: ClassifiedResult
+  latest: ClassifiedResult
+  fromDate: Date
+  toDate: Date
+}) {
+  return (
+    <div className="ap-move">
+      <div className="ap-move__pt" data-old="true">
+        <span>{formatDemoDateShort(fromDate)}</span>
+        <b>{num(previous.value)}</b>
+      </div>
+      <span className="ap-move__arw" aria-hidden="true">
+        &rarr;
+      </span>
+      <div className="ap-move__pt">
+        <span>{formatDemoDateShort(toDate)}</span>
+        <b>{num(latest.value)}</b>
+      </div>
+      <span className="ap-move__word">{movementWord(previous, latest)}</span>
+    </div>
+  )
+}
+
+/*
+ * The prototype's `plot()`: two dots, a line, both values and both dates.
+ *
+ * Deliberately NOT a chart library. Two points do not need axes, gridlines or a
+ * tooltip, and the screen says so out loud one panel down: "two points is not a
+ * trend, it is the smallest number that can answer whether anything moved".
+ */
+function TwoPointPlot({
+  title,
+  a,
+  b,
+  min,
+  max,
+  fromDate,
+  toDate,
+  symptom = false,
+}: {
+  title: string
+  a: number
+  b: number
+  min?: number
+  max?: number
+  fromDate: Date
+  toDate: Date
+  symptom?: boolean
+}) {
+  const lo = min ?? Math.min(a, b) * 0.6
+  const hi = max ?? Math.max(a, b) * 1.25
+  const y = (v: number) => 72 - ((Math.max(lo, Math.min(hi, v)) - lo) / (hi - lo || 1)) * 54
+  const ya = y(a)
+  const yb = y(b)
+  const from = formatDemoDateShort(fromDate)
+  const to = formatDemoDateShort(toDate)
+
+  return (
+    <div className="ap-plot" data-symptom={symptom || undefined}>
+      <div className="ap-plot__t">{title}</div>
+      <svg viewBox="0 0 200 96" role="img" aria-label={`${title}: ${num(a)} on ${from}, ${num(b)} on ${to}`}>
+        <line x1="38" y1={ya} x2="162" y2={yb} stroke="currentColor" strokeWidth="2" opacity=".38" />
+        <circle cx="38" cy={ya} r="5" fill="none" stroke="currentColor" strokeWidth="2.5" opacity=".55" />
+        <circle cx="162" cy={yb} r="6.5" fill="currentColor" />
+        <text x="38" y={ya - 12} textAnchor="middle" fontSize="12" fill="currentColor" opacity=".6">
+          {num(a)}
+        </text>
+        <text x="162" y={yb - 14} textAnchor="middle" fontSize="15" fontWeight="700" fill="currentColor">
+          {num(b)}
+        </text>
+        <text x="38" y="92" textAnchor="middle" fontSize="10" fill="currentColor" opacity=".55">
+          {from}
+        </text>
+        <text x="162" y="92" textAnchor="middle" fontSize="10" fill="currentColor" opacity=".55">
+          {to}
+        </text>
+      </svg>
+    </div>
+  )
+}
+
+/* ====================================================== PLAN =============== */
+
+/*
+ * The prototype's `screenPlan`, panel for panel.
+ *
+ * 🔴 MONTH ONE IS A NOTICE, NOT A PAYWALL, and this screen is where that shows.
+ * The prototype drew an ASK here until 2026-09-07: pay £47 to unlock the plan and
+ * the trend. Three rulings replaced it -- the first 30 days are included in the
+ * kit price (2026-08-27), the month starts when the RESULT lands (anchor ruling),
+ * and the card is charged automatically on day 31 (auto-renew ruling). So the
+ * plan is OPEN here and the only thing owed is a clear notice of the date.
+ */
+function PlanScreen({
+  rows,
+  journey,
+  dates,
+}: {
+  rows: DemoRow[]
+  journey: DemoJourneyId
+  dates: DemoDates | null
+}) {
+  if (journey === 'waiting') {
+    return (
+      <EmptyState
+        icon="clock"
+        title="Your plan starts when your result does."
+        body="There is nothing to work on yet, because there is no number to move. This fills in the moment your result lands."
+      />
+    )
+  }
+
   const member = journey === 'member'
 
   /*
-   * 🔴 THE ENGINE PICKS THE MARKER, NEVER THIS FILE. `markerToMove` applies the
-   * documented order (severity first, and a named seam inside a severity band
-   * that is still owed Ewa's ruling). It returns null on purpose for an
-   * all-clear member, who gets no loop rather than a loop against a retest a
-   * year away, and for a man whose only flagged marker is hs-CRP, which has no
-   * behaviour we sell against.
+   * 🔴 THE MARKER IS CHOSEN FROM THE FIRST RESULT, NOT THE LATEST, AND THAT IS
+   * NOT A SHORTCUT. In the member state the retest has just landed and vitamin D
+   * has crossed into range, so `markerToMove` over the LATEST states returns
+   * ferritin -- the marker he would be asked to work on NEXT. But the 22 days of
+   * check-ins on this screen are the loop he has just spent ninety days running,
+   * and relabelling that history as an iron loop would be a lie about his own
+   * data. The screen shows the loop that produced the retest; what replaces it is
+   * a conversation for after he has read the result.
    */
-  const loop = (() => {
-    if (!today) return null
-    const marker = markerToMove(markers.map((m) => m.state))
-    if (!marker) return null
-    const questions = questionsFor(marker)
-    const keys = questions.map((q) => q.key)
-    const checkin = getDemoCheckin(keys, today)
-    return {
-      questions,
-      checkin,
-      streak: currentStreak(checkin.entries, checkin.today),
-      series: adherenceSeries(checkin.entries, questions.length, 22, checkin.today),
-      logged: loggedWithin(checkin.entries, 22, checkin.today),
-    }
-  })()
+  const marker = markerToMove(rows.map((r) => (r.previous ?? r.latest).state))
+  const questions = marker ? questionsFor(marker) : []
+  const target = marker ? rows.find((r) => r.latest.markerName === PANEL_MARKERS[marker].name) : null
+
+  const today = member ? dates?.retestReceived ?? null : dates?.resultReceived ?? null
+  const checkin = today ? getDemoCheckin(questions.map((q) => q.key), today) : null
 
   return (
     <div className="ap-screen">
-      <div className="ap-screen__head">
-        <h1 className="ap-screen__title">
-          {loop
-            ? loop.questions.length > 0 && flagged.length === 1
-              ? 'One number to move.'
-              : `${flagged.length} numbers to move.`
-            : flagged.length === 0
-              ? 'Nothing to work on.'
-              : 'No daily loop for this one.'}
-        </h1>
-      </div>
+      {!member && dates && <MonthOneNotice dates={dates} />}
 
-      {/* The month-one notice, or the standing membership line once past it. */}
-      {dates && !member && (
-        <div className="ap-notice">
-          <h3>You are a member until {formatDemoDate(dates.includedMonthEnds)}.</h3>
-          <p>
-            It came with your kit. On {formatDemoDate(dates.firstCharge)} your card is charged
-            &pound;47 and it carries on monthly. Cancel any time before then and nothing is taken.
-          </p>
-          <div className="ap-price">
-            <b>&pound;47</b>
-            <span>/ month from {formatDemoDateShort(dates.firstCharge)}</span>
-          </div>
-          <p className="ap-notice__foot">
-            Your results are yours either way. You can export them whenever you like, member or not.
-          </p>
-        </div>
-      )}
-
-      {dates && member && (
-        <div className="ap-notice">
-          <h3>Member since {formatDemoDate(dates.resultReceived)}.</h3>
-          <p>
-            Your included retest came back on {formatDemoDate(dates.retestDue)}. The record tab is
-            what it turned into.
-          </p>
-        </div>
-      )}
-
-      {/*
-       * 🔴 THE REFUSAL IS THE ARGUMENT, so it gets a card rather than an empty
-       * screen. `markerToMove` returns null when the flagged markers have no
-       * loop, and the two cases are the ones the module names: testosterone,
-       * which does not move on what we sell, and hs-CRP, which has no single
-       * behaviour to ask about. A demo that quietly showed nothing here would
-       * hide the most persuasive thing the product does, which is decline to
-       * sell someone a daily habit against a number it cannot move.
-       *
-       * ⚠ It states no threshold and no mechanism: it says there is no loop and
-       * why we do not offer one. The marker's own explanation is one tap away on
-       * the results tab, in the engine's words.
-       */}
-      {!loop && flagged.length > 0 && (
+      {questions.length > 0 && checkin && (
         <div className="ap-card">
-          <span className="ap-lbl">Why there is nothing to tap</span>
-          <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
-            The daily loop only covers markers you can actually move, and only where there is a
-            behaviour we would ask you about: vitamin D, B12 and ferritin. Nothing you flag today is
-            one of those.
-          </p>
-          <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 10, color: 'var(--ap-ink-2)' }}>
-            We could give you a streak to keep anyway. It would not change the number, and the
-            retest would say so.
-          </p>
-        </div>
-      )}
-
-      {/* 🔴 THE ENGINE WRITES THIS, NOT THIS FILE. Every marker below was flagged
-          by `classify()` and every word under it is its own `recommendation`
-          string from `biomarker-copy.ts`, which is Ewa-approved copy. The
-          prototype's invented daily tasks are deliberately not used. */}
-      {flagged.length > 0 && (
-        <div className="ap-group">
-          <span className="ap-lbl">What you are working on</span>
-          {flagged.map((m) => (
-            <div className="ap-card" key={m.markerName}>
-              <span className="ap-lbl">{m.markerName}</span>
-              <div className="ap-bigval">
-                <b>{m.value}</b>
-                <span>{m.unit}</span>
-              </div>
-              {m.recommendation && (
-                <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 10, color: 'var(--ap-ink-2)' }}>
-                  {m.recommendation}
-                </p>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* 🔴 THE REAL LOOP, NOT A DRAWING OF ONE. `markerToMove` picks the one
-          number this man is being asked to move, `questionsFor` gives that
-          marker's own three taps, and `CheckinRow` is the component the
-          logged-in member uses. An earlier version of this screen hand-rolled a
-          1-to-10 energy row; the product's scale is 1 to 5 and lives in
-          `SCALE_MIN`/`SCALE_MAX`, which is exactly the kind of thing a copy
-          drifts on and a shared component cannot.
-
-          `onSave` is what makes it safe here: the demo has no session, so a tap
-          that POSTed would take the 401 branch and bounce a visitor to a login
-          page. With the handler it reflects the tap and stores nothing. */}
-      {loop && (
-        <div className="ap-card">
-          <span className="ap-lbl">Today &middot; three taps</span>
-          <div style={{ marginTop: 10 }}>
-            <CheckinRow
-              questions={loop.questions}
-              answeredToday={loop.checkin.answeredToday}
-              onSave={() => {}}
-            />
-          </div>
-          <p style={{ fontSize: 12, lineHeight: 1.7, marginTop: 12, color: 'var(--ap-ink-3)' }}>
-            Three taps, all connected to the one marker you are moving. A member moving ferritin
-            would be asked for different things. This is about behaviour, not blood: nothing here
-            claims your result has changed, and the app never joins the two for you.
+          <span className="ap-lbl">Today · three taps</span>
+          <CheckinRow
+            questions={questions}
+            answeredToday={checkin.answeredToday}
+            onSave={() => {}}
+          />
+          <p className="ap-note-sm">
+            {member
+              ? 'Three taps, all connected to the one marker you are moving. A member moving ferritin would be asked for different things.'
+              : 'Day one. No streak yet, and nothing to chart until you have logged a few days.'}
           </p>
         </div>
       )}
 
-      {/* 🔴 BEHAVIOUR, NOT BLOOD, and the caption is load-bearing. The prototype
-          draws a 22-day adherence chart here and captions it "this chart is about
-          behaviour, not blood. Nothing here claims your result has changed." That
-          sentence is the reason the chart is allowed to exist beside a set of
-          clinical results at all, so it ships with it or neither ships.
-
-          ⚠ THE PROTOTYPE'S DAILY TASKS ARE STILL NOT PORTED. "D3 capsule" and
-          "20 min daylight" are invented actions with no pre-flight and no
-          clinical sign-off; the prototype's own header forbids lifting them to a
-          live surface. The engine's own recommendations render above instead. */}
-      {/* 🔴 COMPUTED BY `checkin.ts`, NOT TYPED. The mockup asserted "22 days
-          logged" beside "16 day streak" and the two did not agree with each
-          other. These come from `loggedWithin`, `currentStreak` and
-          `adherenceSeries` over a synthesised entry set, so they cannot
-          disagree, and `AdherenceChart` is the member's own component, legend
-          included: the "behaviour, not blood" line is not optional and ships
-          with the chart rather than beside it. */}
-      {member && loop && (
+      {member && checkin && (
         <>
           <div className="ap-stats">
             <div className="ap-stat">
-              <b>{loop.logged.logged}</b>
+              <b>{loggedWithin(checkin.entries, 22, checkin.today).logged}</b>
               <span>Days logged</span>
             </div>
             <div className="ap-stat">
-              <b>{loop.streak}</b>
+              <b>{currentStreak(checkin.entries, checkin.today)}</b>
               <span>Day streak</span>
             </div>
             <div className="ap-stat">
-              <b>{flagged.length}</b>
-              <span>{flagged.length === 1 ? 'Marker to move' : 'Markers to move'}</span>
+              <b>{marker ? 1 : 0}</b>
+              <span>Marker to move</span>
             </div>
           </div>
+
           <div className="ap-card">
-            <span className="ap-lbl">Adherence, {loop.logged.of} days</span>
-            <AdherenceChart series={loop.series} />
+            <span className="ap-lbl">Adherence, 22 days</span>
+            {/* `AdherenceChart` prints the behaviour-not-blood caption itself,
+                so this panel does not repeat it. The prototype carries the line
+                once and so does this. */}
+            <AdherenceChart
+              series={adherenceSeries(checkin.entries, questions.length, 22, checkin.today)}
+            />
           </div>
         </>
       )}
 
-      {dates && !member && (
+      {target && dates && (
+        <div className="ap-card">
+          <span className="ap-lbl">Your one number to move</span>
+          <div className="ap-bigval">
+            <b>{num(target.latest.value)}</b>
+            <span>
+              {target.latest.unit} {target.latest.markerName}
+            </span>
+          </div>
+          <p className="ap-body">
+            {member && target.previous ? (
+              <>
+                Your last reading was {num(target.previous.value)}. Your retest on{' '}
+                {formatDemoDate(dates.retestReceived ?? dates.retestDue)} is what says whether it
+                moved, and it did.
+              </>
+            ) : (
+              <>
+                Your retest on {formatDemoDate(dates.retestDue)} is what says whether it moved.{' '}
+                {daysBetween(dates.resultReceived, dates.retestDue)} days after this result,{' '}
+                {daysBetween(dates.firstCharge, dates.retestDue)} after your first payment.
+              </>
+            )}
+          </p>
+        </div>
+      )}
+
+      {!member && (
         <div className="ap-card">
           <span className="ap-lbl">What month one includes, and what nothing gates</span>
-          <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
-            Your first 30 days came with the kit, so the plan and the trend are open now. Nothing
-            gates your numbers at any point: under UK data protection law you have a right of access
-            to your own health data, so the results tab stays open whatever you decide about
-            membership.
+          <p className="ap-body">
+            Your first 30 days came with the kit, so the <b>plan</b> and the <b>trend</b> are open
+            now. Nothing gates your numbers at any point: under UK data protection law you have a
+            right of access to your own health data, so the results tab stays open whatever you
+            decide about membership.
           </p>
         </div>
       )}
@@ -697,128 +885,229 @@ function PlanScreen({
   )
 }
 
-/* ---------------- Record ---------------- */
+function daysBetween(a: Date, b: Date): number {
+  return Math.round((b.getTime() - a.getTime()) / 86400000)
+}
 
 /*
- * TWO POINTS OR NOTHING. With one result this screen exists to say what it
- * cannot tell you, which is direction. With two it draws them side by side.
+ * The prototype's `.pay` block, which is a NOTICE. Its own comment says so: the
+ * class name is kept there for styling and the content is a continuation
+ * conversation, not a sales one.
+ */
+function MonthOneNotice({ dates }: { dates: DemoDates }) {
+  // One source for the number: the products module, which is also what the
+  // checkout reads. Typing £47 here would be the third copy of a fact.
+  const amount = PRODUCT_MAP.membership.price.split('/')[0]
+  const charge = formatDemoDateNoYear(dates.firstCharge)
+
+  return (
+    <div className="ap-notice">
+      <h3>You are a member until {charge}.</h3>
+      <p>
+        It came with your kit. You have one number to move and{' '}
+        {daysBetween(dates.firstCharge, dates.retestDue)} days to move it.
+      </p>
+      <div className="ap-price">
+        <b>{amount}</b>
+        <span>/ month from {formatDemoDateShort(dates.firstCharge)}</span>
+      </div>
+      <p>
+        <b>
+          On {charge} your card is charged {amount} and it carries on monthly.
+        </b>{' '}
+        Cancel any time before then and nothing is taken.
+      </p>
+      <ul className="ap-incl">
+        <li>
+          <i aria-hidden="true">+</i>
+          <span>
+            <b>Your retest on {formatDemoDate(dates.retestDue)}.</b> Included while you are a member.
+            You need to be a member on that date. It is not a credit, it does not expire, and there
+            is no balance to keep track of.
+          </span>
+        </li>
+        <li>
+          <i aria-hidden="true">+</i>
+          <span>Your plan, your streak and your daily data, kept running.</span>
+        </li>
+        <li>
+          <i aria-hidden="true">+</i>
+          <span>Every marker explained against both ranges, ours and your lab&rsquo;s.</span>
+        </li>
+        <li>
+          <i aria-hidden="true">+</i>
+          <span>Ask the clinician. Questions answered every month, published for all members.</span>
+        </li>
+        <li>
+          <i aria-hidden="true">+</i>
+          <span>Supplements at member price, only where we test the marker.</span>
+        </li>
+      </ul>
+      <button type="button" className="ap-btn" data-variant="ghost">
+        Manage membership
+      </button>
+      <p className="ap-notice__foot">
+        Your results are yours either way. Download them whenever you want, member or not.
+      </p>
+    </div>
+  )
+}
+
+/* ====================================================== RECORD ============= */
+
+/*
+ * The prototype's `screenRecord`, panel for panel.
  *
- * ⚠ IT NEVER JOINS A NUMBER TO AN INTERVENTION. Whether the supplement moved
- * the marker is a per-customer interpretation and is post-CQC. The words below
- * are arithmetic on two engine values ("Risen", "Fallen", "Unchanged") and
- * nothing else.
+ * 🔴 THE MEMBER CELL IS WHERE THE KIT 2 RULING IS VISIBLE. Four rows carry two
+ * numbers and a movement word; five carry one number and say they were not
+ * retested. The prototype drew nine pairs because its retest was another Kit 3.
  */
 function RecordScreen({
-  latest,
-  previous,
+  rows,
+  journey,
   dates,
+  onOpenMarker,
 }: {
-  latest: SingleResult | undefined
-  previous: SingleResult | null
+  rows: DemoRow[]
+  journey: DemoJourneyId
   dates: DemoDates | null
+  onOpenMarker: (name: string | null) => void
 }) {
-  const markers = latest?.markers ?? []
+  if (journey === 'waiting') {
+    return (
+      <EmptyState
+        icon="chart"
+        title="Nothing to compare yet."
+        body="A record needs two points. Your first result is the first of them, and it is on its way."
+      />
+    )
+  }
 
-  if (!previous) {
+  const member = journey === 'member'
+
+  if (!member) {
     return (
       <div className="ap-screen">
-        <div className="ap-screen__head">
-          <h1 className="ap-screen__title">One point.</h1>
-        </div>
         <div className="ap-card">
-          <p style={{ fontSize: 13.5, lineHeight: 1.7, color: 'var(--ap-ink-2)' }}>
-            That is a fact about today, and it is genuinely useful: {markers.length} markers, one
-            date, one set of standards. What it cannot tell you is which direction you are going.
+          <span className="ap-lbl">Your record so far</span>
+          <p className="ap-body">
+            <b>One point.</b> That is a fact about today, and it is genuinely useful: nine markers,
+            one date, one set of standards. What it cannot tell you is which direction you are going.
           </p>
-          <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 10, color: 'var(--ap-ink-2)' }}>
-            {dates
-              ? `Your included retest on ${formatDemoDate(dates.retestDue)} is what turns this into a record. Two points is the smallest number that can answer whether anything moved.`
-              : 'Your next test is what turns this into a record. Two points is the smallest number that can answer whether anything moved.'}
+          <p className="ap-body">
+            Your next test is what turns this into a record. Two points is the smallest number that
+            can answer whether anything moved.
           </p>
         </div>
+
+        {rows.map((r) => (
+          <div className="ap-card" data-compact="true" key={r.latest.markerName}>
+            <span className="ap-lbl">{r.latest.markerName}</span>
+            <div className="ap-move">
+              <div className="ap-move__pt">
+                <span>{dates ? formatDemoDateShort(dates.resultReceived) : 'First test'}</span>
+                <b>{num(r.latest.value)}</b>
+              </div>
+              <span className="ap-move__arw" aria-hidden="true">
+                &rarr;
+              </span>
+              <div className="ap-move__pt" data-old="true">
+                <span>Next test</span>
+                <b>?</b>
+              </div>
+            </div>
+          </div>
+        ))}
+
         <div className="ap-card">
           <span className="ap-lbl">Only our own kits feed this</span>
-          <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
+          <p className="ap-body">
             We do not chart a result from another provider. A number typed in from a photo has no
             assay identity and no collection time, and a line drawn between two different assays is
-            an artefact that looks like information. We only chart what we can stand behind.
+            an artefact that looks like information.{' '}
+            <b>We only chart what we can stand behind.</b>
           </p>
         </div>
       </div>
     )
   }
 
-  const prevByName = new Map(previous.markers.map((m) => [m.markerName, m]))
-  const moved = markers.filter((m) => {
-    const p = prevByName.get(m.markerName)
-    return p && Number(p.value) !== Number(m.value)
-  }).length
+  const retested = rows.filter((r) => r.previous)
 
   return (
     <div className="ap-screen">
-      <div className="ap-screen__head">
-        <h1 className="ap-screen__title">
-          {moved === 0 ? 'Nothing moved.' : `${moved} of ${markers.length} moved.`}
-        </h1>
+      <div className="ap-card">
+        <span className="ap-lbl">Two purchases, one picture</span>
+        <p className="ap-body">
+          <b>Nine markers, two dates, {numberWord(retested.length)} of them re-measured.</b>{' '}
+          Which kit a number came from is a detail on the row, not something you have to navigate.
+        </p>
       </div>
 
-      <div className="ap-group">
-        {markers.map((m) => {
-          const p = prevByName.get(m.markerName)
-          const a = p ? Number(p.value) : null
-          const b = Number(m.value)
-          const delta = a === null ? null : b - a
-          const word =
-            delta === null ? '' : delta === 0 ? 'Unchanged' : delta > 0 ? 'Risen' : 'Fallen'
-          return (
-            <div className="ap-move" key={m.markerName}>
-              <span className="ap-move__name">
-                {m.markerName}
-                <span className="ap-move__word">{word}</span>
-              </span>
-              <span className="ap-move__vals">
-                <span className="ap-move__was">{p?.value ?? '–'}</span>
-                <span className="ap-move__arw" aria-hidden="true">
-                  &rarr;
-                </span>
-                <b>{m.value}</b>
-                <span className="ap-row__unit">{m.unit}</span>
-              </span>
-            </div>
-          )
-        })}
-      </div>
+      {/* 🔴 THESE ARE BUTTONS, AND THE FIRST REBUILD GOT THAT WRONG. They were
+          rendered as static divs on the reasoning that a record row is "a
+          statement rather than a link". The prototype disagrees and it is right:
+          its record rows are `<button data-marker>` and tapping one opens the
+          marker detail, which in the member state is the ONLY place the movement
+          breakdown lives -- the two-point track with the earlier reading, the
+          band-crossing line, and the marker plotted beside the symptom. Making
+          them inert stranded that screen behind the Results tab. Keith found it
+          by tapping a row that moved and getting nothing. */}
+      {rows.map((r) => (
+        <button
+          type="button"
+          className="ap-row"
+          data-wide="true"
+          key={r.latest.markerName}
+          onClick={() => onOpenMarker(r.latest.markerName)}
+        >
+          <span>
+            <span className="ap-row__name">{r.latest.markerName}</span>
+            <span className="ap-row__verdict" data-tone="flat">
+              {r.previous ? movementWord(r.previous, r.latest) : 'Not retested'}
+            </span>
+          </span>
+          <span className="ap-row__val">
+            {r.previous && <span className="ap-row__was">{num(r.previous.value)} &rarr;</span>}
+            {num(r.latest.value)}
+            <u className="ap-row__unit">{r.latest.unit}</u>
+          </span>
+          {CHEV}
+        </button>
+      ))}
 
       <div className="ap-card">
-        <span className="ap-lbl">What this does not say</span>
-        <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
-          Two numbers and two dates. It does not claim what moved them. Anything you changed in
-          between is yours to weigh, and joining the two for you would be an interpretation we are
-          not registered to make.
+        <span className="ap-lbl">Your purchases</span>
+        <p className="ap-body">
+          <b>{dates ? formatDemoDate(dates.resultReceived) : 'First result'}</b> ·{' '}
+          {kitName('hormone-recovery')}, nine markers.
+          <br />
+          <b>{dates?.retestReceived ? formatDemoDate(dates.retestReceived) : 'Retest'}</b> ·{' '}
+          {kitName('energy-recovery')} retest, {numberWord(retested.length)} markers, included with
+          membership.
         </p>
       </div>
     </div>
   )
 }
 
-/* ---------------- You ---------------- */
+/* ====================================================== YOU =============== */
 
+/* The prototype's `screenYou`, panel for panel. */
 function YouScreen({
-  kits,
+  rows,
   journey,
   dates,
 }: {
-  kits: KitData[]
+  rows: DemoRow[]
   journey: DemoJourneyId
   dates: DemoDates | null
 }) {
-  const results = kits[0]?.results ?? []
-  const latest = results[results.length - 1]
-  const kitName = kits[0]?.kitType
   const waiting = journey === 'waiting'
   const member = journey === 'member'
+  const amount = PRODUCT_MAP.membership.price.split('/')[0]
   /* The engine decides whether a GP row belongs here, never this file. */
-  const routesToGp = (latest?.markers ?? []).some((m) => toneFor(m.state) === 'crit')
+  const gp = rows.some((r) => goesToGp(r.latest))
 
   return (
     <div className="ap-screen">
@@ -827,174 +1116,147 @@ function YouScreen({
         {/* A named persona, because an account screen with no account on it
             demonstrates nothing. It is the repo's own ICP name and the page says
             "sample data" twice above this point. */}
-        <p className="ap-name" style={{ marginTop: 8 }}>
-          Mark Ellison
-        </p>
+        <p className="ap-name">Mark Ellison</p>
         <p className="ap-email">mark@example.com</p>
       </div>
 
-      {/* 🔴 The membership card is the one place a PRICE appears on this route.
-          That is what widens the open compliance item on `/demo`: CA-046 was
-          raised about a results report on an ungated surface, not about a
-          membership price on one. Flagged in `lib/results/demo.ts` and in
-          `03_compliance/STATE.md`. */}
-      {dates && !waiting && (
+      {/* 🔴 The one place a PRICE appears inside the phone. That is what widens
+          the open compliance item on `/demo`: CA-046 was raised about a results
+          report on an ungated surface, not about a membership price on one.
+          Flagged in `lib/results/demo.ts` and in `03_compliance/STATE.md`. */}
+      {member && dates && (
         <div className="ap-card">
           <span className="ap-lbl">Membership</span>
           <div className="ap-bigval">
-            <b>&pound;47</b>
+            <b>{amount}</b>
             <span>/ month</span>
           </div>
-          <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
-            Member since {formatDemoDate(dates.resultReceived)}, included with your kit for the first
-            30 days.{' '}
-            {member
-              ? `First payment ${formatDemoDate(dates.firstCharge)}.`
-              : `First payment ${formatDemoDate(dates.firstCharge)}, and you can cancel before then without being charged.`}
+          <p className="ap-body">
+            Member since {formatDemoDateNoYear(dates.resultReceived)}. First payment{' '}
+            {formatDemoDateNoYear(dates.firstCharge)}.
           </p>
-          {/* ⚠ DELIBERATELY SILENT ON THE NEXT RETEST. The prototype's account
-              screen names one a year out. That is DEFECT 3b in
-              `04_products/results-engine/retest-mechanism-map.md`: nothing calls
-              `nextRetestAfter`, so the build gives a member one retest ever
+          {/* ⚠ DELIBERATELY SILENT ON THE NEXT RETEST. The prototype names one a
+              year out. That is DEFECT 3b in `retest-mechanism-map.md`: nothing
+              calls `nextRetestAfter`, so the build gives a member one retest ever
               while the forecast and the copy both sell one a year. Until that is
               decided, this screen states the retest it can stand behind and no
               other. Do not add the annual line back without checking 3b. */}
+          <button type="button" className="ap-btn" data-variant="ghost">
+            Manage membership
+          </button>
         </div>
+      )}
+
+      {!waiting && (
+        <>
+          {gp && (
+            <button type="button" className="ap-rowlink">
+              <span className="ap-rowlink__t">
+                <span className="ap-rowlink__n">GP handoff summary</span>
+                <span className="ap-rowlink__d">One page, written for a clinician · ready</span>
+              </span>
+              {CHEV}
+            </button>
+          )}
+          <button type="button" className="ap-rowlink">
+            <span className="ap-rowlink__t">
+              <span className="ap-rowlink__n">Download my results</span>
+              <span className="ap-rowlink__d">Yours whatever you decide about membership</span>
+            </span>
+            {CHEV}
+          </button>
+        </>
+      )}
+
+      {member && (
+        <>
+          <button type="button" className="ap-rowlink">
+            <span className="ap-rowlink__t">
+              <span className="ap-rowlink__n">Ask the clinician</span>
+              <span className="ap-rowlink__d">Answered generally, published for all members</span>
+            </span>
+            {CHEV}
+          </button>
+
+          <div className="ap-sect">Member shop</div>
+          {/* ⚠ THE PROTOTYPE SELLS A PRODUCT THAT DOES NOT EXIST. It draws
+              "Vitamin D3 + K2 · £18.95 member price"; every supplement in
+              `lib/subscriptions/products.ts` is RETIRED, so that row would put an
+              invented product at an invented price on a public surface. The panel
+              is kept because its NOTE is the point of it; the row points at the
+              waitlist, which is real and is the state the range is actually in. */}
+          <button type="button" className="ap-rowlink">
+            <span className="ap-rowlink__t">
+              <span className="ap-rowlink__n">Supplements</span>
+              <span className="ap-rowlink__d">Not open yet · join the waitlist</span>
+            </span>
+            {CHEV}
+          </button>
+          <div className="ap-card">
+            <p className="ap-note-sm">
+              Only where we test the marker. Nothing is offered against a result we have routed to a
+              GP.
+            </p>
+          </div>
+        </>
       )}
 
       <div className="ap-card">
         <span className="ap-lbl">{waiting ? 'Your kit' : 'This result'}</span>
-        <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
+        <p className="ap-body">
           {waiting
-            ? `Your ${kitName} panel is with the lab.`
-            : `${latest?.markers.length} markers from your ${kitName} panel${
-                latest?.collectedAt
-                  ? `, collected ${new Date(latest.collectedAt).toLocaleDateString('en-GB', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}`
-                  : ''
+            ? `Your ${kitName('hormone-recovery')} is with the lab.`
+            : `${rows.length} markers from your ${kitName('hormone-recovery')}${
+                dates ? `, collected ${formatDemoDate(dates.resultReceived)}` : ''
               }.`}
-          {results.length > 1 ? ` Two sets of results, ${results.length} dates on your record.` : ''}
+          {member ? ' Two purchases, two dates on your record.' : ''}
         </p>
       </div>
 
-      {/* The prototype's action rows. They do nothing here, which is true of
-          every control on this route, and they are what makes the account screen
-          an account screen rather than a paragraph about one.
-
-          The GP row appears only when the engine actually routed a marker out of
-          the business, so it cannot read as decoration. */}
-      {!waiting && routesToGp && (
-        <button type="button" className="ap-rowlink">
-          <span className="ap-rowlink__t">
-            <span className="ap-rowlink__n">GP handoff summary</span>
-            <span className="ap-rowlink__d">One page, written for a clinician &middot; ready</span>
-          </span>
-          <span className="ap-chev" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </span>
-        </button>
-      )}
-
-      {!waiting && (
-        <button type="button" className="ap-rowlink">
-          <span className="ap-rowlink__t">
-            <span className="ap-rowlink__n">Download my results</span>
-            <span className="ap-rowlink__d">Yours whatever you decide about membership</span>
-          </span>
-          <span className="ap-chev" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </span>
-        </button>
-      )}
-
-      {member && (
-        <button type="button" className="ap-rowlink">
-          <span className="ap-rowlink__t">
-            <span className="ap-rowlink__n">Ask the clinician</span>
-            <span className="ap-rowlink__d">Answered generally, published for all members</span>
-          </span>
-          <span className="ap-chev" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </span>
-        </button>
-      )}
-
-      {/* ⚠ THE MEMBER SHOP IS DELIBERATELY NOT PORTED. The prototype lists
-          "Vitamin D3 + K2, GBP 18.95, member price" here. Putting a supplement
-          PRICE on an ungated public surface is a third compliance question on
-          this route, on top of the results report (CA-046) and the membership
-          price, and nobody has asked it. Flagged in 03_compliance/STATE.md. */}
-
       <div className="ap-card">
         <span className="ap-lbl">Your data</span>
-        <p style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ap-ink-2)' }}>
-          One UK data controller. Your results are never sold. You can export your results as CSV or
-          request erasure at any time, member or not.
+        <p className="ap-body">
+          One UK data controller. Your results are never sold. You can export or delete everything
+          from here at any time.
         </p>
+        <button type="button" className="ap-btn" data-variant="ghost">
+          Export everything
+        </button>
       </div>
     </div>
   )
 }
 
-/* ---------------- Tabs ---------------- */
+/* ====================================================== shared ============ */
 
-/*
- * 🔄 THE TAB BAR IS A SIBLING OF THE SCROLL AREA, NOT INSIDE IT (2026-09-07).
- * It used to be the last child of the shell with `position: sticky; bottom: 0`,
- * which meant the screen scrolled UNDER it and the last card on a long screen sat
- * behind the tabs. The prototype makes it a flex sibling of the scroll region, so
- * the content ends where the tabs begin. That is a structural difference, not a
- * styling one, which is why it is exported rather than styled around.
- */
-export function TabBar({ tab, onTab }: { tab: Tab; onTab: (t: Tab) => void }) {
-  const TABS = [
-    {
-      id: 'results' as const,
-      label: 'Results',
-      path: 'M3 12h4l3 8 4-16 3 8h4',
-    },
-    {
-      id: 'plan' as const,
-      label: 'Plan',
-      path: 'M4 5h16v16H4zM8 3v4M16 3v4M4 11h16M9 15.5l2 2 4-4',
-    },
-    {
-      id: 'record' as const,
-      label: 'Record',
-      path: 'M3 3v18h18M7 15l4-4 3 3 5-6',
-    },
-    {
-      id: 'you' as const,
-      label: 'You',
-      path: 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
-    },
-  ]
+function EmptyState({
+  icon,
+  title,
+  body,
+}: {
+  icon: 'clock' | 'chart'
+  title: string
+  body: string
+}) {
   return (
-    <div className="ap-tabbar" role="tablist" aria-label="Sections">
-      {TABS.map((t) => (
-        <button
-          key={t.id}
-          type="button"
-          role="tab"
-          aria-selected={tab === t.id}
-          className="ap-tab"
-          onClick={() => onTab(t.id)}
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d={t.path} strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {t.label}
-        </button>
-      ))}
+    <div className="ap-screen">
+      <div className="ap-empty">
+        <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          {icon === 'clock' ? (
+            <>
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </>
+          ) : (
+            <>
+              <path d="M3 3v18h18" />
+              <path d="M7 15l4-4 3 3 5-6" />
+            </>
+          )}
+        </svg>
+        <h3 className="ap-empty__t">{title}</h3>
+        <p>{body}</p>
+      </div>
     </div>
   )
 }

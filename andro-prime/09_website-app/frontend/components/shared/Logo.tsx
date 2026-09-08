@@ -34,12 +34,22 @@ import {
 // sit slightly above them, not shout: h-4 (16px) puts the cap at 10.6px, which is where it landed
 // after rendering the whole ladder from 14px to 24px and looking at it. If a new placement needs a
 // size, work back from the surrounding type the same way rather than reusing a number from here.
-type LogoVariant = 'dark' | 'light'
+type LogoVariant = 'dark' | 'light' | 'auto'
 
 interface LogoProps extends SVGProps<SVGSVGElement> {
   /**
    * 'dark' = black ink, for light backgrounds (default).
    * 'light' = white ink, for dark backgrounds.
+   * 'auto'  = `currentColor`, so CSS decides. Added 2026-09-08 for the demo's dark mode: the nav
+   *           and the footer are themed by re-declaring `--ink`, and a logo with a literal fill was
+   *           the one thing on that chrome that could not follow. With 'auto' the mark inherits the
+   *           `color` of whatever it is placed in, which is how every other glyph on those surfaces
+   *           already works.
+   *
+   * 🔴 'auto' NEEDS A DEFINED COLOUR ON OR ABOVE THE ELEMENT. It inherits, so dropping it somewhere
+   * with a muted or inherited-grey `color` renders a muted logo. Pair it with a class that pins the
+   * colour, the way `.f-logo` does, rather than trusting the surrounding cascade.
+   *
    * The names describe the INK, not the ground, and are kept from the previous component so the
    * existing call sites keep meaning what they meant.
    */
@@ -49,7 +59,7 @@ interface LogoProps extends SVGProps<SVGSVGElement> {
 }
 
 export function Logo({ variant = 'dark', mark = false, ...props }: LogoProps) {
-  const ink = variant === 'dark' ? '#000000' : '#ffffff'
+  const ink = variant === 'auto' ? 'currentColor' : variant === 'dark' ? '#000000' : '#ffffff'
   return (
     <svg
       viewBox={mark ? MARK_VIEWBOX : LOCKUP_VIEWBOX}

@@ -59,9 +59,25 @@ export interface RangeTrackProps {
   /** Report-only markers get a hollow pin and no bands, ever. */
   reportOnly?: boolean
   tone: Tone
+  /**
+   * The earlier reading, on the markers that have one.
+   *
+   * 🔴 IT DRAWS A HOLLOW PIN AND A BAR BETWEEN THE TWO, which is the
+   * prototype's two-point track. History is drawn as an outline and the current
+   * reading as a solid pin, so which one is now is legible without a caption.
+   * Only four of the nine markers ever pass this: the included retest is a Kit 2
+   * and the hormone markers are not re-measured.
+   */
+  previousValue?: number
 }
 
-export function RangeTrack({ result, compare = false, reportOnly = false, tone }: RangeTrackProps) {
+export function RangeTrack({
+  result,
+  compare = false,
+  reportOnly = false,
+  tone,
+  previousValue,
+}: RangeTrackProps) {
   const max = barMaxFor(result)
   const hideBands = compare || reportOnly
 
@@ -85,6 +101,10 @@ export function RangeTrack({ result, compare = false, reportOnly = false, tone }
     .filter((v) => v >= 0 && v <= max)
     .sort((a, b) => a - b)
 
+  const hasPrev = previousValue !== undefined && Number.isFinite(previousValue)
+  const prevPct = hasPrev ? pct(previousValue as number, max) : 0
+  const nowPct = pct(result.value, max)
+
   const hasBracket = result.referenceLow !== null && result.referenceHigh !== null
   const brkLeft = hasBracket ? pct(result.referenceLow as number, max) : 0
   const brkWidth = hasBracket ? pct(result.referenceHigh as number, max) - brkLeft : 0
@@ -101,11 +121,23 @@ export function RangeTrack({ result, compare = false, reportOnly = false, tone }
             style={{ left: `${z.left}%`, width: `${z.width}%` }}
           />
         ))}
+        {hasPrev && (
+          <>
+            <span
+              className="ap-conn"
+              style={{
+                left: `${Math.min(prevPct, nowPct)}%`,
+                width: `${Math.abs(nowPct - prevPct)}%`,
+              }}
+            />
+            <span className="ap-pin" data-ghost="true" style={{ left: `${prevPct}%` }} />
+          </>
+        )}
         <span
           className="ap-pin"
           data-tone={tone}
           data-hollow={reportOnly || undefined}
-          style={{ left: `${pct(result.value, max)}%` }}
+          style={{ left: `${nowPct}%` }}
         />
       </div>
 
@@ -127,7 +159,13 @@ export function RangeTrack({ result, compare = false, reportOnly = false, tone }
         ))}
       </div>
 
-      <Legend compare={compare} reportOnly={reportOnly} zones={zones} hasBracket={hasBracket} />
+      <Legend
+        compare={compare}
+        reportOnly={reportOnly}
+        zones={zones}
+        hasBracket={hasBracket}
+        hasPrev={hasPrev}
+      />
     </div>
   )
 }
@@ -137,12 +175,19 @@ function Legend({
   reportOnly,
   zones,
   hasBracket,
+  hasPrev,
 }: {
   compare: boolean
   reportOnly: boolean
   zones: { tone: Tone }[]
   hasBracket: boolean
+  hasPrev: boolean
 }) {
+  const history = hasPrev ? (
+    <div>
+      <span className="ap-sw" data-kind="ghost" /> The earlier reading
+    </div>
+  ) : null
   const bracket = hasBracket ? (
     <div>
       <span className="ap-sw" data-kind="brk" /> Your lab&rsquo;s male reference range
@@ -156,12 +201,19 @@ function Legend({
         <div>
           <span className="ap-sw" data-kind="ring" /> Reported, no verdict
         </div>
+        {history}
       </div>
     )
   }
 
   // Comparing: the laboratory's interval is the only thing left to key.
-  if (compare) return <div className="ap-legend">{bracket}</div>
+  if (compare)
+    return (
+      <div className="ap-legend">
+        {bracket}
+        {history}
+      </div>
+    )
 
   const seen: Tone[] = []
   for (const z of zones) if (!seen.includes(z.tone)) seen.push(z.tone)
@@ -181,6 +233,7 @@ function Legend({
         </div>
       ))}
       {bracket}
+      {history}
     </div>
   )
 }

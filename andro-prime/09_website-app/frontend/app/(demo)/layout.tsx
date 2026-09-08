@@ -1,5 +1,6 @@
 import { Nav } from '@/components/shared/Nav'
 import { Footer } from '@/components/shared/Footer'
+import { DemoThemeProvider } from '@/components/app-shell/DemoTheme'
 import '@/styles/components/dashboard-panels.css'
 import '@/styles/pages/results-dashboard.css'
 import '@/styles/pages/app-shell.css'
@@ -28,12 +29,19 @@ import '@/styles/pages/membership.css'
  * the dashboard sidebar was written against under the app nav, so the sidebar
  * behaves the same on both surfaces.
  */
+/*
+ * 🔴 THE NAV AND THE FOOTER ARE INSIDE THE THEME, and that is the whole point of
+ * the wrapper. The demo's dark toggle used to set its attribute on `.ap-stage`,
+ * which contains the phone and the rail only, so the chrome above and below it
+ * stayed white while the stage went dark. Keith reported it as "the header and
+ * footer are in light mode". They are all one subtree now.
+ */
 export default function DemoLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <DemoThemeProvider>
       <Nav variant="marketing" />
       <main id="main-content" className="pt-[92px] md:pt-[104px]">{children}</main>
       <Footer />
-    </>
+    </DemoThemeProvider>
   )
 }
