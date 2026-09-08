@@ -1273,15 +1273,18 @@ Recorded so they are not rediscovered as surprises.
     the exact value the token’s own comment states as its floor for functional text on paper, and
     passes AA for the 12.5px it is set at.
     **A value that cannot be measured is usually a sign the design is wrong, not the ruler.**
-12. ⚠ **THE SYSTEM IS NOW PARTLY ENFORCED, AND THE BOUNDARY MATTERS.** Five checks run in
+12. ⚠ **THE SYSTEM IS NOW PARTLY ENFORCED, AND THE BOUNDARY MATTERS.** Seven checks run in
     `npm test` (`npm run test:design`): token existence, class existence, modifier specificity, the
-    dark-panel mechanism, and the hero field's geometry. Two more need a dev server and run on
+    scaffold, the dark-panel mechanism, the route-conformance report's freshness, and the hero
+    field's geometry. Two more need a dev server and run on
     demand, `npm run test:design:live`: the scroll-reveal paths and the rendered dark-ground
     contrast sweep over 16 routes. **What is enforced is what a file can be read to prove.** Nothing
     here checks that a page looks right, that spacing follows the rhythm, or that a photograph
-    is cropped to its focal point. **Six checks now, not five:** `verify-f-scaffold.js` closed
-    the "does a new page use the system at all" half of this gap on 2026-09-08, and the hero
-    assembly and the section counter are no longer hand-copied. `reconcile-f-css.js` was **retired on 2026-09-08** rather than wired in: it
+    is cropped to its focal point. **Seven checks now, not five:** `verify-f-scaffold.js` closed
+    the "does a new page use the system at all" half of this gap on 2026-09-08, and
+    `verify-route-conformance.js` closed the "how many routes are done" half; the hero assembly
+    and the section counter are no longer hand-copied, and the route count is generated into
+    `design/route-conformance.md` rather than stated. `reconcile-f-css.js` was **retired on 2026-09-08** rather than wired in: it
     compared the build against the journey frames, which rank below it, so its 41 conflicts were
     a question about drawings rather than about the site. Every check that remains compares the
     build against itself.

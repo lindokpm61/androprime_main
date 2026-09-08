@@ -1,0 +1,670 @@
+{
+  "generated": "2026-09-08",
+  "base": "http://localhost:3000",
+  "rows": [
+    {
+      "url": "/",
+      "href": "/",
+      "file": "app/(marketing)/page.tsx",
+      "status": 200,
+      "classes": 81,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 72
+      }
+    },
+    {
+      "url": "/about",
+      "href": "/about",
+      "file": "app/(marketing)/about/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/account",
+      "href": "/account",
+      "file": "app/(app)/account/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not measured",
+      "note": "redirects to `/auth/login` for an anonymous visitor",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/account/membership",
+      "href": "/account/membership",
+      "file": "app/(app)/account/membership/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not measured",
+      "note": "redirects to `/auth/login` for an anonymous visitor",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/activate",
+      "href": "/activate",
+      "file": "app/activate/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/auth/consent",
+      "href": "/auth/consent",
+      "file": "app/auth/consent/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/auth/link",
+      "href": "/auth/link",
+      "file": "app/auth/link/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/auth/login",
+      "href": "/auth/login",
+      "file": "app/auth/login/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/auth/reset",
+      "href": "/auth/reset",
+      "file": "app/auth/reset/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/auth/signup",
+      "href": "/auth/signup",
+      "file": "app/auth/signup/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/authors/[slug]",
+      "href": "/authors/dr-ewa-lindo",
+      "file": "app/(marketing)/authors/[slug]/page.tsx",
+      "status": 200,
+      "classes": 23,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 13
+      }
+    },
+    {
+      "url": "/blog",
+      "href": "/blog",
+      "file": "app/(marketing)/blog/page.tsx",
+      "status": 200,
+      "classes": 36,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 13
+      }
+    },
+    {
+      "url": "/blog/[slug]",
+      "href": "/blog/andropause-male-menopause",
+      "file": "app/(marketing)/blog/[slug]/page.tsx",
+      "status": 200,
+      "classes": 30,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/checkout/details",
+      "href": "/checkout/details",
+      "file": "app/(marketing)/checkout/details/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/contact",
+      "href": "/contact",
+      "file": "app/(marketing)/contact/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/faq",
+      "href": "/faq",
+      "file": "app/(marketing)/faq/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/founding-member-status",
+      "href": "/founding-member-status",
+      "file": "app/(app)/founding-member-status/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not measured",
+      "note": "redirects to `/auth/login` for an anonymous visitor",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/how-it-works",
+      "href": "/how-it-works",
+      "file": "app/(marketing)/how-it-works/page.tsx",
+      "status": 200,
+      "classes": 60,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 52
+      }
+    },
+    {
+      "url": "/kits",
+      "href": "/kits",
+      "file": "app/(marketing)/kits/page.tsx",
+      "status": 200,
+      "classes": 77,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 68
+      }
+    },
+    {
+      "url": "/kits/energy-recovery",
+      "href": "/kits/energy-recovery",
+      "file": "app/(marketing)/kits/energy-recovery/page.tsx",
+      "status": 200,
+      "classes": 75,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 71
+      }
+    },
+    {
+      "url": "/kits/hormone-recovery",
+      "href": "/kits/hormone-recovery",
+      "file": "app/(marketing)/kits/hormone-recovery/page.tsx",
+      "status": 200,
+      "classes": 90,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 86
+      }
+    },
+    {
+      "url": "/kits/testosterone",
+      "href": "/kits/testosterone",
+      "file": "app/(marketing)/kits/testosterone/page.tsx",
+      "status": 200,
+      "classes": 79,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 75
+      }
+    },
+    {
+      "url": "/lp/collagen",
+      "href": "/lp/collagen",
+      "file": "app/lp/collagen/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/lp/daily-stack",
+      "href": "/lp/daily-stack",
+      "file": "app/lp/daily-stack/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/lp/energy-recovery",
+      "href": "/lp/energy-recovery",
+      "file": "app/lp/energy-recovery/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/lp/hormone-recovery",
+      "href": "/lp/hormone-recovery",
+      "file": "app/lp/hormone-recovery/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/lp/testosterone",
+      "href": "/lp/testosterone",
+      "file": "app/lp/testosterone/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/membership",
+      "href": "/membership",
+      "file": "app/(marketing)/membership/page.tsx",
+      "status": 200,
+      "classes": 51,
+      "verdict": "F",
+      "note": "",
+      "source": {
+        "scaffold": true,
+        "classes": 42
+      }
+    },
+    {
+      "url": "/not-found",
+      "href": "/__conformance_probe_404__",
+      "file": "app/not-found.tsx",
+      "status": 404,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/order/confirmed",
+      "href": "/order/confirmed",
+      "file": "app/(marketing)/order/confirmed/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/privacy",
+      "href": "/privacy",
+      "file": "app/(marketing)/privacy/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/results-dashboard",
+      "href": "/results-dashboard",
+      "file": "app/(app)/results-dashboard/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not measured",
+      "note": "redirects to `/auth/login` for an anonymous visitor",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/results-dashboard/handoff",
+      "href": "/results-dashboard/handoff",
+      "file": "app/(app)/results-dashboard/handoff/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not measured",
+      "note": "redirects to `/auth/login` for an anonymous visitor",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/subscription/confirmed",
+      "href": "/subscription/confirmed",
+      "file": "app/(marketing)/subscription/confirmed/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/subscriptions",
+      "href": "/subscriptions",
+      "file": "app/(app)/subscriptions/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not measured",
+      "note": "redirects to `/auth/login` for an anonymous visitor",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/supplement-waitlist",
+      "href": "/supplement-waitlist",
+      "file": "app/(marketing)/supplement-waitlist/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/supplement-waitlist-status",
+      "href": "/supplement-waitlist-status",
+      "file": "app/(app)/supplement-waitlist-status/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not measured",
+      "note": "redirects to `/auth/login` for an anonymous visitor",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/supplements",
+      "href": "/supplements",
+      "file": "app/(marketing)/supplements/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/supplements/collagen",
+      "href": "/supplements/collagen",
+      "file": "app/(marketing)/supplements/collagen/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/supplements/daily-stack",
+      "href": "/supplements/daily-stack",
+      "file": "app/(marketing)/supplements/daily-stack/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/terms",
+      "href": "/terms",
+      "file": "app/(marketing)/terms/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/test-selector",
+      "href": "/test-selector",
+      "file": "app/(marketing)/test-selector/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    },
+    {
+      "url": "/waitlist",
+      "href": "/waitlist",
+      "file": "app/(marketing)/waitlist/page.tsx",
+      "status": 200,
+      "classes": 0,
+      "verdict": "not rebuilt",
+      "note": "",
+      "source": {
+        "scaffold": false,
+        "classes": 0
+      }
+    }
+  ],
+  "excluded": {
+    "/founding-member": "retired, 307s to /kits",
+    "/admin/dashboard": "internal, no public UI",
+    "/ops/content": "internal, no public UI",
+    "/go": "internal redirect, no UI",
+    "/blog/preview/[slug]": "internal preview of an unpublished draft",
+    "/demo": "runs the authenticated app shell (`ap-*`), not the marketing layer, so Direction F is the wrong question"
+  },
+  "unused": [
+    "f-bar",
+    "f-btn-on",
+    "f-burger",
+    "f-c-12",
+    "f-chip",
+    "f-chips",
+    "f-cookie",
+    "f-cookieacts",
+    "f-cookielink",
+    "f-cookiewrap",
+    "f-core-dark",
+    "f-drawer",
+    "f-foot",
+    "f-footbar",
+    "f-footer",
+    "f-footlink",
+    "f-in",
+    "f-kitaside",
+    "f-kitfoot",
+    "f-kitgrid",
+    "f-kitprice",
+    "f-kittitle",
+    "f-lab",
+    "f-legal",
+    "f-logo",
+    "f-narrow",
+    "f-nav",
+    "f-navcta",
+    "f-navcta-wrap",
+    "f-navlinks",
+    "f-navlogin",
+    "f-navright",
+    "f-navshell",
+    "f-navstat",
+    "f-oneoff",
+    "f-out",
+    "f-rep",
+    "f-row-top",
+    "f-scrolled",
+    "f-shot-band",
+    "f-spec-open",
+    "f-st",
+    "f-st-hot",
+    "f-stat",
+    "f-sub2",
+    "f-total",
+    "f-tray-dark",
+    "f-val",
+    "fb-alert",
+    "fb-alert-act",
+    "fb-alert-bd",
+    "fb-alert-h",
+    "fb-alert-k",
+    "fb-arthead",
+    "fb-authav",
+    "fb-byline",
+    "fb-byline-av",
+    "fb-byline-col",
+    "fb-byline-dates",
+    "fb-byline-n",
+    "fb-byline-r",
+    "fb-bylines",
+    "fb-caveat",
+    "fb-clin",
+    "fb-clin-foot",
+    "fb-clin-in",
+    "fb-clin-k",
+    "fb-clin-q",
+    "fb-credit",
+    "fb-crumb",
+    "fb-cta",
+    "fb-cta-body",
+    "fb-cta-in",
+    "fb-figure",
+    "fb-mchips",
+    "fb-metabar",
+    "fb-note",
+    "fb-now",
+    "fb-num",
+    "fb-num-feat",
+    "fb-num-n",
+    "fb-pshot-og",
+    "fb-pub",
+    "fb-pub-src",
+    "fb-punch",
+    "fb-refs",
+    "fb-refs-h",
+    "fb-stand",
+    "fb-stat",
+    "fb-stat-big",
+    "fb-stat-k",
+    "fb-sys",
+    "fb-sys-chip",
+    "fb-tablewrap",
+    "fb-wrap"
+  ]
+}
