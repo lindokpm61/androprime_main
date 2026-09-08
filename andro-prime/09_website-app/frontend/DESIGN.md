@@ -121,9 +121,18 @@ components:
 >
 > 1. `design/mockups/directions/F-field.html` — the approved direction. Wins any disagreement.
 > 2. `styles/components/f-primitives.css` — the implementation, and what ships.
-> 3. `design/mockups/journey/*-F.html` — 13 per-page frames, drawn later. **Demonstrably drifted
->    from the direction twice** (section rhythm, container width) and are owed a sweep.
-> 4. `12_operations/automation/reconcile-f-css.js` — diffs 2 against 3 and reports.
+> 3. `design/mockups/journey/*-F.html`: 13 per-page frames, drawn later. **Demonstrably drifted
+>    from the direction twice** (section rhythm, container width).
+>    🔴 **RULED 2026-09-08 (Keith): THESE ARE PICTURES, NOT A SPEC.** Their `<style>` blocks are
+>    a 13-fold copy of the component layer and are a source of nothing. What they are still for
+>    is the LAYOUT and CONTENT of a page, which matters because 8 of the 13 draw routes that do
+>    not exist yet. Build one by taking the arrangement from the frame and the styling from the
+>    shipped components and tokens, then judge it in a browser.
+> 4. ~~`12_operations/automation/reconcile-f-css.js`~~: **RETIRED 2026-09-08.** It diffed 2
+>    against 3, which runs the comparison the wrong way round: it checked what ships against a
+>    drawing that outranks nothing. That is why its 41 conflicts needed rulings rather than
+>    fixes, and why 30 of them were frames disagreeing with each other. Replaced by six checks
+>    in `npm test` that compare the build against ITSELF. Full reasoning in the script header.
 >
 > This file exists so design tooling has product-specific ground to judge against instead of
 > generic taste. **Where it disagrees with 1 or 2, it is stale and they win.** Written 2026-08-31.
@@ -1272,10 +1281,10 @@ Recorded so they are not rediscovered as surprises.
     here checks that a page looks right, that spacing follows the rhythm, or that a photograph
     is cropped to its focal point. **Six checks now, not five:** `verify-f-scaffold.js` closed
     the "does a new page use the system at all" half of this gap on 2026-09-08, and the hero
-    assembly and the section counter are no longer hand-copied. And `12_operations/automation/reconcile-f-css.js` is still wired into
-    nothing and still reports **41 conflicts, 30 mockup-vs-mockup, 72 unpaired**; that disagreement
-    is between the mockups and the build, which is a different question from whether the build is
-    internally consistent, and it needs rulings rather than a green light.
+    assembly and the section counter are no longer hand-copied. `reconcile-f-css.js` was **retired on 2026-09-08** rather than wired in: it
+    compared the build against the journey frames, which rank below it, so its 41 conflicts were
+    a question about drawings rather than about the site. Every check that remains compares the
+    build against itself.
 11. ⚠ **The gap numbers are not in order** (1, 2, 3, 6, 7, 4, 5, 8, 9, 10, 11) and are kept as they
     are on purpose: they are cited by number from STATE.md and from commit messages, so renumbering
     would break every reference for a tidiness nobody reads.

@@ -2,6 +2,10 @@
 /**
  * reconcile-f-css.js: diff the Direction F component layer against itself.
  *
+ * 🔴 RETIRED 2026-09-08 BY KEITH'S RULING. It still runs and it still reports
+ * honestly; it is the QUESTION that stopped being worth asking. Read the section
+ * "WHY THIS IS RETIRED" below before acting on anything it prints.
+ *
  * The component layer lives in FOURTEEN independent copies: a <style> block in
  * each of the 13 journey mockups, plus frontend/styles/components/f-primitives.css
  * in the app. Nothing reconciles them, and they have already drifted from each
@@ -41,6 +45,39 @@
  * below. Anything that cannot be paired is REPORTED rather than dropped: an
  * unpaired selector is either a missing alias or a component the app has not
  * ported yet, and both are worth seeing.
+ */
+
+
+/**
+ * WHY THIS IS RETIRED (2026-09-08)
+ *
+ * This script diffs the app's component layer against the 13 journey frames.
+ * DESIGN.md's authority list ranks those frames BELOW the implementation, and
+ * records that they had already drifted from the approved direction twice and
+ * were owed a sweep. So the comparison runs the wrong way round: it checks what
+ * ships against a drawing that outranks nothing, which is why its 41 conflicts
+ * needed rulings rather than fixes, and why 30 of them are frames disagreeing
+ * with each other rather than with the site.
+ *
+ * The premise that made it worth building was that new pages would be drawn as
+ * frames and then ported. They are not. A page is now built from the shipped
+ * components and tokens and judged in a browser, which is how every Direction F
+ * ruling has actually been made. Under that method the frames' <style> blocks
+ * are never consulted, so whether they agree with the app has no consequence.
+ *
+ * The frames are kept, and each one now says so in a banner: they are pictures
+ * of pages, several of which do not exist yet, and that is still worth having.
+ *
+ * WHAT REPLACED IT. Six checks in `npm test` that compare the build against
+ * ITSELF rather than against a drawing: token existence, class existence,
+ * modifier specificity, the scaffold, the dark-panel mechanism, and the hero
+ * field's geometry. The one thing this script reported that had real content was
+ * its 72 unpaired selectors, which are components the app has not ported; that is
+ * route-coverage information, and a route-conformance report measures it against
+ * rendered routes instead of drawings.
+ *
+ * DO NOT WIRE THIS INTO A TEST SUITE. If the frames ever become a spec again,
+ * un-retire it deliberately and say why here.
  */
 
 'use strict';
