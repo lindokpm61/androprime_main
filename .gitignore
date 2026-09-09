@@ -47,3 +47,13 @@ andro-prime/09_website-app/frontend/public/carousel/
 
 # fanout harvest cache (paid SERP payloads, re-derivable; keep the staging CSV instead)
 andro-prime/06_marketing/seo-ai-search/.fanout-harvest-*.json
+
+# AI-actor film working media (Kit 2 "Same Programme", 2026-09-09). Same gate D3 rule as the
+# carousel above: git holds the recipe, Drive holds the media. 208 MB of stage 1-4 stills and
+# clips, most of it rejected takes kept for audit. The production log beside the storyboard IS committed and is the recipe:
+# it carries every job_id, so any frame or clip can be re-fetched or re-generated from it.
+andro-prime/06_marketing/content-machine/assets/kit2-same-programme/*/
+
+# Packaging renders. Heavy design artefacts, superseded often; the approved pack art is recorded
+# in 02_brand/STATE.md with its date and job_id rather than committed as bytes.
+andro-prime/02_brand/assets/packaging/renders/*.png

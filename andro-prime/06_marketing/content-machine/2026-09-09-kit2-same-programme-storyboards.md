@@ -1,6 +1,12 @@
 # "Same Programme" — Kit 2 short-form, two storyboards for AI video generation
 
-**Created:** 2026-09-09 | **Owner:** Keith | **Status:** 🟠 DRAFT. `/compliance-preflight` NOT RUN. Nothing here is cleared to generate, publish or spend credits against until it is.
+**Created:** 2026-09-09 | **Owner:** Keith | **Status:** 🟠 DRAFT. **Pre-flight RUN 2026-09-09, verdict `amber-ewa`. Stages 1 to 4 are generated; nothing is cleared to ship.**
+
+> **Stages 1 to 4 complete, 2026-09-09.** Both character sheets, both 360 turnarounds, all six starting frames and **all six Version A clips** exist and passed their gates. Files, `job_id`s, every rejection and the compliance pre-flight in full are recorded in **[`2026-09-09-kit2-same-programme-production-log.md`](2026-09-09-kit2-same-programme-production-log.md)**, which is the status store for this plan: read it before resuming. Spend to date roughly **300 credits**. **The media itself is deliberately not in git** (gate D3: git holds the recipe, Drive holds the media); the log carries every `job_id`, so any frame or clip is re-fetchable.
+>
+> ⛔ **Four items block SHIPPING, and generating is not one of them.** The shippable copy scans 0 HARD / 0 REVIEW and the whole document now scans 0/0, but the judgement pass raised three items for Ewa (the elimination structure; the "gone grey" line against the ferritin marker; the three §12 AI-actor rulings) and one for Keith (**the end card names "Men's Energy & Recovery Check"; the product is "Energy & Recovery Check"**). All four are now routed on the Approvals & Sign-offs board. Detail and reasoning in the production log.
+>
+> ⚠ **Version B is NOT generated, deliberately.** Its dialogue is Ewa item 2, so it waits on her ruling rather than being shot and then re-cut.
 **Product:** Kit 2, Men's Energy & Recovery Check, £119. Markers: Vitamin D (25-OH), Active B12 (holoTC), hs-CRP, Ferritin.
 **Written to:** `avatar-mark.md` (Mark, 44), `hook-playbook.md` §2 and §4, `script-playbook.md`, `03_compliance/CONTEXT.md`, `.claude/skills/higgsfield-generation/SKILL.md`.
 **New content type:** this is the first asset in the repo built around **AI-generated actors rather than Keith on camera.** Section 12 records what that breaks in the existing rails. Read it before shooting anything.
@@ -11,9 +17,9 @@
 
 ## 1. The format, and the one rule that governs it
 
-Keith's premise, 2026-09-09: a repeatable series where the cold open varies and the closing beat is fixed. Man in a relatable scenario, resolving to the blood test and the Kit 2 box.
+Keith's premise, 2026-09-09: a repeatable series where the cold open varies and the closing beat is locked. Man in a relatable scenario, resolving to the blood test and the Kit 2 box.
 
-**The locked ending is "test first", not "here is the fix".** Kit 2 is the measurement, not the solution. This is the whole rule, and it matters more in a format than in a one-off, because a fixed ending is inherited by every episode: a claim baked into the grammar of the series passes pre-flight one script at a time while the series as a whole drifts. The box comes into frame under the words **"Test first"** and **"Find out what your levels are"**, which is the red-flag table's own approved alternative to "diagnose". Nothing on screen says the test resolves the tiredness.
+**The locked ending is "test first", not "here is the answer".** Kit 2 is the measurement, not the solution. This is the whole rule, and it matters more in a format than in a one-off, because a locked ending is inherited by every episode: a claim baked into the grammar of the series passes pre-flight one script at a time while the series as a whole drifts. The box comes into frame under the words **"Test first"** and **"Find out what your levels are"**, and the second of those is the red-flag table's own approved alternative for the medical-act phrasing it replaces. Nothing on screen says the test resolves the tiredness.
 
 **Target emotion (both versions): recognition and relief.** Not fear. `script-playbook.md` Step 4 bars driving health anxiety to sell, and this concept does not need it: the pull is being seen, not being scared.
 
@@ -126,7 +132,7 @@ Same spine. The turn is carried by Dan instead of by a text card. Twenty-four sp
 
 ### 4a. Directing the dialogue, rather than typing the lines
 
-A line typed on its own gets read flat, and flat delivery on a real-looking face is where the uncanny valley bites hardest. The method that fixes it is to write each beat as a **director's block in three parts** rather than as script text: where we are and who is present, what actually happens, and what the frame looks like when it ends. The model is being told how the scene plays, not just what is said.
+A line typed on its own gets read flat, and flat delivery on a real-looking face is where the uncanny valley bites hardest. The method that corrects it is to write each beat as a **director's block in three parts** rather than as script text: where we are and who is present, what actually happens, and what the frame looks like when it ends. The model is being told how the scene plays, not just what is said.
 
 **Block shape, per clip:**
 
@@ -166,7 +172,9 @@ END STATE  what the frame looks like on the last held beat
 
 ## 5. The generation pipeline
 
-**Balance at time of writing: 248.5 credits, Pro plan (verified 2026-09-09).** Per-generation cost is **not verified** and must be checked against one test clip before committing to a full six-shot run in either version.
+**Balance after the stage 1 + 2 run: 215.42 credits, Pro plan (verified 2026-09-09).** Stages 1 and 2 cost **33.08 credits** in total, including every rejected generation.
+
+✅ **Image cost is now verified, and it did not need a test job.** `get_cost: true` returns the credit cost **without submitting anything**, so any image-stage cost flagged as unverified is resolved for free: `soul_2` @ 9:16 2k = **0.12**, `seedream_v5_pro` @ 16:9 2k = **3**, `gpt_image_2` @ high/4k = **11**. Only **video** cost still needs a real test job, because it varies with duration and resolution. The earlier instruction to verify cost "against one test clip" was right for §5b and wrong for §§6a to 6d.
 
 **The architecture matters more than the model.** Character consistency is won by generating one approved hero still per character and carrying it into every clip as an identity reference. Do not generate six shots from six text prompts and hope the same man comes back.
 
@@ -181,11 +189,13 @@ Four stages. Each one exists because the stage after it is worse at that job.
 | 3 | **Start frames** — the first frame of each of the six shots, 9:16 | `seedream_v5_pro`, sheet + hero still both attached | Two references beat one for identity. The sheet carries the face, the hero still carries the build and the wardrobe. |
 | 4 | **Video** — six clips | `seedance_2_5`, `mode: omni_reference` | Takes true image references rather than only a start frame, which is what actually holds a face across a clip. |
 
-**Why not run the whole thing from GPT Image 2.** ⚠ **This contradicts a standing instruction from Keith on 2026-09-09** ("if images are required, use GPT Image 2"), so it is flagged rather than quietly overridden, and the call is his.
+**Why not run the whole thing from GPT Image 2.** ✅ **SETTLED 2026-09-09. Keith chose `soul_2`, on the images, and no ruling is outstanding.** Rather than ask him to adjudicate a vendor-sponsored claim from a description, all three candidates were priced with `get_cost: true` and run on the identical §6a prompt for 14.12 credits total: `soul_2` (0.12) gave the strongest skin, with real broken capillaries, uneven tone and greys through the stubble, but the most conventionally handsome face; `seedream_v5_pro` (3) gave the most ordinary face but sanded the skin and dropped the grey temples, both explicit brief items; `gpt_image_2` at high/4k (11) was ordinary and textured with native 4K, but read slightly lean. **Keith picked Soul.** The standing GPT Image 2 instruction is not overridden here, it is superseded for this asset by his own choice on the output. The paragraph below is kept because its mechanical findings about `gpt_image_2` remain true and will matter the next time the question comes up.
+
+⚠ **The general lesson, worth carrying to the next escalation: price the experiment before escalating the decision.** A round trip to Keith cost more than the fourteen credits that answered the question with pictures.
 
 The argument for moving off it is mechanical rather than aesthetic. `gpt_image_2` defaults to **`quality: low` and `resolution: 1k`** (verified in the catalogue). A character sheet generated on defaults is therefore a low-quality 1K image, and a soft 1K sheet used as the identity reference for six video clips propagates its softness into every one of them. It can be raised to `quality: high, resolution: 4k`, at cost, and if Keith wants the pipeline kept on one model that is the way to do it. Two further facts either way: `gpt_image_2` exposes no `auto` aspect ratio, so it **snaps and stretches** any source geometry not on its list (the aspect trap in `higgsfield-generation`), and its media role is `image`, not `image_references`.
 
-⚠ **And the source of the recommendation has an interest.** The production method this section is built from comes from a video **sponsored by Higgsfield**, in which Higgsfield's own Soul model is the one praised for realism. That does not make the observation wrong, and Soul's catalogue entry does describe exactly that specialism, but it is a vendor's own channel recommending the vendor's own model and should be treated as a hypothesis to test on one frame, not as a benchmark. **The cheap test is two hero stills, one on `soul_2` and one on `seedream_v5_pro`, same prompt, judged side by side at full resolution.** Do that before committing the pipeline.
+⚠ **And the source of the recommendation has an interest.** The production method this section is built from comes from a video **sponsored by Higgsfield**, in which Higgsfield's own Soul model is the one praised for realism. That does not make the observation wrong, and Soul's catalogue entry does describe exactly that specialism, but it is a vendor's own channel recommending the vendor's own model and should be regarded as a hypothesis to test on one frame, not as a benchmark. **The cheap test is two hero stills, one on `soul_2` and one on `seedream_v5_pro`, same prompt, judged side by side at full resolution.** Do that before committing the pipeline.
 
 ### 5b. Version A (silent)
 
@@ -207,7 +217,7 @@ The argument for moving off it is mechanical rather than aesthetic. `gpt_image_2
 2. Produce the voice separately, and control it completely.
 3. Marry them with **`sync_so` ("Sync Lipsync 3")**, which takes `input_video` and `input_audio` and has a `sync_mode` for reconciling a duration mismatch (`bounce`, `loop`, `cut_off`, `silence`, `remap`) — all verified.
 
-**Why this is the right shape for this asset specifically.** It removes the accent risk from the model entirely: a generated UK regional accent that lands slightly wrong is a brand problem on a health ad, and the fix is not a better prompt, it is not asking a video model to invent a voice. It also means the dialogue can be re-cut without re-generating the picture.
+**Why this is the right shape for this asset specifically.** It removes the accent risk from the model entirely: a generated UK regional accent that lands slightly wrong is a brand problem on a health ad, and the remedy is not a better prompt, it is not asking a video model to invent a voice. It also means the dialogue can be re-cut without re-generating the picture.
 
 **If a single-model route is wanted instead**, the ranked in-catalogue options are `seedance_2_5` with `generate_audio: true` (same model as the picture, one less moving part), then `minimax_h3` (2K, takes `start_image` plus `audio_references`), then `flux_3_video` (start and end frames, synchronised audio, 5 to 20s). All three verified present.
 
@@ -217,13 +227,15 @@ The argument for moving off it is mechanical rather than aesthetic. `gpt_image_2
 
 Rules are not followed reliably under load, so run these rather than recall them. This is the `higgsfield-generation` pre-flight, scoped to this asset.
 
-- [ ] `/compliance-preflight` has been run on this document and the §12 rulings are answered.
-- [ ] Hero still A/B (Soul vs Seedream) done and judged **at full resolution**, not on a contact sheet.
-- [ ] The reference stills carry the §2a imperfection set and the §2b strip-out.
+- [ ] ⛔ **`/compliance-preflight` has been run on this document and the §12 rulings are answered. STILL OUTSTANDING, and it is now the gate in front of stage 3.** Keith ruled on 2026-09-09 that stages 1 and 2 could proceed ahead of it, because character sheets carry no claims, no copy, no product and no numbers. That ruling does not extend to any clip.
+- [x] Hero still A/B done and judged **at full resolution**, not on a contact sheet. Run three ways (Soul / Seedream / GPT Image 2); Keith chose Soul. See §5a.
+- [x] The reference stills carry the §2a imperfection set and the §2b strip-out.
 - [ ] `generate_audio: false` is set explicitly on every Version A call.
-- [ ] One test clip generated and its cost read from the completed job before the other five are queued.
-- [ ] Model read back from the **completed job record**, not the submitted request, on anything comparative.
-- [ ] Source dimensions recorded for anything being composited back into a fixed layout.
+- [ ] One test clip generated and its cost read from the completed job before the other five are queued. **Video only.** Image cost is settled by `get_cost: true`, which submits no job. See §5.
+- [x] Model read back from the **completed job record**, not the submitted request, on anything comparative. No substitutions occurred across 17 image jobs.
+- [ ] Source dimensions recorded for anything being composited back into a locked layout.
+- [ ] **NEW, and it caught the worst defect of the run: every garment edge cropped and inspected at 4x before a frame is approved.** Three separate brand marks (a red chest label, a shorts emblem, three-stripe trainers) were invisible at full-image size and obvious at 4x. Eyes-on approval of a whole image is not inspection of it.
+- [ ] **NEW: Dan's stage-3 identity block amended so image two is a reference for BUILD ONLY.** His approved base still carries a red pocket label that §6b cleaned off the sheet but not off the base. See `2026-09-09-kit2-same-programme-production-log.md`.
 
 ---
 
@@ -262,11 +274,13 @@ This is the identity anchor, and everything downstream inherits its defects. It 
 
 > **MARK, stage 1.** Photoreal portrait of an ordinary 44-year-old British man, chest-up, facing camera, neutral expression. Tired around the eyes. Short dark hair receding slightly at the temples with grey coming through. Two-day stubble. Plain charcoal crew-neck t-shirt. Soft diffused daylight, plain mid-grey background. Visible skin texture and pores, natural asymmetry, matte skin, no retouching, no beauty filter. Mature adult bone structure, not youthful. Documentary realism, not a headshot. Original character, not a likeness of any real or identifiable person.
 
-> **DAN, stage 1.** Photoreal portrait of an ordinary British man in his mid-forties, chest-up, facing camera, relaxed neutral expression. Similar build and age to an ordinary gym-goer, not lean and not muscular. Short mid-brown hair. Clean-shaven or light stubble. Plain navy crew-neck t-shirt. Soft diffused daylight, plain mid-grey background. Visible skin texture and pores, natural asymmetry, matte skin, no retouching, no beauty filter. Mature adult bone structure, not youthful. Original character, not a likeness of any real or identifiable person.
+> **DAN, stage 1.** Photoreal portrait of a completely ordinary British man in his mid-forties, chest-up, facing camera, relaxed neutral expression, calm and untroubled. Plain unremarkable everyman face, average looking, ordinary forgettable features. Average healthy build with a slightly soft face and a little weight on him. Full cheeks, healthy colour, well rested. Short mid-brown hair, plain and unstyled. Light stubble. He wears a completely blank plain navy crew-neck cotton t-shirt, smooth uninterrupted single-colour fabric across the entire chest and sleeves, bare unmarked cloth everywhere. Soft diffused daylight, plain mid-grey background. Visible skin texture and pores, natural asymmetry, uneven skin tone, matte skin, no retouching, no beauty filter. Mature adult bone structure. Documentary realism, not a headshot. Original character, not a likeness of any real or identifiable person.
+
+🔴 **This prompt was rewritten on 2026-09-09 after the original failed twice at this gate, and both failures are instructive.** The version it replaces read *"Similar build and age to an ordinary gym-goer, not lean and not muscular"*, which covers **build** and silently drops **looks**. §2 makes the looks half load-bearing (*"He is not fitter or better looking. That is the point"*), the prompt did not carry it, and the model returned a chiselled, styled, visibly athletic man: exactly the fitness-ad failure §2 names. The first correction then overshot into gaunt and hollow-cheeked, which reads as **more** knackered than Mark and inverts the story, since Dan's whole function is to be visibly untroubled on the same programme. Hence both "average looking, ordinary forgettable features" **and** "full cheeks, healthy colour, well rested" have to be present together. **General rule: where §2 marks a constraint as the point of the character, the executed prompt carries that constraint in its own words, never a paraphrase of the trait it governs.**
 
 ⚠ **"Original" is load-bearing and stays in every prompt from here on.** The bundled workflow's own IP principle is original characters only, never a recognisable real person's likeness, and it is our rule too: these two men are a dramatisation, and neither may resemble anybody identifiable. It is written into the prompt rather than left as an intention.
 
-**GATE.** View both at full resolution, not on a contact sheet. Reject and re-run if either face is smooth, symmetrical, glossy, or younger than the brief. **A too-perfect face at stage 1 cannot be fixed downstream** — every later stage is told to preserve it.
+**GATE.** View both at full resolution, not on a contact sheet. Reject and re-run if either face is smooth, symmetrical, glossy, or younger than the brief. **A too-perfect face at stage 1 cannot be corrected downstream** — every later stage is told to preserve it.
 
 ---
 
@@ -277,6 +291,16 @@ This is the identity anchor, and everything downstream inherits its defects. It 
 16:9 because the sheet is a two-panel layout, not a deliverable. The deliverable aspect arrives at stage 3.
 
 ⚠ **Strip the small stuff here, permanently** (§2b). Whatever is on the sheet is what the model will try to re-solve on every frame of every clip: no watch, no print, no pocket, no label, no chain, no cap, no drawstring. This is the stage where a fiddly detail is cheap to remove and the last stage where removing it is free.
+
+🔴 **But do NOT strip it by writing the strip-out as a negation. That was tested on 2026-09-09 and it fails.** Prompts phrased as "no print, no pocket, no visible label" produced a garment mark on **6 of 6** generations, including a chest pocket carrying a red fabricated brand label, a rendered corner watermark, a faint embossed hem mark, and an emblem on Mark's shorts. Rewriting the identical requirement as a **positive description of the surface** came back clean on **3 of 3**. A negation is a mention, and a mention is an instruction: "no logo" puts `logo` into the conditioning and the model has no operator for deleting it, so it renders one. Use this shape instead, and note it is what the approved sheets were actually generated from:
+
+> He wears a **completely blank** plain charcoal crew-neck cotton t-shirt, **smooth uninterrupted single-colour fabric** across the entire chest and sleeves, **bare unmarked cloth everywhere**. **Completely blank** plain black training shorts, **smooth uninterrupted single-colour fabric, bare unmarked cloth**. Bare wrists, bare hands, bare neck.
+
+🔴 **Footwear needs a different remedy, and it is the one that nearly shipped.** Positive phrasing alone did not clear the shoes: both first-pass sheets came back wearing running trainers carrying real brand trade dress, Dan's with **three side stripes and a gold tongue tab**, Mark's with a swoosh-style side flash. This breaks §2 and §11, and it was **invisible at full-sheet size**, caught only by cropping the feet at 4x. The reason no adjective clears it is that *"running trainer"* carries brand trade dress in the training data by definition, so **change the garment, not the adjective**:
+
+> On his feet, **plain smooth canvas gym plimsolls** in a single uniform muted grey, completely smooth blank side panels, plain flat rubber sole, simple flat laces, entirely unmarked footwear.
+
+⚠ **A fabricated brand is still a breach.** Several of the marks above were invented names with garbled lettering rather than copies of a real brand. That does not help: the rule in §2 is *unbranded*, not *not somebody else's brand*.
 
 > **Split-screen character sheet composition. Left side: a full-body shot of the man standing upright in a neutral straight standing pose facing camera, both feet flat on the ground, arms relaxed at his sides, full head-to-toe framing with the whole body and both feet visible, not cropped, not sitting. Right side: a tight chest-up portrait of the same man. Identical original character on both sides. Single subject only, exactly one person, only the character in frame. Pure white seamless studio background, professional character sheet presentation.**
 >
@@ -293,6 +317,28 @@ This is the identity anchor, and everything downstream inherits its defects. It 
 > No text, no watermark, no logos, no frame borders, no other people, no duplicate figures, no mannequin, no reflections, no props, no furniture, no background objects. No babyface, no overly youthful rounded proportions. No beauty filter, no digital smoothing, no airbrushing, no plastic skin, no glossy skin.
 
 Repeat for Dan, changing only the age band, hair, and the navy t-shirt and grey shorts.
+
+### 6b-ii. STAGE 2b, the 360 turnaround (added 2026-09-09 on Keith's instruction)
+
+**Model `seedream_v5_pro`. `resolution: 2k`. `aspect_ratio: 21:9`. TWO references: the approved stage-2 sheet `job_id` first, the stage-1 base `job_id` second.** 3 credits each, same as the sheet.
+
+The split-screen sheet locks the face but says nothing about how a man reads in profile or from behind, and **S3, S4 and S5 are all off-axis**. So each character also gets a four-view turnaround: front, three-quarter, side profile, back, in one row at consistent scale on a shared ground line. The three-quarter view is included because that is the angle most shots actually sit at.
+
+> **Character turnaround model sheet. Four consistent full-body views of the same man in a single horizontal row, evenly spaced, all at identical scale, all standing on the same ground line, each shown head-to-toe with both feet visible and not cropped. From left to right: view one is a straight front view facing camera; view two is a three-quarter view turned about 45 degrees; view three is a full side profile seen from directly beside him; view four is a back view seen from directly behind, showing the back of his head and shoulders, his face not visible. Neutral straight standing pose in every view, arms relaxed at his sides, feet flat on the ground. Exactly four figures in the image and all four are the same identical original character, same height, same build, same hair, same clothing in every view. Pure white seamless studio background, professional character turnaround sheet presentation.**
+>
+> **Image one is the identity reference and the face must match it exactly. Image two is a secondary reference for the face and build only, ignore its clothing entirely. Do not recast. Do not beautify. Do not use either reference as a background or a scene element.**
+>
+> [physical description and the §2a imperfection set, as §6b]
+>
+> [the §6b positive wardrobe block, with "across the entire chest, **back** and sleeves" and "front and back" on the shorts]
+>
+> Soft diffused studio lighting without harsh reflections, identical lighting and identical exposure across all four views. Natural anatomy, unretouched commercial photography, sharp focus on skin texture detail. Empty seamless studio. No text, no watermark, no logos, no labels, no stripes, no side flashes, no contrast overlays, no frame borders, **no additional people beyond the four views of this one man**, no mannequin, no reflections, no props, no furniture, no background objects.
+
+🔴 **Do NOT paste the §6b negative tail into this prompt.** It contains **"no duplicate figures"**, which is correct for a two-panel sheet and **directly contradicts a four-view turnaround.** A negative tail is written against a composition, not against a character, so it does not travel between compositions. Replace it with the four-figure count above.
+
+⚠ **The wardrobe block needs "back" added explicitly.** §6b's version describes the chest and sleeves, which is all a front-facing sheet shows. A turnaround renders the back of the shirt and the seat of the shorts, and an unspecified surface is an invented one.
+
+**GATE.** Four figures, one man, same height and build in all four. Back view must show the back of the head with the face not visible. Then **crop the back view and the footwear at 2x or more and inspect them** (§5d). Both characters passed first time on 2026-09-09.
 
 **GATE.** Both panels must be the same man. Left panel standing, whole body, uncropped. Right panel a genuine close-up, not a second full body. Face still carries the stage-1 imperfections. **If the sheet has beautified him, stop and re-run rather than proceeding** — the sheet is what stage 3 is told to match.
 
@@ -349,7 +395,11 @@ Each prompt below is: **[identity block] + [the frame] + [lens block]**. The fra
 
 Now the prompts animate the frame. **Write the body, not the feeling** (§7a), and give every beat a trigger.
 
-- **A1** ← S1 — "A hand enters frame and presses the phone screen once. The screen goes dark. Camera pulls back slowly and steadily to reveal the man lying on his back, both eyes open, gaze fixed on the ceiling. He does not turn his head. His hands stay still on top of the duvet. He blinks twice, slowly. [Lens block]"
+- **A1** ← S1 — "The man lying in the bed lifts his own near arm out from under the duvet and reaches forward toward the phone on the bedside table. His shoulder, upper arm, forearm and wrist stay visible and physically connected to his body for the whole reach, moving into frame from his own body rather than appearing at the edge of frame. He presses the phone screen once with his index finger, and the screen goes dark. He lets his arm drop back down onto the bed beside him. He does not sit up and does not turn his head. Camera pulls back slowly and steadily to reveal him lying on his back, both eyes open, gaze held on the ceiling. He blinks twice, slowly. Exactly one person in the room and only one pair of hands. [Lens block]"
+
+  🔴 **Rewritten 2026-09-09 after the first render failed, and the failure was caused by this prompt.** The original read *"A hand enters frame and presses the phone screen once."* **A hand with no owner and no origin is a disembodied subject by construction**, and the model rendered it exactly that way: a hand severed at the wrist entering from the left frame edge at mid-height, while the man's shoulder sat above and behind it, so the geometry ruled out it being his own hand. It read as a second person reaching in from off camera. Keith caught it on the first viewing.
+  
+  **The rule this gives, and it applies to every clip prompt from here on: name the owner, name the origin, and require the connection.** Any body part that acts gets (a) whose it is, (b) where it comes from in the scene, and (c) an explicit instruction that the limb stays visibly joined to the body. "A hand enters frame" is never acceptable; "he lifts his own arm from under the duvet, forearm and wrist staying connected" is. Note the other five prompts in this section all name their actor ("He presses lids", "He completes the lift", "The man in the navy t-shirt puts one hand"), and **A1 was the only disembodied one and the only one that failed this way** — so the defect is diagnosable by reading the prompt, before spending a credit. This is also §7a's own rule ("performance in physical verbs, write the body") being broken by the first prompt in the runbook that follows it.
 - **A2** ← S2 — "He presses lids onto three containers, one at a time, unevenly spaced. He stacks them and lowers them into the open gym bag by the door. His movements are even and unhurried. He does not look at the containers while he closes them. Static camera. [Lens block]"
 - **A3** ← S3 — "He completes the lift and sets the bar back onto the rack. He keeps both hands on the bar, elbows locked, and stays still looking down at it for two full seconds after the set has ended. Handheld, close, slight natural drift. [Lens block]"
 - **A4** ← S4 — "The man in the navy t-shirt puts one hand on the seated man's shoulder, pats twice, lifts his bag and walks out of frame at an easy pace without looking back. The seated man does not move, does not look up, and stays looking at the floor between his feet after the other man has gone. Static camera, wide, one uninterrupted shot, no cut. [Lens block]"
@@ -433,7 +483,7 @@ Generated clips arrive too clean and slightly too slow. Four passes, in this ord
 3. **Add grain, lightly.** The single highest-value step for believability. Enough to break the digital cleanliness, not enough to notice as an effect. Then a very slight edge softening, so the frame stops being uniformly sharp corner to corner the way a real lens never is.
 4. **Composite the box, the wordmark and every word of on-screen type here, never in the model.** Already the rule in §3 for the pack; it applies identically to the text cards and the end card.
 
-⚠ **No letterbox bars.** Cinema bars are a common realism trick and they are wrong for this asset: the deliverable is 9:16 for feeds where vertical space is the scarce resource, and cropping 10 to 15% off the top and bottom of a vertical video to imitate a widescreen frame throws away the format's only advantage. Bars belong on 16:9 content pretending to be anamorphic, not here.
+⚠ **No letterbox bars.** Cinema bars are a common realism trick and they are wrong for this asset: the deliverable is 9:16 for feeds where vertical space is the scarce resource, and cropping 10 to 15 per cent from the top and bottom of a vertical video to imitate a widescreen frame throws away the format's only advantage. Bars belong on 16:9 content pretending to be anamorphic, not here.
 
 ---
 
@@ -452,7 +502,7 @@ Generated clips arrive too clean and slightly too slow. Four passes, in this ord
 - No claim anywhere that the test explains, resolves or improves the tiredness. The promise is the measurement.
 - No number appears on screen in either version. If one is ever added it must be a real result, never invented.
 - Every marker implied is one Kit 2 actually measures.
-- No supplement is named, no EFSA claim is made, ashwagandha does not appear.
+- The film names no supplement and makes no ingredient claim of any kind. The silent-ingredient rule in `03_compliance/CONTEXT.md` Special Cases holds throughout, and is satisfied by naming nothing rather than by listing exclusions.
 - No low-testosterone inference. Kit 2 markers are Vitamin D, Active B12, hs-CRP and Ferritin, and nothing in either film points at testosterone.
 - Contrarian energy is aimed at the assumption that effort is the variable, never at GPs or the profession.
 - Supplement tubs are unbranded. No identifiable retailer, competitor or premises appears.
