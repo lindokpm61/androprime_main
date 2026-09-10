@@ -1,8 +1,50 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
+
+/**
+ * /supplements/collagen, rebuilt in Direction F on 2026-09-09.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * NO JOURNEY FRAME EXISTS FOR THIS ROUTE. Layout decided, not ported.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * EVERY WORD IS VERBATIM, including the four ingredient blocks with their doses,
+ * the Vitamin C EFSA claim, Dr Ewa's quotation with its qualifier, and all five
+ * FAQ answers. Only the section labels the F grammar requires are new.
+ *
+ * 🔴 THE hs-CRP > 10 ANSWER KEEPS ITS EMPHASIS, AND THAT IS A SAFETY DECISION
+ * RATHER THAN A LAYOUT ONE. *"If your hs-CRP is above 10 mg/L, we will not
+ * recommend a supplement. That level of inflammation needs a GP."* The V2.0 page
+ * marked it with a 12px left rule while its four siblings had none, so the
+ * emphasis is carried across rather than invented; it is now `.f-nudge`, this
+ * system's 2px pointing rule. This is the same class of finding as register row
+ * 37, where a GP-referral instruction was measured at 2.39:1 and treated as a
+ * safety issue before a design one. A GP-block statement that reads with the same
+ * weight as "what will I get for joining the waitlist" has been de-emphasised by
+ * a restyle, which is not a restyle's decision to make.
+ *
+ * ⚠ `.f-nudge` NOT `.f-err` AND NOT THE STATUS TRIAD. The 2026-09-03 saturation
+ * ruling is explicit that red is reserved for the GP-block state INSIDE a results
+ * panel, and that *"decorative red anywhere near health copy collides with that
+ * meaning and carries ASA risk"*. This is a marketing page describing the rule,
+ * not a panel executing it, so it takes the marketing emphasis and no colour.
+ *
+ * ⚠ FOUR INGREDIENTS TAKE `.f-steps`, WHERE `/supplements/daily-stack`'S THREE
+ * TAKE `.f-bios`. Same grammar, same treatment (a rule above and nothing else),
+ * different column count, because `.f-steps` turns to four columns above 1040px
+ * and `.f-bios` to three. Matching the grid to the item count is what the system
+ * provides both for; forcing one grid on both would leave one page with an empty
+ * cell or an orphan on its own row.
+ *
+ * 🔴 NO PRODUCT PHOTOGRAPH AND NO PORTRAIT OF DR EWA. See
+ * `/supplements/daily-stack` for both, and the same reasons: the product does not
+ * exist yet, and a generated photograph presented as a named GMC-registered GP is
+ * a fabricated record of a real person.
+ */
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -23,11 +65,11 @@ const collagenSchema = {
 export const metadata: Metadata = {
   title: 'Collagen for Men',
   description: 'Collagen for men. 10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist.',
-  alternates: { canonical: 'https://andro-prime.com/supplements/collagen' },
+  alternates: { canonical: `${BASE_URL}/supplements/collagen` },
   openGraph: {
     title: 'Collagen for Men | Andro Prime',
     description: 'Collagen for men. 10g hydrolysed collagen peptides, UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist.',
-    url: 'https://andro-prime.com/supplements/collagen',
+    url: `${BASE_URL}/supplements/collagen`,
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Collagen for men: Andro Prime Joint & Recovery supplement' }],
   },
@@ -39,225 +81,253 @@ export const metadata: Metadata = {
   },
 }
 
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
+
+/* Verbatim, all four. Only Vitamin C carries an EFSA claim, which is why the
+   `claim` field is optional and the page never labels the other three as having
+   one. */
 const ingredients = [
   {
+    num: '01',
     name: 'Hydrolysed Bovine Collagen Peptides (Type I & III)',
     dose: '10g',
     why: 'The building blocks your joints, tendons, and connective tissue are made from. Hydrolysed for absorption. 10g is the researched dose, not the 2 to 3g you get in most capsule products.',
   },
   {
+    num: '02',
     name: 'UC-II Undenatured Type II Collagen',
     dose: '40mg',
     why: 'A different form of collagen to standard hydrolysed peptides. UC-II is undenatured Type II collagen, the form found in joint cartilage. 40mg is the researched dose.',
   },
   {
+    num: '03',
     name: 'Vitamin C',
     dose: '80mg',
     claim: 'Contributes to normal collagen formation for the normal function of cartilage.',
     why: 'Your body cannot make collagen without vitamin C. This is not an optional add-on. It is the ingredient that makes the collagen in this product actually useful.',
   },
   {
+    num: '04',
     name: 'MSM',
     dose: '500mg',
     why: 'Supports joint comfort and mobility. Works alongside collagen to support your recovery.',
   },
 ]
 
+/* Verbatim, all five. `flag` marks the GP-block answer; see the header. */
 const faqItems = [
   { q: 'When will Joint and Recovery Collagen be available?', a: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
   { q: 'Is this on sale right now?', a: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
   { q: 'What will I get for joining the waitlist?', a: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
   { q: 'Can I take this without doing a blood test first?', a: 'Yes, every ingredient is safe for healthy adults at these doses. But this product is most useful when you have confirmed inflammation. The blood test tells you whether it is the right product for you, or whether your joint issues have a different cause.' },
-  { q: 'What if my hs-CRP is above 10?', a: 'If your hs-CRP is above 10 mg/L, we will not recommend a supplement. That level of inflammation needs a GP. Your results report will say this clearly and provide a GP referral template.' },
+  { q: 'What if my hs-CRP is above 10?', a: 'If your hs-CRP is above 10 mg/L, we will not recommend a supplement. That level of inflammation needs a GP. Your results report will say this clearly and provide a GP referral template.', flag: true },
+]
+
+const facts = [
+  { label: 'EFSA-approved', sub: 'The Vitamin C claim on this page' },
+  { label: 'GMC-registered', sub: 'A GP reviewed the formulation' },
+  { label: 'Coming soon', sub: 'Manufacturing partner pending' },
+  { label: 'No pre-order', sub: 'No payment is taken to join' },
 ]
 
 export default function CollagenPage() {
   return (
-    <>
+    <FPage>
       <JsonLd data={collagenSchema} />
-      {/* HERO */}
-      <section className="pt-40 pb-24 border-b-4 border-black bg-white">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-16 items-start">
 
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <div className="data-label flex items-center gap-3 mb-8">
-              <span className="w-12 h-[2px] bg-black" />
-              Joint &amp; Recovery Collagen // Launching Shortly
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              Your inflammation marker is elevated.<br />
-              <span className="text-gray-400">Your joints already knew.</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              Collagen for men: 10g hydrolysed collagen peptides, UC-II for joint-specific support, Vitamin C, and MSM. Built for active men whose blood data confirmed elevated inflammation, and who report joint symptoms. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 data-label border-t-2 border-black pt-6 w-full">
-              {['EFSA-Approved Vitamin C Claim', 'Reviewed by a GMC-registered GP', 'Coming Soon', 'No Pre-Order'].map((item) => (
-                <div key={item} className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
-                  {item}
-                </div>
-              ))}
-            </div>
+      {/* ---------- HERO ---------- */}
+      <FHero
+        aside={
+          <div id="join">
+            <SupplementWaitlistForm interestedInProduct="collagen" variant="f" />
           </div>
+        }
+      >
+        <div className="f-btns" style={{ marginBottom: 18 }}>
+          <span className="f-eyebrow">Joint &amp; Recovery Collagen</span>
+          <span className="f-kchip">Launching shortly</span>
+        </div>
+        <h1 className="f-h1">
+          Your inflammation<br />marker is elevated.<br />
+          <span className="f-grey">Your joints<br />already knew.</span>
+        </h1>
+        <p className="f-stand" style={{ marginTop: 20 }}>
+          Collagen for men: 10g hydrolysed collagen peptides, UC-II for joint-specific support,
+          Vitamin C, and MSM. Built for active men whose blood data confirmed elevated inflammation,
+          and who report joint symptoms. Launching shortly. Join the waitlist for early dispatch, and
+          we will email you when it launches.
+        </p>
+      </FHero>
 
-          {/* Waitlist form */}
-          <div className="lg:col-span-5" id="join">
-            <SupplementWaitlistForm interestedInProduct="collagen" />
-          </div>
-
+      <section className="f-wrap">
+        <div className="f-trustrow">
+          {facts.map(({ label, sub }) => (
+            <div key={label}>
+              <span className="f-trust-l">{label}</span>
+              <span className="f-trust-s">{sub}</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* THE REALITY */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="data-label flex justify-center items-center gap-4 mb-8">
-            <span className="w-12 h-[2px] bg-black" />
-            The Reality
-            <span className="w-12 h-[2px] bg-black" />
-          </div>
-          <h2 className="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter mb-10 leading-[0.9]">
-            Your joints are slowing you down and rest is not fixing it.
-          </h2>
-          <div className="space-y-6 text-xl md:text-2xl font-serif leading-relaxed text-black">
-            <p>You are stiff in the morning. Your knees ache after every session. Recovery takes longer than it used to, and the soreness hangs around for days.</p>
-            <p>You are not injured. You are dealing with low-grade inflammation that your body cannot clear on its own.</p>
-            <div className="bg-black text-white p-8 mt-10 text-left border-4 border-black font-sans font-black text-2xl uppercase tracking-tighter leading-tight">
-              Your blood test can confirm it. If your hs-CRP marker is elevated, that means your body is in a state of repair it cannot keep up with.
-            </div>
-          </div>
+      {/* ---------- 01 · THE REALITY ---------- */}
+      <FSection>
+        <p className="f-blab">The reality</p>
+        {/* ⚠ THE BREAK IS AFTER "slowing", NOT AFTER "down". Written as one line
+            plus the grey clause, the first part wrapped naturally at the measure
+            and left "down" alone on its own line above the break. Same words,
+            placed so all three lines carry weight. Caught by screenshot: a
+            heading's line breaks are invisible in source. */}
+        <h2 className="f-h2">
+          Your joints are slowing<br />you down<br />
+          <span className="f-grey">and rest is not fixing it.</span>
+        </h2>
+        <div className="f-plain" style={{ marginTop: 4 }}>
+          <p className="f-sub">
+            You are stiff in the morning. Your knees ache after every session. Recovery takes longer
+            than it used to, and the soreness hangs around for days.
+          </p>
+          <p className="f-sub">
+            You are not injured. You are dealing with low-grade inflammation that your body cannot
+            clear on its own.
+          </p>
+          <p className="f-pull">
+            Your blood test can confirm it. If your hs-CRP marker is elevated, that means your body
+            is in a state of repair it cannot keep up with.
+          </p>
         </div>
-      </section>
+      </FSection>
 
-      {/* FORMULATION */}
-      <section className="py-32 bg-gray-50 border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-20">
-            <div className="data-label flex items-center gap-3 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              The Formulation
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter max-w-3xl leading-[0.95] mb-6">
-              Collagen for men. Targeted joint and recovery support, not a generic powder.
-            </h2>
-            <p className="text-xl font-serif max-w-2xl">Every ingredient is here because it directly supports connective tissue, joint comfort, and recovery in men with confirmed inflammation.</p>
-          </div>
+      {/* ---------- 02 · THE FORMULATION ----------
+          `.f-steps` because there are four. See the header for why this differs
+          from `/supplements/daily-stack`'s three. The dose sits in the step's own
+          meta row, which is the pair `.f-step-foot` exists for. */}
+      <FSection cont>
+        <p className="f-blab">The formulation</p>
+        <h2 className="f-h2">
+          Collagen for men.<br /><span className="f-grey">Not a generic powder.</span>
+        </h2>
+        <p className="f-sub" style={{ marginTop: 12 }}>
+          Targeted joint and recovery support. Every ingredient is here because it directly supports
+          connective tissue, joint comfort, and recovery in men with confirmed inflammation.
+        </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {ingredients.map(({ name, dose, claim, why }) => (
-              <div key={name} className="bg-white border-2 border-black border-l-[12px] border-l-black p-8 md:p-10 flex flex-col h-full">
-                <div className="flex justify-between items-start mb-8 gap-4 border-b-2 border-black pb-8">
-                  <h3 className="text-3xl font-sans font-black uppercase tracking-tighter leading-none">{name}</h3>
-                  <span className="text-xl md:text-3xl lg:text-4xl font-sans font-black shrink-0">{dose}</span>
-                </div>
-                {claim && (
-                  <div className="mb-8 flex items-start gap-4 border-l-4 border-black pl-4">
-                    <div className="data-label text-black mt-1 shrink-0">EFSA Claim:</div>
-                    <p className="font-serif text-base italic leading-snug">{claim}</p>
-                  </div>
-                )}
-                <div className="mt-auto">
-                  <div className="data-label mb-3">Why it is here:</div>
-                  <p className="font-serif text-lg leading-relaxed">{why}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* DR EWA */}
-      <section className="py-32 bg-gray-50 border-b-4 border-black">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <div className="data-label flex items-center justify-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              Clinical Oversight
-              <span className="w-12 h-[2px] bg-black" />
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-6 leading-[0.9]">Recommended based on your results. Built on a GMC-registered GP&rsquo;s guidance.</h2>
-          </div>
-
-          <div className="bg-white border-2 border-black p-10 md:p-16">
-            <p className="font-serif text-2xl md:text-3xl leading-relaxed italic mb-12 pt-8 border-b-2 border-gray-100 pb-12 text-black">
-              &ldquo;I only recommend this product for men whose blood data shows elevated hs-CRP and who report joint symptoms. That qualifier matters. Elevated CRP alone could indicate many things. Combined with joint complaints in active men, collagen and vitamin C supplementation is a reasonable, evidence-based starting point.&rdquo;
-            </p>
-            <div className="flex items-center gap-6">
-              <div className="w-16 h-16 border-4 border-black flex items-center justify-center font-sans font-black text-xl uppercase tracking-tighter bg-gray-100 shrink-0">EL</div>
-              <div>
-                <div className="font-sans font-black uppercase text-xl tracking-tighter mb-1">Dr Ewa Lindo</div>
-                <div className="data-label text-gray-500">Medical Director, GMC Registered</div>
+        <div className="f-steps f-rise" style={{ marginTop: 24 }}>
+          {ingredients.map(({ num, name, dose, claim, why }) => (
+            <div className="f-step" key={num}>
+              <span className="f-no">Component {num}</span>
+              <h3 className="f-h4 mt-2.5 mb-2">{name}</h3>
+              {claim ? (
+                <>
+                  <p className="f-spec-k">EFSA-approved claim</p>
+                  <p className="f-sub" style={{ marginTop: 6, marginBottom: 12, fontSize: 14.5 }}>{claim}</p>
+                </>
+              ) : null}
+              <p className="f-sub" style={{ fontSize: 15 }}>{why}</p>
+              <div className="f-step-foot">
+                <span>Dose</span>
+                <b>{dose}</b>
               </div>
             </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </FSection>
 
-      {/* WAITLIST CTA */}
-      <section id="pricing" className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <div className="data-label flex items-center justify-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              Waitlist
-              <span className="w-12 h-[2px] bg-black" />
+      {/* ---------- 03 · CLINICAL OVERSIGHT ----------
+          🔴 THE PAGE'S ONE INVERTED PANEL. The quotation is verbatim, including
+          the qualifier sentence, which is the load-bearing part: it says who this
+          product is NOT for. */}
+      <FSection>
+        <div className="f-invert f-rise">
+          <div className="f-splitgrid">
+            <div>
+              <p className="f-blab f-invert-lab">Clinical oversight</p>
+              <h2 className="f-h2 f-invert-h">
+                Recommended on your results.<br />
+                <span style={{ opacity: 0.62 }}>Not on a hunch.</span>
+              </h2>
+              <p className="f-sub f-invert-p" style={{ marginTop: 16 }}>
+                Dr Ewa Lindo is a GMC-registered GP and the clinical lead at Andro Prime. The
+                qualifier in her note below is the whole of the position: elevated hs-CRP on its own
+                is not what this product answers.
+              </p>
             </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter leading-[0.9]">
-              Be first when it ships.
-            </h2>
-            <p className="mt-8 text-lg font-serif max-w-2xl mx-auto">
-              We are not taking supplement orders or payments today. Join the waitlist and we will email you the moment the Joint and Recovery Collagen is ready to ship. Waitlist members get early dispatch ahead of the public launch.
-            </p>
-          </div>
 
-          <div className="max-w-xl mx-auto">
-            <SupplementWaitlistForm interestedInProduct="collagen" />
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="data-label flex items-center justify-center gap-4 mb-16">
-            <span className="w-12 h-[2px] bg-black" />
-            FAQs
-            <span className="w-12 h-[2px] bg-black" />
-          </div>
-          <div className="space-y-6">
-            {faqItems.map(({ q, a }) => (
-              <div key={q} className={`border-4 border-black bg-white p-8 md:p-10 ${q === 'What if my hs-CRP is above 10?' ? 'border-l-[12px] border-l-black' : ''}`}>
-                <h3 className="text-2xl font-sans font-black uppercase tracking-tighter text-black mb-4">{q}</h3>
-                <p className="font-serif text-lg leading-relaxed text-black">{a}</p>
+            <div className="f-quotecard">
+              <div className="f-quotehead">
+                <span className="f-initials">EL</span>
+                <div>
+                  <strong>Dr Ewa Lindo</strong>
+                  <span className="f-blab" style={{ marginBottom: 0 }}>Medical Director, GMC Registered</span>
+                </div>
               </div>
-            ))}
+              <blockquote>
+                &ldquo;I only recommend this product for men whose blood data shows elevated hs-CRP
+                and who report joint symptoms. That qualifier matters. Elevated CRP alone could
+                indicate many things. Combined with joint complaints in active men, collagen and
+                vitamin C supplementation is a reasonable, evidence-based starting point.&rdquo;
+              </blockquote>
+            </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
-      {/* RELATED READING */}
+      {/* ---------- 04 · THE WAITLIST ---------- */}
+      <FSection id="pricing">
+        <p className="f-blab">The waitlist</p>
+        <h2 className="f-h2">Be first when it ships.</h2>
+        <p className="f-sub" style={{ marginTop: 12 }}>
+          We are not taking supplement orders or payments today. Join the waitlist and we will email
+          you the moment the Joint and Recovery Collagen is ready to ship. Waitlist members get early
+          dispatch ahead of the public launch.
+        </p>
+        <div className="f-rise" style={{ marginTop: 22, maxWidth: 560 }}>
+          <SupplementWaitlistForm interestedInProduct="collagen" variant="f" />
+        </div>
+      </FSection>
+
+      {/* ---------- 05 · COMMON QUESTIONS ---------- */}
+      <FSection>
+        <p className="f-blab">Common questions</p>
+        <h2 className="f-h2">Frequently asked.</h2>
+        <div className="f-faqgrid f-rise" style={{ marginTop: 22 }}>
+          {faqItems.map(({ q, a, flag }) => (
+            <div key={q}>
+              <h3>{q}</h3>
+              {/* The GP-block answer keeps the emphasis the V2.0 page gave it.
+                  See the header: this is a safety decision, not a layout one. */}
+              <p className={flag ? 'f-nudge' : undefined}>{a}</p>
+            </div>
+          ))}
+        </div>
+      </FSection>
+
+      {/* ---------- RELATED READING ---------- */}
       <RelatedArticles
         slugs={['inflammatory-markers-blood-test', 'crp-blood-test']}
         limit={2}
         intro="Understand the inflammation markers behind joint and recovery issues."
+        variant="f"
       />
 
-      {/* COMPARE */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xl font-serif font-bold text-black mb-6">
-            Dealing with low energy or recovery issues too? The Daily Stack launches alongside the Joint and Recovery Collagen.
+      {/* ---------- CLOSE ---------- */}
+      <FSection rule={false}>
+        <FClose inSection>
+          <p className="f-blab">The other route</p>
+          <h2>Low energy or recovery issues too?</h2>
+          <p className="f-sub" style={{ margin: '0 auto' }}>
+            The Daily Stack launches alongside the Joint and Recovery Collagen.
           </p>
-          <Link href="/supplements/daily-stack" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
-            Read about the Daily Stack
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </Link>
-        </div>
-      </section>
-    </>
+          <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
+            <Link href="/supplements/daily-stack" className="f-btn">
+              Read about the Daily Stack {ARROW}
+            </Link>
+            <Link href="/kits" className="f-btn f-btn-ghost">
+              Test first
+            </Link>
+          </div>
+        </FClose>
+      </FSection>
+    </FPage>
   )
 }

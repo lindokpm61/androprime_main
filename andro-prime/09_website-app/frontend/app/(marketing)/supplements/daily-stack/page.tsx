@@ -1,8 +1,48 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
+
+/**
+ * /supplements/daily-stack, rebuilt in Direction F on 2026-09-09.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * NO JOURNEY FRAME EXISTS FOR THIS ROUTE. Layout decided, not ported.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * EVERY WORD IS VERBATIM. The headline, standfirst, the three "reality"
+ * paragraphs, all three ingredient blocks with their doses and their EFSA
+ * claims, Dr Ewa's quotation, the waitlist paragraph and all five FAQ answers
+ * are byte-identical to the V2.0 page. The changes are the section labels the F
+ * grammar requires and the eyebrow split (see `/supplements`).
+ *
+ * 🔴 THE THREE EFSA CLAIM SENTENCES CARRY THEIR OWN QUOTE MARKS IN THE SOURCE
+ * DATA AND THEY STAY. `'"Contributes to the maintenance of normal testosterone
+ * levels."'` is stored with its quotation marks because it is a QUOTATION of an
+ * approved wording rather than a sentence this page wrote, and the V2.0 page
+ * rendered them. Stripping them would make an approved third-party form of words
+ * read as our own claim about our own product, which is the distinction the
+ * whole EFSA regime turns on.
+ *
+ * 🔴 NO PRODUCT PHOTOGRAPH. The Daily Stack does not exist yet: the page says so
+ * five times, and the waitlist exists because a manufacturing partner is not yet
+ * confirmed. A generated image of a tub or a capsule would be a picture of a
+ * product nobody has made, on a page whose compliance position is that no orders
+ * are being taken. See `/supplements` for the same note and the `PRODUCT.md`
+ * rule behind it.
+ *
+ * 🔴 NO PORTRAIT OF DR EWA, for the reason `/about` and `/contact` record: a
+ * generated photograph presented as a named GMC-registered GP is a fabricated
+ * record of a real person. She is `.f-initials`, which is what
+ * `/how-it-works` already does on the identical block.
+ *
+ * ⚠ WHERE THIS PAGE SPENDS ITS ONE INVERTED PANEL: section 03, clinical
+ * oversight. Same subject and same treatment as `/how-it-works`, which is
+ * deliberate rather than duplicated: the constraint is one per PAGE, and on a
+ * page selling a formulation the clinical sign-off is the conformity statement.
+ */
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -23,11 +63,11 @@ const dailyStackSchema = {
 export const metadata: Metadata = {
   title: 'Men\'s Multivitamin: Zinc, B12 & Vitamin D3',
   description: 'A men\'s multivitamin built around blood data: Zinc, Active B12, and Vitamin D3 in one daily product. EFSA-approved claims. Join the waitlist.',
-  alternates: { canonical: 'https://andro-prime.com/supplements/daily-stack' },
+  alternates: { canonical: `${BASE_URL}/supplements/daily-stack` },
   openGraph: {
     title: 'Men\'s Multivitamin: Daily Stack | Andro Prime',
     description: 'A men\'s multivitamin built around blood data: Zinc, Active B12, and Vitamin D3 in one daily product. Launching shortly. Join the waitlist.',
-    url: 'https://andro-prime.com/supplements/daily-stack',
+    url: `${BASE_URL}/supplements/daily-stack`,
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Men\'s multivitamin: Andro Prime Daily Stack' }],
   },
@@ -39,6 +79,9 @@ export const metadata: Metadata = {
   },
 }
 
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
+
+/* Verbatim, quotation marks included. See the header. */
 const ingredients = [
   {
     name: 'Zinc',
@@ -64,6 +107,7 @@ const ingredients = [
   },
 ]
 
+/* Verbatim, all five. */
 const faqItems = [
   { q: 'When will the Daily Stack be available?', a: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
   { q: 'Is the Daily Stack on sale right now?', a: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
@@ -72,192 +116,228 @@ const faqItems = [
   { q: 'Why no iron?', a: 'Iron supplementation without medical supervision carries a toxicity risk. If your Ferritin came back low, your results report will recommend dietary changes and, if very low, a GP referral. We do not include iron in any of our supplements.' },
 ]
 
+/* The four hero facts, verbatim, in the row `/membership` and `/about` use.
+   `.f-trust-l` uppercases, which is why each label is short and each qualifier
+   sits in the sub, where it is not uppercased. */
+const facts = [
+  { label: 'EFSA-approved', sub: 'Every claim on this page' },
+  { label: 'GMC-registered', sub: 'A GP reviewed the formulation' },
+  { label: 'Coming soon', sub: 'Manufacturing partner pending' },
+  { label: 'No pre-order', sub: 'No payment is taken to join' },
+]
+
 export default function DailyStackPage() {
   return (
-    <>
+    <FPage>
       <JsonLd data={dailyStackSchema} />
-      {/* HERO */}
-      <section className="relative pt-16 pb-24 overflow-hidden bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
 
-          <div className="flex flex-col items-start">
-            <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-white mb-8">
-              <span className="w-2 h-2 bg-black" />
-              <span className="data-label !text-[10px]">Daily Stack // Launching Shortly</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-6xl md:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              Your blood test told you what is missing.<br />
-              <span className="text-gray-400">This is built to fill the gaps.</span>
-            </h1>
-
-            <p className="text-xl text-black font-serif mb-12 leading-relaxed max-w-lg">
-              A men&rsquo;s multivitamin built around what your blood data actually shows: Zinc, Active B12, and Vitamin D3 in one daily product. Dosed properly. No fillers. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-y-4 gap-x-6 data-label pt-6 border-t-2 border-black w-full">
-              {['EFSA-Approved Claims', 'Reviewed by a GMC-registered GP', 'Coming Soon', 'No Pre-Order'].map((item) => (
-                <div key={item} className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><polyline points="20 6 9 17 4 12" /></svg>
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Waitlist form */}
+      {/* ---------- HERO ---------- */}
+      <FHero
+        aside={
           <div id="join">
-            <SupplementWaitlistForm interestedInProduct="daily-stack" />
+            <SupplementWaitlistForm interestedInProduct="daily-stack" variant="f" />
           </div>
+        }
+      >
+        <div className="f-btns" style={{ marginBottom: 18 }}>
+          <span className="f-eyebrow">Daily Stack</span>
+          <span className="f-kchip">Launching shortly</span>
+        </div>
+        {/* ⚠ EVERY BREAK IS EXPLICIT, AND THE BUDGET IS ABOUT 20 CHARACTERS.
+            `.f-h1` clamps to 65.6px and the hero's left column is ~650px at 1440,
+            so a line longer than that wraps and leaves an orphan: written with one
+            break this rendered as "Your blood test told / you" and "This is built
+            to fill the / gaps." Same words, four deliberate lines. Heading breaks
+            are invisible in source and only a render shows them. */}
+        <h1 className="f-h1">
+          Your blood test told<br />you what is missing.<br />
+          <span className="f-grey">This is built<br />to fill the gaps.</span>
+        </h1>
+        <p className="f-stand" style={{ marginTop: 20 }}>
+          A men&rsquo;s multivitamin built around what your blood data actually shows: Zinc, Active
+          B12, and Vitamin D3 in one daily product. Dosed properly. No fillers. Launching shortly.
+          Join the waitlist for early dispatch, and we will email you when it launches.
+        </p>
+      </FHero>
 
+      <section className="f-wrap">
+        <div className="f-trustrow">
+          {facts.map(({ label, sub }) => (
+            <div key={label}>
+              <span className="f-trust-l">{label}</span>
+              <span className="f-trust-s">{sub}</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* THE PROBLEM */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="data-label flex items-center gap-4 mb-8">
-            <span className="w-12 h-[2px] bg-black" />
-            The Reality
-          </div>
-          <h2 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-12">
-            You are already supplementing.<br />
-            <span className="text-gray-400">You are probably guessing.</span>
-          </h2>
-          <div className="space-y-8 text-2xl text-black font-serif leading-relaxed">
-            <p>Most men buy supplements based on a blog post, a mate&rsquo;s recommendation, or whatever is on offer at the supermarket. They do not know what they are actually low in.</p>
-            <p>They take too much of some things and not enough of others. That is money wasted on pills that are not doing anything.</p>
-            <div className="pl-8 border-l-[6px] border-black py-4 bg-gray-50 mt-12">
-              <p className="text-black font-serif italic font-bold">Your blood test changes that. You know exactly what is low. The Daily Stack is built around what your results showed.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FORMULATION */}
-      <section className="py-32 bg-gray-50 border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-20">
-            <div className="data-label flex items-center gap-4 mb-6">
-              <span className="w-12 h-[2px] bg-black" />
-              The Formulation
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-6 max-w-3xl">
-              A men&rsquo;s multivitamin, done properly. Three active ingredients, each backed by an EFSA-approved health claim.
-            </h2>
-            <p className="text-black font-serif text-xl leading-relaxed max-w-2xl">
-              Nothing unnecessary. No proprietary blend hiding cheap fillers. Every ingredient is here because blood data says it is the gap that matters.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {ingredients.map(({ name, num, dose, doseSub, claim, why }) => (
-              <div key={num} className="bg-white border-2 border-black p-10 flex flex-col">
-                <div className="flex justify-between items-start mb-8 pb-8 border-b-2 border-black">
-                  <div>
-                    <h3 className="text-4xl font-sans font-black uppercase tracking-tighter text-black mb-2">{name}</h3>
-                    <div className="data-label !text-white bg-black px-3 py-1.5 inline-flex">Formulation Component {num}</div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-3xl font-sans font-black text-black block">{dose}</span>
-                    {doseSub && <span className="data-label">{doseSub}</span>}
-                  </div>
-                </div>
-                <div className="mb-10">
-                  <div className="data-label text-gray-500 mb-3">EFSA Approved Claim</div>
-                  <p className="text-lg font-serif italic text-black border-l-4 border-black pl-4">{claim}</p>
-                </div>
-                <div className="mt-auto">
-                  <div className="data-label text-black mb-3">Why it is here</div>
-                  <p className="text-base text-black font-serif leading-relaxed">{why}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* DR EWA */}
-      <section className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="data-label flex items-center gap-4 mb-6">
-            <span className="w-12 h-[2px] bg-black" />
-            Clinical Oversight
-          </div>
-          <h2 className="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter mb-16 max-w-2xl">
-            Formulated with clinical input. Not a marketing department.
-          </h2>
-          <div className="p-10 md:p-16 flex flex-col md:flex-row gap-12 items-center bg-gray-50 border-2 border-black">
-            <div className="w-48 h-48 shrink-0 bg-white border-4 border-black flex items-center justify-center">
-              <span className="font-sans font-black uppercase text-4xl">EL</span>
-            </div>
-            <div>
-              <p className="text-2xl md:text-3xl text-black font-serif italic leading-relaxed mb-8 border-l-4 border-black pl-8">
-                &ldquo;I reviewed this formulation against the biomarkers we test in our kits. The doses are evidence-based, the forms are bioavailable, and every claim is EFSA-approved. If your results show a deficiency, this is what I would recommend.&rdquo;
-              </p>
-              <div className="pl-8">
-                <div className="text-xl font-sans font-black uppercase tracking-tight text-black">Dr Ewa Lindo</div>
-                <div className="data-label text-gray-600 mt-1">Medical Director, GMC Registered</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* WAITLIST CTA */}
-      <section id="order" className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="data-label flex items-center justify-center gap-4 mb-6 text-center">
-            <span className="w-12 h-[2px] bg-black" />
-            Waitlist
-            <span className="w-12 h-[2px] bg-black" />
-          </div>
-          <h2 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter mb-12 text-center">
-            Be first when it ships.
-          </h2>
-          <p className="text-center text-lg font-serif max-w-2xl mx-auto mb-10">
-            We are not taking supplement orders or payments today. Join the waitlist and we will email you the moment the Daily Stack is ready to ship. Waitlist members get early dispatch ahead of the public launch.
+      {/* ---------- 01 · THE REALITY ----------
+          Uncontained prose. The V2.0 page put the closing line in a grey box with
+          a 6px left rule; `.f-pull` is this system's version of that device and
+          the words are unchanged. */}
+      <FSection>
+        <p className="f-blab">The reality</p>
+        <h2 className="f-h2">
+          You are already supplementing.<br />
+          <span className="f-grey">You are probably guessing.</span>
+        </h2>
+        <div className="f-plain" style={{ marginTop: 4 }}>
+          <p className="f-sub">
+            Most men buy supplements based on a blog post, a mate&rsquo;s recommendation, or whatever
+            is on offer at the supermarket. They do not know what they are actually low in.
           </p>
-          <div className="max-w-xl mx-auto">
-            <SupplementWaitlistForm interestedInProduct="daily-stack" />
-          </div>
+          <p className="f-sub">
+            They take too much of some things and not enough of others. That is money wasted on pills
+            that are not doing anything.
+          </p>
+          <p className="f-pull">
+            Your blood test changes that. You know exactly what is low. The Daily Stack is built
+            around what your results showed.
+          </p>
         </div>
-      </section>
+      </FSection>
 
-      {/* FAQ */}
-      <section className="py-32 bg-gray-50 border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter mb-16 text-center">Frequently Asked Questions</h2>
-          <div className="border-t-4 border-black">
-            {faqItems.map(({ q, a }) => (
-              <div key={q} className="border-b-4 border-black py-8">
-                <h3 className="font-sans font-black uppercase text-2xl tracking-tighter text-black mb-4">{q}</h3>
-                <p className="font-serif text-xl text-black leading-relaxed">{a}</p>
+      {/* ---------- 02 · THE FORMULATION ----------
+          ⚠ `.f-bios` AND NOT A GRID OF CARDS. Three ingredient descriptions are
+          prose with a number attached, and the containment ruling of 2026-09-02
+          is explicit that a card holds a transaction or an instrument and prose
+          gets neither. The dose takes `.f-price`, which is the system's large
+          value face and already carries `tabular-nums`, so 25mg / 4,000 IU /
+          1,000mcg align down the row rather than shuffling. */}
+      <FSection cont>
+        <p className="f-blab">The formulation</p>
+        <h2 className="f-h2">
+          A men&rsquo;s multivitamin,<br /><span className="f-grey">done properly.</span>
+        </h2>
+        <p className="f-sub" style={{ marginTop: 12 }}>
+          Three active ingredients, each backed by an EFSA-approved health claim. Nothing
+          unnecessary. No proprietary blend hiding cheap fillers. Every ingredient is here because
+          blood data says it is the gap that matters.
+        </p>
+
+        <div className="f-bios f-rise" style={{ marginTop: 24 }}>
+          {ingredients.map(({ name, num, dose, doseSub, claim, why }) => (
+            <div className="f-bio" key={num}>
+              <p className="f-blab">Component {num}</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
+                <h3 style={{ margin: 0 }}>{name}</h3>
+                <span className="f-price" style={{ fontSize: '1.35rem', flex: 'none' }}>{dose}</span>
               </div>
-            ))}
+              {doseSub ? <p className="f-spec-k" style={{ marginTop: 6 }}>{doseSub}</p> : null}
+
+              {/* ⚠ NO `.f-well` HERE, THOUGH `/supplements` USES ONE FOR THE SAME
+                  SENTENCE. `.f-well` is a `--sunk` ground *inside a `.f-core`*,
+                  which is what that page has and this one does not: these
+                  ingredient blocks are uncontained under the containment ruling,
+                  so a well would be a recessed box floating on bare paper with
+                  nothing to be recessed into. The mono key is the boundary
+                  instead, which is exactly how `.f-spec` marks a key and its
+                  value, and it is the same device the "Why it is here" pair below
+                  uses. */}
+              <p className="f-spec-k" style={{ marginTop: 18 }}>EFSA-approved claim</p>
+              <p className="f-sub" style={{ marginTop: 6, fontSize: 14.5 }}>{claim}</p>
+
+              <p className="f-spec-k" style={{ marginTop: 18 }}>Why it is here</p>
+              <p style={{ marginTop: 6 }}>{why}</p>
+            </div>
+          ))}
+        </div>
+      </FSection>
+
+      {/* ---------- 03 · CLINICAL OVERSIGHT ----------
+          🔴 THE PAGE'S ONE INVERTED PANEL. Dr Ewa's quotation is verbatim. */}
+      <FSection>
+        <div className="f-invert f-rise">
+          <div className="f-splitgrid">
+            <div>
+              <p className="f-blab f-invert-lab">Clinical oversight</p>
+              <h2 className="f-h2 f-invert-h">
+                Formulated with clinical input.<br />
+                <span style={{ opacity: 0.62 }}>Not a marketing department.</span>
+              </h2>
+              <p className="f-sub f-invert-p" style={{ marginTop: 16 }}>
+                Dr Ewa Lindo is a GMC-registered GP and the clinical lead at Andro Prime. She
+                reviewed this formulation against the biomarkers the kits measure, which is the same
+                review every results report goes through before it reaches a customer.
+              </p>
+            </div>
+
+            <div className="f-quotecard">
+              <div className="f-quotehead">
+                <span className="f-initials">EL</span>
+                <div>
+                  <strong>Dr Ewa Lindo</strong>
+                  <span className="f-blab" style={{ marginBottom: 0 }}>Medical Director, GMC Registered</span>
+                </div>
+              </div>
+              <blockquote>
+                &ldquo;I reviewed this formulation against the biomarkers we test in our kits. The
+                doses are evidence-based, the forms are bioavailable, and every claim is
+                EFSA-approved. If your results show a deficiency, this is what I would
+                recommend.&rdquo;
+              </blockquote>
+            </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
-      {/* RELATED READING */}
+      {/* ---------- 04 · THE WAITLIST ---------- */}
+      <FSection id="order">
+        <p className="f-blab">The waitlist</p>
+        <h2 className="f-h2">Be first when it ships.</h2>
+        <p className="f-sub" style={{ marginTop: 12 }}>
+          We are not taking supplement orders or payments today. Join the waitlist and we will email
+          you the moment the Daily Stack is ready to ship. Waitlist members get early dispatch ahead
+          of the public launch.
+        </p>
+        <div className="f-rise" style={{ marginTop: 22, maxWidth: 560 }}>
+          <SupplementWaitlistForm interestedInProduct="daily-stack" variant="f" />
+        </div>
+      </FSection>
+
+      {/* ---------- 05 · COMMON QUESTIONS ---------- */}
+      <FSection>
+        <p className="f-blab">Common questions</p>
+        <h2 className="f-h2">Frequently asked.</h2>
+        <div className="f-faqgrid f-rise" style={{ marginTop: 22 }}>
+          {faqItems.map(({ q, a }) => (
+            <div key={q}>
+              <h3>{q}</h3>
+              <p>{a}</p>
+            </div>
+          ))}
+        </div>
+      </FSection>
+
+      {/* ---------- RELATED READING ----------
+          `variant="f"` since 2026-09-06. Without it this component renders the
+          blog's own editorial language (hard borders, uppercase black sans) on a
+          Direction F page, which is the seam gap 4 in DESIGN.md records. */}
       <RelatedArticles
         slugs={['low-vitamin-d-symptoms', '14-signs-of-vitamin-d-deficiency']}
         limit={2}
         intro="What low vitamin D and B12 actually do, and why testing first beats guessing."
+        variant="f"
       />
 
-      {/* COMPARE */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xl font-serif font-bold text-black mb-6">
-            Dealing with joint pain or elevated inflammation too? The Joint and Recovery Collagen launches alongside the Daily Stack.
+      {/* ---------- CLOSE ---------- */}
+      <FSection rule={false}>
+        <FClose inSection>
+          <p className="f-blab">The other route</p>
+          <h2>Joint pain or elevated inflammation too?</h2>
+          <p className="f-sub" style={{ margin: '0 auto' }}>
+            The Joint and Recovery Collagen launches alongside the Daily Stack.
           </p>
-          <Link href="/supplements/collagen" className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-base px-8 py-4 transition-colors">
-            Read about the Collagen
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </Link>
-        </div>
-      </section>
-    </>
+          <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
+            <Link href="/supplements/collagen" className="f-btn">
+              Read about the Collagen {ARROW}
+            </Link>
+            <Link href="/kits" className="f-btn f-btn-ghost">
+              Test first
+            </Link>
+          </div>
+        </FClose>
+      </FSection>
+    </FPage>
   )
 }

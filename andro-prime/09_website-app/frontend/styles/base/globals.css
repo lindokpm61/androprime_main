@@ -21,6 +21,12 @@
    needed now that the token release permits radius and the ambient shadow
    site-wide. The blog is no longer a special case. */
 @import "../components/f-blog.css";
+/* Direction F legal-document layer, `.f-doc`. Added 2026-09-09 with the
+   /privacy and /terms rebuild. It styles SEMANTIC HTML rather than components,
+   because what those two routes render is a canonical legal document whose
+   classes have been stripped by `lib/legal/canonical.ts` so its TEXT can be
+   asserted byte-identical to the approved source. See that file's header. */
+@import "../components/f-legal-doc.css";
 
 @tailwind base;
 @tailwind components;

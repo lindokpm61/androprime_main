@@ -807,7 +807,20 @@
   border-bottom: 1px solid var(--hair);
   color: var(--ink);
 }
-.f-faqgrid p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+/* ⚠ THE FAMILY IS STATED HERE, NOT FURTHER DOWN THE FILE. This rule and a second
+   identical one at the old line 2343 both declared `.f-faqgrid p`, differing only
+   in that the later one added `font-family: var(--font-sans)`. They agreed, so
+   the duplication was invisible: the later block won on source order and every
+   FAQ answer rendered in the sans, which is what both authors wanted.
+
+   Collapsed 2026-09-09, on this file's own standing rule -- *"two rule blocks for
+   one selector in this file should be treated as a defect"* -- and because
+   agreement is exactly the condition under which a duplicate is latent rather
+   than benign. `.f-btn-ghost` shipped fully transparent and `.f-btn`'s transition
+   was silently overwritten by the same shape; both were found only once the two
+   copies stopped agreeing. Three new routes render this class as of today, so
+   the copies were about to be read by more surfaces than had ever exercised them. */
+.f-faqgrid p { font-family: var(--font-sans); font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
 
 /* ---------- CLOSE ---------- */
 /* The close is a WHOLE section, not a section header, so it takes the gap on
@@ -2340,7 +2353,8 @@
 /* The FAQ grid doubles as a card list; -onecol drops it to a single column when
    it sits inside a split. */
 .f-onecol { grid-template-columns: 1fr !important; }
-.f-faqgrid p { font-family: var(--font-sans); font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+/* `.f-faqgrid p` was declared here as well and has been folded into the single
+   block beside `.f-faqgrid h3`. See the note there. */
 
 /* Kit mini-cards on this page reuse .f-bio, which already carries the card
    surface. These are the extra bits it does not have. */
@@ -2660,6 +2674,29 @@
   font-family: var(--font-sans); font-size: 15.5px; color: var(--ink);
 }
 .f-inp::placeholder { color: var(--ink-3); }
+
+/* ONE FIELD AND ITS SUBMIT ON ONE LINE, added 2026-09-09 with `/waitlist` and
+   `/supplement-waitlist`. `.f-inp` already declares `flex: 1`, so it has always
+   assumed a flex parent and never had one of its own: `/test-selector` gave it
+   `.f-wtprow` and `/auth/*` gave it `.f-formrow`'s column.
+
+   🔴 IT IS NOT `.f-wtprow`, AND THE REASON IS THE `.f-field` LESSON RATHER THAN
+   TASTE. `.f-wtprow` is the WILLINGNESS-TO-PAY row: a label beside a currency
+   field, at step 4 of the quiz. Its geometry happens to fit an email-and-button
+   pair today, so borrowing it would work and would leave two unrelated
+   components sharing one selector, which is the shape that put `/auth`'s inputs
+   outside their card and passed every check. A borrowed class is a collision
+   that has not happened yet.
+
+   The turn is 560px, matching `.f-wtprow`'s, because both are answering the same
+   question: below it a pill field and a pill button cannot share a line without
+   one of them losing its text. Stacked, the button goes full width so it does
+   not sit as a short pill under a long one. */
+.f-inprow { display: flex; flex-direction: column; gap: 10px; }
+@media (min-width: 560px) { .f-inprow { flex-direction: row; align-items: center; gap: 12px; } }
+.f-inprow > .f-btn { flex: none; justify-content: center; }
+@media (max-width: 559px) { .f-inprow > .f-btn { width: 100%; } }
+
 /* `appearance: none` and a drawn chevron, which is the one place in this system
    an arrow is NOT the typographic glyph. That ruling exists because the button's
    pip is set in the button's own face and should follow the type ruling; a

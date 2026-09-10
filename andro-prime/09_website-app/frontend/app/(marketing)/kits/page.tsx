@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FPage, FSection, FHero, FClose } from '@/components/marketing/FPage'
 import { KIT_NAMES } from '@/lib/kits/names'
+import { PRICING } from '@/lib/pricing'
 import { SIZES_KGRID } from '@/lib/ui/image-sizes'
 import {
   ALL_PANEL_MARKER_IDS,
@@ -46,10 +47,21 @@ const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
 
 const ORDER: KitType[] = ['testosterone', 'energy-recovery', 'hormone-recovery']
 
+/* 🔴 DERIVED, NOT TYPED, SINCE 2026-09-09. These three were the string literals
+   `'£99'`, `'£119'` and `'£179'`, two lines above a comment congratulating this
+   file for importing its kit NAMES instead of restating them. DESIGN.md's Do
+   list covers both in one sentence: *"Derive marker sets, prices and panel copy
+   from `lib/kits/panel.ts` and `lib/pricing.ts`. Never hand-write them onto a
+   surface."*
+
+   Collapsed rather than left alone because `/waitlist` was rebuilt the same day
+   and reads `PRICING`, which would have made this the second source of one fact.
+   A duplicated fact is invisible exactly while the copies agree; the fix is
+   never to update the other copy but to give both one source to read. */
 const PRICES: Record<KitType, string> = {
-  'testosterone': '£99',
-  'energy-recovery': '£119',
-  'hormone-recovery': '£179',
+  'testosterone': `£${PRICING.KIT_1.rrp}`,
+  'energy-recovery': `£${PRICING.KIT_2.rrp}`,
+  'hormone-recovery': `£${PRICING.KIT_3.rrp}`,
 }
 
 /* NO LOCAL NAME MAP. `lib/kits/names.ts` calls itself the single source of

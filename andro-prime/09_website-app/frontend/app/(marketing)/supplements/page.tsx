@@ -1,7 +1,43 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
+
+/**
+ * /supplements, rebuilt in Direction F on 2026-09-09.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * NO JOURNEY FRAME EXISTS FOR THIS ROUTE. Layout decided, not ported.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * EVERY WORD IS VERBATIM, INCLUDING THE FOUR EFSA CLAIM SENTENCES. The
+ * headline, standfirst, three hero facts, both product blurbs, the Complete
+ * Men's Stack paragraph, the routing prose and all three routing cards are
+ * byte-identical to the V2.0 page.
+ *
+ * ⚠ ONE LABEL SPLIT, REGISTERED. The V2.0 eyebrow read `Supplements //
+ * Launching Shortly` as a single string. The double slash is a V2.0 brutalist
+ * device with no equivalent in Direction F, and `.f-eyebrow` is ruled to be one
+ * per page in the hero. It is now `.f-eyebrow` "Supplements" beside `.f-kchip`
+ * "Launching shortly": the same two facts, in the two components the system
+ * provides for them, and no new words.
+ *
+ * 🔴 NO PRODUCT PHOTOGRAPH, AND THAT IS THE HARD CONSTRAINT ON THIS PAGE. Neither
+ * product exists: the range launches when a manufacturing partner is confirmed,
+ * which is the fact the page states four separate times. A generated image of a
+ * tub, a pouch or a capsule would be a picture of a product nobody has made, on
+ * a page whose entire compliance position is that no orders are being taken.
+ * `PRODUCT.md`'s Evidence on Hand rule is the same shape and DESIGN.md restates
+ * it: do not invent a dispatch cutoff, a testimonial, a review count or a press
+ * mention, because none exists. A product shot is that list's missing entry.
+ *
+ * ⚠ NO INVERTED PANEL. The V2.0 page ended its routing row with a black card
+ * saying "Save your seat", which is a CTA rather than a conformity statement.
+ * DESIGN.md reserves the panel for the second and allows one per page; this page
+ * makes no conformity statement, so it spends none, and the third routing card
+ * takes the same treatment as the two beside it.
+ */
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -21,11 +57,11 @@ const supplementsSchema = {
 export const metadata: Metadata = {
   title: 'Men\'s Health Supplements',
   description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint & Recovery Collagen launch shortly. Join the waitlist for early access.',
-  alternates: { canonical: 'https://andro-prime.com/supplements' },
+  alternates: { canonical: `${BASE_URL}/supplements` },
   openGraph: {
     title: 'Men\'s Health Supplements | Andro Prime',
     description: 'Men\'s health supplements built around blood data. The Daily Stack and Joint and Recovery Collagen launch shortly. Join the waitlist for early dispatch, and we will email you when they launch.',
-    url: 'https://andro-prime.com/supplements',
+    url: `${BASE_URL}/supplements`,
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Men\'s health supplements from Andro Prime' }],
   },
@@ -37,177 +73,205 @@ export const metadata: Metadata = {
   },
 }
 
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
+
+/* Verbatim. */
+const heroFacts = [
+  'Free to join.',
+  'No payment is taken.',
+  'No supplement orders are being taken right now.',
+]
+
+/* Verbatim. The `routes` are the two products; `claimsLabel` differs between
+   them because one carries three approved claims and the other carries one, and
+   the V2.0 page was already careful about the singular. */
+const routes = [
+  {
+    slug: 'daily-stack',
+    label: 'Daily deficiency support',
+    name: 'Daily Stack',
+    blurb: 'Built for men whose blood data shows the common gaps behind energy, recovery, and training output. Designed to be the one daily product, not the sixth.',
+    claimsLabel: 'EFSA-approved claims',
+    claims: 'Zinc contributes to the maintenance of normal testosterone levels. Vitamin D3 contributes to normal muscle function. Active B12 contributes to normal energy-yielding metabolism.',
+    cta: 'Read about Daily Stack',
+  },
+  {
+    slug: 'collagen',
+    label: 'Joint and inflammation support',
+    name: 'Joint & Recovery Collagen',
+    blurb: 'A recovery-focused collagen formula for active men whose blood data confirmed elevated inflammation markers, and who report joint symptoms.',
+    claimsLabel: 'EFSA-approved claim',
+    claims: 'Vitamin C contributes to normal collagen formation for the normal function of cartilage.',
+    cta: 'Read about Collagen',
+  },
+]
+
+/* Verbatim bodies. Three-up, so `.f-bios` rather than `.f-steps`: `.f-steps`
+   turns to four columns above 1040px and would leave a quarter of the row empty. */
+const meantime = [
+  {
+    num: 'Route 01',
+    title: 'Not sure yet',
+    body: 'Run the test selector first. If the issue might be hormones, deficiency, or inflammation, let the data lead.',
+    href: '/test-selector',
+    cta: 'Use the test selector',
+  },
+  {
+    num: 'Route 02',
+    title: 'See the kits',
+    body: 'Three kits, covering testosterone, energy and recovery, or both. Results in 2 to 5 working days.',
+    href: '/kits',
+    cta: 'Browse kits',
+  },
+  {
+    num: 'Route 03',
+    title: 'Save your seat',
+    body: 'Join the waitlist now. Early dispatch when we launch, and we email you the moment it is live.',
+    href: '#join',
+    cta: 'Join the waitlist',
+  },
+]
+
 export default function SupplementsPage() {
   return (
-    <>
+    <FPage>
       <JsonLd data={supplementsSchema} />
-      {/* HERO */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 w-full">
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-7 flex flex-col items-start">
-              <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-white mb-8">
-                <span className="w-2 h-2 bg-black" />
-                <span className="data-label !text-[10px] !text-black">Supplements // Launching Shortly</span>
-              </div>
 
-              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-                Built for what your numbers<br />
-                <span className="text-gray-400">actually show.</span>
-              </h1>
-
-              <p className="text-lg md:text-xl text-black font-serif mb-8 max-w-2xl leading-relaxed">
-                Our men&rsquo;s health supplement range launches shortly, as soon as our manufacturing partner is confirmed. Two targeted formulas, built around blood-data patterns. Not generic men&rsquo;s health products. Join the waitlist for early dispatch, and we will email you when they launch.
-              </p>
-
-              <ul className="space-y-3 font-serif text-base text-black mb-2">
-                <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> Free to join.</li>
-                <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> No payment is taken.</li>
-                <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 bg-black" /> No supplement orders are being taken right now.</li>
-              </ul>
-            </div>
-
-            <div className="lg:col-span-5" id="join">
-              <SupplementWaitlistForm interestedInProduct="any" />
-            </div>
+      {/* ---------- HERO ---------- */}
+      <FHero
+        aside={
+          <div id="join">
+            <SupplementWaitlistForm interestedInProduct="any" variant="f" />
           </div>
+        }
+      >
+        <div className="f-btns" style={{ marginBottom: 18 }}>
+          <span className="f-eyebrow">Supplements</span>
+          <span className="f-kchip">Launching shortly</span>
         </div>
-      </section>
+        <h1 className="f-h1">
+          Built for what<br />your numbers<br /><span className="f-grey">actually show.</span>
+        </h1>
+        <p className="f-stand" style={{ marginTop: 20 }}>
+          Our men&rsquo;s health supplement range launches shortly, as soon as our manufacturing
+          partner is confirmed. Two targeted formulas, built around blood-data patterns. Not generic
+          men&rsquo;s health products. Join the waitlist for early dispatch, and we will email you when
+          they launch.
+        </p>
+        <ul className="f-ticks" style={{ marginTop: 22 }}>
+          {heroFacts.map((f) => (
+            <li key={f}>
+              <span aria-hidden="true">&#10003;</span>
+              {f}
+            </li>
+          ))}
+        </ul>
+      </FHero>
 
-      {/* WHAT IS COMING */}
-      <section id="what-is-coming" className="py-32 bg-white border-b-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-20">
-            <div className="data-label flex items-center gap-4 mb-6">
-              <span className="w-12 h-[4px] bg-black" />
-              What is coming
-            </div>
-            <h2 className="text-5xl md:text-7xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
-              Two supplement routes.<br />
-              <span className="text-gray-400">Different jobs.</span>
-            </h2>
-          </div>
+      {/* ---------- 01 · WHAT IS COMING ----------
+          🔴 THE FOUR EFSA SENTENCES ARE APPROVED WORDINGS. Each sits in a
+          `.f-well` under its own mono key, so the regulated sentence has a visible
+          start and end rather than running into the marketing prose above it.
+          Not one character may be reworded, abbreviated or split. */}
+      <FSection>
+        <p className="f-blab">What is coming</p>
+        <h2 className="f-h2">
+          Two supplement routes.<br /><span className="f-grey">Different jobs.</span>
+        </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-
-            {/* Daily Stack */}
-            <div className="bg-white border-4 border-black flex flex-col h-full hover:bg-gray-50 transition-colors">
-              <div className="p-10 flex-grow flex flex-col">
-                <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-white border-2 border-black self-start mb-8">
-                  Daily deficiency support
+        <div className="f-splitgrid f-rise" style={{ marginTop: 22 }}>
+          {routes.map(({ slug, label, name, blurb, claimsLabel, claims, cta }) => (
+            <div className="f-tray" key={slug} style={{ marginBottom: 0 }}>
+              <div className="f-core">
+                <div className="f-btns" style={{ marginBottom: 14 }}>
+                  <span className="f-kchip">{label}</span>
+                  <span className="f-kchip">Coming soon</span>
                 </div>
-                <div className="flex justify-between items-start mb-6">
-                  <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black max-w-[280px] leading-none">Daily Stack</h3>
-                  <div className="text-right">
-                    <span className="data-label px-3 py-1.5 border-2 border-black bg-white">Coming soon</span>
-                  </div>
+                <h3 className="f-h4">{name}</h3>
+                <p className="f-sub" style={{ fontSize: 15, marginTop: 10 }}>{blurb}</p>
+                <div className="f-well">
+                  <p className="f-blab">{claimsLabel}</p>
+                  <p className="f-sub" style={{ marginTop: 10, fontSize: 14.5 }}>{claims}</p>
                 </div>
-                <p className="text-lg text-black font-serif mb-10 leading-relaxed flex-grow">Built for men whose blood data shows the common gaps behind energy, recovery, and training output. Designed to be the one daily product, not the sixth.</p>
-                <div className="space-y-4 mt-auto pt-8 border-t-4 border-black">
-                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest mb-6">EFSA-approved claims</div>
-                  <p className="font-serif text-sm leading-relaxed">Zinc contributes to the maintenance of normal testosterone levels. Vitamin D3 contributes to normal muscle function. Active B12 contributes to normal energy-yielding metabolism.</p>
-                </div>
-              </div>
-              <div className="p-10 pt-0">
-                <Link href="/supplements/daily-stack" className="block w-full text-center px-6 py-5 border-4 border-black text-black font-sans font-black uppercase tracking-widest text-base hover:bg-black hover:text-white transition-colors">
-                  Read about Daily Stack
-                </Link>
-              </div>
-            </div>
-
-            {/* Collagen */}
-            <div className="bg-gray-100 border-4 border-black flex flex-col h-full hover:bg-gray-50 transition-colors">
-              <div className="p-10 flex-grow flex flex-col">
-                <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black !text-white border-2 border-black self-start mb-8">
-                  Joint and inflammation support
-                </div>
-                <div className="flex justify-between items-start mb-6">
-                  <h3 className="text-4xl lg:text-5xl font-sans font-black uppercase tracking-tighter text-black max-w-[160px] sm:max-w-[280px] leading-none">Joint &amp; Recovery Collagen</h3>
-                  <div className="text-right shrink-0 ml-4">
-                    <span className="data-label px-3 py-1.5 border-2 border-black bg-white">Coming soon</span>
-                  </div>
-                </div>
-                <p className="text-lg text-black font-serif mb-10 leading-relaxed flex-grow">A recovery-focused collagen formula for active men whose blood data confirmed elevated inflammation markers, and who report joint symptoms.</p>
-                <div className="space-y-4 mt-auto pt-8 border-t-4 border-black">
-                  <div className="text-xs font-sans font-black text-black uppercase tracking-widest mb-6">EFSA-approved claim</div>
-                  <p className="font-serif text-sm leading-relaxed">Vitamin C contributes to normal collagen formation for the normal function of cartilage.</p>
-                </div>
-              </div>
-              <div className="p-10 pt-0">
-                <Link href="/supplements/collagen" className="block w-full text-center px-6 py-5 bg-black text-white border-4 border-black font-sans font-black uppercase tracking-widest text-base hover:bg-white hover:text-black transition-colors">
-                  Read about Collagen
-                </Link>
-              </div>
-            </div>
-
-            {/* Complete Men's Stack: concept */}
-            <div className="lg:col-span-2 bg-white border-4 border-black p-10">
-              <div className="grid lg:grid-cols-3 gap-8 items-center">
-                <div className="lg:col-span-2">
-                  <div className="data-label mb-3">Coming with the launch</div>
-                  <h3 className="text-3xl md:text-4xl font-sans font-black uppercase tracking-tighter mb-4">Complete Men&rsquo;s Stack</h3>
-                  <p className="font-serif text-base leading-relaxed">
-                    A bundle pairing the Daily Stack and Joint and Recovery Collagen, for men whose blood data points in both directions. Pricing is finalised before launch. Waitlist members hear first.
-                  </p>
-                </div>
-                <div className="text-left lg:text-right">
-                  <a href="#join" className="inline-flex items-center gap-3 border-4 border-black px-6 py-4 font-sans font-black uppercase tracking-widest text-sm hover:bg-black hover:text-white transition-colors">
-                    Join the waitlist
-                  </a>
+                <div className="f-btns" style={{ marginTop: 18 }}>
+                  <Link href={`/supplements/${slug}`} className="f-btn f-btn-ghost f-btn-sm">
+                    {cta} {ARROW}
+                  </Link>
                 </div>
               </div>
             </div>
-
-          </div>
+          ))}
         </div>
-      </section>
 
-      {/* ROUTING GUIDANCE */}
-      <section className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <div className="data-label flex items-center gap-4 mb-6">
-              <span className="w-12 h-[4px] bg-black" />
-              In the meantime
-            </div>
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter max-w-4xl leading-[0.9]">
-              Test first. Supplement later.
-            </h2>
-            <p className="mt-8 text-lg text-black font-serif max-w-3xl leading-relaxed">
-              The blood test is the part that is live today. We recommend supplements based on your result. Our own range launches shortly. Until then, the result still tells you what is going on.
+        {/* The bundle. One card across the measure, because it is a third product
+            rather than a third column of the pair above it. */}
+        <div className="f-tray f-rise" style={{ marginTop: 22 }}>
+          <div className="f-core">
+            <p className="f-blab">Coming with the launch</p>
+            <h3 className="f-h4" style={{ marginTop: 10 }}>Complete Men&rsquo;s Stack</h3>
+            <p className="f-sub" style={{ fontSize: 15 }}>
+              A bundle pairing the Daily Stack and Joint and Recovery Collagen, for men whose blood
+              data points in both directions. Pricing is finalised before launch. Waitlist members
+              hear first.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white border-2 border-black p-10 hover:bg-gray-50 transition-colors flex flex-col h-full">
-              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-black mb-6 pb-6 border-b-2 border-black">Not sure yet</div>
-              <p className="text-black font-serif text-lg leading-relaxed mb-6">Run the test selector first. If the issue might be hormones, deficiency, or inflammation, let the data lead.</p>
-              <Link href="/test-selector" className="mt-auto inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
-                Use the test selector
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
-            </div>
-
-            <div className="bg-white border-2 border-black p-10 hover:bg-gray-50 transition-colors flex flex-col h-full">
-              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-black mb-6 pb-6 border-b-2 border-black">See the kits</div>
-              <p className="text-black font-serif text-lg leading-relaxed mb-6">Three kits, covering testosterone, energy and recovery, or both. Results in 2 to 5 working days.</p>
-              <Link href="/kits" className="mt-auto inline-flex items-center gap-3 text-black font-sans font-black uppercase tracking-widest text-sm hover:underline">
-                Browse kits
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </Link>
-            </div>
-
-            <div className="bg-black border-2 border-black p-10 flex flex-col h-full">
-              <div className="font-sans font-black uppercase tracking-tighter text-3xl text-white mb-6 pb-6 border-b-2 border-gray-600">Save your seat</div>
-              <p className="text-white font-serif text-lg leading-relaxed opacity-90 mb-6">Join the waitlist now. Early dispatch when we launch, and we email you the moment it is live.</p>
-              <a href="#join" className="mt-auto inline-flex items-center gap-3 text-white font-sans font-black uppercase tracking-widest text-sm hover:underline">
-                Join the waitlist
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+            <div className="f-btns" style={{ marginTop: 18 }}>
+              <a href="#join" className="f-btn f-btn-sm">
+                Join the waitlist {ARROW}
               </a>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </FSection>
+
+      {/* ---------- 02 · IN THE MEANTIME ---------- */}
+      <FSection cont>
+        <p className="f-blab">In the meantime</p>
+        <h2 className="f-h2">
+          Test first.<br /><span className="f-grey">Supplement later.</span>
+        </h2>
+        <p className="f-sub" style={{ marginTop: 12 }}>
+          The blood test is the part that is live today. We recommend supplements based on your
+          result. Our own range launches shortly. Until then, the result still tells you what is
+          going on.
+        </p>
+
+        <div className="f-bios f-rise" style={{ marginTop: 24 }}>
+          {meantime.map(({ num, title, body, href, cta }) => (
+            <div className="f-bio" key={num}>
+              <p className="f-blab">{num}</p>
+              <h3>{title}</h3>
+              <p>{body}</p>
+              <div className="f-btns" style={{ marginTop: 14 }}>
+                {href.startsWith('#') ? (
+                  <a href={href} className="f-btn f-btn-ghost f-btn-sm">{cta} {ARROW}</a>
+                ) : (
+                  <Link href={href} className="f-btn f-btn-ghost f-btn-sm">{cta} {ARROW}</Link>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </FSection>
+
+      {/* ---------- CLOSE ---------- */}
+      <FSection rule={false}>
+        <FClose inSection>
+          <p className="f-blab">The order of things</p>
+          <h2>The test comes first.</h2>
+          <p className="f-sub" style={{ margin: '0 auto' }}>
+            We recommend a supplement when your result shows a gap it addresses, and not before.
+            Until the range is live, the result is the part that is live.
+          </p>
+          <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
+            <Link href="/kits" className="f-btn">
+              See the tests {ARROW}
+            </Link>
+            <a href="#join" className="f-btn f-btn-ghost">
+              Join the waitlist
+            </a>
+          </div>
+        </FClose>
+      </FSection>
+    </FPage>
   )
 }

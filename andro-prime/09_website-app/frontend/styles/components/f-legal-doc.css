@@ -1,0 +1,215 @@
+/* ============================================================================
+   THE LEGAL DOCUMENT, `.f-doc`. Added 2026-09-09 with the Direction F rebuild of
+   /privacy and /terms.
+
+   WHAT THIS STYLES. `lib/legal/canonical.ts` extracts the hero and `<main>` from
+   a canonical legal document, removes every SVG, and strips every class except
+   two mapped ones. What arrives here is therefore SEMANTIC HTML: h1 to h4, p,
+   ul/li, strong, a, table, section, hr, address, plus `.f-blab` where the source
+   carried a mono eyebrow and `.f-kchip` where it carried a badge. So the rules
+   below are element rules on purpose, scoped under one class, rather than a
+   parallel set of `f-` component classes nobody would be able to apply.
+
+   🔴 IT IS `.f-doc`, NOT `.f-legal`. `.f-legal` already exists in
+   f-primitives.css as `.f-foot .f-legal`, the footer's small print. Taking that
+   name for a whole legal document would put two unrelated components on one
+   selector, which is the collision `.f-field` produced on /auth: two rule blocks
+   at equal specificity, source order deciding, both inputs rendering outside
+   their card, and every check passing. DESIGN.md's instruction is one line:
+   grep the class name before you use it.
+
+   ⚠ ELEMENT SELECTORS ARE A DELIBERATE EXCEPTION HERE AND NOWHERE ELSE. This
+   file's own system warns that a bare element selector inside a card is what
+   produced the `.invert p` / `.blab` specificity bug. That warning is about
+   styling a COMPONENT's internals by element; this is a document whose elements
+   are all it has. Everything is scoped under `.f-doc` so nothing reaches a
+   component, and the specificities are (0,1,1), which loses to any F class a
+   future author puts on one of these elements.
+
+   ⚠ NO INK PANEL AND NO CARD ANYWHERE IN HERE. Direction F allows one inverted
+   panel per page and reserves it for a conformity statement; a privacy policy is
+   793 lines of prose, and the containment ruling of 2026-09-02 gives prose no
+   container at all. The document's structure is carried by the type ramp, the
+   hairline rules and the measure.
+   ============================================================================ */
+
+.f-doc {
+  /* `.f-narrow` is 880px and is the system's long-form measure. This is set
+     directly rather than by wearing the class because the class is a top-level
+     container carrying its own gutter, and this sits inside `.f-wrap` already:
+     nested, it gutters twice, which is the defect `.f-sec > .f-narrow` exists to
+     undo for `/test-selector`. */
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* ---- the document head -------------------------------------------------- */
+
+/* The source's hero is a `<header>` on /privacy and a `<section>` on /terms, so
+   this targets the first child of either shape by position rather than by name. */
+.f-doc > :first-child { margin-bottom: 34px; }
+
+.f-doc h1 {
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
+  font-size: clamp(2.1rem, 4.6vw, 3.2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: 0 0 0.42em;
+}
+
+/* ---- the outline -------------------------------------------------------- */
+
+/* 🔴 A RULE ABOVE, NOT A BOX AROUND. Same device as `.f-step` and `.f-bio`, and
+   it is what carries the section boundaries now that the source's `border-b-4`
+   frames are gone. The gap above is larger than the gap below, which is the
+   direction's rhythm rule stated at document scale.
+
+   🔴 THE RULE IS ON THE `<section>`, NOT ON THE `<h2>`, AND THAT WAS FOUND BY
+   SCREENSHOT RATHER THAN BY READING. Written on the h2 it looked correct in
+   source and rendered wrong: both canonical documents open every block with a
+   `data-label` eyebrow ABOVE its heading, so a rule and 64px of margin on the h2
+   landed BETWEEN the label and the heading it introduces. "DATA CONTROLLER" sat
+   marooned at the foot of the previous section with a hairline under it, reading
+   as that section's footer rather than this one's title. The source's own DOM is
+   a flat list of sibling `<section>`s inside `<main>`, so the boundary belongs to
+   the section, which is the element that actually starts. */
+.f-doc main section {
+  border-top: 1px solid var(--hair);
+  padding-top: 26px;
+  margin-top: 60px;
+}
+/* The first block already has the document head above it. */
+.f-doc main section:first-of-type { border-top: 0; padding-top: 0; margin-top: 44px; }
+/* A nested section is a sub-block, not a new subject. */
+.f-doc main section section { border-top: 0; padding-top: 0; margin-top: 30px; }
+
+.f-doc h2 {
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
+  font-size: clamp(1.35rem, 2.6vw, 1.72rem);
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  line-height: 1.18;
+  color: var(--ink);
+  margin: 34px 0 0.55em;
+}
+/* An h2 that leads its section, or follows the section's own mono label, takes
+   the section's top spacing rather than adding a second gap to it. */
+.f-doc section > h2:first-child,
+.f-doc .f-blab + h2 { margin-top: 0; }
+
+.f-doc h3 {
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
+  font-size: 17.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 30px 0 0.55em;
+}
+
+.f-doc h4 {
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.3;
+  color: var(--ink);
+  margin: 24px 0 0.55em;
+}
+
+/* ---- body --------------------------------------------------------------- */
+
+/* ⚠ THE MEASURE IS STATED HERE AND NOT INHERITED FROM THE CONTAINER. The
+   2026-09-02 rhythm ruling: *"a measure held by a container is not a measure, it
+   is a coincidence, and it ends the moment the container does."* `.f-rstep p` ran
+   82ch for exactly that reason. */
+.f-doc p {
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  line-height: 1.68;
+  color: var(--ink-2);
+  max-width: 68ch;
+  margin: 0 0 1em;
+}
+
+.f-doc strong { font-weight: 600; color: var(--ink); }
+.f-doc em { font-style: italic; }
+
+.f-doc a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--hair-2);
+  text-underline-offset: 3px;
+}
+.f-doc a:hover { text-decoration-color: var(--ink); }
+
+/* ---- lists -------------------------------------------------------------- */
+
+/* The source marks its bullets with a `<span>&bull;</span>` inside each `<li>`,
+   which the transform leaves alone because it is a TEXT node and the transform
+   touches attributes only. So the list marker is suppressed here rather than
+   drawn, or every item would carry two. */
+.f-doc ul { list-style: none; padding: 0; margin: 0 0 1.2em; display: grid; gap: 9px; }
+.f-doc li {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 68ch;
+}
+.f-doc li p { margin-bottom: 0; }
+
+/* ---- tables ------------------------------------------------------------- */
+
+/* Wide content scrolls inside its own box; the page body never scrolls
+   horizontally. The source tables have no wrapper of their own, so the scroll is
+   put on the table's own block rather than added as markup, which would be a
+   structural change to the document. */
+.f-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 1.4em;
+  display: block;
+  overflow-x: auto;
+}
+.f-doc th, .f-doc td {
+  padding: 11px 12px 11px 0;
+  text-align: left;
+  vertical-align: top;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--hair);
+}
+.f-doc thead th {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--hair-2);
+}
+.f-doc tbody th { color: var(--ink); font-weight: 600; }
+
+/* ---- the two mapped classes --------------------------------------------- */
+
+/* `.f-blab` and `.f-kchip` are the F components; they need no redeclaration.
+   These are the two positional adjustments a document needs that a marketing
+   section does not: a label sitting directly above a heading it introduces, and
+   a badge sitting inline in a run of prose. */
+.f-doc .f-blab { margin-bottom: 10px; }
+.f-doc .f-kchip { margin: 0 6px 10px 0; }
+
+/* ---- furniture ---------------------------------------------------------- */
+
+.f-doc hr { border: 0; border-top: 1px solid var(--hair); margin: 40px 0; }
+.f-doc address { font-style: normal; }
+
+/* The source nests a great many layout `<div>`s that now carry no class at all.
+   They are inert, but the ones that wrapped a grid used to supply the gap
+   between their children, so a little vertical air is restored at the block
+   level rather than by trying to reconstruct which div was which. */
+.f-doc section + section { margin-top: 8px; }

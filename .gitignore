@@ -73,3 +73,13 @@ andro-prime/06_marketing/content-machine/assets/kit2-same-programme/**/*.mov
 # STATE.md asserted these were ignored. The `**` line is what makes that assertion true.
 andro-prime/02_brand/assets/packaging/renders/*.png
 andro-prime/02_brand/assets/packaging/renders/**/*.png
+
+# Direction F route verification screenshots (2026-09-09). Same gate D3 rule as the
+# packaging renders and the Kit 2 film media above: git holds the recipe, Drive holds
+# the media. 94 files, 156 MB, and they are verification evidence rather than a
+# deliverable — the judgement they produced is written into 09_website-app/STATE.md,
+# and re-taking any of them is one shot.js call against a dev server.
+# BOTH patterns, deliberately, per the note above: shots are written into a dated
+# SUBFOLDER (f-marketing-2026-09-09/), which the single-level `*` form does not reach.
+andro-prime/09_website-app/design/mockups/journey/shots/*.png
+andro-prime/09_website-app/design/mockups/journey/shots/**/*.png
