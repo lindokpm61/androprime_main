@@ -107,6 +107,11 @@ ships and this is a separate sentence. Nothing re-opened it because the register
 copy as a dated EVENT ("Built 2026-09-02") and has no re-validation pass, so a later
 ruling cannot reach an earlier row. **Owed: a rewritten line from Keith, then
 pre-flight.** Register row 12a; row 10 is superseded by it. task-observer OBS-704.
+**The same gap is on `/faq`, which was rebuilt in Direction F on 2026-09-09 and
+still carries no membership or subscription answer at all** (both matches in
+`app/(marketing)/faq/page.tsx` are code comments, checked 2026-09-10). A man
+buying a kit now starts a subscription and the FAQ does not mention one. Downstream
+of the same copy call: the FAQ answer cannot be written until the homepage line is.
 
 🔴 **`/supplement-waitlist` PROMISES A FORM CONTROL THAT DOES NOT EXIST.** FAQ 4
 says *"The form lets you tell us whether you are interested in the Daily Stack,
