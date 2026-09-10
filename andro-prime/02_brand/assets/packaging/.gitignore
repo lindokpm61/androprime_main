@@ -1,0 +1,8 @@
+# Fetched OFL design faces. The repo holds the recipe (fetch-fonts.sh), not the binaries.
+fonts/
+
+# Intermediate HTML emitted by gen-sleeve-v8.js. Regenerate with `node gen-sleeve-v8.js`.
+# The PDFs ARE committed: a print file is a deliverable with a version identity — you need
+# to know exactly which bytes went to the printer, and a regenerated one could differ
+# (font version, Chrome version) without anyone noticing.
+sleeve-v8-*.html

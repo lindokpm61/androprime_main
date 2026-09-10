@@ -1,0 +1,30 @@
+{
+  "media": "A6-continuous-blank-1080p.mp4",
+  "recorded": "2026-09-09",
+  "job_id": "ba0acc2d-0f2a-4e70-bbe7-220b68de62a4",
+  "model": "seedance_2_5",
+  "mode": "omni_reference",
+  "stage": 4,
+  "shot": "A6",
+  "status": "APPROVED: compliance-correct replacement for A6-cupboard.mp4",
+  "resolution": "1080p",
+  "dimensions": "1080x1920",
+  "duration_s": 5,
+  "generate_audio": false,
+  "bitrate_mode": "high",
+  "aspect_ratio": "9:16",
+  "cost_credits": 45,
+  "start_image": "247bbe41-5db4-4a66-ad83-6b480abbb30d",
+  "end_image": "d5d9a72d-3a9f-42fc-bdbc-9e07ad0a5ec5",
+  "image_references": ["ef3ec90a-4465-42ec-aca6-83d373fad50d"],
+  "supersedes": "30348f63-00e5-4dd7-9b60-a4bbdc75223a",
+  "what_changed": "Same start_image and same structure as the rejected 30348f63, with ONE substitution: the end_image is the de-branded blank plate (d5d9a72d) instead of the packed counter frame (53db409e). That single change removes the model's need to render our real pack through a camera move, which is what garbled it.",
+  "verification": {
+    "box_blank": "Verified on the final frame at ~2.4x with contrast stretched: clean bone card, no printing, no ghost of the erased artwork, no invented type.",
+    "bottle_labels": "VITAMIN D3, OMEGA 3, MAGNESIUM, MULTIVITAMIN, VITAMIN C all correctly spelled at zoom. Fine print resolves to texture rather than words, per the log's standing preference.",
+    "hands": "Hand and forearm stay connected, one person, one pair of hands.",
+    "motion": "No unrequested slow motion."
+  },
+  "known_deviation": "seedance rendered start_image + end_image as a HARD CUT at roughly frame 50, not as one continuous move. Storyboard §7c asks for a single continuous shot with a rack focus. The cut is clean and the two beats are both good, but this is a departure and is Keith's call: accept the cut, or shoot the counter beat separately (see A6b-counter-blank-1080p.mp4) and edit deliberately.",
+  "post": "Composite the real Kit 2 pack onto the blank box here, never in the model: storyboard §3 and §9.4. Canonical pack art: 02_brand job 10f799cd-32ab-4284-887f-9d41dd30c08c, or the verified front elevation 573db174-02d1-4e65-ab71-57e07bfba790 which is square-on and the easier corner-pin source."
+}

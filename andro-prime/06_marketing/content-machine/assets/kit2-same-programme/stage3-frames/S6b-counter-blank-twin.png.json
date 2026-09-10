@@ -1,0 +1,16 @@
+{
+  "media": "S6b-counter-blank-twin.png",
+  "bytes": 13841461,
+  "recorded": "2026-09-09",
+  "recovered_from": "Higgsfield generation history; mapping verified by exact byte size against the file on disk",
+  "job_id": "d5d9a72d-3a9f-42fc-bdbc-9e07ad0a5ec5",
+  "model": "gpt_image_2",
+  "stage": 3,
+  "shot": "S6b",
+  "role": "APPROVED blank counter plate",
+  "status": "APPROVED: this is the compositing plate",
+  "resolution": "4k",
+  "dimensions": "2160x3840",
+  "derived_from": "53db409e-ffe8-4882-a89b-06831da031c8",
+  "note": "Made by ERASING the print off the packed version rather than generating a blank box fresh. That is why its geometry matches the real pack exactly: it IS the same box, wiped. Technique worth reusing whenever a blank compositing plate has to match a real product."
+}

@@ -1,0 +1,13 @@
+{
+  "media": "S6b-counter-pack.png",
+  "bytes": 7255314,
+  "recorded": "2026-09-09",
+  "recovered_from": "Higgsfield generation history; mapping verified by exact byte size against the file on disk",
+  "job_id": "53db409e-ffe8-4882-a89b-06831da031c8",
+  "model": "gpt_image_2",
+  "stage": 3,
+  "shot": "S6b",
+  "role": "counter frame WITH the real pack rendered",
+  "status": "SUPERSEDED: do not use",
+  "note": "Carries the Kit 2 pack rendered by the model. Breaches storyboard §3 (blank box in model, composite the pack in post). Kept for audit only."
+}

@@ -1,0 +1,58 @@
+{
+  "media": "A7-letterbox-blank-1080p.mp4",
+  "recorded": "2026-09-09",
+  "job_id": "b1e9947c-f9d4-4820-8f84-bed3a2f8749c",
+  "model": "seedance_2_5",
+  "mode": "omni_reference",
+  "stage": 4,
+  "shot": "A7",
+  "title": "Letterbox arrival: candidate locked ending for the series",
+  "status": "APPROVED as a plate. Creative approval and the composite still outstanding.",
+  "resolution": "1080p",
+  "dimensions": "1080x1920",
+  "duration_s": 5,
+  "fps": 24,
+  "generate_audio": false,
+  "bitrate_mode": "high",
+  "aspect_ratio": "9:16",
+  "cost_credits": 45,
+  "start_image": "b61060f0-10b4-4c2e-8cfa-f716f24d546f",
+  "end_image": "fbf10cac-c8be-49e2-9448-e04a633fad05",
+  "why_this_shot": "Keith chose it on 2026-09-09 from five options as the replacement closing beat. It dramatises the flat mail packer, which 02_brand/STATE.md records as the entire reason for that pack format (letterbox postage, large letter, no missed deliveries). It carries the product without a person in frame, which makes it repeatable as a locked ending across every episode.",
+  "frames": {
+    "S7-letterbox-drop-matched.png": "b61060f0-10b4-4c2e-8cfa-f716f24d546f: start frame",
+    "S7-letterbox-landed.png": "fbf10cac-c8be-49e2-9448-e04a633fad05: end frame, and the composite reference",
+    "S7-letterbox-drop.png": "472fb10e-7d53-4341-aa19-9ee2559c7bcb: SUPERSEDED, camera did not match"
+  },
+  "how_the_frames_were_made": "The landed frame was generated first and approved. The drop frame is an EDIT of it (empty the mat, put the box through the slot), not a sibling generation. A first attempt generated both from near-identical prompts and they came back with completely different camera positions, which would have driven a whipping move instead of a vertical drop. Editing inherits the camera; a shared prompt does not.",
+  "timing": {
+    "slide_and_fall": "frames 1-33",
+    "landing_impact": "frames 33-35",
+    "final_settle": "frames 46-55, box drops 8px into the coir",
+    "static_hold": "frames 55-121, 2.75s"
+  },
+  "composite_window": {
+    "frames": "55-121",
+    "box_face_px": "788 x 460 at centre (642, 1090) in the 1080x1920 master",
+    "stability": "Box centre and size are PIXEL-IDENTICAL across every sample from f55 to f121 (measured f55/65/75/85/95/105/115/121). Single corner-pin, no motion tracking needed.",
+    "note": "A motion spike at f91 is confined to the top band of frame: the letterbox flap settling. The box region is unaffected."
+  },
+  "verification": {
+    "box_blank": "Final frame read at 2.25x with contrast stretched: clean bone card, no printing, no invented type, no postal marking. Lid seams visible and usable as corner-pin landmarks.",
+    "no_text_in_frame": "No house number, no brand mark, no lettering on door, mat or letterbox.",
+    "camera": "Locked. Verified by tracking the box bounding box, not by eye: an eyeball read of a 4-frame contact strip suggested drift and was wrong.",
+    "slow_motion": "Fall completes in roughly 1.4s. Slightly slower than real gravity but within usable range; the slide out of the slot is the slow part."
+  },
+  "edit_notes": [
+    "Trim the head: the first ~15 frames are a slow slide out of the slot. Starting nearer the tip point makes the drop land harder.",
+    "Storyboard §9.1 says cut any slow motion the model added. The fall is mildly slow; a 1.3-1.5x retime on frames 1-45 with the hold left alone would tighten it.",
+    "Composite the real Kit 2 pack onto the blank face here, never in the model: §3 and §9.4.",
+    "Sound, per §8's logic: the flap snap, then the box landing on coir, one contact. No music sting on the product."
+  ],
+  "pack_art_for_composite": {
+    "canonical_3q": "10f799cd-32ab-4284-887f-9d41dd30c08c",
+    "front_elevation_preferred": "573db174-02d1-4e65-ab71-57e07bfba790",
+    "why": "The front elevation is square-on and verified line by line, so it corner-pins onto a flat-lying box with the least distortion."
+  },
+  "open": "Not cleared to ship. The four pre-flight items still block the film, and this shot changes nothing about them. Compliance note: it introduces a doormat and front door but no person, no premises identifier and no claim."
+}

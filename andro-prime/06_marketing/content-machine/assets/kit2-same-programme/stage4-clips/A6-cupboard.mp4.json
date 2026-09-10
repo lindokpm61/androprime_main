@@ -1,0 +1,15 @@
+{
+  "media": "A6-cupboard.mp4",
+  "bytes": 1201705,
+  "recorded": "2026-09-09",
+  "recovered_from": "Higgsfield generation history; mapping verified by exact byte size against the file on disk",
+  "job_id": "30348f63-00e5-4dd7-9b60-a4bbdc75223a",
+  "model": "seedance_2_5",
+  "stage": 4,
+  "shot": "A6",
+  "status": "REJECTED: garbled pack",
+  "resolution": "720p",
+  "start_image": "247bbe41-5db4-4a66-ad83-6b480abbb30d",
+  "end_image": "53db409e-ffe8-4882-a89b-06831da031c8",
+  "note": "Used the PACKED counter frame as end_image, so the model had to render our real pack through a camera move. It garbled: NMOL/L reads NAIL/L, PMOL/L reads PMIL/L, AT-HOME BLOOD TEST reads AT-HBME BLODD TEST, subhead is mush. Exactly the failure storyboard §3 predicts. Do not ship."
+}

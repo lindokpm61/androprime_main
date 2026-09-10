@@ -1,0 +1,17 @@
+{
+  "media": "S6b-counter-blank.png",
+  "bytes": 6436352,
+  "recorded": "2026-09-09",
+  "recovered_from": "Higgsfield generation history; mapping verified by exact byte size against the file on disk",
+  "job_id": "c2e49fd3-a8f3-402c-87cd-2b06ff123679",
+  "model": "seedream_v5_pro",
+  "stage": 3,
+  "shot": "S6b",
+  "role": "blank counter frame, generated from scratch",
+  "status": "SUPERSEDED: wrong box geometry",
+  "references": [
+    "ef3ec90a-4465-42ec-aca6-83d373fad50d",
+    "9f721183-03f5-4cb9-a17b-96f02bec0771"
+  ],
+  "note": "Box came back tall, deep and portrait. The real AP-E02 is a shallow landscape mailer. Superseded by the de-brand edit below, which inherits the correct geometry."
+}

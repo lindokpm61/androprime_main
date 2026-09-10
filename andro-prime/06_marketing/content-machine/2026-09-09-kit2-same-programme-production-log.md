@@ -161,3 +161,191 @@ The closing shot took four attempts, and the two failures in the middle are the 
 ## Next: stage 4
 
 ⛔ **Blocked on the four items above.** Items 1 to 3 need Ewa and none has been routed; item 4 needs Keith and costs one decision. Stage 4 is `seedance_2_5`, `mode: omni_reference`, 9:16, 720p, 5s per shot, and **`generate_audio: false` set explicitly on every call** because it defaults to true. Per §5d, generate one clip first and read its cost from the completed job before queueing the other five: video cost is the one figure `get_cost` cannot settle for us.
+
+---
+
+## STAGE 4 / A6: the closing shot, 2026-09-09 (late session)
+
+> 🔴 **This section exists because the hour of A6 work before it was recorded NOWHERE.** Four
+> artefacts sat on disk with no `job_id`, no prompt and no rationale, and a repo-wide grep for
+> `S6b` returned zero hits in any document. The media is gitignored on the promise that "the log
+> carries every job_id, so any frame or clip is re-fetchable" — **so a gap in this log is not
+> documentation debt, it is data loss.** Those four were recovered only from Higgsfield's own
+> generation history, and every mapping below was then verified by exact byte size against the
+> file on disk rather than inferred from a filename.
+>
+> Two fixes landed with this section. **Every asset now carries a `.json` recipe sidecar beside
+> it** (`<file>.json`: job_id, model, references, verification, status). And **`.gitignore` was
+> changed to ignore the media by EXTENSION rather than by directory** — the old
+> `kit2-same-programme/*/` excluded the directories, and git cannot re-include a file whose
+> parent directory is excluded, so it was silently swallowing the sidecars too. The recipe would
+> have been lost with the media it exists to recover.
+
+### ⚠ Correction to the stage 3 table above: S6's `job_id` is wrong
+
+The table records S6 as `fa9e18ed-f2dc-4d18-8bfc-1531cf091f48`. The file actually on disk at
+`stage3-frames/S6-cupboard.png` is **`247bbe41-5db4-4a66-ad83-6b480abbb30d`** (verified, 6,659,068
+bytes exact). The frame was re-run at 20:51 and the new output replaced the file without the row
+being updated. The recipe and the media had diverged silently, and nothing detected it.
+
+### The A6 lineage, recovered and verified
+
+| File | `job_id` | Res | Verdict |
+|---|---|---|---|
+| `A6-superseded-blank-labels.mp4` | `25269434-038b-4498-b1d7-816453cc94ca` | 720p | Superseded. Blank labels; compliant but unrecognisable as supplements |
+| `A6-superseded-blankbox.mp4` | `2439106f-007c-4f24-94f1-dabc3f241407` | 720p | Superseded on framing. Printed labels, blank box: compliance-correct |
+| `A6-cupboard.mp4` | `30348f63-00e5-4dd7-9b60-a4bbdc75223a` | 720p | 🔴 **REJECTED — garbled pack. Do not ship** |
+| `A6-continuous-blank-1080p.mp4` | `ba0acc2d-0f2a-4e70-bbe7-220b68de62a4` | 1080p | 🟢 **APPROVED** — replaces `A6-cupboard.mp4` |
+| `A6b-counter-blank-1080p.mp4` | `8754acc5-3cd0-4655-b74d-c36a3a3c361a` | 1080p | 🟢 **APPROVED** — locked-off counter plate |
+
+Frames: `S6b-counter-pack.png` = `53db409e` (superseded, carries the rendered pack);
+`S6b-counter-blank.png` = `c2e49fd3` (superseded, wrong box geometry);
+**`S6b-counter-blank-twin.png` = `d5d9a72d`** (approved plate, 4K).
+
+### 🔴 A6-cupboard.mp4 is the proof that §3's blank-box rule is load-bearing
+
+It was generated with the **packed** counter frame as `end_image`, so the model had to render our
+real pack through a camera move. §3 predicts precisely this and calls it "a product
+misrepresentation, not a cosmetic error". What came back, read at zoom on the final frame:
+
+- `NMOL/L` → **`NAIL/L`**
+- `PMOL/L` → **`PMIL/L`**
+- `AT-HOME BLOOD TEST · ENERGY & RECOVERY` → **`AT-HBME BLODD TEST · ENEAGY & RECOVEBY`**
+- `Your levels, not your programme.` → mush
+
+Only the large serif headline and the AP monogram survived. **Garbled units on a medical-device
+pack in a health ad.** The rule was right and the departure produced exactly the predicted defect.
+
+### The fix was one substitution, not a re-prompt
+
+`S6b-counter-blank-twin.png` was made by **erasing the print off the packed frame** rather than
+generating a blank box from scratch — which is why its geometry matches the real pack exactly: it
+*is* the same box, wiped. The earlier from-scratch attempt (`c2e49fd3`) came back with a tall,
+deep, portrait box; the real AP-E02 is a shallow landscape mailer.
+
+**Technique worth keeping: when a compositing plate has to match a real product, de-brand a shot
+of the product rather than generating a blank one. Erasure preserves geometry; generation
+re-invents it.**
+
+`A6-continuous-blank-1080p.mp4` is then the rejected clip's own recipe with a single field
+changed — `end_image` swapped from the packed frame to the blank plate. Same start frame, same
+structure, blank box throughout.
+
+### Verification (both approved clips)
+
+Box face read at ~2.4x with contrast stretched: clean bone card, no printing, no ghost of the
+erased artwork, no invented type. Bottle labels `VITAMIN D3`, `OMEGA 3`, `MAGNESIUM`,
+`MULTIVITAMIN`, `VITAMIN C` all correctly spelled, fine print resolving to texture. Hands
+connected, one person, one pair of hands, no unrequested slow motion. For the locked plate, the
+box region measured **1.63/255 mean absolute difference between first and last frame** — that is
+film grain, not movement, which is what makes it a single-corner-pin composite with no tracking.
+
+### ⚠ One open deviation for Keith
+
+`seedance_2_5` renders `start_image` + `end_image` as a **hard cut**, not as one continuous move.
+Storyboard §7c asks A6 to be a single continuous shot with a rack focus, and §7c defends that
+choice explicitly. So there are two shapes on the table and it is a creative call, not a technical
+one:
+
+- **Accept the cut** — `A6-continuous-blank-1080p.mp4` alone, cupboard then counter.
+- **Cut deliberately** — the cupboard half of the continuous clip, then `A6b-counter-blank-1080p.mp4`,
+  which is locked off and holds. Costs an edit decision, gains a cleaner composite and a proper hold.
+
+Neither is shippable until the pack is composited in post, and neither changes the four items
+already blocking the film.
+
+**Stage 4 spend this session: 90 credits** (2 x 45, `seedance_2_5` 1080p / 5s / `bitrate_mode: high`).
+
+⚠ **Correction to §5, §5d and the "Next: stage 4" note below: `get_cost` DOES settle video
+cost.** All three say video is the one figure a preflight cannot price and mandate generating a
+test clip to find out. It is not true — `generate_video` takes `get_cost: true` exactly as the
+image tools do, and returned `seedance_2_5` at 9:16 / 5s / audio-off as **32.5 credits at 720p**
+and **45 at 1080p with high bitrate**, submitting nothing. The gate cost a full-price clip per run
+to discover a number that is free.
+
+---
+
+## A7: the letterbox arrival, a candidate NEW locked ending (2026-09-09)
+
+**Keith chose it on 2026-09-09** from five options put to him after A6's pack-render failure. It is
+offered as a replacement for the closing beat, not an addition.
+
+**Why this one, on its merits rather than as a workaround.** It dramatises the flat mail packer,
+which `02_brand/STATE.md` records as the whole reason for that pack format: the 65 mm front reads
+flat, it posts as a large letter, and on a monthly subscription that compounds twelve times a year
+and removes missed deliveries. Nothing has to be said for the shot to say it. It also carries the
+product with **no person in frame**, which is what makes it repeatable as a locked ending across
+every episode: §13's cold opens vary, this does not, and no episode needs a new performance to
+close.
+
+| Asset | `job_id` | Note |
+|---|---|---|
+| `stage3-frames/S7-letterbox-landed.png` | `fbf10cac-c8be-49e2-9448-e04a633fad05` | End frame, and the composite reference |
+| `stage3-frames/S7-letterbox-drop-matched.png` | `b61060f0-10b4-4c2e-8cfa-f716f24d546f` | Start frame, an EDIT of the above |
+| `stage3-frames/S7-letterbox-drop.png` | `472fb10e-7d53-4341-aa19-9ee2559c7bcb` | ⛔ Superseded, camera did not match |
+| `stage4-clips/A7-letterbox-blank-1080p.mp4` | `b1e9947c-f9d4-4820-8f84-bed3a2f8749c` | 🟢 The clip. 1080p, blank box, 45 credits |
+
+### 🔴 The frame pair had to be EDITED into agreement, not prompted into it
+
+Both frames were first generated in one batch from prompts that were roughly 95% character-identical
+— same hallway, same door, same "camera at standing head height looking down and forward", same mat,
+same lens block. **They came back with completely different camera positions**: letterbox centred at
+top versus off to the right, mat square-on versus raking away. As a start/end pair that drives a
+whipping camera move, not a vertical drop.
+
+The fix was to stop generating the second frame and **edit the approved one** instead: hold every
+invariant explicitly, then make exactly two changes (empty the mat, put the box through the slot).
+The camera is then inherited rather than re-described.
+
+**This is the second time in two sessions that the same manoeuvre was the answer.** The approved
+counter plate (`S6b-counter-blank-twin`) exists because the print was *erased off* a shot of the
+packed box; the from-scratch blank (`c2e49fd3`), given a careful description, returned a tall deep
+portrait box when the real product is a shallow landscape mailer.
+
+> **Rule worth carrying: a shared prompt is a shared DESCRIPTION, not a shared RESULT.** Anything a
+> prompt does not pin down is re-sampled on every generation, and the properties that matter for
+> continuity — camera position, object geometry, how the light falls — are exactly the spatial ones
+> prose is worst at constraining. Where two artefacts must agree, generate one, approve it, and
+> produce the other as an edit of it. The edit costs the same as the generation, so there is no
+> reason to gamble on agreement.
+
+### The composite window, measured rather than eyeballed
+
+| Frames | What happens |
+|---|---|
+| 1-33 | Box slides out of the slot and falls |
+| 33-35 | Landing impact |
+| 46-55 | Final settle, box drops 8 px into the coir |
+| **55-121** | **Static hold, 2.75 s** |
+
+Across every sample from f55 to f121 the box face is **pixel-identical**: 788 x 460 px centred at
+(642, 1090) in the 1080x1920 master. **Single corner-pin, no motion tracking.**
+
+⚠ **And a correction worth recording, because the failure was mine and it is repeatable.** A
+four-frame contact strip *looked* like a slow camera drift, and that read was reported before it was
+measured. Tracking the box's bounding box showed zero drift: 0 px horizontally, 0% size change. **A
+contact strip is not evidence about motion** — separate tiles cannot be compared by eye for
+sub-percent movement, and the same §5d rule that bans judging a garment from a scaled sheet applies
+to judging motion from one. Measure it.
+
+A motion spike at f91 is confined to the top band of frame and is the letterbox flap settling. The
+box region is unaffected.
+
+### Edit notes
+
+Trim the head: the first ~15 frames are a slow slide out of the slot, and starting nearer the tip
+point makes the drop land harder. The fall itself completes in about 1.4 s, mildly slower than real
+gravity, so §9.1's "cut any slow motion the model added" applies lightly — a 1.3 to 1.5x retime over
+frames 1-45 with the hold untouched. Sound follows §8's logic: the flap snap, then one contact as
+the box lands on coir, and **no sting on the product**.
+
+### Status
+
+🟢 Plate approved and verified. 🟠 **The creative decision is Keith's and is not made**: adopting
+this as the locked ending changes §1's format rule, which currently fixes the box arriving under
+"Test first" in the kitchen. §1 is explicit that a locked ending is inherited by every episode, so
+this is a series-level change, not a shot swap. ⛔ Not cleared to ship: the four pre-flight items
+still block the film and this shot changes none of them. It introduces a front door and a doormat
+but no person, no premises identifier and no claim.
+
+**Spend: 45 credits for the clip, 33 for the three frames (2 x 11 generated, 1 x 11 edited). 78 total.**

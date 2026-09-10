@@ -52,8 +52,24 @@ andro-prime/06_marketing/seo-ai-search/.fanout-harvest-*.json
 # carousel above: git holds the recipe, Drive holds the media. 208 MB of stage 1-4 stills and
 # clips, most of it rejected takes kept for audit. The production log beside the storyboard IS committed and is the recipe:
 # it carries every job_id, so any frame or clip can be re-fetched or re-generated from it.
-andro-prime/06_marketing/content-machine/assets/kit2-same-programme/*/
+#
+# NOTE 2026-09-09: this was `kit2-same-programme/*/`, which excluded the DIRECTORIES. Git cannot
+# re-include a file whose parent directory is excluded, so that pattern also swallowed the
+# `.json` recipe sidecars sitting next to each asset — the recipe would have been lost with the
+# media it exists to recover. An hour of A6 work (the S6b frames and their clips) had already
+# gone unrecorded this way: bytes on disk, job_ids nowhere, recoverable only from the vendor's
+# own history. Ignore the MEDIA by extension instead, so sidecars stay tracked.
+andro-prime/06_marketing/content-machine/assets/kit2-same-programme/**/*.png
+andro-prime/06_marketing/content-machine/assets/kit2-same-programme/**/*.jpg
+andro-prime/06_marketing/content-machine/assets/kit2-same-programme/**/*.jpeg
+andro-prime/06_marketing/content-machine/assets/kit2-same-programme/**/*.webp
+andro-prime/06_marketing/content-machine/assets/kit2-same-programme/**/*.mp4
+andro-prime/06_marketing/content-machine/assets/kit2-same-programme/**/*.mov
 
 # Packaging renders. Heavy design artefacts, superseded often; the approved pack art is recorded
 # in 02_brand/STATE.md with its date and job_id rather than committed as bytes.
+# NOTE: `*` does not cross a `/`, so the single-level pattern below missed any SUBFOLDER of
+# renders/ — the first one created (kit2-shotlist-2026-09-09, 94 MB) was fully stageable while
+# STATE.md asserted these were ignored. The `**` line is what makes that assertion true.
 andro-prime/02_brand/assets/packaging/renders/*.png
+andro-prime/02_brand/assets/packaging/renders/**/*.png

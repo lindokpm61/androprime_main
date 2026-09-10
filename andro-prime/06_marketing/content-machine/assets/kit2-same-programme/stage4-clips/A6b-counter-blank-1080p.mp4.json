@@ -1,0 +1,23 @@
+{
+  "media": "A6b-counter-blank-1080p.mp4",
+  "bytes": 3707960,
+  "recorded": "2026-09-09",
+  "recovered_from": "Higgsfield generation history; mapping verified by exact byte size against the file on disk",
+  "job_id": "8754acc5-3cd0-4655-b74d-c36a3a3c361a",
+  "model": "seedance_2_5",
+  "stage": 4,
+  "shot": "A6b",
+  "status": "APPROVED: locked-off compositing plate",
+  "resolution": "1080p",
+  "dimensions": "1080x1920",
+  "duration_s": 5,
+  "generate_audio": false,
+  "bitrate_mode": "high",
+  "start_image": "d5d9a72d-3a9f-42fc-bdbc-9e07ad0a5ec5",
+  "image_references": [
+    "ef3ec90a-4465-42ec-aca6-83d373fad50d"
+  ],
+  "cost_credits": 45,
+  "verification": "Box blank in every frame at 2.3x with contrast stretched. Box region frame0 vs frame119 mean abs diff 1.63/255 (grain, not motion), max 15. Camera locked, framing identical first to last. One person, one hand, hand connected to forearm. No slow motion.",
+  "note": "Counter beat only. Locked off deliberately so the pack composite needs a single corner-pin and no motion tracking. Any push or pull is added in the edit per storyboard §9.2."
+}
