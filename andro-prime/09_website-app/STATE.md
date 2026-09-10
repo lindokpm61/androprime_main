@@ -92,6 +92,22 @@ throws now. Register row 39a.
 
 ### Owed to Keith, new this session
 
+🔴 **THE HOMEPAGE'S ONLY MEMBERSHIP SENTENCE IS NOW FALSE, FOUND AT WRAP 2026-09-10.**
+`frontend/app/(marketing)/page.tsx:678` has said since 2026-09-02: *"It is offered
+once your first result is back, never before, and you never need it to buy a kit or to
+read your own results."* Keith's ruling of 2026-09-07
+(`01_strategy/2026-09-07-auto-renew-at-day-30.md` section 1) supersedes exactly that
+model: the first 30 days are **included in the kit price** and day 31 charges GBP 47
+automatically, with no re-consent step. The line therefore tells a cold buyer the offer
+comes later and is optional, on the page that routes him into a purchase which now
+starts a subscription, and it **understates a recurring charge** on a branch whose own
+ruling (sections 2 and 3) calls prominence close to mandatory under the DMCCA read. **It
+is wrong however register row 32a resolves**, because 32a governs whether the PRICE line
+ships and this is a separate sentence. Nothing re-opened it because the register logs
+copy as a dated EVENT ("Built 2026-09-02") and has no re-validation pass, so a later
+ruling cannot reach an earlier row. **Owed: a rewritten line from Keith, then
+pre-flight.** Register row 12a; row 10 is superseded by it. task-observer OBS-704.
+
 🔴 **`/supplement-waitlist` PROMISES A FORM CONTROL THAT DOES NOT EXIST.** FAQ 4
 says *"The form lets you tell us whether you are interested in the Daily Stack,
 the Joint and Recovery Collagen, or both. You can change your mind later."*
