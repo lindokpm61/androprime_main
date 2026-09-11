@@ -46,7 +46,20 @@ const fs = require('fs')
 const path = require('path')
 
 const ROOT = path.resolve(__dirname, '..')
-const SCOPE = [path.join(ROOT, 'app')]
+/* 🔴 `public/` JOINED THE SCOPE ON 2026-09-11, AND IT IS THE REASON THIS CHECK
+   NEARLY SHIPPED USELESS. The first version walked `app/` and `.tsx` only. An
+   independent pre-flight found `public/llms.txt` serving the CA-026 C1 paragraph
+   **verbatim**, including "no subscription unless you choose one", under the
+   heading "One Price, Nothing Hidden". It is published on the apex and written
+   specifically for AI ingestion, so it is the copy most likely to be quoted back
+   at us by a model, and this check reported GREEN over it.
+
+   The lesson is about how the scope was chosen rather than about the file: it was
+   set to where the claims HAPPENED TO BE FOUND (seven page components) rather
+   than to where customer-facing copy CAN live. A scope drawn around the known
+   instances can only ever confirm the search that produced it. */
+const SCOPE = [path.join(ROOT, 'app'), path.join(ROOT, 'public')]
+const EXT = ['.tsx', '.txt', '.md']
 
 /* The phrases that assert the absence of a subscription or the one-off nature of
    the purchase. Matched case-insensitively against rendered text only: a JSX
@@ -58,6 +71,41 @@ const CLAIMS = [
   'not a subscription',
 ]
 
+/* 🔴 THE MIRROR SET, ADDED 2026-09-11. THE CHECK WAS ONE-DIRECTIONAL AND THAT WAS
+   A REAL BLIND SIDE, NOT A LIMITATION.
+
+   The first version failed only when `MEMBERSHIP_ENABLED` was ON with an old
+   "no subscription" claim still present. It could not see the opposite and more
+   dangerous state: NEW copy asserting a GBP 47 recurring charge while the flag is
+   OFF, against `app/api/checkout/kit/route.ts`, which is `mode: 'payment'` with a
+   single line item, no `subscription_data` and no `trial_period_days`. That page
+   would tell every buyer he is being charged on day 31 for a membership that no
+   code creates and that he cannot be sold, and this check would report GREEN.
+
+   `MembershipDisclosure`'s header already argues why that is the worse direction:
+   *"a page promising thirty included days in front of a checkout that bills
+   immediately is a worse position than saying nothing, because it is a promise
+   rather than an omission."* A gate guarding one direction of a two-sided
+   contradiction is not half a gate, it is a gate that certifies the side it does
+   not check. */
+const RENEWAL_CLAIMS = [
+  'days of membership',
+  '/month after',
+  'a month unless you stop it',
+  'becomes £47',
+  'charged £47',
+]
+
+/* Surfaces allowed to state the renewal with the flag off, because they are the
+   flag's own machinery or never render to a customer while it is off.
+   `/membership` calls `notFound()` when the flag is off; the disclosure component
+   returns null. Both are the interlock, not a breach of it. */
+const RENEWAL_ALLOW = [
+  'app/(marketing)/membership/page.tsx',
+  'components/commerce/MembershipDisclosure.tsx',
+  'lib/membership/disclosure.ts',
+]
+
 const SKIP_DIR = new Set(['node_modules', '.next', '.git', '.impeccable', 'out'])
 
 function die(m) { console.error(`ERROR: ${m}`); process.exit(1) }
@@ -66,7 +114,7 @@ function walk(dir, acc = []) {
   if (!fs.existsSync(dir)) return acc
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     if (e.isDirectory()) { if (!SKIP_DIR.has(e.name)) walk(path.join(dir, e.name), acc) }
-    else if (e.name.endsWith('.tsx')) acc.push(path.join(dir, e.name))
+    else if (EXT.some((x) => e.name.endsWith(x))) acc.push(path.join(dir, e.name))
   }
   return acc
 }
@@ -89,14 +137,20 @@ if (files.length < 20) die(`found only ${files.length} route files. The layout c
 
 const flagOn = process.env.MEMBERSHIP_ENABLED === 'true'
 const found = []
+const renewal = []
 
 for (const f of files) {
   const src = stripComments(read(f))
   const lines = src.split('\n')
+  const allowed = RENEWAL_ALLOW.includes(rel(f))
   lines.forEach((line, i) => {
     const hay = line.toLowerCase()
     for (const claim of CLAIMS) {
       if (hay.includes(claim)) found.push({ file: rel(f), line: i + 1, claim, text: line.trim().slice(0, 120) })
+    }
+    if (allowed) return
+    for (const claim of RENEWAL_CLAIMS) {
+      if (hay.includes(claim.toLowerCase())) renewal.push({ file: rel(f), line: i + 1, claim, text: line.trim().slice(0, 120) })
     }
   })
 }
@@ -113,6 +167,28 @@ for (const c of found) {
 for (const [file, cs] of [...byFile.entries()].sort()) {
   console.log(`  ${file}`)
   for (const c of cs) console.log(`    :${c.line}  ${c.text}`)
+}
+
+/* THE MIRROR CHECK. Fails when the flag is OFF and customer copy already promises
+   the renewal, because the mechanic does not exist yet. */
+if (renewal.length) {
+  console.log(`\n  ${renewal.length} line(s) stating the renewal outside the interlock\n`)
+  for (const c of renewal) console.log(`    ${c.file}:${c.line}  ${c.text}`)
+  if (!flagOn) {
+    console.error(`
+  FAIL MEMBERSHIP_ENABLED is OFF and the line(s) above already promise a
+       recurring charge. Kit checkout is \`mode: 'payment'\` with no
+       \`subscription_data\` and no \`trial_period_days\`, so no membership is
+       created and none can be sold. A page promising thirty included days in
+       front of a checkout that bills once is a PROMISE rather than an omission,
+       which is the worse of the two directions.
+
+       Render it behind \`isMembershipEnabled()\`, as \`MembershipDisclosure\`
+       does, or add the surface to RENEWAL_ALLOW if it genuinely cannot reach a
+       customer with the flag off.
+`)
+    process.exit(1)
+  }
 }
 
 if (!found.length) {
