@@ -14,14 +14,17 @@ import { isMembershipEnabled, isAccountDataControlsEnabled } from '@/lib/flags'
  * that was retired on 2026-07-22 and is now an eleven-line redirect. A borrowed
  * class name is invisible until somebody deletes the page it was named after.
  *
- * The three that remain are held open by components this batch has not reached:
- * `account.css` by `AddressSection` and `DataPrivacySection`, `membership.css`
- * by the four `components/membership/*` pieces, and `results-dashboard.css` plus
- * `dashboard-panels.css` by the results-engine tree behind `ResultsReadyView`.
+ * `account.css` and `results-dashboard.css` FOLLOWED THEM on 2026-09-11, once the
+ * results-ready view was rebuilt: nothing renders a class from either any more.
+ * `results-dashboard.css` was also imported by `app/(demo)/layout.tsx`, which
+ * renders none of its classes either, so that import went with it.
+ *
+ * The two that remain are held open by components this batch did not reach:
+ * `membership.css` by three `components/membership/*` pieces, and
+ * `dashboard-panels.css` by `DevFixtureBar` (dev-only) plus the
+ * `status-indicator--*` set.
  */
 import '@/styles/components/dashboard-panels.css'
-import '@/styles/pages/results-dashboard.css'
-import '@/styles/pages/account.css'
 import '@/styles/pages/membership.css'
 
 /**

@@ -51,34 +51,40 @@ export function TrafficLightBar({
       ? `Target: >${referenceLow} ${unit}`
       : null
 
+  /*
+   * Rebuilt in Direction F on 2026-09-11. Same arithmetic, same zones, same
+   * labels: `barMax`, the zone widths and `dotPct` are untouched, because they
+   * decide where a clinical band sits and that is the engine's answer, not a
+   * styling one. What changed is the track's shape and the marker.
+   *
+   * The value marker is a CASED NEEDLE standing proud of the track rather than a
+   * dot sitting inside it, which is the fix the marketing bar already took on
+   * 2026-09-02: a dot within a coloured fill fights the colour behind it for
+   * contrast at every position, and a needle with a paper casing never does.
+   */
   return (
-    <div className="traffic-light-bar">
+    <div>
       {/* The track is a visual restatement: the value, the unit and the
           reference range are all rendered as text directly below it, and
           StatusBadge carries the verdict in words in the same card. Labelling
           it as well would double-announce, so it is hidden from assistive tech
           rather than given a redundant aria-label. */}
-      <div className="traffic-light-bar__track" aria-hidden="true">
-        {zones.map((z, i) => (
-          <div
-            key={i}
-            style={{ flex: `0 0 ${z.widthPct}%`, backgroundColor: z.color }}
-          />
-        ))}
-        <div
-          className="traffic-light-bar__dot"
-          style={{ left: `${dotPct}%` }}
-        />
+      <div className="f-mkbar" aria-hidden="true">
+        <div className="f-mktrack">
+          {zones.map((z, i) => (
+            <div
+              key={i}
+              style={{ flex: `0 0 ${z.widthPct}%`, backgroundColor: z.color }}
+            />
+          ))}
+        </div>
+        <span className="f-mkneedle" style={{ left: `${dotPct}%` }} />
       </div>
-      <div className="traffic-light-bar__labels">
-        <span className="data-label text-xs">
+      <div className="f-mklabels">
+        <span>
           {value} {unit}
         </span>
-        {rangeLabel && (
-          <span className="data-label text-xs" style={{ color: 'var(--color-gray-500)' }}>
-            {rangeLabel}
-          </span>
-        )}
+        {rangeLabel && <span className="f-mklab-r">{rangeLabel}</span>}
       </div>
     </div>
   )

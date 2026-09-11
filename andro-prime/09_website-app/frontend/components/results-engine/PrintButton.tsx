@@ -8,7 +8,7 @@ export function PrintButton() {
     <button
       type="button"
       onClick={() => window.print()}
-      className="print:hidden inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
+      className="f-btn print:hidden"
     >
       Print or save as PDF
     </button>

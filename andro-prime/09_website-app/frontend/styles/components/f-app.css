@@ -668,6 +668,301 @@
 .f-appfoot-note { margin-left: auto; }
 @media (max-width: 760px) { .f-appfoot-note { margin-left: 0; width: 100%; } }
 
+/* ---------- the results dashboard ---------------------------------------
+
+   🔴 A MARKER CARD IS DATA, SO IT GETS A TRAY, AND THE CONCENTRIC CORE DOES REAL
+   WORK: the reading sits in the core and its interpretation sits around it.
+   That is Frame C's argument for using the tray here when the blog frame was
+   told not to, and it is the same grammar reaching the opposite verdict because
+   the content is a different kind of thing.
+
+   ⚠ THE FRAME'S CENTREPIECE IS DELIBERATELY NOT BUILT. Frame C draws a two-range
+   track: our action bands as a fill, the laboratory's reference interval as a
+   bracket beneath, and a hard rule at a named clinical action cutoff.
+   `components/app-shell/RangeTrack.tsx` already renders that on live data and
+   REFUSES the named cutoff, because that string is not in the engine. Building a
+   second, weaker copy of one clinical device in this layer would be the
+   duplication this repo keeps paying for. `TrafficLightBar` is restyled and kept.
+
+   Every word on these cards is the results engine's and is Ewa-approved. Nothing
+   here moves a word; it moves boxes. */
+
+.f-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.f-tab {
+  appearance: none;
+  border: 1px solid var(--hair-2);
+  background: var(--core);
+  color: var(--ink-2);
+  border-radius: 999px;
+  padding: 8px 15px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.f-tab:hover { color: var(--ink); }
+/* Compounded, because a tab is always worn with its base. */
+.f-tab.f-tab-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* The panel head: which kit, when it was collected, and the one-line verdict. */
+.f-rhead { margin-bottom: 26px; }
+.f-rhead-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.f-rhead h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+.f-rsum { font-family: var(--font-sans); font-size: 16px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+
+/* The result-date picker, when a kit has more than one result. */
+.f-rsel {
+  appearance: none;
+  border: 1px solid var(--hair-2);
+  background: var(--core);
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+/* ---- the marker card --------------------------------------------------- */
+
+.f-mkname {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.f-mkname h3 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+/* The reading. Mono and tabular, so a column of markers does not jitter, and
+   large enough to be the first thing read, which is what the card is for. */
+.f-mkread {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 16px 0 4px;
+}
+.f-mkval {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(40px, 6vw, 58px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.f-mkval span {
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  margin-left: 9px;
+}
+.f-mkref {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 20px;
+}
+
+/* ---- the verdict badge ------------------------------------------------
+
+   🔴 NOT `.f-stat`, AND THE SEPARATION IS THE POINT. `.f-stat` is the PROCESS
+   badge: an order moving through fulfilment, a subscription moving through
+   billing. This one carries the results engine's clinical verdict vocabulary,
+   straight out of `badgeFor()`. Routing a health verdict through a fulfilment
+   class is how the two start sharing a rule that only one of them wanted, and
+   `resultSeverity.ts` exists precisely so that answer lives in one place.
+
+   Monochrome, filled or outlined, exactly as before: `badgeFor()` returns a
+   label and a `filled` boolean and no severity colour, so inventing a hue here
+   would be inventing a clinical mapping. Filled means flagged. */
+
+.f-mkbadge {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  border: 1px solid var(--hair-2);
+  background: var(--core);
+  color: var(--ink-2);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  max-width: 100%;
+}
+.f-mkbadge.f-mkbadge-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* ---- the range track --------------------------------------------------
+
+   A multi-zone track, so it cannot reuse `.f-bar`, which is the marketing
+   readout's single fill. The zone colours are inline and come from
+   `displayZones`, which is the engine's, so nothing here decides a band.
+
+   The value marker is a CASED NEEDLE standing proud of the track rather than a
+   dot sitting in it. That is the fix the marketing bar already took on
+   2026-09-02: a dot inside a coloured track has to fight the fill behind it for
+   contrast at every position, and a needle with a paper casing never does. */
+
+/* ⚠ TWO ELEMENTS, AND THE NESTING IS LOAD-BEARING. The track clips its zones to
+   the pill radius with `overflow: hidden`; the needle stands 18px proud of an
+   8px track, so a needle INSIDE that container is clipped to 8px and reads as a
+   slightly darker segment rather than a marker. `.f-mkbar` is the unclipped
+   positioning context they share. */
+.f-mkbar { position: relative; width: 100%; margin-top: 4px; }
+.f-mktrack {
+  display: flex;
+  height: 8px;
+  width: 100%;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.f-mkneedle {
+  position: absolute;
+  top: 50%;
+  width: 3px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  background: var(--ink);
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--paper);
+  z-index: 2;
+}
+.f-mklabels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 14px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.f-mklabels .f-mklab-r { color: var(--ink-3); }
+
+/* The two prose blocks. A hairline and a mono key, not a 2px black rule and an
+   icon: the icons were V2.0's way of separating two identical-looking headings,
+   and a label plus a rule does it without spending a graphic on furniture. */
+.f-mkblock { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hair); }
+.f-mkblock p {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.66;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* The Evidence as a disclosure, when the flag collapses it. */
+.f-mkdet summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.f-mkdet summary::-webkit-details-marker { display: none; }
+.f-mkdet summary::after {
+  content: '+';
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+.f-mkdet[open] summary::after { content: '\2212'; }
+.f-mkdet summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* The recommendation foot. Recessed, because it is the card's conclusion rather
+   than more of its body, and the direction already spends `--sunk` on exactly
+   that distinction. */
+.f-mkfoot {
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: var(--radius-inset);
+  background: var(--sunk);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.f-mkfoot-b { flex: 1 1 320px; min-width: 0; }
+.f-mkfoot-b p { font-family: var(--font-sans); font-size: 14.5px; line-height: 1.6; color: var(--ink-2); margin: 0; }
+
+/* A consent block or a qualifier sits under the foot, full width, and is a
+   decision rather than a conclusion, so it takes a rule and not a ground. */
+.f-mkgate { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--hair); }
+
+/* ---- the consent rows -------------------------------------------------
+
+   A checkbox and its sentence, on the low-T and borderline nurture opt-ins.
+   The control keeps a real 20px hit area and the label is the whole row, so the
+   sentence is the target rather than the box alone. */
+
+.f-chkrow { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+.f-chk {
+  margin-top: 3px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+/* The scope note: what the kit did NOT measure. Flag-gated, CA-025 approved. */
+.f-scopenote {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  margin: 0 0 22px;
+  padding-left: 14px;
+  border-left: 2px solid var(--hair-2);
+  max-width: 62ch;
+}
+
 /* ---------- the GP handoff, the one route that leaves the direction ----
 
    🔴 A PRINT ARTEFACT FOR A CLINICIAN, NOT A SCREEN FOR A CUSTOMER. Frame G

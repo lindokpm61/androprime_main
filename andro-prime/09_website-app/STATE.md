@@ -152,29 +152,61 @@ anything. Moved onto `.f-btn` and `.f-err`. It was one of the four
 `components/membership/*` pieces left on V2.0 below, and it is the one that
 renders in a state a customer actually reaches.
 
+### ✅ THE RESULTS-READY VIEW IS REBUILT, AND IT WAS THE LAST V2.0 SURFACE
+
+Keith opened the app and said the results pages still looked like version two.
+They did, and it was the worst possible place for it: **the post-login redirect
+lands on `/results-dashboard`**, so for anyone with a result the first screen
+after signing in was the one view the rebuild had not reached.
+
+Rebuilt on 2026-09-11: `ResultsReadyView`, `KitTabs`, `MarkerCard`,
+`TrafficLightBar`, `StatusBadge`, `ResultConvert`, `ResultRecommend`,
+`MaintenanceOfferCta`, `QualifierGate`, `LowTNurtureConsent`,
+`BorderlineNurtureConsent` and `PrintButton`.
+
+- **It composes `AppStrip` and `AppShell` now**, like every other signed-in
+  route, which also removed this file's own status strip. That had been
+  competing with the one the layout gained earlier in the same batch: two black
+  bars, stacked, saying different things.
+- **A marker card is a tray**, which is Frame C's argument and the opposite of
+  the blog frame's ruling, because the content is a different kind of thing: the
+  reading sits in the core and its interpretation sits around it.
+- **The value marker is a cased needle standing proud of the track**, not a dot
+  inside it. Same fix the marketing bar took on 2026-09-02, for the same reason:
+  a dot within a coloured fill fights the colour behind it at every position.
+- 🔴 **`.f-mkbadge` IS NOT `.f-stat`.** The verdict badge carries the results
+  engine's clinical vocabulary; `.f-stat` is the process badge for orders and
+  billing. Routing a health verdict through a fulfilment class is how the two
+  start sharing a rule only one of them wanted.
+- **`QualifierGate` lost a lot of furniture**, including an internal ref readout
+  printing the raw question key (`crp_joint_symptoms`) to the customer, and two
+  60px YES/NO slabs that were the largest type on the dashboard, larger than his
+  own result.
+- 🔴 **NOT ONE WORD CHANGED.** Every sentence is the engine's and Ewa-approved.
+
+**Two more V2.0 stylesheets are deleted**, `account.css` and
+`results-dashboard.css`, once nothing rendered a class from either.
+`results-dashboard.css` was also imported by `app/(demo)/layout.tsx`, which
+renders none of its classes; that import went with it. Four of six now gone.
+
 ### 🔴 WHAT IS STILL NOT DONE
 
-**None of these seven routes can be seen without a Supabase session**, and the
-dev server points at the PRODUCTION project (`phqrjtnflovicgkngieu`). No test
-login was available in this session, so:
-
-- **The results-READY state is NOT rebuilt.** That is `ResultsReadyView`,
-  `KitTabs`, `MarkerCard` and the rest of `components/results-engine/`, about
-  1,377 lines, and it is the most important screen in the app. It is reachable
-  only with auth AND a ready result. **It was not rebuilt blind.**
-- **The four `components/membership/*` pieces** (CheckinRow, AdherenceChart,
-  TrendRail, JoinButton) keep their V2.0 classes, for the same reason: they need
-  auth AND `MEMBERSHIP_ENABLED` AND a member fixture.
-- **What WAS verified visually**: the shell, the status strip, the process
-  badges, the history table in all four tones, the tracker, the readout, the
-  counters, the includes list, the billing error and the waiting cards, rendered
-  through the real components and the real stylesheet on a temporary ungated
-  route at 1440 and 390, then deleted. Shots in `shots/batch3/`, not in git.
-
-✅ **The test login is no longer the blocker. What remains is the WORK**: the
-results-ready view is a large port, and the three remaining
-`components/membership/*` pieces need a member fixture with check-in history,
-which the seeder does not create.
+- **Three `components/membership/*` pieces** (CheckinRow, AdherenceChart,
+  TrendRail) keep their V2.0 classes and hold `membership.css` open. They need a
+  member fixture with check-in history, which `seed-result.ts` does not create.
+  `JoinButton` was the fourth and is done: it is the only one of the four that
+  renders in a state a customer reaches, and it was a square black slab inside an
+  F tray on the paywall.
+- **`dashboard-panels.css`** stays for `DevFixtureBar` (dev-only) and the
+  `status-indicator--*` set.
+- ⚠ **`ResultEducate`, `ResultExplain` and `ResultValue` have ZERO consumers.**
+  Exported from the results-engine index and rendered by nothing. Not deleted in
+  this batch, because dead-code removal is its own change with its own argument.
+- ⚠ **An em dash is live in customer-facing consent copy.** Both nurture opt-ins
+  render "OPTIONAL — STAY INFORMED". The house rule bans the em dash in
+  customer-facing copy outright, but this is inside the CA-014 consent block, so
+  it is flagged rather than changed: an approval's copy is not a rebuild's to
+  edit even typographically.
 
 ### Two defects found by looking at the render, not by reading the source
 

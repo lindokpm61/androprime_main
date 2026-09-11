@@ -73,110 +73,65 @@ export function MarkerCard({
 
   return (
     <article
-      className="marker-rise border-b-4 border-black bg-white hover:bg-gray-50 transition-colors duration-200 flex flex-col relative"
-      style={{ animationDelay: `${Math.min(index, 6) * 90}ms` }}
+      className="f-tray f-rise"
+      style={{ transitionDelay: `${Math.min(index, 6) * 90}ms` }}
     >
+      <div className="f-core">
 
-      {/* Main body — two-column grid */}
-      <div className="p-8 lg:p-12 xl:p-16 grid grid-cols-1 xl:grid-cols-12 gap-12 xl:gap-16 flex-grow relative z-10">
-
-        {/* Left column: value display + traffic light bar */}
-        <div className="xl:col-span-5 flex flex-col justify-between">
-          <div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-8 gap-4">
-              <h2 className="text-2xl lg:text-3xl font-sans font-black uppercase tracking-tight">
-                {displayName}
-              </h2>
-              <StatusBadge state={marker.state} />
-            </div>
-
-            <div
-              className="font-sans font-black tracking-tighter leading-none mb-4"
-              style={{ fontSize: 'clamp(72px, 10vw, 140px)' }}
-            >
-              {marker.value}
-            </div>
-
-            <div className="font-mono text-sm tracking-[0.15em] uppercase flex items-center gap-3">
-              {marker.unit}
-              {referenceLabel(marker) && (
-                <>
-                  <span className="w-2 h-2 bg-current" aria-hidden />
-                  {referenceLabel(marker)}
-                </>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-12 w-full">
-            <TrafficLightBar
-              value={marker.value}
-              unit={marker.unit}
-              referenceLow={marker.referenceLow}
-              referenceHigh={marker.referenceHigh}
-              displayZones={marker.displayZones}
-              state={marker.state}
-            />
-          </div>
+        {/* The reading. Name, verdict, value, reference, then the bar. One
+            column: the V2.0 card put the value and the prose side by side in a
+            12-column grid, which at the shell's measure would leave the number
+            in a 290px gutter. Frame C draws it stacked for the same reason. */}
+        <div className="f-mkname">
+          <h3>{displayName}</h3>
         </div>
 
-        {/* Right column: explanation + evidence */}
-        <div className="xl:col-span-7 flex flex-col gap-10 justify-center">
-
-          <div>
-            <h3 className="font-sans font-black uppercase tracking-tight text-lg lg:text-xl mb-4 pb-3 border-b-2 border-black flex items-center gap-3">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" aria-hidden>
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-              </svg>
-              What This Means
-            </h3>
-            <p className="text-base xl:text-lg font-serif leading-relaxed text-gray-600">
-              {marker.explanation}
-            </p>
+        <div className="f-mkread">
+          <div className="f-mkval">
+            {marker.value}
+            <span>{marker.unit}</span>
           </div>
+          <StatusBadge state={marker.state} />
+        </div>
+
+        {referenceLabel(marker) && <p className="f-mkref">{referenceLabel(marker)}</p>}
+
+        <TrafficLightBar
+          value={marker.value}
+          unit={marker.unit}
+          referenceLow={marker.referenceLow}
+          referenceHigh={marker.referenceHigh}
+          displayZones={marker.displayZones}
+          state={marker.state}
+        />
+
+        <div className="f-mkblock">
+          <p className="f-blab">What this means</p>
+          <p>{marker.explanation}</p>
+        </div>
 
           {/* The Evidence. Generic per-marker explainer, identical on every
               visit and for every customer with this marker, so behind
               EVIDENCE_DISCLOSURE_ENABLED it collapses to a disclosure. Native
               <details>: keyboard and screen-reader support for free, no JS, and
               the copy stays in the DOM either way. No words change. */}
-          {collapseEvidence ? (
-            <details className="marker-evidence">
-              <summary className="marker-evidence__summary font-sans font-black uppercase tracking-tight text-lg lg:text-xl mb-4 pb-3 border-b-2 border-black flex items-center gap-3">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" aria-hidden>
-                  <rect x="4" y="2" width="16" height="20" />
-                  <line x1="4" y1="6" x2="20" y2="6" />
-                  <line x1="4" y1="14" x2="20" y2="14" />
-                </svg>
-                The Evidence
-                <span className="marker-evidence__toggle data-label text-xs" aria-hidden />
-              </summary>
-              <p className="text-base xl:text-lg font-serif leading-relaxed text-gray-600">
-                {marker.educationContext}
-              </p>
-            </details>
-          ) : (
-          <div>
-            <h3 className="font-sans font-black uppercase tracking-tight text-lg lg:text-xl mb-4 pb-3 border-b-2 border-black flex items-center gap-3">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square" aria-hidden>
-                <rect x="4" y="2" width="16" height="20" />
-                <line x1="4" y1="6" x2="20" y2="6" />
-                <line x1="4" y1="14" x2="20" y2="14" />
-              </svg>
-              The Evidence
-            </h3>
-            <p className="text-base xl:text-lg font-serif leading-relaxed text-gray-600">
-              {marker.educationContext}
-            </p>
+        {collapseEvidence ? (
+          <details className="f-mkblock f-mkdet">
+            <summary>
+              <span className="f-blab" style={{ marginBottom: 0 }}>The evidence</span>
+            </summary>
+            <p style={{ marginTop: 14 }}>{marker.educationContext}</p>
+          </details>
+        ) : (
+          <div className="f-mkblock">
+            <p className="f-blab">The evidence</p>
+            <p>{marker.educationContext}</p>
           </div>
-          )}
-
-        </div>
-      </div>
+        )}
 
       {/* Footer: recommendation + CTA */}
       {marker.requiresQualifier && marker.qualifierKey ? (
-        <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-10 bg-gray-50 relative z-10">
+        <div className="f-mkgate">
           <QualifierGate
             resultId={resultId}
             questionKey={marker.qualifierKey}
@@ -188,12 +143,10 @@ export function MarkerCard({
         // so the offer copy + the `supplement_offer_shown` event fire exactly
         // once per all-clear result. Other in-range cards suppress their footer.
         isMaintenanceAnchor ? (
-          <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mt-auto relative z-10">
-            <div className="max-w-2xl">
-              <div className="font-mono text-xs font-bold tracking-[0.15em] mb-3 text-black">
-                WHAT WE RECOMMEND
-              </div>
-              <div className="font-serif text-sm lg:text-base text-gray-600">
+          <div className="f-mkfoot">
+            <div className="f-mkfoot-b">
+              <p className="f-blab">What we recommend</p>
+              <div>
                 <ResultRecommend
                   recommendation={marker.recommendation}
                   primaryCta={marker.primaryCta}
@@ -205,18 +158,16 @@ export function MarkerCard({
                 />
               </div>
             </div>
-            <div className="shrink-0 w-full md:w-auto">
+            <div>
               <MaintenanceOfferCta />
             </div>
           </div>
         ) : null
       ) : (
-        <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mt-auto relative z-10">
-          <div className="max-w-2xl">
-            <div className="font-mono text-xs font-bold tracking-widest mb-3 text-black">
-              WHAT WE RECOMMEND
-            </div>
-            <div className="font-serif text-sm lg:text-base text-gray-800">
+        <div className="f-mkfoot">
+          <div className="f-mkfoot-b">
+            <p className="f-blab">What we recommend</p>
+            <div>
               <ResultRecommend
                 recommendation={marker.recommendation}
                 primaryCta={marker.primaryCta}
@@ -227,7 +178,7 @@ export function MarkerCard({
               />
             </div>
           </div>
-          <div className="shrink-0 w-full md:w-auto">
+          <div>
             <ResultConvert
               primaryCta={marker.primaryCta}
               secondaryCta={marker.secondaryCta}
@@ -241,7 +192,7 @@ export function MarkerCard({
       {(marker.state === 'severely-low-testosterone' ||
         marker.state === 'low-testosterone' ||
         marker.state === 'equivocal-testosterone') && (
-        <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 relative z-10">
+        <div className="f-mkgate">
           <LowTNurtureConsent />
         </div>
       )}
@@ -252,11 +203,12 @@ export function MarkerCard({
           the consent gate that feeds seq-03d, mirroring the low-T opt-in above. */}
       {marker.markerName === 'Testosterone' &&
         isBorderlineTestosterone(marker.value) && (
-        <div className="border-t-4 border-black p-8 lg:px-12 xl:px-16 lg:py-8 bg-gray-50 relative z-10">
+        <div className="f-mkgate">
           <BorderlineNurtureConsent />
         </div>
       )}
 
+      </div>
     </article>
   )
 }

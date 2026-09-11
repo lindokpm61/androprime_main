@@ -54,12 +54,12 @@ export function ResultRecommend({
   if (primaryCta?.type === 'maintenance-offer') {
     return (
       <div>
-        <h4 className="font-black font-sans text-sm uppercase tracking-widest mb-2">
+        <h4 className="f-blab">
           {MAINTENANCE_OFFER_COPY.headline}
         </h4>
-        <p className="font-serif text-base leading-relaxed">{MAINTENANCE_OFFER_COPY.body1}</p>
-        <p className="font-serif text-base leading-relaxed mt-2">{maintenanceClaimsForKit(kitType)}</p>
-        <p className="font-serif text-base leading-relaxed mt-2">{MAINTENANCE_OFFER_COPY.body3}</p>
+        <p >{MAINTENANCE_OFFER_COPY.body1}</p>
+        <p style={{ marginTop: 8 }}>{maintenanceClaimsForKit(kitType)}</p>
+        <p style={{ marginTop: 8 }}>{MAINTENANCE_OFFER_COPY.body3}</p>
       </div>
     )
   }
@@ -71,11 +71,11 @@ export function ResultRecommend({
   return (
     <div>
       {showHeading && (
-        <h4 className="font-black font-sans text-sm uppercase tracking-widest mb-2">{heading}</h4>
+        <h4 className="f-blab">{heading}</h4>
       )}
-      <p className="font-serif text-base leading-relaxed">{recommendation}</p>
+      <p >{recommendation}</p>
       {secondaryCta && (
-        <p className="text-sm text-gray-500 mt-2 font-serif">
+        <p className="f-fine" style={{ marginTop: 8 }}>
           {secondaryCta.type === 'kit-2-cross-sell' &&
             'Your energy markers were not tested in this kit. Add an Energy & Recovery Check to get the full picture.'}
           {secondaryCta.type === 'kit-1-cross-sell' &&

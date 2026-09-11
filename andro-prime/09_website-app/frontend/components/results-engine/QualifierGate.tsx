@@ -34,61 +34,42 @@ export function QualifierGate({ resultId, questionKey, question }: QualifierGate
     }
   }
 
+  /*
+   * Rebuilt in Direction F on 2026-09-11. Not one word changed: the question,
+   * the helper sentence and the two answers are as they were, and the POST, the
+   * pending lock, the refresh and the error path are untouched.
+   *
+   * WHAT WENT IS THE FURNITURE, and there was a lot of it: four black corner
+   * squares, an inverted "Assessment Gate" header bar, an internal ref readout
+   * of the question key, and two 60px YES/NO slabs in a 120px-tall split panel.
+   * That is a great deal of apparatus around one yes-or-no question, and two
+   * pieces of it were addressed to us rather than to the customer. The ref is
+   * gone: a customer does not need `crp_joint_symptoms`, and it was the only
+   * thing on the card written in the database's language rather than his.
+   *
+   * The two answers are ordinary buttons now. They were the largest type on the
+   * whole dashboard, larger than his own result, which inverted the page's own
+   * hierarchy: the number is the thing he came for.
+   */
   return (
-    <div className={`relative border-4 border-black flex flex-col overflow-hidden ${pending ? 'opacity-50 pointer-events-none' : ''}`}>
-      {/* Corner accents */}
-      <span className="absolute top-0 left-0 w-4 h-4 bg-black z-10" aria-hidden />
-      <span className="absolute top-0 right-0 w-4 h-4 bg-black z-10" aria-hidden />
-      <span className="absolute bottom-0 left-0 w-4 h-4 bg-black z-10" aria-hidden />
-      <span className="absolute bottom-0 right-0 w-4 h-4 bg-black z-10" aria-hidden />
+    <div style={pending ? { opacity: 0.5, pointerEvents: 'none' } : undefined}>
+      <p className="f-blab">One question</p>
+      <p className="f-sub" style={{ fontSize: 16 }}>{question}</p>
+      <p className="f-fine" style={{ marginTop: 10 }}>
+        Your answer helps us show you the most relevant recommendation for your result.
+      </p>
 
-      {/* Header bar */}
-      <div className="bg-black text-white px-6 py-4 flex justify-between items-center">
-        <span className="font-black font-sans uppercase tracking-widest text-sm">Assessment Gate</span>
-        <span className="font-mono text-[10px] tracking-[0.15em] uppercase">REF: {questionKey}</span>
-      </div>
-
-      {/* Body */}
-      <div className="flex flex-col md:flex-row">
-
-        {/* Question panel */}
-        <div className="flex-1 p-8 lg:p-10 md:border-r-4 border-b-4 md:border-b-0 border-black flex flex-col justify-center gap-5">
-          <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase bg-black text-white px-3 py-1.5 w-fit">
-            One Question
-          </span>
-          <h2
-            className="font-black font-sans uppercase tracking-tight leading-tight text-black"
-            style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}
-          >
-            {question}
-          </h2>
-          <p className="font-serif text-sm text-gray-600 max-w-sm">
-            Your answer helps us show you the most relevant recommendation for your result.
-          </p>
-        </div>
-
-        {/* YES / NO buttons */}
-        <div className="flex md:flex-col w-full md:w-[40%]">
-          <button
-            type="button"
-            onClick={() => handleAnswer(true)}
-            className="flex-1 flex items-center justify-center p-8 md:border-b-4 border-r-4 md:border-r-0 border-black hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer font-black font-sans uppercase tracking-widest text-4xl md:text-6xl min-h-[120px]"
-          >
-            Yes
-          </button>
-          <button
-            type="button"
-            onClick={() => handleAnswer(false)}
-            className="flex-1 flex items-center justify-center p-8 hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer font-black font-sans uppercase tracking-widest text-4xl md:text-6xl min-h-[120px]"
-          >
-            No
-          </button>
-        </div>
-
+      <div className="f-btns" style={{ marginTop: 18 }}>
+        <button type="button" onClick={() => handleAnswer(true)} className="f-btn">
+          Yes
+        </button>
+        <button type="button" onClick={() => handleAnswer(false)} className="f-btn f-btn-ghost">
+          No
+        </button>
       </div>
 
       {error && (
-        <p className="px-8 pb-4 pt-3 text-sm font-serif border-t-2 border-black">
+        <p className="f-err" role="alert">
           {error}. Please try again.
         </p>
       )}

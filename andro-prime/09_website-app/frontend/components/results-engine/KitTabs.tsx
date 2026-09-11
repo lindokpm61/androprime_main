@@ -121,7 +121,7 @@ export function KitTabs({ kits, showKitScopeNote = false, collapseEvidence = fal
     <>
       {/* Kit selector tabs (shown only when multiple kits exist) */}
       {hasTabs && (
-        <div className="kit-tabs" role="tablist" aria-label="Your kits">
+        <div className="f-tabs" role="tablist" aria-label="Your kits">
           {kits.map((kit, i) => (
             <button
               key={kit.kitType}
@@ -132,7 +132,7 @@ export function KitTabs({ kits, showKitScopeNote = false, collapseEvidence = fal
               aria-controls="kit-panel"
               tabIndex={i === activeKitIndex ? 0 : -1}
               ref={(el) => { tabRefs.current[i] = el }}
-              className={`kit-tab ${i === activeKitIndex ? 'kit-tab--active' : ''}`}
+              className={i === activeKitIndex ? 'f-tab f-tab-on' : 'f-tab'}
               onClick={() => handleKitChange(i)}
               onKeyDown={(e) => handleTabKeyDown(e, i)}
             >
@@ -149,12 +149,12 @@ export function KitTabs({ kits, showKitScopeNote = false, collapseEvidence = fal
           ? { role: 'tabpanel' as const, 'aria-labelledby': `kit-tab-${activeKitIndex}` }
           : {})}
       >
-      <div className="p-8 lg:p-12 xl:p-16 border-b-4 border-black bg-white">
-        <div className="flex items-center justify-between gap-4 mb-4">
-          <p className="data-label text-xs">{KIT_NAMES[activeKit.kitType]}</p>
+      <div className="f-rhead">
+        <div className="f-rhead-top">
+          <p className="f-blab" style={{ marginBottom: 0 }}>{KIT_NAMES[activeKit.kitType]}</p>
           {activeKit.results.length > 1 && (
             <select
-              className="result-history-select"
+              className="f-rsel"
               value={activeResultIndex}
               onChange={(e) => setActiveResultIndex(Number(e.target.value))}
               aria-label="Select result date"
@@ -167,18 +167,12 @@ export function KitTabs({ kits, showKitScopeNote = false, collapseEvidence = fal
             </select>
           )}
           {activeKit.results.length === 1 && activeResult.collectedAt && (
-            <span className="data-label text-xs" style={{ color: 'var(--color-gray-500, #6b7280)' }}>
-              {formatDate(activeResult.collectedAt)}
-            </span>
+            <span className="f-fine">{formatDate(activeResult.collectedAt)}</span>
           )}
         </div>
 
-        <h2 className="font-black font-sans text-3xl lg:text-4xl uppercase tracking-tight mt-2 mb-3">
-          What your blood is telling you
-        </h2>
-        <p className="font-serif text-lg" style={{ color: 'var(--color-gray-600, #4b5563)' }}>
-          {summaryText}
-        </p>
+        <h2>What your blood is telling you</h2>
+        <p className="f-rsum">{summaryText}</p>
       </div>
 
       {/* Marker articles */}
@@ -200,11 +194,9 @@ export function KitTabs({ kits, showKitScopeNote = false, collapseEvidence = fal
 
       {/* F5: what this test did not tell you (dark, normal-T Kit 1 only) */}
       {showScopeNote && (
-        <div className="border-b-4 border-black bg-gray-50 p-8 lg:px-12 xl:px-16 lg:py-10">
-          <div className="font-mono text-xs font-bold tracking-[0.15em] mb-3 text-black">
-            WHAT THIS TEST DID NOT TELL YOU
-          </div>
-          <p className="font-serif text-base lg:text-lg leading-relaxed text-gray-600 max-w-3xl">
+        <div style={{ marginTop: 26 }}>
+          <p className="f-blab">What this test did not tell you</p>
+          <p className="f-scopenote">
             This test measured your testosterone. It did not measure Vitamin D,
             Vitamin B12, or inflammation, which are the other common reasons men
             feel tired or slow to recover. A normal testosterone result rules

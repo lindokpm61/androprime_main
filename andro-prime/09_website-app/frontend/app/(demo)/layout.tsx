@@ -2,7 +2,6 @@ import { Nav } from '@/components/shared/Nav'
 import { Footer } from '@/components/shared/Footer'
 import { DemoThemeProvider } from '@/components/app-shell/DemoTheme'
 import '@/styles/components/dashboard-panels.css'
-import '@/styles/pages/results-dashboard.css'
 import '@/styles/pages/app-shell.css'
 // The demo renders the real membership check-in row and adherence chart, and
 // their styles live with the (app) group this tree never passes through.
