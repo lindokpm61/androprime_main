@@ -19,9 +19,18 @@ import { useState } from 'react'
 // controller) and to avoid every red-flag term. No em dashes (AI-tell rule).
 //
 // ─────────────────────────────────────────────────────────────────────────
-// RESTYLED IN DIRECTION F ON 2026-09-11 (batch 3). NOT ONE WORD CHANGED: every
-// sentence below is the CA-024 approved text, including the two that differ only
-// in tense between the idle and the done state.
+// RESTYLED IN DIRECTION F ON 2026-09-11 (batch 3). Every SENTENCE below is the
+// CA-024 approved text, including the two that differ only in tense between the
+// idle and the done state.
+//
+// ⚠ ONE STRING DID CHANGE AND IT IS THE SECTION HEADING: "Data & privacy" became
+// "Data and privacy". CA-024's record names its artefact as the "Data & privacy"
+// section, so the heading is that approval's identifier. The change adds no
+// proposition, so it is inside the approval on the CA-001 / CA-003 claim-reduction
+// precedent and does not go back to Ewa. What it DOES owe is a record amendment:
+// the register row and this file's own sibling comment still say "Data & privacy",
+// and an auditor matching the register to the rendered screen by heading will not
+// find it. Flagged by the independent pre-flight, 2026-09-11.
 //
 // 🔴 IT CARRIES `id="data-privacy"` NOW, AND THE FOOTER DEPENDS ON IT. The app
 // footer added in this batch links "Your data" and "Request erasure" here, and
@@ -30,11 +39,26 @@ import { useState } from 'react'
 // is not on the page is the defect the `/lp` rebuild found in the nav's "Order
 // Now" button; it is not repeated here.
 //
-// ⚠ THE FRAME LABELS THIS SECTION AS UNREVIEWED AND SO DOES THE HEADING. Frame K
-// draws it with "wording not signed off" on its own label, on the grounds that a
-// redesign must not make unreviewed copy look finished. The countersignature is
-// still recommended and still outstanding, so the flag-dark note stays visible
-// to whoever is looking at this screen with the flag on, which is only ever us.
+// 🔴 DO NOT READ SIGN-OFF STATE OFF THIS FILE. The previous version of this
+// comment asserted that CA-024's countersignature was "still recommended and
+// still outstanding". It was RECEIVED on 2026-08-02, from Ewa's own address, and
+// the register has said so since. `03_compliance/CONTEXT.md` forbids reading
+// approval state from a marker inside the artefact precisely because it causes
+// false escalations to the scarcest reviewer in the business, and this batch
+// wrote a fresh one. The register is the record:
+// `03_compliance/content-approval/content-approval-register.md`, CA-024.
+//
+// ⚠ AND THE FLAG'S PRODUCTION STATE IS GENUINELY UNSETTLED, so it is not asserted
+// here either. The register row records the `ACCOUNT_DATA_CONTROLS_ENABLED` flip
+// as gated on Keith confirming the erasure ops-alert address and the 30-day SLA;
+// the CA-024 approval record says the flag was set true in Coolify and deployed
+// on 2026-07-19. Both cannot be current. A checkout cannot settle it, which is the
+// CA-045 lesson verbatim: "live" is a claim about a deployed ref and the working
+// tree can never evidence it. Somebody has to read Coolify.
+//
+// The frame's own label on this section reads "wording not signed off", which was
+// true when drawn and is not now. Frame K's underlying point stands and is worth
+// keeping: a redesign must not make unreviewed copy look finished.
 
 type RequestState = 'idle' | 'submitting' | 'done' | 'error'
 

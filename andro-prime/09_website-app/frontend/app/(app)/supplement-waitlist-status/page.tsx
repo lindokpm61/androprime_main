@@ -69,7 +69,16 @@ export default async function SupplementWaitlistStatusPage() {
       <AppShell
         chip={status.listed ? 'Listed' : 'Not listed'}
         heading="Where you stand on the supplement waitlist."
-        intro="The list is how we decide how much to make and who hears first. It costs nothing to be on it and nothing happens automatically when the range goes live."
+        /*
+         * 🔴 "NOTHING HAPPENS AUTOMATICALLY WHEN THE RANGE GOES LIVE" WAS THE
+         * FIRST DRAFT AND IT CONTRADICTED THE APPROVED COPY TWO LINES BELOW IT.
+         * Something does happen automatically: we email you, which is the entire
+         * mechanic the customer opted into, and the CA-009 body on this same
+         * screen says so twice. The intended meaning was no charge and no order,
+         * so it now says that, in the terms the approved body already uses
+         * ("No payment, no commitment"). Caught by the independent pre-flight.
+         */
+        intro="The list is how we decide how much to make and who hears first. It costs nothing to be on it, and being on it commits you to nothing."
       >
         <div className="f-tray f-rise">
           <div className="f-core">

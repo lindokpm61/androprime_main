@@ -204,7 +204,21 @@ export default async function AccountPage() {
             : `${orderCount} ${orderCount === 1 ? 'kit' : 'kits'}, ${resultCount} ${resultCount === 1 ? 'result' : 'results'}`
         }
         heading="Everything we hold, and what you can do with it."
-        intro="This is the one screen that has to answer a question we would rather it never had to: what have you got on me, and how do I get it back or get rid of it. It reads better when that answer is not buried."
+        /*
+         * 🔴 THE INTRO IS GATED ON THE SAME FLAG AS THE CONTROLS IT PROMISES.
+         * The frame's line answers "what have you got on me, and how do I get it
+         * back or get rid of it", and the only two controls that answer the
+         * second half are the CSV export and the erasure request, both behind
+         * ACCOUNT_DATA_CONTROLS_ENABLED. Rendered unconditionally it promised an
+         * answer that, with the flag off, is not buried but absent. The app
+         * footer's two links were gated for exactly this reason in the same
+         * commit and the intro was not; caught by the independent pre-flight.
+         */
+        intro={
+          isAccountDataControlsEnabled()
+            ? 'This is the one screen that has to answer a question we would rather it never had to: what have you got on me, and how do I get it back or get rid of it. It reads better when that answer is not buried.'
+            : 'Your profile, your test history, and the ways to manage your account.'
+        }
       >
         {/* 02. PROFILE */}
         <div className="f-tray f-rise">
@@ -276,15 +290,21 @@ export default async function AccountPage() {
             same users-row columns the bundle second-kit dispatch reads. */}
         {address && <AddressSection initial={address} />}
 
-        {/* Data & privacy (export + data-use statement + erasure request).
-            Dark behind ACCOUNT_DATA_CONTROLS_ENABLED (default OFF): the account
-            page is byte-identical to before when the flag is unset. Pending a
-            compliance read of the data-use wording + Keith confirming the
-            erasure ops-alert address/SLA. See
-            docs/2026-07-17-bucket-ab-implementation-plan.md.
+        {/* Data and privacy (export + data-use statement + erasure request),
+            behind ACCOUNT_DATA_CONTROLS_ENABLED. Copy is CA-024, APPROVED
+            2026-07-19, countersignature RECEIVED 2026-08-02.
 
-            The app footer links to `#data-privacy` and is gated on the same
-            flag, so the anchor and the links appear and disappear together. */}
+            🔴 DO NOT READ SIGN-OFF OR FLAG STATE OFF THIS COMMENT. The version
+            this replaces said "Pending a compliance read of the data-use wording
+            + Keith confirming the erasure ops-alert address/SLA", which had been
+            closed for weeks; the register is the record. And whether the flag is
+            ON in production is genuinely unsettled between the register row and
+            the CA-024 approval record. `DataPrivacySection.tsx`'s header carries
+            the full note; it is not repeated here, because two copies of an
+            unsettled fact is how one of them goes stale.
+
+            The app footer links to `#data-privacy` and is gated on the same flag,
+            so the anchor and the links appear and disappear together. */}
         {isAccountDataControlsEnabled() && <DataPrivacySection />}
       </AppShell>
     </>

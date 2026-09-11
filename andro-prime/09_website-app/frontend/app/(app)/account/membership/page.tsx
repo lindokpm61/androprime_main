@@ -158,7 +158,19 @@ export default async function MembershipPage({ searchParams }: PageProps) {
         <AppShell
           chip="Member"
           heading="What your membership is keeping running."
-          intro="Your dated retest, the trend behind your number, and the daily loop that moves it. Manage or cancel from your subscriptions at any time."
+          /*
+           * 🔴 "THE DAILY LOOP THAT MOVES IT" WAS THE FIRST DRAFT AND IT MADE THE
+           * LOOP THE AGENT. That attributes movement of a biomarker to a paid
+           * product feature, at GBP 47 a month, which is the neighbour of the
+           * retest-framing rule in 03_compliance/CONTEXT.md ("never language
+           * implying the supplement fixed or cured anything"). The pre-existing
+           * copy on this same screen never does it: "You have one number to move,
+           * and a dated retest to move it by" makes the number the target and the
+           * man the agent. Reduced to match. Claim reduction onto the framing the
+           * screen already uses, so no fresh sign-off, CA-001 / CA-003 precedent.
+           * Caught by the independent pre-flight, 2026-09-11.
+           */
+          intro="Your dated retest, the trend behind your number, and the daily loop you log against. Manage or cancel from your subscriptions at any time."
         >
           {marker && (
             <div className="f-tray f-rise">
@@ -334,7 +346,28 @@ export default async function MembershipPage({ searchParams }: PageProps) {
       <AppShell
         chip={heroChip}
         heading={heroHeading}
-        intro="Membership keeps your number, your plan and your dated retest running. It is offered for the 30 days after a result lands."
+        /*
+         * 🔴 A SECOND SENTENCE WAS CUT HERE AND THE REASON IS NOT COSMETIC.
+         * It read "It is offered for the 30 days after a result lands." Against
+         * the offer-window ruling (2026-08-26 §3) that is exact. Against the
+         * auto-renew ruling (2026-09-07 §1) it is the superseded model: nobody is
+         * OFFERED a membership any more, the first 30 days are in the kit price
+         * and the card is charged on day 31 with no re-consent step. The two
+         * rulings are in tension on this screen, which is register rows 12a and
+         * 42a one surface further in, and picking a side is a payment-terms
+         * decision and therefore Keith's. So the claim is removed rather than
+         * restated, leaving only the half both rulings agree on.
+         *
+         * ⚠ `scripts/verify-subscription-claims.js` REPORTED GREEN ON IT. This
+         * file is inside the script's `app/` scope, but its CLAIMS set is four
+         * literal phrases about there being no subscription and its
+         * RENEWAL_CLAIMS set is five about the charge; the sentence matched
+         * neither. The gate built on 2026-09-11 to stop exactly this class does
+         * not cover the in-app phrasing of it. Owed to Keith, not widened here:
+         * making that gate stricter fails the build whenever the flag is on, and
+         * which assertions it should catch is his call, not a mid-batch one.
+         */
+        intro="Membership keeps your number, your plan and your dated retest running."
       >
         {checkin && checkin.logged > 0 && (
           <div className="f-tray f-rise">

@@ -209,12 +209,83 @@ New customer-facing strings were introduced (the sidebar headings and intros, th
 footer, the billing failure message, the strip labels). Payload extracted and
 scanned separately from the source files, per the payload/apparatus rule:
 **0 HARD / 0 REVIEW, exit 0**, the only hit being "This is not a diagnosis"
-cleared as a negation. ⚠ **The drafter may not clear their own copy**, so the
-judgement pass went to the `compliance-reviewer` agent.
+cleared as a negation. The drafter may not clear their own copy, so the judgement
+pass went to the `compliance-reviewer` agent, which re-ran the floor independently
+and reached the same 0/0.
 
-⚠ **One heading changed inside CA-024's section and it is recorded rather than
-glossed**: "Data & privacy" became "Data and privacy". The approved STATEMENT
-beneath it is verbatim.
+**It returned no HARD fails and ten items owed. Four were defects in what this
+batch wrote, and all four are fixed:**
+
+1. 🔴 **A FALSE SIGN-OFF STATE WAS WRITTEN INTO `DataPrivacySection.tsx`.**
+   The new header said CA-024's countersignature was "still recommended and still
+   outstanding". It was **RECEIVED 2026-08-02**, from Ewa's own address, and the
+   register has said so since. `03_compliance/CONTEXT.md` forbids reading approval
+   state off a marker inside the artefact precisely because it causes false
+   escalations to the scarcest reviewer in the business, and this batch wrote a
+   fresh one. Both that comment and `/account`'s stale "pending a compliance read"
+   note now point at the register instead of asserting anything.
+2. 🔴 **`/account`'s intro promised controls the flag can remove.** It
+   renders unconditionally and said the screen answers "how do I get it back or
+   get rid of it"; the only two controls that answer that are behind
+   `ACCOUNT_DATA_CONTROLS_ENABLED`. With the flag off the answer was not buried,
+   it was absent. The footer's two links were gated for exactly this reason **in
+   the same commit** and the intro was not. Now gated.
+3. 🔴 **The waitlist intro contradicted approved copy two lines below it.**
+   It said "nothing happens automatically when the range goes live"; the CA-009
+   body on the same screen says "We email you when the range is live", twice.
+   Something does happen, and it is the whole mechanic the customer opted into.
+   Reworded onto the approved body's own terms.
+4. 🔴 **The membership intro made the product the agent.** "The daily loop
+   that moves it" attributes movement of a biomarker to a paid feature at GBP 47 a
+   month. The pre-existing copy on the same screen never does that: "You have one
+   number to move, and a dated retest to move it by". Reduced to match.
+
+🔴 **AND A SENTENCE WAS CUT FROM THE PAYWALL THAT THE INTERLOCK COULD NOT
+SEE.** It read *"It is offered for the 30 days after a result lands."* Against the
+offer-window ruling that is exact; against the auto-renew ruling it is the
+superseded model, because nobody is OFFERED a membership any more. That is register
+rows 12a and 42a one surface further in. **`verify-subscription-claims.js` reported
+GREEN on it**: the file is inside the script's `app/` scope, but `CLAIMS` is four
+literal phrases about there being no subscription and `RENEWAL_CLAIMS` is five
+about the charge, and the sentence matched neither. The claim was removed rather
+than restated, because picking between the two rulings is a payment-terms decision
+and therefore Keith's. **The gate was NOT widened**: making it stricter fails the
+build whenever the flag is on, and which assertions it should catch is his call.
+
+**Six items remain owed and none is a blocker on this branch, which deploys
+nothing.** To Ewa: the app footer's four-word disclaimer versus the marketing
+footer's four clauses, on the one surface where a man reads his own number; and
+the "Ask the clinician" asymmetry, where register row 32c added a qualifier to the
+PUBLIC `/membership` and the in-app paywall carries none, so the acquisition
+surface is now safer than the sale screen. To Keith: whether the in-app paywall
+owes the day-31 disclosure that seven marketing surfaces carry; the
+`verify-subscription-claims.js` blind spot above; "your original order still
+covers it" on the sample-failed screen, which is contractual rather than
+operational and whose cost handling currently lives in a negotiation log rather
+than in a term; and a CA-024 record amendment for the heading.
+
+⚠ **ONE HEADING CHANGED INSIDE CA-024's SECTION**: "Data & privacy" became
+"Data and privacy". The reviewer's read, which the register supports: the change
+adds no proposition, so it is inside the approval on the CA-001 / CA-003
+claim-reduction precedent and does NOT go back to Ewa. What it owes is a **record
+amendment**, because the register still names the artefact by the old heading and
+an auditor matching register to screen by heading will not find it.
+
+🔴 **A FACTUAL PREMISE IS UNSETTLED AND THREE OF THOSE ITEMS REST ON IT.**
+The register row records the `ACCOUNT_DATA_CONTROLS_ENABLED` flip as gated on Keith
+confirming the erasure ops-alert address and the 30-day SLA; the CA-024 approval
+record says the flag was set true in Coolify and deployed on 2026-07-19. Both
+cannot be current. **A checkout cannot settle it** and neither can this repo: that
+is the CA-045 lesson verbatim, "live is a claim about a deployed ref and the
+working tree can never evidence it". Somebody has to read Coolify.
+
+⚠ **AND A CORRECTION TO THIS FILE'S OWN FRAMING.** "Pre-existing approved copy"
+holds for CA-023, CA-024 and CA-009. It does **not** hold for `/account/membership`:
+there is **no membership row in the approval register at all**, and the
+offer-window doc lists the compliance read on the membership framing as an open
+hard launch gate. Those three hero headings, the includes list and the entitlement
+paragraphs are **carried, not approved**. Carried is a provenance claim; approved
+is a register claim, and this handoff conflated them.
 
 ### Test status at 2026-09-11 (third batch)
 
