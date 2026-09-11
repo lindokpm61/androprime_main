@@ -2,6 +2,22 @@ import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { SCENARIOS } from './fixtures/registry'
 import type { ScenarioName } from './types'
 
+/**
+ * The password every seeded dev account carries.
+ *
+ * ⚠ THE NAME IS A HISTORICAL MISNOMER AND THE VALUE IS KEPT ANYWAY. It was
+ * "not used" when the fixtures only fed server-side reads and nobody signed in.
+ * They do now: the only way to see a gated screen is to log in as one of these
+ * accounts, so it is typed by hand regularly. The value is unchanged because it
+ * is quoted in two handoffs and in this script's own output, and a password
+ * that is correct in the code and stale in the note somebody reads is worse
+ * than an awkward name.
+ *
+ * It protects nothing. These are `@androprime.test` accounts holding fixture
+ * data, on a domain that does not receive mail.
+ */
+export const DEV_PASSWORD = 'dev-password-not-used'
+
 export interface SeedResult {
   userId: string
   orderId: string
@@ -26,11 +42,28 @@ export async function seedScenario(scenarioName: ScenarioName): Promise<SeedResu
   let userId: string
   if (existing) {
     userId = existing.id
+    /* 🔴 THE PASSWORD IS RESET ON EVERY RUN, added 2026-09-12.
+       It used to be set only at CREATION, so an account that already existed
+       kept whatever it had and the credentials the script prints were a guess
+       about history rather than a statement about the account. That is the same
+       defect as the duplicate orders below, one field further out: a fixture
+       has to put the account into a KNOWN state, and the password is part of
+       that state. It surfaced when the printed password did not open the screen
+       the run had just built.
+       `email_confirm` is re-asserted for the same reason: an account confirmed
+       by hand, or never confirmed, is otherwise a second unknown. */
+    const { error: resetError } = await supabase.auth.admin.updateUserById(userId, {
+      password: DEV_PASSWORD,
+      email_confirm: true,
+    })
+    if (resetError) {
+      throw new Error(`Failed to reset the test user's password: ${resetError.message}`)
+    }
   } else {
     const { data: created, error: createError } = await supabase.auth.admin.createUser({
       email: devEmail,
       email_confirm: true,
-      password: 'dev-password-not-used',
+      password: DEV_PASSWORD,
     })
     if (createError || !created.user) {
       throw new Error(`Failed to create test user: ${createError?.message}`)

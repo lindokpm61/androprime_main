@@ -46,7 +46,7 @@ function loadEnvLocal() {
 async function main() {
   loadEnvLocal()
 
-  const { seedScenario } = await import('../lib/results/seed')
+  const { seedScenario, DEV_PASSWORD } = await import('../lib/results/seed')
   const { seedMember } = await import('../lib/membership/seedMember')
   const { SCENARIOS } = await import('../lib/results/fixtures/registry')
   const { markerToMove } = await import('../lib/membership/checkin')
@@ -145,7 +145,7 @@ async function main() {
     console.log(JSON.stringify(member, null, 2))
     console.log('')
     console.log('  Sign in at /auth/login as:')
-    console.log(`    dev+${scenarioName}@androprime.test  /  dev-password-not-used`)
+    console.log(`    dev+${scenarioName}@androprime.test  /  ${DEV_PASSWORD}`)
     console.log('  then open /account/membership. MEMBERSHIP_ENABLED must be on.')
   }
 
