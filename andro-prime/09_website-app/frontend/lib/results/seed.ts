@@ -50,6 +50,25 @@ export async function seedScenario(scenarioName: ScenarioName): Promise<SeedResu
   )
   if (userRowError) throw new Error(`Failed to upsert users row: ${userRowError.message}`)
 
+  /* 🔴 CLEAR THE ACCOUNT'S PREVIOUS ORDERS FIRST, added 2026-09-12.
+     This used to insert unconditionally, so every run left ANOTHER order and
+     another result on the same dev account, and the account's state after two
+     runs was undefined. It looked harmless until the member screen was opened:
+     the trend rail plots one point per result, so a second run drew two
+     identical readings on the same date and the screen reported a trend that
+     was an artefact of seeding. A fixture that accumulates is not a fixture.
+
+     Safe because this function OWNS the account: it derives the address from
+     the scenario name and creates it. Everything hangs off kit_orders by
+     `on delete cascade`, so this takes the results, biomarkers and the order's
+     symptom answers with it. Check-in answers carry no order_id and are not
+     touched here; `seedMember` rewrites those. */
+  const { error: clearError } = await supabase
+    .from('kit_orders')
+    .delete()
+    .eq('user_id', userId)
+  if (clearError) throw new Error(`Failed to clear previous orders: ${clearError.message}`)
+
   // Insert kit_orders row
   const { data: order, error: orderError } = await supabase
     .from('kit_orders')
@@ -79,6 +98,14 @@ export async function seedScenario(scenarioName: ScenarioName): Promise<SeedResu
       order_id: orderId,
       user_id: userId,
       kit_type: payload.kitType,
+      /* 🔴 THE COLLECTION DATE, which was not being set, added 2026-09-12.
+         `getDashboardData` reads `collectedAt` from this column, so an unset
+         one defaulted to now and EVERY seeded result was dated today no matter
+         what its fixture said. Invisible on the results dashboard, which shows
+         one result; obvious on the trend rail, which puts the date under each
+         point and was captioning a April reading "12 Sept". The fixture already
+         carries the date and is the right source for it. */
+      received_at: scenario.payload.collectedAt,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       raw_payload: payload as unknown as any,
     })

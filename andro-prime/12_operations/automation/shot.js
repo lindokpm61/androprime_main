@@ -28,6 +28,17 @@
  *   --nth <n|all>      which match of --selector                (default 0)
  *   --full             full-page screenshot rather than viewport
  *   --wait <ms>        extra settle time after fonts resolve    (default 250)
+ *   --cookie name=value  set a cookie on the target's origin before the first
+ *                      navigation, repeatable. This is how a GATED route gets
+ *                      shot: without it the capture is of the login page, which
+ *                      is a perfectly good screenshot of the wrong thing. URLs
+ *                      only. Obtaining the cookie is a separate job; this only
+ *                      carries it.
+ *   --resolve <rule>   passed to Chrome as --host-resolver-rules, e.g.
+ *                      "MAP app.andro-prime.com 127.0.0.1:3000". For an app
+ *                      served on two hostnames: the request then arrives with
+ *                      the real Host header instead of being redirected to the
+ *                      production host. Same mechanism route-conformance.js uses.
  *   --localstorage k=v seed localStorage before the page loads, repeatable.
  *                      The common one is the cookie banner, which is `fixed`
  *                      and overlays every element shot of a running site:
@@ -139,6 +150,8 @@ const stamp = flag('--stamp');
 const reducedMotion = !flag('--motion');
 const walk = !flag('--no-walk');
 const storage = optAll('--localstorage');
+const cookies = optAll('--cookie');
+const resolve = opt('--resolve', null);
 const hideSelectors = optAll('--hide');
 const clickSelectors = optAll('--click');
 const expectSelectors = optAll('--expect');
@@ -242,6 +255,11 @@ function findChrome() {
       // setting. Mandatory whenever the shot is a deliverable.
       '--disable-lcd-text',
       '--font-render-hinting=none',
+      // Mapping a REAL hostname onto the dev server, so the request arrives
+      // with the Host header the app routes on. Needed for any route the app
+      // serves from a second hostname: without it the middleware 308s to the
+      // production host and the capture is of nothing.
+      ...(resolve ? [`--host-resolver-rules=${resolve}`] : []),
     ],
   });
 
@@ -286,6 +304,17 @@ function findChrome() {
             for (const [k, v] of entries) window.localStorage.setItem(k, v);
           } catch (_) { /* storage blocked; the caller sees the banner and knows why */ }
         }, pairs);
+      }
+
+      // Cookies, before the first navigation, so a gated route serves the page
+      // rather than its login redirect. Set on the target's own origin.
+      if (cookies.length && isUrl) {
+        const { hostname } = new URL(targetUrl);
+        await page.setCookie(...cookies.map((kv) => {
+          const eq = kv.indexOf('=');
+          if (eq === -1) die(`--cookie "${kv}" has no "=". Expected name=value.`);
+          return { name: kv.slice(0, eq), value: kv.slice(eq + 1), domain: hostname, path: '/' };
+        }));
       }
 
       const res = await page.goto(targetUrl, { waitUntil: 'networkidle0', timeout: 60000 });

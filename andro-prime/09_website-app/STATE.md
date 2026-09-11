@@ -152,10 +152,13 @@ change, including one in `f-primitives.css` and one in `app-shell.css`.
 ### How it was verified, and what that does NOT cover
 
 **The `ap-` skin was shot on the real route**, `/demo?s=member`, Plan tab, light
-and dark. **The `f-` skin could not be**: it renders only on
+and dark. **The `f-` skin could not be at first**: it renders only on
 `/account/membership` in its MEMBER state, which needs a session with a
 membership and check-in history, and the only seeder writes to the PRODUCTION
-project.
+project. 🔄 **Keith authorised that write later the same session and the screen
+has now been shot for real**, see the seeder section above. The harness account
+below is kept, because it is how the components were built and because the
+harness itself is the reusable part.
 
 So it was rendered through a harness: the real components to static HTML via
 `react-dom/server`, wrapped in the real token and component stylesheets, shot
@@ -165,11 +168,12 @@ shows up as an unstyled element. `shot.js` gained a `--click` option for the
 demo's tab, which fails hard on a selector that matches nothing, because a
 capture of the wrong tab looks exactly like a capture of the right one.
 
-⚠ **WHAT THE HARNESS DOES NOT COVER**, and it is owed a real look when a member
-fixture exists: the surrounding page layout, the trays the components sit in on
-the live route, and anything the `(app)` layout contributes. The three
-components themselves are verified; `/account/membership` as a composed screen
-is not.
+⚠ **WHAT THE HARNESS DOES NOT COVER**: the surrounding page layout, the trays
+the components sit in on the live route, and anything the `(app)` layout
+contributes. 🔄 **That gap is closed** for this screen: it was rendered once the
+fixture existed, and doing so found two seeder defects that neither the harness
+nor any test would have caught. The limits stated here still hold for any future
+use of the harness.
 
 One thing the harness settled rather than flagged: the body text renders in
 mono, which looked wrong and is correct. `.f-fine` is mono by design in
@@ -177,12 +181,75 @@ Direction F and the frame's `.fine` is byte-for-byte the same declaration.
 Direction F has **no dark mode** by design, so the identical light and dark
 harness captures are also correct.
 
+### ✅ THE MEMBER FIXTURE EXISTS NOW, AND OPENING THE SCREEN FOUND TWO SEEDER DEFECTS
+
+Keith authorised the production write on 2026-09-12. `scripts/seed-result.ts
+<scenario> --member --yes` now creates an active membership and 22 days of
+check-in history alongside the result, so **`/account/membership` in its MEMBER
+state has been rendered and screenshot for the first time**. The three
+components are confirmed on their own surface, not only through the harness.
+
+**What the seeder gained**, beyond `--member`:
+
+- **It loads `.env.local`.** It never did, which is the gotcha batch 3 recorded:
+  `npx tsx` is not `next`, so `SUPABASE_SERVICE_ROLE_KEY` fell through to a
+  placeholder and the run died as "Invalid API key", which reads as a ROTATED
+  key rather than a missing one. The loader is the one
+  `scripts/import-blog-to-db.ts` already had.
+- **It prints the target project and refuses without `--yes`.** "It seeds a dev
+  account" and "it writes to the production database" are both true and only the
+  first is memorable, so the second is now on screen before anything is written.
+- **`seedMember` refuses any address that is not `@androprime.test`.** It
+  deletes and rewrites check-in history, so pointed at a real customer by a slip
+  of copy and paste it would erase the loop they had been logging.
+
+🔴 **AND OPENING THE SCREEN IMMEDIATELY FOUND TWO DEFECTS IN THE SEEDER, WHICH
+IS THE WHOLE ARGUMENT FOR THE RULE.**
+
+1. **Every run left ANOTHER order and another result on the same account.**
+   `seedScenario` inserted unconditionally, so the account's state after two
+   runs was undefined. It looked harmless for as long as nobody looked: the
+   results dashboard shows one result. The trend rail plots one point PER
+   result, so the first render of the member screen drew **two identical
+   readings on the same date** and captioned it as a trend. It now clears the
+   account's previous orders first, which cascades to the results, biomarkers
+   and order-context answers. A fixture that accumulates is not a fixture.
+2. **`lab_results.received_at` was never set**, so it defaulted to now and every
+   seeded result was dated TODAY whatever its fixture said. Invisible on the
+   dashboard, which prints no collection date; obvious on the rail, which prints
+   one under each point and was captioning a 1 April reading "12 Sept". It now
+   comes from the fixture's own `collectedAt`.
+
+Both were pre-existing and neither is a batch-4 regression. Neither would have
+been found by a test: the first needs two runs and a screen that plots per
+result, the second needs a screen that prints the date.
+
+### `shot.js` gained three options, and the split is the point
+
+`--click` (a tab, an accordion, a state switcher), `--cookie name=value`, and
+`--resolve` (passed to Chrome's `--host-resolver-rules`, the same mechanism
+`route-conformance.js` uses, so an app-host route arrives with the Host header
+the middleware routes on).
+
+**Obtaining a session cookie is deliberately NOT in `shot.js`**, because it
+means knowing an app's login form and the tool is meant to be generic. A
+scratchpad helper drives the real login form and prints the `sb-*` cookies as
+ready-made `--cookie` arguments. The value of splitting it that way is that the
+capture is still a `shot.js` capture: the walk, the reveal check, the overflow
+assertion and `--expect` all still run on a gated route, where a bespoke
+login-and-screenshot script would have thrown every one of them away.
+
+⚠ **One thing to know when scripting that login: the consent banner blocks the
+submit.** The first attempt posted nothing and sat on the login page with no
+error, because the banner is `fixed` and covers the button. Seeding
+`ap_cookie_consent=denied` into localStorage before load fixes it, which is the
+same flag `--localstorage` exists for.
+
 ### 🔴 WHAT IS STILL NOT DONE
 
-- ⚠ **A member fixture with check-in history still does not exist.**
-  `seed-result.ts` does not create one and writes to PRODUCTION, so it needs
-  Keith's authorisation per run. Until then `/account/membership` in its member
-  state has never been seen as a composed screen by anybody.
+- ✅ ~~A member fixture with check-in history still does not exist.~~ **DONE
+  later the same session**, see the seeder section above. `/account/membership`
+  in its member state has now been rendered and screenshot.
 - **The `/demo` and density decisions are still open** and this batch did not
   touch them: `869ez4jrt` (/demo presentation) and `869erraqd` (is the
   authenticated app deliberately denser than marketing, or should they
