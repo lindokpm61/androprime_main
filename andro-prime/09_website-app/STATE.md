@@ -67,6 +67,14 @@ with the kit and charges on day 31.
 own source comment says the redraw changes only the container. Changing it needs a
 fresh CA record.
 
+⚠ **THAT RE-RECORD IS KEITH'S, NOT EWA'S. Business, not clinical** (Keith,
+2026-09-11, correcting this file's first version). What changes is payment terms;
+the approval register records her CA-026 remit as *"clinical/principle"*, and
+CA-021 is the precedent for a business-only approval. **She re-enters only if a
+draft reworks C1's OTHER clause** — *"the next step is a GP conversation, and we
+earn nothing from it"* — which is the conflict-free principle itself. Keep the two
+clauses structurally separate and she is not in the loop.
+
 **None was rewritten.** Approved copy is not a rebuild's to change. What ships
 instead is an interlock: **`scripts/verify-subscription-claims.js`**, new, in
 `npm test`. It lists every claim on every run and **fails whenever

@@ -90,9 +90,34 @@ is updated in the same change.
 | Item | Owner |
 |---|---|
 | Rewritten wording for the thirteen one-off / no-subscription sentences | **Keith**, then compliance pre-flight |
-| Fresh CA record for CA-026 C1 | **Keith and Ewa** |
+| Fresh CA record for CA-026 C1 | **Keith. Business, not clinical.** See below |
 | The homepage membership sentence (register row 12a, open since 2026-09-10) | **Keith**, then pre-flight |
 | The DMCC Act 2024 Part 4 questions (`03_compliance/2026-09-07-dmcca-subscription-regime-gap.md`) | **Solicitor**, still open |
 
 ⚠ The first three are one decision, not three: they are the same fact stated on
 nine surfaces. Answering them separately is how they drift.
+
+## 6. The rewrite is a BUSINESS decision, not a clinical one (Keith, 2026-09-11)
+
+This doc first listed the CA-026 C1 re-record as owed to **Keith and Ewa**. That
+was wrong and Keith corrected it.
+
+**What is changing is payment terms: what you pay, and when.** That is commercial
+copy. Ewa's remit on CA-026 is recorded in the approval register as
+*"Keith + Ewa (clinical/principle)"*, and the register already carries a
+business-only path: CA-021 is logged *"APPROVED by Keith, business, in-session"*.
+So a C1 re-record for the subscription clause is Keith's, and a compliance
+pre-flight still runs because it is customer-facing copy.
+
+🔴 **THE BOUNDARY INSIDE C1, AND IT IS WORTH KNOWING BEFORE ANYONE DRAFTS.** The
+C1 paragraph holds two different kinds of sentence:
+
+| Clause | Kind | Whose |
+|---|---|---|
+| *"The price on the card is everything you pay… no subscription unless you choose one"* | Commercial terms | **Keith** |
+| *"If a result needs action, the next step is a GP conversation, and we earn nothing from it"* | The conflict-free PRINCIPLE, the separation of incentives | **Ewa**, if it is touched |
+
+The rewrite only needs the first. **If a draft leaves the second clause alone,
+Ewa is not in the loop at all.** If a draft reshapes the paragraph in a way that
+moves or reworks the GP sentence, it re-enters her remit, which is a reason to
+keep the two clauses structurally separate in whatever replaces it.
