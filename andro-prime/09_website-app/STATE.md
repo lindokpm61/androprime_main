@@ -84,6 +84,35 @@ until the copy is swept. Do not edit those sentences to clear it.
 ⚠ **This is one decision with register row 12a, not two.** The homepage membership
 sentence is the same fact on a ninth surface.
 
+### The rewrite is drafted, and the independent pre-flight found three blockers
+
+Draft of all fourteen replacement sentences, cut from one governing sentence:
+**`2026-09-11-subscription-copy-rewrite-draft.md`**. Nothing applied.
+Deterministic floor clean both ways (0 HARD / 0 REVIEW, delta zero). The
+judgement pass went to the `compliance-reviewer` agent, because the pre-flight
+skill forbids the drafter from clearing their own copy.
+
+🔴 **All three HARD findings are BUILD work, not copy.**
+
+1. **There is no cancellation route for a membership.** `getSubscriptions` and
+   `app/api/checkout/portal/route.ts` both query `supplement_subscriptions` only;
+   a membership owns a row in `memberships`. Every kit buyer is a membership-only
+   customer under this ruling, so all of them get the empty state, and the portal
+   404s, which `BillingPortalButton` does not handle: **the click is a silent
+   no-op.** The ruled disclosure already says "Cancel anytime", so this predates
+   the rewrite and blocks the whole membership surface.
+2. **There is no included-month mechanic.** Kit checkout is `mode: 'payment'`
+   with no `subscription_data` and no `trial_period_days`.
+3. **The rewritten copy must render behind `isMembershipEnabled()`**, as
+   `MembershipDisclosure` does.
+
+🔴 **AND `verify-subscription-claims.js` HAD TWO HOLES, BOTH FIXED THE SAME DAY.**
+It could not see **`public/llms.txt`**, which serves the C1 paragraph verbatim on
+the apex for AI ingestion, because scope was `app/` and `.tsx` only. And it was
+one-directional: blind to new copy promising GBP 47 while the flag is off. Scope
+is now `app/` + `public/` across `.tsx`/`.txt`/`.md`, and `RENEWAL_CLAIMS` fails
+the mirror case. Mutation-tested both ways. **Count 15 to 16.**
+
 ### Keith ruled §4 closed, and the decided half had never been built
 
 The three kit LPs carry the subscription price line (Keith, 2026-09-11), closing

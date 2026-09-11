@@ -85,6 +85,28 @@ build failure, which is the shape this repo has repeatedly concluded a rule need
 Keith, a pre-flight, and a fresh CA record for C1; then `CLAIMS` in that script
 is updated in the same change.
 
+🔴 **THE PARAGRAPH ABOVE WAS WRITTEN BEFORE THE CHECK WAS TESTED, AND THE CHECK
+HAD TWO HOLES. Both fixed later the same day; recorded here because the claim
+above was stated more confidently than it had earned.**
+
+1. **It could not see `public/llms.txt`**, which serves the C1 paragraph verbatim,
+   including the false clause, on the apex and written specifically for AI
+   ingestion. Scope was `app/` and `.tsx` only. **The check reported green over the
+   copy most likely to be quoted back at us by a model.** The scope had been drawn
+   around where the claims happened to be found rather than around where
+   customer-facing copy can live, and a scope drawn from the search that produced
+   it can only confirm that search. Now `app/` and `public/`, across `.tsx`,
+   `.txt` and `.md`; count 15 to 16.
+2. **It was one-directional.** It failed only with the flag ON and an old claim
+   present, and was blind to the opposite and worse state: new copy promising GBP
+   47 a month while the flag is OFF, against a kit checkout that is
+   `mode: 'payment'` with no `subscription_data` and no `trial_period_days`.
+   `RENEWAL_CLAIMS` added, with an allow-list for the flag's own machinery.
+   Mutation-tested both ways.
+
+**A gate guarding one direction of a two-sided contradiction is not half a gate.
+It is a gate that certifies the side it does not check.**
+
 ## 5. What is owed
 
 | Item | Owner |
@@ -96,6 +118,20 @@ is updated in the same change.
 
 ⚠ The first three are one decision, not three: they are the same fact stated on
 nine surfaces. Answering them separately is how they drift.
+
+🔴 **THREE BUILD BLOCKERS WERE ADDED BY THE INDEPENDENT PRE-FLIGHT, 2026-09-11,
+and none of them is a copy decision.** Draft and findings:
+`09_website-app/2026-09-11-subscription-copy-rewrite-draft.md` §8a.
+
+| Blocker | What is actually wrong | Owner |
+|---|---|---|
+| **No cancellation route for a membership** | `getSubscriptions` and the portal API both query `supplement_subscriptions` only; a membership owns a row in `memberships`. A membership-only customer, which is EVERY kit buyer under this ruling, gets the empty state, and the portal API 404s, which `BillingPortalButton` does not handle, so the click is a **silent no-op**. The already-ruled disclosure line says **"Cancel anytime"**, so the gap predates the rewrite | **Keith**, build |
+| **No included-month mechanic at all** | `app/api/checkout/kit/route.ts` is `mode: 'payment'` with no `subscription_data` and no `trial_period_days`; `lib/membership/sync.ts:71` stamps `startedAt ?? new Date()` at checkout and inserts `status: 'active'`, not `trialing`. So "includes your first 30 days" has no mechanic, and the start date contradicts the anchor ruling that `/membership` already promises customers | **Keith**, build |
+| **The rewritten copy must inherit the flag** | The new sentences are the same promise in richer form as `MembershipDisclosure`, whose header argues that a promise in front of a checkout that bills once is worse than an omission | **Keith**, build |
+
+⚠ **The Stripe portal's `subscription_cancel` setting is a dashboard value with no
+repo trace.** Per the pre-flight skill's invariant 6 it is unverified until
+exercised, not read.
 
 ## 6. The rewrite is a BUSINESS decision, not a clinical one (Keith, 2026-09-11)
 
