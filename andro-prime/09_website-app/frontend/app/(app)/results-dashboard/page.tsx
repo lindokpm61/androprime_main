@@ -82,11 +82,39 @@ interface PageProps {
 
 const TRACKER_STEPS = ['Kit dispatched', 'Sample received', 'Analysing', 'Results ready'] as const
 
+/*
+ * 🔴 THIS INDEX IS THE STEP BEING WAITED FOR, NOT THE STEP REACHED, AND MISREADING
+ * IT PUT "RESULTS READY" ON A SCREEN THAT SAYS THE SAMPLE IS STILL AT THE LAB.
+ *
+ * Read it as "the milestone you are waiting for": an order-placed customer is
+ * waiting for the kit to be dispatched (0), and an analysing customer is waiting
+ * for the results (3). The tracker renders everything below the index as done and
+ * the index itself as current, which is right under that reading and is why the
+ * live tracker has always been correct.
+ *
+ * What it is NOT is a description of where the order has got to. The batch-3
+ * rebuild added two new surfaces that assumed it was: the status strip printed
+ * `TRACKER_STEPS[index]` and the sidebar chip printed `index + 1 of 4`, so an
+ * analysing order announced "RESULTS READY" and "Step 4 of 4" above a heading
+ * reading "Your sample is being analysed." Caught by screenshotting the route
+ * after logging in, and by nothing else: every check in the suite passed.
+ *
+ * `STATUS_CHIP` below is the achieved state, and it is what those two surfaces
+ * use now. Two maps, because they answer two different questions.
+ */
 const STATUS_TO_STEP: Record<PreResultsOrderStatus, number> = {
   'order-placed':    0,
   'kit-sent':        1,
   'sample-received': 2,
   'analysing':       3,
+}
+
+/** Where the order actually IS, for the strip and the chip. */
+const STATUS_CHIP: Record<PreResultsOrderStatus, string> = {
+  'order-placed':    'Order placed',
+  'kit-sent':        'Kit on its way',
+  'sample-received': 'Sample received',
+  'analysing':       'Analysing',
 }
 
 const STATUS_COPY: Record<PreResultsOrderStatus, { heading: string; subtext: string }> = {
@@ -278,9 +306,9 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
     return (
       <>
         {showPasswordBanner && <PasswordBanner />}
-        <AppStrip label="Your results" right={TRACKER_STEPS[STATUS_TO_STEP[orderStatus]]} />
+        <AppStrip label="Your results" right={STATUS_CHIP[orderStatus]} />
         <AppShell
-          chip={`Step ${STATUS_TO_STEP[orderStatus] + 1} of ${TRACKER_STEPS.length}`}
+          chip={STATUS_CHIP[orderStatus]}
           heading={copy.heading}
           intro={copy.subtext}
         >

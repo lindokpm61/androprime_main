@@ -121,7 +121,38 @@ unimported: nothing renders their classes any more. `account.css`,
 `membership.css`, `results-dashboard.css` and `dashboard-panels.css` remain, each
 held open by components this batch did not reach.
 
-### 🔴 WHAT IS NOT DONE, AND WHY IT STOPPED RATHER THAN BEING GUESSED AT
+### ✅ THE ROUTES CAN NOW BE SEEN, AND LOOKING AT THEM FOUND TWO DEFECTS
+
+**The blocker is cleared.** `scripts/seed-result.ts` creates a dev account per
+scenario, `dev+<scenario>@androprime.test`, password `dev-password-not-used`.
+`low-testosterone` is seeded. Two gotchas worth keeping:
+
+- ⚠ **The seeder does not load `.env.local`.** `npx tsx` is not `next`, so
+  `SUPABASE_SERVICE_ROLE_KEY` is unset and it falls through to a stale fallback,
+  failing as **"Invalid API key"**, which reads like a rotated key rather than a
+  missing one. Pass the var explicitly. Only `scripts/import-blog-to-db.ts` has
+  a loader; the rest of `scripts/` has the same hole.
+- ⚠ **It writes to the PRODUCTION project.** Auth user, `users` row,
+  `kit_orders` row at `results_received`, `lab_results` row and its biomarkers.
+  Keith authorised this run on 2026-09-11.
+
+🔴 **SCREENSHOTTING THE REAL ROUTES FOUND A DEFECT THE WHOLE SUITE PASSED
+OVER.** On the pre-results screen the status strip read **"RESULTS READY"** and
+the chip read **"Step 4 of 4"**, directly above a heading reading *"Your sample is
+being analysed."* Cause: `STATUS_TO_STEP` is the step being WAITED FOR, not the
+step reached, and the batch added two new surfaces that read it as the latter.
+The tracker itself was always right. Fixed with a second map, `STATUS_CHIP`, which
+is the achieved state; the two maps answer two different questions and now say so.
+**Nine design checks, 343 class assertions and a green `npm test` all passed while
+that was on screen.**
+
+🔴 **AND `JoinButton` WAS A V2.0 SQUARE BLACK SLAB INSIDE AN F TRAY**, on the
+membership paywall, which is the primary CTA of the only screen that sells
+anything. Moved onto `.f-btn` and `.f-err`. It was one of the four
+`components/membership/*` pieces left on V2.0 below, and it is the one that
+renders in a state a customer actually reaches.
+
+### 🔴 WHAT IS STILL NOT DONE
 
 **None of these seven routes can be seen without a Supabase session**, and the
 dev server points at the PRODUCTION project (`phqrjtnflovicgkngieu`). No test
@@ -140,8 +171,10 @@ login was available in this session, so:
   through the real components and the real stylesheet on a temporary ungated
   route at 1440 and 390, then deleted. Shots in `shots/batch3/`, not in git.
 
-⚠ **A test login, or a throwaway seeded account, is the one thing blocking the
-rest of batch 3.**
+✅ **The test login is no longer the blocker. What remains is the WORK**: the
+results-ready view is a large port, and the three remaining
+`components/membership/*` pieces need a member fixture with check-in history,
+which the seeder does not create.
 
 ### Two defects found by looking at the render, not by reading the source
 

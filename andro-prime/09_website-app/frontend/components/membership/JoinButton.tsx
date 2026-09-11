@@ -43,11 +43,11 @@ export function JoinButton({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <button onClick={handleClick} disabled={loading} className="membership__cta">
+      <button onClick={handleClick} disabled={loading} className="f-btn">
         {loading ? 'Redirecting to checkout…' : children}
       </button>
       {error && (
-        <p role="alert" className="membership__checkin-error">
+        <p role="alert" className="f-err">
           We could not start checkout. Please try again.
         </p>
       )}
