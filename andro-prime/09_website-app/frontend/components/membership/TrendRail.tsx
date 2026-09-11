@@ -50,28 +50,24 @@ export function TrendRail({ markerName, trend, pendingRetestAt }: Props) {
   return (
     <>
       <div
-        className="membership__rail"
+        className="f-rail"
         role="img"
         aria-label={`${markerName}: ${described}.`}
       >
-        <span className="membership__rail-line" />
+        <span className="f-rail-line" />
         {points.map((point, index) => (
           <span
             key={`${point.label}-${point.when}-${index}`}
-            className={
-              future && index === points.length - 1
-                ? 'membership__point membership__point--future'
-                : 'membership__point'
-            }
+            className={future && index === points.length - 1 ? 'f-pt f-pt-future' : 'f-pt'}
             style={{ left: `${position(index)}%` }}
           >
-            <span className="membership__point-value">{point.label}</span>
-            <span className="membership__point-dot" />
-            <span className="membership__point-when">{point.when}</span>
+            <span className="f-pt-v">{point.label}</span>
+            <span className="f-pt-d" />
+            <span className="f-pt-w">{point.when}</span>
           </span>
         ))}
       </div>
-      <p className="membership__rail-note">
+      <p className="f-fine">
         {trend.length === 1 ? (
           <>
             Two points is not a trend. It is the smallest number that can answer whether anything

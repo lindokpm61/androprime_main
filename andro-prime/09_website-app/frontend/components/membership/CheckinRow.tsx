@@ -6,6 +6,7 @@ import {
   SCALE_MIN,
   type CheckinQuestion,
 } from '@/lib/membership/checkin'
+import { LOOP_SKIN, type LoopSurface } from './surface'
 
 interface Props {
   questions: readonly CheckinQuestion[]
@@ -23,6 +24,8 @@ interface Props {
    * anything if the taps are actually stored.
    */
   onSave?: (question: CheckinQuestion, answer: boolean | number) => void
+  /** Which design system to wear. See `surface.ts`. */
+  surface?: LoopSurface
 }
 
 /**
@@ -38,9 +41,10 @@ interface Props {
  * the row is operable from a keyboard and reads correctly to a screen reader
  * rather than being three tappable divs.
  */
-export function CheckinRow({ questions, answeredToday, onSave }: Props) {
+export function CheckinRow({ questions, answeredToday, onSave, surface = 'app' }: Props) {
   const [answers, setAnswers] = useState<Record<string, boolean | number>>(answeredToday)
   const [failed, setFailed] = useState<string | null>(null)
+  const skin = LOOP_SKIN[surface]
 
   async function save(question: CheckinQuestion, answer: boolean | number) {
     const previous = answers[question.key]
@@ -86,37 +90,63 @@ export function CheckinRow({ questions, answeredToday, onSave }: Props) {
 
   return (
     <div>
-      <div className="membership__checkin">
+      <div className={skin.taps}>
         {questions.map((question) => {
           const value = answers[question.key]
           const filled = question.type === 'boolean' ? value === true : typeof value === 'number'
-          const display =
-            question.type === 'boolean'
-              ? value === true
-                ? '✓'
-                : '–'
-              : typeof value === 'number'
-                ? String(value)
-                : '–'
+
+          /* THE STATE GOES IN THE ACCESSIBLE NAME, and it has to, now that the
+             scale is drawn as pips: the prompt alone told a screen reader what
+             the button asks and never what it currently says, which was already
+             thin when the answer was a visible numeral and is nothing at all
+             when the answer is five hidden marks. Frame H's own label carries
+             the value for the same reason. */
+          const state =
+            question.type === 'scale'
+              ? typeof value === 'number'
+                ? `${value} out of ${SCALE_MAX}`
+                : 'not answered yet'
+              : value === true
+                ? 'done'
+                : 'not done yet'
 
           return (
             <button
               key={question.key}
               type="button"
               onClick={() => save(question, nextValue(question, value))}
-              aria-label={question.prompt}
-              className={`membership__chip${filled ? ' membership__chip--filled' : ''}`}
+              aria-label={`${question.prompt} ${state}.`}
+              className={filled ? skin.tapOn : skin.tap}
             >
-              <span className="membership__chip-key">{question.label}</span>
-              <span className="membership__chip-value" aria-hidden="true">
-                {display}
-              </span>
+              <span className={skin.tapKey}>{question.label}</span>
+              {question.type === 'scale' ? (
+                /* THE SCALE IS DRAWN AS PIPS, NOT AS THE NUMERAL, since the
+                   2026-09-12 redraw against Frame H. A 1 to 5 answer shown as
+                   "3" reads as a score and invites "out of what" on a control
+                   whose whole job is to be tapped without thinking; five marks
+                   answer that in the shape. The value is still in the button's
+                   accessible name, so nothing is lost to a screen reader, and
+                   the pips are hidden from one rather than read as five spans.
+                   SCALE_MIN and SCALE_MAX stay the single source of the range:
+                   a hand-rolled demo chart once encoded 1 to 10 here and that
+                   is exactly what this component being shared prevents. */
+                <span className={skin.scale} aria-hidden="true">
+                  {Array.from({ length: SCALE_MAX - SCALE_MIN + 1 }, (_, step) => {
+                    const lit = typeof value === 'number' && value >= SCALE_MIN + step
+                    return <i key={step} className={lit ? skin.pipOn : skin.pip} />
+                  })}
+                </span>
+              ) : (
+                <span className={skin.tapValue} aria-hidden="true">
+                  {value === true ? '✓' : '–'}
+                </span>
+              )}
             </button>
           )
         })}
       </div>
       {failed && (
-        <p role="status" className="membership__checkin-error">
+        <p role="status" className={skin.tapsError}>
           That did not save. Tap it again.
         </p>
       )}

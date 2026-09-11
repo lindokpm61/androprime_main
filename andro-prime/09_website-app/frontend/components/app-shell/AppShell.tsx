@@ -805,6 +805,7 @@ function PlanScreen({
             questions={questions}
             answeredToday={checkin.answeredToday}
             onSave={() => {}}
+            surface="demo"
           />
           <p className="ap-note-sm">
             {member
@@ -838,6 +839,7 @@ function PlanScreen({
                 once and so does this. */}
             <AdherenceChart
               series={adherenceSeries(checkin.entries, questions.length, 22, checkin.today)}
+              surface="demo"
             />
           </div>
         </>

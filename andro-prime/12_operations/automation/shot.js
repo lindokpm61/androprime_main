@@ -39,6 +39,13 @@
  *                      shot wherever the element happens to be: the sticky nav,
  *                      a cookie banner, a chat bubble. `visibility:hidden`, so
  *                      layout is unchanged and only the overlay goes.
+ *   --click <css>      click the first match before capturing, repeatable and
+ *                      applied in order. For a view that is reachable only
+ *                      through the UI: a tab, an accordion, a state switcher.
+ *                      A selector that matches NOTHING is a hard failure, not a
+ *                      warning, for the same reason --expect exists: a capture
+ *                      of the tab you did not mean to shoot looks exactly like
+ *                      a capture of the one you did.
  *   --expect <css>     fail unless the selector is present in the served DOM,
  *                      repeatable. A screenshot cannot tell "my change did not
  *                      apply" from "the server served stale HTML"; this can.
@@ -133,6 +140,7 @@ const reducedMotion = !flag('--motion');
 const walk = !flag('--no-walk');
 const storage = optAll('--localstorage');
 const hideSelectors = optAll('--hide');
+const clickSelectors = optAll('--click');
 const expectSelectors = optAll('--expect');
 const expectText = optAll('--expect-text');
 
@@ -287,6 +295,24 @@ function findChrome() {
 
       // Webfonts move layout after load. Wait for them rather than guessing.
       await page.evaluate(() => document.fonts && document.fonts.ready).catch(() => {});
+
+      // Clicks, before the walk, so whatever they reveal gets walked too. A
+      // missing selector THROWS: the whole point of shooting a tab is that the
+      // tab is what gets shot, and a silent no-op here returns a perfectly
+      // plausible picture of the default view instead.
+      for (const sel of clickSelectors) {
+        const hit = await page.$(sel);
+        if (!hit) {
+          throw new Error(
+            `--click "${sel}" matched nothing. Nothing was captured: a click that ` +
+            `silently does not happen yields a screenshot of the wrong view.`);
+        }
+        await hit.click();
+        // One frame plus a beat, so a state change that re-renders has landed
+        // before the next click looks for its target.
+        await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+        await new Promise((r) => setTimeout(r, 180));
+      }
 
       // The walk. Reduced-motion disarms the reveal in this design system, but
       // not every page honours it, and a page that does not is exactly the page

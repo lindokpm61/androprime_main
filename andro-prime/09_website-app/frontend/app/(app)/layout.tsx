@@ -19,13 +19,17 @@ import { isMembershipEnabled, isAccountDataControlsEnabled } from '@/lib/flags'
  * `results-dashboard.css` was also imported by `app/(demo)/layout.tsx`, which
  * renders none of its classes either, so that import went with it.
  *
- * The two that remain are held open by components this batch did not reach:
- * `membership.css` by three `components/membership/*` pieces, and
- * `dashboard-panels.css` by `DevFixtureBar` (dev-only) plus the
- * `status-indicator--*` set.
+ * `membership.css` WENT ON 2026-09-12 (batch 4), with the three
+ * `components/membership/*` pieces that were the only things still rendering
+ * its classes. They now wear Direction F on this tree and `ap-` on `/demo`,
+ * chosen by a `surface` prop rather than by a stylesheet reaching across route
+ * groups: `app/(demo)/layout.tsx` had been importing this sheet to dress them,
+ * which is the import that went with it.
+ *
+ * ONE REMAINS. `dashboard-panels.css`, held open by `DevFixtureBar` (dev-only)
+ * plus the `status-indicator--*` set. Five of six V2.0 page sheets are gone.
  */
 import '@/styles/components/dashboard-panels.css'
-import '@/styles/pages/membership.css'
 
 /**
  * THE AUTHENTICATED APP'S DIRECTION F ROOT, rebuilt 2026-09-11 (batch 3).

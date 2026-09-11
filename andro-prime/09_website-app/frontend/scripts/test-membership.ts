@@ -322,6 +322,28 @@ check('(8g) a day is capped at the question count', overfull[0].fraction === 1)
 check('(8h) a zero-question loop cannot divide by zero',
   adherenceSeries([entryOn(0)], 0, 1, NOW)[0].fraction === 0)
 
+// The streak flag on the series, and the one rule that makes it worth a test:
+// it has to agree with `currentStreak` on the day today is NOT yet logged.
+const streakRun = adherenceSeries([...fullDay(0), ...fullDay(-1), ...fullDay(-2), entryOn(-4)], 3, 7, NOW)
+check('(8k) the live run is flagged, oldest-first, ending today',
+  streakRun.filter((day) => day.inStreak).map((day) => day.day).join() ===
+    '2026-08-24,2026-08-25,2026-08-26')
+check('(8l) a logged day OUTSIDE the run is not flagged',
+  streakRun[2].day === '2026-08-22' && streakRun[2].answered === 1 && !streakRun[2].inStreak)
+
+// 🔴 THE CASE THE CHART CANNOT DERIVE ON ITS OWN. Today is unlogged, so a
+// backwards walk from the last day stops immediately and reports no streak,
+// while `currentStreak` counts 2 from yesterday. The flag must follow the
+// function, and today must not be in it.
+const openToday = adherenceSeries([...fullDay(-1), ...fullDay(-2)], 3, 7, NOW)
+check('(8m) an unlogged today does not break the run', currentStreak([...fullDay(-1), ...fullDay(-2)], NOW) === 2)
+check('(8n) the flag agrees with it, and excludes today',
+  openToday.filter((day) => day.inStreak).map((day) => day.day).join() === '2026-08-24,2026-08-25' &&
+    openToday[6].day === '2026-08-26' && !openToday[6].inStreak)
+
+check('(8o) no run means nothing flagged',
+  adherenceSeries([entryOn(-4)], 3, 7, NOW).every((day) => !day.inStreak))
+
 check('(8i) loggedWithin counts distinct days inside the window',
   JSON.stringify(loggedWithin([...fullDay(0), ...fullDay(-2), entryOn(-4)], 7, NOW)) ===
     JSON.stringify({ logged: 3, of: 7 }))

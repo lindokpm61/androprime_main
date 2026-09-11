@@ -1042,6 +1042,198 @@
 
 .f-handoff-fine { font-size: 12px; line-height: 1.7; color: #3F444B; margin: 0; }
 
+/* ---------- the daily loop: taps, adherence, trend ---------------------
+
+   Added 2026-09-12 with the batch-4 rebuild of the three `components/
+   membership/*` pieces that batch 3 left on V2.0. Those three were the last
+   thing holding `styles/pages/membership.css` open, and it is deleted with
+   them.
+
+   LAYOUT SOURCE. `design/mockups/journey/membership-F.html`, Frame H, blocks
+   02 and 05 to 09. Picture, not a spec: its arrangement and content are
+   authoritative, its CSS reaches nothing and the tokens below are the shipped
+   ones.
+
+   🔴 THE SHAPE IS THE FRAME'S, NOT THE OLD ONE RESTYLED. The V2.0 row was a
+   three-column grid of tall stacked cards and the first pass of this rebuild
+   carried that grid across and only repainted it. That is precisely the defect
+   the membership redesign task was opened about, one layer down: taking the
+   content and structure of the old build and calling a new skin a redraw. The
+   frame draws a WRAPPING ROW OF PILLS, each one label and value side by side,
+   and that is what is below.
+
+   🔴 TWO SURFACES WEAR THESE COMPONENTS AND ONLY ONE OF THEM IS DIRECTION F.
+   `CheckinRow` and `AdherenceChart` are rendered by `/account/membership` AND
+   by `/demo`, which is the `ap-` phone shell in `styles/pages/app-shell.css`.
+   The components take a `surface` prop and emit one prefix or the other, so
+   each page stays native and there is still ONE implementation of the daily
+   loop. Keith ruled this on 2026-09-12, over rebuilding in `f-` and letting
+   the demo inherit a foreign look. The `ap-` half of the pair lives in
+   `app-shell.css` beside the shell it belongs to. If a class below gains a
+   rule, check whether its `ap-` twin needs the same one.
+
+   WHY THE GREEN IS ALLOWED HERE WHEN `.f-nudge` REFUSED IT. The status hues
+   are fenced to range verdicts, and this file's own `.f-mkbadge` note is about
+   keeping a clinical vocabulary off a fulfilment class. Two things put these
+   marks on the other side of that fence. The chip carries DONE or NOT DONE,
+   which is an affordance state and not a claim about anybody's blood; the bars
+   carry LOGGED or NOT LOGGED, and the legend rendered directly under them says
+   so in the same breath. Both are already the shipped treatment on `/demo`,
+   which has painted the same two marks in the same token since 2026-09-07, so
+   ink here would have been a change rather than a safe default. Colour is also
+   never the only carrier: the streak is a rule, a count and a weight, a missed
+   day is a hollow outline, and the chips fill.
+
+   AND THE SAVE ERROR IS INK, which is not an oversight. `f-primitives.css`
+   records the ruling: the error was drafted in --color-status-critical, the
+   precedent reached for was `membership__checkin-error`, and a pre-ruling call
+   site is not a licence. It takes ink plus a rule, and the markup carries
+   `role="alert"` so it is announced rather than tinted.
+
+   Zero em dashes. */
+
+/* ---- today's taps ---- */
+
+.f-taps { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+.f-tap {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid var(--hair-2); border-radius: var(--radius-pill);
+  padding: 10px 16px;
+  background: transparent; color: var(--ink-2);
+  font: inherit; font-size: 14px; cursor: pointer;
+  transition: background-color 160ms var(--ease), border-color 160ms var(--ease);
+}
+.f-tap:hover { border-color: var(--ink-3); }
+/* Worn WITH the base, so it compounds rather than racing it on source order.
+   TINT PLUS A FULL STRENGTH BORDER AND INK TEXT, never a solid fill: #059669
+   under white does not clear a text contrast floor and this chip carries a
+   word. Same treatment the verdict badges take. */
+.f-tap.f-tap-on {
+  background: color-mix(in srgb, var(--color-status-optimal) 32%, transparent);
+  border-color: var(--color-status-optimal);
+  color: var(--ink);
+}
+
+.f-tap-k { font-weight: 500; }
+.f-tap-v {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px; color: var(--ink-3); min-width: 1ch; text-align: center;
+}
+.f-tap.f-tap-on .f-tap-v { color: var(--ink); }
+
+/* THE 1 TO 5 CHIP WAS A BARE NUMERAL, which is the least alive thing on the
+   row and also the least readable: a "3" has to be decoded, five segments with
+   three filled are simply seen. It also invited "out of what" on a control
+   whose whole job is to be tapped without thinking. */
+.f-tap-sc { display: inline-flex; gap: 2px; align-items: center; }
+.f-tap-sc i {
+  width: 4px; height: 14px; border-radius: 1px;
+  background: var(--ink); opacity: 0.22; display: block;
+}
+.f-tap-sc i.f-tap-pip-on { background: var(--color-status-optimal); opacity: 1; }
+
+.f-taps-err {
+  margin: 14px 0 0; font-size: 14px; color: var(--ink);
+  padding-left: 12px; border-left: 2px solid var(--ink);
+}
+
+/* ---- adherence ---- */
+
+/* The well is what seats the bars on the page. Without it the chart was the
+   only element on the screen with no material under it while everything else
+   sits in a tray, and twenty two flat marks on bare paper read as a barcode. */
+.f-well {
+  background: var(--sunk); border-radius: var(--radius-inset);
+  padding: 16px 16px 12px; box-shadow: inset 0 0 0 1px var(--hair);
+}
+
+.f-adh { display: flex; align-items: flex-end; gap: 3px; height: 84px; }
+
+/* WEIGHT ENCODES THE STREAK, which is real data the caption states in words
+   two lines below. The whole logged set is one hue and the live run is the one
+   that gets it at full strength, which is chroma spent by area: large fills
+   stay low-alpha and read as weather. */
+.f-adh-b {
+  flex: 1; min-width: 4px; display: block;
+  background: var(--color-status-optimal); border-radius: 3px; opacity: 0.42;
+}
+.f-adh-b.f-adh-st { opacity: 1; }
+/* A missed day has to read as a DELIBERATE empty slot. As a near-invisible
+   stub it reads as a rendering fault, and for a 35 to 65 audience a boundary
+   is read before a tone is. */
+.f-adh-b.f-adh-miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink-3); opacity: 0.6; }
+
+/* 🔴 THE PULSE MUST NOT TOUCH THE BAR ITSELF. Animating today's bar opacity
+   leaves a still capture showing a faded bar, and on a chart where weight
+   carries meaning a faded bar reads as a partial day. A data mark cannot be
+   the thing that breathes, so the bar stays solid and a cap above it carries
+   the motion. The chart is therefore still correct in a screenshot.
+   This is the screen's ONE pulsing element, which is the whole budget in
+   brand-guidelines 8.3. This file's live-dot note records that the status
+   strip deliberately does not pulse, so nothing had to give this up. */
+.f-adh-b.f-adh-now { opacity: 1; position: relative; }
+.f-adh-b.f-adh-now::after {
+  content: ""; position: absolute; left: 50%; top: -11px; transform: translateX(-50%);
+  width: 6px; height: 6px; border-radius: var(--radius-pill);
+  background: var(--color-status-optimal);
+  animation: fAdhCap 2.6s var(--ease) infinite;
+}
+@keyframes fAdhCap { 0%, 100% { opacity: 1; } 50% { opacity: 0.28; } }
+@media (prefers-reduced-motion: reduce) {
+  .f-adh-b.f-adh-now::after { animation: none; }
+}
+
+/* The streak drawn under the run it describes, rather than only counted in
+   words. Positioned inline from the series, because where the run starts is
+   data. */
+.f-srun { position: relative; height: 24px; margin-top: 10px; }
+.f-srun em { position: absolute; top: 0; height: 2px; background: var(--color-status-optimal); display: block; }
+.f-srun span {
+  position: absolute; top: 8px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2);
+}
+
+.f-adhaxis {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-2);
+  padding-bottom: 12px; border-bottom: 1px solid var(--hair);
+  margin: 12px 0 12px;
+}
+
+/* ---- the trend rail ---- */
+
+.f-rail { position: relative; height: 72px; margin: 16px 0 4px; }
+.f-rail-line {
+  position: absolute; left: 0; right: 0; top: 30px; height: 2px;
+  background: var(--hair-2); display: block;
+}
+.f-pt { position: absolute; top: 0; transform: translateX(-50%); text-align: center; }
+.f-pt-v {
+  display: block;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 17px; font-weight: 600; line-height: 1; color: var(--ink);
+}
+.f-pt-d {
+  display: block; width: 11px; height: 11px; margin: 9px auto 0;
+  border-radius: var(--radius-pill); background: var(--ink);
+}
+/* The point that has not happened yet is hollow. It is the only mark on the
+   screen standing for something in the future, and a filled dot would claim a
+   reading exists. */
+.f-pt.f-pt-future .f-pt-v { color: var(--ink-3); }
+.f-pt.f-pt-future .f-pt-d { background: var(--paper); box-shadow: inset 0 0 0 2px var(--ink-3); }
+.f-pt-w {
+  display: block; margin-top: 8px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-2); white-space: nowrap;
+}
+
 /* ---------- print ------------------------------------------------------
 
    ⚠ THE APP CHROME HAS TO COME OFF THE PAPER, AND UNTIL THIS BATCH THERE WAS

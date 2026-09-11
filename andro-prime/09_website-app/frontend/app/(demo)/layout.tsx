@@ -5,7 +5,6 @@ import '@/styles/components/dashboard-panels.css'
 import '@/styles/pages/app-shell.css'
 // The demo renders the real membership check-in row and adherence chart, and
 // their styles live with the (app) group this tree never passes through.
-import '@/styles/pages/membership.css'
 
 /*
  * ITS OWN ROUTE GROUP, AND THE REASON IS ONE LINE OF ANOTHER FILE.

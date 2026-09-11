@@ -258,6 +258,17 @@ export interface AdherenceDay {
   total: number
   /** `answered / total`, 0 to 1. */
   fraction: number
+  /**
+   * Inside the live streak, the run `currentStreak` is counting.
+   *
+   * 🔴 IT IS DERIVED FROM `currentStreak`, NOT RE-DERIVED ALONGSIDE IT. The
+   * streak has one non-obvious rule (an unlogged TODAY does not break it) and a
+   * chart that walked the series backwards on its own would state a second
+   * answer to the same question, which would disagree with the caption beside it
+   * on exactly one day in every streak. One rule, one implementation, two
+   * readers.
+   */
+  inStreak: boolean
 }
 
 /**
@@ -284,6 +295,23 @@ export function adherenceSeries(
   }
 
   const todayKey = dayKey(today)
+
+  /* The streak's days, taken from `currentStreak` rather than recomputed. It
+     returns a LENGTH, so the days are walked back from the run's end, and the
+     end is today only when today is logged: the same "9am and the day is not
+     over" rule that function documents. Outside the window the keys simply
+     never match a rendered day, so a streak longer than the chart is not a
+     special case. */
+  const streakDays = new Set<string>()
+  const streakLength = currentStreak(entries, today)
+  if (streakLength > 0) {
+    let cursor = byDay.has(todayKey) ? todayKey : dayKeyMinus(todayKey, 1)
+    for (let step = 0; step < streakLength; step += 1) {
+      streakDays.add(cursor)
+      cursor = dayKeyMinus(cursor, 1)
+    }
+  }
+
   const series: AdherenceDay[] = []
   for (let back = windowDays - 1; back >= 0; back -= 1) {
     const day = dayKeyMinus(todayKey, back)
@@ -293,6 +321,7 @@ export function adherenceSeries(
       answered,
       total: questionCount,
       fraction: questionCount === 0 ? 0 : answered / questionCount,
+      inStreak: streakDays.has(day),
     })
   }
   return series

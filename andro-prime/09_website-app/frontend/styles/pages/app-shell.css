@@ -851,7 +851,9 @@
    5 and lives in `SCALE_MIN`/`SCALE_MAX`) and `.ap-bars` (a hand-rolled
    adherence chart, when `AdherenceChart` already exists). The demo renders the
    real components now, so these were not just unused, they encoded a wrong
-   answer. Their styles come from `styles/pages/membership.css`. */
+   answer. Their styles came from `styles/pages/membership.css` until
+   2026-09-12; that sheet is deleted and the components emit `ap-` directly.
+   See "the daily loop, the `ap-` half" below. */
 .ap-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .ap-stat {
   background: var(--ap-core); border: 1px solid var(--ap-hair);
@@ -868,6 +870,108 @@
   color: var(--ap-ink-3); margin-top: 7px; line-height: 1.4;
 }
 
+/* ---------- the daily loop, the `ap-` half -----------------------------
+
+   Added 2026-09-12. `CheckinRow` and `AdherenceChart` are rendered BOTH by
+   `/account/membership`, which is Direction F, and by `/demo`, which is this
+   shell. Until now both surfaces wore `membership__*` from
+   `styles/pages/membership.css`, and this file carried a block of `.ap-stage`
+   overrides re-pointing those V2.0 classes at the `--ap-*` tokens. That block
+   is gone with the stylesheet: the components now emit this prefix directly.
+
+   Keith ruled on 2026-09-12 that the components take a `surface` prop and emit
+   one prefix or the other: ONE implementation of the daily loop, two skins. The
+   Direction F twin is in `styles/components/f-app.css` under "the daily loop",
+   and it carries the fuller argument for the shape and the hue. A rule gained
+   on one side is usually owed to the other.
+
+   WHAT CHANGED VISUALLY HERE, so it is not mistaken for a regression: the taps
+   were a three-column grid of tall stacked cards and are now a wrapping row of
+   pills, which is what Frame H draws and what the old grid was never a version
+   of. The colours are the ones this surface already used.
+
+   Zero em dashes. */
+
+.ap-taps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
+
+.ap-tap {
+  display: inline-flex; align-items: center; gap: 9px;
+  border: 1px solid var(--ap-hair-2); border-radius: 999px;
+  padding: 9px 14px;
+  background: transparent; color: var(--ap-ink-2);
+  font: inherit; font-size: 13px; cursor: pointer;
+  transition: background-color 160ms var(--ap-ease), border-color 160ms var(--ap-ease);
+}
+.ap-tap:hover { border-color: var(--ap-ink-3); }
+/* Tint plus a full-strength border and ink text, never a solid fill: the hue
+   under white does not clear a text contrast floor and this chip carries a
+   word. Same treatment `.ap-badge` and `.ap-pin` take. */
+.ap-tap--on { background: var(--ap-ok-f2); border-color: var(--ap-ok); color: var(--ap-ink); }
+
+.ap-tap__k { font-weight: 500; }
+.ap-tap__v {
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px; color: var(--ap-ink-3); min-width: 1ch; text-align: center;
+}
+.ap-tap--on .ap-tap__v { color: var(--ap-ink); }
+
+/* Five segments rather than a numeral, for the reason the F twin gives: a "3"
+   has to be decoded, five segments with three filled are simply seen. */
+.ap-tap__sc { display: inline-flex; gap: 2px; align-items: center; }
+.ap-tap__sc i {
+  width: 4px; height: 13px; border-radius: 1px;
+  background: var(--ap-ink); opacity: 0.22; display: block;
+}
+.ap-tap__sc i.ap-pip--on { background: var(--ap-ok); opacity: 1; }
+
+.ap-taps__err {
+  margin: 12px 0 0; font-size: 12.5px; color: var(--ap-ink);
+  padding-left: 11px; border-left: 2px solid var(--ap-ink);
+}
+
+.ap-well {
+  background: var(--ap-sunk); border-radius: var(--ap-r-in);
+  padding: 14px 14px 10px; box-shadow: inset 0 0 0 1px var(--ap-hair);
+}
+
+.ap-adh { display: flex; align-items: flex-end; gap: 2.5px; height: 72px; }
+.ap-adh__b {
+  flex: 1; min-width: 3px; display: block;
+  background: var(--ap-ok); border-radius: 2.5px; opacity: 0.42;
+}
+.ap-adh__b--st { opacity: 1; }
+.ap-adh__b--miss { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ap-ink-3); opacity: 0.6; }
+
+/* The cap carries the motion, never the bar: a faded bar on a chart where
+   weight means something reads as a partial day in any still capture. */
+.ap-adh__b--now { opacity: 1; position: relative; }
+.ap-adh__b--now::after {
+  content: ""; position: absolute; left: 50%; top: -10px; transform: translateX(-50%);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--ap-ok);
+  animation: apAdhCap 2.6s var(--ap-ease) infinite;
+}
+@keyframes apAdhCap { 0%, 100% { opacity: 1; } 50% { opacity: 0.28; } }
+@media (prefers-reduced-motion: reduce) {
+  .ap-adh__b--now::after { animation: none; }
+}
+
+.ap-srun { position: relative; height: 22px; margin-top: 9px; }
+.ap-srun em { position: absolute; top: 0; height: 2px; background: var(--ap-ok); display: block; }
+.ap-srun span {
+  position: absolute; top: 7px;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ap-ink-2);
+}
+
+.ap-adhaxis {
+  display: flex; justify-content: space-between;
+  font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
+  font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ap-ink-3);
+  padding-bottom: 10px; border-bottom: 1px solid var(--ap-hair);
+  margin: 10px 0 10px;
+}
+
 
 /* The account identity block. */
 .ap-name { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; color: var(--ap-ink); }
@@ -878,46 +982,6 @@
   display: block; font-family: var(--font-mono), ui-monospace, monospace; font-size-adjust: none;
   font-size: 9.5px; color: var(--ap-ink-3); font-weight: 400; margin-bottom: 2px;
 }
-
-/* ---------------------------------------------------------------------------
-   THEMING THE REAL MEMBERSHIP COMPONENTS INSIDE THE DEMO STAGE.
-
-   `CheckinRow` and `AdherenceChart` are the member's own components and the demo
-   renders them rather than copies, which is the point. But `membership.css` was
-   written for the logged-in app, which is light-only: it hard-codes black
-   borders, white chips and `bg-gray-200` bars. Dropped into the demo stage those
-   are correct in light and inverted in dark, where an UNFILLED chip came out as
-   a white block on a near-black screen, brighter than the filled ones.
-
-   These rules re-point the same components at the `--ap-*` tokens. Scoped under
-   `.ap-stage`, so the logged-in surface is untouched and keeps rendering exactly
-   as it does today; nothing here changes a component, only where it reads its
-   colours when it is standing on this page.
-   --------------------------------------------------------------------------- */
-
-.ap-stage .membership__checkin { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-
-.ap-stage .membership__chip {
-  border: 1.5px solid var(--ap-hair-2);
-  background: var(--ap-sunk);
-  color: var(--ap-ink-2);
-  border-radius: 14px;
-}
-.ap-stage .membership__chip:hover { background: var(--ap-tray); }
-.ap-stage .membership__chip--filled {
-  background: var(--ap-ok-f);
-  border-color: var(--ap-ok);
-  color: var(--ap-ink);
-}
-.ap-stage .membership__chip--filled:hover { background: var(--ap-ok-f); }
-.ap-stage .membership__chip-key { color: inherit; }
-.ap-stage .membership__chip-value { color: inherit; }
-
-.ap-stage .membership__bar { background: var(--ap-ok-f2); border-radius: 2px; }
-.ap-stage .membership__bar--missed { background: var(--ap-sunk); }
-.ap-stage .membership__chart-axis { color: var(--ap-ink-3); }
-.ap-stage .membership__chart-legend { color: var(--ap-ink-3); }
-.ap-stage .membership__checkin-error { color: var(--ap-crit); }
 
 
 /* ============================================================================

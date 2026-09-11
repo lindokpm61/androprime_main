@@ -2820,10 +2820,11 @@
    the error takes ink.
 
    ⚠ THE ERROR WAS DRAFTED IN `--color-status-critical` AND THAT WAS WRONG. The
-   precedent reached for was `membership__checkin-error`, which does carry a form
-   failure in the critical token — but it lives in `styles/pages/membership.css`,
-   outside the F layer, and predates the ruling. A pre-ruling call site is not a
-   licence. Since the colour is what an error usually leans on, the markup carries
+   precedent reached for was `membership__checkin-error`, which did carry a form
+   failure in the critical token, but it lived in `styles/pages/membership.css`,
+   outside the F layer, and predated the ruling. A pre-ruling call site is not a
+   licence. That sheet was deleted on 2026-09-12 and its successor, `.f-taps-err`
+   in `f-app.css`, took ink plus a rule for exactly this reason. Since the colour is what an error usually leans on, the markup carries
    `role="alert"` instead, which announces it rather than tinting it, and is the
    better mechanism regardless. */
 .f-nudge {

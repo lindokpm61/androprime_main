@@ -4,7 +4,216 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-11 (third batch: the seven gated app routes)
+## ▶️ PICK UP HERE — handoff, 2026-09-12 (fourth batch: the three shared membership components)
+
+### THE BATCH NUMBERING, extended
+
+| Batch | Scope |
+|---|---|
+| 1 | The buy stage: `/checkout/details`, `/order/confirmed` |
+| 2 | The five `/lp/*` landing pages |
+| 3 | The seven gated app routes |
+| 4 | The three `components/membership/*` pieces batch 3 left on V2.0 (this handoff) |
+| 5 | **Not named.** Do not assume one exists |
+
+Keith chose batch 4 from a menu as "the membership redesign", meaning ClickUp
+`869eqe7qp`. What that task turned out to be is the first finding below.
+
+### 🔴 THE TASK THAT SCOPED THIS BATCH WAS STALE, AND BY MOST OF ITS LENGTH
+
+`869eqe7qp` opens *"Nothing is to be built until the approach is agreed (Keith,
+2026-08-26). This task holds the approach conversation, not the work,"* and
+carries a heading reading **"The fork that gates everything else — UNANSWERED"**.
+The fork was *"is this a membership-only redesign, or an app-wide design system
+change?"*
+
+**It was answered the next day and the task was never told.**
+`design/journey-inventory.md` opens with *"the decision Keith made on 2026-08-27:
+the redesign is app-wide"* and tabulates three decisions, including which
+language survives: **Direction F's**. Its five-step plan has since been executed
+almost end to end: step 2 is that inventory, steps 3 and 4 are thirteen drawn
+journey frames, and step 5 is batches 1 to 3.
+
+Its central premise is also no longer true of the page it describes. The task
+says the build *"took the mockup's content and structure but rendered them in the
+existing app design system"*; `/account/membership` measures **75 Direction F
+classes and zero V2.0 classes**. What actually remained of a task scoped at
+*"roughly 15 to 20 screens"* was **three leaf components**.
+
+**A task that gates work on a named open QUESTION must name where its answer will
+be written**, because the answer gets recorded wherever the answering
+conversation happened, which is almost never the task. Task-observer OBS-720.
+
+### What shipped
+
+**One implementation, two skins.** `CheckinRow`, `AdherenceChart` and
+`TrendRail` are rebuilt against `membership-F.html` Frame H, blocks 02 and 05 to
+09. New `components/membership/surface.ts` carries a `LoopSkin` map; the
+components take a `surface` prop.
+
+🔴 **TWO OF THE THREE ARE RENDERED BY `/demo` AS WELL, AND THAT IS WHY THIS WAS
+NOT A RESTYLE.** `CheckinRow` and `AdherenceChart` are worn both by
+`/account/membership`, which is Direction F, and by the `ap-` phone shell, which
+is a different design system on a PUBLIC route. The sharing is deliberate: the
+demo renders the real components rather than copies, ported 2026-09-07 after a
+hand-rolled `.ap-bars` turned out to encode a 1-to-10 scale when the product's is
+1 to 5. Keith ruled on 2026-09-12 for the skin map over rebuilding in `f-` and
+letting the demo inherit a foreign look. `TrendRail` has no second caller and is
+`f-` only.
+
+**The `ap-` half lives in `app-shell.css`, beside the shell it belongs to**, and
+it replaced something worse: a block of `.ap-stage .membership__*` overrides that
+re-pointed the V2.0 classes at `--ap-*` tokens, plus an import reaching from
+`app/(demo)/layout.tsx` into the (app) group's stylesheet. Both are gone.
+
+🔴 **THE FIRST PASS OF THIS BATCH CARRIED THE OLD GRID ACROSS AND ONLY REPAINTED
+IT**, which is the exact defect the stale task was opened about, one layer down.
+The V2.0 row was a three-column grid of tall stacked cards; **Frame H draws a
+wrapping row of horizontal pills** and the old grid was never a version of it.
+Caught by reading the frame's CSS for its ARGUMENT rather than its values, after
+the markup had already been written. A skin applied to inherited structure looks
+like a redraw in a diff and is not one.
+
+### The streak is now data, and it is single-sourced
+
+`AdherenceDay` gains `inStreak`. **It is derived from `currentStreak`, not
+re-derived alongside it.** The streak has one non-obvious rule, that an unlogged
+TODAY does not break it, and a chart walking the series backwards on its own
+would state a second answer to the same question and disagree with the caption
+beside it on exactly one day in every streak. Five assertions added to
+`test-membership.ts`, one of them that case specifically. 209 passed, 0 failed.
+
+### What the frame proposes and what was taken
+
+Taken: the sunk well; weight encoding the streak, so days inside the live run are
+full and days before it lighter; a missed day as a hollow outline rather than a
+near-invisible stub; today capped with the screen's one pulse; the streak run
+drawn under the run it describes; the 1-to-5 answer as five pips instead of a
+numeral. **The pulse is on the CAP, never the bar**, because animating a bar's
+opacity leaves a still capture showing a faded bar, and on a chart where weight
+carries meaning that reads as a partial day.
+
+**The hue was taken too, after nearly being refused.** The first pass built the
+bars in ink, reasoning from Keith's 2026-08-29 ruling that dropped accent red
+from the blog skin because it collides with the results-dashboard status
+meaning. Three things overturned that: the frame attaches each colour to a fact
+the page states in words; the chips carry an affordance state and the bars carry
+LOGGED or NOT LOGGED with the legend saying so directly underneath; and
+**`/demo` has painted both marks in that exact token since 2026-09-07**, so ink
+would have been a change rather than a safe default. The reasoning is written
+beside the classes in `f-app.css`.
+
+**The save error is INK, not critical red**, matching the ruling
+`f-primitives.css` already records: the precedent reached for was
+`membership__checkin-error`, and a pre-ruling call site is not a licence.
+
+⚠ **ONE THING THE FRAME ADDS WAS NOT TAKEN: new copy.** Its legend opens *"Green
+is a day you logged, nothing more"*, which the live legend does not say. Same
+call as batches 2 and 3: the layout is the frame's and the words are the live
+page's. Owed to Keith as a copy decision rather than quietly taken.
+
+### 🔴 ACCESSIBILITY: THE PIPS FORCED A REAL FIX
+
+Drawing the 1-to-5 answer as five hidden marks would have left the button's
+accessible name as the prompt alone, saying what the control asks and never what
+it currently says. That was already thin when the answer was a visible numeral
+and is nothing at all now. The name now carries the state ("... 3 out of 5.",
+"... not answered yet."). The pips are `aria-hidden` rather than read as five
+spans.
+
+### Five of six V2.0 page stylesheets are now gone
+
+`membership.css` is **deleted**, not merely unimported, and nothing renders a
+class from it: the only survivor was a reference inside a comment. Three
+comments elsewhere still described it as live and were corrected in the same
+change, including one in `f-primitives.css` and one in `app-shell.css`.
+`dashboard-panels.css` is the last one standing, held open by `DevFixtureBar`
+(dev-only) and the `status-indicator--*` set.
+
+### 🔴 TWO ENVIRONMENT DEFECTS, AND THE FIRST ONE COST AN HOUR
+
+1. **`NEXT_PUBLIC_APP_URL` is required locally and existed nowhere.** Not in
+   `.env.local`, not in `.env.example`, not in the `dev` script. Unset it falls
+   back to the production `https://` host, so the middleware builds absolute
+   redirects the dev server cannot serve and **every app-host route 308s to
+   itself** while the marketing routes look fine. The rule was written correctly
+   and completely, inside `scripts/route-conformance.js`, which is not a file
+   anyone opens to start a dev server. **Now in `.env.example`** with the
+   symptom, the correct value, and the wrong value that looks right
+   (`http://localhost:3000`, which collapses the two hosts and loops the
+   marketing routes instead). OBS-721.
+2. ⚠ **No feature flags in `.env.local` at all**, so `/membership` and
+   `/account/membership` both 404 locally, while `MEMBERSHIP_ENABLED` is **ON in
+   production** (`869eqavre`). Run the dev server with
+   `MEMBERSHIP_ENABLED=true` to see either. Not fixed: which flags a local
+   environment should carry is a decision, not a default, and it is downstream
+   of the flag audit that task still asks for.
+
+### How it was verified, and what that does NOT cover
+
+**The `ap-` skin was shot on the real route**, `/demo?s=member`, Plan tab, light
+and dark. **The `f-` skin could not be**: it renders only on
+`/account/membership` in its MEMBER state, which needs a session with a
+membership and check-in history, and the only seeder writes to the PRODUCTION
+project.
+
+So it was rendered through a harness: the real components to static HTML via
+`react-dom/server`, wrapped in the real token and component stylesheets, shot
+from there. **The markup is the components' own output**, so the harness cannot
+verify a fiction: a class the component emits and the stylesheet does not define
+shows up as an unstyled element. `shot.js` gained a `--click` option for the
+demo's tab, which fails hard on a selector that matches nothing, because a
+capture of the wrong tab looks exactly like a capture of the right one.
+
+⚠ **WHAT THE HARNESS DOES NOT COVER**, and it is owed a real look when a member
+fixture exists: the surrounding page layout, the trays the components sit in on
+the live route, and anything the `(app)` layout contributes. The three
+components themselves are verified; `/account/membership` as a composed screen
+is not.
+
+One thing the harness settled rather than flagged: the body text renders in
+mono, which looked wrong and is correct. `.f-fine` is mono by design in
+Direction F and the frame's `.fine` is byte-for-byte the same declaration.
+Direction F has **no dark mode** by design, so the identical light and dark
+harness captures are also correct.
+
+### 🔴 WHAT IS STILL NOT DONE
+
+- ⚠ **A member fixture with check-in history still does not exist.**
+  `seed-result.ts` does not create one and writes to PRODUCTION, so it needs
+  Keith's authorisation per run. Until then `/account/membership` in its member
+  state has never been seen as a composed screen by anybody.
+- **The `/demo` and density decisions are still open** and this batch did not
+  touch them: `869ez4jrt` (/demo presentation) and `869erraqd` (is the
+  authenticated app deliberately denser than marketing, or should they
+  converge). The skin map makes either answer cheaper to act on; it does not
+  answer them.
+- **The last three measurable routes are still V2.0**: `/subscription/confirmed`
+  (no frame exists), `/not-found` (116 lines of V2.0 body under F chrome), and
+  `/activate` (a deprecated redirect, not a restyle). 33 of 36 is unchanged by
+  this batch, which touched no measurable route.
+- ⚠ **`ResultEducate`, `ResultExplain` and `ResultValue` still have zero
+  consumers**, carried from batch 3.
+- ⚠ **The em dash in CA-014 consent copy is still live**, carried from batch 3.
+
+### Test status at 2026-09-12 (fourth batch)
+
+`npm test` green, exit 0, including all nine design checks and a regenerated
+`design/route-conformance.md` (the 22 new F classes land in "asked for by a
+source file, so not dead", which is correct: they render only on a gated route
+an anonymous run cannot reach). `npm run test:design:live`: **153 passed, 2
+failed**, both the documented pre-existing `/privacy` and `/terms` pair.
+Production build NOT run, because a dev server was up throughout and the two
+share `.next`.
+
+⚠ **`verify-subscription-claims.js` ran with `MEMBERSHIP_ENABLED` unset**, so it
+reported the 16 no-subscription claims as still true. That is the interlock
+reading the local env rather than the deployed one, recorded on 2026-09-11 and
+unchanged.
+
+---
+
+## ▶️ Previous handoff, 2026-09-11 (third batch: the seven gated app routes)
 
 ### THE BATCH NUMBERING, because it cost an hour to reconstruct
 
