@@ -27,6 +27,14 @@
    classes have been stripped by `lib/legal/canonical.ts` so its TEXT can be
    asserted byte-identical to the approved source. See that file's header. */
 @import "../components/f-legal-doc.css";
+/* Direction F authenticated-app layer, `.f-app*` plus the process-status badge
+   and the history row. Added 2026-09-11 with the batch-3 rebuild of the seven
+   gated routes. It is a page FAMILY with a shell of its own (status strip,
+   explanatory sidebar, main column of trays), which is why it sits beside
+   f-blog.css and f-legal-doc.css rather than inside f-primitives.css. It is NOT
+   the `ap-` system in styles/pages/app-shell.css: that is the phone-shaped
+   shell /demo renders, and the two prefixes never mix on one element. */
+@import "../components/f-app.css";
 
 @tailwind base;
 @tailwind components;

@@ -28,6 +28,34 @@ export const metadata: Metadata = {
 // Zero new dependency: rendered as clean HTML with Tailwind `print:` variants;
 // the customer prints or saves as PDF from the browser. A server-generated PDF
 // (a real dependency decision) is a later option, not built here.
+//
+// ─────────────────────────────────────────────────────────────────────────
+// TOUCHED 2026-09-11 (batch 3), AND IT IS THE ONE ROUTE IN THE BATCH THAT
+// DELIBERATELY LEAVES DIRECTION F.
+//
+// Frame G's own note is the ruling: this is a print artefact for a clinician,
+// not a screen for a customer. It has no tray, no wash, no grain, no ambient
+// shadow and no dark mode, because none of those survive a laser printer and
+// all of them cost legibility on paper. What it keeps from F is the TYPE and the
+// hairline rules. A design system that cannot say "not here" is a style guide
+// pretending to be a system.
+//
+// 🔴 NOT ONE WORD CHANGED. Every sentence here is CA-023 approved, including the
+// accreditation line, the three questions and the closing disclaimer. The
+// changes below are the type ramp and the print rules, nothing else.
+//
+// 🔴 THE TYPOGRAPHY CHANGED WITHOUT THIS FILE ASKING, WHICH IS WHY IT IS NOW
+// EXPLICIT. The batch-3 layout wraps this tree in `.f-page`, whose
+// `.f-page p, .f-page li` rule at (0,1,1) out-specifies Tailwind's `.font-serif`
+// at (0,1,0). So every `font-serif` on this page silently became sans the moment
+// the layout changed. That is the direction Frame G asks for, so it is kept, but
+// it is kept ON PURPOSE and the dead `font-serif` classes are gone rather than
+// left sitting there asserting something that no longer happens.
+//
+// ⚠ THE APP CHROME IS HIDDEN IN PRINT, and that is new. The layout gained a nav
+// and a footer in this batch; before it, all six authenticated routes ended with
+// the page and nothing under it, so there was no chrome to keep off the paper.
+// The rules live in `f-app.css` beside the chrome they hide, not here.
 
 const KIT_LABELS: Record<KitType, string> = {
   testosterone: 'Testosterone Health Check',
@@ -77,33 +105,29 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
   const fullName = [profile?.first_name, profile?.last_name].filter(Boolean).join(' ')
 
   return (
-    <div className="bg-white text-black">
-      <div className="max-w-3xl mx-auto px-8 py-12 print:px-0 print:py-0">
+    <div className="f-handoff">
+      <div className="f-handoff-in">
 
         {/* Print control (hidden on the printed page) */}
-        <div className="flex justify-between items-center mb-10 print:hidden">
-          <a href="/results-dashboard" className="font-mono text-xs uppercase tracking-[0.15em] underline">
+        <div className="f-handoff-ctl print:hidden">
+          <a href="/results-dashboard" className="f-tlink">
             Back to results
           </a>
           <PrintButton />
         </div>
 
         {/* Header */}
-        <header className="border-b-4 border-black pb-6 mb-8">
-          <p className="font-mono text-xs font-bold tracking-widest uppercase mb-2">
-            Blood test results: summary for your GP
-          </p>
-          <h1 className="font-black font-sans text-3xl uppercase tracking-tight">
-            {fullName || user.email}
-          </h1>
-          <div className="font-serif text-sm text-gray-600 mt-3 space-y-1">
+        <header className="f-handoff-head">
+          <p className="f-blab">Blood test results: summary for your GP</p>
+          <h1>{fullName || user.email}</h1>
+          <div className="f-handoff-id">
             {fullName && <p>Email: {user.email}</p>}
             <p>Date of birth: {formatDate(profile?.date_of_birth ?? null)}</p>
           </div>
         </header>
 
         {/* Accreditation line (Vitall agreement §3.6: state accreditation, no UKAS symbol) */}
-        <p className="font-serif text-sm text-gray-600 mb-8">
+        <p className="f-handoff-note">
           These samples were analysed by a UKAS ISO 15189 accredited laboratory.
           The reference ranges shown are the laboratory&rsquo;s own.
         </p>
@@ -113,29 +137,27 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
           const result = kit.results[0]
           if (!result) return null
           return (
-            <section key={kit.kitType} className="mb-10">
-              <h2 className="font-black font-sans text-lg uppercase tracking-tight border-b-2 border-black pb-2 mb-4">
+            <section key={kit.kitType} className="f-handoff-sec">
+              <h2>
                 {KIT_LABELS[kit.kitType] ?? kit.kitType}
-                <span className="block font-sans font-normal normal-case tracking-normal text-sm text-gray-600 mt-1">
-                  Sample collected: {formatDate(result.collectedAt)}
-                </span>
+                <span>Sample collected: {formatDate(result.collectedAt)}</span>
               </h2>
-              <table className="w-full border-collapse text-sm">
+              <table className="f-handoff-t">
                 <thead>
-                  <tr className="border-b-2 border-black text-left font-mono text-xs uppercase tracking-[0.15em]">
-                    <th className="py-2 pr-4">Marker</th>
-                    <th className="py-2 pr-4">Result</th>
-                    <th className="py-2 pr-4">Reference range</th>
-                    <th className="py-2">Andro Prime reading</th>
+                  <tr>
+                    <th>Marker</th>
+                    <th>Result</th>
+                    <th>Reference range</th>
+                    <th>Andro Prime reading</th>
                   </tr>
                 </thead>
-                <tbody className="font-serif">
+                <tbody>
                   {result.markers.map((m) => (
-                    <tr key={m.markerName} className="border-b border-gray-200">
-                      <td className="py-2 pr-4 font-medium">{m.markerName}</td>
-                      <td className="py-2 pr-4">{m.value} {m.unit}</td>
-                      <td className="py-2 pr-4">{referenceRange(m)} {m.unit}</td>
-                      <td className="py-2">{m.stateLabel}</td>
+                    <tr key={m.markerName}>
+                      <td>{m.markerName}</td>
+                      <td>{m.value} {m.unit}</td>
+                      <td>{referenceRange(m)} {m.unit}</td>
+                      <td>{m.stateLabel}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -145,11 +167,9 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
         })}
 
         {/* Questions to take to your GP (generic, conservative, no clinical claim) */}
-        <section className="border-4 border-black p-6 mb-8">
-          <h2 className="font-black font-sans text-lg uppercase tracking-tight mb-4">
-            Questions to ask your GP
-          </h2>
-          <ul className="font-serif text-sm text-gray-600 space-y-2 list-disc pl-5">
+        <section className="f-handoff-q">
+          <h2>Questions to ask your GP</h2>
+          <ul>
             <li>These are the results I would like to go through with you.</li>
             <li>Are any of these worth repeating or investigating further?</li>
             <li>Do any of them point to something I should follow up on?</li>
@@ -157,7 +177,7 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
         </section>
 
         {/* Not-a-diagnosis disclaimer (compliant framing) */}
-        <p className="font-serif text-xs text-gray-600 leading-relaxed">
+        <p className="f-handoff-fine">
           Andro Prime is a wellness service. This summary is provided to help you
           discuss your results with your GP. It is not a diagnosis and does not
           replace medical advice. The readings shown come from Andro

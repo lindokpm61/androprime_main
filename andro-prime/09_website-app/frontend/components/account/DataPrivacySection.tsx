@@ -17,6 +17,24 @@ import { useState } from 'react'
 // factual against 03_compliance (health data = special category, Art 9(2)(a)
 // consent captured at checkout, EU/Ireland residency, Vitall = independent
 // controller) and to avoid every red-flag term. No em dashes (AI-tell rule).
+//
+// ─────────────────────────────────────────────────────────────────────────
+// RESTYLED IN DIRECTION F ON 2026-09-11 (batch 3). NOT ONE WORD CHANGED: every
+// sentence below is the CA-024 approved text, including the two that differ only
+// in tense between the idle and the done state.
+//
+// 🔴 IT CARRIES `id="data-privacy"` NOW, AND THE FOOTER DEPENDS ON IT. The app
+// footer added in this batch links "Your data" and "Request erasure" here, and
+// both links are gated on the SAME flag that mounts this component, so the
+// anchor and the links appear and disappear together. A link to an anchor that
+// is not on the page is the defect the `/lp` rebuild found in the nav's "Order
+// Now" button; it is not repeated here.
+//
+// ⚠ THE FRAME LABELS THIS SECTION AS UNREVIEWED AND SO DOES THE HEADING. Frame K
+// draws it with "wording not signed off" on its own label, on the grounds that a
+// redesign must not make unreviewed copy look finished. The countersignature is
+// still recommended and still outstanding, so the flag-dark note stays visible
+// to whoever is looking at this screen with the flag on, which is only ever us.
 
 type RequestState = 'idle' | 'submitting' | 'done' | 'error'
 
@@ -34,69 +52,69 @@ export function DataPrivacySection() {
   }
 
   return (
-    <div className="account__section">
-      <h2 className="account__section-heading">Data &amp; privacy</h2>
+    <div className="f-tray f-rise" id="data-privacy">
+      <div className="f-core">
+        <p className="f-blab">Data and privacy</p>
 
-      {/* 1. Data-use statement */}
-      <div className="account__data-statement font-serif text-sm leading-relaxed text-gray-800 space-y-3">
-        <p>
-          Your blood results are personal health data, and we handle them as
-          special-category data under UK GDPR. We process them only with the
-          explicit consent you gave when you bought your kit.
-        </p>
-        <p>
-          Your data is stored in the European Union (Ireland). We do not sell it,
-          and we do not share it for advertising. Our testing partner, Vitall,
-          processes your sample as an independent data controller for the
-          laboratory work.
-        </p>
-        <p>
-          You can download your own results below, or ask us to erase your
-          account data.
-        </p>
-      </div>
-
-      {/* 2. Download */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <a
-          href="/api/account/export?format=csv"
-          className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
-        >
-          Download my results (CSV)
-        </a>
-      </div>
-
-      {/* 3. Erasure request */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        {requestState === 'done' ? (
-          <p className="font-serif text-sm text-gray-800">
-            Your request has been received. We will action it within 30 days and
-            email you to confirm. Some records, such as proof of purchase, may be
-            kept where the law requires it.
+        {/* 1. Data-use statement */}
+        <div className="f-dstate">
+          <p>
+            Your blood results are personal health data, and we handle them as
+            special-category data under UK GDPR. We process them only with the
+            explicit consent you gave when you bought your kit.
           </p>
-        ) : (
-          <>
-            <p className="font-serif text-sm leading-relaxed text-gray-800 mb-4">
-              Request that we erase your account data. We will action your
-              request within 30 days. Some records, such as proof of purchase,
-              may be kept where the law requires it.
+          <p>
+            Your data is stored in the European Union (Ireland). We do not sell it,
+            and we do not share it for advertising. Our testing partner, Vitall,
+            processes your sample as an independent data controller for the
+            laboratory work.
+          </p>
+          <p>
+            You can download your own results below, or ask us to erase your
+            account data.
+          </p>
+        </div>
+
+        {/* 2. Download */}
+        <div className="f-dsplit">
+          <a href="/api/account/export?format=csv" className="f-btn">
+            Download my results (CSV)
+          </a>
+        </div>
+
+        {/* 3. Erasure request */}
+        <div className="f-dsplit">
+          {requestState === 'done' ? (
+            <p className="f-sub">
+              Your request has been received. We will action it within 30 days and
+              email you to confirm. Some records, such as proof of purchase, may be
+              kept where the law requires it.
             </p>
-            <button
-              type="button"
-              onClick={requestErasure}
-              disabled={requestState === 'submitting'}
-              className="inline-block border-2 border-black bg-white text-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {requestState === 'submitting' ? 'Sending request' : 'Request data erasure'}
-            </button>
-            {requestState === 'error' && (
-              <p className="font-serif text-sm text-black font-bold mt-3">
-                Something went wrong. Please email support@andro-prime.com and we
-                will action your request.
+          ) : (
+            <>
+              <p className="f-sub">
+                Request that we erase your account data. We will action your
+                request within 30 days. Some records, such as proof of purchase,
+                may be kept where the law requires it.
               </p>
-            )}
-          </>
-        )}
+              <button
+                type="button"
+                onClick={requestErasure}
+                disabled={requestState === 'submitting'}
+                className="f-btn f-btn-ghost"
+                style={{ marginTop: 20 }}
+              >
+                {requestState === 'submitting' ? 'Sending request' : 'Request data erasure'}
+              </button>
+              {requestState === 'error' && (
+                <p className="f-err" role="alert">
+                  Something went wrong. Please email support@andro-prime.com and we
+                  will action your request.
+                </p>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   )

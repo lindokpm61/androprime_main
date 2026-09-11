@@ -9,6 +9,7 @@ import { CheckinRow } from '@/components/membership/CheckinRow'
 import { AdherenceChart } from '@/components/membership/AdherenceChart'
 import { TrendRail } from '@/components/membership/TrendRail'
 import { JoinButton } from '@/components/membership/JoinButton'
+import { AppStrip, AppShell } from '@/components/app/AppShell'
 import Link from 'next/link'
 import { urlFor } from '@/lib/hosts'
 
@@ -38,6 +39,26 @@ function plural(n: number, word: string): string {
  * startsWith arm, and its host routing from APP_ROUTE_PREFIXES' '/account' for
  * the same reason; both files carry a note saying '/membership' must NOT be
  * re-added, because doing so would drag the public page onto the app host.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * REBUILT IN DIRECTION F ON 2026-09-11. Batch 3.
+ *
+ * 🔴 IT IS NOT FRAMELESS, WHICH IS WHAT THE ROUTE LIST SAID. The batch-2 handoff
+ * and the conformance report both record `/account/membership` as postdating the
+ * journey set. That is true of the PATH and false of the SCREEN:
+ * `design/mockups/journey/membership-F.html` draws all three of its states as
+ * Frames H (member, retest pending), H2 (the retest block in all four
+ * entitlement states), I (paywall, inside the window), I2 (the paywall hero in
+ * all three variants) and J (window shut). The route was renamed on 2026-09-08
+ * and the frame kept the old name, so a lookup by path found nothing. A frame
+ * index keyed on a path goes stale the first time a route moves.
+ *
+ * 🔴 EVERY WORD IS VERBATIM, AND ON THIS SCREEN THAT MATTERS MORE THAN ANYWHERE
+ * ELSE IN THE BATCH. Almost every sentence here is load-bearing and argued in
+ * the comments below: the three paywall headings and why the middle one exists,
+ * the entitlement wording that says it is not a credit, the three benefits and
+ * why there is no fourth, the deadline stated plainly. This rebuild changed the
+ * shell around them and nothing inside it.
  *
  * The three states:
  *
@@ -85,38 +106,44 @@ export default async function MembershipPage({ searchParams }: PageProps) {
   // nothing.
   const loop = marker && checkin && (
     <>
-      <section className="membership__block">
-        <p className="data-label text-xs">Today · {marker.questions.length} taps</p>
-        <CheckinRow questions={marker.questions} answeredToday={checkin.answeredToday} />
-        <p className="membership__logged">
-          {checkin.logged === 0
-            ? 'Nothing logged yet'
-            : `Logged ${checkin.logged} of ${checkin.loggedOf} ${plural(checkin.loggedOf, 'day')}`}
-          {checkin.streak > 0 && <> · {checkin.streak} day streak</>}
-        </p>
-      </section>
-
-      <section className="membership__block">
-        <p className="data-label text-xs">Your one number to move</p>
-        <div className="membership__counter">
-          <span className="membership__counter-n">{marker.value}</span>
-          {/* Marker names keep the engine's casing ("Vitamin D", "Active B12"),
-              so this line reads the same as the result card it came from. */}
-          <span className="membership__counter-unit">
-            {marker.unit} {marker.displayName}
-          </span>
+      <div className="f-tray f-rise">
+        <div className="f-core">
+          <p className="f-blab">Today &middot; {marker.questions.length} taps</p>
+          <CheckinRow questions={marker.questions} answeredToday={checkin.answeredToday} />
+          <p className="f-fine" style={{ marginTop: 16 }}>
+            {checkin.logged === 0
+              ? 'Nothing logged yet'
+              : `Logged ${checkin.logged} of ${checkin.loggedOf} ${plural(checkin.loggedOf, 'day')}`}
+            {checkin.streak > 0 && <> &middot; {checkin.streak} day streak</>}
+          </p>
         </div>
-        {/* Ewa-approved copy from the results engine, reused rather than rewritten. */}
-        <p className="membership__counter-sub">{marker.explanation}</p>
-      </section>
+      </div>
+
+      <div className="f-tray f-rise">
+        <div className="f-core">
+          <p className="f-blab">Your one number to move</p>
+          <p className="f-read">
+            {marker.value}{' '}
+            {/* Marker names keep the engine's casing ("Vitamin D", "Active B12"),
+                so this line reads the same as the result card it came from. */}
+            <span style={{ fontSize: 14, color: 'var(--ink-3)' }}>
+              {marker.unit} {marker.displayName}
+            </span>
+          </p>
+          {/* Ewa-approved copy from the results engine, reused rather than rewritten. */}
+          <p className="f-read-s">{marker.explanation}</p>
+        </div>
+      </div>
 
       {checkin.series.length >= 3 && (
-        <section className="membership__block membership__block--tint">
-          <p className="data-label text-xs">
-            Adherence, {checkin.series.length} {plural(checkin.series.length, 'day')}
-          </p>
-          <AdherenceChart series={checkin.series} />
-        </section>
+        <div className="f-tray f-rise">
+          <div className="f-core">
+            <p className="f-blab">
+              Adherence, {checkin.series.length} {plural(checkin.series.length, 'day')}
+            </p>
+            <AdherenceChart series={checkin.series} />
+          </div>
+        </div>
       )}
     </>
   )
@@ -126,80 +153,89 @@ export default async function MembershipPage({ searchParams }: PageProps) {
     const pendingRetestAt = entitlement.kind === 'pending' ? entitlement.dueAt : null
 
     return (
-      <div className="membership">
-        <div className="membership__inner">
-          <p className="data-label text-xs mb-8">Your membership</p>
-
+      <>
+        <AppStrip label="Your membership" right="Member" />
+        <AppShell
+          chip="Member"
+          heading="What your membership is keeping running."
+          intro="Your dated retest, the trend behind your number, and the daily loop that moves it. Manage or cancel from your subscriptions at any time."
+        >
           {marker && (
-            <section className="membership__block">
-              <p className="data-label text-xs">{marker.displayName}, your points so far</p>
-              <TrendRail
-                markerName={marker.displayName}
-                trend={marker.trend}
-                pendingRetestAt={pendingRetestAt}
-              />
-            </section>
+            <div className="f-tray f-rise">
+              <div className="f-core">
+                <p className="f-blab">{marker.displayName}, your points so far</p>
+                <TrendRail
+                  markerName={marker.displayName}
+                  trend={marker.trend}
+                  pendingRetestAt={pendingRetestAt}
+                />
+              </div>
+            </div>
           )}
 
-          <section className="membership__block">
-            <p className="data-label text-xs">Your retest</p>
-            {entitlement.kind === 'pending' && (
-              <>
-                <p className="membership__retest">{formatDate(entitlement.dueAt)}</p>
-                <p className="membership__retest-note">
-                  {entitlement.daysRemaining} days away. Included while you are a member: you need to
-                  be a member on that date. It is not a credit, there is no balance, and there is
-                  nothing to keep track of.
+          <div className="f-tray f-rise">
+            <div className="f-core">
+              <p className="f-blab">Your retest</p>
+              {entitlement.kind === 'pending' && (
+                <>
+                  <p className="f-read">{formatDate(entitlement.dueAt)}</p>
+                  <p className="f-read-s">
+                    {entitlement.daysRemaining} days away. Included while you are a member: you need
+                    to be a member on that date. It is not a credit, there is no balance, and there
+                    is nothing to keep track of.
+                  </p>
+                </>
+              )}
+              {entitlement.kind === 'due' && (
+                <>
+                  <p className="f-read">Due now</p>
+                  <p className="f-read-s">
+                    Your retest kit is being prepared. We will email you before it ships so you can
+                    check the delivery address we hold.
+                  </p>
+                </>
+              )}
+              {entitlement.kind === 'claimed' && (
+                <>
+                  <p className="f-read">On its way</p>
+                  <p className="f-read-s">
+                    Your retest kit was released on {formatDate(entitlement.claimedAt)}. Your next
+                    one is a year after that, while you are still a member.
+                  </p>
+                </>
+              )}
+              {entitlement.kind === 'none' && (
+                <p className="f-read-s" style={{ marginTop: 0 }}>
+                  Your retest date is set once your first payment clears. We will show it here.
                 </p>
-              </>
-            )}
-            {entitlement.kind === 'due' && (
-              <>
-                <p className="membership__retest">Due now</p>
-                <p className="membership__retest-note">
-                  Your retest kit is being prepared. We will email you before it ships so you can
-                  check the delivery address we hold.
-                </p>
-              </>
-            )}
-            {entitlement.kind === 'claimed' && (
-              <>
-                <p className="membership__retest">On its way</p>
-                <p className="membership__retest-note">
-                  Your retest kit was released on {formatDate(entitlement.claimedAt)}. Your next one
-                  is a year after that, while you are still a member.
-                </p>
-              </>
-            )}
-            {entitlement.kind === 'none' && (
-              <p className="membership__retest-note">
-                Your retest date is set once your first payment clears. We will show it here.
-              </p>
-            )}
-          </section>
+              )}
+            </div>
+          </div>
 
           {loop}
 
-          <section className="membership__block membership__block--tint">
-            <p className="data-label text-xs">Ask the clinician</p>
-            <p className="membership__retest-note">
-              Nothing published yet this month. Members ask a question, a registered clinician
-              answers it generally, and every member sees the answer.
-            </p>
-            <p className="membership__fineprint">
-              General health information, not advice about your own results.
-            </p>
-          </section>
+          <div className="f-tray f-rise">
+            <div className="f-core">
+              <p className="f-blab">Ask the clinician</p>
+              <p className="f-sub">
+                Nothing published yet this month. Members ask a question, a registered clinician
+                answers it generally, and every member sees the answer.
+              </p>
+              <p className="f-fine" style={{ marginTop: 14 }}>
+                General health information, not advice about your own results.
+              </p>
+            </div>
+          </div>
 
-          <p className="membership__fineprint">
+          <p className="f-fine">
             Manage or cancel your membership from{' '}
-            <Link href="/subscriptions" className="underline">
+            <Link href="/subscriptions" className="f-tlink">
               your subscriptions
             </Link>
             .
           </p>
-        </div>
-      </div>
+        </AppShell>
+      </>
     )
   }
 
@@ -213,51 +249,51 @@ export default async function MembershipPage({ searchParams }: PageProps) {
   // and another kit at full retail opens a new 30 days.
   if (offer.kind !== 'open') {
     return (
-      <div className="membership">
-        <div className="membership__inner">
-          <p className="data-label text-xs mb-8">Membership</p>
+      <>
+        <AppStrip label="Membership" right={offer.kind === 'closed' ? 'Window closed' : 'Not started'} />
+        <AppShell
+          chip={offer.kind === 'closed' ? 'Not open right now' : 'Starts with a test'}
+          heading={
+            offer.kind === 'closed'
+              ? 'Membership opens when a result comes back.'
+              : 'Membership starts with a number to track.'
+          }
+          intro="Your results stay yours either way, and nothing about them is locked behind this."
+        >
+          <div className="f-tray f-rise">
+            <div className="f-core">
+              <p className="f-sub">
+                {offer.kind === 'closed' ? (
+                  <>
+                    Membership is offered for the 30 days after a result lands, because what it
+                    keeps running is a number and a dated retest. That window closed on{' '}
+                    {formatDate(offer.closedAt)}. Your next test opens a new one.
+                  </>
+                ) : (
+                  <>
+                    There is nothing to track yet. Take a test first, and when the result comes back
+                    you will have 30 days to decide whether you want it kept running.
+                  </>
+                )}
+              </p>
+              {/* Cross-host: /kits is MARKETING on the apex, so a plain anchor. */}
+              <a href={urlFor('/kits')} className="f-btn" style={{ marginTop: 22 }}>
+                Choose your test <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
 
-          <section className="membership__hero">
-            <p className="membership__eyebrow">
-              {offer.kind === 'closed' ? 'Not open right now' : 'Starts with a test'}
-            </p>
-            <h1 className="membership__heading">
-              {offer.kind === 'closed'
-                ? 'Membership opens when a result comes back.'
-                : 'Membership starts with a number to track.'}
-            </h1>
-          </section>
-
-          <section className="membership__block">
-            <p className="membership__retest-note">
-              {offer.kind === 'closed' ? (
-                <>
-                  Membership is offered for the 30 days after a result lands, because what it keeps
-                  running is a number and a dated retest. That window closed on{' '}
-                  {formatDate(offer.closedAt)}. Your next test opens a new one.
-                </>
-              ) : (
-                <>
-                  There is nothing to track yet. Take a test first, and when the result comes back
-                  you will have 30 days to decide whether you want it kept running.
-                </>
-              )}
-            </p>
-            {/* Cross-host: /kits is MARKETING on the apex, so a plain anchor. */}
-            <a href={urlFor('/kits')} className="membership__cta membership__cta--link">
-              Choose your test
-            </a>
-          </section>
-
-          <section className="membership__block membership__decline">
-            <p className="membership__decline-head">Your results are yours either way</p>
-            <p>Nothing is locked. Download them whenever you want, member or not.</p>
-            <Link href="/results-dashboard" className="underline">
-              Go to your results
-            </Link>
-          </section>
-        </div>
-      </div>
+          <div className="f-tray f-rise">
+            <div className="f-core">
+              <p className="f-blab">Your results are yours either way</p>
+              <p className="f-sub">Nothing is locked. Download them whenever you want, member or not.</p>
+              <Link href="/results-dashboard" className="f-tlink">
+                Go to your results
+              </Link>
+            </div>
+          </div>
+        </AppShell>
+      </>
     )
   }
 
@@ -271,120 +307,116 @@ export default async function MembershipPage({ searchParams }: PageProps) {
   const projectedRetest = firstRetestDueAt(now, view.hasResults)
   const price = PRODUCT_MAP.membership.price
 
+  /*
+    THREE headings, and the middle one is why.
+
+    `marker` answers "is there something you can log against daily". It is
+    null both for the all-clear member AND for a man whose flagged marker
+    has no honest daily behaviour, such as low testosterone. Folding those
+    two together would print "nothing is wrong today" to a man we have
+    just told to see his GP. `anyFlagged` is the separate question, taken
+    from the same map that badges his result card.
+
+    There is no "before your first result" case here any more: the offer
+    window is shut for anyone without one, so this branch is only ever
+    reached by someone who has a result.
+  */
+  const heroChip = marker ? 'One number to move' : view.anyFlagged ? 'Your result, tracked' : 'Your baseline, kept'
+  const heroHeading = marker
+    ? 'You have one number to move, and a dated retest to move it by.'
+    : view.anyFlagged
+      ? 'Your result is on record. Membership dates the next one.'
+      : 'Nothing is flagged today. Next year’s test has something to be measured against.'
+
   return (
-    <div className="membership">
-      <div className="membership__inner">
-        <p className="data-label text-xs mb-8">Membership</p>
-
-        {/*
-          THREE headings, and the middle one is why.
-
-          `marker` answers "is there something you can log against daily". It is
-          null both for the all-clear member AND for a man whose flagged marker
-          has no honest daily behaviour, such as low testosterone. Folding those
-          two together would print "nothing is wrong today" to a man we have
-          just told to see his GP. `anyFlagged` is the separate question, taken
-          from the same map that badges his result card.
-
-          There is no "before your first result" case here any more: the offer
-          window is shut for anyone without one, so this branch is only ever
-          reached by someone who has a result.
-        */}
-        <section className="membership__hero">
-          {marker ? (
-            <>
-              <p className="membership__eyebrow">One number to move</p>
-              <h1 className="membership__heading">
-                You have one number to move, and a dated retest to move it by.
-              </h1>
-            </>
-          ) : view.anyFlagged ? (
-            <>
-              <p className="membership__eyebrow">Your result, tracked</p>
-              <h1 className="membership__heading">
-                Your result is on record. Membership dates the next one.
-              </h1>
-            </>
-          ) : (
-            <>
-              <p className="membership__eyebrow">Your baseline, kept</p>
-              <h1 className="membership__heading">
-                Nothing is flagged today. Next year&rsquo;s test has something to be measured
-                against.
-              </h1>
-            </>
-          )}
-        </section>
-
+    <>
+      <AppStrip label="Membership" right={`Closes ${formatDate(offer.closesAt)}`} />
+      <AppShell
+        chip={heroChip}
+        heading={heroHeading}
+        intro="Membership keeps your number, your plan and your dated retest running. It is offered for the 30 days after a result lands."
+      >
         {checkin && checkin.logged > 0 && (
-          <div className="membership__built">
-            <div>
-              <span className="membership__built-n">{checkin.logged}</span>
-              <span className="membership__built-k">Days logged</span>
-            </div>
-            <div>
-              <span className="membership__built-n">{checkin.streak}</span>
-              <span className="membership__built-k">Day streak</span>
-            </div>
-            <div>
-              <span className="membership__built-n">{marker ? 1 : 0}</span>
-              <span className="membership__built-k">Marker to move</span>
+          <div className="f-tray f-rise">
+            <div className="f-core">
+              <p className="f-blab">What you have already built</p>
+              <div className="f-counts">
+                <div>
+                  <span className="f-counts-n">{checkin.logged}</span>
+                  <span className="f-counts-k">Days logged</span>
+                </div>
+                <div>
+                  <span className="f-counts-n">{checkin.streak}</span>
+                  <span className="f-counts-k">Day streak</span>
+                </div>
+                <div>
+                  <span className="f-counts-n">{marker ? 1 : 0}</span>
+                  <span className="f-counts-k">Marker to move</span>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
         {loop}
 
-        <section className="membership__block">
-          <p className="membership__price">{price}</p>
+        <div className="f-tray f-rise">
+          <div className="f-core">
+            <p className="f-blab">Membership</p>
+            <p className="f-read">{price}</p>
 
-          <div className="membership__entitle">
-            <p className="membership__entitle-head">
-              Join today and your retest falls on {formatDate(projectedRetest)}
-            </p>
-            <p>
-              Included while you are a member. You need to be a member on that date. It is not a
-              credit, it does not expire, and there is no balance to keep track of.
+            <div style={{ marginTop: 22 }}>
+              <p className="f-blab" style={{ marginBottom: 8 }}>
+                Join today and your retest falls on {formatDate(projectedRetest)}
+              </p>
+              <p className="f-sub">
+                Included while you are a member. You need to be a member on that date. It is not a
+                credit, it does not expire, and there is no balance to keep track of.
+              </p>
+            </div>
+
+            {/*
+              Three benefits, not four. "Member price on kits" came off on
+              2026-08-26: kits are never discounted, for anyone, because the
+              member's benefit is the included retest and discounting on top of it
+              undercuts the economics the offer window protects. Member pricing is
+              for supplements, and a paywall must not list a benefit that has no
+              delivery path yet.
+            */}
+            <ul className="f-inclu">
+              <li>Your plan, your streak and your daily data, kept running.</li>
+              <li>Every marker explained against both ranges, ours and your lab&rsquo;s.</li>
+              <li>Ask the clinician. Questions answered every month, published for all members.</li>
+            </ul>
+
+            <div style={{ marginTop: 26 }}>
+              <JoinButton>Keep going</JoinButton>
+            </div>
+            {/*
+              The deadline is stated plainly, because it is real: miss it and the
+              way back in is another kit at full retail. Saying so is fairer than
+              a limit that only reveals itself once it has passed.
+            */}
+            <p className="f-fine" style={{ marginTop: 14 }}>
+              Cancel any time &middot; this offer closes on {formatDate(offer.closesAt)}
             </p>
           </div>
+        </div>
 
-          {/*
-            Three benefits, not four. "Member price on kits" came off on
-            2026-08-26: kits are never discounted, for anyone, because the
-            member's benefit is the included retest and discounting on top of it
-            undercuts the economics the offer window protects. Member pricing is
-            for supplements, and a paywall must not list a benefit that has no
-            delivery path yet.
-          */}
-          <ul className="membership__includes">
-            <li>Your plan, your streak and your daily data, kept running.</li>
-            <li>Every marker explained against both ranges, ours and your lab&rsquo;s.</li>
-            <li>Ask the clinician. Questions answered every month, published for all members.</li>
-          </ul>
-
-          <JoinButton>Keep going</JoinButton>
-          {/*
-            The deadline is stated plainly, because it is real: miss it and the
-            way back in is another kit at full retail. Saying so is fairer than
-            a limit that only reveals itself once it has passed.
-          */}
-          <p className="membership__cta-sub">
-            Cancel any time &middot; this offer closes on {formatDate(offer.closesAt)}
-          </p>
-        </section>
-
-        <section className="membership__block membership__decline">
-          <p className="membership__decline-head">Not right now</p>
-          <p>
-            Your results are yours either way. Download them whenever you want, member or not. If
-            you change your mind after {formatDate(offer.closesAt)}, your next test opens a new 30
-            days.
-          </p>
-          <Link href="/results-dashboard" className="underline">
-            Go to your results
-          </Link>
-        </section>
-      </div>
-    </div>
+        <div className="f-tray f-rise">
+          <div className="f-core">
+            <p className="f-blab">Not right now</p>
+            <p className="f-sub">
+              Your results are yours either way. Download them whenever you want, member or not. If
+              you change your mind after {formatDate(offer.closesAt)}, your next test opens a new 30
+              days.
+            </p>
+            <Link href="/results-dashboard" className="f-tlink">
+              Go to your results
+            </Link>
+          </div>
+        </div>
+      </AppShell>
+    </>
   )
 }

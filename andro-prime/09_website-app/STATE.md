@@ -4,7 +4,228 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-11 (second batch: the landing pages)
+## ▶️ PICK UP HERE — handoff, 2026-09-11 (third batch: the seven gated app routes)
+
+### THE BATCH NUMBERING, because it cost an hour to reconstruct
+
+Keith works through this rebuild in numbered batches and the numbers live nowhere
+but the conversation. Recorded here so the next `build batch N` resolves:
+
+| Batch | Scope |
+|---|---|
+| 1 | The buy stage: `/checkout/details`, `/order/confirmed` |
+| 2 | The five `/lp/*` landing pages |
+| 3 | The seven gated app routes (this handoff) |
+| 4 | **Not named.** Do not assume one exists |
+
+🔴 **"Batch 3: the three kit landing pages" was the opening instruction and it did
+not resolve.** "The three kit landing pages" is defined at STATE.md:7610 as
+`app/lp/{testosterone,energy-recovery,hormone-recovery}`, and all three shipped
+four hours earlier in batch 2. Keith then chose the seven gated app routes. An
+ordinal is a pointer into a plan, and recording "we finished item 2" without
+recording the list makes it unresolvable: it does not fail loudly, it resolves to
+the nearest plausible noun, which in a well-documented repo is the thing just
+completed. Task-observer OBS-712.
+
+### Where the rebuild is
+
+**33 of 36 measurable routes are Direction F (92%), unchanged**, because none of
+these seven is measurable: they all redirect an anonymous visitor to
+`/auth/login`. The report now records their STATIC signal instead, and six of the
+seven went from "no F markers in source" to 8 to 25 F classes each.
+
+### What shipped
+
+**A shared layer first, then the routes.** `app/(app)/layout.tsx`, new
+`styles/components/f-app.css` (the authenticated-app family), new
+`components/app/AppShell.tsx` (`AppStrip` + `AppShell`).
+
+🔴 **THE LAYOUT CARRIED THREE LIVE DEFECTS AND ALL SEVEN ROUTES INHERITED THEM.**
+
+1. **No `.f-page` root.** That is the type ramp. Without it an F surface renders
+   in the V2.0 serif at about 8% under the size it was drawn at, and nothing
+   errors: not tsc, not the build, not the class checker. `app/auth/layout.tsx`
+   has carried the same one-line root and the same warning since 2026-09-08.
+2. **`<main>` carried `pt-20`**, V2.0's flush-bar clearance, under a nav that has
+   been a floating shell for weeks. Every authenticated route has been rendering
+   its first element under the nav. Third layout to carry that number; the `/lp`
+   rebuild found the second one the same day.
+3. **No `.js` reveal gate.** The tree is not under the marketing layout and
+   nothing supplied one, so every `.f-rise` would have had nothing to reveal it.
+   Fails in the SAFE direction, which is why it would never have been noticed.
+   `RevealGate` is now shared by three layouts.
+
+**The app footer is net-new** and is a proposal Keith kept on 2026-08-29, not a
+redraw: before this, all six authenticated routes ended with the page and nothing
+under it. ⚠ **Two of the frame's four links are NOT built**: "How we set our
+ranges" and "What we do not test" are new PAGES that exist nowhere in the
+codebase. Shipping the links before the pages is how a footer of dead ends
+happens, so they are owed to Keith as scope. The two that do ship are gated on
+`ACCOUNT_DATA_CONTROLS_ENABLED`, the same flag that mounts their target section,
+so the links and the anchor appear and disappear together.
+
+### Route by route
+
+| Route | State |
+|---|---|
+| `/account` | **Rebuilt.** Frames K and K2 |
+| `/subscriptions` | **Rebuilt.** Frames L and L2 |
+| `/supplement-waitlist-status` | **Rebuilt.** No frame exists; layout decided |
+| `/results-dashboard` | **Three of four states rebuilt**: no-results, sample-failed, pre-results. The results-READY state is not (see below) |
+| `/results-dashboard/handoff` | **Rebuilt**, and it is the one route that deliberately leaves Direction F |
+| `/account/membership` | **Rebuilt.** Frames H, H2, I, I2, J |
+| `/founding-member-status` | **NOT A RESTYLE.** See below |
+
+🔴 **`/account/membership` IS NOT FRAMELESS, WHICH IS WHAT THE ROUTE LIST SAID.**
+Batch 2's handoff and the conformance report both record it as postdating the
+journey set. True of the PATH, false of the SCREEN: `membership-F.html` draws all
+three of its states, under the route's old name. It was renamed on 2026-09-08 and
+the frame kept the old one, so a lookup by path found nothing. **A frame index
+keyed on a path goes stale the first time a route moves.**
+
+🔴 **`/founding-member-status` IS AN ELEVEN-LINE `redirect('/account')` AND WAS ON
+THE BATCH LIST AS A RESTYLE.** It renders no markup at all. Third route scheduled
+for design work that a header comment had already retired, after `/activate` in
+batch 1 and this same route once before, caught by `account-F.html` (which prints
+"There is nothing to draw" as Frame M and says it is kept only "so the inventory
+stops counting it"). **Fixed in the report generator this time rather than in
+prose**: `route-conformance.js` now detects a page whose whole body is a bare
+`redirect()`/`notFound()` with no JSX and reports "renders no markup (a redirect
+or notFound: not a restyle)". OBS-714, ACTIONED.
+
+### Three live defects fixed on the way, none cosmetic
+
+1. 🔴 **A CANCELLED OR REFUNDED ORDER TOLD THE CUSTOMER HIS RESULTS WERE COMING.**
+   `/account` branched on `hasResults` alone and those two statuses never have
+   them, so the action column read "Awaiting results" on an order that ended. The
+   cell is now empty, its phone label dropped with it. **The frame is why it was
+   found**: it drew all nine statuses in one place, which is the only reason two
+   of them were ever seen side by side.
+2. 🔴 **"MANAGE BILLING" WAS A SILENT NO-OP.** `BillingPortalButton` read
+   `data.url` and navigated if present; the portal route 404s for any customer
+   with no `supplement_subscriptions` row, so the function fell through,
+   re-enabled the button and changed nothing. It now fails visibly. That is
+   deliberately ALL it does: the underlying gap is a data and billing decision,
+   and inventing a second lookup in a button would put that decision in the least
+   visible place in the system.
+3. 🔴 **`/supplement-waitlist-status` WAS WEARING A RETIRED PAGE'S CLOTHES.** Every
+   class on it was `founding-member-status__*`. That programme closed on
+   2026-07-22 and its page is now a redirect, so this route was the only thing
+   keeping the stylesheet alive. **A borrowed class name is invisible until
+   somebody deletes the page it was named after.**
+
+### Two V2.0 stylesheets deleted, three still held open
+
+`subscriptions.css` and `founding-member-status.css` are **deleted**, not merely
+unimported: nothing renders their classes any more. `account.css`,
+`membership.css`, `results-dashboard.css` and `dashboard-panels.css` remain, each
+held open by components this batch did not reach.
+
+### 🔴 WHAT IS NOT DONE, AND WHY IT STOPPED RATHER THAN BEING GUESSED AT
+
+**None of these seven routes can be seen without a Supabase session**, and the
+dev server points at the PRODUCTION project (`phqrjtnflovicgkngieu`). No test
+login was available in this session, so:
+
+- **The results-READY state is NOT rebuilt.** That is `ResultsReadyView`,
+  `KitTabs`, `MarkerCard` and the rest of `components/results-engine/`, about
+  1,377 lines, and it is the most important screen in the app. It is reachable
+  only with auth AND a ready result. **It was not rebuilt blind.**
+- **The four `components/membership/*` pieces** (CheckinRow, AdherenceChart,
+  TrendRail, JoinButton) keep their V2.0 classes, for the same reason: they need
+  auth AND `MEMBERSHIP_ENABLED` AND a member fixture.
+- **What WAS verified visually**: the shell, the status strip, the process
+  badges, the history table in all four tones, the tracker, the readout, the
+  counters, the includes list, the billing error and the waiting cards, rendered
+  through the real components and the real stylesheet on a temporary ungated
+  route at 1440 and 390, then deleted. Shots in `shots/batch3/`, not in git.
+
+⚠ **A test login, or a throwaway seeded account, is the one thing blocking the
+rest of batch 3.**
+
+### Two defects found by looking at the render, not by reading the source
+
+1. **`.f-read` and `.f-subprice` lost their mono to `.f-page p`.** `.f-page p` is
+   (0,1,1) and a bare class is (0,1,0), so a mono readout that happens to be a
+   `<p>` silently renders in the body sans. This is the defect `f-primitives.css`
+   documents at line 354 after it cost 37 of 51 labels their face on 2026-08-31,
+   and a new stylesheet walked straight into it. Re-asserted at (0,2,0). **Found
+   by measuring computed styles in the browser**, not by reading CSS.
+2. **The longest status label forced the history table into two-line cells.**
+   "Sample issue: recollection" is live approved copy and cannot be shortened to
+   suit a column, so `white-space: nowrap` came off and the columns were resized.
+
+### 🔴 A FALSE RED IN `test:design:live` WAS FIXED, AND IT WAS NOT MINE
+
+`verify-scroll-reveal.js` reported `/lp/hormone-recovery: every section is visible
+after a full scroll — want 0, got 1` on every run, which reads as a section that
+never appears. **It appears.** The element has `.on` and measures **0.987152**
+against a threshold of 0.99: it is the last block on the longest page, enters the
+viewport only on the final jump to the bottom, and carries `transition-delay:
+180ms`, so its 0.7s ease-out was still asymptotically closing when a flat
+1600ms sleep took the measurement. No sleep value fixes that. The sleep is now a
+poll on the condition with a 5s cap, so a genuinely stuck reveal still fails.
+**152 passed / 3 failed became 153 passed / 2 failed**, and the two that remain
+are the documented pre-existing `/privacy` and `/terms` pair. OBS-716.
+
+⚠ **Batch 2's handoff recorded four pre-existing failures and named them; this was
+not among them.** The count had grown by one and nobody could tell which kind it
+was.
+
+### Two things the frames propose that were NOT built, both deliberate
+
+1. 🔴 **Frame C's "one upgrade" is already built, in the other design system, and
+   better.** The frame proposes a two-range track showing the laboratory's
+   reference interval against our action bands. `components/app-shell/
+   RangeTrack.tsx` does exactly that on live data, and it deliberately refuses
+   two things the frame draws: the named "clinical action cutoff" rule, because
+   that string is not in the engine, and any hand-typed threshold. Building the
+   frame's version in `f-` would be a second implementation of one clinical
+   device, and the weaker of the two. **If the dashboard is to gain it, it should
+   SHARE that component**, which is a decision about the two systems rather than
+   a styling task.
+2. ⚠ **Frame C also draws a "signed by Dr Ewa Lindo" attribution line.** Not
+   built. A named clinical attribution on a results surface is hers to grant, and
+   it sits close to the "Ewa signs off the system, not individual reports" rule.
+
+### The frames rewrote the copy and none of it was taken
+
+Every frame's header says its copy is "not compliance-checked and is not
+clinically signed". Taking it would have shipped, in one commit: an unverified
+causal claim about why samples fail ("almost always the volume of blood in the
+tube"); a stronger operational promise than the live one; **two links to routes
+that do not exist**, one of them `/how-to-sample`, which batch 1 established needs
+a film nobody has made; an invented per-step SLA with timestamps and an
+"Expected by" date that `getDashboardData` has no data for; and four new
+educational cards including a description of laboratory batch controls.
+
+**So the LAYOUT is the frames' and the WORDS are the live page's**, which is the
+call batch 2 made. All of it is owed to Keith as a copy decision rather than
+quietly taken or quietly dropped.
+
+### Compliance
+
+New customer-facing strings were introduced (the sidebar headings and intros, the
+footer, the billing failure message, the strip labels). Payload extracted and
+scanned separately from the source files, per the payload/apparatus rule:
+**0 HARD / 0 REVIEW, exit 0**, the only hit being "This is not a diagnosis"
+cleared as a negation. ⚠ **The drafter may not clear their own copy**, so the
+judgement pass went to the `compliance-reviewer` agent.
+
+⚠ **One heading changed inside CA-024's section and it is recorded rather than
+glossed**: "Data & privacy" became "Data and privacy". The approved STATEMENT
+beneath it is verbatim.
+
+### Test status at 2026-09-11 (third batch)
+
+`npm test` green, exit 0, including all nine design checks and a regenerated
+`design/route-conformance.md`. `npm run test:design:live`: **153 passed, 2
+failed**, both pre-existing and neither on these routes. Production build NOT run
+this session, because a dev server was up throughout and the two share `.next`.
+
+---
+
+## ▶️ Previous handoff, 2026-09-11 (second batch: the landing pages)
 
 ### Where the rebuild is
 

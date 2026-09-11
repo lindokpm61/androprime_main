@@ -179,11 +179,31 @@ function routes(dir, acc = []) {
 // cannot be rendered anonymously. It reads the page file itself: a rebuilt page
 // either composes the scaffold or writes `f-` classes, and a page that does
 // neither is not Direction F whatever the renderer could not tell us.
+//
+// 🔴 IT ALSO HAS TO SAY WHEN THERE IS NOTHING TO MARK UP, AND FOR A LONG TIME IT
+// DID NOT. "No F markers in source" is equally true of a page awaiting a rebuild
+// and of a page that renders NOTHING: a bare `redirect()`, a `notFound()`, a
+// route retired years ago. Only the first is work, and the table could not tell
+// them apart, so the same route kept being scheduled for design work that a
+// header comment had already retired. It has now happened three times on this
+// project: `/activate`, caught in batch 1 after it was scoped; and
+// `/founding-member-status`, caught first by `account-F.html` (which prints
+// "There is nothing to draw" as Frame M and says it is kept only "so the
+// inventory stops counting it") and then AGAIN in batch 3, because the frame
+// knew and this report did not.
+//
+// The detection is deliberately narrow: a default export whose entire body is a
+// single `redirect(...)` or `notFound()` call, with no JSX anywhere in the file.
+// Anything more clever would start guessing about pages that conditionally
+// redirect, which DO have markup and DO need the work.
+const EMPTY_BODY = /export default (?:async )?function [A-Za-z0-9_]*\s*\([^)]*\)\s*\{\s*(?:redirect|notFound)\s*\([^)]*\)\s*\}/
+
 function sourceSignal(file) {
   const src = fs.readFileSync(path.join(ROOT, file), 'utf8')
   const scaffold = /from '@\/components\/marketing\/FPage'/.test(src)
   const classes = new Set([...src.matchAll(/(?<![A-Za-z0-9_-])((?:f|fb)-[a-z][a-z0-9-]*)(?![A-Za-z0-9_-])/g)].map((m) => m[1]))
-  return { scaffold, classes: classes.size }
+  const rendersNothing = EMPTY_BODY.test(src) && !/<[A-Za-z]/.test(src)
+  return { scaffold, classes: classes.size, rendersNothing }
 }
 
 // `not-found.tsx` is a rendered surface with no `page.tsx`, so the directory
@@ -444,7 +464,7 @@ page's classes would score every gated route with whatever \`/auth/login\` wears
 
 | Route | Why | Static signal | Source |
 |---|---|---|---|
-${unmeasured.map((r) => `| \`${r.url}\` | ${r.note} | ${r.source.scaffold ? 'composes the scaffold' : r.source.classes ? `${r.source.classes} F classes in source` : '**no F markers in source**'} | \`${r.file}\` |`).join('\n')}
+${unmeasured.map((r) => `| \`${r.url}\` | ${r.note} | ${r.source.rendersNothing ? '**renders no markup** (a redirect or notFound: not a restyle)' : r.source.scaffold ? 'composes the scaffold' : r.source.classes ? `${r.source.classes} F classes in source` : '**no F markers in source**'} | \`${r.file}\` |`).join('\n')}
 
 ## Excluded from the count (${Object.keys(EXCLUDED).length})
 

@@ -5,6 +5,7 @@ import { getDashboardData } from '@/lib/results/getDashboardData'
 import { isKitScopeNoteEnabled, isGpHandoffEnabled } from '@/lib/flags'
 import { DevFixtureBar, ResultsReadyView } from '@/components/results-engine'
 import { PasswordBanner } from '@/components/app/PasswordBanner'
+import { AppStrip, AppShell } from '@/components/app/AppShell'
 import type { PreResultsOrderStatus, KitType } from '@/lib/results/types'
 import { urlFor } from '@/lib/hosts'
 import { numberWord, panelCount, panelSentenceList } from '@/lib/kits/panel'
@@ -14,13 +15,72 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
+/*
+ * /results-dashboard, REBUILT IN DIRECTION F ON 2026-09-11. Batch 3.
+ *
+ * Frames: results-states-F.html D (pre-results), E (no-results), F
+ * (sample-failed). The results-present state is `ResultsReadyView` and is drawn
+ * by results-F.html Frame C. Pictures, not a spec.
+ *
+ * 🔴 NOT ONE WORD OF COPY CHANGED, AND ALL THREE FRAMES REWROTE IT. This is the
+ * single biggest decision in this file, so the reasoning is here rather than in
+ * a commit message. Each frame's own header says its copy is "not
+ * compliance-checked and is not clinically signed", and taking it would have
+ * shipped, in one commit:
+ *
+ *   FRAME F, AN UNVERIFIED CAUSAL CLAIM. "It is almost always the volume of
+ *   blood in the tube" states a cause for sample failure that appears nowhere in
+ *   the lab agreement, the products workspace, or any approved copy. The live
+ *   sentence says a finger-prick sample sometimes does not give the lab enough
+ *   to work with, which says less and is supported.
+ *
+ *   FRAME F, A STRONGER OPERATIONAL PROMISE. "A replacement kit is on its way to
+ *   you at no cost" against the live "We're arranging a replacement kit... our
+ *   team will be in touch by email". One asserts a dispatch that has happened;
+ *   the other describes a process. Only the second is true at the moment this
+ *   screen renders.
+ *
+ *   FRAME F, TWO LINKS TO ROUTES THAT DO NOT EXIST. "Track the replacement" has
+ *   no surface behind it, and "How to get a good sample" is `/how-to-sample`,
+ *   which Frame AD draws and which the 2026-09-11 buy-stage handoff established
+ *   DOES NOT EXIST and needs a film nobody has made.
+ *
+ *   FRAME D, AN INVENTED SLA. The tracker carries per-step timestamps and an
+ *   "Expected by Thu 18 Aug". `getDashboardData` returns an order STATUS and no
+ *   timeline, so both would be fabricated, and kits-F already ruled on this exact
+ *   shape: an invented operational promise in a mockup is read by the rebuild as
+ *   an existing one.
+ *
+ *   FRAME D, FOUR NEW EDUCATIONAL CARDS including a description of laboratory
+ *   batch controls. The four cards that ship (DOC.01 to DOC.04) are the ones
+ *   already live.
+ *
+ * So the LAYOUT is the frames' and the WORDS are the live page's, which is the
+ * same call the `/lp` rebuild made in batch 2. Everything above is owed to Keith
+ * as a copy decision, not quietly taken or quietly dropped.
+ *
+ * ⚠ FRAME C'S "ONE UPGRADE" IS ALREADY BUILT, IN THE OTHER DESIGN SYSTEM, AND
+ * BETTER. The frame proposes a two-range track showing the laboratory's
+ * reference interval against our action bands. `components/app-shell/
+ * RangeTrack.tsx` does exactly that on live data, and it deliberately refuses
+ * two things the frame draws: the named "clinical action cutoff" rule, because
+ * that string is not in the engine, and any threshold typed by hand. Building
+ * the frame's version in `f-` would be a second implementation of one clinical
+ * device, and the weaker of the two. Not built. If the dashboard is to gain the
+ * two-range track it should SHARE that component, which is a decision about the
+ * two systems rather than a styling task.
+ *
+ * ⚠ THE FRAME ALSO DRAWS A "signed by Dr Ewa Lindo" ATTRIBUTION LINE. Not built.
+ * A named clinical attribution on a results surface is hers to grant.
+ */
+
 interface PageProps {
   searchParams: Promise<{ dev?: string }>
 }
 
 // ── Tracker config ──────────────────────────────────────────────────────────
 
-const TRACKER_STEPS = ['KIT DISPATCHED', 'SAMPLE RECEIVED', 'ANALYSING', 'RESULTS READY'] as const
+const TRACKER_STEPS = ['Kit dispatched', 'Sample received', 'Analysing', 'Results ready'] as const
 
 const STATUS_TO_STEP: Record<PreResultsOrderStatus, number> = {
   'order-placed':    0,
@@ -59,74 +119,35 @@ const KIT_CARD_BODY: Record<KitType, string> = {
 
 // ── StatusTracker ────────────────────────────────────────────────────────────
 
+/*
+ * ONE DOM, TWO AXES. The live version rendered the whole tracker twice, once in
+ * a `sm:hidden` vertical stepper and once in a `hidden sm:block` horizontal one,
+ * so the four labels and the completion arithmetic existed in two places and a
+ * change to either had to be made twice. `.f-prog` turns its own axis at 640px,
+ * so there is one copy of the steps and no way for the two to disagree.
+ */
 function StatusTracker({ orderStatus }: { orderStatus: PreResultsOrderStatus }) {
   const currentStep = STATUS_TO_STEP[orderStatus]
 
   return (
-    <>
-      {/* Mobile: vertical stepper */}
-      <div className="sm:hidden mt-10 flex flex-col">
-        {TRACKER_STEPS.map((label, i) => {
-          const isComplete = i < currentStep
-          const isCurrent = i === currentStep
-          const isLast = i === TRACKER_STEPS.length - 1
-          return (
-            <div key={label} className="flex gap-4">
-              <div className="flex flex-col items-center">
-                <div
-                  className={[
-                    'w-6 h-6 border-4 border-black flex items-center justify-center shrink-0',
-                    isComplete ? 'bg-black' : 'bg-white',
-                  ].join(' ')}
-                >
-                  {isCurrent && <span className="w-2 h-2 bg-black" />}
-                </div>
-                {!isLast && <div className="w-1 bg-black flex-1 min-h-[2rem]" />}
-              </div>
-              <span
-                className={[
-                  'font-mono font-bold tracking-[0.15em] uppercase pb-6 text-[0.75rem]',
-                  !isComplete && !isCurrent ? 'text-gray-400' : 'text-black',
-                ].join(' ')}
-              >
-                {label}
-              </span>
-            </div>
-          )
-        })}
-      </div>
-
-      {/* sm+: horizontal tracker */}
-      <div className="hidden sm:block overflow-x-auto mt-16">
-        <div className="relative pt-8 min-w-[520px]">
-          <div
-            className="absolute bg-black"
-            style={{ top: '2.75rem', left: '3rem', right: '3rem', height: '4px', zIndex: 0 }}
-          />
-          <div className="relative flex justify-between" style={{ zIndex: 1 }}>
-            {TRACKER_STEPS.map((label, i) => {
-              const isComplete = i < currentStep
-              const isCurrent = i === currentStep
-              return (
-                <div key={label} className="flex flex-col items-center gap-6 bg-white px-4">
-                  <span className="font-mono font-bold tracking-[0.15em] uppercase whitespace-nowrap" style={{ fontSize: '0.75rem' }}>
-                    {label}
-                  </span>
-                  <div
-                    className={[
-                      'w-6 h-6 border-4 border-black flex items-center justify-center shrink-0',
-                      isComplete ? 'bg-black' : 'bg-white',
-                    ].join(' ')}
-                  >
-                    {isCurrent && <span className="w-2 h-2 bg-black" />}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-    </>
+    <ol className="f-prog">
+      {TRACKER_STEPS.map((label, i) => {
+        const done = i < currentStep
+        const now = i === currentStep
+        return (
+          <li
+            key={label}
+            className={
+              done ? 'f-prog-s f-prog-done' : now ? 'f-prog-s f-prog-now' : 'f-prog-s'
+            }
+            aria-current={now ? 'step' : undefined}
+          >
+            <span className="f-prog-mark" aria-hidden="true" />
+            <span className="f-prog-lab">{label}</span>
+          </li>
+        )
+      })}
+    </ol>
   )
 }
 
@@ -160,30 +181,16 @@ function EducationCards({ kitType }: { kitType: KitType }) {
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="f-waitgrid">
       {cards.map((card) => (
-        <article key={card.id} className="relative border-2 border-black p-8 flex flex-col gap-6">
-          <span
-            className="absolute font-mono font-bold tracking-[0.15em] uppercase"
-            style={{ top: '2rem', right: '2rem', fontSize: '0.75rem' }}
-          >
-            {card.id}
-          </span>
-          <h3
-            className="font-black font-sans uppercase tracking-tight leading-tight"
-            style={{ fontSize: '1.5rem', maxWidth: '80%' }}
-          >
-            {card.title}
-            {card.subtitle && (
-              <span className="block font-sans font-normal text-sm mt-2 normal-case tracking-normal">
-                {card.subtitle}
-              </span>
-            )}
-          </h3>
-          <div className="mt-auto pt-6 border-t border-black font-serif text-base leading-relaxed">
-            {card.body}
+        <div key={card.id} className="f-tray f-rise">
+          <div className="f-core f-waitcard">
+            <p className="f-blab">{card.id}</p>
+            <h3>{card.title}</h3>
+            {card.subtitle && <p className="f-waitcard-sub">{card.subtitle}</p>}
+            <div className="f-waitcard-b">{card.body}</div>
           </div>
-        </article>
+        </div>
       ))}
     </div>
   )
@@ -201,66 +208,65 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
   const jar = await cookies()
   const showPasswordBanner = !jar.get('ap_pwd_prompt_dismissed')?.value
 
+  const devBar = process.env.NODE_ENV !== 'production' ? <DevFixtureBar currentScenario={dev} /> : null
+
   // ── No orders ─────────────────────────────────────────────────────────────
   if (data.state === 'no-results') {
     return (
-      <div className="results-dashboard">
+      <>
         {showPasswordBanner && <PasswordBanner />}
-        <div className="results-dashboard__inner">
-          {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
-          <div className="results-holding">
-            <p className="data-label text-xs mb-4">Your results</p>
-            <h1 className="font-black font-sans text-3xl uppercase tracking-tight mb-4">
-              No kit purchased yet
-            </h1>
-            <p className="font-serif text-base text-gray-600 max-w-md mx-auto mb-8">
-              Once you've purchased a kit, your results and order status will appear here.
-            </p>
-            {/* Cross-host: /kits is MARKETING on the apex. */}
-            <a
-              href={urlFor('/kits')}
-              className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
-            >
-              Buy a kit →
-            </a>
+        <AppStrip label="Your results" right="No kit yet" />
+        <AppShell
+          chip="Nothing to show"
+          heading="Nothing here yet."
+          intro="This page holds your results and your order status, and nothing else lives here. Once a kit is on its way, this is where it appears."
+        >
+          {devBar}
+          <div className="f-tray f-rise">
+            <div className="f-core">
+              <p className="f-blab">Your results</p>
+              <p className="f-sub">
+                Once you&rsquo;ve purchased a kit, your results and order status will appear here.
+              </p>
+              {/* Cross-host: /kits is MARKETING on the apex. */}
+              <a href={urlFor('/kits')} className="f-btn" style={{ marginTop: 22 }}>
+                Buy a kit <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
           </div>
-        </div>
-      </div>
+        </AppShell>
+      </>
     )
   }
 
   // ── State A0: Sample failed ───────────────────────────────────────────────
   if (data.state === 'sample-failed') {
     return (
-      <div className="bg-white min-h-[calc(100vh-5rem)]">
+      <>
         {showPasswordBanner && <PasswordBanner />}
-        {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
-
-        <div className="max-w-[1600px] mx-auto px-8 lg:px-16 py-12 lg:py-16">
-          <section aria-label="Order Status" className="flex flex-col gap-6 max-w-2xl">
-            <span className="inline-flex border-4 border-black px-4 py-2 font-mono text-xs font-bold tracking-[0.15em] uppercase self-start">
-              STATUS: SAMPLE.ISSUE
-            </span>
-            <h1
-              className="font-black font-sans uppercase tracking-tight leading-none"
-              style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', maxWidth: '20ch' }}
-            >
-              We couldn&rsquo;t process your sample.
-            </h1>
-            <p className="font-serif text-base leading-relaxed" style={{ color: 'var(--color-gray-600, #4b5563)' }}>
-              Sometimes a finger-prick sample doesn&rsquo;t give the lab enough to work with. It happens,
-              and it isn&rsquo;t anything you did wrong. We&rsquo;re arranging a replacement kit so you can
-              try again at no extra cost, and our team will be in touch by email with the details.
-            </p>
-            <a
-              href="mailto:support@andro-prime.com"
-              className="inline-block self-start bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors mt-2"
-            >
-              Contact support &nbsp;→
-            </a>
-          </section>
-        </div>
-      </div>
+        <AppStrip label="Your results" right="Sample issue" />
+        <AppShell
+          chip="Sample issue"
+          heading="We couldn&rsquo;t process your sample."
+          intro="A recollection is being arranged. Your original order still covers it, and there is nothing to pay."
+        >
+          {devBar}
+          <div className="f-tray f-rise">
+            <div className="f-core">
+              <span className="f-stat f-stat-w">Status: sample issue</span>
+              <p className="f-sub" style={{ marginTop: 18 }}>
+                Sometimes a finger-prick sample doesn&rsquo;t give the lab enough to work with. It
+                happens, and it isn&rsquo;t anything you did wrong. We&rsquo;re arranging a
+                replacement kit so you can try again at no extra cost, and our team will be in touch
+                by email with the details.
+              </p>
+              <a href="mailto:support@andro-prime.com" className="f-btn" style={{ marginTop: 22 }}>
+                Contact support <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+        </AppShell>
+      </>
     )
   }
 
@@ -268,47 +274,31 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
   if (data.state === 'pre-results') {
     const { orderStatus, kitType } = data
     const copy = STATUS_COPY[orderStatus]
-    const statusBadgeLabel = `STATUS: ${orderStatus.toUpperCase().replace(/-/g, '.')}`
 
     return (
-      <div className="bg-white min-h-[calc(100vh-5rem)]">
+      <>
         {showPasswordBanner && <PasswordBanner />}
-        {process.env.NODE_ENV !== 'production' && <DevFixtureBar currentScenario={dev} />}
+        <AppStrip label="Your results" right={TRACKER_STEPS[STATUS_TO_STEP[orderStatus]]} />
+        <AppShell
+          chip={`Step ${STATUS_TO_STEP[orderStatus] + 1} of ${TRACKER_STEPS.length}`}
+          heading={copy.heading}
+          intro={copy.subtext}
+        >
+          {devBar}
 
-        <div className="max-w-[1600px] mx-auto px-8 lg:px-16 py-12 lg:py-16 flex flex-col gap-24">
-
-          {/* Order status section */}
-          <section aria-label="Order Status">
-            <div className="flex flex-col gap-4">
-              <span className="inline-flex border-4 border-black px-4 py-2 font-mono text-xs font-bold tracking-[0.15em] uppercase self-start">
-                {statusBadgeLabel}
-              </span>
-              <h1
-                className="font-black font-sans uppercase tracking-tight leading-none"
-                style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', maxWidth: '20ch' }}
-              >
-                {copy.heading}
-              </h1>
-              <p className="font-serif text-base max-w-lg" style={{ color: 'var(--color-gray-600, #4b5563)' }}>
-                {copy.subtext}
-              </p>
+          <div className="f-tray f-rise">
+            <div className="f-core">
+              <p className="f-blab">Where your kit is</p>
+              <StatusTracker orderStatus={orderStatus} />
             </div>
-            <StatusTracker orderStatus={orderStatus} />
-          </section>
+          </div>
 
-          {/* Educational content section */}
-          <section aria-label="Educational Materials">
-            <div className="flex justify-between items-end border-b-4 border-black pb-4 mb-12">
-              <h2 className="font-black font-sans text-4xl uppercase tracking-tight">WHILE YOU WAIT</h2>
-              <span className="font-mono text-xs font-bold tracking-[0.15em] uppercase hidden sm:block">
-                WHAT WE'RE TESTING
-              </span>
-            </div>
-            <EducationCards kitType={kitType} />
-          </section>
-
-        </div>
-      </div>
+          <p className="f-blab" style={{ marginTop: 34 }}>
+            While you wait &middot; what we&rsquo;re testing
+          </p>
+          <EducationCards kitType={kitType} />
+        </AppShell>
+      </>
     )
   }
 
@@ -330,25 +320,22 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
       kits={data.kits}
       showKitScopeNote={isKitScopeNoteEnabled()}
       banner={showPasswordBanner ? <PasswordBanner /> : null}
-      sidebarTop={process.env.NODE_ENV !== 'production' ? <DevFixtureBar currentScenario={dev} /> : null}
+      sidebarTop={devBar}
       belowTabs={
         showHandoffLink ? (
-          <div className="bg-gray-50 border-t-4 border-black p-8 lg:px-12 xl:px-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div className="max-w-2xl">
-              <div className="font-mono text-xs font-bold tracking-[0.15em] uppercase mb-2">
-                Taking this to your GP?
+          <div className="f-tray" style={{ margin: '0 0 20px' }}>
+            <div className="f-core f-subfoot" style={{ marginTop: 0, paddingTop: 0, borderTop: 0 }}>
+              <div style={{ maxWidth: '44ch' }}>
+                <p className="f-blab">Taking this to your GP?</p>
+                <p className="f-sub">
+                  Prepare a one-page summary of your results, with the reference ranges and
+                  questions to ask, that you can print or save as a PDF.
+                </p>
               </div>
-              <p className="font-serif text-sm text-gray-600">
-                Prepare a one-page summary of your results, with the reference
-                ranges and questions to ask, that you can print or save as a PDF.
-              </p>
+              <a href="/results-dashboard/handoff" className="f-btn">
+                Prepare GP summary <span aria-hidden="true">&rarr;</span>
+              </a>
             </div>
-            <a
-              href="/results-dashboard/handoff"
-              className="shrink-0 inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors"
-            >
-              Prepare GP summary
-            </a>
           </div>
         ) : null
       }

@@ -13,6 +13,23 @@ import type { AddressData } from '@/lib/account/getAddress'
 //
 // COPY STATUS: plain logistics copy, no health claim, no em dashes (AI-tell
 // rule). Pending the compliance read that gates flipping the flag on.
+//
+// ─────────────────────────────────────────────────────────────────────────
+// RESTYLED IN DIRECTION F ON 2026-09-11 (batch 3). Not one word changed, and no
+// branch changed: the same three required fields, the same first-failure
+// behaviour, the same two distinct error messages.
+//
+// IT COMPOSES `.f-formrow` AND `.f-inp` RATHER THAN GROWING ITS OWN FIELD. Those
+// are the primitives the auth rebuild added on 2026-09-08 and they already carry
+// the label placement, the focus ring and the full-width input. A second field
+// component here is how two forms on one site end up disagreeing about where a
+// label sits, which is exactly the drift `FPage` was extracted to end.
+//
+// ⚠ THE FOUR SAVE STATES ARE THE FRAME'S AND WERE ALREADY THE CODE'S: idle,
+// saving, saved, and two different errors. Frame K's note is that the validation
+// error names the three required fields, "because 'something went wrong' on an
+// address form is the version that gets abandoned". That was already true here
+// and is preserved rather than discovered.
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
 
@@ -50,43 +67,38 @@ export function AddressSection({ initial }: { initial: AddressData }) {
   }
 
   return (
-    <div className="account__section">
-      <h2 className="account__section-heading">Delivery address</h2>
-      <p className="font-serif text-sm leading-relaxed text-gray-800 mb-6">
-        This is where we send your test kits. Keep it up to date so any kit still
-        to be dispatched reaches you.
-      </p>
+    <div className="f-tray f-rise">
+      <div className="f-core">
+        <p className="f-blab">Delivery address</p>
+        <p className="f-sub">
+          This is where we send your test kits. Keep it up to date so any kit still
+          to be dispatched reaches you.
+        </p>
 
-      <div className="grid gap-4 sm:grid-cols-2 max-w-2xl">
-        <Field label="First name" value={form.firstName} onChange={(v) => update('firstName', v)} autoComplete="given-name" />
-        <Field label="Last name" value={form.lastName} onChange={(v) => update('lastName', v)} autoComplete="family-name" />
-        <Field label="Address line 1" value={form.line1} onChange={(v) => update('line1', v)} required autoComplete="address-line1" className="sm:col-span-2" />
-        <Field label="Address line 2 (optional)" value={form.line2} onChange={(v) => update('line2', v)} autoComplete="address-line2" className="sm:col-span-2" />
-        <Field label="Town or city" value={form.city} onChange={(v) => update('city', v)} required autoComplete="address-level2" />
-        <Field label="County (optional)" value={form.county} onChange={(v) => update('county', v)} autoComplete="address-level1" />
-        <Field label="Postcode" value={form.postalCode} onChange={(v) => update('postalCode', v)} required autoComplete="postal-code" />
-        <Field label="Country" value={form.country === 'GB' ? 'United Kingdom' : form.country} onChange={() => {}} disabled />
-      </div>
+        <div className="f-addrgrid">
+          <Field label="First name" value={form.firstName} onChange={(v) => update('firstName', v)} autoComplete="given-name" />
+          <Field label="Last name" value={form.lastName} onChange={(v) => update('lastName', v)} autoComplete="family-name" />
+          <Field label="Address line 1" value={form.line1} onChange={(v) => update('line1', v)} required autoComplete="address-line1" wide />
+          <Field label="Address line 2 (optional)" value={form.line2} onChange={(v) => update('line2', v)} autoComplete="address-line2" wide />
+          <Field label="Town or city" value={form.city} onChange={(v) => update('city', v)} required autoComplete="address-level2" />
+          <Field label="County (optional)" value={form.county} onChange={(v) => update('county', v)} autoComplete="address-level1" />
+          <Field label="Postcode" value={form.postalCode} onChange={(v) => update('postalCode', v)} required autoComplete="postal-code" />
+          <Field label="Country" value={form.country === 'GB' ? 'United Kingdom' : form.country} onChange={() => {}} disabled />
+        </div>
 
-      <div className="mt-6 flex items-center gap-4">
-        <button
-          type="button"
-          onClick={save}
-          disabled={state === 'saving'}
-          className="inline-block bg-black text-white border-4 border-black font-sans font-black text-sm uppercase tracking-widest px-6 py-3 hover:bg-white hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {state === 'saving' ? 'Saving' : 'Save address'}
-        </button>
-        {state === 'saved' && (
-          <span className="font-serif text-sm text-gray-800">Address saved.</span>
-        )}
-        {state === 'error' && (
-          <span className="font-serif text-sm text-black font-bold">
-            {missing.length > 0
-              ? 'Please fill in your address line 1, town or city, and postcode.'
-              : 'Something went wrong. Please try again or email support@andro-prime.com.'}
-          </span>
-        )}
+        <div className="f-saverow">
+          <button type="button" onClick={save} disabled={state === 'saving'} className="f-btn">
+            {state === 'saving' ? 'Saving' : 'Save address'}
+          </button>
+          {state === 'saved' && <span className="f-fine">Address saved.</span>}
+          {state === 'error' && (
+            <p className="f-err" role="alert">
+              {missing.length > 0
+                ? 'Please fill in your address line 1, town or city, and postcode.'
+                : 'Something went wrong. Please try again or email support@andro-prime.com.'}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -99,7 +111,7 @@ function Field({
   required = false,
   disabled = false,
   autoComplete,
-  className = '',
+  wide = false,
 }: {
   label: string
   value: string
@@ -107,11 +119,11 @@ function Field({
   required?: boolean
   disabled?: boolean
   autoComplete?: string
-  className?: string
+  wide?: boolean
 }) {
   return (
-    <label className={`flex flex-col gap-1 ${className}`}>
-      <span className="data-label text-xs text-gray-500">{label}</span>
+    <label className={wide ? 'f-formrow f-addrwide' : 'f-formrow'}>
+      <span className="f-blab">{label}</span>
       <input
         type="text"
         value={value}
@@ -119,7 +131,7 @@ function Field({
         required={required}
         disabled={disabled}
         autoComplete={autoComplete}
-        className="border-2 border-black bg-white px-3 py-2 font-serif text-black focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-100 disabled:text-gray-500"
+        className="f-inp"
       />
     </label>
   )

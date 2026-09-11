@@ -102,11 +102,34 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `/results-dashboard/handoff` | `(app)/results-dashboard/handoff/page.tsx` (GP handoff, LIVE 2026-07-19) | yes |
 | `/account` | `(app)/account/page.tsx` | yes |
 | `/subscriptions` | `(app)/subscriptions/page.tsx` | yes |
-| `/membership` | `(app)/membership/page.tsx`: ONE route, THREE top-level states (member / not a member inside the 30-day offer window / not a member outside it). Behind `MEMBERSHIP_ENABLED`, `notFound()` when off. | yes |
+| `/account/membership` | `(app)/account/membership/page.tsx`: ONE route, THREE top-level states (member / not a member inside the 30-day offer window / not a member outside it). Behind `MEMBERSHIP_ENABLED`, `notFound()` when off. **MOVED here from `/membership` on 2026-09-08**; the bare `/membership` is now the PUBLIC marketing explainer at `(marketing)/membership/page.tsx`, and Next.js cannot serve two pages at one path. Its auth gate comes from middleware's `/account` prefix and its host routing from `APP_ROUTE_PREFIXES`' `/account`, both by the startsWith arm. `/membership` must NOT be re-added to either list: that would drag the public page onto the app host. **Frames: `membership-F.html` H, H2, I, I2, J, drawn under the OLD path** (this row said `/membership` until 2026-09-11, and a lookup by path therefore reported the screen as frameless). | yes |
 | `/founding-member-status` | `(app)/founding-member-status/page.tsx`: **RETIRED 2026-07-22**, now just `redirect('/account')` (FM programme closed) | yes |
 | `/supplement-waitlist-status` | `(app)/supplement-waitlist-status/page.tsx` | yes |
 
 \*Middleware `matcher` now covers all five authed routes: `/results-dashboard`, `/subscriptions`, `/account`, `/founding-member-status`, `/supplement-waitlist-status`. (The page also self-guards via `getCurrentUser()` → `return null`, so gating is defence-in-depth + a consistent login redirect rather than a data-leak fix.)
+
+**The authenticated app's Direction F layer (added 2026-09-11).** These routes are
+Direction F, and they are NOT marketing-shaped, so they do not compose `FPage`:
+
+- `app/(app)/layout.tsx` supplies `.f-page`, the TYPE RAMP. Without it an F surface
+  renders in the V2.0 serif at about 8% under the size it was drawn at and nothing
+  errors. `app/auth/layout.tsx` is the same one-line root for the same reason.
+- `components/app/AppShell.tsx` is the page assembly: `AppStrip` (the ink status
+  strip that names the screen, and the app's one inverted block, so an app page
+  never also wears `.f-invert`) and `AppShell` (the sticky explanatory sidebar and
+  the main column of trays).
+- `styles/components/f-app.css` is the family layer, `@import`ed in
+  `styles/base/globals.css` beside `f-blog.css` and `f-legal-doc.css`.
+- `verify-f-scaffold.js` scopes itself to `app/(marketing)`, `app/lp` and
+  `components/marketing`, and does NOT cover this tree, deliberately: `FPage` is a
+  hero plus counted sections, which an app screen does not have.
+
+🔴 **`components/app/AppShell.tsx` and `components/app-shell/AppShell.tsx` are
+different things and the names hide it.** The second is the `ap-` phone shell that
+`/demo` renders, typed against the demo's own data model. Keith ruled on
+2026-09-11 that the authenticated routes are rebuilt in Direction F and that
+adopting the phone shell for the real app is a separate, product-shaped decision.
+The two prefixes never mix on one element and neither module imports the other.
 
 ### Auth: `app/auth/`
 `/auth/login`, `/auth/signup`, `/auth/reset`, `/auth/link`, `/auth/consent` (pages); `/auth/callback`, `/auth/logout`, `/auth/post-checkout` (route handlers).

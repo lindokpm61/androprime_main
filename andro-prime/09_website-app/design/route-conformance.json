@@ -12,7 +12,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 72
+        "classes": 72,
+        "rendersNothing": false
       }
     },
     {
@@ -25,7 +26,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 42
+        "classes": 42,
+        "rendersNothing": false
       }
     },
     {
@@ -38,7 +40,8 @@
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 25,
+        "rendersNothing": false
       }
     },
     {
@@ -51,7 +54,8 @@
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 14,
+        "rendersNothing": false
       }
     },
     {
@@ -64,7 +68,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": false
       }
     },
     {
@@ -77,7 +82,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 19
+        "classes": 19,
+        "rendersNothing": false
       }
     },
     {
@@ -90,7 +96,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": false
       }
     },
     {
@@ -103,7 +110,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": false
       }
     },
     {
@@ -116,7 +124,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": false
       }
     },
     {
@@ -129,7 +138,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": false
       }
     },
     {
@@ -142,7 +152,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 13
+        "classes": 13,
+        "rendersNothing": false
       }
     },
     {
@@ -155,7 +166,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 13
+        "classes": 13,
+        "rendersNothing": false
       }
     },
     {
@@ -168,7 +180,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": false
       }
     },
     {
@@ -181,7 +194,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 12
+        "classes": 12,
+        "rendersNothing": false
       }
     },
     {
@@ -194,7 +208,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 37
+        "classes": 37,
+        "rendersNothing": false
       }
     },
     {
@@ -207,7 +222,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 42
+        "classes": 42,
+        "rendersNothing": false
       }
     },
     {
@@ -220,7 +236,8 @@
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": true
       }
     },
     {
@@ -233,7 +250,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 52
+        "classes": 52,
+        "rendersNothing": false
       }
     },
     {
@@ -246,7 +264,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 68
+        "classes": 68,
+        "rendersNothing": false
       }
     },
     {
@@ -259,7 +278,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 71
+        "classes": 71,
+        "rendersNothing": false
       }
     },
     {
@@ -272,7 +292,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 86
+        "classes": 86,
+        "rendersNothing": false
       }
     },
     {
@@ -285,7 +306,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 75
+        "classes": 75,
+        "rendersNothing": false
       }
     },
     {
@@ -298,7 +320,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 30
+        "classes": 30,
+        "rendersNothing": false
       }
     },
     {
@@ -311,7 +334,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 30
+        "classes": 30,
+        "rendersNothing": false
       }
     },
     {
@@ -324,7 +348,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 52
+        "classes": 52,
+        "rendersNothing": false
       }
     },
     {
@@ -337,7 +362,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 62
+        "classes": 62,
+        "rendersNothing": false
       }
     },
     {
@@ -350,7 +376,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 52
+        "classes": 52,
+        "rendersNothing": false
       }
     },
     {
@@ -363,7 +390,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 42
+        "classes": 42,
+        "rendersNothing": false
       }
     },
     {
@@ -376,7 +404,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": false
       }
     },
     {
@@ -389,7 +418,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 24
+        "classes": 24,
+        "rendersNothing": false
       }
     },
     {
@@ -402,7 +432,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 5
+        "classes": 5,
+        "rendersNothing": false
       }
     },
     {
@@ -415,7 +446,8 @@
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 19,
+        "rendersNothing": false
       }
     },
     {
@@ -428,7 +460,8 @@
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 14,
+        "rendersNothing": false
       }
     },
     {
@@ -441,7 +474,8 @@
       "note": "",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 0,
+        "rendersNothing": false
       }
     },
     {
@@ -454,7 +488,8 @@
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 15,
+        "rendersNothing": false
       }
     },
     {
@@ -467,7 +502,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 28
+        "classes": 28,
+        "rendersNothing": false
       }
     },
     {
@@ -480,7 +516,8 @@
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
         "scaffold": false,
-        "classes": 0
+        "classes": 8,
+        "rendersNothing": false
       }
     },
     {
@@ -493,7 +530,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 23
+        "classes": 23,
+        "rendersNothing": false
       }
     },
     {
@@ -506,7 +544,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 37
+        "classes": 37,
+        "rendersNothing": false
       }
     },
     {
@@ -519,7 +558,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 35
+        "classes": 35,
+        "rendersNothing": false
       }
     },
     {
@@ -532,7 +572,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 4
+        "classes": 4,
+        "rendersNothing": false
       }
     },
     {
@@ -545,7 +586,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 24
+        "classes": 24,
+        "rendersNothing": false
       }
     },
     {
@@ -558,7 +600,8 @@
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 30
+        "classes": 30,
+        "rendersNothing": false
       }
     }
   ],
@@ -571,6 +614,21 @@
     "/demo": "runs the authenticated app shell (`ap-*`), not the marketing layer, so Direction F is the wrong question"
   },
   "unused": [
+    "f-addrgrid",
+    "f-addrwide",
+    "f-appdot",
+    "f-appfoot",
+    "f-appfoot-in",
+    "f-appfoot-note",
+    "f-appmain",
+    "f-appshell",
+    "f-appside",
+    "f-appside-foot",
+    "f-appside-p",
+    "f-appstrip",
+    "f-appstrip-in",
+    "f-appstrip-r",
+    "f-appwrap",
     "f-banner",
     "f-banner-err",
     "f-banner-k",
@@ -586,13 +644,36 @@
     "f-cookielink",
     "f-cookiewrap",
     "f-core-dark",
+    "f-counts",
+    "f-counts-k",
+    "f-counts-n",
     "f-drawer",
+    "f-dsplit",
+    "f-dstate",
     "f-err",
     "f-foot",
     "f-footbar",
     "f-footer",
     "f-footlink",
+    "f-handoff",
+    "f-handoff-ctl",
+    "f-handoff-fine",
+    "f-handoff-head",
+    "f-handoff-id",
+    "f-handoff-in",
+    "f-handoff-note",
+    "f-handoff-q",
+    "f-handoff-sec",
+    "f-handoff-t",
+    "f-histhead",
+    "f-histkit",
+    "f-histlab",
+    "f-histref",
+    "f-histrow",
+    "f-histwait",
+    "f-histwhen",
     "f-in",
+    "f-inclu",
     "f-kitaside",
     "f-kitfoot",
     "f-kitgrid",
@@ -612,10 +693,24 @@
     "f-oneoff",
     "f-oref",
     "f-out",
+    "f-pfield",
+    "f-pfield-k",
+    "f-pfield-v",
     "f-pinput",
+    "f-prog",
+    "f-prog-done",
+    "f-prog-lab",
+    "f-prog-mark",
+    "f-prog-now",
+    "f-prog-s",
+    "f-qlink",
+    "f-qlink-n",
+    "f-read",
+    "f-read-s",
     "f-rep",
     "f-rescap",
     "f-row-top",
+    "f-saverow",
     "f-scrolled",
     "f-sel",
     "f-shot-band",
@@ -623,10 +718,21 @@
     "f-st",
     "f-st-hot",
     "f-stat",
+    "f-stat-c",
+    "f-stat-n",
+    "f-stat-o",
+    "f-stat-w",
     "f-sub2",
+    "f-subfoot",
+    "f-subprice",
+    "f-subtop",
     "f-total",
     "f-tray-dark",
     "f-val",
+    "f-waitcard",
+    "f-waitcard-b",
+    "f-waitcard-sub",
+    "f-waitgrid",
     "f-wtplab",
     "f-wtprow",
     "fb-alert",
@@ -678,6 +784,21 @@
     "fb-wrap"
   ],
   "stateOnly": [
+    "f-addrgrid",
+    "f-addrwide",
+    "f-appdot",
+    "f-appfoot",
+    "f-appfoot-in",
+    "f-appfoot-note",
+    "f-appmain",
+    "f-appshell",
+    "f-appside",
+    "f-appside-foot",
+    "f-appside-p",
+    "f-appstrip",
+    "f-appstrip-in",
+    "f-appstrip-r",
+    "f-appwrap",
     "f-banner",
     "f-banner-err",
     "f-banner-k",
@@ -690,12 +811,35 @@
     "f-cookieacts",
     "f-cookielink",
     "f-cookiewrap",
+    "f-counts",
+    "f-counts-k",
+    "f-counts-n",
     "f-drawer",
+    "f-dsplit",
+    "f-dstate",
     "f-err",
     "f-foot",
     "f-footbar",
     "f-footer",
     "f-footlink",
+    "f-handoff",
+    "f-handoff-ctl",
+    "f-handoff-fine",
+    "f-handoff-head",
+    "f-handoff-id",
+    "f-handoff-in",
+    "f-handoff-note",
+    "f-handoff-q",
+    "f-handoff-sec",
+    "f-handoff-t",
+    "f-histhead",
+    "f-histkit",
+    "f-histlab",
+    "f-histref",
+    "f-histrow",
+    "f-histwait",
+    "f-histwhen",
+    "f-inclu",
     "f-legal",
     "f-logo",
     "f-nav",
@@ -707,11 +851,36 @@
     "f-navshell",
     "f-navstat",
     "f-oref",
+    "f-pfield",
+    "f-pfield-k",
+    "f-pfield-v",
     "f-pinput",
+    "f-prog",
+    "f-prog-done",
+    "f-prog-lab",
+    "f-prog-mark",
+    "f-prog-now",
+    "f-prog-s",
+    "f-qlink",
+    "f-qlink-n",
+    "f-read",
+    "f-read-s",
     "f-rescap",
+    "f-saverow",
     "f-scrolled",
     "f-sel",
     "f-stat",
+    "f-stat-c",
+    "f-stat-n",
+    "f-stat-o",
+    "f-stat-w",
+    "f-subfoot",
+    "f-subprice",
+    "f-subtop",
+    "f-waitcard",
+    "f-waitcard-b",
+    "f-waitcard-sub",
+    "f-waitgrid",
     "f-wtplab",
     "f-wtprow",
     "fb-alert",

@@ -1,0 +1,765 @@
+/* ============================================================
+   DIRECTION F: THE AUTHENTICATED APP LAYER, `.f-app*`
+
+   Added 2026-09-11 with the batch-3 rebuild of the seven gated routes
+   (`/account`, `/account/membership`, `/subscriptions`,
+   `/supplement-waitlist-status`, `/results-dashboard` and its handoff).
+
+   WHY A SEPARATE FILE AND NOT MORE `f-primitives.css`. The same reason
+   `f-blog.css` and `f-legal-doc.css` are separate: this is a page FAMILY with a
+   shell of its own, not a component the marketing pages also wear. Every class
+   here exists because the signed-in app has a grammar the marketing site does
+   not: a status strip that names the screen, a fixed explanatory sidebar, and
+   a main column of trays, and none of it appears on a single marketing route.
+   Splitting it keeps `f-primitives.css` the shared layer rather than the union
+   of everything.
+
+   🔴 THIS IS NOT A SECOND DESIGN SYSTEM. It reuses `.f-tray`, `.f-core`,
+   `.f-blab`, `.f-sub`, `.f-fine`, `.f-btn`, `.f-chip` and `.f-tlink` as they
+   are; what is defined below is only the shell those sit in, plus the two
+   things the marketing site has no equivalent of at all (a process-status badge
+   and a history row). If a rule here duplicates one in `f-primitives.css`,
+   that is a defect, not a local override.
+
+   ⚠ THE SEPARATE SYSTEM IS `ap-`, IN `styles/pages/app-shell.css`, AND IT IS A
+   DIFFERENT THING. That is the phone-shaped shell `/demo` renders. Keith ruled
+   on 2026-09-11 that the authenticated routes are rebuilt in Direction F and
+   that adopting `ap-` for them is a separate, product-shaped decision. Do not
+   mix the two prefixes on one element.
+
+   LAYOUT SOURCE. `design/mockups/journey/account-F.html` (Frames K, K2, L, L2)
+   and `results-F.html` (Frame C). Those files are PICTURES, NOT A SPEC (Keith,
+   2026-09-08): their arrangement and content are authoritative, their CSS
+   reaches nothing and was not consulted.
+
+   MODIFIER SHAPE. Every modifier here is always worn WITH its base, so each one
+   compounds (`.f-stat.f-stat-o`) rather than repeating itself. That is the
+   first of the two shapes `verify-modifier-specificity.js` documents, and it is
+   the right one only because no modifier below ever stands alone.
+
+   Zero em dashes.
+   ============================================================ */
+
+/* ---------- the status strip -------------------------------------------
+
+   The one piece of chrome that names the screen. It is the app's equivalent of
+   a page title, and it carries a fact on the right that the page would
+   otherwise have to repeat in its own body (the signed-in email, the count of
+   active subscriptions). Ink ground, because it is chrome and not content, and
+   because the direction spends one inverted block per page: on these routes the
+   strip is that block, which is why no app page carries `.f-invert` as well. */
+
+.f-appstrip {
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: 1px solid var(--ink);
+}
+.f-appstrip-in {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+/* Pushed to the right rather than the row being `space-between`, so the dot and
+   the label stay together as one unit when the right-hand fact is absent. */
+.f-appstrip-r { margin-left: auto; color: rgba(255, 255, 255, 0.62); }
+
+/* The live dot. `animate-pulse` is deliberately not used: the motion budget on
+   these pages is spent on the section reveal, and a pulsing dot beside a
+   customer's own health data reads as an alert rather than as a status. It is a
+   solid mark that says the screen is current. */
+.f-appdot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--color-status-optimal);
+  flex-shrink: 0;
+}
+
+/* ---------- the shell --------------------------------------------------
+
+   A fixed explanatory sidebar and a main column. The sidebar is not navigation:
+   it carries the one sentence that says what the screen is for, which is the
+   thing every one of these routes was missing. It sticks, because the main
+   column is a long scroll of trays and the explanation is what the reader needs
+   when they are three trays down and have lost the frame.
+
+   TURNS AT 980px, matching `.f-herogrid` rather than Tailwind's `lg`. Below it
+   the sidebar becomes a normal block above the main column, so the sentence is
+   read first on a phone rather than being pushed under the content. */
+
+.f-appwrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+.f-appshell {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 34px;
+  padding: 34px 0 60px;
+}
+@media (min-width: 980px) {
+  .f-appshell {
+    grid-template-columns: 0.85fr 1.6fr;
+    gap: 54px;
+    padding: 46px 0 84px;
+  }
+}
+
+@media (min-width: 980px) {
+  .f-appside {
+    position: sticky;
+    top: 118px; /* the floating nav's clearance plus the strip */
+    align-self: start;
+  }
+}
+.f-appside h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  margin: 18px 0 0;
+}
+.f-appside-p {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  margin-top: 16px;
+  max-width: 42ch;
+}
+/* The mark at the foot of the sidebar, desktop only: on a phone the sidebar is
+   a heading block above the content and a logo under it would separate the
+   explanation from the thing it explains. */
+.f-appside-foot { display: none; }
+@media (min-width: 980px) {
+  .f-appside-foot {
+    display: block;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hair);
+  }
+}
+
+.f-appmain { min-width: 0; }
+
+/* ---------- process status badge ---------------------------------------
+
+   🔴 THIS IS A PROCESS STATE, NEVER A HEALTH VERDICT. An order moving through
+   fulfilment and a subscription moving through billing. A results-ready row is
+   green because the result ARRIVED, not because it is good news. The results
+   engine's own verdict vocabulary and its `--color-status-*` usage on a marker
+   are a different thing entirely and must not be routed through this class.
+
+   COLOUR IS NEVER THE ONLY CARRIER. Every badge states its status as a word.
+   The base is the uncoloured one, which is correct for the six fulfilment steps
+   that are neither good nor bad news, so a row only takes colour when something
+   actually changed. */
+
+.f-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--hair);
+  background: var(--core);
+  color: var(--ink-2);
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  /* NOT `white-space: nowrap`. "Sample issue: recollection" is the longest of
+     the nine order labels and it is live approved copy, so it cannot be
+     shortened to suit a column. With nowrap it forced the status column wide
+     enough to push both "2 September 2026" and "Awaiting results" onto two lines
+     each, which read as a broken table rather than as a long label. Measured at
+     1440 in the browser, not reasoned about. It wraps. */
+  text-wrap: balance;
+}
+.f-stat::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+/* o: it changed something and the change is good (results arrived, subscription
+   paying). w: it needs the customer, and the customer can fix it. c: it ended.
+   n is the base and is declared so a caller can be explicit rather than relying
+   on the absence of a modifier. */
+.f-stat.f-stat-n { color: var(--ink-2); }
+.f-stat.f-stat-o { color: var(--color-status-optimal); border-color: color-mix(in srgb, var(--color-status-optimal) 34%, transparent); }
+.f-stat.f-stat-w { color: var(--color-status-warning); border-color: color-mix(in srgb, var(--color-status-warning) 34%, transparent); }
+.f-stat.f-stat-c { color: var(--color-status-critical); border-color: color-mix(in srgb, var(--color-status-critical) 34%, transparent); }
+
+/* ---------- the history table ------------------------------------------
+
+   A four-column table on a desktop and a stack of labelled pairs on a phone,
+   because a table that scrolls sideways in a 390 viewport is a table nobody
+   reads. The phone labels live in the markup and are hidden once the header row
+   is doing that job, which is the only way to keep one DOM for both. */
+
+.f-histhead {
+  display: none;
+}
+@media (min-width: 760px) {
+  .f-histhead {
+    display: grid;
+    /* The status column is the widest because the longest label in it runs to
+       two words more than any other cell on the row. The date column is sized to
+       hold "14 September 2026" on one line, which is the longest date this
+       locale format produces. */
+    grid-template-columns: 1.9fr 1.55fr 1.2fr 1.2fr;
+    gap: 16px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid var(--hair);
+    font-family: var(--font-mono); font-size-adjust: none;
+    font-size: 10.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+}
+
+.f-histrow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hair);
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+}
+.f-histrow:last-child { border-bottom: 0; }
+@media (min-width: 760px) {
+  .f-histrow {
+    grid-template-columns: 1.9fr 1.55fr 1.2fr 1.2fr;
+    gap: 16px;
+    align-items: center;
+    padding: 18px 0;
+  }
+}
+.f-histwhen { white-space: nowrap; }
+
+.f-histkit { font-weight: 500; color: var(--ink); }
+/* The order reference. Mono and tabular, the same treatment `.f-oref` gives a
+   receipt, but smaller and secondary: here it identifies a row rather than
+   being the thing the page is about. */
+.f-histref {
+  display: block;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+.f-histwhen { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.f-histwait { color: var(--ink-3); }
+
+/* The phone-only key. Hidden at the breakpoint where the header row appears. */
+.f-histlab {
+  display: inline-block;
+  min-width: 66px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+@media (min-width: 760px) { .f-histlab { display: none; } }
+
+/* ---------- profile field, and the quick link --------------------------- */
+
+.f-pfield {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.f-pfield:last-child { border-bottom: 0; }
+.f-pfield-k {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.f-pfield-v {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--ink);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.f-qlink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--hair);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.3s var(--ease);
+}
+.f-qlink:last-child { border-bottom: 0; }
+.f-qlink:hover { color: var(--ink-2); }
+.f-qlink-n {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+}
+
+/* ---------- the two flag-dark account sections -------------------------- */
+
+/* The address form. Two columns above 620px, with the two street lines spanning
+   both, because an address line is the one field where a short box invites a
+   truncated entry. `.f-formrow` and `.f-inp` do the label and the control; this
+   only arranges them. */
+.f-addrgrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 18px;
+  margin-top: 22px;
+  max-width: 620px;
+}
+@media (min-width: 620px) { .f-addrgrid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 620px) { .f-addrwide { grid-column: 1 / -1; } }
+
+.f-saverow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+}
+/* The validation message takes its own line rather than sitting beside the
+   button: it names three fields and would otherwise wrap into a narrow column
+   next to a control the reader has just pressed. */
+.f-saverow .f-err { flex-basis: 100%; margin-top: 0; }
+
+/* The data-use statement. Three paragraphs that are read rather than scanned, so
+   they keep a measure and a rhythm of their own instead of sitting at the tray's
+   default. */
+.f-dstate { margin-top: 6px; max-width: 62ch; }
+.f-dstate p {
+  font-size: 14.5px;
+  line-height: 1.66;
+  color: var(--ink-2);
+  margin: 0 0 12px;
+}
+.f-dstate p:last-child { margin-bottom: 0; }
+
+/* Each control below the statement is separated by a rule, because a download
+   and an erasure request are different acts with different consequences and
+   should not read as two buttons in a row. */
+.f-dsplit {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hair);
+}
+
+/* ---------- the subscription card's head and foot ----------------------- */
+
+.f-subtop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+.f-subtop h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+.f-subprice {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-top: 6px;
+}
+.f-subfoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hair);
+}
+/* The portal button's failure message is a sibling of the button inside this
+   row, so without a basis it would sit beside the button as a third column and
+   squeeze both. It takes its own line. `margin-top` is zeroed because the row's
+   `gap` is already supplying the space. */
+.f-subfoot .f-err { flex-basis: 100%; margin-top: 0; }
+
+/* ---------- a readout inside the app -----------------------------------
+
+   A large single value the screen is about: a retest date, a state such as "Due
+   now", a logged count. Mono and tabular, so a date and a word occupy the same
+   optical weight and a column of them does not jitter.
+
+   🔴 IT IS NOT `.f-mk-v` AND IT IS NOT `.f-oref`. `.f-mk-v` is the results
+   readout's MARKER VALUE and carries the verdict vocabulary's meaning; putting a
+   membership date in it would put a clinical class on a billing fact. `.f-oref`
+   is the receipt's order reference and was itself separated from `.f-mk-v` on
+   2026-09-11 for exactly this reason. Three shapes that look alike and mean
+   different things stay three classes. */
+
+.f-read {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* 🔴 RE-ASSERTED AT (0,2,0), AND THIS FILE WALKED INTO THE DEFECT THE PRIMITIVE
+   LAYER ALREADY DOCUMENTS AT LINE 354.
+   `.f-page p` is (0,1,1) and a bare `.f-read` is (0,1,0), so a mono readout that
+   happens to be a `<p>` silently loses its face to the body sans. Measured in
+   the browser, not reasoned about: `.f-read` computed "Source Sans 3" while
+   `.f-blab` two elements above it computed "JetBrains Mono", because `.f-blab`
+   has exactly this re-assertion and `.f-read` did not. Spans were fine, which is
+   why it did not look systematic, which is precisely what the 2026-08-31 note
+   says about the 37 labels that lost their face the same way.
+   A specificity collision is a contest PER PROPERTY, so both properties are
+   re-asserted rather than just the family. `.f-page p` sets no font-size, so the
+   size does not need repeating here; if it ever does, it will need adding. */
+.f-page .f-read,
+.f-page .f-subprice { font-family: var(--font-mono); font-size-adjust: none; }
+.f-read-s {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  margin-top: 12px;
+  max-width: 52ch;
+}
+
+/* The counters row. Three facts the member has already built, shown to someone
+   deciding whether to keep them. */
+.f-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 44px;
+  padding: 22px 0;
+}
+.f-counts-n {
+  display: block;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-variant-numeric: tabular-nums;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--ink);
+}
+.f-counts-k {
+  display: block;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 8px;
+}
+
+/* What a membership includes. A list of entitlements, not a feature grid. */
+.f-inclu { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 12px; }
+/* No `font-family` here on purpose. `.f-inclu li` is (0,1,1) and so is
+   `.f-page li`, and a TIE is decided by source order, which is the latent state
+   `verify-modifier-specificity.js` exists to reject: it works today only because
+   this file is imported after the primitives. The value would be the same sans
+   either way, so the honest fix is to declare nothing and inherit it. */
+.f-inclu li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.f-inclu li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 6px; height: 6px;
+  background: var(--ink);
+}
+
+/* ---------- the order progress tracker ---------------------------------
+
+   Four steps, horizontal above 640px and a vertical stepper below it, because
+   four uppercase mono labels do not fit across a 390 viewport and the live
+   version's answer to that was a second copy of the whole component in the
+   markup. One DOM, one set of rules, and the axis turns.
+
+   🔴 NAMED `.f-prog` AND NOT `.f-steps` OR `.f-track`, BOTH OF WHICH ARE TAKEN.
+   `.f-steps` is the marketing numbered-process grid and `.f-track` is the range
+   bar on a results panel. Reusing either name would put a fulfilment tracker in
+   the same namespace as a clinical instrument, which is how the two end up
+   sharing a rule that only one of them wanted.
+
+   The active step is marked by a filled square and a weight change, not by a
+   pulse. The motion budget on these pages is spent on the section reveal, and a
+   pulsing marker beside a customer's own order reads as an alert. */
+
+.f-prog {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 34px;
+}
+@media (min-width: 640px) {
+  .f-prog {
+    flex-direction: row;
+    gap: 0;
+    margin-top: 44px;
+  }
+}
+
+.f-prog-s {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding-bottom: 22px;
+  position: relative;
+}
+@media (min-width: 640px) {
+  .f-prog-s {
+    flex: 1;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-bottom: 0;
+  }
+}
+
+/* The connector. Vertical below the breakpoint, horizontal above it, and absent
+   on the last step in both directions. */
+.f-prog-s::before {
+  content: '';
+  position: absolute;
+  background: var(--hair-2);
+  left: 6px; top: 16px; bottom: 0; width: 1px;
+}
+.f-prog-s:last-child::before { display: none; }
+@media (min-width: 640px) {
+  .f-prog-s::before {
+    left: 7px; right: 0; top: 6px;
+    bottom: auto; width: auto; height: 1px;
+  }
+}
+
+.f-prog-mark {
+  width: 13px; height: 13px;
+  border: 1px solid var(--ink-3);
+  background: var(--paper);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.f-prog-s.f-prog-done .f-prog-mark { background: var(--ink); border-color: var(--ink); }
+.f-prog-s.f-prog-now .f-prog-mark { border-color: var(--ink); box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 13px var(--ink); }
+
+.f-prog-lab {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  line-height: 1.4;
+}
+.f-prog-s.f-prog-done .f-prog-lab { color: var(--ink-2); }
+.f-prog-s.f-prog-now .f-prog-lab { color: var(--ink); font-weight: 600; }
+
+/* ---------- the waiting cards ------------------------------------------- */
+
+.f-waitgrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 760px) { .f-waitgrid { grid-template-columns: 1fr 1fr; } }
+
+.f-waitcard { display: flex; flex-direction: column; height: 100%; }
+.f-waitcard h3 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 10px 0 0;
+}
+.f-waitcard-sub {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-top: 6px;
+}
+.f-waitcard-b {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--ink-2);
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hair);
+}
+
+/* ---------- the app footer ---------------------------------------------
+
+   🔴 NET-NEW, AND IT IS A PROPOSAL KEITH KEPT (2026-08-29), NOT A REDRAW.
+   Before this, all six authenticated routes ended with the page and nothing
+   under it: `app/(app)/layout.tsx` rendered no footer at all. It lives in the
+   layout for the reason `app/lp/layout.tsx` already demonstrates, that a fact
+   in one file cannot drift.
+
+   ⚠ TWO OF THE FRAME'S FOUR LINKS ARE NOT BUILT AND ARE NOT DRAWN HERE. Frame C
+   proposes "How we set our ranges" and "What we do not test"; both are new
+   PAGES that exist nowhere in the codebase, and shipping the links before the
+   pages is how a footer full of dead ends happens. They are owed to Keith as
+   scope, not quietly invented. */
+
+.f-appfoot {
+  border-top: 1px solid var(--hair);
+  margin-top: 40px;
+}
+.f-appfoot-in {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 20px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 26px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.f-appfoot-in a {
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: color 0.3s var(--ease);
+}
+.f-appfoot-in a:hover { color: var(--ink); }
+/* The closing statement is worded "This is not a diagnosis" and not "Nothing
+   here is a diagnosis". The compliance scanner treats `diagnosis` as a HARD hit
+   unless negated, and its negation handling covers not-forms but not negative
+   quantifier subjects, so the second wording fails while meaning the same. The
+   rest of the site already uses this form. */
+.f-appfoot-note { margin-left: auto; }
+@media (max-width: 760px) { .f-appfoot-note { margin-left: 0; width: 100%; } }
+
+/* ---------- the GP handoff, the one route that leaves the direction ----
+
+   🔴 A PRINT ARTEFACT FOR A CLINICIAN, NOT A SCREEN FOR A CUSTOMER. Frame G
+   rules that it has no tray, no wash, no grain, no ambient shadow and no dark
+   mode, because none of those survive a laser printer and all of them cost
+   legibility on paper. What it keeps from Direction F is the type and the
+   hairline rules. A design system that cannot say "not here" is a style guide
+   pretending to be a system.
+
+   Its copy is CA-023 approved and not a word of it is styling's to move. */
+
+.f-handoff { background: #FFFFFF; color: #000000; }
+.f-handoff-in { max-width: 780px; margin: 0 auto; padding: 40px 24px 60px; }
+
+.f-handoff-ctl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 38px;
+}
+
+.f-handoff-head { border-bottom: 2px solid #000000; padding-bottom: 20px; margin-bottom: 26px; }
+.f-handoff-head h1 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 10px 0 0;
+}
+.f-handoff-id { margin-top: 12px; font-size: 14px; color: #3F444B; }
+.f-handoff-id p { margin: 0 0 3px; }
+
+.f-handoff-note { font-size: 14px; line-height: 1.6; color: #3F444B; margin: 0 0 30px; }
+
+.f-handoff-sec { margin-bottom: 34px; }
+.f-handoff-sec h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 8px;
+  margin: 0 0 14px;
+}
+.f-handoff-sec h2 span {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0;
+  color: #3F444B;
+  margin-top: 5px;
+}
+
+.f-handoff-t { width: 100%; border-collapse: collapse; font-size: 14px; }
+.f-handoff-t th {
+  text-align: left;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #000000;
+  padding: 0 14px 7px 0;
+}
+.f-handoff-t td {
+  padding: 9px 14px 9px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+  vertical-align: top;
+}
+.f-handoff-t td:first-child { font-weight: 500; }
+.f-handoff-t td:nth-child(2), .f-handoff-t td:nth-child(3) { font-variant-numeric: tabular-nums; }
+
+.f-handoff-q { border: 2px solid #000000; padding: 22px; margin-bottom: 28px; }
+.f-handoff-q h2 { font-family: var(--font-display); font-size: 18px; margin: 0 0 12px; }
+.f-handoff-q ul { margin: 0; padding-left: 20px; }
+.f-handoff-q li { font-size: 14px; line-height: 1.6; color: #3F444B; margin-bottom: 6px; }
+
+.f-handoff-fine { font-size: 12px; line-height: 1.7; color: #3F444B; margin: 0; }
+
+/* ---------- print ------------------------------------------------------
+
+   ⚠ THE APP CHROME HAS TO COME OFF THE PAPER, AND UNTIL THIS BATCH THERE WAS
+   NONE TO COME OFF. The layout gained a nav and a footer on 2026-09-11, so a
+   customer printing the GP summary would have got a navigation bar and a footer
+   link row on a document he is handing to a clinician. The rules sit here, with
+   the chrome they hide, rather than in the handoff page, because the page did
+   not add the chrome and should not have to know about it. */
+
+@media print {
+  .f-nav, .f-appfoot, .f-appstrip { display: none !important; }
+  .f-handoff-in { max-width: none; padding: 0; }
+  .f-handoff-sec, .f-handoff-q { break-inside: avoid; }
+  /* The layout's nav clearance is 92px of blank paper at the top of page one. */
+  main { padding-top: 0 !important; }
+}

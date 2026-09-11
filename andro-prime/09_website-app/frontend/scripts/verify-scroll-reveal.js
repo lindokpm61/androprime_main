@@ -223,7 +223,36 @@ const visibility = () => {
       }
       window.scrollTo(0, document.body.scrollHeight);
     });
-    await new Promise((r) => setTimeout(r, 1600));
+    /*
+     * 🔴 SETTLE ON A CONDITION, NOT ON A STOPWATCH, AND THE BUG THIS FIXES WAS
+     * A FALSE RED RATHER THAN A MISS.
+     *
+     * This was a flat `setTimeout(1600)`. On the longest route, `/lp/hormone
+     * recovery`, the final `.f-close` enters the viewport only on the last jump
+     * to the bottom, and it carries `transition-delay: 180ms` from its stagger.
+     * Its 0.7s ease-out therefore starts 180ms into the 1600ms window and is
+     * still asymptotically closing when the measurement is taken: opacity
+     * 0.987152, against a threshold of 0.99. The section had fired, had `.on`,
+     * and was indistinguishable from finished to any eye. The check reported
+     * "every section is visible after a full scroll: want 0, got 1" every single
+     * run, which reads exactly like a section that never appears.
+     *
+     * An ease-out approaches its endpoint slowly by definition, so no fixed wait
+     * is the right one: a longer sleep makes the same race less likely without
+     * removing it, and makes every run slower to buy that. Polling the real
+     * condition removes it. A genuinely stuck reveal never reaches the threshold
+     * and still fails at the cap, so the assertion keeps all of its strength.
+     */
+    await p.evaluate(async () => {
+      const settled = () =>
+        [...document.querySelectorAll('.f-rise')].every(
+          (el) => parseFloat(getComputedStyle(el).opacity) >= 0.99
+        );
+      const deadline = Date.now() + 5000;
+      while (!settled() && Date.now() < deadline) {
+        await new Promise((r) => setTimeout(r, 100));
+      }
+    });
     const after = await p.evaluate(visibility);
     t(`${route}: every section is visible after a full scroll`, after.invisibleRises, 0);
     t(`${route}: every section fired`, after.onRises, after.rises);
