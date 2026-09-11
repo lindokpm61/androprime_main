@@ -71,7 +71,7 @@ so the links and the anchor appear and disappear together.
 | `/account` | **Rebuilt.** Frames K and K2 |
 | `/subscriptions` | **Rebuilt.** Frames L and L2 |
 | `/supplement-waitlist-status` | **Rebuilt.** No frame exists; layout decided |
-| `/results-dashboard` | **Three of four states rebuilt**: no-results, sample-failed, pre-results. The results-READY state is not (see below) |
+| `/results-dashboard` | **Rebuilt, all four states**: no-results, sample-failed, pre-results, and results-READY. The last of those came after Keith opened the app and said the results pages still looked like version two |
 | `/results-dashboard/handoff` | **Rebuilt**, and it is the one route that deliberately leaves Direction F |
 | `/account/membership` | **Rebuilt.** Frames H, H2, I, I2, J |
 | `/founding-member-status` | **NOT A RESTYLE.** See below |
@@ -114,12 +114,18 @@ or notFound: not a restyle)". OBS-714, ACTIONED.
    keeping the stylesheet alive. **A borrowed class name is invisible until
    somebody deletes the page it was named after.**
 
-### Two V2.0 stylesheets deleted, three still held open
+### Four V2.0 stylesheets deleted, two still held open
 
-`subscriptions.css` and `founding-member-status.css` are **deleted**, not merely
-unimported: nothing renders their classes any more. `account.css`,
-`membership.css`, `results-dashboard.css` and `dashboard-panels.css` remain, each
-held open by components this batch did not reach.
+`subscriptions.css` and `founding-member-status.css` went first, once
+`/subscriptions` and `/supplement-waitlist-status` were rebuilt. `account.css`
+and `results-dashboard.css` followed when the results-ready view was done. All
+four are **deleted**, not merely unimported: nothing renders a class from any of
+them. `results-dashboard.css` was also imported by `app/(demo)/layout.tsx`, which
+renders none of its classes either.
+
+`membership.css` and `dashboard-panels.css` remain, held open by three
+`components/membership/*` pieces and by `DevFixtureBar` plus the
+`status-indicator--*` set.
 
 ### ✅ THE ROUTES CAN NOW BE SEEN, AND LOOKING AT THEM FOUND TWO DEFECTS
 
@@ -336,13 +342,29 @@ claim-reduction precedent and does NOT go back to Ewa. What it owes is a **recor
 amendment**, because the register still names the artefact by the old heading and
 an auditor matching register to screen by heading will not find it.
 
-🔴 **A FACTUAL PREMISE IS UNSETTLED AND THREE OF THOSE ITEMS REST ON IT.**
-The register row records the `ACCOUNT_DATA_CONTROLS_ENABLED` flip as gated on Keith
-confirming the erasure ops-alert address and the 30-day SLA; the CA-024 approval
-record says the flag was set true in Coolify and deployed on 2026-07-19. Both
-cannot be current. **A checkout cannot settle it** and neither can this repo: that
-is the CA-045 lesson verbatim, "live is a claim about a deployed ref and the
-working tree can never evidence it". Somebody has to read Coolify.
+⚠ **A FACTUAL PREMISE WAS UNSETTLED AND CLICKUP LARGELY SETTLES IT.** The register
+row records the `ACCOUNT_DATA_CONTROLS_ENABLED` flip as gated on Keith confirming
+the erasure ops-alert address and the 30-day SLA; CA-024's approval record says the
+flag was set true in Coolify and deployed on 2026-07-19. Both cannot be current,
+and no checkout can settle it.
+
+**Sprint task `869eqavre` is the third data point and it sides with OFF**: *"Coolify
+flag set has drifted from vars.md"*, 2026-08-26, records `MEMBERSHIP_ENABLED` and
+`ACCOUNT_ADDRESS_ENABLED` as wrongly ON and `ACCOUNT_DATA_CONTROLS_ENABLED` as
+*"appears correctly off"*. Two caveats: it is hedged, and **the full flag audit that
+task asks for was never run**, so it is one observation rather than a sweep.
+
+🔴 **AND THE SAME TASK RAISES THE SEVERITY OF TWO ITEMS ABOVE, BECAUSE
+`MEMBERSHIP_ENABLED` IS ON IN PRODUCTION.** `/account/membership` is a LIVE screen,
+not a dark one: the task confirmed a 200 and a real `cs_live_` Stripe Checkout URL
+for a signed-in user. So the paywall's missing day-31 disclosure and the interlock
+blind spot are findings about a reachable, chargeable surface rather than about a
+flag-dark one. Both are commented onto that task, 2026-09-11.
+
+⚠ **The systemic fix that task proposes is still not built**: no post-deploy flag
+assertion exists in `/wrap` stage 3. A dark launch is only as dark as the deployed
+environment, and nothing in this repo checks the deployed value against the
+documented one.
 
 ⚠ **AND A CORRECTION TO THIS FILE'S OWN FRAMING.** "Pre-existing approved copy"
 holds for CA-023, CA-024 and CA-009. It does **not** hold for `/account/membership`:
