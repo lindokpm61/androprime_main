@@ -15,6 +15,55 @@ const OUT = require('os').tmpdir();
 const CHROME = ['C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'].find((p) => fs.existsSync(p));
 
+/* ---------------------------------------------------------------------------
+   HOSTS. Added 2026-09-11, when `/order/confirmed` became the first app-host
+   route to reach the conformance report's "Rebuilt" table WITH reveal targets.
+
+   🔴 THIS CHECK USED TO 308 ON IT AND REPORT THAT AS A MOTION DEFECT. The
+   off-host skip below is a hand-typed regex naming the auth and account family,
+   and it never listed `/order/confirmed` or `/subscription/confirmed` even
+   though `lib/hosts.ts` has always served them from the app host. Nothing
+   noticed, because until that route was rebuilt no app-host route appeared in
+   the Rebuilt table at all. The failure it produced was "has reveal targets —
+   want true, got false", which reads as a page that lost its animation and was
+   actually a redirect this script followed into nothing.
+
+   `route-conformance.js` had already solved this and its solution is copied
+   rather than reinvented: derive the prefixes from `lib/hosts.ts` so the list
+   cannot drift, and MAP the app hostname onto the dev server so the request
+   arrives with the real Host header.
+
+   🔴 THE HOSTNAME IS THE APP HOST'S; THE SCHEME AND PORT ARE THE DEV SERVER'S.
+   Navigating to the https URL opens a TLS handshake against a plain-HTTP dev
+   server and every app-host route comes back as a load failure;
+   `--ignore-certificate-errors` does not help, because there is no TLS at all.
+   The middleware only reads the hostname, so that is the only part kept. */
+const BASE = 'http://localhost:3000';
+const APP_HOST = (process.env.NEXT_PUBLIC_APP_URL || 'https://app.andro-prime.com').replace(/\/+$/, '');
+const APP_PREFIXES = (() => {
+  const ts = fs.readFileSync(require('path').join(__dirname, '..', 'lib', 'hosts.ts'), 'utf8');
+  const block = ts.match(/export const APP_ROUTE_PREFIXES = \[([\s\S]*?)\] as const/);
+  if (!block) {
+    console.error('ERROR: could not read APP_ROUTE_PREFIXES out of lib/hosts.ts. Fix this parser rather than trusting a pass.');
+    process.exit(1);
+  }
+  const body = block[1].replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ');
+  const out = [...new Set([...body.matchAll(/'([^']+)'/g)].map((m) => m[1]))];
+  if (!out.length) {
+    console.error('ERROR: APP_ROUTE_PREFIXES parsed to zero entries. Fix this parser rather than trusting a pass.');
+    process.exit(1);
+  }
+  return out;
+})();
+/* Exact-or-segment-boundary, never a bare startsWith: '/accounts-payable' must
+   not match '/account'. Same rule lib/hosts.ts matchesPrefix applies. */
+const onAppHost = (u) => APP_PREFIXES.some((p) => u === p || u.startsWith(p + '/'));
+const APP_RESOLVABLE = !/^(localhost|127\.|\[?::1)/.test(new URL(APP_HOST).hostname);
+const APP_FETCH_ORIGIN = APP_RESOLVABLE
+  ? `${new URL(BASE).protocol}//${new URL(APP_HOST).hostname}`
+  : APP_HOST;
+const originFor = (u) => (onAppHost(u) ? APP_FETCH_ORIGIN : BASE);
+
 /* THE ROUTE LIST IS READ FROM THE GENERATED CONFORMANCE REPORT, NOT TYPED HERE.
    It was a literal of six when ten routes were rebuilt, so this check had
    quietly stopped covering /blog, /blog/[slug], /authors/[slug] and /membership,
@@ -53,14 +102,21 @@ function rebuiltRoutes() {
   if (!rows.length) { console.error('ERROR: the Rebuilt table parsed to zero routes. Fix this parser rather than trusting a pass.'); process.exit(1); }
   const out = [], skipped = [], offHost = [];
   for (const r of rows) {
-    // APP-HOST ROUTES ARE OUT OF SCOPE HERE, and it is not an oversight.
-    // `lib/hosts.ts` serves /auth and the authenticated app from
-    // app.andro-prime.com, so driving them from this origin gets a 308 rather
-    // than a page. More to the point there is nothing here to verify: the auth
-    // card carries NO `.f-rise` at all, deliberately, because a reveal on a form
-    // the reader came to use is a delay in front of a password field. This check
-    // exists to catch content left invisible by motion; a surface with no motion
-    // cannot fail it. `route-conformance.js` measures them, on the right host.
+    // THESE ROUTES CARRY NO REVEAL TARGETS, DELIBERATELY, which is the only
+    // reason they are skipped. The auth card has NO `.f-rise` at all, because a
+    // reveal on a form the reader came to use is a delay in front of a password
+    // field, and the gated account and results surfaces are the app shell rather
+    // than the marketing layer. This check exists to catch content left
+    // invisible by motion; a surface with no motion cannot fail it.
+    //
+    // ⚠ THE REASON USED TO BE STATED AS "THEY 308 FROM THIS ORIGIN", AND THAT
+    // WAS TRUE OF MORE ROUTES THAN THIS LIST NAMES. `/order/confirmed` and
+    // `/subscription/confirmed` are app-host routes too and were never in this
+    // regex, so when the first of them was rebuilt it 308d and this check
+    // reported the redirect as a missing reveal target. The host mapping at the
+    // top now serves every app-host route on its own host, so the redirect is
+    // no longer a reason to skip anything, and this list is back to meaning what
+    // it says: surfaces with no motion to verify.
     if (/^\/(auth|account|results-dashboard|subscriptions|founding-member-status|supplement-waitlist-status)(\/|$)/.test(r)) { offHost.push(r); continue; }
     if (!r.includes('[')) out.push(r);
     else if (EXAMPLES[r]) out.push(EXAMPLES[r]);
@@ -111,7 +167,15 @@ const visibility = () => {
 };
 
 (async () => {
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox'] });
+  /* MAP the app hostname onto whatever host:port BASE points at, so an app-host
+     route is fetched with its REAL Host header and the middleware serves it
+     instead of 308-ing to production. Only applied when the app host is a real
+     name; pointed at localhost there is nothing to map. */
+  const hostRules = APP_RESOLVABLE
+    ? [`--host-resolver-rules=MAP ${new URL(APP_HOST).hostname} ${new URL(BASE).host}`]
+    : [];
+  if (APP_RESOLVABLE) console.log(`  note  ${new URL(APP_HOST).hostname} mapped to ${new URL(BASE).host}`);
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', ...hostRules] });
 
   console.log('\nPrecondition: the page is actually styled\n');
   {
@@ -130,7 +194,7 @@ const visibility = () => {
   }
   for (const route of ROUTES) {
     const p = await newPage(browser);
-    const resp = await p.goto('http://localhost:3000' + route, { waitUntil: 'networkidle0', timeout: 120000 });
+    const resp = await p.goto(originFor(route) + route, { waitUntil: 'networkidle0', timeout: 120000 });
     // A bad EXAMPLE must not read as a broken page. Without this, a 404 fails
     // "has reveal targets" and sends the reader looking at the motion layer.
     if (resp && resp.status() !== 200) {

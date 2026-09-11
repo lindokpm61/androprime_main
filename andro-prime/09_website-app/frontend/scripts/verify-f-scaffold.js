@@ -23,9 +23,16 @@
  *   6. `SectionRule` imported anywhere but FPage.tsx
  *
  * SCOPE is the F surface: `app/(marketing)` and `components/marketing`. The
- * authenticated app, the checkout and the legal pages are not Direction F yet
- * and are not held to it; when they are rebuilt they come into scope by being
- * moved, not by an edit here.
+ * authenticated app is not Direction F yet and is not held to it; when it is
+ * rebuilt it comes into scope by being moved, not by an edit here.
+ *
+ * ⚠ THIS USED TO SAY "the checkout and the legal pages" TOO, and both have since
+ * been rebuilt in place. `/privacy` and `/terms` landed 2026-09-10 and
+ * `/checkout/details` and `/order/confirmed` on 2026-09-11; all four already sat
+ * under `app/(marketing)`, so they came into scope by being rebuilt rather than
+ * by being moved, and the sentence above quietly stopped describing them. It is
+ * corrected rather than deleted because the mechanism it states is still right:
+ * scope follows the directory, and nothing here is a list to maintain.
  *
  * ⚠ THE AUTH ROUTES ARE DIRECTION F AND ARE DELIBERATELY NOT IN SCOPE, since
  * 2026-09-08. That sentence above used to imply every rebuilt route eventually

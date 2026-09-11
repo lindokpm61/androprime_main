@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-09",
+  "generated": "2026-09-10",
   "base": "http://localhost:3000",
   "rows": [
     {
@@ -176,12 +176,12 @@
       "href": "/checkout/details",
       "file": "app/(marketing)/checkout/details/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 29,
+      "verdict": "F",
       "note": "",
       "source": {
-        "scaffold": false,
-        "classes": 0
+        "scaffold": true,
+        "classes": 12
       }
     },
     {
@@ -384,12 +384,12 @@
       "href": "/order/confirmed",
       "file": "app/(marketing)/order/confirmed/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 32,
+      "verdict": "F",
       "note": "",
       "source": {
-        "scaffold": false,
-        "classes": 0
+        "scaffold": true,
+        "classes": 24
       }
     },
     {
@@ -610,6 +610,7 @@
     "f-navshell",
     "f-navstat",
     "f-oneoff",
+    "f-oref",
     "f-out",
     "f-pinput",
     "f-rep",
@@ -705,6 +706,7 @@
     "f-navright",
     "f-navshell",
     "f-navstat",
+    "f-oref",
     "f-pinput",
     "f-rescap",
     "f-scrolled",

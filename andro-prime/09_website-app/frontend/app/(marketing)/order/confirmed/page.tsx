@@ -1,14 +1,97 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { FPage, FSection, FHero } from '@/components/marketing/FPage'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getOrderRefForCheckoutSession } from '@/lib/orders/getOrderRefForCheckoutSession'
+
+/**
+ * /order/confirmed, rebuilt in Direction F on 2026-09-11.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * FRAME W AND W2, `design/mockups/journey/buy-F.html`. Layout ported.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * EVERY WORD IS VERBATIM. The eyebrow, the headline, the standfirst, both order
+ * reference states, all three step titles and bodies, both account-block
+ * headings and bodies, all four button labels and all four trust items are
+ * byte-identical to the V2.0 page. The one section label the F grammar requires
+ * is "What happens next", which was already on the page as its own heading.
+ *
+ * 🔴 THE REDIRECT AND ITS LOOP GUARD ARE UNTOUCHED. A signed-out arrival
+ * carrying a `session_id` goes to `/auth/post-checkout` and renders nothing;
+ * `post_checkout=1` is what stops that becoming a loop, and the comment below
+ * records the scar. Frame W2 writes it down precisely because a frame cannot
+ * draw a redirect and an inventory that counts screens will miss it. Not one
+ * branch here changed.
+ *
+ * 🔴 THE ORDER REFERENCE MOVES INTO THE HERO ASIDE, and that is the one
+ * structural departure from Frame W, which draws it in a tray directly under the
+ * hero. Three reasons. It is the single value a customer returns to this page
+ * for, and the `.f-herogrid` right column is where `/contact` puts the same kind
+ * of thing (its inbox address, also set in the mono face, for the same reason).
+ * It arrives beside the confirmation rather than after it, which is the order a
+ * receipt is read in. And the frame's own layout predates `FHero`, so it had no
+ * aside to draw into. See `.f-oref` in f-primitives.css for why only the
+ * resolved state wears the mono readout.
+ *
+ * 🔴 STEP 03 IS NO LONGER AN INK PANEL. On the V2.0 page the third step sat on
+ * `bg-black` while its two siblings were white, which under this direction is an
+ * inverted panel, and the direction spends one per page at most, on a conformity
+ * statement. This one was not spending it on a conformity statement; it was
+ * spending it on the third of three equal steps. The containment ruling of
+ * 2026-09-02 settles the rest: the four prose grids all take one treatment, a
+ * rule above and nothing else, so a step that is also a black slab is a second
+ * grammar inside one grid. Frame W draws all three the same. No words changed.
+ * THE PAGE THEREFORE SPENDS NO INVERTED PANEL, which is allowed ("once per page
+ * at most"), and nothing else here is a conformity statement.
+ *
+ * ⚠ `.f-steps-3`, ADDED FOR THIS PAGE. `.f-steps` turns four-up at 1040px and
+ * this section has three steps, so the base grid would leave a quarter of the row
+ * empty and the sequence would read as a step somebody forgot. Argued in
+ * f-primitives.css.
+ *
+ * ⚠ THE FRAME DROPS "ISO 15189" FROM STEP 03 AND FROM THE TRUST ROW, AND THE
+ * PAGE KEEPS IT. Frame W writes "Our UKAS accredited lab" and "UKAS ISO 15189
+ * lab"; the shipped page writes "Our UKAS ISO 15189 accredited lab" and "UKAS ISO
+ * 15189 Lab". The accreditation scope is a claim, the frame is a drawing, and the
+ * copy rule wins over both. The frame's lower-cased "lab" and "doctor" in the
+ * trust row are not adopted either, for the same reason: the words on the page
+ * are the ones that were approved.
+ */
 
 export const metadata: Metadata = {
   title: 'Order Confirmed | Andro Prime',
   description: 'Your kit is on its way.',
   robots: { index: false, follow: false },
 }
+
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
+
+const STEPS = [
+  {
+    num: '01',
+    title: 'Kit arrives',
+    body: 'Dispatched the same working day. Fits through your letterbox. Everything you need is inside.',
+  },
+  {
+    num: '02',
+    title: 'Collect and return',
+    body: 'Five-minute finger-prick at home. Drop it back in any postbox using the prepaid return envelope in your kit.',
+  },
+  {
+    num: '03',
+    title: 'Results in 2 to 5 working days',
+    body: 'Our UKAS ISO 15189 accredited lab processes your sample. Results go to your dashboard with a plain-English explanation and a specific next step.',
+  },
+]
+
+const TRUST = [
+  'UKAS ISO 15189 Lab',
+  'Same-day dispatch',
+  'GMC-Registered Doctor',
+  'Results in 2 to 5 working days',
+]
 
 interface PageProps {
   searchParams: Promise<{
@@ -46,184 +129,119 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
   const orderRef = isLoggedIn ? await getOrderRefForCheckoutSession(sessionId) : null
 
   return (
-    <>
-      {/* CONFIRMATION HERO */}
-      <section className="pt-40 pb-24 bg-white border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6">
-
-          <div className="inline-flex items-center gap-3 px-3 py-1.5 border-2 border-black bg-black mb-10">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="square">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span className="data-label !text-white !text-[10px]">Order confirmed</span>
+    <FPage>
+      <FHero
+        aside={
+          <div className="f-tray" style={{ marginBottom: 0 }}>
+            <div className="f-core">
+              <p className="f-blab">Your order reference</p>
+              {orderRef ? (
+                <>
+                  <span className="f-oref">{orderRef}</span>
+                  <p className="f-sub" style={{ fontSize: 14.5, marginTop: 0 }}>
+                    Quote this if you contact us. It is also on your receipt and in your account.
+                  </p>
+                </>
+              ) : (
+                /* The fallback is what a FIRST-TIME buyer actually sees, because
+                   resolving a reference requires being signed in. It stays in
+                   `.f-sub` and does not wear `.f-oref`: there is no code to read
+                   here, and giving an apology the same readout treatment as the
+                   real thing is how a design starts lying about which state is
+                   which. Frame W2. */
+                <p className="f-sub" style={{ fontSize: 14.5, marginTop: 10 }}>
+                  Your reference is on the confirmation email we have just sent you, and in your
+                  account under Test history.
+                </p>
+              )}
+            </div>
           </div>
-
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-            Kit on its way.
-          </h1>
-
-          <p className="text-xl md:text-2xl text-black font-serif leading-relaxed max-w-2xl">
-            Your order is confirmed and your kit will be dispatched the same working day. Check your email for your receipt.
-          </p>
-
-          {orderRef ? (
-            <div className="mt-10 inline-block border-2 border-black px-8 py-5">
-              <span className="data-label text-[10px] block mb-2">Your order reference</span>
-              <span className="font-mono font-black text-3xl tracking-tight text-black">
-                {orderRef}
-              </span>
-              <span className="block mt-3 font-serif text-sm text-black">
-                Quote this if you contact us. It is also on your receipt and in your account.
-              </span>
-            </div>
-          ) : (
-            <div className="mt-10 inline-block border-2 border-black px-8 py-5">
-              <span className="data-label text-[10px] block mb-2">Your order reference</span>
-              <span className="block font-serif text-sm text-black max-w-md">
-                Your reference is on the confirmation email we have just sent you, and in your
-                account under Test history.
-              </span>
-            </div>
-          )}
+        }
+      >
+        <div className="f-btns" style={{ marginBottom: 18 }}>
+          <span className="f-eyebrow">Order confirmed</span>
         </div>
-      </section>
+        <h1 className="f-h1">Kit on its way.</h1>
+        <p className="f-stand" style={{ marginTop: 20 }}>
+          Your order is confirmed and your kit will be dispatched the same working day. Check your email for your receipt.
+        </p>
+      </FHero>
 
-      {/* NEXT STEPS */}
-      <section className="py-24 bg-white border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6">
+      {/* ---------- 01 · WHAT HAPPENS NEXT ---------- */}
+      <FSection>
+        <p className="f-blab">What happens next</p>
 
-          <div className="data-label flex items-center gap-4 mb-12">
-            <span className="w-12 h-[2px] bg-black" />
-            What happens next
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black">
-            <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
-              <div className="font-sans font-black text-5xl text-gray-200 mb-6 leading-none">01</div>
-              <h3 className="font-sans font-black text-lg uppercase tracking-tight text-black mb-3">Kit arrives</h3>
-              <p className="font-serif text-sm text-black leading-relaxed">
-                Dispatched the same working day. Fits through your letterbox. Everything you need is inside.
-              </p>
+        <div className="f-steps f-steps-3 f-rise" style={{ marginTop: 24 }}>
+          {STEPS.map(({ num, title, body }) => (
+            <div className="f-step" key={num}>
+              <span className="f-no">{num}</span>
+              <h3 className="f-h4 mt-2.5 mb-2">{title}</h3>
+              <p className="f-sub" style={{ fontSize: 15 }}>{body}</p>
             </div>
-
-            <div className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black">
-              <div className="font-sans font-black text-5xl text-gray-200 mb-6 leading-none">02</div>
-              <h3 className="font-sans font-black text-lg uppercase tracking-tight text-black mb-3">Collect and return</h3>
-              <p className="font-serif text-sm text-black leading-relaxed">
-                Five-minute finger-prick at home. Drop it back in any postbox using the prepaid return envelope in your kit.
-              </p>
-            </div>
-
-            <div className="p-8 bg-black">
-              <div className="font-sans font-black text-5xl text-white/20 mb-6 leading-none">03</div>
-              <h3 className="font-sans font-black text-lg uppercase tracking-tight text-white mb-3">Results in 2 to 5 working days</h3>
-              <p className="font-serif text-sm text-gray-400 leading-relaxed">
-                Our UKAS ISO 15189 accredited lab processes your sample. Results go to your dashboard with a plain-English explanation and a specific next step.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </FSection>
 
-      {/* ACCOUNT CTA */}
-      <section className="py-24 bg-gray-50 border-b-4 border-black">
-        <div className="max-w-4xl mx-auto px-6">
+      {/* ---------- 02 · THE ACCOUNT HANDOVER ----------
+          Not `FClose`, and this is the one place the closing ask does not take
+          the system's closing component. `.f-close` is centred and carries a
+          single ask; this ask has two states that differ in label, heading, body
+          and both buttons, and a two-state block centred reads as two different
+          pages rather than as one page in one of two conditions. Frame W draws it
+          left-aligned in a tray, which is what it gets. */}
+      <FSection>
+        <p className="f-blab">{isLoggedIn ? 'You’re all set' : 'One more thing'}</p>
 
-          <div className="border-4 border-black p-10 md:p-14 bg-white">
-            <div className="data-label flex items-center gap-3 mb-8">
-              <span className="w-2 h-2 bg-black" />
-              {isLoggedIn ? 'You’re all set' : 'One more thing'}
-            </div>
-
-            {isLoggedIn ? (
-              <>
-                <h2 className="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-6">
-                  Results land in<br />your dashboard.
-                </h2>
-
-                <p className="text-lg text-black font-serif leading-relaxed mb-10 max-w-xl">
+        {isLoggedIn ? (
+          <>
+            <h2 className="f-h2">
+              Results land in<br /><span className="f-grey">your dashboard.</span>
+            </h2>
+            <div className="f-tray f-rise" style={{ marginTop: 24, marginBottom: 0 }}>
+              <div className="f-core">
+                <p className="f-sub" style={{ marginTop: 0 }}>
                   Your kit is linked to your account. The moment your sample is processed, your results, recommendations, and next steps will appear on your private dashboard.
                 </p>
-
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                  <Link
-                    href="/results-dashboard"
-                    className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-colors"
-                  >
-                    Go to dashboard
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
-                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                    </svg>
+                <div className="f-btns" style={{ marginTop: 20 }}>
+                  <Link href="/results-dashboard" className="f-btn">
+                    Go to dashboard {ARROW}
                   </Link>
-
-                  <Link
-                    href="/kits"
-                    className="data-label text-black hover:underline flex items-center gap-2"
-                  >
+                  <Link href="/kits" className="f-btn f-btn-ghost">
                     Browse other tests
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
-                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                    </svg>
                   </Link>
                 </div>
-              </>
-            ) : (
-              <>
-                <h2 className="text-4xl md:text-5xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-6">
-                  Sign in to see<br />your results.
-                </h2>
-
-                <p className="text-lg text-black font-serif leading-relaxed mb-10 max-w-xl">
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="f-h2">
+              Sign in to see<br /><span className="f-grey">your results.</span>
+            </h2>
+            <div className="f-tray f-rise" style={{ marginTop: 24, marginBottom: 0 }}>
+              <div className="f-core">
+                <p className="f-sub" style={{ marginTop: 0 }}>
                   We&rsquo;ve created your account from your order. Get a one-time sign-in link by email to reach your private dashboard. No password to remember.
                 </p>
-
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                  <Link
-                    href="/auth/link?next=/results-dashboard"
-                    className="inline-flex items-center gap-3 bg-black text-white hover:bg-white hover:text-black border-4 border-black font-sans font-black uppercase tracking-widest text-sm px-8 py-5 transition-colors"
-                  >
-                    Get a sign-in link
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
-                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                    </svg>
+                <div className="f-btns" style={{ marginTop: 20 }}>
+                  <Link href="/auth/link?next=/results-dashboard" className="f-btn">
+                    Get a sign-in link {ARROW}
                   </Link>
-
-                  <Link
-                    href="/auth/login"
-                    className="data-label text-black hover:underline flex items-center gap-2"
-                  >
+                  <Link href="/auth/login" className="f-btn f-btn-ghost">
                     Use a password instead
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square">
-                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                    </svg>
                   </Link>
                 </div>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* REASSURANCE STRIP */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="flex flex-wrap items-center gap-8 justify-center">
-            {[
-              'UKAS ISO 15189 Lab',
-              'Same-day dispatch',
-              'GMC-Registered Doctor',
-              'Results in 2 to 5 working days',
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-2 data-label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                {item}
               </div>
-            ))}
-          </div>
+            </div>
+          </>
+        )}
+
+        <div className="f-trustrow">
+          {TRUST.map((item) => (
+            <div key={item}>{item}</div>
+          ))}
         </div>
-      </section>
-    </>
+      </FSection>
+    </FPage>
   )
 }

@@ -115,10 +115,36 @@ type FHeroProps = {
   heroPad?: number
   /** Overrides the rhythm's `--f-sec-below`. The three kit pages take 44. */
   padBottom?: number
+  /**
+   * `.f-narrow` (880px) instead of `.f-wrap` (1180px), matching `FSection`'s prop
+   * of the same name. Added 2026-09-11 for `/checkout/details`.
+   *
+   * 🔴 IT EXISTS BECAUSE A NARROW SECTION UNDER A FULL-MEASURE HERO ONLY WORKS
+   * WHEN A SECTION RULE SPANS THE GAP. `/test-selector` is the shipped precedent
+   * for a centred 880px card below a 1180px hero, and it reads correctly for two
+   * reasons that are easy to miss: its hero carries an `aside`, so the measure is
+   * visibly occupied to the right, and its quiz sits under a counted rule that
+   * runs the full width and anchors the card to the page. A hero with neither —
+   * no aside, and a section that takes `rule={false}` — leaves a centred card
+   * floating 145px to the right of the headline above it, with nothing crossing
+   * the distance. Measured at 1440: headline at x=157, card at x=302.
+   *
+   * The fix is to narrow the HERO rather than to widen the card, because the
+   * card's width is doing real work: a consent sentence set at the full measure
+   * runs about 130 characters a line. Frame V draws both in `.narrow` for the
+   * same reason.
+   *
+   * ⚠ UNLIKE `FSection`, THIS NARROWS THE SECTION ITSELF rather than wrapping the
+   * children. `FSection` keeps `.f-wrap` on the `<section>` so its RULE still
+   * spans the full measure while only the content narrows. A hero has no rule to
+   * preserve, and the ground behind it is full-bleed inside `.f-ruleground`
+   * regardless, so the two classes swap cleanly.
+   */
+  narrow?: boolean
   style?: React.CSSProperties
 }
 
-export function FHero({ children, ground = 'field', aside, heroPad, padBottom, style }: FHeroProps) {
+export function FHero({ children, ground = 'field', aside, heroPad, padBottom, narrow, style }: FHeroProps) {
   // `.f-sec` AND `.f-sec-hero`, always. `.f-sec-hero` is what gives the hero
   // back to the reader while the consent banner is up; `.f-sec` is what supplies
   // the rhythm underneath it. Wearing one without the other is the drift this
@@ -132,7 +158,10 @@ export function FHero({ children, ground = 'field', aside, heroPad, padBottom, s
   if (padBottom !== undefined) heroStyle.paddingBottom = padBottom
 
   const section = (
-    <section className="f-wrap f-sec f-sec-hero" style={Object.keys(heroStyle).length ? heroStyle : undefined}>
+    <section
+      className={`${narrow ? 'f-narrow' : 'f-wrap'} f-sec f-sec-hero`}
+      style={Object.keys(heroStyle).length ? heroStyle : undefined}
+    >
       {aside === undefined ? (
         <div className="f-rise">{children}</div>
       ) : (

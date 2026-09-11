@@ -671,6 +671,28 @@
 .f-steps { display: grid; gap: 0 34px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .f-steps { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1040px) { .f-steps { grid-template-columns: repeat(4, 1fr); } }
+/* A THREE-STEP GRID. Added 2026-09-11 with `/order/confirmed`, whose "what
+   happens next" is three steps and not four.
+
+   ⚠ WITHOUT THIS THE THIRD STEP READS AS A MISSING FOURTH. Three items in a
+   four-column grid fill three columns and leave a quarter of the row empty, and
+   an empty cell in a numbered sequence looks like a step somebody forgot rather
+   than a grid that is wider than its contents. `/contact` hit the same problem
+   from the other side and solved it by picking a different grid (`.f-faqgrid`,
+   five items in two columns); there is no three-up prose grid other than
+   `.f-bios`, whose serif h3 and missing mono index are wrong for a step.
+
+   Only the 1040 rule is overridden. Below that `.f-steps` is already 2 columns
+   and then 1, which is exactly `.f-bios`' progression, and `.f-bios` ships three
+   items at that middle breakpoint on `/about` and `/how-it-works`. The 2 + 1
+   orphan at 760 is therefore the shipped rhythm for three items, not a defect
+   this fixes.
+
+   COMPOUNDED ONTO THE BASE, per the two fix shapes in
+   `verify-modifier-specificity.js`: `.f-steps-3` is never worn without
+   `.f-steps`, so `.f-steps.f-steps-3` at (0,2,0) beats the base's (0,1,0) on
+   specificity rather than on where it sits in this file. */
+@media (min-width: 1040px) { .f-steps.f-steps-3 { grid-template-columns: repeat(3, 1fr); } }
 /* 🔴 ONE CONTAINMENT GRAMMAR, 2026-09-02. The four prose grids on the F pages
    (steps, spec rows, biomarker cards, FAQ answers) were four boxed treatments of
    the same thing: a short block of prose in a rounded well. Under the containment
@@ -1589,6 +1611,40 @@
   text-transform: uppercase; color: var(--ink-2);
 }
 .f-spec-v { display: block; font-family: var(--font-sans); font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink); }
+
+/* ---------- THE ORDER REFERENCE ----------
+   Added 2026-09-11 with `/order/confirmed`, Frame W. The one value on that page
+   a customer comes back for, and until 2026-08-04 the page did not render it at
+   all: it read `session_id` and printed nothing from it, so anyone who closed
+   the confirmation email had no way to find their reference.
+
+   MONO, BECAUSE IT IS A CODE AND NOT PROSE. Same reasoning as `/contact`'s
+   inbox address, which was 4xl sans black on the V2.0 page and now sits in the
+   mono face: a value takes the value register, the same one carrying units and
+   spec keys. `tabular-nums` because a reference is read character by character
+   and compared against a receipt, which is the one job proportional digits are
+   bad at.
+
+   🔴 IT IS NOT `.f-mk-v`, WHICH IS THE CLOSEST THING ALREADY IN THE FILE AND IS
+   THE WRONG CLASS. That is the readout's MARKER value, sized and spaced for a
+   blood result sitting in a `.f-mk` row. Wearing it here would put a results
+   class on a receipt, which is the `.f-field` collision arriving by the door
+   DESIGN.md warns about: one selector, two unrelated components, and whichever
+   is edited next silently moves the other.
+
+   ⚠ ONLY THE RESOLVED STATE WEARS THIS. The fallback (no reference resolved) is
+   a sentence telling the reader where to find it, and it stays in `.f-sub`.
+   Frame W2 argues the distinction and it survives `--flag` becoming ink: the
+   emphasis marks a reference the reader can act on, and dressing an apology in
+   the same treatment as the real thing is how a design starts lying about which
+   state is which. */
+.f-oref {
+  display: block; margin: 6px 0 10px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-weight: 600; font-size: 26px; letter-spacing: -0.02em;
+  line-height: 1.2; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
 
 /* ============================================================================
    THE PANEL, AND THE STRIP
@@ -2619,6 +2675,26 @@
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2);
 }
 .f-opt-t { display: block; font-family: var(--font-sans); font-size: 16.5px; line-height: 1.5; color: var(--ink); }
+
+/* THE SELECTED OPTION. Added 2026-09-11 with `/checkout/details`, whose sex
+   control is the first `.f-opt` group on the site that HOLDS a choice.
+   `/test-selector`'s options are click-through: each one routes on the same
+   gesture that picks it, so nothing is ever in a selected state long enough to
+   need drawing. A two-option control that has to keep showing which one is
+   chosen does need one.
+
+   🔴 THE CLASS IS REPEATED, AND THAT IS THE `.f-sec-hero` SHAPE RATHER THAN A
+   TYPO. `.f-opt:hover` is (0,2,0) and sets `background`. A plain `.f-opt.f-on`
+   is also (0,2,0) and sets `background`, so the two TIE and source order decides
+   which wins while the pointer is over a selected option. That is precisely the
+   latent state `.f-tray-flag` was in, and DESIGN.md narrates four instances of
+   it. Repeating the class lifts the selected rule to (0,3,0), so it beats both
+   the base and the hover on specificity and does not care where it sits.
+
+   It keeps the hover LIFT. Losing the transform on the selected option would
+   make the chosen one feel dead under the pointer while its sibling moves. */
+.f-opt.f-on.f-on { background: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.f-opt.f-on.f-on .f-opt-t { color: var(--paper); }
 
 /* ---- the result caption ------------------------------------------------- */
 
