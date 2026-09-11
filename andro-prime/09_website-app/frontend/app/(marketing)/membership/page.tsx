@@ -6,7 +6,11 @@ import { isMembershipEnabled } from '@/lib/flags'
 import { PRODUCT_MAP } from '@/lib/subscriptions/products'
 import { PRICING } from '@/lib/pricing'
 import { KIT_NAMES } from '@/lib/kits/names'
-import { MEMBERSHIP_OFFER_WINDOW_DAYS } from '@/lib/membership/offer'
+import {
+  MEMBERSHIP_DISCLOSURE,
+  MEMBERSHIP_INCLUDED_DAYS,
+  MEMBERSHIP_FIRST_CHARGE_DAY,
+} from '@/lib/membership/disclosure'
 import { FIRST_CYCLE_RETEST_DAYS, ANNUAL_RETEST_DAYS } from '@/lib/membership/entitlement'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
@@ -124,17 +128,19 @@ const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
    so the prose can say "£47 a month" in full words while the price OBJECT in
    section 04 renders the canonical string, and both move together. */
 const MEMBERSHIP_PRICE = PRODUCT_MAP.membership.price
-const INCLUDED_DAYS = MEMBERSHIP_OFFER_WINDOW_DAYS
-/* The first charge lands the day AFTER the included run ends. Derived, never
-   typed: "day 31" appears three times on this page and in the ruling itself. */
-const FIRST_CHARGE_DAY = INCLUDED_DAYS + 1
 
-/* THE DISCLOSURE SENTENCE, verbatim from `2026-09-07-auto-renew-at-day-30.md`
-   §4, which specifies it for the four `/kits/` routes. It is the sentence this
-   page exists to explain, so it is rendered here too, once, high on the page and
-   in the same weight as the surrounding price furniture. Do not reword it in one
-   place: it is a two-site fact by design and the register tracks it as one. */
-const DISCLOSURE = `Includes ${INCLUDED_DAYS} days of membership. ${MEMBERSHIP_PRICE.replace('/mo', '')}/month after. Cancel anytime.`
+/* 🔴 THE DISCLOSURE, THE WINDOW AND THE FIRST-CHARGE DAY NOW COME FROM
+   `lib/membership/disclosure.ts` AND ARE NO LONGER DECLARED HERE. This block
+   used to own them, under a comment reading *"Do not reword it in one place: it
+   is a two-site fact by design and the register tracks it as one."* On
+   2026-09-11 Keith ruled the line onto the three `/lp/` kit landing pages as
+   well, which §4 had left undecided, taking it from two sites to seven. A
+   comment asking future readers to keep copies in step does not survive that,
+   and this file already carries four other notes about exactly this defect
+   class. The sentence has one home now, and it is not this page. */
+const INCLUDED_DAYS = MEMBERSHIP_INCLUDED_DAYS
+const FIRST_CHARGE_DAY = MEMBERSHIP_FIRST_CHARGE_DAY
+const DISCLOSURE = MEMBERSHIP_DISCLOSURE
 
 const membershipSchema = {
   '@context': 'https://schema.org',

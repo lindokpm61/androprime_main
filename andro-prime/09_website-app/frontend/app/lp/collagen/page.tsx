@@ -1,8 +1,42 @@
 import type { Metadata } from 'next'
-import { FaqAccordion } from '@/components/marketing/FaqAccordion'
-import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { FPage, FSection, FHero } from '@/components/marketing/FPage'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
+
+/**
+ * /lp/collagen, rebuilt in Direction F on 2026-09-11.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * NO JOURNEY FRAME EXISTS FOR THIS ROUTE. Layout decided, not ported.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * Same reasoning, same structure and the same three compliance notes as
+ * `/lp/daily-stack`, which is the sibling rebuilt in the same change. Read that
+ * file's header first: the EFSA quotation marks, the no-photograph rule and the
+ * deferred-supplement position all apply here unchanged.
+ *
+ * EVERY WORD IS VERBATIM. The headline, the standfirst, the formulation card's
+ * every row and dose, the two science paragraphs, the pull quote, all three
+ * "what it will support" entries, both attributed quotations, both verification
+ * chips, the conflict-free paragraph, all five FAQ answers and the waitlist block
+ * are byte-identical to the V2.0 page.
+ *
+ * 🔴 THE VITAMIN C CLAIM IS AN EFSA WORDING AND IS CARRIED WHOLE. *"Vitamin C
+ * contributes to normal collagen formation for the normal function of
+ * cartilage"* appears in the FAQ and in the support list; it is an approved form
+ * of words and neither instance is shortened, re-split or paraphrased to fit a
+ * card.
+ *
+ * ⚠ DR EWA'S "IDENTITY" GLYPH IS GONE, and this is the `/contact` removal
+ * applied to a second surface. The V2.0 page drew a 64px outlined person icon in
+ * a bordered box beside her name. That is a placeholder for a portrait dressed as
+ * a credential: it looks like a verification badge and verifies nothing, which is
+ * the device the 2026-09-03 ruling took off the footer chips ("a dot marks a
+ * STATE, never a credential"). She is `.f-initials`, as on `/about`, `/contact`,
+ * `/kits/hormone-recovery` and `/supplements/collagen`. Her two verification
+ * chips keep their words and lose their icons: Direction F has no icon
+ * vocabulary at all.
+ */
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -31,8 +65,8 @@ const lpSchema = {
         },
         {
           '@type': 'Question',
-          name: 'What will I get for joining the waitlist?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
+          name: 'What will be in the formulation?',
+          acceptedAnswer: { '@type': 'Answer', text: '10g hydrolysed collagen peptides, 40mg UC-II undenatured Type II collagen, 80mg Vitamin C, and 500mg MSM. Vitamin C contributes to normal collagen formation for the normal function of cartilage.' },
         },
       ],
     },
@@ -40,25 +74,42 @@ const lpSchema = {
 }
 
 export const metadata: Metadata = {
-  title: 'Joint Pain Supplement for Active Men | Joint & Recovery Collagen',
-  description: 'Hydrolysed collagen peptides, UC-II, Vitamin C, and MSM. Built for active men with elevated inflammation or joint symptoms. Launching shortly. Join the waitlist for early dispatch.',
+  title: 'Collagen for Men UK | Joint & Recovery Collagen',
+  description: '10g hydrolysed collagen peptides with UC-II, Vitamin C and MSM. Built for joints, tendons and recovery after 30. Launching shortly. Join the waitlist for early dispatch.',
   robots: { index: false, follow: false },
   openGraph: {
-    title: 'Joint Pain Supplement for Active Men | Joint & Recovery Collagen | Andro Prime',
-    description: '10g hydrolysed collagen peptides, UC-II, Vitamin C, and MSM. Launching shortly. Join the waitlist for early dispatch.',
+    title: 'Collagen for Men UK | Joint & Recovery Collagen | Andro Prime',
+    description: '10g hydrolysed collagen peptides with UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist.',
     url: 'https://andro-prime.com/lp/collagen',
     type: 'website',
-    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Joint & Recovery Collagen supplement' }],
+    images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime Joint and Recovery Collagen' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Joint Pain Supplement for Active Men | Andro Prime',
-    description: '10g hydrolysed collagen, UC-II, Vitamin C, MSM. Launching shortly. Join the waitlist.',
+    title: 'Collagen for Men UK | Joint & Recovery Collagen | Andro Prime',
+    description: '10g hydrolysed collagen peptides with UC-II, Vitamin C and MSM. Launching shortly. Join the waitlist.',
     images: ['/og/default.png'],
   },
 }
 
-const faqItems = [
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
+
+const SPEC_ROWS = [
+  { label: 'UC-II Type II Collagen', value: '40mg, the researched dose' },
+  { label: 'Vitamin C', value: '80mg, EFSA cartilage claim' },
+  { label: 'MSM', value: '500mg, joint comfort support' },
+  { label: 'Additives', value: 'None. Unflavoured.' },
+]
+
+const SUPPORTS = [
+  { marker: 'Joint Comfort', body: 'Hydrolysed peptides accumulate in cartilage. Vitamin C contributes to normal collagen formation for the normal function of cartilage.' },
+  { marker: 'Recovery', body: 'Type I collagen is the primary structural protein in tendons and ligaments. Supplementation supports repair after training.' },
+  { marker: 'Inflammation Marker Tracking', body: 'Built to be paired with a retest at 90 days, so you can see if your hs-CRP marker has moved alongside how you feel.' },
+]
+
+const VERIFICATION = ['GMC Registered', 'UKAS ISO 15189 Lab']
+
+const FAQ_ITEMS = [
   { question: 'When will Joint and Recovery Collagen be available?', answer: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
   { question: 'Is this on sale right now?', answer: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
   { question: 'What will I get for joining the waitlist?', answer: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
@@ -68,199 +119,177 @@ const faqItems = [
 
 export default function CollagenLpPage() {
   return (
-    <>
+    <FPage>
       <JsonLd data={lpSchema} />
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black text-white mb-8 border-2 border-black">
-              Supplement // Joint &amp; Recovery Collagen // Launching Shortly
+
+      <FHero
+        aside={
+          <div className="f-tray" style={{ marginBottom: 0 }}>
+            <div className="f-core">
+              <p className="f-blab">Formulation (in build)</p>
+              <h2 className="f-h4" style={{ marginTop: 10, marginBottom: 4 }}>Joint &amp; Recovery Collagen</h2>
+              <div className="f-spec" style={{ gridTemplateColumns: '1fr', marginBottom: 0 }}>
+                <div>
+                  <span className="f-spec-k">Hydrolysed Collagen Peptides &middot; 10g</span>
+                  <span className="f-spec-v" style={{ fontWeight: 400 }}>
+                    &ldquo;Hydrolysed peptides for absorption&rdquo;
+                  </span>
+                  <span className="f-blab" style={{ marginTop: 8, marginBottom: 0 }}>Per serving</span>
+                </div>
+                {SPEC_ROWS.map(({ label, value }) => (
+                  <div key={label}>
+                    <span className="f-spec-k">{label}</span>
+                    <span className="f-spec-v" style={{ fontWeight: 400 }}>{value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
+          </div>
+        }
+      >
+        <div className="f-btns" style={{ marginBottom: 18 }}>
+          <span className="f-eyebrow">Joint &amp; Recovery Collagen</span>
+          <span className="f-kchip">Launching shortly</span>
+        </div>
+        {/* ⚠ THREE LINES, MEASURED. "Your joints are not ageing." is 27
+            characters and `.f-h1` fits about 17 in this column once the
+            formulation card takes the right-hand side, so left whole it wrapped
+            with "ageing." alone. Broken at 11 / 15 / 18, each line a complete
+            phrase. The grey carries the second sentence, which is the turn. */}
+        <h1 className="f-h1">
+          Your joints<br />are not ageing.<br /><span className="f-grey">They are starving.</span>
+        </h1>
+        <p className="f-stand" style={{ marginTop: 20 }}>
+          After 30, your body produces less collagen every year. Joints stiffen. Tendons weaken. Recovery slows. We are building a formula that pairs 10g of hydrolysed collagen peptides with UC-II, Vitamin C, and MSM. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
+        </p>
+        <div className="f-btns" style={{ marginTop: 24 }}>
+          <a href="#join" className="f-btn">
+            Join the waitlist {ARROW}
+          </a>
+          <span className="f-kchip">No payment. No commitment.</span>
+        </div>
+      </FHero>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              Your joints are not ageing.<br />
-              <span className="text-gray-400">They are starving.</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              After 30, your body produces less collagen every year. Joints stiffen. Tendons weaken. Recovery slows. We are building a formula that pairs 10g of hydrolysed collagen peptides with UC-II, Vitamin C, and MSM. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
+      {/* ---------- 01 · THE SCIENCE ---------- */}
+      <FSection>
+        <p className="f-blab">The science</p>
+        <div className="f-splitgrid f-rise" style={{ marginTop: 12 }}>
+          <div>
+            <h2 className="f-h2">
+              Why collagen<br /><span className="f-grey">matters after 30.</span>
+            </h2>
+            <p className="f-sub" style={{ marginTop: 14 }}>
+              After 30, collagen synthesis drops by roughly 1% per year. By 50, you have lost up to 20% of the collagen that supports your joints, tendons, and skin.
+            </p>
+            <p className="f-sub" style={{ marginTop: 14 }}>
+              This is not something you feel gradually. It hits suddenly: a shoulder that does not recover. A knee that starts clicking. Skin that looks tired no matter how much you sleep.
+            </p>
+            <p className="f-pull">
+              You cannot eat enough collagen through food. Supplementation is the only practical way to top up.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-3">
-                Join the waitlist
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </a>
-              <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">No payment. No commitment.</span>
-            </div>
-          </div>
-
-          {/* Product card */}
-          <div className="lg:col-span-5">
-            <div className="border-4 border-black p-10 bg-white relative">
-              <div className="data-label mb-4 bg-black text-white px-3 py-1.5 inline-block">Formulation (in build)</div>
-              <h2 className="text-4xl font-sans font-black uppercase tracking-tighter mb-8">Joint &amp; Recovery Collagen</h2>
-
-              <div className="border-t-4 border-black pt-8">
-                <div className="border-b-2 border-black pb-6 mb-6">
-                  <div className="flex justify-between items-baseline mb-2">
-                    <h3 className="font-sans font-black uppercase tracking-tighter text-xl">Hydrolysed Collagen Peptides</h3>
-                    <span className="font-mono font-black text-lg">10g</span>
-                  </div>
-                  <p className="font-serif text-sm text-gray-600 italic mb-2">&ldquo;Hydrolysed peptides for absorption&rdquo;</p>
-                  <span className="data-label border border-black px-2 py-0.5 !text-[10px]">Per Serving</span>
-                </div>
-
-                <div className="space-y-4">
-                  {[
-                    { label: 'UC-II Type II Collagen', value: '40mg, the researched dose' },
-                    { label: 'Vitamin C', value: '80mg, EFSA cartilage claim' },
-                    { label: 'MSM', value: '500mg, joint comfort support' },
-                    { label: 'Additives', value: 'None. Unflavoured.' },
-                  ].map(({ label, value }) => (
-                    <div key={label} className="flex justify-between items-start gap-4 py-2 border-b border-gray-200">
-                      <span className="data-label shrink-0">{label}</span>
-                      <span className="font-serif text-sm text-right">{value}</span>
-                    </div>
-                  ))}
+            <div className="f-quotecard" style={{ marginTop: 26 }}>
+              <div className="f-quotehead">
+                <span className="f-initials">KA</span>
+                <div>
+                  <strong>Keith Antony</strong>
+                  <span className="f-blab" style={{ marginBottom: 0 }}>Founder, Andro Prime</span>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* THE SCIENCE */}
-      <section className="py-32 bg-white border-y-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-start">
-          <div>
-            <SectionEyebrow label="The Science" />
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              Why collagen matters after 30.
-            </h2>
-            <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-              <p>After 30, collagen synthesis drops by roughly 1% per year. By 50, you have lost up to 20% of the collagen that supports your joints, tendons, and skin.</p>
-              <p>This is not something you feel gradually. It hits suddenly: a shoulder that does not recover. A knee that starts clicking. Skin that looks tired no matter how much you sleep.</p>
-              <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50">
-                <p className="text-black font-serif italic font-bold text-2xl leading-snug">
-                  You cannot eat enough collagen through food. Supplementation is the only practical way to top up.
-                </p>
-              </div>
+              <blockquote>
+                &ldquo;I started taking collagen at 39 when my shoulder would not recover. Within 6 weeks, I could train again without pain. I do not know why it took me so long to try it.&rdquo;
+              </blockquote>
             </div>
           </div>
 
           <div>
-            <div className="flex items-center gap-4 mb-10 pb-8 border-b-4 border-black">
-              <div className="w-4 h-4 bg-black" />
-              <h3 className="font-sans font-black text-3xl tracking-tighter uppercase text-black m-0">What It Will Support</h3>
-            </div>
-            <div className="space-y-4">
-              {[
-                { marker: 'Joint Comfort', body: 'Hydrolysed peptides accumulate in cartilage. Vitamin C contributes to normal collagen formation for the normal function of cartilage.' },
-                { marker: 'Recovery', body: 'Type I collagen is the primary structural protein in tendons and ligaments. Supplementation supports repair after training.' },
-                { marker: 'Inflammation Marker Tracking', body: 'Built to be paired with a retest at 90 days, so you can see if your hs-CRP marker has moved alongside how you feel.' },
-              ].map(({ marker, body }) => (
-                <div key={marker} className="border-2 border-black p-6 md:p-10 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
-                  <div className="w-3 h-3 bg-black mt-2 shrink-0" />
-                  <p className="font-serif text-lg leading-relaxed">
-                    <strong className="font-sans font-black uppercase text-base tracking-tight">{marker}.</strong> {body}
-                  </p>
+            <p className="f-blab">What it will support</p>
+            <div className="f-bios" style={{ gridTemplateColumns: '1fr', marginTop: 6 }}>
+              {SUPPORTS.map(({ marker, body }) => (
+                <div className="f-bio" key={marker}>
+                  <h3>{marker}</h3>
+                  <p>{body}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
-      {/* CLINICAL OVERSIGHT */}
-      <section className="py-32 bg-white border-t-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
-          <div className="border-2 border-black p-10 lg:p-16 flex flex-col justify-between h-full bg-white">
+      {/* ---------- 02 · CLINICAL OVERSIGHT ----------
+          🔴 THE PAGE'S ONE INVERTED PANEL. Dr Ewa's quotation is verbatim. */}
+      <FSection>
+        <div className="f-invert f-rise">
+          <div className="f-splitgrid">
             <div>
-              <div className="data-label bg-black text-white px-3 py-1.5 inline-block w-fit mb-10">Founder</div>
-              <p className="font-serif text-xl md:text-2xl leading-relaxed italic mb-12">
-                &ldquo;I started taking collagen at 39 when my shoulder would not recover. Within 6 weeks, I could train again without pain. I do not know why it took me so long to try it.&rdquo;
-              </p>
-            </div>
-            <div className="flex items-center gap-6 border-t-2 border-black pt-8">
-              <div className="w-16 h-16 rounded-none border-2 border-black flex items-center justify-center shrink-0">
-                <span className="font-sans font-black text-2xl uppercase">KA</span>
-              </div>
-              <div>
-                <div className="font-sans font-black uppercase tracking-tighter text-xl">Keith Antony</div>
-                <div className="font-serif text-sm text-gray-600">Founder, Andro Prime</div>
+              <p className="f-blab f-invert-lab">Clinical oversight</p>
+              <h2 className="f-h2 f-invert-h">
+                The clinically studied<br />
+                <span style={{ opacity: 0.62 }}>combination, and no fillers.</span>
+              </h2>
+              <div style={{ marginTop: 20 }}>
+                <p className="f-blab f-invert-lab" style={{ marginBottom: 10 }}>Verification</p>
+                {VERIFICATION.map((v) => (
+                  <p className="f-sub f-invert-p" key={v} style={{ marginTop: 6 }}>{v}</p>
+                ))}
               </div>
             </div>
-          </div>
 
-          <div className="border-2 border-black p-10 lg:p-16 flex flex-col justify-between h-full bg-gray-50">
-            <div>
-              <div className="data-label border-2 border-black px-3 py-1.5 inline-block w-fit mb-10">Clinical Oversight</div>
-              <p className="font-serif text-xl md:text-2xl leading-relaxed italic mb-12">
-                &ldquo;10g of hydrolysed collagen with Vitamin C is the clinically studied combination. UC-II and MSM extend support to joint-specific tissue. No fillers, no additives.&rdquo;
-              </p>
-            </div>
-            <div>
-              <div className="flex items-center gap-6 border-t-2 border-black pt-8 mb-6">
-                <div className="w-16 h-16 rounded-none border-2 border-black bg-white flex items-center justify-center shrink-0">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="23" y2="12" /><line x1="23" y1="8" x2="19" y2="12" />
-                  </svg>
-                </div>
+            <div className="f-quotecard">
+              <div className="f-quotehead">
+                <span className="f-initials">EL</span>
                 <div>
-                  <div className="font-sans font-black uppercase tracking-tighter text-xl">Dr Ewa Lindo</div>
-                  <div className="font-serif text-sm text-gray-600">GMC-Registered GP &amp; Clinical Lead</div>
+                  <strong>Dr Ewa Lindo</strong>
+                  <span className="f-blab" style={{ marginBottom: 0 }}>GMC-Registered GP &amp; Clinical Lead</span>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex items-center gap-2 data-label bg-white border border-black px-3 py-2">
-                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="square" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                  GMC Registered
-                </div>
-                <div className="flex items-center gap-2 data-label bg-white border border-black px-3 py-2">
-                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="square" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                  UKAS ISO 15189 Lab
-                </div>
-              </div>
-            </div>
-          </div>
-          <p className="md:col-span-2 font-serif text-base text-black leading-relaxed pt-8 border-t-2 border-black">Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.</p>
-        </div>
-      </section>
-
-      {/* FAQ + WAITLIST */}
-      <section className="py-32 bg-white border-t-4 border-black" id="join">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-12 gap-16 lg:gap-20 items-start">
-            <div className="lg:col-span-7">
-              <SectionEyebrow label="Common Questions" />
-              <FaqAccordion items={faqItems} />
-            </div>
-
-            <div className="lg:col-span-5 lg:sticky lg:top-32">
-              <div className="border-4 border-black bg-black text-white p-10 md:p-12 relative overflow-hidden mb-6">
-                <div className="data-label bg-white text-black px-4 py-2 inline-block border-2 border-black mb-8">Waitlist</div>
-
-                <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-2">Joint &amp; Recovery</h2>
-                <p className="font-serif text-base text-gray-300 mb-6">
-                  Launching shortly, as soon as our manufacturing partner is confirmed.
-                </p>
-                <p className="font-serif text-base text-gray-300 mb-2">
-                  Waitlist members get:
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> Early dispatch ahead of public launch.</li>
-                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> We email you the moment it launches.</li>
-                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> No payment, no commitment to join.</li>
-                </ul>
-              </div>
-
-              <SupplementWaitlistForm interestedInProduct="collagen" />
+              <blockquote>
+                &ldquo;10g of hydrolysed collagen with Vitamin C is the clinically studied combination. UC-II and MSM extend support to joint-specific tissue. No fillers, no additives.&rdquo;
+              </blockquote>
             </div>
           </div>
         </div>
-      </section>
-    </>
+
+        <p className="f-sub f-rise" style={{ marginTop: 26 }}>
+          Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.
+        </p>
+      </FSection>
+
+      {/* ---------- 03 · COMMON QUESTIONS ---------- */}
+      <FSection>
+        <p className="f-blab">Common questions</p>
+        <h2 className="f-h2">Frequently asked.</h2>
+        <div className="f-faqgrid f-rise" style={{ marginTop: 22 }}>
+          {FAQ_ITEMS.map(({ question, answer }) => (
+            <div key={question}>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </div>
+          ))}
+        </div>
+      </FSection>
+
+      {/* ---------- THE WAITLIST ---------- */}
+      <FSection narrow rule={false} cont id="join">
+        <div className="f-tray f-rise" style={{ marginBottom: 0 }}>
+          <div className="f-core">
+            <p className="f-blab">Waitlist</p>
+            <h2 className="f-h2" style={{ marginTop: 10 }}>Joint &amp; Recovery</h2>
+            <p className="f-sub" style={{ marginTop: 14 }}>
+              Launching shortly, as soon as our manufacturing partner is confirmed.
+            </p>
+            <p className="f-sub" style={{ marginTop: 14, marginBottom: 6 }}>Waitlist members get:</p>
+            <div className="f-bios" style={{ gridTemplateColumns: '1fr' }}>
+              <div className="f-bio"><p>Early dispatch ahead of public launch.</p></div>
+              <div className="f-bio"><p>We email you the moment it launches.</p></div>
+              <div className="f-bio"><p>No payment, no commitment to join.</p></div>
+            </div>
+            <div style={{ marginTop: 22 }}>
+              <SupplementWaitlistForm interestedInProduct="collagen" variant="f" />
+            </div>
+          </div>
+        </div>
+      </FSection>
+    </FPage>
   )
 }

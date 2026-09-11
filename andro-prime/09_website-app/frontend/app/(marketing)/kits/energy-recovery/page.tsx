@@ -5,6 +5,8 @@ import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { READOUT_KIT_2 } from '@/lib/kits/sampleReadout'
+import { MembershipDisclosure } from '@/components/commerce/MembershipDisclosure'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
 import { KIT_NAMES } from '@/lib/kits/names'
@@ -196,124 +198,11 @@ export const metadata: Metadata = {
 // not as a drawn path. Keeping it as text means it inherits the type ruling.
 const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
 
-/*
- * The sample report. `band` is what the row's own badge declares, and it drives
- * both the chip underline and the bar fill, so the two cannot disagree.
- *
- * Every row mirrors what the results engine would actually return for these
- * values: `status` is the badge from components/results-engine/StatusBadge.tsx
- * (its BADGES map is the customer-facing vocabulary) and the band is the zone
- * from resolveBarZones in lib/results/classifier.ts. Adopted 2026-08-17 (Keith)
- * after this page's first pre-flight found it speaking Normal / Borderline /
- * Low, a vocabulary the product uses nowhere. Keep the two in step: a value
- * changed here without re-deriving its state is a mockup that contradicts the
- * product.
- */
-/*
- * THE SAMPLE READOUT, REBUILT AS THE TWO-RANGE DEVICE, 2026-09-04.
- *
- * WHY IT CHANGED. `/` opens on "Two ranges. Nine markers. You should see both",
- * and then the page that actually takes the money showed ONE bar, no lab band,
- * no reference range and no needle. The promise was made on the page that sells
- * nothing and broken on the page that sells. This row set is now the same
- * `.f-mk` / `.f-track` / `.f-band` / `.f-you` device the homepage uses, from the
- * same geometry, so the argument survives the click.
- *
- * EVERY BAND POSITION IS ARITHMETIC FROM `04_products/results-engine/
- * thresholds.md`, and THREE OF THESE FOUR ROWS ARE CARRIED VERBATIM FROM THE
- * HOMEPAGE, values and verdicts included. That is deliberate: those three have
- * already been rendered to customers with this exact geometry, so porting them
- * adds no new clinical assertion. Only hs-CRP is new here, and its two bands
- * COINCIDE, which is the weakest visual claim the device can make.
- *
- * EVERY ROW IS LAB-NORMAL BY CONSTRUCTION, and that is a compliance choice
- * rather than a flattering one. `f-v-lab` carries the string "Lab normal" on all
- * four rows, byte-identical to `/`. Choosing a value the lab would call
- * out-of-range would have required inventing a second lab verdict string that
- * exists nowhere in the approved set. The device's whole argument is "the lab
- * says normal and we do not", so lab-normal rows are also the honest case.
- *
- * THE RESULT IS NOW MIXED, WHICH IS A DELIBERATE REVERSAL (Keith, 2026-09-04).
- * The previous four rows read Action needed / Monitor / Monitor / Monitor: every
- * marker flagged, so the demonstration of the product was a man for whom nothing
- * is fine. For a reader arriving because he is not recovering, that is
- * fear-shaped and it sits badly beside "we sell certainty and clarity". Two rows
- * now read In range and two read Monitor. Both Monitors are genuine SPLITS, so
- * the page still shows the product finding something a standard report misses.
- *
- * Do not adjust a number here without re-deriving its percentage. A value moved
- * without its arithmetic is a page that contradicts the results engine.
- */
-const READOUT: {
-  name: string
-  qualifier: string | null
-  value: string
-  unit: string
-  labLeft: number
-  labWidth: number
-  oursLeft: number
-  oursWidth: number
-  you: number
-  lab: string
-  ours: string
-  split: boolean
-}[] = [
-  {
-    // CARRIED FROM `/`. thresholds.md: <25 -> GP, <50 low, 50-250 normal, >250
-    // -> GP (Ewa 2026-08-07). Vitall male range 50-250 nmol/L. Scale 0-250.
-    //   lab      50 -> 20.0%, 250 -> 100%, width 80.0%
-    //   ours     50 -> 20.0%, 250 -> 100%, width 80.0%
-    //   marker   58 -> 23.2%
-    // The two ranges COINCIDE, which is why `.f-band-ours` is inset 2px
-    // vertically: at equal height it covered the lab band exactly.
-    // `normal-vitamin-d` badges In range.
-    name: 'Vitamin D', qualifier: 'muscle function & energy', value: '58', unit: 'nmol/L',
-    labLeft: 20, labWidth: 80, oursLeft: 20, oursWidth: 80, you: 23.2,
-    lab: 'Lab normal', ours: 'In range', split: false,
-  },
-  {
-    // CARRIED FROM `/`. NICE NG239 three-band, <25 low, 25-70 borderline, >70
-    // normal; Ewa re-ratified 2026-08-07 with the assay cut visible. Vitall
-    // assay cut is >37.5 pmol/L. Scale 0-100.
-    //   lab    37.5 -> 37.5%, 100 -> 100%, width 62.5%
-    //   ours     25 -> 25.0%,  70 ->  70%, width 45.0%
-    //   marker   45 -> 45.0%
-    // SPLIT: the assay calls 45 normal, NG239 calls it indeterminate. Same
-    // number, two verdicts. `borderline-b12` badges Monitor.
-    name: 'Active B12', qualifier: 'cellular energy', value: '45', unit: 'pmol/L',
-    labLeft: 37.5, labWidth: 62.5, oursLeft: 25, oursWidth: 45, you: 45,
-    lab: 'Lab normal', ours: 'Monitor', split: true,
-  },
-  {
-    // THE ONE NEW ROW ON THIS PAGE, and its bands coincide.
-    // thresholds.md hs-CRP: <=1 normal, >1-3 elevated, >3-10 moderate, >10 -> GP
-    // (AHA/CDC 2003 consensus banding, Ewa 2026-06-16 ruling 6 "no change").
-    // Vitall reference is <1.00 mg/L, matching our cut at 1 exactly (line 63 of
-    // thresholds.md records the match). Scale 0-10, chosen as the full
-    // actionable range up to the GP cut.
-    //   lab       0 ->  0.0%,   1 -> 10.0%, width 10.0%
-    //   ours      0 ->  0.0%,   1 -> 10.0%, width 10.0%
-    //   marker  0.8 ->  8.0%
-    // No split is POSSIBLE here at a lab-normal value: the lab's cut and ours
-    // are the same number, so agreement is the only truthful drawing.
-    // `normal-crp` badges In range.
-    name: 'hs-CRP', qualifier: 'inflammation', value: '0.8', unit: 'mg/L',
-    labLeft: 0, labWidth: 10, oursLeft: 0, oursWidth: 10, you: 8,
-    lab: 'Lab normal', ours: 'In range', split: false,
-  },
-  {
-    // CARRIED FROM `/`. thresholds.md: <30 -> GP, 30-100 borderline /
-    // indeterminate (Ewa ruling 5, 2026-06-16), 100-300 normal, >300 -> GP.
-    // Vitall male range 30-442 ug/L. Scale 0-450.
-    //   lab      30 ->  6.7%, 442 -> 98.2%, width 91.5%
-    //   ours     30 ->  6.7%, 100 -> 22.2%, width 15.5%
-    //   marker   62 -> 13.8%
-    // SPLIT. `suboptimal-ferritin` badges Monitor.
-    name: 'Ferritin', qualifier: 'iron stores', value: '62', unit: 'µg/L',
-    labLeft: 6.7, labWidth: 91.5, oursLeft: 6.7, oursWidth: 15.5, you: 13.8,
-    lab: 'Lab normal', ours: 'Monitor', split: true,
-  },
-]
+/* THE SAMPLE READOUT now lives in `lib/kits/sampleReadout.ts`, with its full
+ * derivation notes, because `/lp/energy-recovery` renders the same rows and a second
+ * transcription of a clinical verdict is what produced the defect DESIGN.md
+ * gap 9 records. Imported above; nothing about what renders has changed. */
+const READOUT = READOUT_KIT_2
 
 const BIOMARKERS = [
   { num: '01', title: 'Vitamin D', body: "Most UK men are deficient between October and March. Low vitamin D directly affects muscle function, recovery speed, and energy. You can't tell from how you feel. You can only tell from your blood." },
@@ -493,6 +382,11 @@ export default function KitEnergyRecoveryPage() {
                 <span className="f-kchip">All-in. No hidden fees.</span>
               </div>
             )}
+
+            {/* Ruled 2026-09-07 §4, built 2026-09-11. Below both CTA branches,
+                because the fact is true of the bundle and the single test alike.
+                Renders nothing while `MEMBERSHIP_ENABLED` is off. */}
+            <MembershipDisclosure />
 
             <div className="f-trustrow">
               {TRUST.map((item) => <div key={item}>{item}</div>)}

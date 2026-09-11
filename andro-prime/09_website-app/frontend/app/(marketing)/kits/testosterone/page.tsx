@@ -5,6 +5,8 @@ import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { READOUT_KIT_1 } from '@/lib/kits/sampleReadout'
+import { MembershipDisclosure } from '@/components/commerce/MembershipDisclosure'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
 import { KIT_NAMES } from '@/lib/kits/names'
@@ -157,136 +159,11 @@ export const metadata: Metadata = {
 // not as a drawn path. Keeping it as text means it inherits the type ruling.
 const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
 
-/*
- * The sample report. `band` is what the row's own badge declares, and it drives
- * both the chip underline and the bar fill, so the two cannot disagree.
- * FAI is deliberately bandless: the engine maps it to `fai-reported`, which
- * carries no verdict, and resolveBarZones returns [] for it because a coloured
- * bar IS a verdict. Strings come from lib/kits/panel.ts.
- */
-/*
- * THE SAMPLE READOUT, REBUILT AS THE TWO-RANGE DEVICE, 2026-09-04.
- *
- * WHY IT CHANGED. `/` opens on "Two ranges. Nine markers. You should see both",
- * and the page that actually takes the money showed ONE bar, no lab band, no
- * reference range and no needle. The promise was made where nothing is sold and
- * broken where the money is asked for. Same `.f-mk` / `.f-track` / `.f-band` /
- * `.f-you` device as `/` and `/kits/energy-recovery`, from the same geometry.
- *
- * EVERY BAND POSITION IS ARITHMETIC FROM `04_products/results-engine/
- * thresholds.md` AND `lib/results/classifier.ts:resolveBarZones`, WHICH IS THE
- * RATIFIED SOURCE FOR WHAT A BAR DRAWS PER MARKER. The working is kept inline.
- *
- * A FLOOR IS DRAWN TO THE END OF THE TRACK, AND THAT IS RULED, NOT INVENTED.
- * Albumin and Free Testosterone have no upper action threshold: `resolveBarZones`
- * returns `{ color: 'optimal', upTo: null }` for both, and `upTo: null` means "to
- * the end". Ewa was asked for an albumin upper band on 2026-08-07 and answered
- * "No" (approval-record-biomarker-bands-v2, row "Albumin upper band | No | No
- * change"); CA-044 records the bands themselves as APPROVED, with only two
- * states' card WORDING still pending. So on those two rows our band renders
- * WIDER at the top than the lab reference interval. That is the truth of the
- * ruling: above the lab's upper limit we take no action, and the dashboard has
- * been drawing it that way to customers already.
- *
- * EVERY ROW IS LAB-NORMAL BY CONSTRUCTION, and that is a vocabulary limit rather
- * than a flattering choice. "Lab normal" is the ONLY lab-verdict string that
- * exists anywhere in this app; a value the lab would call out-of-range needs a
- * second string nobody has approved. It is also the honest case, because the
- * device's whole argument is "the lab says normal and we do not".
- *
- * FAI DRAWS NO TRACK. `resolveBarZones` returns [] for it (Ewa ruling 8,
- * report-only, not banded in men) because a coloured bar IS a verdict. It keeps
- * the `.f-bar-none` spacer so the row does not read as a rendering fault, and
- * its badge comes from FAI_REPORT_ONLY rather than being written here.
- *
- * Do not adjust a number here without re-deriving its percentage. A value moved
- * without its arithmetic is a page that contradicts the results engine.
- */
-const READOUT: {
-  name: string
-  qualifier: string | null
-  value: string
-  unit: string
-  labLeft: number
-  labWidth: number
-  oursLeft: number
-  oursWidth: number
-  you: number
-  lab: string
-  ours: string
-  split: boolean
-  noTrack?: boolean
-}[] = [
-  {
-    // CARRIED FROM `/`. thresholds.md Kit 1 Total Testosterone: our bands low
-    // <12, normal 12-20, optimal >20-29, high >29 -> GP. Vitall male reference
-    // 8.64-29.00 nmol/L (confirmed 2026-08-06). Scale 0-35 nmol/L.
-    //   lab    8.64 -> 24.7%,  29.00 -> 82.9%,  width 58.2%
-    //   ours     12 -> 34.3%,     20 -> 57.1%,  width 22.8%
-    //   marker  14.2 -> 40.6%
-    // SPLIT: 14.2 sits inside the lab's 8.64-29.00 so a standard report says
-    // normal and stops; it also sits in OUR 12-20 band, the state
-    // `normal-testosterone`, which badges Monitor. Same number, two verdicts.
-    name: 'Testosterone', qualifier: 'total', value: '14.2', unit: 'nmol/L',
-    labLeft: 24.7, labWidth: 58.2, oursLeft: 34.3, oursWidth: 22.8, you: 40.6,
-    lab: 'Lab normal', ours: 'Monitor', split: true,
-  },
-  {
-    // resolveBarZones SHBG: warning below referenceLow, optimal to
-    // referenceHigh, warning above -- i.e. OUR BAND IS THE LAB'S BAND, by Ewa
-    // ruling 7 ("match the lab assay, no fixed numbers", 2026-06-16). Vitall
-    // male 20.6-76.7 nmol/L, which is also the code fallback. Scale 0-100.
-    //   lab    20.6 -> 20.6%, 76.7 -> 76.7%, width 56.1%
-    //   ours   identical, which is why `.f-band-ours` is inset 2px vertically
-    //   marker 38.5 -> 38.5%
-    // No split is possible here by construction: the two ranges are one range.
-    // `shbg-normal` badges In range.
-    name: 'SHBG', qualifier: 'binding globulin', value: '38.5', unit: 'nmol/L',
-    labLeft: 20.6, labWidth: 56.1, oursLeft: 20.6, oursWidth: 56.1, you: 38.5,
-    lab: 'Lab normal', ours: 'In range', split: false,
-  },
-  {
-    // NO TRACK. resolveBarZones returns [] for FAI (Ewa ruling 8: report-only,
-    // not banded in men) because a coloured bar IS a verdict, and the generic
-    // fallback used to derive one from the lab range while the card text called
-    // the same value normal. Vitall does return a male interval (35.0-92.6%),
-    // but we do not interpret against it, so nothing is drawn.
-    // The badge is read from FAI_REPORT_ONLY, never written here.
-    name: PANEL_MARKERS.fai.name, qualifier: 'reported, not interpreted', value: '36.9', unit: '%',
-    labLeft: 0, labWidth: 0, oursLeft: 0, oursWidth: 0, you: 0,
-    lab: '', ours: FAI_REPORT_ONLY.badge, split: false, noTrack: true,
-  },
-  {
-    // resolveBarZones Albumin: `{critical, upTo: 35}` then `{optimal, upTo: null}`.
-    // `upTo: null` is a FLOOR, not a band -- there is no upper action threshold,
-    // and that is a ruling: Ewa was asked for an albumin upper band on 2026-08-07
-    // and answered "No" (approval-record-biomarker-bands-v2). Vitall male
-    // 35-50 g/L. Scale 0-60 g/L.
-    //   lab      35 -> 58.3%, 50 -> 83.3%, width 25.0%
-    //   ours     35 -> 58.3%, to the track end -> 100%, width 41.7%
-    //   marker 42.0 -> 70.0%
-    // OUR BAND IS WIDER THAN THE LAB'S AT THE TOP, and that is the ruling drawn
-    // honestly: above 50 the lab's interval ends and we still take no action.
-    // `normal-albumin` badges In range.
-    name: 'Albumin', qualifier: 'transport protein', value: '42.0', unit: 'g/L',
-    labLeft: 58.3, labWidth: 25.0, oursLeft: 58.3, oursWidth: 41.7, you: 70.0,
-    lab: 'Lab normal', ours: 'In range', split: false,
-  },
-  {
-    // resolveBarZones Free Testosterone: `{critical, upTo: referenceLow}` then
-    // `{optimal, upTo: null}`. A FLOOR again, and dynamic: the cut is whatever
-    // referenceLow arrives with the sample (Ewa ruling 7). Vitall male
-    // 0.1980-0.6190 nmol/L, confirmed 2026-08-06. Scale 0-0.8 nmol/L.
-    //   lab   0.198 -> 24.8%, 0.619 -> 77.4%, width 52.6%
-    //   ours  0.198 -> 24.8%, to the track end -> 100%, width 75.2%
-    //   marker 0.244 -> 30.5%
-    // Illustrative: a real card bands against the range returned with the
-    // sample. `ft-normal` badges In range.
-    name: 'Free testosterone', qualifier: 'calculated', value: '0.244', unit: 'nmol/L',
-    labLeft: 24.8, labWidth: 52.6, oursLeft: 24.8, oursWidth: 75.2, you: 30.5,
-    lab: 'Lab normal', ours: 'In range', split: false,
-  },
-]
+/* THE SAMPLE READOUT now lives in `lib/kits/sampleReadout.ts`, with its full
+ * derivation notes, because `/lp/testosterone` renders the same rows and a second
+ * transcription of a clinical verdict is what produced the defect DESIGN.md
+ * gap 9 records. Imported above; nothing about what renders has changed. */
+const READOUT = READOUT_KIT_1
 
 const BIOMARKERS = [
   { num: '01', title: 'Total testosterone', body: 'The total amount of testosterone in your blood. Your baseline. The number most GPs test, if they test anything at all.' },
@@ -474,6 +351,14 @@ export default function KitTestosteronePage() {
                 <span className="f-kchip">All-in. No hidden fees.</span>
               </div>
             )}
+
+            {/* THE SUBSCRIPTION PRICE LINE, ruled 2026-09-07 §4 for all four
+                `/kits/` routes and built 2026-09-11. It sits below BOTH CTA
+                branches rather than inside either, because the fact it states is
+                true of the bundle and the single test alike, and duplicating it
+                per branch is how two copies of one sentence start to disagree.
+                Renders nothing while `MEMBERSHIP_ENABLED` is off. */}
+            <MembershipDisclosure />
 
             <div className="f-trustrow">
               {TRUST.map((item) => <div key={item}>{item}</div>)}

@@ -1,8 +1,66 @@
 import type { Metadata } from 'next'
-import { FaqAccordion } from '@/components/marketing/FaqAccordion'
-import { SectionEyebrow } from '@/components/marketing/SectionEyebrow'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { FPage, FSection, FHero } from '@/components/marketing/FPage'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
+
+/**
+ * /lp/daily-stack, rebuilt in Direction F on 2026-09-11.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * NO JOURNEY FRAME EXISTS FOR THIS ROUTE. Layout decided, not ported.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * Frame AC in `lp-sample-F.html` draws the `/lp` SHELL and a variance table, and
+ * says why it draws nothing else: *"drawing five asserts they should stay five,
+ * drawing one asserts a template that does not exist"*. So the shell came from
+ * the frame and this page's layout is decided against DESIGN.md, the same way
+ * the ten marketing routes of 2026-09-09 were.
+ *
+ * EVERY WORD IS VERBATIM. The headline, the standfirst, both CTA labels, all
+ * three ingredient blocks with their doses and their EFSA claim sentences, the
+ * two problem paragraphs, the pull quote, all three "why these three" entries,
+ * both attributed quotations, the three verification lines, the conflict-free
+ * paragraph, all six FAQ answers, the waitlist paragraph and its three bullets
+ * are byte-identical to the V2.0 page.
+ *
+ * 🔴 THE EFSA CLAIM SENTENCES KEEP THEIR QUOTATION MARKS. They are QUOTATIONS of
+ * an approved third-party wording, not sentences this page wrote, and the V2.0
+ * page rendered them quoted. Stripping the marks would turn an approved form of
+ * words into our own claim about our own product, which is the distinction the
+ * whole EFSA regime turns on. Same note as `/supplements/daily-stack`.
+ *
+ * 🔴 THE PAGE STILL SELLS NOTHING, AND THAT IS A COMPLIANCE POSITION RATHER THAN
+ * A GAP. Supplements were deferred by `01_strategy/2026-05-23-phase0-supplements-
+ * deferred-plan.md` (approved, Keith): sourcing is incomplete, the live Stripe
+ * price IDs are deliberately unset, and every "buy" CTA on the site was replaced
+ * with a non-cash waitlist opt-in. Two of the six FAQ answers say so outright.
+ * The rebuild changes the container and not that.
+ *
+ * 🔴 NO PRODUCT PHOTOGRAPH AND NO PORTRAIT OF DR EWA. The Daily Stack does not
+ * exist yet, so a rendered tub would be a picture of a product nobody has made on
+ * a page whose position is that no orders are being taken; and a generated
+ * photograph presented as a named GMC-registered GP would be a fabricated record
+ * of a real person. She is `.f-initials`, as on `/how-it-works`, `/about` and
+ * `/supplements/daily-stack`.
+ *
+ * ⚠ THE EYEBROW SPLITS, which is the one furniture change. `Supplement // Daily
+ * Stack // Launching Shortly` becomes `.f-eyebrow` "Daily Stack" beside
+ * `.f-kchip` "Launching shortly": the double slash is a V2.0 device and Direction
+ * F allows one eyebrow per page. Registered for `/supplements/*` as row 38(c) and
+ * this is the same change on the same words.
+ *
+ * ⚠ THE FAQ IS AN OPEN GRID, NOT `FaqAccordion`. Keith standardised that on
+ * 2026-08-29 and `/contact` carried it into the rebuild on 2026-09-09: four short
+ * answers behind four clicks, on a page whose whole job is to answer objections
+ * before a cold reader leaves, is the accordion working against the page. No
+ * answer text changed.
+ *
+ * ⚠ WHERE THIS PAGE SPENDS ITS ONE INVERTED PANEL: section 02, clinical
+ * oversight. Same subject and same treatment as `/supplements/daily-stack`, which
+ * is the constraint working rather than a duplication: it is one per PAGE, and on
+ * a page describing a formulation the clinical sign-off is the conformity
+ * statement.
+ */
 
 const BASE_URL = 'https://andro-prime.com'
 
@@ -63,7 +121,23 @@ export const metadata: Metadata = {
   },
 }
 
-const faqItems = [
+const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
+
+const FORMULATION = [
+  { name: 'Zinc', dose: '25mg', claim: 'Contributes to the maintenance of normal testosterone levels' },
+  { name: 'Vitamin D3', dose: '4,000 IU', claim: 'Contributes to normal muscle function' },
+  { name: 'Active B12', dose: '1,000mcg', claim: 'Contributes to normal energy-yielding metabolism' },
+]
+
+const WHY_THESE_THREE = [
+  { marker: 'Zinc (25mg)', body: 'Most men in the UK are borderline low. Zinc contributes to the maintenance of normal testosterone levels (EFSA-approved claim).' },
+  { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are low in winter. Vitamin D3 contributes to normal muscle function (EFSA-approved claim).' },
+  { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Contributes to normal energy-yielding metabolism and to normal psychological function. Particularly relevant for men over 40. Methylcobalamin is the form your body absorbs directly, not the cheaper synthetic cyanocobalamin.' },
+]
+
+const VERIFICATION = ['Reviewed by a GMC-registered GP', 'UKAS ISO 15189 Lab', 'EFSA Compliant Dosage']
+
+const FAQ_ITEMS = [
   { question: 'When will the Daily Stack be available?', answer: 'Launching shortly, as soon as our manufacturing partner is confirmed. Waitlist members are the first to be invited to subscribe, ahead of the public launch.' },
   { question: 'Is the Daily Stack on sale right now?', answer: 'Not yet. We are not taking supplement orders or payments at this time. The waitlist is how we let you know the moment that changes.' },
   { question: 'What will I get for joining the waitlist?', answer: 'Early dispatch when stock arrives, and we email you when it launches. No payment is taken to join.' },
@@ -74,173 +148,191 @@ const faqItems = [
 
 export default function DailyStackLpPage() {
   return (
-    <>
+    <FPage>
       <JsonLd data={lpSchema} />
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center pt-24 pb-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <div className="data-label flex items-center gap-2 px-3 py-1.5 bg-black text-white mb-8 border-2 border-black">
-              Supplement // Daily Stack // Launching Shortly
-            </div>
 
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[80px] font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              Stop guessing which supplements you need.
-            </h1>
-
-            <p className="text-lg md:text-xl text-black font-serif mb-12 max-w-2xl leading-relaxed">
-              The three things most men over 35 are genuinely low in, in one daily product. Zinc, Active B12, and Vitamin D3. Each at a dose that actually moves the needle. Each backed by EFSA-approved health claims. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <a href="#join" className="w-full sm:w-auto bg-black hover:bg-white border-4 border-black text-white hover:text-black font-sans font-black uppercase tracking-widest text-sm px-8 py-4 rounded-none transition-colors flex items-center justify-center gap-3">
-                Join the waitlist
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </a>
-              <span className="font-mono text-xs text-black tracking-[0.15em] uppercase font-bold">No payment. No commitment.</span>
-            </div>
-          </div>
-
-          {/* Supplement card */}
-          <div className="lg:col-span-5">
-            <div className="border-4 border-black p-10 bg-white relative">
-              <div className="data-label mb-4 bg-black text-white px-3 py-1.5 inline-block">Formulation</div>
-              <h2 className="text-4xl font-sans font-black uppercase tracking-tighter mb-8">Daily Stack</h2>
-
-              <div className="space-y-6 border-t-4 border-black pt-8">
-                {[
-                  { name: 'Zinc', dose: '25mg', claim: 'Contributes to the maintenance of normal testosterone levels', tag: 'EFSA Claim' },
-                  { name: 'Vitamin D3', dose: '4,000 IU', claim: 'Contributes to normal muscle function', tag: 'EFSA Claim' },
-                  { name: 'Active B12', dose: '1,000mcg', claim: 'Contributes to normal energy-yielding metabolism', tag: 'EFSA Claim' },
-                ].map(({ name, dose, claim, tag }) => (
-                  <div key={name} className="border-b-2 border-black pb-6">
-                    <div className="flex justify-between items-baseline mb-2">
-                      <h3 className="font-sans font-black uppercase tracking-tighter text-xl">{name}</h3>
-                      <span className="font-mono font-black text-lg">{dose}</span>
-                    </div>
-                    <p className="font-serif text-sm text-gray-600 italic mb-2">&ldquo;{claim}&rdquo;</p>
-                    <span className="data-label border border-black px-2 py-0.5 !text-[10px]">{tag}</span>
+      <FHero
+        aside={
+          /* THE FORMULATION CARD. A tray holding a core, which under the
+             containment ruling is what a card is for: three derived rows with
+             doses and approved claim sentences is an instrument, not prose. */
+          <div className="f-tray" style={{ marginBottom: 0 }}>
+            <div className="f-core">
+              <p className="f-blab">Formulation</p>
+              <h2 className="f-h4" style={{ marginTop: 10, marginBottom: 4 }}>Daily Stack</h2>
+              <div className="f-spec" style={{ gridTemplateColumns: '1fr', marginBottom: 0 }}>
+                {FORMULATION.map(({ name, dose, claim }) => (
+                  <div key={name}>
+                    <span className="f-spec-k">
+                      {name} &middot; {dose}
+                    </span>
+                    <span className="f-spec-v" style={{ fontWeight: 400 }}>
+                      &ldquo;{claim}&rdquo;
+                    </span>
+                    <span className="f-blab" style={{ marginTop: 8, marginBottom: 0 }}>EFSA claim</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
+        }
+      >
+        <div className="f-btns" style={{ marginBottom: 18 }}>
+          <span className="f-eyebrow">Daily Stack</span>
+          <span className="f-kchip">Launching shortly</span>
         </div>
-      </section>
+        {/* ⚠ THREE LINES, AND THE BREAKS ARE MEASURED RATHER THAN GUESSED. The
+            first attempt broke after "which", which reads correctly in source and
+            rendered as three lines with "need." alone on the last one: the hero's
+            left column is about 640px here because the formulation card takes the
+            right, so `.f-h1` at 65.6px fits roughly 20 characters. "supplements
+            you need." is 21 and wrapped. Breaking at 13 / 17 / 9 puts a whole
+            phrase on every line. STATE.md's trap list: a heading's line breaks
+            are invisible in source and only a render shows the orphan. */}
+        <h1 className="f-h1">
+          Stop guessing<br />which supplements<br /><span className="f-grey">you need.</span>
+        </h1>
+        <p className="f-stand" style={{ marginTop: 20 }}>
+          The three things most men over 35 are genuinely low in, in one daily product. Zinc, Active B12, and Vitamin D3. Each at a dose that actually moves the needle. Each backed by EFSA-approved health claims. Launching shortly. Join the waitlist for early dispatch, and we will email you when it launches.
+        </p>
+        <div className="f-btns" style={{ marginTop: 24 }}>
+          <a href="#join" className="f-btn">
+            Join the waitlist {ARROW}
+          </a>
+          <span className="f-kchip">No payment. No commitment.</span>
+        </div>
+      </FHero>
 
-      {/* THE PROBLEM */}
-      <section className="py-32 bg-white border-y-4 border-black">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-start">
+      {/* ---------- 01 · THE PROBLEM ---------- */}
+      <FSection>
+        <p className="f-blab">The problem</p>
+        <div className="f-splitgrid f-rise" style={{ marginTop: 12 }}>
           <div>
-            <SectionEyebrow label="The Problem" />
-            <h2 className="text-5xl md:text-6xl font-sans font-black text-black uppercase tracking-tighter leading-[0.9] mb-8">
-              Most supplement stacks are built on guesswork.
+            <h2 className="f-h2">
+              Most supplement stacks<br /><span className="f-grey">are built on guesswork.</span>
             </h2>
-            <div className="space-y-6 text-xl text-black font-serif leading-relaxed">
-              <p>You are taking five different pills from three different brands that some influencer recommended. You do not know the doses. You do not know if they are working. You do not know if you need them.</p>
-              <p>We are building this stack differently. It contains the three supplements most commonly flagged as low in our blood test data, at the doses backed by EFSA-approved health claims.</p>
-              <div className="pl-8 border-l-[6px] border-black py-4 mt-8 bg-gray-50">
-                <p className="text-black font-serif italic font-bold text-2xl leading-snug">
-                  This is not a random multivitamin. It is what your blood test would actually recommend.
-                </p>
+            <p className="f-sub" style={{ marginTop: 14 }}>
+              You are taking five different pills from three different brands that some influencer recommended. You do not know the doses. You do not know if they are working. You do not know if you need them.
+            </p>
+            <p className="f-sub" style={{ marginTop: 14 }}>
+              We are building this stack differently. It contains the three supplements most commonly flagged as low in our blood test data, at the doses backed by EFSA-approved health claims.
+            </p>
+            <p className="f-pull">
+              This is not a random multivitamin. It is what your blood test would actually recommend.
+            </p>
+
+            {/* The founder quotation, which is a problem statement and sits with
+                the problem rather than with the clinical sign-off. The V2.0 page
+                paired it with Dr Ewa's in one two-column block; splitting them
+                is what lets the clinical one take the inverted panel alone. */}
+            <div className="f-quotecard" style={{ marginTop: 26 }}>
+              <div className="f-quotehead">
+                <span className="f-initials">KA</span>
+                <div>
+                  <strong>Keith Antony</strong>
+                  <span className="f-blab" style={{ marginBottom: 0 }}>Founder, Andro Prime</span>
+                </div>
               </div>
+              <blockquote>
+                &ldquo;I was spending &pound;60 a month on five different bottles. Then I got my blood tested and found out I was actually low in just two things. That is when I decided we needed to build something better.&rdquo;
+              </blockquote>
             </div>
           </div>
 
           <div>
-            <div className="flex items-center gap-4 mb-10 pb-8 border-b-4 border-black">
-              <div className="w-4 h-4 bg-black" />
-              <h3 className="font-sans font-black text-3xl tracking-tighter uppercase text-black m-0">Why These Three</h3>
-            </div>
-            <div className="space-y-4">
-              {[
-                { marker: 'Zinc (25mg)', body: 'Most men in the UK are borderline low. Zinc contributes to the maintenance of normal testosterone levels (EFSA-approved claim).' },
-                { marker: 'Vitamin D3 (4,000 IU)', body: 'Over 40% of UK adults are low in winter. Vitamin D3 contributes to normal muscle function (EFSA-approved claim).' },
-                { marker: 'Active B12 (1,000mcg Methylcobalamin)', body: 'Contributes to normal energy-yielding metabolism and to normal psychological function. Particularly relevant for men over 40. Methylcobalamin is the form your body absorbs directly, not the cheaper synthetic cyanocobalamin.' },
-              ].map(({ marker, body }) => (
-                <div key={marker} className="border-2 border-black p-6 md:p-10 flex gap-5 hover:bg-gray-50 transition-colors bg-white">
-                  <div className="w-3 h-3 bg-black mt-2 shrink-0" />
-                  <p className="font-serif text-lg leading-relaxed">
-                    <strong className="font-sans font-black uppercase text-base tracking-tight">{marker}.</strong> {body}
-                  </p>
+            <p className="f-blab">Why these three</p>
+            <div className="f-bios" style={{ gridTemplateColumns: '1fr', marginTop: 6 }}>
+              {WHY_THESE_THREE.map(({ marker, body }) => (
+                <div className="f-bio" key={marker}>
+                  <h3>{marker}</h3>
+                  <p>{body}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </FSection>
 
-      {/* CLINICAL OVERSIGHT */}
-      <section className="py-32 bg-white border-t-4 border-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-0 border-4 border-black">
-            <div className="p-12 border-b-4 md:border-b-0 md:border-r-4 border-black bg-gray-50 flex flex-col justify-between">
-              <div>
-                <div className="data-label border-2 border-black inline-block px-3 py-1 mb-8 bg-white">Founder</div>
-                <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;I was spending £60 a month on five different bottles. Then I got my blood tested and found out I was actually low in just two things. That is when I decided we needed to build something better.&rdquo;</p>
-              </div>
-              <div>
-                <div className="font-sans font-black uppercase tracking-tighter text-2xl">Keith Antony</div>
-                <div className="data-label mt-2">Founder, Andro Prime</div>
+      {/* ---------- 02 · CLINICAL OVERSIGHT ----------
+          🔴 THE PAGE'S ONE INVERTED PANEL. Dr Ewa's quotation is verbatim. */}
+      <FSection>
+        <div className="f-invert f-rise">
+          <div className="f-splitgrid">
+            <div>
+              <p className="f-blab f-invert-lab">Clinical oversight</p>
+              <h2 className="f-h2 f-invert-h">
+                Every ingredient has<br />
+                <span style={{ opacity: 0.62 }}>a reason to be there.</span>
+              </h2>
+              <div style={{ marginTop: 20 }}>
+                <p className="f-blab f-invert-lab" style={{ marginBottom: 10 }}>Verification</p>
+                {VERIFICATION.map((v) => (
+                  <p className="f-sub f-invert-p" key={v} style={{ marginTop: 6 }}>{v}</p>
+                ))}
               </div>
             </div>
 
-            <div className="p-12 bg-white flex flex-col justify-between relative overflow-hidden">
-              <div>
-                <div className="data-label border-2 border-black inline-block px-3 py-1 mb-8 bg-black text-white">Clinical Oversight</div>
-                <p className="font-serif text-2xl leading-relaxed italic mb-12">&ldquo;Every ingredient in this formulation has a specific, evidence-based reason for being included at its specific dose. We do not add ingredients for marketing purposes.&rdquo;</p>
-              </div>
-              <div>
-                <div className="font-sans font-black uppercase tracking-tighter text-2xl">Dr Ewa Lindo</div>
-                <div className="data-label mt-2 mb-6">GMC-Registered GP &amp; Clinical Lead</div>
-                <div className="space-y-4 pt-8 border-t-4 border-black">
-                  <div className="data-label text-black mb-4">Verification</div>
-                  {['Reviewed by a GMC-registered GP', 'UKAS ISO 15189 Lab', 'EFSA Compliant Dosage'].map((v) => (
-                    <div key={v} className="flex items-center gap-4 text-base text-black font-serif">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="square"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-                      <span>{v}</span>
-                    </div>
-                  ))}
+            <div className="f-quotecard">
+              <div className="f-quotehead">
+                <span className="f-initials">EL</span>
+                <div>
+                  <strong>Dr Ewa Lindo</strong>
+                  <span className="f-blab" style={{ marginBottom: 0 }}>GMC-Registered GP &amp; Clinical Lead</span>
                 </div>
               </div>
-            </div>
-          </div>
-          <p className="font-serif text-base text-black leading-relaxed mt-10 pt-8 border-t-2 border-black">Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.</p>
-        </div>
-      </section>
-
-      {/* FAQ + WAITLIST */}
-      <section className="py-32 bg-white border-t-4 border-black" id="join">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-12 gap-16 lg:gap-20 items-start">
-            <div className="lg:col-span-7">
-              <SectionEyebrow label="Common Questions" />
-              <FaqAccordion items={faqItems} />
-            </div>
-
-            <div className="lg:col-span-5 lg:sticky lg:top-32">
-              <div className="border-4 border-black bg-black text-white p-10 md:p-12 relative overflow-hidden mb-6">
-                <div className="data-label bg-white text-black px-4 py-2 inline-block border-2 border-black mb-8">Waitlist</div>
-
-                <h2 className="text-5xl md:text-6xl font-sans font-black uppercase tracking-tighter mb-2">Daily Stack</h2>
-                <p className="font-serif text-base text-gray-300 mb-6">
-                  Launching shortly, as soon as our manufacturing partner is confirmed.
-                </p>
-                <p className="font-serif text-base text-gray-300 mb-2">
-                  Waitlist members get:
-                </p>
-                <ul className="space-y-2 mb-6">
-                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> Early dispatch ahead of public launch.</li>
-                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> We email you the moment it launches.</li>
-                  <li className="font-serif text-sm text-gray-300 flex gap-3 items-start"><span className="mt-2 w-1.5 h-1.5 bg-white shrink-0" /> No payment, no commitment to join.</li>
-                </ul>
-              </div>
-
-              <SupplementWaitlistForm interestedInProduct="daily-stack" />
+              <blockquote>
+                &ldquo;Every ingredient in this formulation has a specific, evidence-based reason for being included at its specific dose. We do not add ingredients for marketing purposes.&rdquo;
+              </blockquote>
             </div>
           </div>
         </div>
-      </section>
-    </>
+
+        {/* The conflict-free paragraph. Approved standing copy, carried verbatim
+            and left OUTSIDE the panel: it is an argument rather than a
+            conformity statement, and prose takes no container. */}
+        <p className="f-sub f-rise" style={{ marginTop: 26 }}>
+          Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.
+        </p>
+      </FSection>
+
+      {/* ---------- 03 · COMMON QUESTIONS ---------- */}
+      <FSection>
+        <p className="f-blab">Common questions</p>
+        <h2 className="f-h2">Frequently asked.</h2>
+        <div className="f-faqgrid f-rise" style={{ marginTop: 22 }}>
+          {FAQ_ITEMS.map(({ question, answer }) => (
+            <div key={question}>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </div>
+          ))}
+        </div>
+      </FSection>
+
+      {/* ---------- THE WAITLIST ----------
+          `rule={false}`: this is the page's ask, not a topic in its argument, and
+          the section counter is a position indicator for a document. The hero CTA
+          targets `#join`, which is why the id is on the section. */}
+      <FSection narrow rule={false} cont id="join">
+        <div className="f-tray f-rise" style={{ marginBottom: 0 }}>
+          <div className="f-core">
+            <p className="f-blab">Waitlist</p>
+            <h2 className="f-h2" style={{ marginTop: 10 }}>Daily Stack</h2>
+            <p className="f-sub" style={{ marginTop: 14 }}>
+              Launching shortly, as soon as our manufacturing partner is confirmed.
+            </p>
+            <p className="f-sub" style={{ marginTop: 14, marginBottom: 6 }}>Waitlist members get:</p>
+            <div className="f-bios" style={{ gridTemplateColumns: '1fr' }}>
+              <div className="f-bio"><p>Early dispatch ahead of public launch.</p></div>
+              <div className="f-bio"><p>We email you the moment it launches.</p></div>
+              <div className="f-bio"><p>No payment, no commitment to join.</p></div>
+            </div>
+            <div style={{ marginTop: 22 }}>
+              <SupplementWaitlistForm interestedInProduct="daily-stack" variant="f" />
+            </div>
+          </div>
+        </div>
+      </FSection>
+    </FPage>
   )
 }

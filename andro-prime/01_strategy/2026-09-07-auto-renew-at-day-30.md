@@ -78,9 +78,27 @@ Under the CTA, in the same weight as the surrounding price furniture:
 **Scope: all four `/kits/` routes** (`testosterone`, `energy-recovery`, `hormone-recovery`, and the
 `kits` index), on `redesign/direction-f` only.
 
-🔵 **NOT DECIDED: the three `/lp/` kit landing pages** (`lp/testosterone`, `lp/hormone-recovery`,
-`lp/energy-recovery`). They carry their own buy buttons and are the pages paid traffic hits cold, so the
-surprise risk is arguably highest there. **Owner: Keith.**
+✅ **DECIDED 2026-09-11 (Keith): THE THREE `/lp/` KIT LANDING PAGES CARRY THE SAME LINE.**
+Doc: `2026-09-11-lp-kit-pages-carry-the-subscription-line.md`. They carry their own buy buttons and are
+the pages paid traffic hits cold, so the surprise risk is arguably highest there, which is the reasoning
+this entry already carried. Built the same day, behind `MEMBERSHIP_ENABLED`, from one shared source
+(`lib/membership/disclosure.ts`) rather than as a seventh copy of the sentence.
+
+🔴 **AND THE HALF OF THIS SECTION THAT WAS ALREADY DECIDED HAD NEVER BEEN BUILT.** The line was ruled
+onto the four `/kits/` routes on 2026-09-07 and, checked on 2026-09-11, existed nowhere in `app/`,
+`components/` or `lib/` except as a private constant inside `/membership`, which 404s while the flag is
+off. All seven surfaces have it now.
+
+🔴 **THIRTEEN SENTENCES ACROSS SEVEN SURFACES STILL SAY THE OPPOSITE, AND ONE OF THEM IS CA-026 C1.**
+`/kits` renders *"no subscription unless you choose one"* verbatim inside its inverted panel; the three
+kit pages and the three kit LPs carry "One-off purchase" or "No subscription" lines and two FAQ answers
+say the same. Under this ruling nobody chooses a subscription, so all thirteen are false the moment the
+flag goes on. **None was rewritten** (approved copy is not a rebuild's to change) and
+`frontend/scripts/verify-subscription-claims.js` now fails the build whenever `MEMBERSHIP_ENABLED` is
+true while any of them remains. **Owed: a rewrite from Keith, a pre-flight, and a fresh CA record for
+C1.** See the decision doc's §3 for the full table.
+
+~~🔵 NOT DECIDED: the three `/lp/` kit landing pages. Owner: Keith.~~
 
 ## 5. The reminder email is not a cost of this decision
 
@@ -162,6 +180,6 @@ experience.**
 
 ## 11. Still open after this
 
-1. **The `/lp/` scope question** (§4). Keith.
+1. ~~The `/lp/` scope question (§4). Keith.~~ ✅ **DECIDED 2026-09-11**: the three `/lp/` kit pages carry the line. Doc: `2026-09-11-lp-kit-pages-carry-the-subscription-line.md`. **Replaced by a larger item: thirteen sentences across seven surfaces still assert a one-off purchase with no subscription, one of them CA-026 C1. Owed: a rewrite from Keith, a pre-flight, and a fresh CA record.**
 2. **The DMCCA read** (`../03_compliance/2026-09-07-dmcca-subscription-regime-gap.md`). Solicitor.
 3. **Reminder timing and cancellation route** (§7). Follows from 2.

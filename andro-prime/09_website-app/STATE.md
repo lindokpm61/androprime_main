@@ -4,7 +4,112 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-11
+## ▶️ PICK UP HERE — handoff, 2026-09-11 (second batch: the landing pages)
+
+### Where the rebuild is
+
+**33 of 36 measurable routes are Direction F (92%), up from 28 (78%).** Read
+`design/route-conformance.md`; do not re-count.
+
+**Three measurable routes remain**, and none of them is an ordinary restyle:
+`/subscription/confirmed` (no frame exists), `/not-found` (its frame is a record
+of what shipped, not an F proposal), and `/activate` (**deprecated**, see the
+earlier handoff). Plus the seven gated account and results routes.
+
+### What shipped: all five `/lp/*` landing pages
+
+Keith asked for the five landing pages, keeping Kits 1, 2 and 3 as three separate
+pages. No journey frame exists for any of them: Frame AC draws the SHELL and a
+variance table and deliberately draws no page, so layout was decided against
+DESIGN.md and argued in each file's header.
+
+**Three live defects were fixed on the way**, none of them cosmetic:
+
+1. 🔴 **THE TWO SUPPLEMENT LPs SHOWED AN "ORDER NOW" BUTTON THAT WENT NOWHERE.**
+   `app/lp/layout.tsx` renders `<Nav variant="lp" />` with no props and the nav
+   defaults to `Order Now` → `#order`. The three kit LPs carry `id="order"`, so it
+   worked there and nobody looked. `/lp/collagen` and `/lp/daily-stack` use
+   `id="join"`, so the button did nothing, above an FAQ answer reading *"We are
+   not taking supplement orders or payments at this time."* Map and reasoning in
+   `lib/lp/cta.ts`.
+2. 🔴 **THE `/lp` TREE HAD NO `.js` REVEAL GATE.** It lives in the marketing
+   layout and nothing supplied it here, so every `.f-rise` would have had nothing
+   to reveal it. It fails in the SAFE direction (the page renders complete and at
+   rest), which is exactly why it would never have been noticed. Shared as
+   `components/marketing/RevealGate.tsx` rather than pasted.
+3. 🔴 **`<main>` CARRIED `pt-20`**, V2.0's flush-bar clearance, under a nav that
+   has been a floating shell for weeks. The content sat under it.
+
+### The sample readouts moved, and that is a clinical fix
+
+🔴 **EACH KIT LP HAND-WROTE ITS OWN COPY OF THE SAME KIT'S SAMPLE REPORT, AND THE
+COPIES WERE WRONG.** DESIGN.md gap 9 records the 2026-09-02 verdict-vocabulary
+sweep that fixed the `/kits/*` pages; it never reached `/lp/*`, where the scanner
+found **twelve live instances**, including **free testosterone graded "Low" at
+0.244 and at 0.231** when the reference low is 0.198 and the engine returns
+`ft-normal`. All three readouts were extracted **by script** into
+`lib/kits/sampleReadout.ts` and verified token-for-token (**194 data tokens
+identical**), so the LPs render the swept data. A redesign may not re-type a
+clinical verdict, and a second transcription is what produced the defect.
+
+### 🔴 THE FINDING THAT MATTERS MOST, AND IT IS OWED TO KEITH
+
+**Thirteen sentences across seven surfaces tell a buyer there is no
+subscription. The auto-renew ruling made all thirteen false.**
+
+`/kits` says *"no subscription unless you choose one"*; the three `/kits/*` pages
+say *"One-off purchase..."* twice each; the three kit LPs carry *"No
+subscription."* / *"One-off purchase."* lines and two FAQ answers. Under
+`2026-09-07-auto-renew-at-day-30.md` nobody chooses a subscription: it arrives
+with the kit and charges on day 31.
+
+🔴 **THE WORST IS CA-026 C1**, rendered verbatim in `/kits`' inverted panel, whose
+own source comment says the redraw changes only the container. Changing it needs a
+fresh CA record.
+
+**None was rewritten.** Approved copy is not a rebuild's to change. What ships
+instead is an interlock: **`scripts/verify-subscription-claims.js`**, new, in
+`npm test`. It lists every claim on every run and **fails whenever
+`MEMBERSHIP_ENABLED` is true while any remains**, so the flag cannot be turned on
+until the copy is swept. Do not edit those sentences to clear it.
+
+⚠ **This is one decision with register row 12a, not two.** The homepage membership
+sentence is the same fact on a ninth surface.
+
+### Keith ruled §4 closed, and the decided half had never been built
+
+The three kit LPs carry the subscription price line (Keith, 2026-09-11), closing
+the last open item in the auto-renew ruling. Doc:
+`../01_strategy/2026-09-11-lp-kit-pages-carry-the-subscription-line.md`.
+
+🔴 **Building it found that the line ruled onto the four `/kits/` routes on
+2026-09-07 existed nowhere in the app** except as a private constant inside
+`/membership`, which 404s with the flag off. It is built now on all seven
+surfaces from one source, `lib/membership/disclosure.ts`, flag-gated.
+
+### Also changed
+
+- **`FHero` gains nothing new this batch**; `FSection`'s `cont` and `narrow` and
+  the `.f-steps-3` modifier from the buy batch all carried the LPs.
+- **`verify-f-scaffold.js` now covers `app/lp`.** The LPs compose `FPage` but
+  could not be MOVED under `(marketing)` (they need the stripped LP chrome), which
+  is the case the check's header did not cover. One documented exception:
+  `app/lp/layout.tsx` wears `.f-page` as the TYPE RAMP for its footer, which is
+  what `Footer.tsx` and `app/auth/layout.tsx` already do.
+
+### Test status at 2026-09-11 (second batch)
+
+`npm test` green, including **nine** design checks now. Production build green,
+run with no dev server listening and a fresh `.next`. All five LPs screenshot at
+1440 and 390 and judged at full resolution; shots in
+`design/mockups/journey/shots/f-lp-2026-09-11/`, not in git.
+
+⚠ **A verification gotcha worth knowing: `shot.js --full` leaves a fixed-header
+page mid-scroll**, and the stitched capture then shows the hero apparently
+clipped with its first heading lines missing. It is an artifact, not a defect.
+Confirm with `--no-walk` at viewport height before chasing it.
+
+## ▶️ Previous handoff, 2026-09-11 (first batch: the buy stage)
 
 Written to be carried into the next chat. Everything below resolves by grep,
 without that conversation.

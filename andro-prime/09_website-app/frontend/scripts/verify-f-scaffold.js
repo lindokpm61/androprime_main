@@ -61,7 +61,15 @@ const fs = require('fs')
 const path = require('path')
 
 const ROOT = path.resolve(__dirname, '..')
-const SCOPE = [path.join(ROOT, 'app', '(marketing)'), path.join(ROOT, 'components', 'marketing')]
+/* `app/lp` joined the scope on 2026-09-11, when the five landing pages were
+   rebuilt in Direction F and composed `FPage`. They could not be MOVED under
+   `(marketing)` the way this file's header describes, because they need the
+   stripped LP chrome from their own layout, so scope had to widen to reach them.
+   That is the case the header's "they come into scope by being moved" sentence
+   did not cover: a route can be a marketing PAGE assembly while wearing
+   different chrome. Without this they would compose the scaffold by convention
+   alone, which is the exact state this check exists to replace. */
+const SCOPE = [path.join(ROOT, 'app', '(marketing)'), path.join(ROOT, 'app', 'lp'), path.join(ROOT, 'components', 'marketing')]
 const OWNER = path.join(ROOT, 'components', 'marketing', 'FPage.tsx')
 
 function die(m) { console.error(`ERROR: ${m}`); process.exit(1) }
@@ -103,10 +111,22 @@ const RULES = [
 // assembly: an FHero variant with a single caller would be worse than this line.
 const ALLOW = [
   { file: 'app/(marketing)/page.tsx', what: 'the hero ground', why: 'the homepage hero is the film, not the shared field' },
+  /* 🔴 `.f-page` ON A LAYOUT IS THE TYPE RAMP, NOT A PAGE ROOT, AND DESIGN.md
+     draws exactly that distinction: *"`.f-page` is the type ramp; `FPage` is the
+     page assembly"*. `globals.css` sets `p { @apply font-serif }` for V2.0, so
+     any F surface without `.f-page` renders in Merriweather about 8% under its
+     drawn size and nothing errors. CHROME therefore has to carry it itself:
+     `components/shared/Footer.tsx` wears `f-footer f-page` and
+     `app/auth/layout.tsx` is a bare `.f-page` wrapper, both for this reason, and
+     both sit outside this check's scope so neither was ever an exception.
+     `app/lp/layout.tsx` is the first one inside it. Composing `FPage` here
+     instead would be wrong twice over: a layout is not a page, and it would wrap
+     the compliance footer in a section counter. */
+  { file: 'app/lp/layout.tsx', what: 'the page root', why: 'a layout supplies the TYPE RAMP to its chrome; the pages inside it compose FPage' },
 ]
 
 console.log('Direction F scaffold: pages compose it rather than hand-writing it\n')
-console.log(`  ${files.length} files in scope (app/(marketing), components/marketing)`)
+console.log(`  ${files.length} files in scope (app/(marketing), app/lp, components/marketing)`)
 console.log(`  ${RULES.length} assemblies owned by ${rel(OWNER)}\n`)
 
 let fail = 0

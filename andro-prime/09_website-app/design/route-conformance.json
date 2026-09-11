@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-10",
+  "generated": "2026-09-11",
   "base": "http://localhost:3000",
   "rows": [
     {
@@ -293,12 +293,12 @@
       "href": "/lp/collagen",
       "file": "app/lp/collagen/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 49,
+      "verdict": "F",
       "note": "",
       "source": {
-        "scaffold": false,
-        "classes": 0
+        "scaffold": true,
+        "classes": 30
       }
     },
     {
@@ -306,12 +306,12 @@
       "href": "/lp/daily-stack",
       "file": "app/lp/daily-stack/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 49,
+      "verdict": "F",
       "note": "",
       "source": {
-        "scaffold": false,
-        "classes": 0
+        "scaffold": true,
+        "classes": 30
       }
     },
     {
@@ -319,12 +319,12 @@
       "href": "/lp/energy-recovery",
       "file": "app/lp/energy-recovery/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 64,
+      "verdict": "F",
       "note": "",
       "source": {
-        "scaffold": false,
-        "classes": 0
+        "scaffold": true,
+        "classes": 52
       }
     },
     {
@@ -332,12 +332,12 @@
       "href": "/lp/hormone-recovery",
       "file": "app/lp/hormone-recovery/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 75,
+      "verdict": "F",
       "note": "",
       "source": {
-        "scaffold": false,
-        "classes": 0
+        "scaffold": true,
+        "classes": 62
       }
     },
     {
@@ -345,12 +345,12 @@
       "href": "/lp/testosterone",
       "file": "app/lp/testosterone/page.tsx",
       "status": 200,
-      "classes": 0,
-      "verdict": "not rebuilt",
+      "classes": 66,
+      "verdict": "F",
       "note": "",
       "source": {
-        "scaffold": false,
-        "classes": 0
+        "scaffold": true,
+        "classes": 52
       }
     },
     {

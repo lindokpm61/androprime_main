@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Logo } from './Logo'
 import { hrefFor, isCrossHost } from '@/lib/hosts'
+import { lpCtaFor } from '@/lib/lp/cta'
 
 type NavVariant = 'marketing' | 'lp' | 'app'
 
@@ -131,6 +133,10 @@ export function Nav({
 }: NavProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  /* Called unconditionally, as a hook must be, and only read for the LP
+     variant. This component is already `'use client'`, so it costs no dynamic
+     rendering: the marketing tree's static prerender is untouched. */
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -160,9 +166,20 @@ export function Nav({
       : marketingLinks
   const showLinks = variant !== 'lp'
 
+  /* 🔴 THE LP CALL TO ACTION IS LOOKED UP, NOT DEFAULTED, SINCE 2026-09-11.
+     It used to fall back to `Order Now` / `#order` whenever the props were
+     absent, and they have never once been passed: the LP layout renders this
+     nav and a layout cannot read the pathname without making the whole tree
+     dynamic. On the three kit landing pages the fallback happened to be right,
+     because each carries an `id="order"`. On `/lp/collagen` and
+     `/lp/daily-stack` it was an "Order Now" button that scrolled nowhere, on
+     pages whose own FAQ says no supplement orders are being taken. The map and
+     the reasoning are in `lib/lp/cta.ts`. An explicit prop still wins. */
+  const lpCta = lpCtaFor(pathname)
+
   const ctaConfig =
     variant === 'lp'
-      ? { text: lpCtaText ?? 'Order Now', href: lpCtaHref ?? '#order' }
+      ? { text: lpCtaText ?? lpCta.text, href: lpCtaHref ?? lpCta.href }
       : variant === 'marketing'
         ? { text: 'Choose your test', href: '/kits' }
         : variant === 'app'

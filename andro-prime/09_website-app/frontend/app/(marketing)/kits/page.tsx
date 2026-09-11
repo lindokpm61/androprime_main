@@ -16,6 +16,7 @@ import {
 // KitType is owned by lib/results/types, which is where panel.ts imports it from.
 import type { KitType } from '@/lib/results/types'
 import { JsonLd } from '@/components/shared/JsonLd'
+import { MembershipDisclosure } from '@/components/commerce/MembershipDisclosure'
 
 /**
  * /kits, rebuilt in Direction F on 2026-08-30 from
@@ -552,6 +553,24 @@ export default function KitsPage() {
           Collection takes five minutes. Results land in your Andro Prime dashboard, not the lab
           portal.
         </p>
+
+        {/* THE SUBSCRIPTION PRICE LINE, ruled 2026-09-07 §4 for all four `/kits/`
+            routes including this index, and built 2026-09-11.
+
+            ⚠ ONCE UNDER THE GRID, NOT THREE TIMES INSIDE IT, and the placement is
+            argued rather than convenient. §4 says "under the CTA", and on the
+            three PRODUCT pages that is literally the buy button. This page's
+            three CTAs are `Start a baseline` links that route to those product
+            pages; no purchase begins here. The sentence is also identical for all
+            three kits, so putting it in each card would be the tick-list mistake
+            this section already fixed once: one fact about all three kits, stated
+            three times, differentiating nothing. It sits directly under the same
+            fine-print block that carries the other such fact.
+
+            Renders nothing while `MEMBERSHIP_ENABLED` is off. */}
+        <MembershipDisclosure
+          style={{ textAlign: 'center', maxWidth: '105ch', marginInline: 'auto' }}
+        />
       </section>
 
       {/* ---------- SECTION 03: THE MONEY BLOCK ----------
