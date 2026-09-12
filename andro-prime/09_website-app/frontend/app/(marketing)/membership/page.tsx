@@ -12,6 +12,7 @@ import {
   MEMBERSHIP_FIRST_CHARGE_DAY,
 } from '@/lib/membership/disclosure'
 import { FIRST_CYCLE_RETEST_DAYS, ANNUAL_RETEST_DAYS } from '@/lib/membership/entitlement'
+import { MEMBERSHIP_INCLUDES as includes } from '@/lib/membership/includes'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { SIZES_HEROGRID } from '@/lib/ui/image-sizes'
@@ -221,16 +222,13 @@ const timeline = [
   },
 ]
 
-/* ⚠ CARRIED VERBATIM from the in-app paywall's `<ul className="membership__
-   includes">`. Three items, not four: "member price on kits" came off on
-   2026-08-26 because kits are never discounted, and member pricing on
-   supplements is not listed because it has no delivery path. Do not add a
-   fourth without checking that document. */
-const includes = [
-  'Your plan, your streak and your daily data, kept running.',
-  'Every marker explained against both ranges, ours and your lab’s.',
-  'Ask the clinician. Questions answered every month, published for all members.',
-]
+/* ⚠ THE THREE INCLUDES MOVED TO `lib/membership/includes.ts` ON 2026-09-12 and
+   are imported at the top of this file as `includes`, so nothing below changes.
+   They were a local array here carrying a comment that said they were CARRIED
+   VERBATIM from the in-app paywall — an assertion that two copies agree, which
+   is an unenforced intention. `/subscription/confirmed` needed them a third
+   time, and three copies of a benefit list is where it starts to matter which
+   one is right. The module holds the "three items, not four" argument. */
 
 /* What the membership does NOT gate. Every line is a negation of something we
    could have charged for and do not, which is the same shape as the approved

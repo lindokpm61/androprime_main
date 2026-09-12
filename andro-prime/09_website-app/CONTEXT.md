@@ -18,7 +18,7 @@ The site is **one Next.js application** under `frontend/`, not separate static-H
 - `app/auth/*`: passwordless auth flows (login/signup/link/consent + callback/logout/post-checkout route handlers).
 - `app/lp/*`: direct-response landing pages. `noindex` per-page (`robots: { index: false }`) and disallowed in `app/robots.ts`.
 - `app/api/*`: all backend route handlers (webhooks, checkout, forms, jobs, OG images).
-- `app/activate/*`: **deprecated 2026-06-12** (login-gated per-order activation scrapped; auth is already passwordless via `/auth/post-checkout`). Still present, slated for removal.
+- `app/activate/*`: **deprecated 2026-06-12, retired 2026-09-12.** The page is now a one-line `redirect()` to `/how-to-sample`, the replacement that decision named; its layout and `styles/pages/activate.css` are deleted. `app/api/activate/route.ts`, `lib/activate/*` and `components/activate/*` remain, with their deprecation headers and **no caller**, because that decision chose marked-not-deleted so it stays reversible. The login gate, the per-order kit code and all three error states are gone; the five instruction steps live on `/how-to-sample` byte for byte.
 - `app/admin/dashboard/`: internal admin metrics.
 
 Blog content lives in the **Supabase `blog_articles` table** (DB is the source of truth as of the Phase-1 content-engine decoupling, migration `20260619_blog_articles_db_backed.sql`). `lib/blog.ts` reads it (anon + published-only RLS for the public path; service-role for drafts/preview), rendered by `app/(marketing)/blog/[slug]/page.tsx` via `next-mdx-remote/rsc`. Visibility is the `status` column (`draft|published|archived`); publishing/editing/takedown is a DB write surfaced by **on-demand revalidation** (`app/api/revalidate` → `revalidateTag('blog'|'article:<slug>')`, 1h ISR backstop), **no Coolify redeploy**. `frontend/content/blog/*.mdx` is now a **backup mirror + import source**, not the live source: authoring still uses `/article` + `/publish-article` on MDX files, then `scripts/import-blog-to-db.ts` bridges file → DB (Phase 2 will move authoring directly onto the DB write path `upsert_blog_article()`). See `06_marketing/seo-ai-search/` + the SEO memory notes for the content engine.
@@ -93,6 +93,7 @@ The sequenced build plan lives in `docs/implementation-plan.md` (plus `phase5/6/
 | `/supplements`, `/supplements/daily-stack`, `/supplements/collagen` | `(marketing)/supplements/...` |
 | `/test-selector`, `/waitlist`, `/supplement-waitlist`, `/founding-member` | `(marketing)/...` |
 | `/how-it-works`, `/faq`, `/contact`, `/privacy`, `/terms` | `(marketing)/...` |
+| `/how-to-sample` (built 2026-09-12, `noindex, follow`, not in `app/sitemap.ts`; the public no-login sample instructions behind the kit-insert QR, replacing `/activate`) | `(marketing)/how-to-sample/page.tsx` |
 | `/checkout/details`, `/order/confirmed`, `/subscription/confirmed` | `(marketing)/...` |
 
 ### Authenticated: `app/(app)/` (protected by `middleware.ts`)

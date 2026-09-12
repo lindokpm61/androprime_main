@@ -4,7 +4,177 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-12 (fourth batch: the three shared membership components)
+## ▶️ PICK UP HERE — handoff, 2026-09-12 (fifth batch: the last three routes, and the measurable site is 100% Direction F)
+
+### THE BATCH NUMBERING, CLOSED
+
+| Batch | Scope |
+|---|---|
+| 1 | The buy stage: `/checkout/details`, `/order/confirmed` |
+| 2 | The five `/lp/*` landing pages |
+| 3 | The seven gated app routes |
+| 4 | The three `components/membership/*` pieces batch 3 left on V2.0 |
+| 5 | **The last three measurable routes**, plus the one new page (this handoff) |
+
+The batch-4 table said of batch 5: *"Not named. Do not assume one exists."* Keith
+named it the same day, as "build out the three outstanding pages".
+
+**`design/route-conformance.md`: 33 of 36 to 36 of 36 (92% to 100%).** Every
+measurable route on the site is Direction F. Seven gated routes still cannot be
+measured anonymously and are unchanged; `/activate` moves into the EXCLUDED list
+beside `/founding-member`, as a retired route rather than an unmeasured one.
+
+### 🔴 NOT ONE OF THE THREE WAS A RESTYLE, WHICH IS WHY THEY WERE LAST
+
+Each had a reason it had been skipped, and in two cases the reason was that
+something other than design was wrong with the page.
+
+**1. `/subscription/confirmed` was confirming a product that cannot be bought.**
+It read *"Your stack is starting"*, *"First box dispatching this week"*, *"First
+box ships ... Free UK delivery. Letterbox-friendly"* and *"UK manufactured"*. All
+three supplement subscriptions are `purchasable: false` in
+`lib/subscriptions/products.ts`: retired, kept only so an existing holder's row
+still renders a name, and structurally impossible to check out because a retired
+entry has no `stripePriceEnv` to resolve. **The only purchasable subscription is
+the membership, and the membership has no physical goods** (Keith, 2026-08-26).
+So the single `success_url` of `app/api/checkout/subscription/route.ts` was
+promising a letterbox-friendly box to the only customer who can ever reach it.
+
+⚠ **Not a live mis-statement today, on two counts, and both can change.**
+`MEMBERSHIP_ENABLED` is off in production, and the flag gates the checkout POST
+on the server as well as the UI, so no subscription of any kind can currently be
+started. The branch also deploys nothing. It becomes a live mis-statement the
+moment the flag goes on.
+
+**The rebuild is a rewrite, and it is assembled from approved strings**: the
+renewal and cancellation sentences are `/membership`'s, the retest heading is its
+§03 heading, the retest terms and the three includes are the in-app paywall's,
+the clinician qualifier is the one the Guardrail #1 pre-flight added at register
+row 32c, and the price is read from `PRODUCT_MAP` rather than typed. The page
+carried **no register row and no CA record**, so this is a correctness fix to
+unregistered copy rather than a rewrite of approved copy. Register rows 45, 45a.
+
+**2. `/activate` was a deprecation nobody had finished.** Deprecated 2026-06-12
+(`docs/2026-06-12-activate-qr-deprecation.md`, owner Keith), which named its
+replacement and left it unbuilt for three months. The route is now a
+`redirect()` to **`/how-to-sample`**, built from Frame AD, whose five steps are
+the deprecated page's `INSTRUCTIONS` array byte for byte. `app/activate/layout.tsx`
+and `styles/pages/activate.css` are deleted with the body, which leaves **one**
+V2.0 page stylesheet standing: `dashboard-panels.css`, held open by
+`DevFixtureBar`. The deprecated API, lib and components under `activate/` are
+left in place with their headers, per that decision's marked-not-deleted call,
+and they now have no caller.
+
+**3. `/not-found` kept every word and lost two live defects.** Frame AI is a
+record of the page built on 2026-08-29 rather than a proposal, so the rebuild
+made the two structural decisions the frame could not: **no tray** (a card holds
+a transaction or an instrument under the containment ruling of 2026-09-02, and an
+apology is neither), and **the six routes back are `.f-xlinks` chips** rather
+than an underlined column, which is the shipped pattern for a short row of places
+to go instead. The two defects: `<main>` carried `pt-20`, V2.0's flush-bar
+clearance, under a floating nav that needs 92/104, which is the same defect batch
+3 found on the app layout; and the page carried **no `.js` gate and no reveal
+observer**, because `RevealGate` lives in the two layouts that carry F pages and
+the 404 is in neither.
+
+### 🔴 A REVEAL TARGET CAN LAND IN A BAND WHERE IT IS VISIBLE TO THE READER AND ABSENT TO THE OBSERVER
+
+`/how-to-sample` failed `verify-scroll-reveal.js` with *"nothing left hidden in
+the first screen: want 0, got 1"*, and the diagnosis generalises past this page.
+`ScrollReveal` reveals on `rootMargin: '0px 0px -12%'` with `threshold: 0.08`, so
+**anything whose top lands between the 88% line and the bottom of the viewport is
+inside the first screen and not yet "arriving"**: it paints at opacity 0 until the
+reader scrolls. The five-step list begins at 751px in a 900px viewport, and as one
+target 7% of a 590px element fell inside the reduced root against a threshold of
+8%. **Six pixels.** Moving `.f-rise` onto each step did not fix it, it moved it:
+step 02 then sat at 850px with 0% inside the root.
+
+**The answer was not a smaller target, it was no target.** The steps carry no
+reveal at all: this is a procedure someone follows while holding a lancet, and
+the direction's own rule is that nothing which moves carries information.
+
+⚠ **The check now NAMES the stuck element** (class, top edge, and its share of the
+reduced root) instead of reporting a count. A count starts a hunt; the top edge is
+the identity and the diagnosis at once. It also learned that **`/not-found` is a
+file and not a URL**: it is reached by asking for a path that does not exist, and
+its correct status is 404, so `EXAMPLES` now maps it and is consulted for every
+route rather than only for ones with a `[slug]` in them. That `else` silently
+meant "a route with no bracket is its own URL", which was true of every route
+until this one.
+
+### 🔴 TWO ENVIRONMENT FINDINGS, AND BOTH WOULD HAVE BEEN REPORTED AS SOMETHING ELSE
+
+1. **`NEXT_PUBLIC_APP_URL` MUST BE IN `.env.local`. PASSING IT ON THE `npm run dev`
+   COMMAND LINE DOES NOTHING**, and the instruction in `scripts/route-conformance.js`
+   said to pass it on the command line. `lib/hosts.ts` is imported by
+   `middleware.ts`, which compiles to the EDGE runtime, where a `NEXT_PUBLIC_*`
+   value is inlined from the env FILES rather than read from the shell environment
+   of the dev process. The middleware therefore kept its production `https://`
+   default and **all fourteen app-host routes failed to load**, which the
+   conformance report shows as `[-1]` and reads as a broken app. `MEMBERSHIP_ENABLED`
+   on the same command line arrived perfectly, because it is read in a server
+   component: **the variable that works is what makes the missing one look
+   impossible.** Corrected in the script's header and in `.env.example`. OBS-728.
+2. ⚠ **THE DEV SERVER THIS SESSION STARTED WAS NOT THE DEV SERVER IT MEASURED.**
+   Port 3000 was still held by a server left running by the batch-4 session
+   nineteen hours earlier; `next dev` printed *"Port 3000 is in use ... using
+   available port 3001 instead"*, then `Ready`, and the readiness wait passed on
+   that line. Every probe, the conformance run, the motion check and four
+   screenshots went to the orphan. Harmless here (same working tree, same flag,
+   and Next recompiles on change, so the code measured was current) and that is
+   exactly why it would have gone unnoticed: every result was plausible. It
+   surfaced only when a build guard reported a stray listener after everything was
+   supposedly stopped. **Check the port your process actually bound, not the one
+   you meant to use.** OBS-729.
+
+### 🔴 WHAT IS STILL NOT DONE
+
+- 🔴 **THE HOW-TO-SAMPLE FILM DOES NOT EXIST, AND NEITHER DOES THE QR.** The
+  2026-06-12 decision's replacement is "a short how-to-sample video plus the step
+  text, linked from a generic QR ... on the kit insert, NOT the packaging sleeve".
+  The page ships **without the film and without mentioning it**: Frame AD draws an
+  empty slot captioned "does not exist yet", which is the honest way to draw a
+  dependency in a mockup and the wrong thing to put in front of a man holding a
+  lancet. When the film exists it goes between the standfirst and the steps.
+  Nothing prints the QR today. Both owed to Keith.
+- ⚠ **`/how-to-sample` is `noindex, follow` and deliberately absent from
+  `app/sitemap.ts`**, on the reading that it is a support page behind a QR rather
+  than an acquisition page. Making it indexable is a content decision, not a build
+  one, and Keith can flip it.
+- **Register rows 44 and 45 are owed to Keith**: two new sentences of standfirst on
+  `/how-to-sample`, and the new sentences on `/subscription/confirmed` (standfirst,
+  eyebrow, retest-date fallback, and the whole "nothing to confirm" state). No
+  clinical claim is involved in either, so neither is Ewa's.
+- ⚠ **A THIRD COPY OF `formatDate` NOW EXISTS.** `/account`, `/account/membership`
+  and `/subscription/confirmed` each define the same one-line en-GB long-date
+  formatter. Not collapsed here because the other two sit inside pages verified by
+  screenshot in batches 3 and 4, and the collapse is worth one pass through all
+  three rather than a shared module with one consumer and two untouched siblings.
+- ⚠ **`getMembershipView` and the new `latestMembershipForUser` run the same query
+  on the same three columns.** Not collapsed for the same reason: that module is
+  what `/account/membership` renders and `scripts/test-membership.ts` covers it.
+- Carried, untouched by this batch: `ResultEducate`, `ResultExplain` and
+  `ResultValue` still have zero consumers; the em dash in CA-014 consent copy is
+  still live; **the retest comparison page is still not built** and is shaped by
+  the undecided `869eyg5bh`; **Ewa still owes the movement threshold**, not yet
+  drafted or sent.
+- The `/demo` presentation decision (`869ez4jrt`) and the density question
+  (`869erraqd`) are still open and this batch did not touch them.
+
+### Test status at 2026-09-12 (fifth batch)
+
+`npm test` green, exit 0, including all nine design checks and a regenerated
+`design/route-conformance.md`. `npm run test:design:live`: **168 passed, 2
+failed**, and both failures are the documented pre-existing pair (`/privacy` and
+`/terms` inject canonical legal HTML and carry no `.f-rise`). The 404 now passes
+all five of its motion assertions, which it could not be asked before.
+`audit-dark-contrast.js`: 16 routes, **0 failing text nodes**. **Production build
+green, exit 0**, run with no dev server listening and a fresh `.next`. All three
+pages screenshot at 1440 and read against the frames.
+
+---
+
+## ▶️ Previous handoff, 2026-09-12 (fourth batch: the three shared membership components)
 
 ### THE BATCH NUMBERING, extended
 

@@ -2,7 +2,15 @@
 
 **Version:** 1.0
 **Date:** 2026-04-24
-**Status:** Active
+**Status:** 🔴 **SUPERSEDED 2026-09-12. THE SCREEN THIS DOCUMENT SPECIFIES NO LONGER EXISTS.**
+
+> `/activate` was deprecated on 2026-06-12 (`../2026-06-12-activate-qr-deprecation.md`) and retired on
+> 2026-09-12: the route is now a redirect to **`/how-to-sample`**, which has no sign-in, no kit code
+> and none of the five states below. The banner underneath says this document stayed authoritative
+> for "content, states, copy, routes and behaviour" once its surface treatment was superseded; that
+> is no longer true either, with one exception. **The five instruction steps survive**, byte for
+> byte, on the replacement page. Everything else here describes a flow that was served and
+> unreachable for its whole life, because nothing ever printed the per-order QR it required.
 
 > 🔴 **SURFACE TREATMENT SUPERSEDED 2026-08-29. The Tailwind class strings in this document encode
 > Brand V2.0** (`rounded-none`, `border-2 border-black`, no shadow, black-on-white badges). Keith demoted

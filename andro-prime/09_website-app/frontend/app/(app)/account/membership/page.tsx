@@ -4,6 +4,7 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { isMembershipEnabled } from '@/lib/flags'
 import { getMembershipView } from '@/lib/membership/getMembershipView'
 import { firstRetestDueAt } from '@/lib/membership/entitlement'
+import { MEMBERSHIP_INCLUDES, MEMBERSHIP_RETEST_TERMS } from '@/lib/membership/includes'
 import { PRODUCT_MAP } from '@/lib/subscriptions/products'
 import { CheckinRow } from '@/components/membership/CheckinRow'
 import { AdherenceChart } from '@/components/membership/AdherenceChart'
@@ -449,24 +450,20 @@ export default async function MembershipPage({ searchParams }: PageProps) {
               <p className="f-blab" style={{ marginBottom: 8 }}>
                 Join today and your retest falls on {formatDate(projectedRetest)}
               </p>
-              <p className="f-sub">
-                Included while you are a member. You need to be a member on that date. It is not a
-                credit, it does not expire, and there is no balance to keep track of.
-              </p>
+              <p className="f-sub">{MEMBERSHIP_RETEST_TERMS}</p>
             </div>
 
             {/*
-              Three benefits, not four. "Member price on kits" came off on
-              2026-08-26: kits are never discounted, for anyone, because the
-              member's benefit is the included retest and discounting on top of it
-              undercuts the economics the offer window protects. Member pricing is
-              for supplements, and a paywall must not list a benefit that has no
-              delivery path yet.
+              Three benefits, not four, and the argument for that moved with the
+              strings to `lib/membership/includes.ts` on 2026-09-12. This list,
+              the public `/membership` page and `/subscription/confirmed` now read
+              one export, so the paywall's promise and the confirmation of it
+              cannot drift apart. No word changed in the move.
             */}
             <ul className="f-inclu">
-              <li>Your plan, your streak and your daily data, kept running.</li>
-              <li>Every marker explained against both ranges, ours and your lab&rsquo;s.</li>
-              <li>Ask the clinician. Questions answered every month, published for all members.</li>
+              {MEMBERSHIP_INCLUDES.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
 
             <div style={{ marginTop: 26 }}>

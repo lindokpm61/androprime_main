@@ -2,7 +2,24 @@
 
 **Version:** 1.0
 **Date:** 2026-04-24
-**Status:** Active
+**Status:** 🔴 **SUPERSEDED 2026-09-12. THE FLOW THIS DOCUMENT MAPS NO LONGER EXISTS.**
+
+> The login-gated, per-order kit-activation flow was **deprecated on 2026-06-12** (Keith,
+> `../../09_website-app/docs/2026-06-12-activate-qr-deprecation.md`) and the route was **retired on
+> 2026-09-12**: `/activate` now redirects to **`/how-to-sample`**, a single public page with no
+> sign-in and no kit code, carrying the same five instruction steps.
+>
+> **What is still true here:** the purpose section's own caveat, that activation was an engagement
+> step and never a technical requirement: Vitall matches sample to order at dispatch, and results
+> arrive whether or not the customer scans anything. That is the finding the deprecation acted on.
+>
+> **What is no longer true:** every screen, state, QR and API step below. The per-order QR was never
+> printed by anyone, so the flow was served and unreachable for its whole life. The replacement QR
+> is generic, identical on every kit insert, and **not yet printed either**; the how-to-sample film
+> the replacement page is meant to carry **does not exist**. Both are owed to Keith.
+>
+> Kept rather than deleted because the engagement question it raises (started vs drawer) outlived
+> the mechanism, and because the deprecation decision chose reversible.
 
 ## Purpose
 

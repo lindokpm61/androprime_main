@@ -693,6 +693,32 @@
    `.f-steps`, so `.f-steps.f-steps-3` at (0,2,0) beats the base's (0,1,0) on
    specificity rather than on where it sits in this file. */
 @media (min-width: 1040px) { .f-steps.f-steps-3 { grid-template-columns: repeat(3, 1fr); } }
+/* A ONE-COLUMN STEP LIST. Added 2026-09-12 with `/how-to-sample`, whose
+   procedure is five steps.
+
+   ⚠ FIVE IS THE COUNT THAT CANNOT FILL THIS GRID AT ALL. Three items leave a
+   quarter-row empty at 1040, which is what `.f-steps-3` above exists to fix;
+   five leaves a cell empty at four-up AND at two-up, so there is no breakpoint
+   where a multi-column arrangement is whole. The `.f-steps-3` argument holds
+   harder here: an empty cell in a numbered sequence reads as a step somebody
+   forgot, and this sequence is instructions for drawing blood.
+
+   THE SECOND REASON IS THE READER, and it is the stronger one. This is the only
+   grid on the site that someone follows WHILE DOING THE THING: one step at a
+   time, one-handed, having just pricked his finger. A grid asks him to scan
+   sideways mid-task and to hold his place in two dimensions. One column is the
+   shape of a procedure.
+
+   NO ROW-GAP RULE, deliberately. `.f-steps` carries `gap: 0 34px`, so a stacked
+   list is separated by `.f-step`'s own border-top and its 16px of padding — the
+   rhythm every steps section on the site already ships at phone widths.
+
+   COMPOUNDED ONTO THE BASE, per the two fix shapes in
+   `verify-modifier-specificity.js`: `.f-steps-1` is never worn without
+   `.f-steps`, so `.f-steps.f-steps-1` at (0,2,0) beats the base's (0,1,0) on
+   specificity. One rule, and no media query, because it beats both of the
+   base's breakpoint rules on specificity rather than on order. */
+.f-steps.f-steps-1 { grid-template-columns: 1fr; }
 /* 🔴 ONE CONTAINMENT GRAMMAR, 2026-09-02. The four prose grids on the F pages
    (steps, spec rows, biomarker cards, FAQ answers) were four boxed treatments of
    the same thing: a short block of prose in a rounded well. Under the containment
@@ -1638,7 +1664,17 @@
    emphasis marks a reference the reader can act on, and dressing an apology in
    the same treatment as the real thing is how a design starts lying about which
    state is which. */
-.f-oref {
+/* `.f-rdue` JOINED IT 2026-09-12, and the pairing is deliberate rather than
+   lazy. It is the retest date on `/subscription/confirmed`: a second value, on a
+   second confirmation page, read the same way and compared against the same kind
+   of external record. That is the SAME component at a different value, which is
+   what a shared declaration is for — and it is the opposite of the `.f-mk-v`
+   collision refused above, where two UNRELATED components would have shared one
+   selector and moved each other by accident. If these two ever need to diverge,
+   the answer is to split the block, not to reach for the other one's name.
+   The resolved-state-only rule above governs both: the fallback on either page
+   is a sentence in `.f-sub`. */
+.f-oref, .f-rdue {
   display: block; margin: 6px 0 10px;
   font-family: var(--font-mono); font-size-adjust: none;
   font-weight: 600; font-size: 26px; letter-spacing: -0.02em;

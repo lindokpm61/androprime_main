@@ -3,7 +3,22 @@
  * Measure every route against Direction F and write the answer into the repo.
  *
  *   # in another terminal, and BOTH env vars matter — see below
- *   MEMBERSHIP_ENABLED=true NEXT_PUBLIC_APP_URL=http://app.andro-prime.com npm run dev
+ *   MEMBERSHIP_ENABLED=true npm run dev
+ *
+ * 🔴 BUT `NEXT_PUBLIC_APP_URL` MUST BE IN `.env.local`, NOT ON THAT COMMAND
+ * LINE (found 2026-09-12). The line above used to carry it and it does not work:
+ * `lib/hosts.ts` is imported by `middleware.ts`, which compiles to the EDGE
+ * runtime, and a `NEXT_PUBLIC_*` value is inlined there from the env FILES
+ * rather than read from the shell environment of `next dev`. Passing it on the
+ * command line leaves `APP_URL` at its production `https://` default inside the
+ * middleware while `MEMBERSHIP_ENABLED` (read in a server component, node
+ * runtime) arrives perfectly — so the flag proves the env "worked" and the host
+ * variable is silently absent. Every app-host route then fails to load and this
+ * script reports fourteen `[-1]`s, which reads as a broken app rather than a
+ * missing line in a file.
+ *
+ *   # .env.local — the http:// form matters, see below
+ *   NEXT_PUBLIC_APP_URL=http://app.andro-prime.com
  *   node scripts/route-conformance.js        # writes design/route-conformance.md
  *   node scripts/route-conformance.js --base http://localhost:3001
  *
@@ -99,6 +114,7 @@ const SAMPLES = {
 // Not part of the public surface, so not part of the count. Each says why.
 const EXCLUDED = {
   '/founding-member': 'retired, 307s to /kits',
+  '/activate': 'retired 2026-09-12, 307s to /how-to-sample (deprecated by the QR decision of 2026-06-12)',
   '/admin/dashboard': 'internal, no public UI',
   '/ops/content': 'internal, no public UI',
   '/go': 'internal redirect, no UI',

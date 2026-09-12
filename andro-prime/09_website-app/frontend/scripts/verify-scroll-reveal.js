@@ -75,7 +75,20 @@ const originFor = (u) => (onAppHost(u) ? APP_FETCH_ORIGIN : BASE);
    Dynamic segments are given a real example, because /blog/[slug] is not a URL.
    A route in the report with no example here is skipped and SAID to be skipped,
    rather than silently dropped. */
-const EXAMPLES = { '/authors/[slug]': '/authors/dr-ewa-lindo' };
+/* ⚠ `/not-found` IS A FILE, NOT A URL. It renders in response to any unmatched
+   path, so the only way to reach it is to ask for one, and its correct status is
+   404. It entered this check on 2026-09-12 by being rebuilt in Direction F:
+   before that it carried no `.f-rise`, so the Rebuilt table did not list it and
+   this loop never saw it. Without the pair below it fails as "a bad example
+   URL", which is the message this check gives a 404 — correct for a mistyped
+   example, wrong for the page whose entire job is to be the 404. */
+const EXAMPLES = {
+  '/authors/[slug]': '/authors/dr-ewa-lindo',
+  '/not-found': '/this-url-does-not-exist-and-that-is-the-point',
+};
+/* Example URLs whose CORRECT status is not 200, keyed by the example rather
+   than the route, since the example is what `goto` is given. */
+const EXPECT_STATUS = { '/this-url-does-not-exist-and-that-is-the-point': 404 };
 /* /blog/[slug] is RESOLVED from the listing rather than written down: a
    hand-picked slug can be unpublished, and the first guess here (a plausible
    'what-is-shbg') 404d, which would have failed this check with a message about
@@ -118,8 +131,14 @@ function rebuiltRoutes() {
     // no longer a reason to skip anything, and this list is back to meaning what
     // it says: surfaces with no motion to verify.
     if (/^\/(auth|account|results-dashboard|subscriptions|founding-member-status|supplement-waitlist-status)(\/|$)/.test(r)) { offHost.push(r); continue; }
-    if (!r.includes('[')) out.push(r);
-    else if (EXAMPLES[r]) out.push(EXAMPLES[r]);
+    // EXAMPLES IS CONSULTED FIRST, not only for dynamic segments. It used to be
+    // the `else` of the bracket test, which silently meant "a route with no
+    // `[...]` in it is its own URL" — true of every route until `/not-found`,
+    // which has no bracket and is still not a URL. An example table that only
+    // applies to the one case it was written for is a table with a hidden
+    // precondition.
+    if (EXAMPLES[r]) out.push(EXAMPLES[r]);
+    else if (!r.includes('[')) out.push(r);
     else skipped.push(r);
   }
   if (skipped.length) console.log(`  note  skipped (no example URL in EXAMPLES): ${skipped.join(', ')}`);
@@ -197,8 +216,9 @@ const visibility = () => {
     const resp = await p.goto(originFor(route) + route, { waitUntil: 'networkidle0', timeout: 120000 });
     // A bad EXAMPLE must not read as a broken page. Without this, a 404 fails
     // "has reveal targets" and sends the reader looking at the motion layer.
-    if (resp && resp.status() !== 200) {
-      fail++; console.log(`  FAIL ${route}: returned ${resp.status()}, so this is a bad example URL, not a motion defect`);
+    const wantStatus = EXPECT_STATUS[route] ?? 200;
+    if (resp && resp.status() !== wantStatus) {
+      fail++; console.log(`  FAIL ${route}: returned ${resp.status()}, want ${wantStatus}, so this is a bad example URL, not a motion defect`);
       await p.close(); continue;
     }
     await new Promise((r) => setTimeout(r, 1400));
@@ -208,11 +228,23 @@ const visibility = () => {
     // The real invariant is not that something above the fold animates (the
     // homepage`s first screen is the hero, which carries no reveal target), it
     // is that nothing is left INVISIBLE inside the first screen at load.
+    // ⚠ IT NAMES WHAT IS STUCK, since 2026-09-12. This used to report a COUNT,
+    // and a count starts a hunt: `/how-to-sample` failed with "want 0, got 1"
+    // and the page has four reveal targets, none of them obviously the one. The
+    // class list and the element's top edge are what actually identify it, and
+    // the top edge is the diagnosis as well as the identity — an element whose
+    // visible share of the reduced root is under the observer's 8% threshold is
+    // inside the first screen and not yet "arriving".
     const stuck = await p.evaluate(() => [...document.querySelectorAll('.f-rise')].filter((el) => {
       const r = el.getBoundingClientRect();
       return r.top < window.innerHeight && r.bottom > 0 && parseFloat(getComputedStyle(el).opacity) < 0.99;
-    }).length);
-    t(`${route}: nothing left hidden in the first screen`, stuck, 0);
+    }).map((el) => {
+      const r = el.getBoundingClientRect();
+      const shown = Math.max(0, Math.min(r.bottom, window.innerHeight * 0.88) - Math.max(r.top, 0));
+      return `${el.className} (top ${Math.round(r.top)}, ${Math.round((shown / r.height) * 100)}% of it inside the 88% root)`;
+    }));
+    t(`${route}: nothing left hidden in the first screen`, stuck.length, 0);
+    if (stuck.length) console.log(`       stuck: ${stuck.join(' | ')}`);
 
     // Scroll the whole page, then nothing may be left hidden.
     await p.evaluate(async () => {
