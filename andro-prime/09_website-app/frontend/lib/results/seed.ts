@@ -26,14 +26,44 @@ export interface SeedResult {
   symptomAnswerIds: string[]
 }
 
-export async function seedScenario(scenarioName: ScenarioName): Promise<SeedResult> {
+export interface SeedOptions {
+  /**
+   * The account to seed onto. Defaults to this scenario's own dev account.
+   *
+   * A RETEST IS SEEDED ONTO THE BASELINE'S ACCOUNT, not its own, which is the
+   * only reason this exists: two results belonging to two different people are
+   * not a retest, and the pairing is by user.
+   */
+  email?: string
+  /**
+   * Clear the account's existing orders first. Default TRUE, which is what makes
+   * a plain run idempotent. A retest passes false, because the entire point is
+   * to leave the baseline standing.
+   */
+  clear?: boolean
+  /**
+   * Override the collection date. Defaults to the fixture's own `collectedAt`.
+   *
+   * A retest needs one, because a fixture's date is fixed and two fixtures can
+   * easily carry dates in the wrong order. Which reading is the later one is the
+   * whole basis of a comparison, so it is set explicitly rather than hoped for.
+   */
+  collectedAt?: string
+}
+
+export async function seedScenario(
+  scenarioName: ScenarioName,
+  options: SeedOptions = {},
+): Promise<SeedResult> {
   const scenario = SCENARIOS[scenarioName]
   if (!scenario) {
     throw new Error(`Unknown scenario: ${scenarioName}`)
   }
 
   const supabase = createSupabaseAdminClient()
-  const devEmail = `dev+${scenarioName}@androprime.test`
+  const devEmail = options.email ?? `dev+${scenarioName}@androprime.test`
+  const clear = options.clear ?? true
+  const collectedAt = options.collectedAt ?? scenario.payload.collectedAt
 
   // Create or get test user
   const { data: existingUsers } = await supabase.auth.admin.listUsers()
@@ -96,11 +126,13 @@ export async function seedScenario(scenarioName: ScenarioName): Promise<SeedResu
      `on delete cascade`, so this takes the results, biomarkers and the order's
      symptom answers with it. Check-in answers carry no order_id and are not
      touched here; `seedMember` rewrites those. */
-  const { error: clearError } = await supabase
-    .from('kit_orders')
-    .delete()
-    .eq('user_id', userId)
-  if (clearError) throw new Error(`Failed to clear previous orders: ${clearError.message}`)
+  if (clear) {
+    const { error: clearError } = await supabase
+      .from('kit_orders')
+      .delete()
+      .eq('user_id', userId)
+    if (clearError) throw new Error(`Failed to clear previous orders: ${clearError.message}`)
+  }
 
   // Insert kit_orders row
   const { data: order, error: orderError } = await supabase
@@ -138,7 +170,7 @@ export async function seedScenario(scenarioName: ScenarioName): Promise<SeedResu
          one result; obvious on the trend rail, which puts the date under each
          point and was captioning a April reading "12 Sept". The fixture already
          carries the date and is the right source for it. */
-      received_at: scenario.payload.collectedAt,
+      received_at: collectedAt,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       raw_payload: payload as unknown as any,
     })

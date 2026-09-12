@@ -54,8 +54,14 @@ async function main() {
   type ScenarioName = keyof typeof SCENARIOS
 
   const args = process.argv.slice(2)
-  const scenarioName = args.find((a) => !a.startsWith('--'))
+  /* The value after --retest is a scenario name too, so it must be excluded
+     here or a command with no baseline would silently seed the retest as one. */
+  const scenarioName = args.find(
+    (a, i) => !a.startsWith('--') && args[i - 1] !== '--retest'
+  )
   const withMember = args.includes('--member')
+  const retestIdx = args.indexOf('--retest')
+  const retestScenario = retestIdx !== -1 && retestIdx < args.length - 1 ? args[retestIdx + 1] : null
   const confirmed = args.includes('--yes')
 
   function usage(message?: string): never {
@@ -67,6 +73,10 @@ async function main() {
     console.error('            history, which is what puts /account/membership into its')
     console.error('            MEMBER state. Needs a scenario with a movable marker')
     console.error('            (low vitamin D, low B12, low or suboptimal ferritin).')
+    console.error('  --retest <scenario>  add a SECOND result to the same account, dated 90')
+    console.error('            days after the baseline, so the pair can be compared. Use the')
+    console.error('            same scenario for an unchanged retest, or a different one to')
+    console.error('            move the numbers. A different KIT is the step-down case.')
     console.error('  --yes     confirm the write. Required: this writes to PRODUCTION.')
     console.error('')
     console.error('Available scenarios:', Object.keys(SCENARIOS).join(', '))
@@ -88,6 +98,7 @@ async function main() {
   console.log(`  │  scenario    ${scenarioName}`)
   console.log(`  │  account     dev+${scenarioName}@androprime.test`)
   console.log(`  │  membership  ${withMember ? 'YES, plus 22 days of check-in history' : 'no'}`)
+  console.log(`  │  retest      ${retestScenario ?? 'no'}`)
   console.log('  │')
   console.log('  │  🔴 THIS IS THE PRODUCTION DATABASE. There is no local one.')
   console.log('  └───────────────────────────────────────────────────────')
@@ -98,9 +109,45 @@ async function main() {
     process.exit(1)
   }
 
+  if (retestScenario && !(retestScenario in SCENARIOS)) {
+    usage(`Unknown retest scenario: "${retestScenario}"`)
+  }
+
   const result = await seedScenario(scenarioName as ScenarioName)
-  console.log('Seeded the result:')
+  console.log('Seeded the baseline result:')
   console.log(JSON.stringify(result, null, 2))
+
+  if (retestScenario) {
+    /* 🔴 THE RETEST GOES ON THE BASELINE'S ACCOUNT AND IS DATED AFTER IT.
+       Two results belonging to two different people are not a retest, and two
+       results whose dates run backwards are not a comparison, so neither is
+       left to chance: the account is named explicitly, and the date is computed
+       from the BASELINE'S rather than taken from the retest fixture, which
+       carries a fixed date of its own that may well be earlier.
+       90 days is the first-cycle cadence a member with a marker to move gets.
+       `clear: false`, obviously: leaving the baseline standing is the point. */
+    const baseline = SCENARIOS[scenarioName as ScenarioName]
+    const retest = SCENARIOS[retestScenario as ScenarioName]
+    const retestAt = new Date(
+      new Date(baseline.payload.collectedAt).getTime() + 90 * 86400000
+    ).toISOString()
+
+    const second = await seedScenario(retestScenario as ScenarioName, {
+      email: `dev+${scenarioName}@androprime.test`,
+      clear: false,
+      collectedAt: retestAt,
+    })
+    console.log(`\nSeeded the retest (${retestScenario}, dated ${retestAt.slice(0, 10)}):`)
+    console.log(JSON.stringify(second, null, 2))
+
+    const sameKit = baseline.payload.kitType === retest.payload.kitType
+    console.log(
+      `\n  Baseline kit ${baseline.payload.kitType}, retest kit ${retest.payload.kitType}` +
+        (sameKit
+          ? ' (same kit: every marker should pair)'
+          : ' (STEP-DOWN: only the shared markers pair)')
+    )
+  }
 
   if (withMember) {
     /* WHICH MARKER THE LOOP IS ABOUT IS THE ENGINE'S ANSWER, NOT AN ARGUMENT.
