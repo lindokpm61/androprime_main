@@ -21,6 +21,24 @@
  * It is cheaper to fulfil wherever it can be, and it is defensible clinically
  * because what gets re-measured is what moved.
  *
+ * THE BLAST RADIUS IS SMALLER THAN THE RULE SOUNDS, and it is worth stating
+ * because it is the thing that makes the rule safe (Keith, 2026-09-12). A man's
+ * flagged markers can only come from the panel he bought, so the kit he bought
+ * bounds the answer:
+ *
+ *   bought Kit 1  ->  always Kit 1     (15 of 15 flag combinations)
+ *   bought Kit 2  ->  always Kit 2     (15 of 15)
+ *   bought Kit 3  ->  Kit 3 in 225 of 255, Kit 1 in 15, Kit 2 in 15
+ *
+ * So this rule is a NO-OP for every Kit 1 and Kit 2 buyer. The only customer it
+ * can change is a Kit 3 buyer, and only when his flags fall entirely inside one
+ * half of the panel: 30 of his 255 possible combinations, twelve per cent.
+ * Kit 1 is five markers and Kit 2 is four, but FAI is never flagged (Ewa ruling
+ * 8, `fai-reported` carries no verdict), so each half contributes 2^4 - 1 = 15.
+ *
+ * The counts are asserted in section 7 of `scripts/test-retest-panel.ts` rather
+ * than left as a claim in a comment.
+ *
  * ⚠ EWA HAS NOT SIGNED THE NARROWING. Dropping five markers off a Kit 3 buyer's
  * retest is a clinical statement, not a packing decision, and the register has
  * said so since 2026-09-08. This file implements the rule Keith chose; the

@@ -43,7 +43,39 @@ and dispatches **the cheapest kit whose panel measures all of them**.
   `retestsNarrowed` in its JSON. A dispatch row records the kit and not the
   reason, so without that line there is no way to tell a narrowed panel from a
   member who simply bought that kit.
-- **`scripts/test-retest-panel.ts`** — 31 assertions, wired into `npm test`.
+- **`scripts/test-retest-panel.ts`** — 39 assertions, wired into `npm test`.
+
+### THE BLAST RADIUS IS SMALLER THAN THE RULE SOUNDS, AND THAT IS THE SAFE PART
+
+Keith, reading the change: *"this will depend on what was initially ordered ...
+so I think it really spans from their initial order. Check that and see if that
+is correct."* It is correct, and it is stronger than "mostly". A man's flagged
+markers can only come from the panel he bought, and Kit 1 and Kit 2 share no
+markers at all, so the kit he bought bounds the answer:
+
+| Bought | Sent | Rule ever differs |
+|---|---|---|
+| Kit 1 | Kit 1, **15 of 15** flag combinations | never |
+| Kit 2 | Kit 2, **15 of 15** | never |
+| Kit 3 | Kit 3 in 225, Kit 1 in 15, Kit 2 in 15 | **30 of 255, 12%** |
+
+**So the rule is a no-op for every Kit 1 and Kit 2 buyer.** The only customer it
+can change is a Kit 3 buyer whose flags fall entirely inside one half. Each half
+contributes 15 rather than 31 and 15 because FAI can never be flagged
+(`fai-reported` carries no verdict, Ewa ruling 8), so the Kit 1 half has five
+markers and four flaggable ones.
+
+Saving when it does fire: **£80** on a Kit 3 narrowed to Kit 1, **£60** to Kit 2.
+
+Section 7 of the test asserts all of it, including the two facts the reasoning
+rests on: that Kit 1 and Kit 2 are disjoint, and that Kit 3 is exactly their
+union. Without those two, the counts would still pass while the argument behind
+them quietly stopped being true.
+
+**What it means for the demo.** For that man to be sent a Kit 2, all four of
+`total-testosterone`, `shbg`, `albumin` and `free-testosterone` must be
+unflagged. That is option 1 below stated precisely: an all-clear on the whole
+testosterone half.
 
 ### 🔴 THE DEMO STILL DISAGREES, AND IT IS NOT THE RULE THAT IS WRONG
 
@@ -114,7 +146,7 @@ covers the flagged markers, and is never dearer than the kit they came from.
 
 ### Test status at 2026-09-12 (D1)
 
-`npm test` green, exit 0, including `test-retest-panel: 31 passed` and the
+`npm test` green, exit 0, including `test-retest-panel: 39 passed` and the
 unchanged `test-membership: 209 passed`. Both typechecks clean. Production build
 green, exit 0, fresh `.next`, no dev server listening.
 

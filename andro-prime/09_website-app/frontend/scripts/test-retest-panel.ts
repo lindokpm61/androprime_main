@@ -4,7 +4,7 @@
  *   npx tsx scripts/test-retest-panel.ts
  *
  * The rule (Keith, 2026-09-12, defect D1) is that the retest panel follows what
- * was FLAGGED, not what was bought. Three things here are load-bearing and the
+ * was FLAGGED, not what was bought. Four things here are load-bearing and the
  * rest are worked examples:
  *
  *   (1) THE DUPLICATED FACT. `PANEL_MARKER_ID_BY_RESULT_NAME` restates the nine
@@ -22,6 +22,13 @@
  *       it over every kit and every non-empty subset of its panel, which is 557
  *       cases, rather than over the three examples in the defect register. 46 of
  *       them narrow to a cheaper kit, so the assertion is not vacuous.
+ *
+ *   (4) THE BLAST RADIUS. Section 7 answers Keith's question of 2026-09-12: does
+ *       this not just come back to whatever they ordered? For Kit 1 and Kit 2
+ *       buyers it does, exactly, in all 15 of their flag combinations, because
+ *       those two panels share no markers. Only a Kit 3 buyer can be narrowed,
+ *       and only in 30 of his 255. That is the property that makes the rule safe
+ *       to ship, so it is asserted rather than reasoned about.
  */
 import fs from 'fs'
 import path from 'path'
@@ -298,6 +305,70 @@ check('(6b) OPEN: the demo shows a Kit 2 retest, so the demo and the rule still 
 check('(6c) and the disagreement is the demo\'s baseline, not the rule: a Kit 2 cannot measure his testosterone',
   demoPanel.flagged.includes('total-testosterone') &&
     !KIT_PANELS['energy-recovery'].includes('total-testosterone'))
+
+// ───────────────────────────────────────────────────────────────────────────
+// (7) THE BLAST RADIUS: the kit he bought bounds the answer
+//
+// Keith's question, 2026-09-12: does this rule not just come back to whatever
+// they ordered in the first place? For two of the three kits it does, exactly,
+// and that is the property that makes the rule safe to ship.
+//
+// A man's flagged markers can only come from the panel he bought. Kit 1 and
+// Kit 2 share no markers at all, so a Kit 1 buyer's flags are never covered by
+// a Kit 2 and vice versa, and each is always sent his own kit back. Only a
+// Kit 3 buyer can be narrowed, and only when his flags fall entirely inside one
+// half.
+//
+// FAI is excluded throughout: `fai-reported` carries no verdict (Ewa ruling 8),
+// so it can never be a marker the retest follows. That is why each half
+// contributes 15 combinations rather than 31 and 15.
+// ───────────────────────────────────────────────────────────────────────────
+
+const NEVER_FLAGGED: PanelMarkerId[] = ['fai']
+
+function outcomesFor(bought: KitType): Record<string, number> {
+  const flaggable = KIT_PANELS[bought].filter((id) => !NEVER_FLAGGED.includes(id))
+  const counts: Record<string, number> = {}
+  for (let mask = 1; mask < 1 << flaggable.length; mask += 1) {
+    const ids = flaggable.filter((_, i) => mask & (1 << i)) as PanelMarkerId[]
+    const sent = cheapestKitCovering(ids)
+    const key = sent ?? 'none'
+    counts[key] = (counts[key] ?? 0) + 1
+  }
+  return counts
+}
+
+check('(7a) the Kit 1 half has five markers but only four can ever be flagged',
+  KIT_PANELS.testosterone.length === 5 &&
+  KIT_PANELS.testosterone.filter((id) => !NEVER_FLAGGED.includes(id)).length === 4 &&
+  !isFlaggedState('fai-reported'))
+
+const k1 = outcomesFor('testosterone')
+check('(7b) a Kit 1 buyer is always sent a Kit 1, over all 15 combinations',
+  k1.testosterone === 15 && Object.keys(k1).length === 1)
+
+const k2 = outcomesFor('energy-recovery')
+check('(7c) a Kit 2 buyer is always sent a Kit 2, over all 15 combinations',
+  k2['energy-recovery'] === 15 && Object.keys(k2).length === 1)
+
+const k3 = outcomesFor('hormone-recovery')
+check('(7d) a Kit 3 buyer keeps the full panel in 225 of 255 combinations',
+  k3['hormone-recovery'] === 225)
+check('(7e) and narrows to Kit 1 in 15 and Kit 2 in 15, the two halves',
+  k3.testosterone === 15 && k3['energy-recovery'] === 15)
+check('(7f) so the rule is a NO-OP for every Kit 1 and Kit 2 buyer',
+  Object.keys(k1).length === 1 && Object.keys(k2).length === 1)
+
+// The two halves are disjoint, which is WHY (7b) and (7c) hold. Asserted
+// directly, because if a marker were ever added to both panels the counts above
+// would still pass while the reasoning behind them quietly stopped being true.
+check('(7g) Kit 1 and Kit 2 share no markers, which is what makes 7b and 7c hold',
+  KIT_PANELS.testosterone.every((id) => !KIT_PANELS['energy-recovery'].includes(id)))
+check('(7h) and Kit 3 is exactly their union, which is why no marker is unique to it',
+  KIT_PANELS['hormone-recovery'].length ===
+    KIT_PANELS.testosterone.length + KIT_PANELS['energy-recovery'].length &&
+  [...KIT_PANELS.testosterone, ...KIT_PANELS['energy-recovery']]
+    .every((id) => KIT_PANELS['hormone-recovery'].includes(id)))
 
 console.log(`test-retest-panel: ${passed} passed, ${failed} failed`)
 process.exit(failed === 0 ? 0 : 1)
