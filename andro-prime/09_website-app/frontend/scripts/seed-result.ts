@@ -113,8 +113,24 @@ async function main() {
     usage(`Unknown retest scenario: "${retestScenario}"`)
   }
 
-  const result = await seedScenario(scenarioName as ScenarioName)
-  console.log('Seeded the baseline result:')
+  /* 🔴 WHEN THERE IS A RETEST, BOTH DATES COME FROM TODAY, NOT FROM THE FIXTURES.
+     The first version dated the retest at the baseline fixture's own collectedAt
+     plus 90 days, which put it two months into the FUTURE: the fixture dates are
+     fixed in their files and the newest is only a month old. The member screen
+     then showed a reading collected in November above a panel saying the retest
+     was still pending, which is not a state a customer can ever be in. Nothing
+     errored, because a future timestamp is a valid timestamp.
+     The retest lands a week ago and the baseline 90 days before that, so the
+     pair is coherent whenever the seeder runs, which a date pinned in a file
+     cannot be. Without --retest the fixture keeps its own date and nothing here
+     applies. */
+  const retestAt = retestScenario ? new Date(Date.now() - 7 * 86400000).toISOString() : null
+  const baselineAt = retestAt
+    ? new Date(new Date(retestAt).getTime() - 90 * 86400000).toISOString()
+    : undefined
+
+  const result = await seedScenario(scenarioName as ScenarioName, { collectedAt: baselineAt })
+  console.log(`Seeded the baseline result${baselineAt ? ` (dated ${baselineAt.slice(0, 10)})` : ''}:`)
   console.log(JSON.stringify(result, null, 2))
 
   if (retestScenario) {
@@ -128,16 +144,13 @@ async function main() {
        `clear: false`, obviously: leaving the baseline standing is the point. */
     const baseline = SCENARIOS[scenarioName as ScenarioName]
     const retest = SCENARIOS[retestScenario as ScenarioName]
-    const retestAt = new Date(
-      new Date(baseline.payload.collectedAt).getTime() + 90 * 86400000
-    ).toISOString()
 
     const second = await seedScenario(retestScenario as ScenarioName, {
       email: `dev+${scenarioName}@androprime.test`,
       clear: false,
-      collectedAt: retestAt,
+      collectedAt: retestAt!,
     })
-    console.log(`\nSeeded the retest (${retestScenario}, dated ${retestAt.slice(0, 10)}):`)
+    console.log(`\nSeeded the retest (${retestScenario}, dated ${retestAt!.slice(0, 10)}):`)
     console.log(JSON.stringify(second, null, 2))
 
     const sameKit = baseline.payload.kitType === retest.payload.kitType

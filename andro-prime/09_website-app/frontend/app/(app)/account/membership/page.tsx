@@ -100,52 +100,82 @@ export default async function MembershipPage({ searchParams }: PageProps) {
 
   const { marker, checkin, entitlement, offer } = view
 
-  // The daily loop, shown to a member AND inside the paywall. It is what builds
-  // the case the paywall then makes, and it is what the member keeps paying
-  // for; hiding it behind the paywall would leave the paywall arguing from
-  // nothing.
-  const loop = marker && checkin && (
-    <>
-      <div className="f-tray f-rise">
-        <div className="f-core">
-          <p className="f-blab">Today &middot; {marker.questions.length} taps</p>
-          <CheckinRow questions={marker.questions} answeredToday={checkin.answeredToday} />
-          <p className="f-fine" style={{ marginTop: 16 }}>
-            {checkin.logged === 0
-              ? 'Nothing logged yet'
-              : `Logged ${checkin.logged} of ${checkin.loggedOf} ${plural(checkin.loggedOf, 'day')}`}
-            {checkin.streak > 0 && <> &middot; {checkin.streak} day streak</>}
-          </p>
-        </div>
+  /*
+   * THE MARKER BLOCK IS SEPARATE FROM THE LOOP, SPLIT 2026-09-12.
+   *
+   * 🔴 THEY WERE ONE FRAGMENT AND IT PUT THE BIOMARKER IN THE MIDDLE OF THE
+   * DAILY LOOP. The variable was called `loop`, its comment called it the daily
+   * loop, and its middle third was this readout: taps and streak line, then the
+   * marker, then the adherence chart that draws that same streak. The action and
+   * the picture of the action were separated by the one block that is not about
+   * either.
+   *
+   * It was not an oversight, which is why splitting is the fix rather than
+   * reordering in place. The fragment serves BOTH surfaces, and on the paywall
+   * the marker belongs exactly where it was: mid-argument, between what the
+   * reader does daily and the chart of him doing it, because there the sequence
+   * is a case for subscribing. The member screen inherited the paywall's order
+   * along with the component. Each surface composes its own now.
+   *
+   * `membership-F.html` draws them interleaved too, and that is not a defence:
+   * its own header records that it was "ENUMERATED BEFORE IT WAS DRAWN" from
+   * this file, so the frame inherited the order rather than proposing it.
+   */
+  const markerBlock = marker && (
+    <div className="f-tray f-rise">
+      <div className="f-core">
+        <p className="f-blab">Your one number to move</p>
+        <p className="f-read">
+          {marker.value}{' '}
+          {/* Marker names keep the engine's casing ("Vitamin D", "Active B12"),
+              so this line reads the same as the result card it came from. */}
+          <span style={{ fontSize: 14, color: 'var(--ink-3)' }}>
+            {marker.unit} {marker.displayName}
+          </span>
+        </p>
+        {/* Ewa-approved copy from the results engine, reused rather than rewritten. */}
+        <p className="f-read-s">{marker.explanation}</p>
       </div>
+    </div>
+  )
 
-      <div className="f-tray f-rise">
-        <div className="f-core">
-          <p className="f-blab">Your one number to move</p>
-          <p className="f-read">
-            {marker.value}{' '}
-            {/* Marker names keep the engine's casing ("Vitamin D", "Active B12"),
-                so this line reads the same as the result card it came from. */}
-            <span style={{ fontSize: 14, color: 'var(--ink-3)' }}>
-              {marker.unit} {marker.displayName}
-            </span>
-          </p>
-          {/* Ewa-approved copy from the results engine, reused rather than rewritten. */}
-          <p className="f-read-s">{marker.explanation}</p>
-        </div>
+  /*
+   * The daily loop, in its two halves, shown to a member AND inside the paywall.
+   * It is what builds the case the paywall then makes, and it is what the member
+   * keeps paying for; hiding it behind the paywall would leave the paywall
+   * arguing from nothing.
+   *
+   * TWO CONSTS RATHER THAN ONE FRAGMENT, because the two surfaces genuinely want
+   * different orders and a single fragment cannot be interleaved. The member gets
+   * them adjacent, so the streak line and the chart of that streak sit together.
+   * The paywall puts `markerBlock` between them, which is where it has always
+   * sat and where it belongs: mid-argument, between what the reader does daily
+   * and the picture of him doing it.
+   */
+  const taps = marker && checkin && (
+    <div className="f-tray f-rise">
+      <div className="f-core">
+        <p className="f-blab">Today &middot; {marker.questions.length} taps</p>
+        <CheckinRow questions={marker.questions} answeredToday={checkin.answeredToday} />
+        <p className="f-fine" style={{ marginTop: 16 }}>
+          {checkin.logged === 0
+            ? 'Nothing logged yet'
+            : `Logged ${checkin.logged} of ${checkin.loggedOf} ${plural(checkin.loggedOf, 'day')}`}
+          {checkin.streak > 0 && <> &middot; {checkin.streak} day streak</>}
+        </p>
       </div>
+    </div>
+  )
 
-      {checkin.series.length >= 3 && (
-        <div className="f-tray f-rise">
-          <div className="f-core">
-            <p className="f-blab">
-              Adherence, {checkin.series.length} {plural(checkin.series.length, 'day')}
-            </p>
-            <AdherenceChart series={checkin.series} />
-          </div>
-        </div>
-      )}
-    </>
+  const adherenceBlock = marker && checkin && checkin.series.length >= 3 && (
+    <div className="f-tray f-rise">
+      <div className="f-core">
+        <p className="f-blab">
+          Adherence, {checkin.series.length} {plural(checkin.series.length, 'day')}
+        </p>
+        <AdherenceChart series={checkin.series} />
+      </div>
+    </div>
   )
 
   // ── 1. Member ────────────────────────────────────────────────────────────
@@ -172,6 +202,20 @@ export default async function MembershipPage({ searchParams }: PageProps) {
            */
           intro="Your dated retest, the trend behind your number, and the daily loop you log against. Manage or cancel from your subscriptions at any time."
         >
+          {/*
+            * THE ORDER, DECIDED 2026-09-12, and it is the first time anybody has
+            * decided it rather than inherited it: the number, then what it has
+            * done, then when it is measured again, then what you do daily.
+            *
+            * 🔴 THE PAGE USED TO OPEN ON A CHART OF A MARKER IT HAD NOT NAMED.
+            * The trend panel is headed "Vitamin D, your points so far" and plots
+            * two readings; the block that says what the number IS and what it
+            * means arrived three panels later, inside the loop. A reader met the
+            * history before the fact. The marker block leads now, so the chart
+            * that follows is a chart of something the page has introduced.
+            */}
+          {markerBlock}
+
           {marker && (
             <div className="f-tray f-rise">
               <div className="f-core">
@@ -224,7 +268,8 @@ export default async function MembershipPage({ searchParams }: PageProps) {
             </div>
           </div>
 
-          {loop}
+          {taps}
+          {adherenceBlock}
 
           <div className="f-tray f-rise">
             <div className="f-core">
@@ -391,7 +436,9 @@ export default async function MembershipPage({ searchParams }: PageProps) {
           </div>
         )}
 
-        {loop}
+        {taps}
+        {markerBlock}
+        {adherenceBlock}
 
         <div className="f-tray f-rise">
           <div className="f-core">
