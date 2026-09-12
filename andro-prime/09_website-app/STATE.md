@@ -131,6 +131,29 @@ in the App Router** and serves no route. The harness above was written as
   `/demo` presentation decision (`869ez4jrt`) and the density question
   (`869erraqd`).
 
+### The journey map is published, and it is the only drawing of the whole graph
+
+**"Six Stages, One Loop"**, 2026-09-12:
+`https://claude.ai/code/artifact/024f85da-2eb8-4dc7-b2c7-7fc7cb84b16c`
+
+Every route on the rebuilt site, drawn in the order a stranger meets them, in six
+stages with the retest as the only cycle. It is **derived from the code, not from
+the frames**: links from the page sources, the Stripe returns from `success_url`
+and `cancel_url` in the two checkout routes, the automatic hops from the handlers
+that issue them. The journey frames in `design/mockups/journey/` draw screens; this
+draws the edges BETWEEN them, which nothing else in the repo does.
+
+It carries three mechanisms on their own because the spine flattens them: the
+bio-link close test (one tile, three destinations, converging on the same kit
+page), the post-checkout sign-in round trip and its loop guard, and the membership
+loop. The nav and footer are deliberately not drawn and are listed instead: 21
+links from every page turns a journey into a mesh.
+
+⚠ **It is a snapshot of `0f26b28` and nothing regenerates it.** If a route is added,
+retired or rerouted, the map is wrong and silent about it, the same failure mode
+route conformance had before it was generated. Re-read it against
+`design/route-conformance.md` before quoting it.
+
 ### Test status at 2026-09-12 (sixth batch)
 
 `npm test` green, exit 0, including all nine design checks and a regenerated
