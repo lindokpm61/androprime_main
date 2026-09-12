@@ -219,17 +219,31 @@ and the check stayed green. `scripts/` is deliberately out of scope: the
 content-engine uses `formatToParts` to build a scheduling field for an external
 API, which is a machine payload, not a sentence anybody reads.
 
-### 🔴 THE DEAD-COMPONENT LIST WAS WRONG IN BOTH DIRECTIONS AT ONCE
+### 🔴 THE DEAD-COMPONENT LIST WAS WRONG, AND SO WAS THE FIRST RE-MEASUREMENT
 
 `design/journey-inventory.md` recorded **five** zero-reference components from an
 August sweep, called it "a cleanup commit rather than a frame", and nobody made
-the commit. Re-running the sweep returns **ten** — and `KitCard`, one of the
-recorded five, **had come back into use and was no longer dead**. Acting on the
-written list would have deleted a live component and missed half the dead ones.
+the commit. Re-running the sweep returned **ten**, and ten were deleted.
 
-A recorded set of "things currently in state X" is a measurement, not a fact, and
-unlike a stale count it can be wrong in two directions at once. The sweep command
-is now in `journey-inventory.md` in place of the membership.
+🔴 **CORRECTED 2026-09-13. The re-run was itself wrong, and this section said so
+in the wrong direction.** It originally claimed `KitCard` "had come back into use
+and was no longer dead". It had not. The sweep matched the component's
+IDENTIFIER, which cannot tell a use from a mention, and `KitCard` matched
+`type KitCard = {` — a local type alias of the same name in `/kits/page.tsx`.
+**`KitCard` is dead and was dead the whole time.** Three more were cleared the
+same way: `FaqAccordion` and `SectionEyebrow` matched comments recording their
+own removal, and `JoinForm` has a real consumer behind an unconditional
+`redirect('/kits')`.
+
+So the score is ten found and deleted, four missed, one reported live that is
+not. A recorded set of "things currently in state X" is a measurement, not a
+fact, and **the derivation published as its remedy has to be checked as hard as
+the list it replaced**: `journey-inventory.md` now carries a sweep matching the
+shape of use (`<Name`) plus the MDX component map, with its remaining blind spots
+stated.
+
+The four missed components are section 05, item C3 of the defect register, and
+are not yet deleted.
 
 **Deleted (10):** `KitActivator`, `ScanAgainButton`, `AppPlaceholder`,
 `SubscribeButton`, `BiomarkerPanel`, `HeroBackground`, `TrustBar`, `ResultValue`,

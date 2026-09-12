@@ -477,20 +477,50 @@ anywhere in `app/`, `components/`, `lib/`, `content/` or `scripts/`**, plus an *
 🟢 **DONE 2026-09-12.** Ten components deleted, `components/lp/` and the now-empty
 `components/activate/` removed, three dead exports dropped from the `results-engine` barrel.
 
-⚠ **THE LIST THIS SECTION ORIGINALLY NAMED WAS WRONG BY THE TIME ANYONE READ IT, IN BOTH
-DIRECTIONS.** It recorded five names. Re-running the sweep a fortnight later returned ten, and
-`KitCard` — one of the five — had come back into use and was no longer dead. Acting on the written
-list would have deleted a live component and missed half the dead ones. **A set of "things currently
-in state X" is a measurement, not a fact**, and unlike a stale count it can be wrong in two
-directions at once, so what belongs in a document is the derivation rather than the membership:
+⚠ **THE LIST THIS SECTION ORIGINALLY NAMED WAS WRONG BY THE TIME ANYONE READ IT.** It recorded five
+names; re-running the sweep a fortnight later returned ten. **A set of "things currently in state X"
+is a measurement, not a fact**, so what belongs in a document is the derivation rather than the
+membership.
+
+🔴 **AND THE FIRST DERIVATION PUBLISHED HERE WAS ITSELF WRONG, corrected 2026-09-13.** It matched the
+component's IDENTIFIER, which cannot tell a use from a mention, so it cleared four dead components
+and reported one live that is not:
+
+- `KitCard` matched `type KitCard = {`, a local type alias of the same name in `/kits/page.tsx`. It
+  was reported as "back in use"; **it is dead**, and was dead the whole time.
+- `FaqAccordion` and `SectionEyebrow` matched comments in three files, each one recording that the
+  component had been removed. **Writing down the removal is what kept them alive to the grep.**
+- `JoinForm` has a real import and a real JSX tag in `/founding-member`, whose first statement is
+  `redirect('/kits')`. The consumer exists and never executes.
+
+Match the SHAPE OF USE instead, and check the MDX component map, since an MDX consumer never appears
+as JSX in a `.tsx` file. **Run 2026-09-13; this is the output it actually produced, not a sketch:**
 
 ```sh
 cd 09_website-app/frontend
-for f in $(find components -name '*.tsx' | sort); do n=$(basename "$f" .tsx); \
-  c=$(grep -rl "\b$n\b" --include=*.tsx --include=*.ts app components lib \
-      | grep -v '/index.ts$' | grep -v "^$f$" | wc -l); \
-  [ "$c" -eq 0 ] && echo "DEAD: $f"; done
+for f in $(find components -name '*.tsx' | sort); do
+  n=$(basename "$f" .tsx)
+  used=$(grep -rlE "<$n([[:space:]/>]|$)" --include=*.tsx app components | grep -v "^$f$" | wc -l)
+  mdx=$(grep -c "\b$n\b" components/marketing/articleMdx.tsx 2>/dev/null || true)
+  [ "${used:-0}" -eq 0 ] && [ "${mdx:-0}" -eq 0 ] && echo "DEAD: $f"
+done
 ```
+
+Two details cost three attempts and are worth keeping. **`([[:space:]/>]|$)` needs the `|$`**: a
+multi-line JSX tag has nothing after the name on its line, so a bare character class reports
+`BundleChoice`, `MarkerCard`, `AuthCard` and every other multi-line consumer as dead. And **`grep -c`
+prints `0` while exiting `1`**, so `|| echo 0` appends a second zero and every comparison dies with
+`integer expression expected`; `|| true` with `${mdx:-0}` is the shape that works.
+
+⚠ **It reports three kinds of false positive, and the third is the one that will catch you out.**
+It cannot see a dynamic import. It counts a component rendered only behind an unconditional
+`redirect()` as live. And **it assumes the file name equals the component name**: `DemoTheme.tsx`
+exports `DemoThemeProvider`, `InternalChrome.tsx` exports several named pieces and
+`articleMdx.tsx` exports `mdxComponents`, so all three are reported dead and all three are live.
+**Read the consumer before deleting anything.**
+
+On the 2026-09-13 run it named seven files: the four genuinely dead above, plus those three
+name-mismatch false positives.
 
 Four of the ten had died since the sweep, killed by the rebuild itself: `HeroBackground` (the
 Direction F homepage plays `/home/table.mp4`, not the old `/videos/hero.*`), and `ResultValue`,
