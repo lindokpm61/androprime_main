@@ -25,6 +25,9 @@ import { dispatchSecondKit } from '@/lib/bundles/dispatch'
 import { ADDRESS_CHECK_WINDOW_DAYS } from '@/lib/bundles/config'
 import { isTriggerMatured, needsAddressCheck, isWindowElapsed } from '@/lib/bundles/sweep'
 import { isRetestDispatchable } from '@/lib/membership/entitlement'
+import { latestClassifiedResult } from '@/lib/membership/latestResult'
+import { selectRetestPanel, type RetestPanel } from '@/lib/membership/retestPanel'
+import type { KitType } from '@/lib/results/types'
 
 const DAY_MS = 24 * 60 * 60 * 1000
 
@@ -58,6 +61,11 @@ export async function POST(request: NextRequest) {
   let dispatched = 0
   let failures = 0
   let retestsOwed = 0
+  // How many of those were narrowed to a cheaper panel than the member's own
+  // kit. Counted rather than inferred: it is the only number that says whether
+  // the D1 rule is doing anything, and a run where it silently stops firing
+  // looks exactly like a run where nobody was due.
+  let retestsNarrowed = 0
 
   // Pass 0 - membership retests become owed kits.
   //
@@ -87,19 +95,44 @@ export async function POST(request: NextRequest) {
         // The DB filter narrows the set; the pure predicate is the gate.
         if (!isRetestDispatchable(m, now)) continue
 
-        // Retest the kit they last took. Without a prior order there is nothing
-        // to retest, so skip rather than guess a panel for them.
-        const { data: lastOrder } = await supabase
-          .from('kit_orders')
-          .select('kit_type')
-          .eq('user_id', m.user_id)
-          .order('ordered_at', { ascending: false })
-          .limit(1)
-          .maybeSingle()
+        // THE PANEL FOLLOWS WHAT WAS FLAGGED, NOT WHAT WAS BOUGHT.
+        //
+        // Keith's rule, 2026-09-12, defect D1. This used to read the last kit
+        // he ordered and send that one back, so a Kit 3 buyer got all nine
+        // markers again whatever his result said, and `/demo` showed him
+        // receiving a Kit 2. `selectRetestPanel` owns the decision and its
+        // header carries the reasoning; this block owns only the fallback.
+        //
+        // ⚠ Ewa has not signed the narrowing. See the note in retestPanel.ts.
+        const latest = await latestClassifiedResult(supabase, m.user_id)
 
-        if (!lastOrder) {
-          console.warn('[bundle-sweep] Membership', m.id, 'is due a retest but has no prior kit order')
-          continue
+        let panel: RetestPanel
+        if (latest) {
+          panel = selectRetestPanel(latest.markers, latest.kitType)
+        } else {
+          // No readable result, so there is nothing for the panel to follow.
+          // Fall back to the kit he last ordered, which is precisely what this
+          // job did before the rule existed: a degraded path that cannot send
+          // less than the old behaviour did. Without a prior order there is
+          // nothing to retest at all, so skip rather than guess a panel.
+          const { data: lastOrder } = await supabase
+            .from('kit_orders')
+            .select('kit_type')
+            .eq('user_id', m.user_id)
+            .order('ordered_at', { ascending: false })
+            .limit(1)
+            .maybeSingle()
+
+          if (!lastOrder) {
+            console.warn('[bundle-sweep] Membership', m.id, 'is due a retest but has no prior kit order')
+            continue
+          }
+
+          panel = {
+            kit: lastOrder.kit_type as KitType,
+            reason: 'no-readable-result',
+            flagged: [],
+          }
         }
 
         // Claim FIRST. If the insert then fails, tomorrow's sweep sees the claim
@@ -120,7 +153,7 @@ export async function POST(request: NextRequest) {
 
         const { error: insertError } = await supabase.from('bundle_dispatches').insert({
           user_id: m.user_id,
-          kit_type: lastOrder.kit_type,
+          kit_type: panel.kit,
           bundle_type: 'membership_retest',
           source: 'membership',
           membership_id: m.id,
@@ -135,6 +168,19 @@ export async function POST(request: NextRequest) {
         }
 
         retestsOwed += 1
+        if (latest && panel.kit !== latest.kitType) retestsNarrowed += 1
+
+        // One line per retest, carrying the decision and what it was made from.
+        // A dispatch row records the kit and not the reason, so without this
+        // there is no way to tell a narrowed panel from a member who simply
+        // bought that kit.
+        console.log(
+          '[bundle-sweep] Retest panel for membership', m.id,
+          '->', panel.kit,
+          `(${panel.reason}`,
+          panel.flagged.length ? `flagged: ${panel.flagged.join(', ')}` : 'nothing flagged',
+          latest ? `from a ${latest.kitType} result)` : 'no readable result)',
+        )
       } catch (err) {
         console.error('[bundle-sweep] Error owing retest for membership', m.id, err)
         failures += 1
@@ -250,5 +296,5 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  return NextResponse.json({ retestsOwed, matured, addressChecked, dispatched, failures })
+  return NextResponse.json({ retestsOwed, retestsNarrowed, matured, addressChecked, dispatched, failures })
 }

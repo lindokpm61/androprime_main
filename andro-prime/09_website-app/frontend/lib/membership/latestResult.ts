@@ -13,6 +13,9 @@
 
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '@/lib/supabase/types'
+import { ageFromDobIso } from '@/lib/date/age'
+import { classify } from '@/lib/results/classifier'
+import type { ClassifiedResult, KitType, NormalisedBiomarker } from '@/lib/results/types'
 
 /**
  * Works with either the user-scoped or the service-role client. Under the
@@ -43,4 +46,98 @@ export async function latestResultReceivedAt(
 
   const at = new Date(data.received_at)
   return Number.isNaN(at.getTime()) ? null : at
+}
+
+/**
+ * The member's most recent result, classified.
+ *
+ * Added 2026-09-12 for the retest panel rule (defect D1), which has to know
+ * which markers were FLAGGED before it can decide which kit to send. The
+ * dashboard already assembles this, in `lib/results/getDashboardData.ts`, but
+ * that function is built for a screen: it is session-scoped, it loads every
+ * result the customer has ever had, and it returns a `DashboardData` union with
+ * pre-results and sample-failed branches a nightly job has no use for.
+ *
+ * So this is the narrow version, and it takes the client as an argument for the
+ * same reason `latestResultReceivedAt` above does: the sweep runs under the
+ * service-role client with no session at all.
+ *
+ * ⚠ IT CLASSIFIES RATHER THAN READING A STORED VERDICT, deliberately. There is
+ * no stored verdict: `state` is derived every time from the thresholds in
+ * `classifier.ts`. Reading a cached one would mean a retest panel chosen
+ * against a threshold the clinical reviewer has since moved.
+ */
+export interface LatestClassifiedResult {
+  kitType: KitType
+  /** In panel order, exactly as the dashboard would show them. */
+  markers: ClassifiedResult[]
+}
+
+export async function latestClassifiedResult(
+  supabase: SupabaseClient<Database>,
+  userId: string,
+): Promise<LatestClassifiedResult | null> {
+  const { data: result, error } = await supabase
+    .from('lab_results')
+    .select('id, order_id, kit_type, received_at')
+    .eq('user_id', userId)
+    .order('received_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  if (error) {
+    console.error('[membership] Could not read the latest result:', error.message)
+    return null
+  }
+  if (!result) return null
+
+  const [biomarkerRes, symptomRes, qualifierRes, userRes] = await Promise.all([
+    supabase
+      .from('biomarker_values')
+      .select('marker_name, value, unit, reference_low, reference_high')
+      .eq('result_id', result.id),
+    supabase
+      .from('symptom_answers')
+      .select('question_key, answer')
+      .eq('user_id', userId)
+      .eq('order_id', result.order_id),
+    supabase
+      .from('qualifier_responses')
+      .select('question_key, answer')
+      .eq('user_id', userId)
+      .eq('result_id', result.id),
+    supabase.from('users').select('age, date_of_birth').eq('id', userId).maybeSingle(),
+  ])
+
+  const biomarkers: NormalisedBiomarker[] = (biomarkerRes.data ?? []).map((b) => ({
+    markerName: b.marker_name,
+    value: b.value,
+    unit: b.unit,
+    referenceLow: b.reference_low,
+    referenceHigh: b.reference_high,
+  }))
+
+  // A result row with no biomarker rows is not an all-clear, it is an unreadable
+  // result. Returning null sends the caller down its fallback path rather than
+  // letting an empty panel read as "nothing was flagged".
+  if (biomarkers.length === 0) {
+    console.warn('[membership] Latest result', result.id, 'has no biomarker rows')
+    return null
+  }
+
+  const markers = classify({
+    kitType: result.kit_type as KitType,
+    biomarkers,
+    symptomAnswers: (symptomRes.data ?? []).map((s) => ({
+      questionKey: s.question_key,
+      answer: s.answer,
+    })),
+    qualifierResponses: (qualifierRes.data ?? []).map((q) => ({
+      questionKey: q.question_key,
+      answer: q.answer,
+    })),
+    userAge: userRes.data?.age ?? ageFromDobIso(userRes.data?.date_of_birth),
+  })
+
+  return { kitType: result.kit_type as KitType, markers }
 }

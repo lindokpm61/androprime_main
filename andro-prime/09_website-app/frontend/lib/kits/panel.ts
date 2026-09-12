@@ -1,4 +1,5 @@
 import type { KitType } from '@/lib/results/types'
+import { PRICING } from '@/lib/pricing'
 
 /**
  * Canonical panel definition: which markers each kit measures, and the
@@ -205,4 +206,80 @@ export function panelSentenceList(kit: KitType): string {
   const labels = panelMarkers(kit).map((m) => m.name)
   if (labels.length < 2) return labels.join('')
   return `${labels.slice(0, -1).join(', ')}, and ${labels[labels.length - 1]}`
+}
+
+/* ------------------------------------------------------------------------- *
+ * Coverage: which kit can measure a given set of markers.
+ *
+ * Added 2026-09-12 for the retest panel rule (defect D1). The nightly sweep
+ * used to re-send whatever kit the customer last bought, so a Kit 3 buyer got
+ * all nine markers back whatever his result said. The rule is now that the
+ * retest panel follows what was FLAGGED, not what was purchased, and that
+ * question is answered here because this file already owns which markers each
+ * kit measures. `lib/membership/retestPanel.ts` owns the flagging half.
+ * ------------------------------------------------------------------------- */
+
+/**
+ * The classifier's marker names, mapped onto the panel vocabulary.
+ *
+ * Two vocabularies exist for the same nine markers: `classifier.ts` switches on
+ * the name the lab sends ("Testosterone", "hs-CRP"), and this file keys on a
+ * slug ("total-testosterone", "hs-crp"). Nothing joined them until a rule
+ * needed to ask "which kit measures the marker this result flagged".
+ *
+ * ⚠ THIS IS A DUPLICATED FACT and it is guarded rather than trusted:
+ * `scripts/test-retest-panel.ts` asserts the map's keys are exactly the marker
+ * names `classifier.ts` switches on, and that its values cover every
+ * `PanelMarkerId`. A marker added to the panel or renamed by the lab fails that
+ * test rather than silently falling out of the retest rule, which would make a
+ * flagged marker invisible to it.
+ */
+export const PANEL_MARKER_ID_BY_RESULT_NAME: Readonly<Record<string, PanelMarkerId>> = {
+  'Testosterone': 'total-testosterone',
+  'SHBG': 'shbg',
+  'Free Androgen Index': 'fai',
+  'Albumin': 'albumin',
+  'Free Testosterone': 'free-testosterone',
+  'Vitamin D': 'vitamin-d',
+  'Active B12': 'active-b12',
+  'hs-CRP': 'hs-crp',
+  'Ferritin': 'ferritin',
+}
+
+/** The panel id for a classified result's marker name, or null if unrecognised. */
+export function panelMarkerIdFor(markerName: string): PanelMarkerId | null {
+  return PANEL_MARKER_ID_BY_RESULT_NAME[markerName] ?? null
+}
+
+/**
+ * The kits in ascending price, derived from `PRICING` rather than written out.
+ *
+ * The order is NOT the panel sizes and must not be re-derived from them: Kit 2
+ * measures four markers and Kit 1 measures five, but Kit 2 is the dearer of the
+ * two (£119 against £99). Sorting by marker count would quietly pick the more
+ * expensive kit whenever both could cover the same set.
+ */
+export const KITS_BY_PRICE: readonly KitType[] = [PRICING.KIT_1, PRICING.KIT_2, PRICING.KIT_3]
+  .slice()
+  .sort((a, b) => a.rrp - b.rrp)
+  .map((k) => k.slug as KitType)
+
+/**
+ * The cheapest kit whose panel measures every one of these markers, or null if
+ * no kit does.
+ *
+ * An empty set returns null rather than the cheapest kit. "Nothing was flagged"
+ * is a different statement from "anything will do", and the caller has to decide
+ * what to send a man with nothing to re-measure; it is not a packing question.
+ */
+export function cheapestKitCovering(ids: readonly PanelMarkerId[]): KitType | null {
+  if (ids.length === 0) return null
+  const wanted = new Set(ids)
+  return (
+    KITS_BY_PRICE.find((kit) => {
+      const panel = KIT_PANELS[kit]
+      for (const id of wanted) if (!panel.includes(id)) return false
+      return true
+    }) ?? null
+  )
 }

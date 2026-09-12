@@ -4,7 +4,123 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-12 (seventh batch: the code nobody calls, and the function everybody rewrote)
+## ▶️ PICK UP HERE — handoff, 2026-09-12 (D1: the retest panel follows the result, and the demo is now the half that disagrees)
+
+### WHAT THIS WAS
+
+Keith, against the defect register: *"make the change so every marker that is
+flagged sends the relative kit, assigns a relative kit as opposed to the
+hard-coded version"*. That is D1, and it is the choice the register put to him:
+the rule, not the Kit 3 to Kit 2 constant that was offered as the quick way out.
+
+### THE RULE, AND WHERE IT LIVES
+
+The nightly sweep used to read the last kit the customer ordered and send that
+one back, so a Kit 3 buyer got all nine markers again whatever his result said.
+It now classifies his most recent result, takes the markers the engine flagged,
+and dispatches **the cheapest kit whose panel measures all of them**.
+
+| Flagged | Sent | Why |
+|---|---|---|
+| Vitamin D, Ferritin | Kit 2 | Kit 1 cannot measure them |
+| Total T | Kit 1 | cheapest that covers it |
+| Total T, Vitamin D | Kit 3 | the only kit spanning both |
+
+- **`lib/membership/retestPanel.ts`** — the rule, one pure function, four named
+  outcomes. Three return the fallback and are deliberately not collapsed:
+  `nothing-flagged`, `unrecognised-marker` and `no-readable-result` are
+  different events and only one of them is the rule working.
+- **`lib/kits/panel.ts`** — `cheapestKitCovering`, plus the map joining the
+  classifier's marker names (`Testosterone`, `hs-CRP`) to the panel's slugs.
+  That map is a duplicated fact, so the test reads `classifier.ts` and asserts
+  the two agree rather than trusting them to.
+- **`lib/membership/latestResult.ts`** — `latestClassifiedResult`, the narrow
+  session-free loader the nightly job needs. It **classifies rather than reading
+  a stored verdict**, because there is no stored verdict: a cached one would
+  mean a panel chosen against a threshold Ewa has since moved.
+- **`app/api/jobs/bundle-sweep/route.ts`** — uses it, logs one line per retest
+  carrying the decision and what it was made from, and reports
+  `retestsNarrowed` in its JSON. A dispatch row records the kit and not the
+  reason, so without that line there is no way to tell a narrowed panel from a
+  member who simply bought that kit.
+- **`scripts/test-retest-panel.ts`** — 31 assertions, wired into `npm test`.
+
+### 🔴 THE DEMO STILL DISAGREES, AND IT IS NOT THE RULE THAT IS WRONG
+
+D1 says one of two things has to move before `/demo` goes public. The job has
+moved; the demo has not, and running the shipped rule against the real fixture
+says why:
+
+**The demo's baseline man is flagged on six markers spanning both halves of the
+panel** — equivocal testosterone and low free testosterone on the Kit 1 side,
+low vitamin D, borderline B12, elevated hs-CRP and suboptimal ferritin on the
+Kit 2 side. **No rule that follows the flags can send him a Kit 2**, because a
+Kit 2 cannot measure his testosterone. The rule sends him the full Kit 3.
+`/demo` shows him receiving a Kit 2.
+
+Three ways to close it, and it is a product call rather than a build one:
+
+1. **Change the demo's baseline** so his flags sit only inside Kit 2. Keeps the
+   Record tab's "what moved, what was never re-measured" argument; gives up the
+   low-testosterone story that is the product's spine.
+2. **Make the demo's retest a Kit 3.** Keeps the story; gives up the
+   partial-remeasure teaching point, since all nine markers come back.
+3. **Rule that a retest always re-measures the full panel he bought.** Closes D1
+   by reverting this rule to its fallback. One line.
+
+Section 6 of the test carries the disagreement as a tripwire rather than leaving
+it to be rediscovered: when the fixtures change, the assertion that they
+disagree fails and names which of the three was picked.
+
+### ⚠ THE FIX THE REGISTER SUGGESTED COULD NOT HAVE WORKED AS WRITTEN
+
+It said *"if a flagged marker only exists on Kit 3, send Kit 3"*, and **that
+condition can never fire**: Kit 3 is the union of the other two, so no marker is
+unique to it. Implemented literally it would have sent every member a Kit 2,
+including the demo's man, re-measuring four of his six flagged markers and
+silently dropping his testosterone. The sentence was written imagining Kit 3 as
+the testosterone panel. The generalisation, cheapest covering kit, is what
+shipped.
+
+### ⚠ A TRAP WORTH KEEPING: CHEAPEST IS NOT SMALLEST
+
+**Kit 2 measures four markers and Kit 1 measures five, but Kit 2 is the dearer
+of the two**, £119 against £99. Anything that picks "the smallest kit" by
+counting markers takes the more expensive one whenever both would do, and the
+mistake is invisible because the answer is still a kit that measures the right
+things. The order is read from `PRICING` rather than written out, and asserted.
+
+The safety invariant is asserted over **all 557 non-empty subsets** of every
+panel rather than over the register's three examples: the chosen kit always
+covers the flagged markers, and is never dearer than the kit they came from.
+46 of the 557 narrow to a cheaper kit, so the assertion is not vacuous.
+
+### 🔴 WHAT IS STILL NOT DONE
+
+- **The demo decision above**, Keith. It is what still blocks `/demo` going
+  public.
+- 🔴 **Ewa has not signed the narrowing.** Dropping five markers off a Kit 3
+  buyer's retest is a clinical statement, not a packing decision. Nothing
+  dispatches while `MEMBERSHIP_ENABLED` is off, so the sign-off is owed before
+  the flag goes on rather than before the merge.
+- Carried, untouched: the saturated-colour tone question on the internal boards;
+  `/go`'s populated state; the orphaned hero assets; the 14 defects raised by
+  the 2026-09-12 rendered sweep (sections 05 to 07 of the register); the
+  how-to-sample film and its QR; the `/subscription/confirmed` and
+  `/how-to-sample` copy (register rows 44, 45); the em dash in CA-014 consent
+  copy; the retest comparison page; the `/demo` presentation decision
+  (`869ez4jrt`) and the density question (`869erraqd`).
+- 🔴 **Still the only merge blocker: CA-045.**
+
+### Test status at 2026-09-12 (D1)
+
+`npm test` green, exit 0, including `test-retest-panel: 31 passed` and the
+unchanged `test-membership: 209 passed`. Both typechecks clean. Production build
+green, exit 0, fresh `.next`, no dev server listening.
+
+---
+
+## ▶️ Previous handoff, 2026-09-12 (seventh batch: the code nobody calls, and the function everybody rewrote)
 
 ### WHAT THIS BATCH WAS
 
