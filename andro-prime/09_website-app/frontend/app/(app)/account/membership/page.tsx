@@ -7,7 +7,7 @@ import { firstRetestDueAt } from '@/lib/membership/entitlement'
 import { PRODUCT_MAP } from '@/lib/subscriptions/products'
 import { CheckinRow } from '@/components/membership/CheckinRow'
 import { AdherenceChart } from '@/components/membership/AdherenceChart'
-import { TrendRail } from '@/components/membership/TrendRail'
+import { TrendPlot } from '@/components/membership/TrendPlot'
 import { JoinButton } from '@/components/membership/JoinButton'
 import { AppStrip, AppShell } from '@/components/app/AppShell'
 import Link from 'next/link'
@@ -176,7 +176,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
             <div className="f-tray f-rise">
               <div className="f-core">
                 <p className="f-blab">{marker.displayName}, your points so far</p>
-                <TrendRail
+                <TrendPlot
                   markerName={marker.displayName}
                   trend={marker.trend}
                   pendingRetestAt={pendingRetestAt}

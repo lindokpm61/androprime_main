@@ -5,7 +5,7 @@ import { dayKey, questionsFor, SCALE_MAX, SCALE_MIN, type CheckinMarkerKey } fro
  * THE MEMBER FIXTURE: a membership and a plausible check-in history.
  *
  * WHY IT EXISTS. `/account/membership` has three top-level states and the
- * MEMBER one is the only place `CheckinRow`, `AdherenceChart` and `TrendRail`
+ * MEMBER one is the only place `CheckinRow`, `AdherenceChart` and `TrendPlot`
  * render at all. Reaching it needs a session with an active membership and
  * enough logged days to draw a chart, and `seedScenario` creates neither, so
  * until 2026-09-12 the member screen had never been opened by anyone: batch 3

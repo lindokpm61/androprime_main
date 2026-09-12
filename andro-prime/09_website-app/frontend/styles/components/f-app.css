@@ -1204,34 +1204,68 @@
   margin: 12px 0 12px;
 }
 
-/* ---- the trend rail ---- */
+/* ---- the trend plot ----
 
-.f-rail { position: relative; height: 72px; margin: 16px 0 4px; }
-.f-rail-line {
-  position: absolute; left: 0; right: 0; top: 30px; height: 2px;
-  background: var(--hair-2); display: block;
+   REPLACED THE RAIL ON 2026-09-12. The rail spaced readings along one
+   horizontal line with the value printed above each, so every reading sat at
+   the same height whatever it said and the question the panel exists to answer
+   was carried entirely by comparing two numerals. Height encodes the value now.
+
+   🔴 THE GEOMETRY IS SVG AND THE TYPE IS HTML. A single scaled `viewBox`, which
+   is how the demo draws its plot, scales its text along with its geometry and
+   offers no way to opt out. That is harmless inside the demo's 320px phone and
+   wrong here, where the card runs past a thousand pixels: the first version
+   rendered the dates larger than the page headline. So the SVG carries only
+   lines, under `preserveAspectRatio="none"` with a non-scaling stroke, and every
+   label below is positioned HTML at a real font size.
+
+   The component carries the rest of the argument, including why there are no
+   reference bands behind it. */
+
+.f-plot { margin: 14px 0 4px; }
+
+.f-plot-area { position: relative; width: 100%; }
+
+.f-plot-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+.f-plot-line { stroke: var(--ink-3); stroke-width: 2; fill: none; }
+/* The run to a reading that has not been taken. Dashed, because a solid line
+   would draw a trajectory nobody has measured. */
+.f-plot-pending { stroke-dasharray: 4 5; opacity: 0.55; }
+
+/* The ground the readings stand on. */
+.f-plot-axis {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: var(--hair); display: block;
 }
-.f-pt { position: absolute; top: 0; transform: translateX(-50%); text-align: center; }
-.f-pt-v {
-  display: block;
+
+/* One reading: the dot sits ON the point and the value rides above it. */
+.f-plot-pt { position: absolute; transform: translate(-50%, -50%); }
+
+.f-plot-dot {
+  display: block; width: 11px; height: 11px; border-radius: var(--radius-pill);
+  background: var(--paper); box-shadow: inset 0 0 0 2px var(--ink-3);
+}
+/* The current reading is what the rest of the screen is about, so it is the
+   only filled mark. */
+.f-plot-dot-now { width: 13px; height: 13px; background: var(--ink); box-shadow: none; }
+.f-plot-dot-next { background: var(--paper); box-shadow: inset 0 0 0 2px var(--ink-3); opacity: 0.6; }
+
+.f-plot-v {
+  position: absolute; left: 50%; bottom: calc(100% + 7px); transform: translateX(-50%);
   font-family: var(--font-mono); font-size-adjust: none;
   font-variant-numeric: tabular-nums;
-  font-size: 17px; font-weight: 600; line-height: 1; color: var(--ink);
+  font-size: 14px; line-height: 1; color: var(--ink-2); white-space: nowrap;
 }
-.f-pt-d {
-  display: block; width: 11px; height: 11px; margin: 9px auto 0;
-  border-radius: var(--radius-pill); background: var(--ink);
-}
-/* The point that has not happened yet is hollow. It is the only mark on the
-   screen standing for something in the future, and a filled dot would claim a
-   reading exists. */
-.f-pt.f-pt-future .f-pt-v { color: var(--ink-3); }
-.f-pt.f-pt-future .f-pt-d { background: var(--paper); box-shadow: inset 0 0 0 2px var(--ink-3); }
-.f-pt-w {
-  display: block; margin-top: 8px;
+.f-plot-v-now { font-size: 19px; font-weight: 600; color: var(--ink); }
+.f-plot-v-next { color: var(--ink-3); }
+
+.f-plot-dates { position: relative; height: 20px; margin-top: 9px; }
+.f-plot-d {
+  position: absolute; top: 0; transform: translateX(-50%);
   font-family: var(--font-mono); font-size-adjust: none;
-  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-2); white-space: nowrap;
+  font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-3); white-space: nowrap;
 }
 
 /* ---------- print ------------------------------------------------------
