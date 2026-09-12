@@ -115,10 +115,19 @@ const SAMPLES = {
 const EXCLUDED = {
   '/founding-member': 'retired, 307s to /kits',
   '/activate': 'retired 2026-09-12, 307s to /how-to-sample (deprecated by the QR decision of 2026-06-12)',
-  '/admin/dashboard': 'internal, no public UI',
-  '/ops/content': 'internal, no public UI',
-  '/go': 'internal redirect, no UI',
-  '/blog/preview/[slug]': 'internal preview of an unpublished draft',
+  '/admin/dashboard': 'admin-gated internal tool, no public UI (Direction F since 2026-09-12)',
+  '/ops/content': 'admin-gated internal tool, no public UI (Direction F since 2026-09-12)',
+  // 🔴 THIS REASON USED TO READ "internal redirect, no UI", AND IT DESCRIBED A
+  // DIFFERENT ROUTE. `/go/[slug]` is the redirect: a `route.ts` that records a
+  // click and sends the reader on. `/go` is a rendered, CUSTOMER-FACING page,
+  // the link-in-bio grid every Instagram profile visitor lands on, and it sat on
+  // V2.0 for the whole rebuild because this line answered the question and
+  // nobody asked it again. Rebuilt 2026-09-12. It stays excluded for a reason
+  // that is now true: the page fires `bio_grid_view` server-side on every
+  // render, so sweeping it would seed the campaign's own baseline with sweep
+  // traffic. A reason is not a category; check it before inheriting it.
+  '/go': 'renders a `bio_grid_view` analytics event on every load, so a sweep would pollute the campaign it measures (Direction F since 2026-09-12)',
+  '/blog/preview/[slug]': 'internal preview of an unpublished draft, behind a shared token (Direction F: it renders ArticleLayout)',
   '/demo': 'runs the authenticated app shell (`ap-*`), not the marketing layer, so Direction F is the wrong question',
 }
 

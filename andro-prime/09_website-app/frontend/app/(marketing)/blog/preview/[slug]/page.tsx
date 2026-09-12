@@ -5,6 +5,8 @@ import { getArticleForPreview, getArticleRevisionForPreview, extractH2Headings, 
 import ArticleLayout from '@/components/marketing/ArticleLayout'
 import BlogToc from '@/components/marketing/BlogToc'
 import { mdxComponents, mdxOptions } from '@/components/marketing/articleMdx'
+import { InternalStrip } from '@/components/internal/InternalChrome'
+import '@/styles/components/f-internal.css'
 
 // The G2 sign-off review surface. Renders a draft (ANY status) exactly as it will
 // publish, in production, gated by a shared token and marked noindex. The public
@@ -40,21 +42,27 @@ export default async function ArticlePreviewPage({ params, searchParams }: Props
 
   return (
     <>
-      <div
-        style={{
-          background: '#000',
-          color: '#fff',
-          fontFamily: 'monospace',
-          fontSize: 13,
-          textAlign: 'center',
-          padding: '8px 16px',
-          letterSpacing: '0.05em',
-        }}
-      >
-        {rev
-          ? `PROPOSED RE-OPT · revision ${rev.slice(0, 8)} · NOT live · not indexed`
-          : `PREVIEW · status: ${frontmatter.status ?? 'draft'} · not public · not indexed`}
-      </div>
+      {/*
+        THE ONLY NON-DIRECTION-F ELEMENT ON THIS ROUTE, until 2026-09-12. The
+        article below it is `ArticleLayout`, rebuilt with the blog in Direction
+        F; this bar was six inline styles and `fontFamily: 'monospace'`, which
+        is the browser's default mono rather than the brand's. It is the same
+        job the internal tools' strip does (say what you are looking at, in one
+        inverted line), so it takes `InternalStrip` rather than a seventh
+        hand-rolled bar. `f-internal.css` is imported by this route directly:
+        the file is scoped by import, and a preview surface is internal even
+        though it sits in the marketing tree.
+
+        The two states keep their exact words.
+      */}
+      <InternalStrip
+        label={rev ? 'Proposed re-opt' : 'Preview'}
+        right={
+          rev
+            ? `revision ${rev.slice(0, 8)} · NOT live · not indexed`
+            : `status: ${frontmatter.status ?? 'draft'} · not public · not indexed`
+        }
+      />
       <ArticleLayout frontmatter={frontmatter} headings={headings} showToc={showToc}>
         <MDXRemote
           source={content}

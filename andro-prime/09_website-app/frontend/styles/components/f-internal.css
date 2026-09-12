@@ -1,0 +1,261 @@
+/* ============================================================================
+   THE INTERNAL TOOLS LAYER, added 2026-09-12.
+
+   `/admin/dashboard`, `/ops/content` and the `/blog/preview/[slug]` banner: the
+   three surfaces only Keith and the sign-off reviewer ever see. Before this they
+   were **660 lines of inline `style={{}}` objects** with hard-coded hexes,
+   hard-coded font stacks ("Inter, system-ui" and "Georgia, serif", neither of
+   which is a brand face any more) and no relationship to any design system at
+   all. They were excluded from route conformance as "internal, no public UI",
+   which is true of the audience and was being read as "no design question here".
+
+   🔴 WHY A FOURTH LAYER RATHER THAN REUSING ONE OF THE THREE. `f-primitives.css`
+   is the marketing reading surface: generous rhythm, one idea per section,
+   66ch measures. `f-app.css` is the signed-in product: trays, an explanatory
+   sidebar, a customer's own numbers. `f-blog.css` is an article. An ops board is
+   none of those. It is a **dense tabular instrument** read by one person looking
+   for the one number that is wrong, and the two things it needs most are a table
+   that fits eight columns without wrapping and a way to say "this one is bad",
+   neither of which the other three have. What it TAKES from them is everything
+   else: the same tokens, the same type ramp (`.f-page` supplies it), the same
+   `.f-tray`/`.f-core` containers, the same `.f-counts` metric row, the same
+   `.f-blab` labels. This file is the delta, and it is deliberately small.
+
+   ⚠ SCOPED BY IMPORT, not by `globals.css`. Only `app/(internal)/layout.tsx` and
+   the blog preview route import it, so it never reaches a customer bundle.
+   `verify-f-classes.js` walks every `.css` under `styles/`, `app/` and
+   `components/` regardless of who imports it, so these classes are checked like
+   any other.
+   ========================================================================= */
+
+/* ---- the three tones, and the ruling they are careful not to touch -------
+
+   🔴 THESE ARE NOT `--color-status-*`, DELIBERATELY, AND THE DIFFERENCE IS THE
+   WHOLE POINT. Keith ruled on 2026-09-03 that **saturated colour means a
+   clinical verdict and nothing else**, after amber had ended up meaning "this
+   number of yours needs watching" on one page and "buy this one, it is £179" on
+   another. The status triad is reserved for a customer's result.
+
+   An ops blocker is not a clinical verdict, and it must not borrow the token
+   that is one: the day somebody re-tunes the critical red for legibility on a
+   results card, a content lane going red is not a reason to hold that change up.
+   So the internal board gets its own three, at its own values, on a surface no
+   customer can reach. They are the values the board already shipped with, so
+   nothing about the RULING's status quo moves here; only the hexes stop being
+   repeated in twenty-six inline styles.
+
+   ⚠ OPEN FOR KEITH: whether the 2026-09-03 ruling is meant to reach an
+   admin-gated internal tool at all. Kept, because stripping the tones would
+   delete the information the board exists to carry, and because they were
+   already live. If the answer is that ink-only holds everywhere, the change is
+   these three values and nothing else. */
+.f-int {
+  --int-bad:  #9E2A20;
+  --int-warn: #9A5B00;
+  --int-ok:   #06724F;
+}
+
+.f-int-bad  { color: var(--int-bad); }
+.f-int-warn { color: var(--int-warn); }
+.f-int-ok   { color: var(--int-ok); }
+
+/* ---- the strip -----------------------------------------------------------
+   The internal surfaces' one inverted block, and the same argument `.f-appstrip`
+   makes on the signed-in tree: Direction F caps a page at one inverted panel,
+   and here it is spent on saying which screen you are on and how fresh it is.
+   NOT `.f-appstrip` itself: that one belongs to the authenticated product and
+   carries a customer-facing dot and label; sharing the selector would mean an
+   ops tweak moving a customer's screen. Same shape, separate component, which is
+   the distinction `.f-oref` had to make against `.f-mk-v`. */
+.f-intstrip {
+  background: var(--ink-ground);
+  color: var(--paper);
+  padding: 9px 20px;
+}
+.f-intstrip-in {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.f-intstrip-in b { font-weight: 600; }
+/* Pushed right, and allowed to wrap away on a phone rather than squeezing the
+   label it sits beside. An ops board is opened on a laptop; the timestamp is the
+   part that goes if anything has to. */
+.f-intstrip-r { margin-left: auto; color: rgba(255, 255, 255, 0.62); }
+@media (max-width: 560px) { .f-intstrip-r { display: none; } }
+
+/* ---- the page container --------------------------------------------------
+   Wider than `.f-wrap` (1180) on purpose: the lane table is eight columns and
+   the marketing measure is set for a line of prose, not for a row of counts. */
+.f-intwrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 30px 20px 90px;
+}
+.f-inthead { margin-bottom: 26px; }
+.f-inthead h1 {
+  font-family: var(--font-display); font-size-adjust: cap-height 0.71;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  margin: 6px 0 0;
+}
+.f-inthead p {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-3);
+  max-width: 76ch;
+}
+
+/* ---- the numbered panel --------------------------------------------------
+   The board's own section rhythm. It is `.f-blab` for the label and a hairline
+   above, which is the containment ruling of 2026-09-02 applied here too: a panel
+   of counts is not a transaction and not an instrument, so it takes a rule and
+   nothing else rather than a box. The board's trays are kept for the two places
+   that genuinely hold a record: an error, and the claim-ledger prose. */
+.f-intpanel { margin-top: 34px; }
+.f-intpanel > .f-blab { margin-bottom: 4px; }
+.f-intpanel-sub {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 86ch;
+}
+.f-intpanel-body { border-top: 1px solid var(--hair-2); padding-top: 16px; }
+
+/* A sub-heading inside a panel, for the three ledger groups. Mono, because it
+   labels a group of counts rather than opening a topic. */
+.f-intsub {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 10px;
+}
+
+/* ---- the dense table -----------------------------------------------------
+   🔴 NOT `.f-table`, WHICH IS THE COMPARISON TABLE. That one centres every cell
+   and sets a 17px price in its head, because it exists to put three kits beside
+   each other. A data table is read down a column: left-aligned, tabular figures,
+   a head that stays out of the way, and rows tight enough that twenty fit on a
+   screen. Two unrelated components under one selector is the `.f-field` collision
+   DESIGN.md keeps warning about, so this one is named for its job. */
+.f-int-tablewrap { overflow-x: auto; }
+.f-int-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.f-int-table th {
+  text-align: left;
+  padding: 0 16px 8px 0;
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--hair-2);
+}
+.f-int-table td {
+  padding: 9px 16px 9px 0;
+  border-top: 1px solid var(--hair);
+  color: var(--ink-2);
+  vertical-align: top;
+}
+.f-int-table tbody tr:first-child td { border-top: 0; }
+/* The first column names the row, so it carries the ink the rest of the row
+   does not. Same relationship as `.f-table tbody th[scope=row]`, inverted:
+   there the label is quiet because the values are the argument; here the label
+   is what you scan for. */
+.f-int-table td:first-child { color: var(--ink); font-weight: 600; white-space: nowrap; }
+/* An empty lane is still a row, and a row nobody has filled should read as
+   quieter than one with work in it rather than as an error. */
+.f-int-table tr.f-int-empty td { color: var(--ink-3); }
+.f-int-table tr.f-int-empty td:first-child { color: var(--ink-2); font-weight: 500; }
+.f-int-num { font-variant-numeric: tabular-nums; }
+
+/* ---- the severity tag ----------------------------------------------------
+   A word, not only a colour: the tag says BLOCKER or ATTENTION in text, so the
+   three tones are never the sole carrier of the meaning. That is the same rule
+   the results badges follow (`accessibility-standards.md`), and it is the reason
+   the tone question above is a design question rather than a data-loss one. */
+.f-int-tag {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 2px 7px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-inset);
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---- the needs-you list --------------------------------------------------
+   A tag beside a sentence, repeated. Not `.f-numlist`: that numbers its items,
+   and these are not a sequence. */
+.f-intlist { list-style: none; margin: 0; padding: 0; }
+.f-intlist li {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.f-intlist li:last-child { border-bottom: 0; }
+.f-intlist b { font-weight: 600; color: var(--ink); }
+.f-intlist span { color: var(--ink-3); }
+
+/* ---- the metric row ------------------------------------------------------
+   `.f-counts` from f-app.css carries the shape; this only tightens the gap,
+   because an ops panel puts four counts in a row where the account puts two.
+   Compounded onto the base per `verify-modifier-specificity.js`. */
+.f-counts.f-int-counts { gap: 22px 36px; padding: 4px 0 0; }
+.f-int-counts .f-counts-n { font-size: 26px; }
+/* A timestamp sitting beside counts must not be the biggest number in the row,
+   which is exactly the emphasis it should not have. Carried from the inline
+   version's `small` prop, which had the same note. */
+.f-int-counts .f-counts-n.f-int-when { font-size: 15px; letter-spacing: 0; }
+/* The one headline number a board is opened FOR: the cash position on the admin
+   dashboard. One per page, and the page has to earn it the way a marketing route
+   earns its inverted panel. It replaces a 40px inline font-size that was the
+   largest thing on that page for the same reason. */
+.f-int-counts .f-counts-n.f-int-lead { font-size: 38px; }
+
+/* ---- the footer note ----------------------------------------------------- */
+.f-intfoot {
+  margin-top: 46px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hair);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-3);
+  max-width: 90ch;
+}
+.f-intfoot code {
+  font-family: var(--font-mono); font-size-adjust: none;
+  font-size: 11px;
+  color: var(--ink-2);
+}
+
+/* ---- the search form ----------------------------------------------------
+   One input and one button on a row. `.f-inprow` in f-primitives does this for
+   the marketing capture, at marketing scale; the admin lookup is a tool control
+   and takes the app's own input size. */
+.f-intsearch { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.f-intsearch .f-inp { flex: 1 1 340px; }

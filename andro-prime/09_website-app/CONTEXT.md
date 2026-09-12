@@ -19,7 +19,8 @@ The site is **one Next.js application** under `frontend/`, not separate static-H
 - `app/lp/*`: direct-response landing pages. `noindex` per-page (`robots: { index: false }`) and disallowed in `app/robots.ts`.
 - `app/api/*`: all backend route handlers (webhooks, checkout, forms, jobs, OG images).
 - `app/activate/*`: **deprecated 2026-06-12, retired 2026-09-12.** The page is now a one-line `redirect()` to `/how-to-sample`, the replacement that decision named; its layout and `styles/pages/activate.css` are deleted. `app/api/activate/route.ts`, `lib/activate/*` and `components/activate/*` remain, with their deprecation headers and **no caller**, because that decision chose marked-not-deleted so it stays reversible. The login gate, the per-order kit code and all three error states are gone; the five instruction steps live on `/how-to-sample` byte for byte.
-- `app/admin/dashboard/`: internal admin metrics.
+- `app/(internal)/`: the two admin-gated tools, `admin/dashboard` (Stripe cash, gate metrics, order lookup) and `ops/content` (the eight-panel content board). A route group, so both URLs are unchanged. Direction F since 2026-09-12, on their own layer: `styles/components/f-internal.css` plus `components/internal/InternalChrome.tsx` (strip, head, numbered panel, metric row, dense data table), imported only by that layout and by the blog preview route, so none of it reaches a customer bundle. 🔴 **The admin gate is in each PAGE, not in the layout, and must stay there:** neither route is in the middleware matcher, a layout is not a security boundary in Next, and `isAdmin()` is a hard-coded allowlist of one address. A consequence worth knowing before trying to screenshot either: no local dev session can open them.
+- `app/go/`: `page.tsx` is the **customer-facing** Instagram link-in-bio grid (one tile per post in the 30-day carousel run; renders only when `CAROUSEL_RUN_START` is set) and `go/[slug]/route.ts` is the click handler that records `bio_tile_click` and redirects. The page fires `bio_grid_view` server-side on every render, which is why it is excluded from the conformance sweep: measuring it would seed the campaign's own baseline. It was excluded for three months as "internal redirect, no UI", which describes the handler and not the page.
 
 Blog content lives in the **Supabase `blog_articles` table** (DB is the source of truth as of the Phase-1 content-engine decoupling, migration `20260619_blog_articles_db_backed.sql`). `lib/blog.ts` reads it (anon + published-only RLS for the public path; service-role for drafts/preview), rendered by `app/(marketing)/blog/[slug]/page.tsx` via `next-mdx-remote/rsc`. Visibility is the `status` column (`draft|published|archived`); publishing/editing/takedown is a DB write surfaced by **on-demand revalidation** (`app/api/revalidate` → `revalidateTag('blog'|'article:<slug>')`, 1h ISR backstop), **no Coolify redeploy**. `frontend/content/blog/*.mdx` is now a **backup mirror + import source**, not the live source: authoring still uses `/article` + `/publish-article` on MDX files, then `scripts/import-blog-to-db.ts` bridges file → DB (Phase 2 will move authoring directly onto the DB write path `upsert_blog_article()`). See `06_marketing/seo-ai-search/` + the SEO memory notes for the content engine.
 
@@ -51,8 +52,9 @@ Ask before deleting; these are worth a deliberate cleanup commit.
 │   │   ├── auth/             ← passwordless auth flows + route handlers
 │   │   ├── lp/               ← noindex direct-response landing pages
 │   │   ├── api/              ← all backend route handlers
-│   │   ├── activate/         ← DEPRECATED
-│   │   ├── admin/dashboard/  ← internal metrics
+│   │   ├── activate/         ← DEPRECATED, a redirect to /how-to-sample
+│   │   ├── (internal)/       ← admin-gated tools: admin/dashboard, ops/content (URLs unchanged)
+│   │   ├── go/               ← the Instagram link-in-bio grid (a PAGE) + go/[slug] (the click handler)
 │   │   ├── layout.tsx, robots.ts, sitemap.ts, manifest.ts, opengraph-image.tsx, global-error.tsx
 │   ├── content/blog/         ← MDX articles (source of the blog)
 │   ├── components/           ← analytics, app, auth, commerce, founding-member, lp, marketing,

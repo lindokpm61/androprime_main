@@ -4,7 +4,147 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-12 (fifth batch: the last three routes, and the measurable site is 100% Direction F)
+## ▶️ PICK UP HERE — handoff, 2026-09-12 (sixth batch: the four routes the report had excluded, and one of them was customer-facing)
+
+### WHAT THIS BATCH WAS
+
+Keith: *"rebuild the internal UI's /admin/dashboard, /ops/content, /go,
+/blog/preview/[slug]"*. Those are the four routes `route-conformance.md` lists
+under **Excluded from the count**, each with a one-line reason. Three of the four
+reasons were right. The fourth was not, and it had been inherited rather than
+checked for the whole rebuild.
+
+### 🔴 `/go` IS A CUSTOMER-FACING PAGE AND THE REPORT CALLED IT AN INTERNAL REDIRECT
+
+The exclusion read *"internal redirect, no UI"*. That is a true description of
+**`/go/[slug]`**, which is a `route.ts` handler: it records a `bio_tile_click`
+and redirects. **`/go` itself is a rendered page**, the Instagram link-in-bio
+grid, with a headline, a standfirst, one tile per post in the 30-day carousel
+run and the conflict-free closing statement. It is the page every visitor to the
+Instagram profile lands on, and it sat on V2.0 (8px black rules, uppercase black
+sans, `hover:bg-black`) through every batch of the rebuild.
+
+**A route excluded from a count on a stated reason needs that reason checked,
+not inherited.** The reason was written once, read as a category ever after, and
+the two routes differ by one path segment. It is now Direction F, and its
+exclusion reason is one that is true: the page fires `bio_grid_view`
+**server-side on every render**, so putting it in the sweep would seed the
+campaign's own baseline with sweep traffic.
+
+⚠ **No word changed on it** except one literal: the turnaround was the string
+"2 to 5 working days" typed into the file and now reads `SLA_COPY`, the constant
+`/faq` and `/waitlist` already import. Register row 46.
+
+### THE INTERNAL LAYER, AND WHY IT IS A FOURTH ONE
+
+`/admin/dashboard` and `/ops/content` were **660 lines between them in which
+every rule was an inline `style={{}}` object**: nineteen hard-coded `#000`s on
+one, eight greys and three tone hexes repeated twenty-six times on the other,
+and **two different font stacks named by hand**, `Inter, system-ui` and
+`ui-sans-serif, system-ui`. Inter was replaced on 2026-08-31 because the type
+ruling names a humanist and Inter is a neo-grotesque, so the page that reads the
+company's cash position was rendering it in a typeface the company had stopped
+using. **No check could see any of it**, because an inline style is invisible to
+`verify-f-classes`, to `verify-design-tokens` and to every other one.
+
+Neither page had a `.f-page` root either, so `globals.css`'s V2.0
+`p { font-serif }` applied by inheritance: the same defect the auth tree and the
+app tree each needed a one-line root to fix.
+
+**What shipped:** `app/(internal)/layout.tsx` (a route group, so no URL moved),
+`styles/components/f-internal.css`, and `components/internal/InternalChrome.tsx`
+carrying the strip, the head, the numbered panel, the metric row and the dense
+data table. The two boards now compose that scaffold, and
+**`/blog/preview/[slug]`'s top bar takes the same strip**, replacing six inline
+styles and a `fontFamily: 'monospace'` that was the browser default rather than
+the brand mono.
+
+**Why a fourth layer rather than one of the three that exist.** `f-primitives`
+is the marketing reading surface, `f-app` is the signed-in product, `f-blog` is
+an article. An ops board is none of those: it is a dense tabular instrument read
+by one person looking for the one number that is wrong. What it needed that none
+of the three had was a table that fits eight columns without wrapping and a way
+to say "this one is bad". Everything else it takes: the tokens, the type ramp,
+`.f-tray`, `.f-counts`, `.f-blab`, `.f-banner`.
+
+### 🔵 ONE QUESTION FOR KEITH, AND IT IS A RULING QUESTION RATHER THAN A COPY ONE
+
+**Does the 2026-09-03 saturated-colour ruling reach an admin-gated internal
+tool?** That ruling says saturated colour means a clinical verdict and nothing
+else, and it was made because amber meant "this number of yours needs watching"
+on one page and "buy this one, it is £179" on another. The ops board's
+red/amber/green say "this lane is blocked". They are kept, because stripping
+them would delete the information the board exists to carry and because they
+were already live, and they are now three variables in `f-internal.css`,
+**deliberately not `--color-status-*`**: the day somebody re-tunes the critical
+red for legibility on a results card, a content lane going red is not a reason
+to hold that change up. **Every tone is paired with a word** (`BLOCKER`,
+`ATTENTION`, `empty lane`, `never`), so colour is never the only carrier and the
+answer changes nothing about what the board can say. If the answer is that
+ink-only holds everywhere, the change is three values and nothing else.
+
+### ⚠ THE TWO BOARDS COULD NOT BE SCREENSHOT, AND THE REASON IS WORTH KNOWING
+
+`isAdmin()` is a hard-coded allowlist of exactly one address,
+`keith@andro-prime.com`, and the local dev environment has no session for it, so
+both pages redirect before they render. They were verified against a temporary
+harness route that rendered the same components with fixture data, which was
+deleted before commit. **The gate itself is unchanged and is still checked in
+each page**, deliberately: neither `/admin` nor `/ops` is in the middleware
+matcher and a layout is not a security boundary in Next, so the in-page check is
+the only gate there is.
+
+### 🔴 A DELIBERATELY BLANKED ENV VAR POISONED A DISK CACHE FOR TWO LATER RUNS
+
+`/go` writes to the production `events` table on every render, and local dev
+points at production Supabase, so the screenshot pass ran with
+`SUPABASE_SERVICE_ROLE_KEY=` blank to make the insert fail inside its own
+try/catch. It did. It also emptied an `unstable_cache` entry, because in
+development the article fetcher uses the admin client: **the empty list was
+cached to `.next/cache` under a one-hour revalidate**, which outlived the
+process. Two dev servers later, with the full environment restored,
+`verify-scroll-reveal.js` reported *"/authors/dr-ewa-lindo: has reveal targets,
+want true, got false"* and `/go` rendered raw slugs where titles belong. Both
+were the stale cache; clearing `.next/cache` restored 168/2 and the titles.
+
+**The tell was the assertion count**, which dropped by five between two runs of
+the same check, and five is one route's worth. A failure that changes how many
+assertions RAN is a data problem, not a code one. OBS-730.
+
+⚠ Also worth knowing: **a folder whose name starts with `_` is a private folder
+in the App Router** and serves no route. The harness above was written as
+`__probe` and 404d, which reads exactly like a broken page.
+
+### 🔴 WHAT IS STILL NOT DONE
+
+- **The tone question above**, Keith.
+- ⚠ **`/go`'s populated state was verified against the local run only.** The tile
+  list renders from `CAROUSEL_RUN_START`, which is unset locally and unset in
+  production, so the live page currently serves the empty state. All ten topic
+  slugs in `lib/bio-grid.ts` ARE published articles (checked against the database
+  2026-09-12), so the titles will resolve when the run starts.
+- Carried, untouched by this batch: the how-to-sample film and its QR; the
+  `/subscription/confirmed` and `/how-to-sample` copy owed to Keith (register
+  rows 44 and 45); the third copy of `formatDate`; `ResultEducate`,
+  `ResultExplain` and `ResultValue` with zero consumers; the em dash in CA-014
+  consent copy; the retest comparison page; Ewa's movement threshold; the
+  `/demo` presentation decision (`869ez4jrt`) and the density question
+  (`869erraqd`).
+
+### Test status at 2026-09-12 (sixth batch)
+
+`npm test` green, exit 0, including all nine design checks and a regenerated
+`design/route-conformance.md` (still **36 of 36 measurable routes, 100%**: all
+four rebuilt routes remain excluded from the count, three of them for reasons
+that were already right and `/go` for one that now is). `npm run
+test:design:live`: **168 passed, 2 failed**, both the documented pre-existing
+`/privacy` and `/terms` pair. `audit-dark-contrast.js`: 16 routes, **0 failing
+text nodes**. **Production build green, exit 0**, with no dev server listening
+and a fresh `.next`. All four routes build at their original URLs.
+
+---
+
+## ▶️ Previous handoff, 2026-09-12 (fifth batch: the last three routes, and the measurable site is 100% Direction F)
 
 ### THE BATCH NUMBERING, CLOSED
 
