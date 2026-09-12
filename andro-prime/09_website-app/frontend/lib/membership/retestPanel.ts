@@ -39,12 +39,31 @@
  * The counts are asserted in section 7 of `scripts/test-retest-panel.ts` rather
  * than left as a claim in a comment.
  *
- * ⚠ EWA HAS NOT SIGNED THE NARROWING. Dropping five markers off a Kit 3 buyer's
- * retest is a clinical statement, not a packing decision, and the register has
- * said so since 2026-09-08. This file implements the rule Keith chose; the
- * sign-off is still owed before `MEMBERSHIP_ENABLED` goes on. If the answer
- * comes back "always re-measure the full panel he bought", the change is to
- * return the fallback here and nothing else moves.
+ * THIS IS NOT A CLINICAL RULING, AND THE REGISTER WAS WRONG TO CALL IT ONE.
+ * From 2026-09-08 the defect register said "dropping five markers off a retest
+ * is a clinical statement, not a packing decision", and that was repeated into
+ * this file. Keith corrected it on 2026-09-13: the system asserts nothing here.
+ * It re-measures markers that moved and reports the new numbers, interpreted by
+ * the same thresholds and the same copy as before. Not running a test is not a
+ * claim that the marker is fine.
+ *
+ * The governing rule is `03_compliance/CONTEXT.md`: **Ewa signs off the system,
+ * not individual reports** — the recommendation logic, meaning thresholds,
+ * result-to-product recommendation mapping, and copy. This rule moves no
+ * threshold, recommends nothing, and changes no customer-facing word. It
+ * selects which box to post against an entitlement the customer already holds.
+ *
+ * The structural half matters more than the argument: **a flagged marker is
+ * never omitted.** The chosen kit always covers every marker the engine
+ * flagged, asserted over all 557 subsets in section 4 of the test, so the case
+ * that WOULD be a clinical statement cannot occur. What is left out is only
+ * ever a marker that came back in range.
+ *
+ * ⚠ What IS owed, when it exists, is COPY. Nothing currently tells a member
+ * what his retest covers (that absence is defect 3c). The sentence that
+ * eventually does is external-facing, so it goes through the Guardrail #1
+ * pre-flight like any other copy. Ewa re-enters only if that copy makes a claim
+ * about clinical sufficiency, e.g. "we re-test what matters".
  *
  * WHAT IT DELIBERATELY DOES NOT DO. It never decides WHEN. The interval is
  * `entitlement.ts`, and the two are siblings: this decides what, that decides

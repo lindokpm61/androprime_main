@@ -131,10 +131,25 @@ covers the flagged markers, and is never dearer than the kit they came from.
 
 - **The demo decision above**, Keith. It is what still blocks `/demo` going
   public.
-- 🔴 **Ewa has not signed the narrowing.** Dropping five markers off a Kit 3
-  buyer's retest is a clinical statement, not a packing decision. Nothing
-  dispatches while `MEMBERSHIP_ENABLED` is off, so the sign-off is owed before
-  the flag goes on rather than before the merge.
+- 🟢 **No clinical ruling is owed, and the claim that one was is withdrawn.**
+  The defect register said from 2026-09-08 that "dropping five markers off a
+  retest is a clinical statement, not a packing decision", and that was repeated
+  into the code, this file and two ClickUp comments without being tested.
+  **Keith corrected it on 2026-09-13: the system asserts nothing here.** It
+  re-measures markers that moved and reports the numbers, interpreted by the
+  same thresholds and the same copy as before; not running a test is not a claim
+  that the marker is fine, and the choice of panel was made by the customer at
+  purchase. `03_compliance/CONTEXT.md` governs: **Ewa signs off the system, not
+  individual reports** — thresholds, result-to-product recommendation mapping,
+  and copy. This moves no threshold, recommends nothing, and changes no
+  customer-facing word.
+  **The structural half is what settles it:** a flagged marker is never omitted,
+  asserted over all 557 subsets, so the case that would be a clinical statement
+  cannot occur. What is left out is only ever a marker that came back in range.
+  ⚠ **What is owed, when it exists, is COPY.** Nothing currently tells a member
+  what his retest covers, which is defect 3c. That sentence is external-facing,
+  so it takes the Guardrail #1 pre-flight like any other copy, and Ewa re-enters
+  only if it claims clinical sufficiency (*"we re-test what matters"*).
 - Carried, untouched: the saturated-colour tone question on the internal boards;
   `/go`'s populated state; the orphaned hero assets; the 14 defects raised by
   the 2026-09-12 rendered sweep (sections 05 to 07 of the register); the

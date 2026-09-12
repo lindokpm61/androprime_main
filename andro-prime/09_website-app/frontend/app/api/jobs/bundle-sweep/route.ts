@@ -103,7 +103,10 @@ export async function POST(request: NextRequest) {
         // receiving a Kit 2. `selectRetestPanel` owns the decision and its
         // header carries the reasoning; this block owns only the fallback.
         //
-        // ⚠ Ewa has not signed the narrowing. See the note in retestPanel.ts.
+        // No clinical ruling gates this: it posts a box against an entitlement
+        // the member already holds, and a flagged marker is never omitted. See
+        // the note in retestPanel.ts for why the register's original framing
+        // was wrong.
         const latest = await latestClassifiedResult(supabase, m.user_id)
 
         let panel: RetestPanel
