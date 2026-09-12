@@ -245,6 +245,150 @@ error, because the banner is `fixed` and covers the button. Seeding
 `ap_cookie_consent=denied` into localStorage before load fixes it, which is the
 same flag `--localstorage` exists for.
 
+### ✅ THE RETEST-AGAINST-ORIGINAL WORK, AND NO NEW TABLES WERE NEEDED
+
+Keith, 2026-09-12: *"We need a page that shows the results of the retest against
+the original test... which also means that we probably need some additional
+tables in Supabase."* **The premise checked out false.** `kit_orders` carries one
+row per purchase, `lab_results` one per order, `biomarker_values` the readings,
+and `getDashboardData` already fetches EVERY result a user has with no limit. A
+retest is a second order and has been representable since April.
+
+**`lib/results/markerHistory.ts`** is what was actually missing: each marker's
+full ordered history, `latest` / `previous` / `first` plus every reading, so a
+surface picks its own comparison rather than having one baked in.
+
+🔴 **IT FLATTENS ACROSS KITS AND THAT IS THE WHOLE POINT.** `getDashboardData`
+groups results by `kit_type`, which is right for a dashboard listing purchases
+and wrong for a comparison: a Kit 3 buy retested with a Kit 2 puts baseline and
+retest in different buckets and the four shared markers never meet. The demo's
+own comment names this as why it could not use the shared helper. **The fix is
+NOT to change the grouping**, which the dashboard depends on, but to ignore it
+here. An earlier note in this session called the grouping a defect; it is not.
+
+**Agnostic about the kit identity `869eyg5bh` has not decided.** Joining by
+marker name is correct under both answers: same-kit, every marker pairs;
+step-down, only the shared ones do and the rest carry `previous: null`, which is
+information a member needs rather than a leftover.
+
+**Verified twice, because these are different claims.** 26 assertions against
+stubs prove the algorithm (cross-kit pairing, and an undated reading never taken
+as the latest). Then it was run over real rows read from the database:
+**9 markers, 4 remeasured, 5 measured once, Vitamin D 31 to 58 across two kits.**
+Four of nine is exactly the shape the demo draws.
+
+⚠ **WHAT IT DELIBERATELY WILL NOT DO IS SAY WHETHER A MARKER MOVED.** The demo's
+`movementWord` calls anything within 0.5% of the previous value "Unchanged", far
+below analytical variation for every marker we run, so on a member's own screen
+it would report assay noise as a rise in his testosterone. Its own comment reads
+"a tenth of the smaller reading" while the constant is `0.005`, off by twenty.
+**What counts as a real change is per-marker and clinical and it is Ewa's.** This
+is the open item blocking the comparison page from saying anything about the
+move itself.
+
+### ✅ THE TREND PANEL IS A PLOT NOW, AND THE RAIL COULD NOT HAVE WORKED
+
+Keith, looking at a real pair: *"It should be a panel with a graph or something."*
+The rail spaced readings along one horizontal line with the value printed above
+each, so **every reading sat at the same height whatever it said** and the one
+question the panel exists to answer was carried entirely by comparing two
+numerals. `TrendRail` is replaced by **`TrendPlot`**: height encodes the value.
+
+🔴 **AND THE FIRST VERSION OF THE PLOT WAS WRONG IN A WAY ONLY THE RENDER
+SHOWED.** It put the whole drawing in one `viewBox` scaled to 100% width, which
+is how the demo does it. That works inside the demo's 320px phone frame and fails
+in a card past a thousand pixels: the drawing scaled by more than three and **the
+date labels rendered larger than the page headline**. A `viewBox` scales its text
+with its geometry and there is no way to opt one out. The geometry keeps a
+viewBox under `preserveAspectRatio="none"` with a non-scaling stroke; every label
+is positioned HTML at a real font size. **`tsc`, the nine design checks and the
+class checker all passed on the broken version.**
+
+No reference bands behind the line, deliberately: that would be a second
+implementation of `RangeTrack`, which batch 3 declined to duplicate. The pending
+retest is a dashed LEVEL run to a hollow dot, never a slope, because a solid line
+to the "?" would draw a trajectory nobody has measured.
+
+### ✅ THE PANEL ORDER WAS NEVER DESIGNED, AND NOW IT HAS BEEN
+
+Keith asked whether the panels were in the right order. They matched
+`membership-F.html` 01 through 11 exactly, **which is not the reassurance it
+looks like**: that frame's header records it was *"ENUMERATED BEFORE IT WAS
+DRAWN"* from this page, so it inherited the order rather than proposing one.
+
+Two things were wrong. **The daily loop was split by the one block that is not
+the loop** — the fragment was named `loop`, its comment called it the daily loop,
+and its middle third was the biomarker readout, so the streak line and the chart
+of that streak sat either side of it. And **the page opened on a chart of a
+marker it had not named**: panel one plots "Vitamin D, your points so far" while
+the block saying what the number IS arrived three panels later.
+
+🔴 **THE SPLIT WAS NOT AN OVERSIGHT**, which is why the fix is separation rather
+than reordering. The fragment serves BOTH surfaces, and **on the paywall the
+marker belongs exactly where it was**, mid-argument between what the reader does
+daily and the chart of him doing it. The member screen had inherited the
+paywall's order along with the component. `taps`, `markerBlock` and
+`adherenceBlock` are three consts now; each surface composes its own and the
+paywall is unchanged.
+
+**Member order, decided 2026-09-12:** the number, what it has done, when it is
+measured again, what you do daily, then help.
+
+### 🔴 FOUR DEFECTS IN THE SEEDER, ALL THE SAME SHAPE
+
+Every one produced something plausible and wrong, and every one was found by
+rendering rather than by a test:
+
+1. **Duplicate orders.** It inserted unconditionally, so the account's state
+   after two runs was undefined. Harmless until the trend rail plotted one point
+   per result and drew two identical readings on the same date.
+2. **`received_at` unset**, so every seeded result was dated today whatever its
+   fixture said. Invisible on a dashboard printing no collection date.
+3. **The password was set only at CREATION**, so an existing account kept
+   whatever it had and the credentials the script printed were a guess about
+   history. It is reset every run now, with `email_confirm` re-asserted.
+4. **The retest was dated in the FUTURE** — baseline fixture date plus 90 days,
+   and fixture dates are pinned in their files. The member screen showed a
+   reading collected in November above a panel saying the retest was pending,
+   which is not a state a customer can be in. Nothing errored, because a future
+   timestamp is a valid timestamp. Both dates derive from today now.
+
+⚠ **Re-seeding resets the password, which invalidates live sessions.** Seeding
+while signed in logs you out.
+
+⚠ **THE DEV ACCOUNT DOMAIN IS `androprime.test`, WITH NO HYPHEN**, one character
+from the `andro-prime.com` everyone types daily. A hyphenated attempt returns
+"Invalid login credentials" with no hint which half is wrong; it cost a
+round trip on 2026-09-12. Renaming means re-seeding every account and the address
+is quoted in three handoffs, so it is left as is and recorded here instead.
+
+**The four seeded accounts**, password `dev-password-not-used`:
+`dev+demo-kit3-baseline` (member, paired 31 to 58, the step-down case),
+`dev+low-vitamin-d` (member, single reading), `dev+low-ferritin` (non-member,
+paywall, offer window open), `dev+low-testosterone`.
+
+### 🔴 MEMBERSHIP_ENABLED IS **OFF** IN PRODUCTION, WHICH REVERSES A SEVERITY CALL
+
+Checked 2026-09-12 while finding Keith a URL. Signed in on `app.andro-prime.com`
+as a seeded account: `/account` and `/subscriptions` serve **200**, and **both**
+membership paths 404 — the post-rename `/account/membership` and the pre-rename
+`/membership`. A 404 on either is the flag's own `notFound()`, so the flag is off
+whichever path that deploy uses.
+
+**Sprint task `869eqavre` records the opposite**, from 2026-08-26, on the strength
+of a 200 and a live Stripe Checkout URL. 🔴 **And the batch-3 handoff above raised
+two owed items from "flag-dark" to "reachable and chargeable" on the back of it**
+— the in-app paywall's missing day-31 disclosure, and the
+`verify-subscription-claims.js` blind spot. If the flag is off, **both are back to
+findings about a dark surface.** Neither is dismissed: a flag that flipped once
+can flip again, and which state is intended is still undecided.
+
+⚠ **An anonymous probe reports the OPPOSITE of the truth here**, because a gated
+route redirects to `/auth/login` and that is a perfectly good 200. A flag audit
+that curls routes logged-out will confirm whatever it hoped. It needs a session,
+which is a reason to write that audit as a script rather than a checklist.
+Commented onto the task 2026-09-12.
+
 ### 🔴 WHAT IS STILL NOT DONE
 
 - ✅ ~~A member fixture with check-in history still does not exist.~~ **DONE
@@ -262,10 +406,25 @@ same flag `--localstorage` exists for.
 - ⚠ **`ResultEducate`, `ResultExplain` and `ResultValue` still have zero
   consumers**, carried from batch 3.
 - ⚠ **The em dash in CA-014 consent copy is still live**, carried from batch 3.
+- 🔴 **THE RETEST COMPARISON PAGE ITSELF IS NOT BUILT.** `markerHistory.ts` is
+  the kit-agnostic core and it is done; what is missing is the F components (the
+  was-to-now row, the two-point marker detail, the "not retested" treatment) and
+  a route. **Both are shaped by `869eyg5bh`**, which is undecided: a same-kit
+  retest gives a simple two-column table, a Kit 3 to Kit 2 step-down needs the
+  not-retested rows. Do not build the surface before that lands.
+- 🔴 **EWA OWES THE MOVEMENT THRESHOLD**, and it blocks the comparison page from
+  saying anything about the move. Per-marker, what counts as a real change rather
+  than assay noise. The demo's 0.5% is not usable. **Not yet drafted or sent** as
+  of 2026-09-12; `signoff-email` is the skill for it.
+- ⚠ **`/account/membership` is verified as a composed screen but `/subscriptions`
+  and `/account` are not**, in the sense that no session has opened them with a
+  member fixture behind them. They were shot anonymously-gated in batch 3 and
+  with a session in batch 4 only as far as a 200.
 
 ### Test status at 2026-09-12 (fourth batch)
 
-`npm test` green, exit 0, including all nine design checks and a regenerated
+`npm test` green, exit 0 (now including `test-marker-history`, 26 new
+assertions), all nine design checks and a regenerated
 `design/route-conformance.md` (the 22 new F classes land in "asked for by a
 source file, so not dead", which is correct: they render only on a gated route
 an anonymous run cannot reach). `npm run test:design:live`: **153 passed, 2
