@@ -1,13 +1,8 @@
 import type { AdherenceDay } from '@/lib/membership/checkin'
 import { LOOP_SKIN, type LoopSurface } from './surface'
+import { formatShortDate } from '@/lib/date/format'
 
 /** `YYYY-MM-DD` as "14 Aug". A date beats "22 days ago", which reads as arithmetic. */
-function formatDay(day: string): string {
-  const date = new Date(`${day}T00:00:00.000Z`)
-  if (Number.isNaN(date.getTime())) return ''
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
-}
-
 interface Props {
   series: AdherenceDay[]
   /** Which design system to wear. See `surface.ts`. */
@@ -109,7 +104,7 @@ export function AdherenceChart({ series, surface = 'app' }: Props) {
       </div>
 
       <div className={skin.axis}>
-        <span>{formatDay(series[0].day)}</span>
+        <span>{formatShortDate(series[0].day)}</span>
         <span>Today</span>
       </div>
       <p className={skin.note}>

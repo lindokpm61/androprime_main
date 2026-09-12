@@ -470,11 +470,39 @@ absence is deliberate is worth one line from Keith.
 
 #### F. Dead code the sweep turned up
 
-Not frames, but found by the same pass and worth a cleanup commit: **five components with zero
-references anywhere in `app/`, `components/`, `lib/`, `content/` or `scripts/`** ...
-`components/marketing/TrustBar.tsx`, `BiomarkerPanel.tsx`, `KitCard.tsx`,
-`components/commerce/SubscribeButton.tsx`, `components/app/AppPlaceholder.tsx` ... plus an **empty
+Not frames, but found by the same pass and worth a cleanup commit: **components with zero references
+anywhere in `app/`, `components/`, `lib/`, `content/` or `scripts/`**, plus an **empty
 `components/lp/` directory**.
+
+🟢 **DONE 2026-09-12.** Ten components deleted, `components/lp/` and the now-empty
+`components/activate/` removed, three dead exports dropped from the `results-engine` barrel.
+
+⚠ **THE LIST THIS SECTION ORIGINALLY NAMED WAS WRONG BY THE TIME ANYONE READ IT, IN BOTH
+DIRECTIONS.** It recorded five names. Re-running the sweep a fortnight later returned ten, and
+`KitCard` — one of the five — had come back into use and was no longer dead. Acting on the written
+list would have deleted a live component and missed half the dead ones. **A set of "things currently
+in state X" is a measurement, not a fact**, and unlike a stale count it can be wrong in two
+directions at once, so what belongs in a document is the derivation rather than the membership:
+
+```sh
+cd 09_website-app/frontend
+for f in $(find components -name '*.tsx' | sort); do n=$(basename "$f" .tsx); \
+  c=$(grep -rl "\b$n\b" --include=*.tsx --include=*.ts app components lib \
+      | grep -v '/index.ts$' | grep -v "^$f$" | wc -l); \
+  [ "$c" -eq 0 ] && echo "DEAD: $f"; done
+```
+
+Four of the ten had died since the sweep, killed by the rebuild itself: `HeroBackground` (the
+Direction F homepage plays `/home/table.mp4`, not the old `/videos/hero.*`), and `ResultValue`,
+`ResultExplain`, `ResultEducate` — stages 1-3 of the five-stage results architecture, now rendered
+inline by `MarkerCard`. Those three mattered more than the rest, because
+`design/mockups/results-dashboard-design-reference.md` still named them as the architecture; see the
+note now on that table.
+
+⚠ **`/videos/hero.mp4`, `hero.webm` and the three posters (1.35 MB) are orphaned by this deletion
+and are NOT removed here** — deleting brand footage is a decision for Keith, not a side effect of a
+code sweep. `scripts/test-host-routing.ts` also uses `/videos/hero.webm` as its sample static-asset
+path; if the files go, that sample should point at one that exists.
 
 #### Confirmed clean (checked, and genuinely covered)
 

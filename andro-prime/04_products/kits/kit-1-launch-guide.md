@@ -330,9 +330,9 @@ The dashboard is at `/results-dashboard` under `app/(app)/`. It is significantly
 | `MarkerCard` | Wraps the 5-part result structure for each biomarker |
 | `TrafficLightBar` | Visual status indicator (optimal / normal / low / high / critical) |
 | `StatusBadge` | Inline status label |
-| `ResultValue` | Plain number display — big, above the fold |
-| `ResultExplain` | What the number means in plain English |
-| `ResultEducate` | Evidence-based context, non-sales |
+| ~~`ResultValue`~~ | Plain number display — big, above the fold. **Rendered inline by `MarkerCard` since the Direction F rebuild; the component was deleted 2026-09-12.** |
+| ~~`ResultExplain`~~ | What the number means in plain English. **Inline in `MarkerCard`, "What this means", since the rebuild.** |
+| ~~`ResultEducate`~~ | Evidence-based context, non-sales. **Inline in `MarkerCard`, "The evidence", since the rebuild.** |
 | `ResultRecommend` | The correct Andro Prime next step |
 | `ResultConvert` | Clean action, correctly framed |
 | `QualifierGate` | hs-CRP joint symptom question — shown between Explain and Recommend |

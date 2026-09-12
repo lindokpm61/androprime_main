@@ -4,19 +4,12 @@ import { useRef, useState, type KeyboardEvent } from 'react'
 import type { KitData } from '@/lib/results/types'
 import { isFlaggedState } from '@/lib/results/resultSeverity'
 import { MarkerCard } from './MarkerCard'
+import { formatLongDate } from '@/lib/date/format'
 
 const KIT_NAMES: Record<string, string> = {
   testosterone: 'Testosterone Health Check',
   'energy-recovery': 'Energy & Recovery Check',
   'hormone-recovery': 'Hormone & Recovery Check',
-}
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
 }
 
 interface KitTabsProps {
@@ -161,13 +154,13 @@ export function KitTabs({ kits, showKitScopeNote = false, collapseEvidence = fal
             >
               {activeKit.results.map((r, i) => (
                 <option key={r.resultId} value={i}>
-                  {r.collectedAt ? formatDate(r.collectedAt) : `Result ${i + 1}`}
+                  {r.collectedAt ? formatLongDate(r.collectedAt) : `Result ${i + 1}`}
                 </option>
               ))}
             </select>
           )}
           {activeKit.results.length === 1 && activeResult.collectedAt && (
-            <span className="f-fine">{formatDate(activeResult.collectedAt)}</span>
+            <span className="f-fine">{formatLongDate(activeResult.collectedAt)}</span>
           )}
         </div>
 

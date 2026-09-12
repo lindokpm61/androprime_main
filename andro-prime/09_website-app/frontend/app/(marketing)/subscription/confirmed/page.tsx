@@ -8,6 +8,7 @@ import { MEMBERSHIP_INCLUDES, MEMBERSHIP_RETEST_TERMS } from '@/lib/membership/i
 import { latestMembershipForUser } from '@/lib/membership/latestMembership'
 import { entitlementState } from '@/lib/membership/entitlement'
 import { urlFor } from '@/lib/hosts'
+import { formatLongDate } from '@/lib/date/format'
 
 /**
  * /subscription/confirmed, rebuilt in Direction F on 2026-09-12.
@@ -102,10 +103,6 @@ const MEMBERSHIP_PRICE = PRODUCT_MAP.membership.price
    screenshot in batches 3 and 4, and a shared formatter is worth one pass
    through all three rather than a third definition and two untouched siblings.
    Recorded in STATE.md as owed. */
-function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-}
-
 interface PageProps {
   searchParams: Promise<{
     session_id?: string | string[]
@@ -229,7 +226,7 @@ export default async function SubscriptionConfirmedPage({ searchParams }: PagePr
             {retestDueAt ? (
               <>
                 <p className="f-blab">Your retest falls on</p>
-                <span className="f-rdue">{formatDate(retestDueAt)}</span>
+                <span className="f-rdue">{formatLongDate(retestDueAt)}</span>
                 <p className="f-sub" style={{ fontSize: 14.5, marginTop: 12 }}>
                   {MEMBERSHIP_RETEST_TERMS}
                 </p>

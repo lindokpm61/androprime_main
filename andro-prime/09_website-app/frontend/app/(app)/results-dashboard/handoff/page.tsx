@@ -6,6 +6,7 @@ import { getDashboardData } from '@/lib/results/getDashboardData'
 import { isGpHandoffEnabled } from '@/lib/flags'
 import { PrintButton } from '@/components/results-engine/PrintButton'
 import type { ClassifiedResult, KitType } from '@/lib/results/types'
+import { formatLongDate } from '@/lib/date/format'
 
 export const metadata: Metadata = {
   title: 'Summary for your GP',
@@ -63,14 +64,6 @@ const KIT_LABELS: Record<KitType, string> = {
   'hormone-recovery': 'Hormone & Recovery Check',
 }
 
-function formatDate(iso: string | null): string {
-  if (!iso) return 'Not recorded'
-  const d = new Date(iso)
-  return Number.isNaN(d.getTime())
-    ? 'Not recorded'
-    : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-}
-
 function referenceRange(m: ClassifiedResult): string {
   if (m.referenceLow !== null && m.referenceHigh !== null) return `${m.referenceLow} to ${m.referenceHigh}`
   if (m.referenceHigh !== null) return `< ${m.referenceHigh}`
@@ -122,7 +115,7 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
           <h1>{fullName || user.email}</h1>
           <div className="f-handoff-id">
             {fullName && <p>Email: {user.email}</p>}
-            <p>Date of birth: {formatDate(profile?.date_of_birth ?? null)}</p>
+            <p>Date of birth: {formatLongDate(profile?.date_of_birth ?? null, 'Not recorded')}</p>
           </div>
         </header>
 
@@ -140,7 +133,7 @@ export default async function GpHandoffPage({ searchParams }: PageProps) {
             <section key={kit.kitType} className="f-handoff-sec">
               <h2>
                 {KIT_LABELS[kit.kitType] ?? kit.kitType}
-                <span>Sample collected: {formatDate(result.collectedAt)}</span>
+                <span>Sample collected: {formatLongDate(result.collectedAt, 'Not recorded')}</span>
               </h2>
               <table className="f-handoff-t">
                 <thead>

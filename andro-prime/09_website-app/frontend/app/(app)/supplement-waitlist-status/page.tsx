@@ -3,6 +3,7 @@ import { getCurrentUser } from '@/lib/auth/session'
 import { getSupplementWaitlistStatus } from '@/lib/supplement-waitlist/getSupplementWaitlistStatus'
 import { AppStrip, AppShell } from '@/components/app/AppShell'
 import { urlFor } from '@/lib/hosts'
+import { formatLongDate } from '@/lib/date/format'
 
 export const metadata: Metadata = {
   title: 'Supplement Waitlist Status',
@@ -42,14 +43,6 @@ export const metadata: Metadata = {
  * `/subscriptions` already follow and the comment in each says why.
  */
 
-function formatDate(date: Date) {
-  return date.toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
-}
-
 export default async function SupplementWaitlistStatusPage() {
   const user = await getCurrentUser()
   if (!user) return null
@@ -60,7 +53,7 @@ export default async function SupplementWaitlistStatusPage() {
     ? "You're on the supplement waitlist."
     : 'Not on the waitlist yet.'
   const body = status.listed
-    ? `You were added on ${status.listedAt ? formatDate(new Date(status.listedAt)) : 'an earlier date'}. We'll email you the moment our supplement range is ready to ship. No payment is required.`
+    ? `You were added on ${status.listedAt ? formatLongDate(status.listedAt) : 'an earlier date'}. We'll email you the moment our supplement range is ready to ship. No payment is required.`
     : 'You are not on the supplement waitlist yet. Joining is free. No payment, no commitment. We email you when the range is live.'
 
   return (

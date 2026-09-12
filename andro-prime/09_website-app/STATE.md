@@ -4,7 +4,138 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-12 (sixth batch: the four routes the report had excluded, and one of them was customer-facing)
+## ▶️ PICK UP HERE — handoff, 2026-09-12 (seventh batch: the code nobody calls, and the function everybody rewrote)
+
+### WHAT THIS BATCH WAS
+
+The two carried items at the bottom of the sixth handoff's NOT DONE list: *"the
+third copy of `formatDate`"* and *"`ResultEducate`, `ResultExplain` and
+`ResultValue` with zero consumers"*. Both were four-word entries that had been
+copied forward, unread, for three batches. **Neither was true, and the way each
+was false is the finding.**
+
+### 🔴 "THE THIRD COPY" WAS THE EIGHTH, AND THE DUPLICATION WAS NOT THE DEFECT
+
+`grep -rn "function formatDate"` returns **eight** local definitions across
+`app/` and `components/`, plus a ninth near-duplicate (`shortDate`) inside a file
+that already had one. All four lines long, all producing "15 June 2026", all
+written by someone doing the obvious thing again. The number in STATE was true
+when it was written; the codebase grew five more underneath it, each added by
+someone who had no reason to read a note about how many there already were.
+
+**The defect underneath them was the timezone, and it is a live one.**
+`toLocaleDateString` with no `timeZone` formats in whatever zone the RUNTIME is
+in. The production container is `node:20-alpine` with no `TZ` set, so it is UTC;
+development is a UK laptop, so it is Europe/London. **Every instant between
+23:00Z and midnight renders a day earlier in production than on the machine where
+the page was checked** — one hour a day, every day of British Summer Time, on
+renewal dates, order dates, sample-collection dates and the renewal date in the
+Stripe webhook's Customer.io merge fields. It is the class of defect no reviewer
+catches, because both readings look right to whoever is looking at one of them.
+
+**What shipped:** `lib/date/format.ts`, five formatters
+(`formatLongDate`, `formatLongDateNoYear`, `formatMediumDate`, `formatShortDate`,
+`formatWeekdayDate`), each taking `Date | string | number | null` and an explicit
+fallback string, all anchored to **Europe/London**. Twelve files now import it and
+**61 lines of hand-rolled formatting are gone**. Europe/London rather than UTC
+because these are dates about a UK customer's own money and own blood, and
+because it is the safer of the two for a bare `YYYY-MM-DD`: that parses as UTC
+midnight, and London is never behind UTC, so a calendar date cannot slip backwards.
+
+⚠ **This changes what production renders** for that one hour a day. It is a
+correction — the old output was not a decision anyone made, it was the container's
+`TZ` — but it is a change, and `formatStripeDate` feeds email merge fields.
+
+**And the rule now has a shape rather than a reminder.**
+`scripts/verify-date-format.js` is in `test:design` and fails the build on any
+`toLocaleDateString`, `toLocaleTimeString` or `new Intl.DateTimeFormat` in `app/`,
+`components/` or `lib/` outside the one module — **and separately asserts that the
+module still sets `timeZone`**, because without that second check the module could
+lose the one line the whole exercise was for while every duplicate stayed deleted
+and the check stayed green. `scripts/` is deliberately out of scope: the
+content-engine uses `formatToParts` to build a scheduling field for an external
+API, which is a machine payload, not a sentence anybody reads.
+
+### 🔴 THE DEAD-COMPONENT LIST WAS WRONG IN BOTH DIRECTIONS AT ONCE
+
+`design/journey-inventory.md` recorded **five** zero-reference components from an
+August sweep, called it "a cleanup commit rather than a frame", and nobody made
+the commit. Re-running the sweep returns **ten** — and `KitCard`, one of the
+recorded five, **had come back into use and was no longer dead**. Acting on the
+written list would have deleted a live component and missed half the dead ones.
+
+A recorded set of "things currently in state X" is a measurement, not a fact, and
+unlike a stale count it can be wrong in two directions at once. The sweep command
+is now in `journey-inventory.md` in place of the membership.
+
+**Deleted (10):** `KitActivator`, `ScanAgainButton`, `AppPlaceholder`,
+`SubscribeButton`, `BiomarkerPanel`, `HeroBackground`, `TrustBar`, `ResultValue`,
+`ResultExplain`, `ResultEducate`. Plus the empty `components/lp/` and the
+now-empty `components/activate/`, and three dead exports from the `results-engine`
+barrel.
+
+### 🔴 THREE OF THEM WERE THE RESULTS ARCHITECTURE, WRITTEN IN THE RETIRED LANGUAGE
+
+`ResultValue`, `ResultExplain` and `ResultEducate` are stages 1-3 of the
+five-stage marker structure named in
+`design/mockups/results-dashboard-design-reference.md`, in `results-F.html`
+("11 ResultValue ... placed") and in `04_products/kits/kit-1-launch-guide.md`.
+Stages 4 and 5 are live components. The Direction F rebuild re-rendered 1-3
+inline inside `MarkerCard` — `.f-mkval` + `StatusBadge` + `TrafficLightBar`,
+then "What this means", then "The evidence" — and left the three files behind.
+
+So what was sitting in the tree was **three components' worth of V2.0**:
+`font-black font-sans uppercase tracking-tight`, `border-l-4 border-black`,
+`bg-gray-50`, `font-serif`. **Every design check the repo owns is blind to a file
+nothing imports** — the class allowlist, the token check, the scaffold check, all
+of them — which is exactly why retired-language code survives a rebuild that was
+otherwise measured at 100%. "Every measurable route is rebuilt" and "no code in
+the old language remains" are different claims and only the first was ever
+measured. Anyone wiring those components back up on the strength of the design
+reference would have got V2.0 chrome on an F screen; that table and the kit guide
+now say where each stage actually lives.
+
+### ⚠ 1.35 MB OF HERO FOOTAGE IS NOW ORPHANED, AND IS DELIBERATELY LEFT ALONE
+
+`HeroBackground` was the only thing referencing `/videos/hero.mp4`,
+`hero.webm`, `hero-poster.jpg`, `hero-poster.webp` and `hero-poster-800.webp`.
+The Direction F homepage plays `/home/table.mp4` instead. **Deleting brand footage
+is Keith's call, not a side effect of a code sweep**, so the files stay. Two things
+to know if they go: the optimisation history in this file (rounds 1-3, re-encodes,
+media-scoped preloads) becomes historical only, and
+`scripts/test-host-routing.ts` uses `/videos/hero.webm` as its sample
+static-asset path, which would then be a path to nothing.
+
+### 🔴 WHAT IS STILL NOT DONE
+
+- **The saturated-colour tone question on the internal boards**, Keith — carried
+  from the sixth batch, unchanged. Three values in `f-internal.css` if the answer
+  is that ink-only holds everywhere.
+- **`/go`'s populated state is still verified against the local run only.**
+  `CAROUSEL_RUN_START` is unset locally and in production, so the live page serves
+  the empty state until the run starts.
+- **The orphaned hero assets above**, Keith.
+- Carried, untouched by this batch: the how-to-sample film and its QR; the
+  `/subscription/confirmed` and `/how-to-sample` copy owed to Keith (register rows
+  44 and 45); the em dash in CA-014 consent copy; the retest comparison page;
+  Ewa's movement threshold; the `/demo` presentation decision (`869ez4jrt`) and
+  the density question (`869erraqd`).
+- 🔴 **Still the only merge blocker: CA-045.** This branch is now **126 commits
+  ahead of `main` and deploys nothing.**
+
+### Test status at 2026-09-12 (seventh batch)
+
+`npm test` green, exit 0, including all **ten** design checks (`verify-date-format`
+is the new one) and `typecheck` clean. Production build green, exit 0, with a
+fresh `.next` and no dev server listening — one was found listening on 3000 from
+an earlier session and killed before the build, which is the failure the build
+guard exists to prevent. `test:design:live` and `audit-dark-contrast.js` were not
+re-run: nothing in this batch changes rendered markup, only the day a date lands
+on in a non-UTC runtime and ten files nothing imported.
+
+---
+
+## ▶️ Previous handoff, 2026-09-12 (sixth batch: the four routes the report had excluded, and one of them was customer-facing)
 
 ### WHAT THIS BATCH WAS
 

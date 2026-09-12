@@ -17,6 +17,7 @@ import { BUNDLE_CONFIG } from '@/lib/bundles/config'
 import { isValidBundleType, isValidKitType, computeBundleDueAt } from '@/lib/bundles/checkout'
 import { SITE_URL } from '@/lib/site-url'
 import { formatOrderRef } from '@/lib/orders/orderRef'
+import { formatLongDate } from '@/lib/date/format'
 
 type UserUpdate = Database['public']['Tables']['users']['Update']
 
@@ -136,11 +137,7 @@ function formatGbp(pence: number | null | undefined): string {
 // Unix seconds → "15 June 2026" for renewal-date merge fields.
 function formatStripeDate(unixSeconds: number | null | undefined): string {
   if (!unixSeconds) return ''
-  return new Date(unixSeconds * 1000).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
+  return formatLongDate(unixSeconds * 1000)
 }
 
 // Structural view of the Stripe Invoice fields the email payloads need, kept

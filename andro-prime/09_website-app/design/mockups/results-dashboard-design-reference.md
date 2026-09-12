@@ -70,13 +70,25 @@ Below all marker rows:
 
 This is where the Andro Prime dashboard diverges from a standard results viewer. Each marker panel has five sections, not two:
 
-| Section | Component | What it does | Thriva equivalent |
+| Section | Where it lives | What it does | Thriva equivalent |
 |---|---|---|---|
-| 1. Value | `ResultValue` | Range bar, value, unit, status badge | Yes — this exists in Thriva's UI |
-| 2. Explain | `ResultExplain` | Plain-English interpretation: "Your results indicate your testosterone is below the range where most men feel their best." | Partially — their doctor's report covers this |
-| 3. Educate | `ResultEducate` | What this marker does in your body. No product names. No sales language. | No equivalent |
+| 1. Value | `MarkerCard`, inline (`.f-mkread` / `.f-mkval` + `StatusBadge` + `TrafficLightBar`) | Range bar, value, unit, status badge | Yes — this exists in Thriva's UI |
+| 2. Explain | `MarkerCard`, inline (`.f-mkblock`, "What this means") | Plain-English interpretation: "Your results indicate your testosterone is below the range where most men feel their best." | Partially — their doctor's report covers this |
+| 3. Educate | `MarkerCard`, inline (`.f-mkblock` / `.f-mkdet`, "The evidence") | What this marker does in your body. No product names. No sales language. | No equivalent |
 | 4. Recommend | `ResultRecommend` | "Here's what you can do about this." EFSA claims. Supplement framing. Or GP referral. Or retest. | No equivalent |
 | 5. Convert | `ResultConvert` | CTA buttons: supplement pre-order, founding member deposit, Kit 2 cross-sell, GP referral link | No equivalent |
+
+⚠ **Stages 1-3 stopped being components on 2026-09-12, and this table said they
+still were.** They were built as `ResultValue`, `ResultExplain` and
+`ResultEducate`; the Direction F rebuild of the results dashboard re-rendered all
+three inline inside `MarkerCard` and left the three files behind with zero
+imports. They survived every design check — a class allowlist, a token check and
+a scaffold check are all blind to a file nothing imports — so what remained in
+the tree was three components' worth of the RETIRED design language
+(`font-black`, `border-l-4 border-black`, `bg-gray-50`, `font-serif`), named by
+this table as the architecture. Anyone wiring them back up on the strength of
+this page would have got V2.0 chrome on an F screen. The files are deleted; the
+five-stage architecture is unchanged and is what `MarkerCard` renders.
 
 Plus:
 - **QualifierGate** — interactive yes/no question card for hs-CRP joint symptoms qualifier. Appears between Educate and Recommend when the classifier needs more information before it can resolve a CTA. Not present in Thriva's UI at all.

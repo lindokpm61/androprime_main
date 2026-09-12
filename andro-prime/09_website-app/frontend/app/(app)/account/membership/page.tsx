@@ -13,14 +13,11 @@ import { JoinButton } from '@/components/membership/JoinButton'
 import { AppStrip, AppShell } from '@/components/app/AppShell'
 import Link from 'next/link'
 import { urlFor } from '@/lib/hosts'
+import { formatLongDate } from '@/lib/date/format'
 
 export const metadata: Metadata = {
   title: 'Membership',
   robots: { index: false, follow: false },
-}
-
-function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 /** "1 day", "2 days". A member on day one should not be told "1 days". */
@@ -235,7 +232,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
               <p className="f-blab">Your retest</p>
               {entitlement.kind === 'pending' && (
                 <>
-                  <p className="f-read">{formatDate(entitlement.dueAt)}</p>
+                  <p className="f-read">{formatLongDate(entitlement.dueAt)}</p>
                   <p className="f-read-s">
                     {entitlement.daysRemaining} days away. Included while you are a member: you need
                     to be a member on that date. It is not a credit, there is no balance, and there
@@ -256,7 +253,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
                 <>
                   <p className="f-read">On its way</p>
                   <p className="f-read-s">
-                    Your retest kit was released on {formatDate(entitlement.claimedAt)}. Your next
+                    Your retest kit was released on {formatLongDate(entitlement.claimedAt)}. Your next
                     one is a year after that, while you are still a member.
                   </p>
                 </>
@@ -325,7 +322,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
                   <>
                     Membership is offered for the 30 days after a result lands, because what it
                     keeps running is a number and a dated retest. That window closed on{' '}
-                    {formatDate(offer.closedAt)}. Your next test opens a new one.
+                    {formatLongDate(offer.closedAt)}. Your next test opens a new one.
                   </>
                 ) : (
                   <>
@@ -388,7 +385,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
 
   return (
     <>
-      <AppStrip label="Membership" right={`Closes ${formatDate(offer.closesAt)}`} />
+      <AppStrip label="Membership" right={`Closes ${formatLongDate(offer.closesAt)}`} />
       <AppShell
         chip={heroChip}
         heading={heroHeading}
@@ -448,7 +445,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
 
             <div style={{ marginTop: 22 }}>
               <p className="f-blab" style={{ marginBottom: 8 }}>
-                Join today and your retest falls on {formatDate(projectedRetest)}
+                Join today and your retest falls on {formatLongDate(projectedRetest)}
               </p>
               <p className="f-sub">{MEMBERSHIP_RETEST_TERMS}</p>
             </div>
@@ -475,7 +472,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
               a limit that only reveals itself once it has passed.
             */}
             <p className="f-fine" style={{ marginTop: 14 }}>
-              Cancel any time &middot; this offer closes on {formatDate(offer.closesAt)}
+              Cancel any time &middot; this offer closes on {formatLongDate(offer.closesAt)}
             </p>
           </div>
         </div>
@@ -485,7 +482,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
             <p className="f-blab">Not right now</p>
             <p className="f-sub">
               Your results are yours either way. Download them whenever you want, member or not. If
-              you change your mind after {formatDate(offer.closesAt)}, your next test opens a new 30
+              you change your mind after {formatLongDate(offer.closesAt)}, your next test opens a new 30
               days.
             </p>
             <Link href="/results-dashboard" className="f-tlink">

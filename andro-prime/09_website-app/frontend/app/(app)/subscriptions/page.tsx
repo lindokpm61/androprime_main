@@ -6,6 +6,7 @@ import type { SubscriptionRow, SubscriptionStatus } from '@/lib/subscriptions/ge
 import { BillingPortalButton } from '@/components/commerce/BillingPortalButton'
 import { AppStrip, AppShell } from '@/components/app/AppShell'
 import { urlFor } from '@/lib/hosts'
+import { formatLongDate } from '@/lib/date/format'
 
 export const metadata: Metadata = {
   title: 'Your Subscriptions',
@@ -58,14 +59,6 @@ export const metadata: Metadata = {
  * reach the EMPTY state on the page that is supposed to let them cancel, and the
  * portal route 404s for them. See 09_website-app/STATE.md.
  */
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
-}
 
 const STATUS_LABELS: Record<SubscriptionStatus, string> = {
   active:     'Active',
@@ -124,7 +117,7 @@ function SubscriptionCard({ sub }: { sub: SubscriptionRow }) {
             {STATUS_LABELS[sub.status]}
           </span>
         </div>
-        <p className="f-fine">Started {formatDate(sub.startedAt)}</p>
+        <p className="f-fine">Started {formatLongDate(sub.startedAt)}</p>
         <div className="f-subfoot">
           <BillingPortalButton className="f-btn">
             Manage billing <span aria-hidden="true">&#8599;</span>

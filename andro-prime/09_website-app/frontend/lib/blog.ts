@@ -4,6 +4,7 @@ import type { Database } from '@/lib/supabase/types'
 import { getSupabaseAnonKey, getSupabaseServiceRoleKey, getSupabaseUrl } from '@/lib/supabase/env'
 import type { AuthorSlug } from '@/lib/authors'
 import { slugify } from '@/lib/slug'
+import { formatMediumDate } from '@/lib/date/format'
 
 export interface ArticleFaqItem {
   q: string
@@ -247,7 +248,7 @@ export function formatArticleDate(s: string | undefined): string {
   if (!/^\d{4}-\d{2}-\d{2}/.test(s)) return s
   const d = new Date(s.slice(0, 10) + 'T00:00:00Z')
   if (Number.isNaN(d.getTime())) return s
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  return formatMediumDate(d, s)
 }
 
 // Public read API. Cached with tags so a publish/edit can revalidate precisely

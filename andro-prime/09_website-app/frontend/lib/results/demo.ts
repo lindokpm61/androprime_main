@@ -2,6 +2,13 @@ import { SCENARIOS } from './fixtures'
 import { FIRST_CYCLE_RETEST_DAYS } from '@/lib/membership/entitlement'
 import type { CheckinEntry } from '@/lib/membership/checkin'
 import type { KitType, ScenarioName } from './types'
+import {
+  formatLongDate,
+  formatLongDateNoYear,
+  formatMediumDate,
+  formatShortDate,
+  formatWeekdayDate,
+} from '@/lib/date/format'
 
 /*
  * THE PUBLIC DEMO'S DATA MODEL. Rebuilt from scratch 2026-09-07.
@@ -184,22 +191,22 @@ export function getDemoDates(journey: DemoJourneyId): DemoDates | null {
 
 /** "12 November 2026". Long form: these dates are read once, not scanned. */
 export function formatDemoDate(d: Date): string {
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+  return formatLongDate(d)
 }
 
 /** "12 Nov". Short form, for the record's column headers and the plots. */
 export function formatDemoDateShort(d: Date): string {
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+  return formatShortDate(d)
 }
 
 /** "14 Aug 2026". The status strip's format, which is neither of the others. */
 export function formatDemoDateMed(d: Date): string {
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  return formatMediumDate(d)
 }
 
 /** "13 September". No year: the charge is inside the reader's own month or two. */
 export function formatDemoDateNoYear(d: Date): string {
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })
+  return formatLongDateNoYear(d)
 }
 
 /* ------------------------------------------------- the engine, client-side */
@@ -310,12 +317,8 @@ export function getDemoWaitingSteps(): DemoStep[] | null {
   if (!collected) return null
 
   const on = (offset: number, time: string) =>
-    `${addDays(collected, offset).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}, ${time}`
-  const expected = addDays(collected, RESULT_LAG_DAYS).toLocaleDateString('en-GB', {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short',
-  })
+    `${formatDemoDateShort(addDays(collected, offset))}, ${time}`
+  const expected = formatWeekdayDate(addDays(collected, RESULT_LAG_DAYS))
 
   return [
     { title: 'Kit dispatched', detail: on(-3, '16:40'), state: 'done' },

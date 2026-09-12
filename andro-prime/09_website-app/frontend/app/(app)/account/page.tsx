@@ -9,6 +9,7 @@ import { AddressSection } from '@/components/account/AddressSection'
 import { AppStrip, AppShell } from '@/components/app/AppShell'
 import { getAddress } from '@/lib/account/getAddress'
 import { urlFor } from '@/lib/hosts'
+import { formatLongDate } from '@/lib/date/format'
 
 export const metadata: Metadata = {
   title: 'Your Account',
@@ -46,14 +47,6 @@ export const metadata: Metadata = {
  * states its status as a word, so colour is never the only carrier. Ruling:
  * Keith, 2026-08-28 on membership-F.
  */
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
-}
 
 const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   pending:           'Order placed',
@@ -146,7 +139,7 @@ function OrderRow({ order }: { order: KitOrderSummary }) {
       </span>
       <span className="f-histwhen">
         <span className="f-histlab">Date</span>
-        {formatDate(order.orderedAt)}
+        {formatLongDate(order.orderedAt)}
       </span>
       {/*
         THE ACTION CELL IS OMITTED ENTIRELY FOR AN ORDER THAT ENDED, its phone

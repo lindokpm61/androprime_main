@@ -1,15 +1,5 @@
 import type { TrendPoint } from '@/lib/membership/getMembershipView'
-
-function formatDate(iso: string | null): string {
-  if (!iso) return ''
-  const date = new Date(iso)
-  if (Number.isNaN(date.getTime())) return ''
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
-}
-
-function shortDate(date: Date): string {
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
-}
+import { formatShortDate } from '@/lib/date/format'
 
 interface Props {
   markerName: string
@@ -98,10 +88,10 @@ export function TrendPlot({ markerName, trend, pendingRetestAt }: Props) {
     slots === 1 ? 50 : INSET + (index / (slots - 1)) * (100 - INSET * 2)
 
   const described = trend
-    .map((p) => `${p.value} ${p.unit} on ${formatDate(p.collectedAt)}`)
+    .map((p) => `${p.value} ${p.unit} on ${formatShortDate(p.collectedAt)}`)
     .join(', ')
   const label = pendingRetestAt
-    ? `${markerName}: ${described}. Next reading due ${shortDate(pendingRetestAt)}.`
+    ? `${markerName}: ${described}. Next reading due ${formatShortDate(pendingRetestAt)}.`
     : `${markerName}: ${described}.`
 
   const lastIndex = trend.length - 1
@@ -176,12 +166,12 @@ export function TrendPlot({ markerName, trend, pendingRetestAt }: Props) {
               className="f-plot-d"
               style={{ left: `${xPct(i)}%` }}
             >
-              {formatDate(point.collectedAt)}
+              {formatShortDate(point.collectedAt)}
             </span>
           ))}
           {pendingRetestAt && (
             <span className="f-plot-d" style={{ left: `${xPct(slots - 1)}%` }}>
-              {shortDate(pendingRetestAt)}
+              {formatShortDate(pendingRetestAt)}
             </span>
           )}
         </div>
