@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-12",
+  "generated": "2026-09-13",
   "base": "http://localhost:3000",
   "rows": [
     {
@@ -40,7 +40,7 @@
       "note": "redirects to `/auth/login` for an anonymous visitor",
       "source": {
         "scaffold": false,
-        "classes": 25,
+        "classes": 26,
         "rendersNothing": false
       }
     },
@@ -133,7 +133,7 @@
       "href": "/authors/dr-ewa-lindo",
       "file": "app/(marketing)/authors/[slug]/page.tsx",
       "status": 200,
-      "classes": 15,
+      "classes": 23,
       "verdict": "F",
       "note": "",
       "source": {
@@ -147,7 +147,7 @@
       "href": "/blog",
       "file": "app/(marketing)/blog/page.tsx",
       "status": 200,
-      "classes": 29,
+      "classes": 36,
       "verdict": "F",
       "note": "",
       "source": {
@@ -161,7 +161,7 @@
       "href": "/blog/andropause-male-menopause",
       "file": "app/(marketing)/blog/[slug]/page.tsx",
       "status": 200,
-      "classes": 27,
+      "classes": 30,
       "verdict": "F",
       "note": "",
       "source": {
@@ -273,7 +273,7 @@
       "href": "/kits/energy-recovery",
       "file": "app/(marketing)/kits/energy-recovery/page.tsx",
       "status": 200,
-      "classes": 74,
+      "classes": 75,
       "verdict": "F",
       "note": "",
       "source": {
@@ -385,12 +385,12 @@
       "href": "/membership",
       "file": "app/(marketing)/membership/page.tsx",
       "status": 200,
-      "classes": 51,
+      "classes": 50,
       "verdict": "F",
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 42,
+        "classes": 41,
         "rendersNothing": false
       }
     },
@@ -539,7 +539,7 @@
       "href": "/supplements/collagen",
       "file": "app/(marketing)/supplements/collagen/page.tsx",
       "status": 200,
-      "classes": 55,
+      "classes": 58,
       "verdict": "F",
       "note": "",
       "source": {
@@ -553,7 +553,7 @@
       "href": "/supplements/daily-stack",
       "file": "app/(marketing)/supplements/daily-stack/page.tsx",
       "status": 200,
-      "classes": 52,
+      "classes": 53,
       "verdict": "F",
       "note": "",
       "source": {
@@ -613,6 +613,58 @@
     "/go": "renders a `bio_grid_view` analytics event on every load, so a sweep would pollute the campaign it measures (Direction F since 2026-09-12)",
     "/blog/preview/[slug]": "internal preview of an unpublished draft, behind a shared token (Direction F: it renders ArticleLayout)",
     "/demo": "runs the authenticated app shell (`ap-*`), not the marketing layer, so Direction F is the wrong question"
+  },
+  "exclusionEvidence": {
+    "/founding-member": {
+      "file": "app/(marketing)/founding-member/page.tsx",
+      "reviewed": "2026-09-12",
+      "checked": [
+        "/redirect\\(\\s*['\"]\\/kits['\"]\\s*\\)/"
+      ]
+    },
+    "/activate": {
+      "file": "app/activate/page.tsx",
+      "reviewed": "2026-09-12",
+      "checked": [
+        "/redirect\\(\\s*['\"]\\/how-to-sample['\"]\\s*\\)/"
+      ]
+    },
+    "/admin/dashboard": {
+      "file": "app/(internal)/admin/dashboard/page.tsx",
+      "reviewed": "2026-09-12",
+      "checked": [
+        "/isAdmin\\(/"
+      ]
+    },
+    "/ops/content": {
+      "file": "app/(internal)/ops/content/page.tsx",
+      "reviewed": "2026-09-12",
+      "checked": [
+        "/isAdmin\\(/"
+      ]
+    },
+    "/go": {
+      "file": "app/go/page.tsx",
+      "reviewed": "2026-09-12",
+      "checked": [
+        "/trackEvent\\(\\s*['\"]bio_grid_view['\"]/"
+      ]
+    },
+    "/blog/preview/[slug]": {
+      "file": "app/(marketing)/blog/preview/[slug]/page.tsx",
+      "reviewed": "2026-09-12",
+      "checked": [
+        "/token\\s*!==\\s*expected/",
+        "/notFound\\(\\)/"
+      ]
+    },
+    "/demo": {
+      "file": "app/(demo)/demo/page.tsx",
+      "reviewed": "2026-09-12",
+      "checked": [
+        "/(?<![A-Za-z0-9_-])ap-[a-z][a-z0-9_-]*/"
+      ]
+    }
   },
   "unused": [
     "f-addrgrid",
@@ -843,9 +895,6 @@
     "fb-cta-body",
     "fb-cta-in",
     "fb-figure",
-    "fb-grid",
-    "fb-mchip",
-    "fb-mchip-q",
     "fb-mchips",
     "fb-metabar",
     "fb-note",
@@ -853,13 +902,6 @@
     "fb-num",
     "fb-num-feat",
     "fb-num-n",
-    "fb-pager",
-    "fb-pbody",
-    "fb-pcard",
-    "fb-pcard-lead",
-    "fb-pfoot",
-    "fb-pk",
-    "fb-pshot",
     "fb-pshot-og",
     "fb-pub",
     "fb-pub-src",
@@ -867,7 +909,9 @@
     "fb-refs",
     "fb-refs-h",
     "fb-stand",
+    "fb-stat",
     "fb-stat-big",
+    "fb-stat-k",
     "fb-sys",
     "fb-sys-chip",
     "fb-tablewrap",
@@ -1079,9 +1123,6 @@
     "fb-cta-body",
     "fb-cta-in",
     "fb-figure",
-    "fb-grid",
-    "fb-mchip",
-    "fb-mchip-q",
     "fb-mchips",
     "fb-metabar",
     "fb-note",
@@ -1089,13 +1130,6 @@
     "fb-num",
     "fb-num-feat",
     "fb-num-n",
-    "fb-pager",
-    "fb-pbody",
-    "fb-pcard",
-    "fb-pcard-lead",
-    "fb-pfoot",
-    "fb-pk",
-    "fb-pshot",
     "fb-pshot-og",
     "fb-pub",
     "fb-pub-src",
@@ -1103,6 +1137,8 @@
     "fb-refs",
     "fb-refs-h",
     "fb-stand",
+    "fb-stat",
+    "fb-stat-k",
     "fb-sys",
     "fb-sys-chip"
   ],

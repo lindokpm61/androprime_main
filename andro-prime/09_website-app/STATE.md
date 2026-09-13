@@ -137,6 +137,57 @@ Both documents said otherwise. Now wired via `prebuild`, and measured failing.
 the flag off and only fixture rows in `memberships`, there is no state in which
 a second join can be clicked today.
 
+### 🟢 R1's MECHANISM IS BUILT, 2026-09-14 — the excluded rows were the only unchecked prose in a generated file
+
+R1's page half shipped on 2026-09-12 (`/go` rebuilt, its reason corrected). What
+was still owed was the mechanism, and this is it: **the counted rows of
+`design/route-conformance.md` are re-measured every run and cannot go stale,
+while the excluded rows carried prose nothing re-tested** — inside a file whose
+header says GENERATED. That is how `/go` sat on V2.0 for six batches behind
+*"internal redirect, no UI"*, a sentence that correctly describes `/go/[slug]`
+and not `/go`.
+
+**`scripts/route-exclusions.js` is new and shared** by the reporter and the
+static guard, so the two cannot hold different opinions about which routes are
+excluded or why. Each of the seven exclusions now carries:
+
+| Field | Question it answers | Enforcement |
+|---|---|---|
+| `evidence` | Is the stated fact still true? | **Fails.** Checked against the route's own source, in `npm test` and again before the reporter renders a single route |
+| `reviewed` | Has anyone asked whether that fact still *justifies* the exclusion? | **Reported, never fatal.** No grep can answer it and there is no principled expiry |
+
+**Both halves are needed, and `/go` is the case that proves it.** Its old reason
+was a *false fact*, which evidence would have caught the first time the sweep
+ran. But a reason can also be perfectly true and no longer sufficient, and that
+is invisible to any check. The file says outright that the age must not be made
+fatal, because this repo has already written down what happens to a check that
+cries wolf on ordinary work.
+
+**Proved non-vacuous, which after P7 is not optional.** Four deliberate
+reintroductions, each failing the expected check: `/go` stops firing the event
+its reason cites; an exclusion declared with no evidence clause; one with no
+reviewed date; and the committed report dropping an exclusion the code declares.
+
+🔴 **AND THE FIRST VERSION PRINTED "-1 DAYS", WHICH IS CLOSED ITEM 10 COMING
+BACK.** The age helper subtracted a UTC midnight from `Date.now()`, so at 23:40
+BST a reason reviewed that afternoon sorted into the future. The date-formatting
+family was closed weeks ago by one module plus `verify-date-format.js` — and
+**neither could see this, because the remedy was scoped to formatting and the
+trap is in subtracting an instant from a calendar date.** Both sides are UTC
+calendar days now, matching the report's own `generated` field, and a negative
+age is surfaced as *"dated N days in the future"* rather than floored to zero.
+Observation 779.
+
+⚠ **`TaskStop` said it stopped the dev server and it had not.** The build guard
+caught it on port 3000; killing by port took a second attempt. Confirm a stopped
+server by the port, not by the task id. Observation 780.
+
+**Report regenerated** (measured 2026-09-13, still 36/36 = 100%). The class
+counts moved where real work landed since 2026-09-12 — `/blog` 29 → 36,
+`/membership` 51 → 50 from the quote-card removal. Verified: `npm test` exit 0,
+`tsc --noEmit` exit 0, `MEMBERSHIP_ENABLED=false npm run build` exit 0 with the
+P9 interlock firing.
+
 ### P5 re-checked at Keith's request, after the wrap
 
 ✅ **The deterministic pre-flight on `/subscription/confirmed` is CLEAN**: 0 HARD,

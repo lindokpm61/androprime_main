@@ -111,25 +111,15 @@ const SAMPLES = {
   '/blog/preview/[slug]': 'andropause-male-menopause',
 }
 
-// Not part of the public surface, so not part of the count. Each says why.
-const EXCLUDED = {
-  '/founding-member': 'retired, 307s to /kits',
-  '/activate': 'retired 2026-09-12, 307s to /how-to-sample (deprecated by the QR decision of 2026-06-12)',
-  '/admin/dashboard': 'admin-gated internal tool, no public UI (Direction F since 2026-09-12)',
-  '/ops/content': 'admin-gated internal tool, no public UI (Direction F since 2026-09-12)',
-  // 🔴 THIS REASON USED TO READ "internal redirect, no UI", AND IT DESCRIBED A
-  // DIFFERENT ROUTE. `/go/[slug]` is the redirect: a `route.ts` that records a
-  // click and sends the reader on. `/go` is a rendered, CUSTOMER-FACING page,
-  // the link-in-bio grid every Instagram profile visitor lands on, and it sat on
-  // V2.0 for the whole rebuild because this line answered the question and
-  // nobody asked it again. Rebuilt 2026-09-12. It stays excluded for a reason
-  // that is now true: the page fires `bio_grid_view` server-side on every
-  // render, so sweeping it would seed the campaign's own baseline with sweep
-  // traffic. A reason is not a category; check it before inheriting it.
-  '/go': 'renders a `bio_grid_view` analytics event on every load, so a sweep would pollute the campaign it measures (Direction F since 2026-09-12)',
-  '/blog/preview/[slug]': 'internal preview of an unpublished draft, behind a shared token (Direction F: it renders ArticleLayout)',
-  '/demo': 'runs the authenticated app shell (`ap-*`), not the marketing layer, so Direction F is the wrong question',
-}
+// Not part of the public surface, so not part of the count. Each says why, and
+// since 2026-09-14 each also carries the EVIDENCE that its why is still true —
+// see scripts/route-exclusions.js for the defect (R1) that demanded it and for
+// why a review date sits beside the check rather than instead of it.
+const { EXCLUSIONS, judgeExclusions, reviewAgePhrase } = require('./route-exclusions')
+
+const EXCLUDED = Object.fromEntries(
+  Object.entries(EXCLUSIONS).map(([url, ex]) => [url, ex.why]),
+)
 
 /* WHICH HOST SERVES WHAT. Mirrors APP_ROUTE_PREFIXES in lib/hosts.ts, which is
    the single source of truth for the route→host mapping. Duplicated here rather
@@ -240,6 +230,26 @@ const SYNTHETIC = [
 
 const all = routes(APP).sort((a, b) => a.url.localeCompare(b.url))
 if (all.length < 20) die(`found only ${all.length} routes under app/. Fix this collector rather than trusting a pass.`)
+
+/* EVERY EXCLUSION IS RE-EARNED HERE, BEFORE A SINGLE ROUTE IS RENDERED (R1).
+   The file for each is taken from the walk above, so this cannot hold a second
+   opinion about where a route lives. A broken exclusion stops the run rather
+   than printing a warning nobody reads: the report's whole claim is that the
+   routes it did not measure did not need measuring. */
+const fileByUrl = new Map(all.map((r) => [r.url, r.file]))
+const exclusionVerdicts = judgeExclusions(
+  (url) => fileByUrl.get(url) || null,
+  (file) => { try { return fs.readFileSync(path.join(ROOT, file), 'utf8') } catch { return null } },
+)
+const brokenExclusions = exclusionVerdicts.filter((v) => !v.ok)
+if (brokenExclusions.length) {
+  die(
+    `${brokenExclusions.length} exclusion(s) no longer earn their place:\n` +
+    brokenExclusions.map((v) => `  ${v.url}\n    why: ${v.why}\n    ${v.problems.join('\n    ')}`).join('\n') +
+    `\nEither the route changed and belongs in the count, or the reason needs rewriting.` +
+    `\nDo NOT widen the evidence to make this pass: that is how \`/go\` stayed excluded for six batches.`,
+  )
+}
 
 const measured = all.filter((r) => !(r.url in EXCLUDED))
 for (const r of measured) {
@@ -493,9 +503,27 @@ ${unmeasured.map((r) => `| \`${r.url}\` | ${r.note} | ${r.source.rendersNothing 
 
 ## Excluded from the count (${Object.keys(EXCLUDED).length})
 
-| Route | Why |
-|---|---|
-${Object.entries(EXCLUDED).map(([k, v]) => `| \`${k}\` | ${v} |`).join('\n')}
+🔴 **THESE ROWS USED TO BE THE ONLY UNCHECKED PROSE IN A GENERATED FILE, AND ONE
+OF THEM HID A CUSTOMER-FACING PAGE FOR SIX BATCHES.** \`/go\` was excluded as
+*"internal redirect, no UI"* — a correct description of \`/go/[slug]\`, not of
+\`/go\`, which is the link-in-bio grid every Instagram visitor lands on. Every
+pass read the exclusion as a category and skipped the row. Since 2026-09-14 each
+exclusion names a fact in the route's own source, and **this report refuses to
+generate if any of those facts has stopped being true** (defect R1).
+
+**Checked** is mechanical and runs in \`npm test\`. **Reviewed** is the date a
+human last asked whether the fact still *justifies* the exclusion, which no grep
+can answer — a reason can be perfectly true and no longer sufficient. Age is
+reported and never fatal; there is no principled expiry, and a check that cries
+wolf gets switched off.
+
+| Route | Why | Checked against source | Reviewed |
+|---|---|---|---|
+${exclusionVerdicts.map((v) => {
+  const when = reviewAgePhrase(v.reviewed, new Date(`${today}T00:00:00.000Z`))
+  const ev = (EXCLUSIONS[v.url].evidence.must || []).map((re) => `\`${String(re)}\``).join(' and ')
+  return `| \`${v.url}\` | ${v.why} | ${ev} in \`${v.file}\` | ${when} |`
+}).join('\n')}
 
 ## F classes defined and rendered nowhere (${unused.length})
 
@@ -539,7 +567,14 @@ rendered at 1440px against a dev server, each on the host that serves it (\`${AP
 `
 
   fs.writeFileSync(OUT, md)
-  fs.writeFileSync(OUT_JSON, JSON.stringify({ generated: today, base: BASE, rows, excluded: EXCLUDED, unused, stateOnly, orphan }, null, 2) + '\n')
+  // `excluded` keeps its shape (url -> why) because the staleness guard and the
+  // route-set check both read it as one. `exclusionEvidence` is the R1 addition,
+  // recorded so the committed report shows what each exclusion was held by at
+  // generation time rather than only that it existed.
+  const exclusionEvidence = Object.fromEntries(
+    exclusionVerdicts.map((v) => [v.url, { file: v.file, reviewed: v.reviewed, checked: (EXCLUSIONS[v.url].evidence.must || []).map(String) }]),
+  )
+  fs.writeFileSync(OUT_JSON, JSON.stringify({ generated: today, base: BASE, rows, excluded: EXCLUDED, exclusionEvidence, unused, stateOnly, orphan }, null, 2) + '\n')
   console.log(`\n${f.length} of ${denom} measurable routes Direction F (${pct}%), ${unmeasured.length} not measurable anonymously, ${unused.length} classes not rendered (${stateOnly.length} asked for by a source file, ${orphan.length} in no source)`)
   console.log(`wrote ${path.relative(path.resolve(ROOT, '..', '..', '..'), OUT).split(path.sep).join('/')}`)
 })().catch((e) => { console.error(e); process.exit(1) })
