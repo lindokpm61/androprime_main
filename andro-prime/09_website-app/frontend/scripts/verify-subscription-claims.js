@@ -39,6 +39,20 @@
  * needs Keith, then a compliance pre-flight, and CA-026 C1 needs a fresh CA
  * record. Record the replacement wording in `redesign-copy-register.md` and
  * update `CLAIMS` below in the same change.
+ *
+ * ── HOW TO READ THE COUNT (changed 2026-09-13) ────────────────────────────
+ * It now reports **13 sentences on 7 pages, plus 1 non-page surface**, with the
+ * raw figures in brackets. Before this it printed a bare `16`, because a line
+ * matching two CLAIMS was pushed twice and `public/llms.txt` was counted in with
+ * the pages. Thirteen-across-seven is also what this header and
+ * `redesign-copy-register.md` row 46 say, so the two now reconcile.
+ *
+ * That mattered more than a tidy number: a reader comparing the register's 13 to
+ * the tool's 16 would reasonably conclude three sentences had crept in since, and
+ * go looking for copy that does not exist. **A count that cannot be reconciled
+ * with the record it enforces sends the reader hunting for a phantom discrepancy
+ * instead of fixing the defect**, which is worse than saying nothing, because it
+ * looks like information.
  */
 'use strict'
 
@@ -106,6 +120,39 @@ const RENEWAL_ALLOW = [
   'lib/membership/disclosure.ts',
 ]
 
+/* 🔴 SENTENCES THAT LIVE IN MORE THAN ONE STORE, AND THE GREP THAT WILL NOT FIND
+   THEM BOTH. ADDED 2026-09-13.
+
+   CA-026 C1's paragraph is rendered on `/kits` AND published verbatim in
+   `public/llms.txt`. A rewrite has to reach both, and **the obvious way to find
+   them does not work**: in the JSX the sentence is wrapped across a newline
+   between "no" and "surprise", so `grep "no surprise second test"` matches the
+   .txt and silently misses the page. Checked 2026-09-13 — a single-line grep
+   returns exactly one of the two stores.
+
+   That is the repo's own "never let a patch anchor span a newline" rule biting
+   from the other end: not a write that fails, but a SEARCH that succeeds and
+   returns an incomplete answer, which is the more dangerous shape because it
+   produces a confident partial sweep. `llms.txt` is the copy written for AI
+   ingestion, so it is also the copy most likely to be quoted back at us, and it
+   is the half a page-focused rewrite drops.
+
+   Matched whitespace-tolerantly below so the check cannot inherit the defect it
+   exists to warn about. Add an entry whenever a sentence is knowingly duplicated
+   into a second store. */
+const LINKED_COPY = [
+  {
+    label: 'CA-026 C1, the conflict-free paragraph',
+    /* Whitespace-tolerant: \s+ spans the JSX line wrap. */
+    pattern: /no\s+surprise\s+second\s+test/i,
+    note: [
+      'The clause to change sits INSIDE the conflict-free statement, whose GP',
+      'half is the brand position. Rewriting it is a compliance pass on the',
+      'whole sentence, not a clause swap.',
+    ],
+  },
+]
+
 const SKIP_DIR = new Set(['node_modules', '.next', '.git', '.impeccable', 'out'])
 
 function die(m) { console.error(`ERROR: ${m}`); process.exit(1) }
@@ -155,18 +202,71 @@ for (const f of files) {
   })
 }
 
+/* 🔴 COUNT DISTINCT SENTENCES, NOT RAW MATCHES, AND SPLIT PAGES FROM THE REST.
+   ADDED 2026-09-13.
+
+   The loop above pushes once per CLAIM per line, so a line reading "One-off
+   purchase. Includes lab fees & delivery. No subscription." matched twice and
+   was printed twice. With `public/llms.txt` counted alongside the pages, the
+   headline read **16** while `redesign-copy-register.md` row 46 and this file's
+   own header both say **thirteen sentences across seven surfaces**.
+
+   Both numbers were correct and they were describing different things: 16 raw
+   matches, 14 distinct locations, 13 of them on 7 rendered pages plus one in
+   llms.txt. Nobody had added a sentence. But a reader comparing 13 to 16 would
+   reasonably conclude three had crept in, and go looking for copy that does not
+   exist. **A count that cannot be reconciled with the register it is supposed to
+   enforce sends the reader to hunt for a discrepancy rather than to fix the
+   defect**, which is a worse failure than being silent, because it looks like
+   information. */
+const PAGE_SURFACE = (f) => f.startsWith('app/') && f.endsWith('.tsx')
+
+const byLocation = new Map()
+for (const c of found) {
+  const key = `${c.file}:${c.line}`
+  if (!byLocation.has(key)) byLocation.set(key, { ...c, claims: [] })
+  byLocation.get(key).claims.push(c.claim)
+}
+const locations = [...byLocation.values()]
+const pageHits = locations.filter((c) => PAGE_SURFACE(c.file))
+const otherHits = locations.filter((c) => !PAGE_SURFACE(c.file))
+const pageFiles = new Set(pageHits.map((c) => c.file)).size
+
 console.log('\nSubscription claims vs the auto-renew ruling\n')
 console.log(`  MEMBERSHIP_ENABLED = ${flagOn ? 'true' : 'unset/false'}`)
-console.log(`  ${found.length} claim(s) asserting no subscription or a one-off purchase\n`)
+console.log(
+  `  ${pageHits.length} sentence(s) on ${pageFiles} page(s)` +
+    (otherHits.length ? `, plus ${otherHits.length} on ${new Set(otherHits.map((c) => c.file)).size} non-page surface(s)` : '') +
+    `  [${found.length} raw matches, ${locations.length} distinct lines]\n`,
+)
 
 const byFile = new Map()
-for (const c of found) {
+for (const c of locations) {
   if (!byFile.has(c.file)) byFile.set(c.file, [])
   byFile.get(c.file).push(c)
 }
 for (const [file, cs] of [...byFile.entries()].sort()) {
-  console.log(`  ${file}`)
-  for (const c of cs) console.log(`    :${c.line}  ${c.text}`)
+  console.log(`  ${file}${PAGE_SURFACE(file) ? '' : '   (not a rendered page)'}`)
+  for (const c of cs.sort((a, b) => a.line - b.line)) {
+    const tag = c.claims.length > 1 ? `  [matches: ${[...new Set(c.claims)].join(', ')}]` : ''
+    console.log(`    :${c.line}  ${c.text}${tag}`)
+  }
+}
+
+/* THE MULTI-STORE REPORT. Not a pass/fail of its own: it exists so the person
+   doing the rewrite is told, at the moment they are looking at the list, that one
+   of these sentences lives somewhere a grep will not find it. */
+for (const linked of LINKED_COPY) {
+  const stores = files.filter((f) => linked.pattern.test(read(f))).map(rel).sort()
+  if (stores.length > 1) {
+    console.log(`\n  ⚠ ONE SENTENCE, ${stores.length} STORES: ${linked.label}`)
+    for (const s of stores) console.log(`      ${s}`)
+    console.log(`      A rewrite must reach all ${stores.length}. A single-line grep will NOT find`)
+    console.log('      them all: the JSX wraps the phrase across a newline.')
+    for (const line of linked.note ?? []) console.log(`      ${line}`)
+  } else if (stores.length === 1) {
+    console.log(`\n  ok  ${linked.label} now appears in one store only (${stores[0]}).`)
+  }
 }
 
 /* THE MIRROR CHECK. Fails when the flag is OFF and customer copy already promises
@@ -209,7 +309,7 @@ if (!flagOn) {
 }
 
 console.error(`
-  FAIL MEMBERSHIP_ENABLED is TRUE and ${found.length} sentence(s) above still tell a
+  FAIL MEMBERSHIP_ENABLED is TRUE and ${pageHits.length} sentence(s) on ${pageFiles} page(s)${otherHits.length ? ` and ${otherHits.length} elsewhere` : ''} still tell a
        buyer there is no subscription. Under
        01_strategy/2026-09-07-auto-renew-at-day-30.md every kit buyer is charged
        £47 on day 31, so each of those sentences is false and sits on a page
