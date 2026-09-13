@@ -145,10 +145,23 @@ const LINKED_COPY = [
     label: 'CA-026 C1, the conflict-free paragraph',
     /* Whitespace-tolerant: \s+ spans the JSX line wrap. */
     pattern: /no\s+surprise\s+second\s+test/i,
+    /* ⚠ CORRECTED 2026-09-13, same day. This note first read: "the clause to
+       change sits INSIDE the conflict-free statement, whose GP half is the brand
+       position, so rewriting it is a compliance pass on the whole sentence, not
+       a clause swap." That OVERSTATED it, and in the expensive direction: it
+       would have pulled Ewa back into a rewrite the 2026-09-11 ruling had already
+       settled as business rather than clinical.
+
+       Read against the approved C1 text rather than from memory, the paragraph is
+       FOUR sentences. "no subscription unless you choose one" is the tail of the
+       third. The GP-and-we-earn-nothing claim is the fourth, structurally
+       independent, and can be left untouched. */
     note: [
-      'The clause to change sits INSIDE the conflict-free statement, whose GP',
-      'half is the brand position. Rewriting it is a compliance pass on the',
-      'whole sentence, not a clause swap.',
+      'ONE PARAGRAPH, FOUR SENTENCES. The clause to change is the tail of the',
+      'third ("no subscription unless you choose one"). The GP-and-we-earn-',
+      'nothing claim is the fourth and is separable, so it need not be reopened.',
+      'Keep sentence four byte-identical and Ewa does not re-enter: the rewrite',
+      'was ruled business rather than clinical on 2026-09-11.',
     ],
   },
 ]
