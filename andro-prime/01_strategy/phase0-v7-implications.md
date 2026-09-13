@@ -306,7 +306,10 @@ V7 doesn't fundamentally change what Phase 0 *is*. It changes what Phase 0 *mean
 
 Pre-V7, Phase 0 was a validation exercise with a TRT launch waiting at the end. The Phase 0 success criteria were defensive (don't run out of money, generate enough warm pipeline for M13).
 
-Post-V7, Phase 0 is the first 12 months of a 7-year platform build with thin headroom on the exit thesis. The success criteria are now offensive (build a wellness brand customers want to stay with, validate the tracker engagement thesis, establish content pillars that work for multi-vertical expansion, set up the operational discipline that exit-track gates will require).
+Post-V7, Phase 0 is the first 12 months of a 7-year platform build with thin headroom on the exit thesis. The success criteria are now offensive (build a men's health brand customers want to stay with, validate the tracker engagement thesis, establish content pillars that work for multi-vertical expansion, set up the operational discipline that exit-track gates will require).
+
+<!-- SWEEP 2026-09-13: category noun updated from "a wellness brand" to "a men's health brand" per ruling B (`2026-08-30-brand-lead-after-the-monitoring-thesis.md` §6). This was the market-positioning sense of the word. The REGULATORY sense of "wellness" elsewhere in this document and in the financial models (the Phase 0 wellness tier, the wellness-versus-clinical entity split) is a different term and is deliberately untouched. -->
+
 
 This is not a harder Phase 0. The product set, the pricing, the financial trajectory all hold. It's the *same* Phase 0 carrying more weight than V6.1 acknowledged.
 

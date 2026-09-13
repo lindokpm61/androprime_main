@@ -1431,4 +1431,27 @@ Founder content now has one git-tracked asset file per idea (`content-machine/as
 ## PT / affiliate programme: FROZEN
 
 - See `affiliates/CONTEXT.md`. FirstPromoter live but dormant; CA-001/002 solicitor sign-off parked (not a launch blocker); unfreeze needs a fresh Keith decision.
+
+🔴 **NEW UNFREEZE PRECONDITION, added 2026-09-13: gate `FirstPromoterScript` on cookie
+consent BEFORE the env var is ever populated.** Found during the in-house terms/privacy
+pass (`../03_compliance/2026-07-25-terms-privacy-legal-review.md` item 15).
+
+**`components/analytics/FirstPromoterScript.tsx` is gated only on
+`NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID` being set, never on the consent banner.** Its
+sibling `GoogleAnalytics.tsx` *is* properly gated, with Google Consent Mode v2 denying
+`analytics_storage` before gtag.js loads, so the gap is inconsistent as well as unsafe.
+
+**Nothing is wrong today, and that is exactly the trap.** The freeze plus an empty
+variable are what stop a non-essential tracking cookie being set without consent, **not
+the code**. So the unfreeze is a one-variable action with an invisible second effect:
+populate the env var and `_fprom_tid` starts being set pre-consent on every referred
+visit, which is a **PECR reg 6** problem and simultaneously makes the privacy policy's
+"marketing cookies are only set if you consent" line false.
+
+**Two things to do at unfreeze, in this order:** (1) add the consent gate to
+`FirstPromoterScript`, (2) add FirstPromoter to the privacy policy's processor table,
+transfers section and cookie section, and verify its transfer mechanism. Neither is
+needed before then: a dormant integration must **not** be disclosed as though it were
+processing data, which is why a first pass that added it to the policy on 2026-09-13
+was reverted the same day.
 - **Affiliate-doc silent-ingredient rewrite done 2026-07-07** (audit precondition 1 of 2 for unfreeze; precondition 2, the GP-framing sweep, also done 2026-07-07; both met; unfreeze remains a Keith decision + solicitor sign-off on CA-001/002). Programme docs now use the v2.3 allowlist + name-free deflection pattern with one fenced INTERNAL ONLY rationale block each; v2.2 brief binaries quarantined to `affiliates/briefs/superseded-v2.2/`. Residual v2.2-pattern mentions in `master-plan/phase0-marketing-plan.md` (~152, ~159) and `master-plan/phase0-acquisition-strategy.md` (~183) belong to the v2.2 marketing-corpus banner sweep, still open.

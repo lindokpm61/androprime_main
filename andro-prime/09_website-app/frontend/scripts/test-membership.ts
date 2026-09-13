@@ -80,6 +80,7 @@ import {
   canJoinMembership,
   offerState,
 } from '../lib/membership/offer'
+import { PORTAL_MANAGEABLE_STATUSES } from '../lib/membership/sync'
 
 let failures = 0
 let passes = 0
@@ -975,6 +976,80 @@ check('(14v) ...and re-checks each row against the fixture predicate',
   membershipPass.includes('isFixtureMembership'))
 check('(14w) ...and selects the column that filter needs',
   membershipPass.includes('stripe_subscription_id'))
+
+
+// ── 15. THE CANCELLATION ROUTE READS BOTH TABLES ────────────────────────────
+//
+// Defect: the portal route and `getSubscriptions` queried
+// `supplement_subscriptions` alone while a membership owns a row in
+// `memberships`, so every membership-only customer 404'd on the route that
+// exists to let him cancel. All three supplement subscriptions are retired, so
+// the table they read is the one nobody can hold a live row in: it was looking
+// in the only place the answer could not be.
+//
+// ⚠ THIS IS A CONTRACT TERM. The terms say cancellation is available "from your
+// account, in the same number of steps it took to join". These assertions are
+// the mechanism behind that sentence, which is why they live here rather than
+// in a manual click-through nobody repeats.
+
+const portalSource = readFileSync(
+  join(__dirname, '..', 'app', 'api', 'checkout', 'portal', 'route.ts'),
+  'utf8',
+)
+const getSubsSource = readFileSync(
+  join(__dirname, '..', 'lib', 'subscriptions', 'getSubscriptions.ts'),
+  'utf8',
+)
+const syncSourceForPortal = readFileSync(
+  join(__dirname, '..', 'lib', 'membership', 'sync.ts'),
+  'utf8',
+)
+
+// The two status lists answer different questions, and that difference is the
+// only reason a second list exists.
+check('(15a) every entitlement status is also portal-manageable',
+  ACTIVE_MEMBER_STATUSES.every((s) => PORTAL_MANAGEABLE_STATUSES.includes(s)))
+
+check('(15b) THE ASYMMETRY: unpaid is manageable but is NOT an entitlement status',
+  PORTAL_MANAGEABLE_STATUSES.includes('unpaid') && !ACTIVE_MEMBER_STATUSES.includes('unpaid'))
+
+check('(15c) a cancelled subscription is not manageable, there being nothing left to manage',
+  !PORTAL_MANAGEABLE_STATUSES.includes('cancelled'))
+
+check('(15d) the manageable list is exactly one status wider than the entitlement list',
+  PORTAL_MANAGEABLE_STATUSES.length === ACTIVE_MEMBER_STATUSES.length + 1)
+
+// The route uses the shared resolver and no longer reaches past it into one
+// table. Source reads, because the resolver is IO and this repo has no mocked
+// Supabase harness (same reason section 14 gives).
+check('(15e) the portal route calls the shared resolver',
+  portalSource.includes('resolveBillingSubscriptionId'))
+
+check('(15f) THE REGRESSION GUARD: the portal route no longer queries supplement_subscriptions directly',
+  !portalSource.includes("from('supplement_subscriptions')"))
+
+check('(15g) the resolver filters fixture subscription ids, so a seeded account cannot reach Stripe',
+  syncSourceForPortal.includes('isDevSubscriptionId'))
+
+check('(15h) a Stripe failure in the portal route raises an ops event rather than a log line',
+  portalSource.includes('Sentry.captureException'))
+
+check('(15i) getSubscriptions reads memberships',
+  getSubsSource.includes("from('memberships')"))
+
+check('(15j) getSubscriptions still reads supplement_subscriptions, for existing holders',
+  getSubsSource.includes("from('supplement_subscriptions')"))
+
+check('(15k) the DISPLAY half is gated on the membership flag',
+  getSubsSource.includes('isMembershipEnabled()'))
+
+// The one a future tidy-up will get wrong. Someone will notice that one half is
+// flag-gated and the other is not, call it an inconsistency, and "fix" it by
+// gating the route. That traps a live member in a subscription he cannot cancel
+// the moment the flag goes back off. Refusing to RENDER is cosmetic; refusing to
+// CANCEL is harmful. Fail loudly rather than let that ship.
+check('(15l) THE CANCELLATION ROUTE IS NOT FLAG-GATED, and that is deliberate',
+  !portalSource.includes('isMembershipEnabled'))
 
 console.log(`test-membership: ${passes} passed, ${failures} failed`)
 if (failures > 0) process.exit(1)

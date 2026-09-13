@@ -4,17 +4,235 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-13 late (3d and 3e built; a question found P7, where the index fires after the charge)
+## ▶️ PICK UP HERE — handoff, 2026-09-13 END OF SESSION (legals drafted in house, P3 + P8 built, membership can almost be switched on)
+
+**Read this block, then the switch-on checklist. Everything else below is history.**
+
+### The one-line state
+
+The membership is closer to switch-on than it has ever been, and **nothing is
+waiting on anyone outside the business.** What is left is Keith's signature, two
+unbuilt defects, and a legal-page sync.
+
+### What moved today, in the order it matters
+
+1. **P1 is not a solicitor blocker and never needed to be.** DMCC Act 2024 Part 4
+   is **not in force**: commencement slipped spring 2026 → autumn 2026 → spring
+   2027, then was set for **January 2027**, and the implementing regulations are
+   **still unpublished**. So the reminder-timing question was one no solicitor
+   could answer either. Full record: `../03_compliance/2026-09-07-dmcca-subscription-regime-gap.md` §0.
+2. **Terms v1.3 and Privacy v1.4 are drafted in house**, to the law actually in
+   force, voluntarily adopting the DMCCA duties so January 2027 is a review
+   rather than a rewrite. **DRAFT, unapproved, not synced live.**
+3. **P3 built**: `npm run verify:prices` reads the live Stripe account and
+   asserts every price against the repo. Keith set `STRIPE_PRICE_MEMBERSHIP` in
+   Coolify (`price_1U8VKRLU0SDiIplTUnr5cyWJ`, £47/month, verified to exist).
+4. **P8 built** (new row on the register): the cancel button looked in the one
+   table nobody can hold a live row in. Both lookups now read `memberships`.
+5. **Stripe's customer portal is configured**, read back from the API:
+   `bpc_1UFKXe…`, cancel **at period end**, **no proration**. Both match the
+   drafted terms sentence for sentence.
+6. **Ruling B swept**: the category noun is "men's health", and the finding was
+   that the docs were already almost right while **`main` still serves "Andro
+   Prime is a wellness information service" three times on the homepage**.
+
+### 🔴 THE FIRST THING TO CHECK NEXT SESSION
+
+**`.env.local` has `MEMBERSHIP_ENABLED=true`** (local only, gitignored, set at
+Keith's request to view the membership surfaces). **While it is true,
+`npm run build` FAILS** on the P6 interlock with 16 sentences still telling a
+buyer there is no subscription. That is the interlock working. Set it to false
+for a build, or clear P6 first. The file carries a comment saying so.
+
+### What is owed, by owner
+
+| Owner | Item |
+|---|---|
+| **Keith** | Sign off terms v1.3 + privacy v1.4. One signature closes P1 and P2 and removes 3c's fourth send-blocker |
+| **Keith** | Decide whether to drop `email` from the Stripe portal's allowed customer updates (diverges receipts from the login) |
+| **Build** | **P7** — subscription checkout does not refuse a customer who already holds a live membership |
+| **Build** | **A2** — two seeded membership rows live in production, due **16 and 17 November 2026**. The guard exists only on this branch, which deploys nothing |
+| **Build** | Sync the legal pages to `canonical-site/*/index.html`. The markdown is not what the site serves |
+| **Build** | A way to verify Stripe prices against the **deployed** environment. The checker runs where the developer is; the environment that takes the money is elsewhere |
+| **Ewa** | 3d's ruling (which result states may pull a retest date forward) and 3f's wording (20 states) |
+
+### Where the procedure lives
+
+**`../10_launch-ops/implementation-checklists/membership-switch-on.md`** — six
+stages, run in one sitting. It names every blocker above in the order they have
+to clear, and its first mechanical line is a command rather than a reading.
+
+---
+
+## Earlier the same day — handoff, 2026-09-13 late (3d and 3e built; a question found P7, where the index fires after the charge)
 
 ### WHAT THIS SESSION WAS
+
+🔴 **ALSO 2026-09-13, FOUND BY THE RULING-B SWEEP: THE LIVE SITE CONTRADICTS THE BRAND
+RULING ON EVERY PAGE.** `main` serves *"Andro Prime is a wellness information service"*,
+three times on the homepage alone. Ruling B (`../01_strategy/2026-08-30-brand-lead-after-the-monitoring-thesis.md`
+§6) settled the category noun as **men's health** on 2026-08-30, and the footer fix landed
+on **`redesign/direction-f` only**: `git show main:...Footer.tsx` still reads "wellness",
+and the fix commit never reached `main`. `frontend/PRODUCT.md` recorded it as
+"✅ Implemented 2026-09-02" **without naming the branch**, which is how it read as done for
+eleven days while production disagreed. That line is corrected. **The fix ships when this
+branch merges; nothing extra to build.**
+
+⚠ **Two surfaces are unfixed on BOTH branches and are NOT this workspace's to change:**
+`canonical-site/terms/index.html` and `canonical-site/privacy/index.html` both say "a
+wellness information service". They are published legal documents pinned by
+`scripts/verify-legal-text.js`, so they are **escalated to Keith**, and they fold into the
+legal-page sync already owed (`../03_compliance/2026-07-25-terms-privacy-legal-review.md`
+item 13). 🔵 The results-dashboard GP handoff keeps "a wellness service" deliberately: it is
+addressed to a clinician inside a not-a-diagnosis disclaimer and is owed to Ewa, per
+`PRODUCT.md`.
+
+---
 
 Keith settled two questions and asked for one of them to be finished.
 
 **3c's entitlement paragraph.** It stands, ship-gated, not cut and not reworded:
-the CA-026 D2 treatment. **The consequence is that P1 is now a FOURTH activation
+the CA-026 D2 treatment. ~~**The consequence is that P1 is now a FOURTH activation
 gate on Customer.io campaign 25**, alongside the draft state, the unstamped
 attribute and `MEMBERSHIP_ENABLED`, and it is the only one of the four that is
-not ours to move. 3c can no longer close ahead of the solicitor.
+not ours to move. 3c can no longer close ahead of the solicitor.~~
+
+🟢 **SUPERSEDED SAME DAY, 2026-09-13 later: P1 IS OURS TO MOVE AFTER ALL, and it
+has moved.** Keith ruled there is no solicitor budget at this stage, so the terms
+were drafted in house. Two things then collapsed the blocker:
+
+1. **The regime P1 was waiting on is not in force.** DMCCA 2024 Part 4 commencement
+   slipped spring 2026 → autumn 2026 → spring 2027, then was set for **January
+   2027**, with the implementing regulations **still unpublished as at September
+   2026**. The reminder-timing question was therefore one **no solicitor could have
+   answered either**.
+2. **`terms-and-conditions.md` v1.3 now carries a Membership section**, including
+   the entitlement paragraph, drafted to the law actually in force and voluntarily
+   adopting the DMCCA duties so January 2027 is a review rather than a rewrite.
+
+**So campaign 25 is back to THREE activation gates**, all of them ours: the draft
+state, the unstamped `membership_retest_due_at` attribute, and `MEMBERSHIP_ENABLED`.
+P1 is now **Keith's business sign-off on a drafted document**, not an external wait.
+Full record: `../03_compliance/STATE.md` (2026-09-13 later) and
+`../03_compliance/2026-09-07-dmcca-subscription-regime-gap.md` §0.
+
+### P3 IS BUILT, and the first run found something P3 did not describe
+
+| File | What it does |
+|---|---|
+| `lib/stripe/priceExpectations.ts` | NEW, pure. What every Stripe price should be, **derived** from `PRICING` and `PRODUCT_MAP`, plus the refusal table |
+| `scripts/verify-stripe-prices.ts` | NEW. Reads the live account, judges every price, exits non-zero. `npm run verify:prices` |
+| `scripts/test-price-expectations.ts` | NEW, 55 assertions, added to `npm test` |
+| `../../10_launch-ops/implementation-checklists/membership-switch-on.md` | NEW. The checklist P3 asked for, with the command as its first mechanical line |
+
+**P3 asked for a checklist line. A checklist line saying "check the price is £47"
+is a human comparing two numbers on two screens at the end of a long sitting,
+which is when people are worst at it.** The checklist now says *run this*, and
+the script does the comparing: amount, currency, one-off vs recurring, the
+monthly interval, and whether the price is archived.
+
+🔴 **THE EXPECTED AMOUNTS ARE DERIVED, NEVER RETYPED.** `lib/subscriptions/products.ts`
+exists because this exact fact once lived in three places and all three had
+drifted. Typing `4700` into the checker would have rebuilt that one layer down,
+inside the file whose whole job is catching drift. Kit amounts come from
+`PRICING.rrp`; the membership amount is **parsed out of the same `'£47/mo'`
+string the kit pages render**.
+
+⚠ **The bundles are deliberately unpriced and that is not an omission.**
+`lib/bundles/config.ts` says their prices are working hypotheses pending the WTP
+read, so the repo claims no amount. The check asserts their **shape** and
+**reports** their amount. A check that invents its own expectation fails on
+correct repricing and trains the reader to ignore it.
+
+🟢 **WHAT THE FIRST LIVE RUN FOUND, and it is the useful part.** The live Stripe
+account **already holds Andro Prime Membership at £47.00, every 1 month,
+active** (`price_1U8VKR…`). So the thing P3 called unverified is correct and
+made; what is missing is `STRIPE_PRICE_MEMBERSHIP` pointing at it. **That is one
+variable, not a pricing exercise.**
+
+⚠ **And a local-only finding, stated as local because that is all that was
+checked.** The three kit price ids in this machine's `.env.local` return *"No
+such price"* against the live key: they carry a **different account prefix**
+(`LAGx1qVxzc`) from every live price (`LU0SDiIplT`). Production's environment
+lives in Coolify and **was not read**, so this is not a claim that live checkout
+is broken. Real kit orders exist from June and July, which argues it is not.
+**The checklist's item 2 says to re-run against the deployed environment for
+exactly this reason: a local env file proves nothing about production.**
+
+**Verified:** `npm test` exit 0 (55 new assertions), typecheck clean on both
+configs, production build clean at 78 static pages, and the verifier run against
+the live Stripe account with its output read.
+
+⚠ **2026-09-13, later: Keith set `STRIPE_PRICE_MEMBERSHIP` in Coolify with the
+£47 price id. It is REPORTED, not verified.** Coolify's environment cannot be
+read from this repo, so the checklist's item 2 is ticked on his word. Two facts
+that can be checked were checked: **`main` does read the variable** (its
+`products.ts` carries the membership entry with that `stripePriceEnv`, so
+setting it is meaningful rather than inert), and **nothing changed for a
+customer**, because `MEMBERSHIP_ENABLED` is still off. The id it should hold is
+**`price_1U8VKRLU0SDiIplTUnr5cyWJ`**, the only £47.00-per-month active price on
+the live account.
+
+🔴 **THE CHECKLIST'S OWN ITEM 2 CARRIED A WEAK LINE AND THIS EXPOSED IT.** It
+said re-run the verifier against the deployed environment *"if you can"*, and
+there is no mechanism, so there is no way to do it. **The check runs where the
+developer is and the environment that takes the money is somewhere else**, which
+is the same gap that produced two wrong claims from `.env.local` earlier today.
+Item 2 now names the gap and the two ways to close it: exec into the container,
+or an admin-gated route that runs the pure check server-side so production
+verifies itself. Neither is built, and until one is, the production price is
+reported rather than verified.
+
+### THE MEMBERSHIP CANCELLATION ROUTE IS FIXED, and it was a contract term
+
+| File | What changed |
+|---|---|
+| `lib/membership/sync.ts` | NEW `resolveBillingSubscriptionId` + `PORTAL_MANAGEABLE_STATUSES`, beside the mirror-image `resolveRecurringOwner` |
+| `app/api/checkout/portal/route.ts` | Uses the resolver; a Stripe throw now raises a Sentry event and a 502 instead of a 500 |
+| `lib/subscriptions/getSubscriptions.ts` | Reads BOTH tables; the membership half is flag-gated |
+| `scripts/test-membership.ts` | Section 15, 12 assertions. Suite **321 → 333** |
+
+**The defect, stated once.** Both the portal route and `getSubscriptions` queried
+`supplement_subscriptions` alone while a membership owns a row in `memberships`.
+Under the auto-renew ruling every kit buyer is a membership-only customer, so
+every one of them reached the empty state and a 404 on the surface that exists to
+let him cancel. **All three supplement subscriptions are retired, so the table
+they read is the one table nobody can hold a live row in:** the lookup was
+pointed at the only place the answer could not be.
+
+🔴 **THIS IS THE MECHANISM BEHIND A CONTRACT TERM.** The terms drafted today say
+cancellation is available *"from your account, in the same number of steps it
+took to join"*, and it is the duty the incoming subscription regime is most
+explicit about. That is why it is asserted rather than left to a click-through.
+
+⚠ **TWO STATUS LISTS, AND THE DIFFERENCE IS THE POINT.**
+`PORTAL_MANAGEABLE_STATUSES` includes `unpaid` and `ACTIVE_MEMBER_STATUSES` does
+not. They answer different questions: one asks *"does he get a retest?"* and the
+other asks *"may he reach his billing?"*. **A man whose dunning has run out is the
+single customer who most needs the portal**, because his card has died and his
+only routes back are updating it or cancelling cleanly. Reusing the entitlement
+list would have locked the portal against exactly the person it exists for.
+
+⚠ **THE FLAG ASYMMETRY IS DELIBERATE AND IS GUARDED.** The display half is gated
+on `MEMBERSHIP_ENABLED`; the route is not. **Refusing to render is cosmetic;
+refusing to cancel is harmful** — gating the route would trap live members the
+moment the flag went back off. Assertion 15l fails if anyone "tidies" that
+inconsistency away, because it is the fix a reader would reach for first.
+
+✅ **THE GUARDS WERE PROVED NON-VACUOUS.** Both defects were deliberately
+reintroduced into the route, the suite went to **exactly 2 failures and exit 1**,
+and the file was restored and re-run clean. A regression test that has never been
+seen to fail is a claim, not a control.
+
+⚠ **NOT VERIFIED BY EYE, and the reason is structural rather than laziness.**
+`MEMBERSHIP_ENABLED` is off, no real membership exists, and the only two rows in
+production are fixtures whose `sub_dev_` ids the resolver now deliberately
+filters. **There is no state in which this flow can be clicked through today.**
+It becomes eye-verifiable at the switch-on sitting, where it is item 5 of the
+checklist.
+
+**Verified:** `npm test` exit 0 (333 membership + 55 price), typecheck clean on
+both configs, production build clean at 78 static pages.
 
 **3d's checkout half, decided and then built.** *"The fix belongs in checkout,
 not in the nightly job."* Check what he holds before taking his money, and never
@@ -358,7 +576,9 @@ mandated retest-framing clause had been trimmed and is restored verbatim, and
   act and has not happened.**
 - **Keith:** whether a member gets a retest-due email at all (the map's Owed row 4
   — 3c presupposes the yes); and the **entitlement paragraph**, which is contract
-  copy while the terms carry no membership section, so it waits on **P1**.
+  copy. ✅ **UPDATED 2026-09-13 later: the terms now HAVE a membership section**
+  (`../03_compliance/terms-and-conditions.md` v1.3 DRAFT), so this is no longer a
+  wait on a solicitor. It is Keith's business sign-off on drafted text.
 - **Code, small:** nothing stamps `membership_retest_due_at`. Needed in
   `lib/membership/sync.ts` at both points the date is written. Until then campaign
   25 cannot fire.

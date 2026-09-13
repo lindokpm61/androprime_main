@@ -2,6 +2,82 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
+## 2026-09-13 (later) — P1 is not a solicitor blocker. Terms v1.3 and Privacy v1.4 drafted in house; one publication item owed, and a wrong finding withdrawn after Keith caught it.
+
+**Keith ruled: no solicitor budget at this stage.** Terms and privacy are written in
+house and reframed later if needed. Both documents are **DRAFT, unapproved and NOT
+synced live.**
+
+🟢 **THE BIGGEST BLOCKER DISSOLVED ON A SEARCH, NOT A PAYMENT.** DMCCA 2024 Part 4
+(the subscription regime behind P1) is **not in force**: commencement slipped spring
+2026 → autumn 2026 → spring 2027, then was set for **January 2027**, and the
+implementing regulations were **still unpublished as at September 2026**. So the
+reminder-timing question **no solicitor could have answered either**. Full update,
+including the reasoning error that priced it as a paid escalation, in
+`2026-09-07-dmcca-subscription-regime-gap.md` §0. That file's status moves
+🔴 OPEN GAP → 🟠 PARTLY ANSWERED, no longer a launch blocker.
+
+| Document | Version | What changed |
+|---|---|---|
+| `terms-and-conditions.md` | 1.3 DRAFT | NEW **Membership** section incl. the entitlement paragraph P1 was gating; review items **6** (subscription variation) and **8** (ADR) closed |
+| `privacy/privacy-policy.md` | 1.4 DRAFT | Membership + check-in health data; review items **11** (consent withdrawn mid-order) and **12** (Sentry) closed; FirstPromoter disclosed |
+| `2026-07-25-terms-privacy-legal-review.md` | — | Per-item status marked; three new items **14, 15, 16** added |
+
+**The membership terms are drafted to the law actually in force** (CCRs 2013, CRA
+2015, unfair terms) and **voluntarily adopt the DMCCA duties** (prominent pre-contract
+info, a reminder before the included month converts, cancellation as easy as sign-up,
+cooling-off on conversion), so January 2027 becomes a review rather than a rewrite.
+Over-compliance with a regime not yet in force cannot be a breach.
+
+🔴 **ONE ITEM TO VERIFY BEFORE PUBLICATION:** Sentry's 90-day retention is Sentry's
+standard, not a figure read from our own account settings. Confirm in the org settings.
+
+❌ **A SECOND AND THIRD "BLOCKER" WERE RAISED AND WITHDRAWN THE SAME DAY. KEITH CAUGHT
+IT.** The first pass reported FirstPromoter as a live, undisclosed processor setting a
+tracking cookie without consent, and called that a PECR reg 6 blocker. **Keith: the
+affiliate layer is frozen, so there should be no cookies going that way.** He is right,
+and re-checking confirmed it at every level:
+
+- **FROZEN since 2026-06-07** (`../06_marketing/STATE.md`), where FirstPromoter is
+  already recorded as *"live but dormant"*. This file should have been read first.
+- `NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID` is **empty**, so the component returns null.
+- **The live site was checked, not the source:** zero FirstPromoter markers in the
+  served HTML, and no `Set-Cookie` on the homepage, plain or with a `?fpr=` parameter.
+- **The Cookies section is accurate.** GA4 is the only analytics tag running and it is
+  gated by Google Consent Mode v2, denied by default before gtag.js loads.
+
+All of it is reverted out of Privacy v1.4. Review items 14 and 15 are rewritten to
+record the correction rather than the claim.
+
+🔴 **THE ERROR, because it generalises.** The code path was read correctly and then the
+**environment state was inferred from `.env.local`**, a local development file, and
+never confirmed against what production serves. **A component gated on an env var is
+not live because its code exists**, and the repo cannot tell you the value of a
+variable that lives in the deployment platform. One `curl` would have caught it. Note
+that the Sentry finding survived the identical check, so the method was sound and only
+the stopping point was wrong.
+
+⚠ **What survives, correctly sized:** `FirstPromoterScript` has no consent gate in the
+code, unlike `GoogleAnalytics`. The freeze and an empty variable are what protect us
+today, not the code. Filed as an **unfreeze precondition** in
+`../06_marketing/STATE.md`. Not a live defect, and not to be logged as one.
+
+⚠ **Two corrections to review item 12 as it was written:** Sentry is on the **EU region
+(Germany)**, not US, and **session replay is disabled**, so the incidental-PII exposure
+is narrower than the item feared.
+
+⚠ **Still open for a solicitor when there is budget:** whether the membership is in
+scope of the DMCCA regime at all given the first 30 days are bundled into a one-off kit
+purchase (genuinely novel); the mixed goods+service treatment (review item 5); and the
+liability cap for a health-adjacent product. All three are carried knowingly and named
+in the Membership section banner. **Revisit trigger: publication of the implementing
+regulations, or first membership revenue, whichever is sooner.**
+
+⚠ **Owed to Keith:** business sign-off on both documents. **Not an Ewa ask** — this is
+contract and data-protection copy, not clinical. The medical disclaimer was not touched.
+
+---
+
 ## 2026-09-13 — A new member-facing email is drafted and is `amber-ewa`. No CA raised, and none should be.
 
 **`membership-retest-due`** (defect 3c, the notice telling a member his included

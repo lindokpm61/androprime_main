@@ -1,11 +1,71 @@
 # GAP: the UK subscription-contracts regime is not recorded anywhere in this workspace
 
-**Raised:** 2026-09-07 · **Status:** 🔴 OPEN GAP, not a ruling · **Owner:** Keith, then a solicitor
+**Raised:** 2026-09-07 · **Status:** 🟠 PARTLY ANSWERED 2026-09-13, no longer a launch blocker · **Owner:** Keith
 **Sits against:** the **membership terms** launch gate (`../01_strategy/STATE.md`, the 2026-08-26
 offer-window entry: *"the compliance read plus the membership terms, both still hard launch gates"*).
 
 > **This file asserts a gap, not the law.** Everything below is written to be taken to a solicitor. The
 > confidence markers are deliberate and should not be sanded off by a later sweep.
+
+---
+
+## 0. UPDATE 2026-09-13 — the commencement question is ANSWERED, and it changes the recommendation
+
+**Keith ruled on 2026-09-13 that there is no solicitor budget at this stage**, and that the terms and
+privacy notice would be written in house and reframed later if needed. Checking §3's open commencement
+question before drafting turned out to close most of this gap for nothing.
+
+**What is now known (checked 2026-09-13, published sources):**
+
+| Question | Answer |
+|---|---|
+| Is DMCCA Part 4 in force? | **No.** |
+| When? | Commencement moved spring 2026 → autumn 2026 → spring 2027, then was **brought forward by the Prime Minister to January 2027**, chosen so the rules are in place as consumers start new subscriptions for the year ahead. |
+| Are the implementing regulations published? | **No, still unpublished as at September 2026.** |
+
+🔴 **§3's reasoning was wrong in a way worth recording, because it is the kind that repeats.** It said:
+*"The assistant that raised this has a May 2026 knowledge cutoff, which is on the wrong side of the
+expected commencement window. That is the single strongest reason this needs a solicitor and not a
+better search."* **A commencement date is a published fact, not an adjudicated one.** Two web searches
+answered it. The cutoff argued for looking it up, not for escalating it. The distinction to hold onto is
+between *needs professional judgement* and *needs current information*: only the first justifies the
+cost, and an agent noticing its own staleness will conflate them, because both present as "I cannot
+answer this."
+
+🔴 **And the decisive half: Q3 could not have been answered by a solicitor either.** The reminder timing
+sits in regulations that do not exist yet. Paying for advice on it in September 2026 buys "I will tell
+you in Q1 2027". That inverts the recommendation rather than shrinking the gap: a decision nobody can
+inform should be **taken provisionally now and revisited on a date**, not deferred while waiting to
+afford advice that would not arrive.
+
+**What was done instead, on 2026-09-13.** `terms-and-conditions.md` v1.3 gained a **Membership**
+section drafted to the law actually in force (CCRs 2013, CRA 2015, unfair terms), which **voluntarily
+adopts this regime's expected duties**: prominent pre-contract information, a reminder before the
+included month converts, cancellation as easy as sign-up, and a cooling-off right on conversion.
+Over-complying with a regime that is not in force cannot be a breach, so **Q1, Q3 and Q6 stop being
+blockers** and become a scheduled review.
+
+**Answers to §4, as they now stand:**
+
+- **Q1 (in force?)** Answered above. No; January 2027 target.
+- **Q2 (in scope, given the bundling?)** 🔴 **Still genuinely open, still novel, still wants a
+  solicitor.** Carried knowingly in the Membership section banner. Note that the voluntary adoption
+  above makes the answer much less load-bearing than it was.
+- **Q3 (reminder timing?)** Unanswerable by anyone until the regulations publish. The terms commit to a
+  reminder "with enough notice to cancel first and pay nothing" rather than a day count, so a statutory
+  minimum can be met later without a rewrite. The day 23 to 25 proposal in the auto-renew ruling §5
+  remains a commercial guess.
+- **Q4 (point-of-sale wording?)** Built and shipped behind `MEMBERSHIP_ENABLED` from
+  `lib/membership/disclosure.ts` across all seven kit surfaces.
+- **Q5 (cancellation route?)** **Answered by checking the code, not by asking.** The Stripe billing
+  portal is wired at `app/api/checkout/portal/route.ts` and `/subscriptions` links to it, so self-serve
+  cancellation exists today and the terms promise it truthfully.
+- **Q6 (cooling-off on conversion?)** Granted voluntarily: 14 days from the first payment.
+- **Q7 (own section in the terms?)** Yes, and it now has one.
+
+**▶ REVISIT TRIGGER: when the DMCCA implementing regulations are published, or at first membership
+revenue, whichever is sooner.** At that point re-read the reminder timing against the regulations, and
+put Q2 to a solicitor if there is budget.
 
 ---
 

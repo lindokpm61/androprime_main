@@ -81,13 +81,27 @@ constraints follow and both are binding on any surface:
    **What a rival cannot copy is what the app visibly refuses to do. Demonstrate it; do not open
    on it.**
 2. **The company describes itself as a men’s health company**, not a wellness brand (ruling B,
-   2026-08-30). ✅ **Implemented 2026-09-02** in both places it was contradicted: the shared footer
-   and the landing-page footer, which said "wellness information service" and "Wellness information
-   service only". ⚠ **"information service" is load-bearing and stayed**: it is the Phase-0 hedge
-   that we provide information rather than health services, and ruling B changes the adjective, not
-   the noun. 🔵 One instance is deliberately unchanged and owed to Ewa: the results-dashboard GP
-   handoff says "a wellness service" inside its not-a-diagnosis disclaimer, which is addressed to a
-   clinician rather than to the market.
+   2026-08-30). ⚠️ **Implemented 2026-09-02 ON `redesign/direction-f` ONLY, and NOT LIVE** in both
+   places it was contradicted: the shared footer and the landing-page footer, which said "wellness
+   information service" and "Wellness information service only". ⚠ **"information service" is
+   load-bearing and stayed**: it is the Phase-0 hedge that we provide information rather than health
+   services, and ruling B changes the adjective, not the noun. 🔵 One instance is deliberately
+   unchanged and owed to Ewa: the results-dashboard GP handoff says "a wellness service" inside its
+   not-a-diagnosis disclaimer, which is addressed to a clinician rather than to the market.
+
+   🔴 **CORRECTED 2026-09-13: this line read a bare "✅ Implemented 2026-09-02" and that was
+   misleading, because it did not say WHICH copy it reached.** Checked against production rather
+   than against the branch: `main` still carries *"Andro Prime is a wellness information service"*,
+   the fix commit never landed there, and the live homepage renders the superseded sentence **three
+   times**. So the ruling is implemented on one branch and contradicted on every page a customer can
+   actually load. A status line for a mirrored store has to name the copy it reached and assert
+   against the other, or it reports done while production disagrees.
+
+   **Two surfaces are still unfixed on BOTH branches and neither is this file's to change:** the
+   canonical legal pages (`canonical-site/terms/index.html`, `canonical-site/privacy/index.html`)
+   both say "Andro Prime is a wellness information service", they are pinned by
+   `scripts/verify-legal-text.js`, and as published legal documents they need Keith's sign-off
+   rather than an edit. See `../../03_compliance/STATE.md` (2026-09-13).
 
 The conflict-free mechanic, stated as a receipt rather than a claim: a result that needs a doctor
 goes to a GP and earns Andro Prime nothing, and no result changes what is offered or what it costs.

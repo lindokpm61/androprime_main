@@ -19,6 +19,7 @@ import {
   type LatestResultOutcome,
 } from './entitlement'
 import { latestClassifiedResult } from './latestResult'
+import { isDevSubscriptionId } from './testAccounts'
 
 type Admin = ReturnType<typeof createSupabaseAdminClient>
 type SubscriptionStatus = Database['public']['Enums']['subscription_status']
@@ -214,6 +215,96 @@ export async function resolveRecurringOwner(
     .maybeSingle()
 
   if (sub) return { userId: sub.user_id, productSlug: sub.product_slug }
+
+  return null
+}
+
+/**
+ * Statuses whose subscription a customer may still MANAGE. Deliberately wider
+ * than `ACTIVE_MEMBER_STATUSES`, and the difference is the point.
+ *
+ * 🔴 `unpaid` IS HERE AND IS NOT AN ENTITLEMENT STATUS. Those two lists answer
+ * different questions. `ACTIVE_MEMBER_STATUSES` asks *"does this man get a
+ * retest?"*, and a man whose dunning has run out does not. This list asks *"may
+ * this man reach his billing?"*, and **he is the single customer who most needs
+ * to**: his card has died and his only routes back are updating it or
+ * cancelling cleanly. Reusing the entitlement list here would lock the portal
+ * against exactly the person it exists for, and it would do it silently.
+ *
+ * `cancelled` is excluded because there is nothing left to manage. Note that a
+ * customer who cancels at period end stays `active` in Stripe until the period
+ * ends, so he keeps portal access for the whole of the time he has paid for,
+ * which is what the terms promise him.
+ */
+export const PORTAL_MANAGEABLE_STATUSES: readonly SubscriptionStatus[] = [
+  'incomplete',
+  'trialing',
+  'active',
+  'past_due',
+  'unpaid',
+] as const
+
+/**
+ * The MIRROR of `resolveRecurringOwner`: user id → the Stripe subscription to
+ * manage. Same two tables, same "one row, one owner, one lookup" rule, opposite
+ * direction.
+ *
+ * ── THE DEFECT THIS CLOSES ────────────────────────────────────────────────
+ * `app/api/checkout/portal/route.ts` queried `supplement_subscriptions` alone,
+ * and a membership owns a row in `memberships`. Under the 2026-09-07 auto-renew
+ * ruling every kit buyer becomes a membership-only customer, so **every one of
+ * them 404'd on the route that exists to let him cancel.** All three supplement
+ * subscriptions are retired, so the table the route did read is one nobody can
+ * have a live row in: it was looking in the only place the answer could not be.
+ *
+ * ⚠ **This is the mechanism behind a contract promise, not a convenience.** The
+ * terms say cancellation is available *"from your account, in the same number
+ * of steps it took to join"*, and Stripe's portal is what makes that true.
+ *
+ * ── WHY MEMBERSHIP IS ASKED FIRST ─────────────────────────────────────────
+ * `memberships_one_live_per_user` is a partial unique index over the four live
+ * statuses, so there can be at most one membership row to find and the order
+ * cannot hide a second answer. Supplements have no such guarantee, which is why
+ * that half takes the most recent and not an arbitrary one.
+ *
+ * ⚠ **A FIXTURE'S SUBSCRIPTION ID DOES NOT EXIST IN STRIPE.** `seedMember.ts`
+ * writes `sub_dev_…` deliberately, *"so nothing can mistake it for a real
+ * subscription"*. Handing one to `subscriptions.retrieve` throws, which reaches
+ * the customer as a 500 rather than as the "no subscription" it actually is, so
+ * it is filtered here beside every other rule about what is manageable rather
+ * than left for the route to remember.
+ */
+export async function resolveBillingSubscriptionId(
+  supabase: Admin,
+  userId: string,
+): Promise<{ stripeSubscriptionId: string; source: 'membership' | 'supplement' } | null> {
+  const statuses = [...PORTAL_MANAGEABLE_STATUSES]
+
+  const { data: mem } = await supabase
+    .from('memberships')
+    .select('stripe_subscription_id, status')
+    .eq('user_id', userId)
+    .in('status', statuses)
+    .order('started_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  if (mem?.stripe_subscription_id && !isDevSubscriptionId(mem.stripe_subscription_id)) {
+    return { stripeSubscriptionId: mem.stripe_subscription_id, source: 'membership' }
+  }
+
+  const { data: sub } = await supabase
+    .from('supplement_subscriptions')
+    .select('stripe_subscription_id, status')
+    .eq('user_id', userId)
+    .in('status', statuses)
+    .order('started_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  if (sub?.stripe_subscription_id && !isDevSubscriptionId(sub.stripe_subscription_id)) {
+    return { stripeSubscriptionId: sub.stripe_subscription_id, source: 'supplement' }
+  }
 
   return null
 }

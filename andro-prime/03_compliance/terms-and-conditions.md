@@ -1,8 +1,33 @@
 # Terms and Conditions
 
 **Page URL:** `/terms/`
-**Last updated:** July 2026
-**Version:** 1.2
+**Last updated:** September 2026
+**Version:** 1.3 (DRAFT, not synced live)
+
+<!--
+Change log:
+- v1.3 DRAFT (2026-09-13): closes three of the items left open by
+  `2026-07-25-terms-privacy-legal-review.md`, plus the membership gap.
+  (a) NEW "Membership" section, including the entitlement paragraph that
+      defect 3c was waiting on (P1). Gated behind MEMBERSHIP_ENABLED; NOT to be
+      synced live until the flag flips.
+  (b) Review item 6 (subscription price/term variation, CRA Sch 2 paras 11-15):
+      "Pricing" and "Changes to These Terms" now give 30 days' notice plus a
+      right to cancel before any material change to an ongoing subscription, and
+      no longer treat continued site use as acceptance of such a change.
+  (c) Review item 8 (ADR Regulations 2015): the Contact section now states
+      plainly that Andro Prime does not currently participate in an ADR scheme,
+      which is the disclosure the regs require.
+  Drafted in house on Keith's decision of 2026-09-13 (no solicitor budget at this
+  stage). Written to the law in force on that date. The DMCCA 2024 Part 4
+  subscription regime is NOT in force (set for January 2027, implementing
+  regulations unpublished as at September 2026); the membership section
+  voluntarily adopts its expected duties so commencement is a review, not a
+  rewrite. Residual solicitor items are named in the Membership banner.
+  PENDING Keith's business sign-off. Live page NOT synced.
+- v1.2 and earlier: see `2026-07-25-terms-privacy-legal-review.md` and the
+  Test Bundles section banner.
+-->
 
 ---
 
@@ -98,7 +123,9 @@ We reserve the right to decline any order at our discretion. If we do, we will r
 
 ### Pricing
 
-All prices are in pounds sterling (GBP) and include VAT where applicable. We reserve the right to change prices at any time. Price changes do not affect orders already placed.
+All prices are in pounds sterling (GBP) and include VAT where applicable. We may change the price of anything we sell. A price change never affects an order you have already placed.
+
+**Ongoing subscriptions are different, and are protected.** Where you hold a subscription with us (a supplement subscription or a membership), we will not change its price without giving you at least 30 days' notice by email, stating the current price, the new price, and the date it takes effect. You can cancel at any time before that date and will never pay the new price.
 
 ### Payment
 
@@ -266,6 +293,122 @@ Everything else in these terms (the medical disclaimer, eligibility, delivery, s
 
 ---
 
+## Membership
+
+> **[IN-HOUSE DRAFT 2026-09-13 — NOT APPROVED. Awaiting Keith (business sign-off). No external solicitor review, by Keith's decision of 2026-09-13 (no budget at this stage); the residual items are named at the end of this banner.]**
+>
+> **Live-publish coupling:** gated behind `MEMBERSHIP_ENABLED`, on `redesign/direction-f` only. Do **not** sync to the live `/terms` page (`canonical-site/terms/index.html`) until the flag flips, so the live page never describes a membership nobody can buy. Same discipline as the Test Bundles section, which was held out until `BUNDLES_ENABLED`.
+>
+> _**Drafted to the law in force on 2026-09-13:** the Consumer Contracts Regulations 2013, the Consumer Rights Act 2015, and the unfair-terms rules in CRA Part 2. **Part 4 of the Digital Markets, Competition and Consumers Act 2024 (the subscription contracts regime) is NOT in force.** Commencement moved from spring 2026, to autumn 2026, to spring 2027, and was then set for **January 2027**; the implementing regulations and guidance were **still unpublished as at September 2026**, which is why the exact reminder timing cannot be sourced from anyone at present. This section **voluntarily adopts that regime's expected duties** (prominent pre-contract information, a reminder before the included month converts, cancellation as easy as sign-up, a cooling-off right on conversion) so that commencement in January 2027 is a review rather than a rewrite. Over-compliance with a regime that is not yet in force cannot itself be a breach. Source record: `2026-09-07-dmcca-subscription-regime-gap.md`._
+>
+> _**Residual items carried knowingly, for a solicitor when there is budget:** (a) whether the membership is in scope of the DMCCA regime at all, given the first 30 days are bundled into a one-off kit purchase rather than sold as a standalone subscription (genuinely novel, gap doc Q2); (b) the exact statutory reminder window once the regulations are published (gap doc Q3); (c) the limitation of liability cap as it applies to a health-adjacent product. Re-open on publication of the implementing regulations, or at the first membership revenue, whichever is sooner._
+
+### What membership is
+
+Andro Prime Membership is an ongoing monthly subscription. It includes:
+
+- **A retest, included.** A kit sent to you at your next recommended retest point, at no extra charge. See "Your included retest" below, which sets out exactly what you are and are not entitled to.
+- **A daily check-in.** A short set of questions in your account, tied to the marker your results suggest is worth watching. Logging them builds the trend you see on your dashboard.
+- **Member pricing.** A discount on kits you buy while your membership is active. Where you hold more than one discount, we apply whichever is better for you.
+- **A monthly clinician answer.** Members can submit a question about men's health. A registered clinician answers it generally and the answer is published to all members.
+
+**Membership is a wellness service, not medical care.** No clinician reviews your individual results, and the monthly answer is general health information rather than advice about you. Membership does not include any clinical service, consultation, or prescription. The medical disclaimer above applies to membership in full.
+
+### How membership starts
+
+There are two ways to start a membership:
+
+1. **With a kit purchase.** Where a kit is sold with membership included, the price you pay for the kit includes your first 30 days of membership. This is stated on the kit page, next to the price, before you buy.
+2. **By joining after a result.** If you have had a result in the last 30 days, you can start a membership from your account. After 30 days from your most recent result, the option closes until you test again.
+
+Membership requires a UK address and an Andro Prime account, and the eligibility rules above apply.
+
+### The included 30 days, and what happens on day 31
+
+**Where your first 30 days are included in a kit price, your membership continues automatically after them.** On day 31 we charge the card you used, at the membership price shown at the time of your purchase, and monthly on that date afterwards.
+
+This is not a hidden step. Before you buy, the kit page states the length of the included period, the monthly price that follows, and that you can cancel at any time.
+
+### We remind you before the first payment is taken
+
+**We email you before the included 30 days end.** The email tells you the date your first payment will be taken and the amount. It is sent with enough notice for you to cancel first and pay nothing.
+
+If you cancel before that date, no payment is taken and you keep everything the kit price already covered.
+
+### Your included retest
+
+This is the part of membership worth reading closely, because it is an entitlement rather than a credit.
+
+**What you are entitled to.** While your membership is active, you are entitled to one retest kit at your next recommended retest point. Your retest point is set by your most recent result: roughly 90 days where your results indicate a marker worth rechecking sooner, and roughly 12 months otherwise, then annually. The panel we send follows the markers your result flagged, and is never narrower than those markers nor more expensive than the kit you took.
+
+**You do not need to claim it.** We send it automatically when it falls due. As with test bundles, we email first to confirm your delivery address, and it is your responsibility to keep that address current.
+
+**The condition.** Your entitlement depends on your membership being active on the date the retest falls due. It is not a credit, it is not money, and it is not a thing you own separately from the membership:
+
+- It has **no cash value** and cannot be exchanged, transferred, or refunded.
+- It does **not accumulate**. You are entitled to one retest per retest point, not one per month of membership, and a retest point that passes while your membership is inactive does not bank a second kit for later.
+- If you cancel before your retest falls due, the entitlement ends with the membership. Nothing is owed to you for it.
+- If you rejoin later, your entitlement runs from your retest point at that time, not from the one you missed.
+
+**We will not charge you for something you already hold.** If you try to buy a kit while you are already entitled to a retest that is due or already on its way, we tell you before taking any payment, rather than selling you a duplicate. If you buy a kit anyway at a point when it changes your retest date, your retest date only ever moves later, never earlier.
+
+**If we cannot send it.** If your membership is active and we fail to send a retest that has fallen due, contact us at hello@andro-prime.com and we will either send it or refund you a month's membership, at your choice.
+
+### Cancelling
+
+<!--
+🔴 BLOCKER BEFORE THE MEMBERSHIP FLAG FLIPS (added 2026-09-13, correcting an
+earlier claim in this same drafting pass). The sentence below is a PROMISE THE
+PRODUCT CANNOT CURRENTLY KEEP, and it was drafted on a check that did not go deep
+enough.
+
+What was checked: `app/api/checkout/portal/route.ts` exists and `/subscriptions`
+links to it, so self-serve cancellation was reported as already built. What was
+NOT checked: WHICH TABLE it reads. Both that route and `getSubscriptions` query
+`supplement_subscriptions` only, while a membership owns a row in `memberships`.
+Every kit buyer is a membership-only customer under the auto-renew ruling, so all
+of them hit the empty state and the portal route 404s, which `BillingPortalButton`
+does not handle: the click is a silent no-op. `09_website-app/STATE.md` had
+already recorded this as a HARD finding.
+
+Separately, and independently fatal: the live Stripe account has ZERO customer
+portal configurations, verified by API on 2026-09-13, so
+`billingPortal.sessions.create()` would throw even once the table lookup is
+fixed. Both are on the switch-on checklist.
+
+The sentence STAYS as drafted rather than being softened, for the same reason the
+3c entitlement paragraph stayed: it is the right promise, the regime is explicit
+about it, and weakening contract copy to match a defect is the wrong direction of
+fix. It is ship-gated with the rest of this section behind MEMBERSHIP_ENABLED.
+-->
+**You can cancel your membership at any time, from your account, in the same number of steps it took to join.** No email, no phone call, and no reason required.
+
+Cancellation takes effect at the end of the period you have paid for. You keep access until then. We do not refund part-used months, except where the cooling-off right below applies or where the law otherwise requires it.
+
+Your results, your past kits, and your dashboard history remain in your account after you cancel. Cancelling a membership does not delete your data. See the Privacy Policy for how long we keep it and how to ask us to delete it.
+
+### 14-day cooling-off
+
+**When your included 30 days convert to a paid membership, you have 14 days from that first payment to change your mind and receive a full refund of it.** Email hello@andro-prime.com within 14 days.
+
+This right applies again to the first payment of any new membership you start later.
+
+Where you have already received a retest kit in that period, the kit is a physical product sealed for hygiene: if it is unopened we will refund in full on its return at your cost, and if you have opened it to take your sample the value of that kit may be deducted from the refund. This is the same basis as the single-kit and bundle rules above.
+
+### If we change the price
+
+**We will not change the price of an existing membership without telling you first.**
+
+If we change the monthly price, we will email you at least 30 days before the new price takes effect. The email will state the current price, the new price, and the date it changes. You can cancel at any point before that date and never pay the new price. If you do not cancel, the new price applies from the date stated.
+
+The same applies to any material change to what membership includes.
+
+### Suspension and ending a membership
+
+We may suspend or end a membership where an account is being misused, where payment repeatedly fails, or where we stop offering membership altogether. If we end your membership for any reason other than misuse, we will refund the unused part of the month you have paid for, and we will send any retest that had already fallen due.
+
+---
+
 ## Your Account
 
 You are responsible for keeping your login credentials secure. Do not share your account with anyone else.
@@ -316,7 +459,13 @@ These terms are governed by the laws of England and Wales. Any disputes will be 
 
 ## Changes to These Terms
 
-We may update these terms from time to time. If we make material changes, we will notify existing customers by email. Your continued use of the site after changes take effect constitutes acceptance of the updated terms.
+We may update these terms from time to time. If we make material changes, we will notify existing customers by email.
+
+**For one-off purchases**, the terms that apply to your order are the ones in force on the day you placed it. A later change does not alter an order you have already made.
+
+**For ongoing subscriptions**, we will not apply a material change to your subscription without giving you at least 30 days' notice by email, setting out what is changing and the date it takes effect. You can cancel at any time before that date, and the change will never take effect for you. If you do not cancel, the change applies from the date stated.
+
+We will not treat continued use of the site as your agreement to a material change to a subscription you already hold. Your agreement to that is your decision not to cancel after being told.
 
 The current version of these terms is always available at andro-prime.com/terms.
 
@@ -329,7 +478,9 @@ If you have a question about these terms, a problem with an order, or a complain
 **Email:** hello@andro-prime.com
 **Response time:** within 2 working days
 
-We take complaints seriously. If you are not satisfied with our response, you may refer your complaint to an approved Alternative Dispute Resolution (ADR) scheme or the courts.
+We take complaints seriously. Email us first and we will try to put it right.
+
+**Alternative Dispute Resolution (ADR).** Andro Prime is **not currently a member of, and does not currently use, an approved ADR scheme.** We are telling you this because the Alternative Dispute Resolution for Consumer Disputes Regulations 2015 require us to say whether we do. If we cannot resolve your complaint between us, you remain free to take it to the courts, and nothing in these terms prevents that. If we join a scheme in future we will name it here.
 
 Andro Prime Ltd
 128 City Road, London, EC1V 2NX, United Kingdom

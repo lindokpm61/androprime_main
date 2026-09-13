@@ -123,6 +123,30 @@ Recorded because "the record becomes its proof" is the kind of sentence that get
 
 ## 7. What a ruling triggers
 
+> **▶ SWEEP STATUS, added 2026-09-13 (forward-pointer only; nothing above is rewritten).**
+> Keith asked for the documentation sweep on the **category noun (question B)**. It ran that day.
+> The finding is that **B is the half that shipped least**, not most:
+>
+> - **The docs were largely already right.** Of 1,430 occurrences of "wellness" across the repo,
+>   only 83 are positioning-shaped, and the large majority of those are **contrastive** ("not a
+>   wellness brand"), which ruling B makes correct rather than stale. **One** doc genuinely asserted
+>   the superseded noun and was updated: `phase0-v7-implications.md` §Post-V7 success criteria.
+> - 🔴 **The code fix is on `redesign/direction-f` only and is NOT LIVE.** `main` still serves
+>   *"Andro Prime is a wellness information service"*, three times on the homepage alone. The
+>   status line in `09_website-app/frontend/PRODUCT.md` said "✅ Implemented 2026-09-02" without
+>   naming the branch, so the ruling read as done while every customer-visible page contradicted it.
+>   That line is now corrected.
+> - 🔴 **The canonical legal pages were never in anyone's list** and carry the superseded sentence
+>   on both branches. Escalated to Keith; they are published legal documents.
+> - ⚠ **"Wellness" is two words in this repo and only one of them is question B's.** The Phase 0
+>   regulatory tier, the wellness-versus-clinical entity split in the financial models, and the
+>   not-a-diagnosis disclaimers are a **different term** and were deliberately untouched.
+>   `02_brand/STATE.md` already records this: *"wellness is the Phase 0 regulatory tier."* A blind
+>   find-and-replace here would have inverted the brand's own positioning sentences and eroded the
+>   Phase 0 boundary in the same pass.
+>
+> Question A2's sweep items in the table below are **still unrun** and are unaffected by this.
+
 A `/decision-sweep`, because the fact is stated in more than one place and a one-site fix would convert a quiet inconsistency into a loud contradiction.
 
 | File | What has to change |
