@@ -24,6 +24,8 @@
 //  (12) The 30-day offer window: when a membership may be JOINED at all.
 //  (13) Defect 3d: what a member's kit purchase does about the retest he holds,
 //       including the clamp that stops the clock reset from ever hastening one.
+//  (14) Defect A2: telling a seeded fixture from a customer, so the sweep never
+//       posts a real kit to a test account.
 
 import {
   ACTIVE_MEMBER_STATUSES,
@@ -47,6 +49,13 @@ import {
   declinesSale,
   resetRetestDueAt,
 } from '../lib/membership/earlyRetest'
+import {
+  DEV_SUBSCRIPTION_LIKE,
+  DEV_SUBSCRIPTION_PREFIX,
+  isDevSubscriptionId,
+  isFixtureMembership,
+  isTestAccountEmail,
+} from '../lib/membership/testAccounts'
 import type { ResultState } from '../lib/results/types'
 import {
   ALL_CHECKIN_KEYS,
@@ -853,6 +862,119 @@ check('(13v) the dispatch path still inserts kit_orders with no payment intent',
   kitOrderInsert.length > 0 && !kitOrderInsert.includes('stripe_payment_intent'))
 check('(13w) ...and that insert was actually found, so the check is not vacuous',
   kitOrderInsert.includes('user_id') && kitOrderInsert.includes('kit_type'))
+
+// ───────────────────────────────────────────────────────────────────────────
+// (14) Defect A2: a seeded fixture must never be posted a real kit
+//
+// Two developer accounts hold LIVE membership rows in the production database,
+// both active, both due November 2026, because local development points at the
+// production Supabase project. Before the A2 guard the only things stopping a
+// real box going to a fake address were the membership flag being off and the
+// date not having arrived, and neither is a control.
+//
+// 🔴 THE REGISTER'S SUGGESTED FIX NAMED A COLUMN THAT DOES NOT EXIST.
+// "Set is_test on kit orders AND memberships" — `is_test` is on `kit_orders`
+// alone (checked against the live database 2026-09-13). So the guard is derived
+// from two markers already true of the rows in production, rather than from a
+// flag that would start false on both and need a backfill.
+// ───────────────────────────────────────────────────────────────────────────
+
+check('(14a) a sub_dev_ subscription id is a fixture',
+  isDevSubscriptionId('sub_dev_986fd9f0-3aed-4b16-b15f-3f9c80f1fea1'))
+check('(14b) a real Stripe subscription id is not',
+  !isDevSubscriptionId('sub_1QRstUvWxYz0123456789ab'))
+check('(14c) null is not', !isDevSubscriptionId(null))
+// The prefix must be matched at the START. A Stripe id merely containing the
+// substring must not read as a fixture, or a real member stops getting retests.
+check('(14d) the prefix is matched at the start, not anywhere',
+  !isDevSubscriptionId('sub_1Qsub_dev_masquerade'))
+
+check('(14e) an @androprime.test email is a fixture account',
+  isTestAccountEmail('dev+low-vitamin-d@androprime.test'))
+check('(14f) case and padding do not defeat it',
+  isTestAccountEmail('  DEV+Low-Vitamin-D@AndroPrime.TEST  '))
+check('(14g) a real customer email is not', !isTestAccountEmail('someone@gmail.com'))
+check('(14h) null is not', !isTestAccountEmail(null))
+// A lookalike domain must not pass: the check is a suffix, so a domain that
+// merely CONTAINS the test domain earlier in the string is a real address.
+check('(14i) a lookalike domain does not pass',
+  !isTestAccountEmail('someone@androprime.test.evil.com'))
+
+// 🔴 OR, NOT AND. Either marker alone is enough, because a fixture written by
+// some other route would otherwise read as a customer and get posted a kit.
+check('(14j) the dev subscription id alone is enough',
+  isFixtureMembership({ stripeSubscriptionId: 'sub_dev_x', email: 'real@gmail.com' }))
+check('(14k) the test email alone is enough',
+  isFixtureMembership({ stripeSubscriptionId: 'sub_1QRealStripeId', email: 'dev+x@androprime.test' }))
+check('(14l) both is obviously enough',
+  isFixtureMembership({ stripeSubscriptionId: 'sub_dev_x', email: 'dev+x@androprime.test' }))
+check('(14m) A REAL MEMBER IS NOT EXCLUDED, which is the half that costs a customer',
+  !isFixtureMembership({ stripeSubscriptionId: 'sub_1QRealStripeId', email: 'someone@gmail.com' }))
+check('(14n) a missing email does not make a real member a fixture',
+  !isFixtureMembership({ stripeSubscriptionId: 'sub_1QRealStripeId', email: null }))
+
+// The two rows actually sitting in production on 2026-09-13, by shape. If the
+// guard cannot exclude these it has not done its job.
+check('(14o) THE LIVE ROWS: both production fixtures are excluded',
+  isFixtureMembership({
+    stripeSubscriptionId: 'sub_dev_986fd9f0-3aed-4b16-b15f-3f9c80f1fea1',
+    email: 'dev+low-vitamin-d@androprime.test',
+  }) &&
+  isFixtureMembership({
+    stripeSubscriptionId: 'sub_dev_aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+    email: 'dev+demo-kit3-baseline@androprime.test',
+  }))
+
+// The Postgres pattern the sweep puts in its own query must match the prefix
+// the predicate checks. Two expressions of one fact, in two files, and the
+// sweep's half is the one that runs against real rows.
+check('(14p) the SQL like pattern agrees with the prefix',
+  DEV_SUBSCRIPTION_LIKE === `${DEV_SUBSCRIPTION_PREFIX}%`)
+
+// 🔴 TRIPWIRE ON THE SEEDER. The sweep's guard only works because
+// `seedMember.ts` writes ids with this prefix. That is a property of another
+// file, invisible from here, and if it changes the guard silently stops
+// excluding anything — a fixture would then be posted a real kit with no error
+// anywhere. Source read, so the assumption fails loudly instead.
+const seedMemberSource = readFileSync(
+  join(__dirname, '..', 'lib', 'membership', 'seedMember.ts'),
+  'utf8',
+)
+check('(14q) seedMember still builds its id from the shared prefix constant',
+  seedMemberSource.includes('DEV_SUBSCRIPTION_PREFIX}${userId}'))
+check('(14r) ...and imports it rather than retyping the string',
+  seedMemberSource.includes("from './testAccounts'"))
+
+// And the seeder marks the kit orders it writes, which is the other half of A2.
+const seedSource = readFileSync(join(__dirname, '..', 'lib', 'results', 'seed.ts'), 'utf8')
+check('(14s) the result seeder marks its kit_orders as test rows',
+  seedSource.includes('is_test: true'))
+
+// 🔴 THE SWEEP ITSELF, AS A SOURCE READ, AND WHY IT IS NOT A BEHAVIOURAL TEST.
+// The register asked for "a unit test that seeds a test membership and asserts
+// it is not dispatched". That needs a mocked Supabase client driving the route,
+// and no such harness exists — test-bundle-sweep.ts drives the PURE predicates
+// with fabricated rows and never touches the route. Building one is a larger
+// job than the defect, so the assumption is pinned where it can fail loudly
+// instead: the predicate above is exhaustively tested, and these assert the
+// sweep actually calls it. Worth upgrading to a real harness the next time
+// anything else in that route needs one.
+const sweepSource = readFileSync(
+  join(__dirname, '..', 'app', 'api', 'jobs', 'bundle-sweep', 'route.ts'),
+  'utf8',
+)
+const membershipPass = sweepSource.slice(
+  sweepSource.indexOf("from('memberships')"),
+  sweepSource.indexOf('Claim FIRST'),
+)
+check('(14t) the membership pass was found, so these checks are not vacuous',
+  membershipPass.length > 0 && membershipPass.includes('next_retest_due_at'))
+check('(14u) the sweep filters dev subscription ids in its own query',
+  membershipPass.includes('DEV_SUBSCRIPTION_LIKE'))
+check('(14v) ...and re-checks each row against the fixture predicate',
+  membershipPass.includes('isFixtureMembership'))
+check('(14w) ...and selects the column that filter needs',
+  membershipPass.includes('stripe_subscription_id'))
 
 console.log(`test-membership: ${passes} passed, ${failures} failed`)
 if (failures > 0) process.exit(1)

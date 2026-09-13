@@ -1,5 +1,6 @@
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { dayKey, questionsFor, SCALE_MAX, SCALE_MIN, type CheckinMarkerKey } from './checkin'
+import { DEV_SUBSCRIPTION_PREFIX } from './testAccounts'
 
 /**
  * THE MEMBER FIXTURE: a membership and a plausible check-in history.
@@ -97,8 +98,19 @@ export async function seedMember(
 
   /* Deterministic per user, so a second run updates the same row instead of
      colliding with the unique index on this column. `sub_dev_` rather than a
-     Stripe-shaped id, so nothing can mistake it for a real subscription. */
-  const stripeSubscriptionId = `sub_dev_${userId}`
+     Stripe-shaped id, so nothing can mistake it for a real subscription.
+
+     🔴 SINCE DEFECT A2 THAT PREFIX IS LOAD-BEARING, NOT DECORATIVE. The nightly
+     sweep excludes memberships whose subscription id starts `sub_dev_`, which
+     is what stops a seeded fixture being posted a real kit at our cost. It is
+     the marker rather than an `is_test` column because `memberships` has no
+     such column (checked against the live database, 2026-09-13) and because a
+     derived marker is already true of the two rows sitting in production,
+     whereas a new flag would start false on both and need a backfill.
+     `DEV_SUBSCRIPTION_PREFIX` in `lib/membership/testAccounts.ts` is the single
+     definition; do not retype the string, and do not change its shape here
+     without changing it there. Asserted in scripts/test-membership.ts. */
+  const stripeSubscriptionId = `${DEV_SUBSCRIPTION_PREFIX}${userId}`
 
   const { data: membership, error: membershipError } = await supabase
     .from('memberships')

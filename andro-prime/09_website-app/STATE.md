@@ -97,6 +97,48 @@ for a man who took that kit, with no bare `/kits` link left on the page.
 **Verified:** `npm test` exit 0 (298 membership + 24 reorder), typecheck clean,
 production build clean, 78 static pages.
 
+### A2 IS GUARDED, NOT CLOSED: the sweep ignores fixtures, the rows are still live
+
+| File | |
+|---|---|
+| `lib/membership/testAccounts.ts` | NEW, pure. Two markers that tell a fixture from a customer |
+| `app/api/jobs/bundle-sweep/route.ts` | Filters `sub_dev_` ids in the query, re-checks each row by email domain, counts what it skipped |
+| `lib/results/seed.ts` | Marks its kit orders `is_test: true` |
+| `lib/membership/seedMember.ts` | Imports the shared prefix instead of retyping it |
+| `scripts/test-membership.ts` | Section 14, 23 assertions. Suite 298 → 321 |
+
+🔴 **THE SUGGESTED FIX NAMED A COLUMN THAT DOES NOT EXIST.** "Set `is_test` on
+kit orders AND memberships" — checked against the live database: **`is_test` is
+on `kit_orders` alone.** Not on `memberships`, not on `users`. Half that fix was
+a migration, which is Keith's decision rather than part of a defect fix.
+
+**Two markers already on the rows were used instead, and they beat the column.**
+`stripe_subscription_id` starting `sub_dev_` (written deliberately by
+`seedMember.ts`) and the `@androprime.test` domain (the only domain the seeder
+will touch). **A flag has to be SET at write time, so it is wrong about every
+row already in the table** — the six seeded kit orders read `false` today, and a
+new column would have started false on both live membership rows and needed a
+backfill nobody would run. **A derived marker is correct about the past; a
+stamped one is only correct about the future.** For a defect whose complaint is
+rows that are already there, that is the whole fix.
+
+**OR, not AND.** Either marker alone excludes. Excluding a real member costs a
+late retest support can now move by hand (A1); including a fixture posts a real
+box to a fake address and nobody complains.
+
+⚠ **STILL OPEN, and it is the half with the date on it.** The two seeded
+membership rows remain in production, active, due **16 and 17 November 2026**.
+The guard lives on `redesign/direction-f`, **which deploys nothing**. Until that
+merges, November is still live and the only thing holding it is the membership
+flag. The interim (delete the rows or push their dates) is a production data
+write and was not taken unasked.
+
+⚠ The sweep-level behavioural test the register asked for was not built: it
+needs a mocked Supabase client driving the route and no harness exists. The
+predicate is exhaustively tested and a source read asserts the sweep calls it.
+
+⚠ Six seeded kit orders, not seven. Re-counted rather than repeated.
+
 ### A1 IS BUILT: the one admin control over a member's retest date
 
 Panel 04 of `/admin/dashboard`. Look a member up by email, see his date, move

@@ -27,6 +27,7 @@ import { isTriggerMatured, needsAddressCheck, isWindowElapsed } from '@/lib/bund
 import { isRetestDispatchable, nextRetestAfter } from '@/lib/membership/entitlement'
 import { latestClassifiedResult } from '@/lib/membership/latestResult'
 import { selectRetestPanel, type RetestPanel } from '@/lib/membership/retestPanel'
+import { DEV_SUBSCRIPTION_LIKE, isFixtureMembership } from '@/lib/membership/testAccounts'
 import type { KitType } from '@/lib/results/types'
 
 const DAY_MS = 24 * 60 * 60 * 1000
@@ -66,6 +67,10 @@ export async function POST(request: NextRequest) {
   // the D1 rule is doing anything, and a run where it silently stops firing
   // looks exactly like a run where nobody was due.
   let retestsNarrowed = 0
+  // A2. Counted rather than silent: a sweep that skips a fixture and a sweep
+  // that had none to skip look identical in the logs otherwise, and the first
+  // is the one that proves the filter is doing something.
+  let fixturesSkipped = 0
 
   // Pass 0 - membership retests become owed kits.
   //
@@ -81,7 +86,21 @@ export async function POST(request: NextRequest) {
   if (membershipOn) {
     const { data: dueMemberships, error: dueError } = await supabase
       .from('memberships')
-      .select('id, user_id, status, next_retest_due_at, retest_claimed_at')
+      .select('id, user_id, status, next_retest_due_at, retest_claimed_at, stripe_subscription_id')
+      // 🔴 DEFECT A2: SEEDED FIXTURES MUST NEVER BE POSTED A REAL KIT.
+      //
+      // Two developer accounts hold live membership rows in PRODUCTION, both
+      // active, both due in November 2026, because local development points at
+      // the production Supabase project. Before this filter the only things
+      // stopping a real box going to a fake address were the membership flag
+      // being off and the date not having arrived — and neither is a control.
+      //
+      // The filter is here, in the query, AND re-checked per row below against
+      // the account's email. Two independent markers, because this is the only
+      // code path that turns a database row into real postage and the register's
+      // lesson is that a fixture in a production table is indistinguishable from
+      // a customer to every job that reads it.
+      .not('stripe_subscription_id', 'like', DEV_SUBSCRIPTION_LIKE)
       // 🔴 `.is('retest_claimed_at', null)` WAS HERE AND WAS DEFECT 3b. It made
       // the first claim permanent: a member who had ever had a retest never
       // appeared in this query again. The date is the control now, and after a
@@ -98,6 +117,27 @@ export async function POST(request: NextRequest) {
       try {
         // The DB filter narrows the set; the pure predicate is the gate.
         if (!isRetestDispatchable(m, now)) continue
+
+        // A2, the second opinion. The query above already excluded `sub_dev_`
+        // ids; this catches a fixture written by any other route — a hand-made
+        // row, a future seeder, a restored backup — by the account's own
+        // domain. Failing the wrong way here costs a real member a late retest
+        // that support can move by hand (A1); failing the other way posts a
+        // real kit to a fake address and nobody ever complains.
+        const { data: owner } = await supabase
+          .from('users')
+          .select('email')
+          .eq('id', m.user_id)
+          .maybeSingle()
+
+        if (isFixtureMembership({
+          stripeSubscriptionId: m.stripe_subscription_id,
+          email: owner?.email,
+        })) {
+          fixturesSkipped += 1
+          console.log('[bundle-sweep] Skipping membership', m.id, '- seeded test account, not a customer')
+          continue
+        }
 
         // THE PANEL FOLLOWS WHAT WAS FLAGGED, NOT WHAT WAS BOUGHT.
         //
@@ -327,5 +367,5 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  return NextResponse.json({ retestsOwed, retestsNarrowed, matured, addressChecked, dispatched, failures })
+  return NextResponse.json({ retestsOwed, retestsNarrowed, fixturesSkipped, matured, addressChecked, dispatched, failures })
 }

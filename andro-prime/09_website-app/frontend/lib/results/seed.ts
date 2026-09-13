@@ -141,6 +141,18 @@ export async function seedScenario(
       user_id: userId,
       kit_type: scenario.payload.kitType,
       status: 'results_received',
+      /* 🔴 DEFECT A2: MARK WHAT THIS CREATES.
+         This function already refuses to run on anything but an
+         `@androprime.test` account, so it knows perfectly well that its rows
+         are fixtures — and it wrote six of them into the PRODUCTION table
+         without saying so, because local development points at the production
+         Supabase project. The column has existed all along and the admin
+         dashboard renders a badge from it.
+         Careful about what this does and does not fix: it is correct from here
+         on and does nothing for rows already written. The six existing orders
+         still read `false`, which is why the sweep's A2 guard is derived from
+         the account rather than from this flag. */
+      is_test: true,
     })
     .select('id')
     .single()
