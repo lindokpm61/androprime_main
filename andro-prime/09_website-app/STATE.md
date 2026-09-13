@@ -49,6 +49,7 @@ for a build, or clear P6 first. The file carries a comment saying so.
 | Owner | Item |
 |---|---|
 | **Keith** | Sign off terms v1.3 + privacy v1.4. One signature closes P1 and P2 and removes 3c's fourth send-blocker |
+| **Keith** | **P6: one decision, not a writing job.** What the kit pages say instead of "no subscription unless you choose one". Give the direction in a sentence and the thirteen rewrites plus `llms.txt` are ours to draft; you approve and sign a fresh CA record for CA-026 C1 |
 | **Keith** | Decide whether to drop `email` from the Stripe portal's allowed customer updates (diverges receipts from the login) |
 | **Build** | **P7** — subscription checkout does not refuse a customer who already holds a live membership |
 | **Build** | **A2** — two seeded membership rows live in production, due **16 and 17 November 2026**. The guard exists only on this branch, which deploys nothing |
@@ -88,6 +89,71 @@ all, so the request lands on the app host's login wall (defect H2) and the 200 i
 the login page's. **The flag's state in production remains unverified from here**
 since 2026-09-12, when it was checked with a real session. An instrument that
 cannot produce the distinguishing signal is not a weak check, it is not a check.
+
+### P6 checked, and the interlock's reporting fixed (2026-09-13, after the wrap)
+
+**The gate itself was never wrong.** Two reporting defects were, and both changed
+what the reader would do next rather than what the gate blocks.
+
+**The count.** It printed a bare **16** while the register and the script's own
+header both say **thirteen sentences across seven surfaces**. Both were right:
+16 raw matches, 14 distinct lines, 13 of them on 7 pages plus one in
+`public/llms.txt`. A line matching two CLAIMS was pushed twice, and llms.txt was
+counted in with the pages. **Nobody had added a sentence**, but a reader
+comparing 13 to 16 would go hunting three that do not exist. Now reads
+`13 sentence(s) on 7 page(s), plus 1 on 1 non-page surface(s)` with the raw
+figures kept in brackets.
+
+**The two-store sentence.** CA-026 C1's paragraph is on `/kits` **and** verbatim
+in `public/llms.txt`, and `grep "no surprise second test"` finds only the .txt,
+because the JSX wraps the phrase across a newline. A `LINKED_COPY` table now
+matches whitespace-tolerantly and names every store, in both flag states.
+**llms.txt is the copy written for AI ingestion**, so it is the one most likely
+to be quoted back at us and the half a page-focused rewrite drops.
+
+🔴 **AND A CLAIM IN THAT NOTE WAS WRONG, corrected the same day.** It said the
+clause to change sits inside the conflict-free statement, so the rewrite is a
+compliance pass on the whole sentence. Read against the approved C1 text: the
+paragraph is **four sentences**, the clause is the tail of the third, and the
+GP-and-we-earn-nothing claim is the fourth and **separable**. Keep sentence four
+byte-identical and **Ewa does not re-enter**, which is what the 2026-09-11
+business ruling already said. The overstatement would have reopened a settled
+question. See observation 774: vague scope drifts toward more approvers, and that
+direction is never challenged because it looks like caution.
+
+⚠ **P6's OWNERSHIP WAS ALSO OVERSTATED TO KEITH, THREE TIMES.** The register and
+the script both say "the fix is a rewrite from Keith", and that was relayed as a
+constraint. **There is no such rule.** Grepped `../03_compliance/CONTEXT.md`, the
+CA-026 wording pack and the pre-flight skill: nothing forbids drafting
+replacement copy. What is reserved is **approval**, not authorship. So P6 is
+**one decision from Keith** (what the pages say instead), **one signature** (a
+fresh CA record), and a clause swap in thirteen places that is ours to draft.
+Observation 773.
+
+### `/membership` §04: the quote card is out
+
+Keith, on the rendered page: *"I don't think we need the message in the white
+box."* It held the canonical disclosure under a "The line, in full" label plus a
+paragraph explaining why the line was repeated there. **That paragraph was
+rationale addressed to us, printed on a customer surface.** The prose beside it
+already gives the included days, charge date, amount, renewal and cancellation
+route in better words.
+
+Nothing is lost: `MEMBERSHIP_DISCLOSURE` still renders on all seven kit surfaces,
+which is where a buyer meets it at the point of sale. No test pinned it here. The
+`f-splitgrid` wrapper went too, because at 980px it is `1fr 1fr` and one child
+leaves the prose in a half-width column beside dead space; the section now
+matches the shipped single-column inverted panel on `/kits`. `KIT_NAMES` became a
+dead import and is removed.
+
+✅ **Verified by screenshot at 1320 and 390, and compared against `/kits`** to
+confirm the left-set measure is the house look rather than something introduced
+here. It is identical there.
+
+⚠ **`npm run lint` is unconfigured** and drops into an interactive ESLint setup
+prompt, so it exits 1 for everyone. Pre-existing and untouched, but it means lint
+is **not currently running as a gate at all**. Worth five minutes before anyone
+relies on it.
 
 ### Where the procedure lives
 
