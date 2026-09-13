@@ -26,6 +26,10 @@
 //       including the clamp that stops the clock reset from ever hastening one.
 //  (14) Defect A2: telling a seeded fixture from a customer, so the sweep never
 //       posts a real kit to a test account.
+//  (15) The cancellation route reads both tables — the mechanism behind the
+//       contract term that cancelling is as easy as joining.
+//  (16) Defect P7: a second membership cannot be bought, refused before the
+//       Stripe call rather than by the index after the charge.
 
 import {
   ACTIVE_MEMBER_STATUSES,
@@ -81,6 +85,10 @@ import {
   offerState,
 } from '../lib/membership/offer'
 import { PORTAL_MANAGEABLE_STATUSES } from '../lib/membership/sync'
+import {
+  refusesSecondMembership,
+  type LiveMembershipCheck,
+} from '../lib/membership/liveMembership'
 
 let failures = 0
 let passes = 0
@@ -1050,6 +1058,142 @@ check('(15k) the DISPLAY half is gated on the membership flag',
 // CANCEL is harmful. Fail loudly rather than let that ship.
 check('(15l) THE CANCELLATION ROUTE IS NOT FLAG-GATED, and that is deliberate',
   !portalSource.includes('isMembershipEnabled'))
+
+// ── 16. P7: A SECOND MEMBERSHIP CANNOT BE BOUGHT ────────────────────────────
+//
+// Defect P7: the subscription checkout route checked the flag and the offer
+// window and never asked whether the customer was already a member. Stripe
+// creates and charges the second subscription, `memberships_one_live_per_user`
+// then refuses the row, and the whole failure is one console line — no refund,
+// no cancellation, no alert. The index protects the DATABASE and fires after
+// the money has moved; it was being read as a commercial guard it never was.
+//
+// ⚠ NOT REACHABLE BY CLICKING, which is exactly what could be said of the flag
+// check beside it. This is a public POST behind auth, so a double submit or a
+// stale tab is the way in, and a hidden control is not a gate.
+
+const ALL_LIVE_CHECKS: LiveMembershipCheck[] = [
+  { kind: 'none' },
+  ...ACTIVE_MEMBER_STATUSES.map((status) => ({ kind: 'live' as const, status })),
+  { kind: 'unreadable', error: 'connection reset' },
+]
+
+check('(16a) a live member is refused',
+  refusesSecondMembership({ kind: 'live', status: 'active' }))
+
+check('(16b) ...at every status the index calls live, not only active',
+  ACTIVE_MEMBER_STATUSES.every((status) => refusesSecondMembership({ kind: 'live', status })))
+
+// Fail CLOSED. Refusing a willing buyer costs him a retry; admitting one we
+// cannot see costs a second charge that no row records and nothing reverses.
+check('(16c) an unreadable table is refused too, never read as "no membership"',
+  refusesSecondMembership({ kind: 'unreadable', error: 'connection reset' }))
+
+check('(16d) a customer with no live row is the ONLY one admitted',
+  ALL_LIVE_CHECKS.filter((c) => !refusesSecondMembership(c)).length === 1 &&
+  !refusesSecondMembership({ kind: 'none' }))
+
+// Source reads, for the same reason sections 14 and 15 give: these are IO and
+// this repo has no mocked Supabase harness. What they pin is ORDER, which is
+// where the defect actually lived.
+const subCheckoutSource = readFileSync(
+  join(__dirname, '..', 'app', 'api', 'checkout', 'subscription', 'route.ts'),
+  'utf8',
+)
+const liveMembershipSource = readFileSync(
+  join(__dirname, '..', 'lib', 'membership', 'liveMembership.ts'),
+  'utf8',
+)
+const joinButtonSource = readFileSync(
+  join(__dirname, '..', 'components', 'membership', 'JoinButton.tsx'),
+  'utf8',
+)
+const webhookSource = readFileSync(
+  join(__dirname, '..', 'app', 'api', 'webhooks', 'stripe', 'route.ts'),
+  'utf8',
+)
+
+// ⚠ THE SEARCH STARTS AT THE HANDLER, AND THAT IS THE LOAD-BEARING PART.
+// Anchored on the whole file, `refusesSecondMembership` matches the IMPORT —
+// which sits above everything, so every ordering check below passes, and passes
+// hardest when the call has been deleted and only the now-unused import
+// remains. Measured: removing the entire P7 block from the route failed NOTHING
+// until this slice was added. An identifier is a mention; an identifier plus
+// `(` inside the handler is a use.
+const handlerAt = subCheckoutSource.indexOf('export async function POST')
+const handlerBody = subCheckoutSource.slice(handlerAt)
+
+const liveCheckAt = handlerBody.indexOf('refusesSecondMembership(')
+const offerCheckAt = handlerBody.indexOf('canJoinMembership(')
+const stripeCallAt = handlerBody.indexOf('stripe.checkout.sessions.create')
+
+check('(16e) all three anchors were found INSIDE the handler, so the rest is not vacuous',
+  handlerAt > -1 && liveCheckAt > -1 && offerCheckAt > -1 && stripeCallAt > -1)
+
+// ⚠ BOTH RE-TEST `liveCheckAt > -1`, and dropping that clause is the second way
+// to make this section decorative. `indexOf` returns -1 when the check has been
+// deleted, and -1 is less than every real offset, so a bare `<` reports
+// "refuses before the Stripe call" most loudly at the moment there is no
+// refusal at all. Both failure modes were measured by deleting the block.
+//
+// The whole defect, in one assertion: before the money moves.
+check('(16f) THE RULE: the route refuses before it creates the Stripe session',
+  liveCheckAt > -1 && liveCheckAt < stripeCallAt)
+
+// An existing member's offer window is usually shut, so the other order answers
+// him "order a test to start a new one" — wrong, and expensive advice to give a
+// man who is already paying us.
+check('(16g) ...and asks before the offer window, so he is never told to buy a kit',
+  liveCheckAt > -1 && liveCheckAt < offerCheckAt)
+
+// ⚠ THESE THREE READ CODE, NOT PROSE, and the first draft of them did not.
+// `liveMembership.ts` NAMES both rules it declines to follow, in a comment
+// explaining why, so a plain substring search over the file answers "is this
+// mentioned?" when the question is "is this used?" — and it duly failed against
+// a correct implementation. Comments are stripped first. The rule generalises:
+// a source-read assertion about behaviour must exclude the half of the file
+// whose job is to discuss behaviour.
+const codeOnly = (source: string): string =>
+  source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1')
+const liveMembershipCode = codeOnly(liveMembershipSource)
+
+// The lookup exists to PREDICT the insert, so it must describe the same rows
+// the partial unique index does. One status wider and it refuses a man the
+// database would have admitted.
+check('(16h) the lookup filters on the INDEX\'s status list',
+  liveMembershipCode.includes('ACTIVE_MEMBER_STATUSES'))
+
+check('(16i) ...and not on the portal\'s, which is one status wider',
+  !liveMembershipCode.includes('PORTAL_MANAGEABLE_STATUSES'))
+
+// The mirror image of (15g), and the reason both are asserted: the portal
+// filters fixture ids because Stripe cannot retrieve them, while the index has
+// no opinion about them at all. A seeded account's second subscription is the
+// one CERTAIN to fail on insert, so skipping fixtures here would wave through
+// precisely the case this refuses.
+check('(16j) THE INVERSE OF THE PORTAL RULE: the lookup does NOT skip seeded rows',
+  !liveMembershipCode.includes('isDevSubscriptionId'))
+
+// Guards the stripper itself: if it ever removed everything, the two negative
+// checks above would pass vacuously and pin nothing at all.
+check('(16j2) the comment stripper left the query behind',
+  liveMembershipCode.includes(".in('status'") && liveMembershipCode.includes('maybeSingle'))
+
+// Stripe has already charged by the time the insert runs, so a failure here is
+// a customer paying for a row that does not exist, and nothing unwinds it alone.
+const insertFailureBranch = webhookSource.slice(
+  webhookSource.indexOf('Failed to record subscription'),
+  webhookSource.indexOf('subscription_started'),
+)
+check('(16k) the failed-insert branch was found', insertFailureBranch.length > 0)
+
+check('(16l) a failed subscription insert raises an ops alert rather than a log line',
+  insertFailureBranch.includes('emitOpsAlert'))
+
+// The generic "please try again" invites a retry that will be refused again.
+check('(16m) the join button sends a refused member to his account instead of offering a retry',
+  joinButtonSource.includes("'already-a-member'") &&
+  joinButtonSource.includes("window.location.href = '/account/membership'"))
 
 console.log(`test-membership: ${passes} passed, ${failures} failed`)
 if (failures > 0) process.exit(1)

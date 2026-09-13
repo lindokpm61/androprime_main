@@ -195,6 +195,17 @@ function stripComments(s) {
 const files = SCOPE.flatMap((d) => walk(d))
 if (files.length < 20) die(`found only ${files.length} route files. The layout changed; fix this collector rather than trusting a pass.`)
 
+// ⚠ THE GATE MUST SEE THE FLAG THE BUILD WILL SEE, and until 2026-09-14 it did
+// not. `next build` loads `.env.local`; a plain `node` script does not. So a
+// developer who set `MEMBERSHIP_ENABLED=true` in `.env.local` — which is how
+// the file itself says to do it — got a green run here and a membership-enabled
+// build, which is the precise pair this interlock exists to make impossible.
+//
+// dotenv does NOT override variables already present in the environment, which
+// is also Next's precedence, so `MEMBERSHIP_ENABLED=false npm run build` still
+// wins over the file. Same inputs, same answer, either way of setting it.
+require('dotenv').config({ path: path.resolve(process.cwd(), '.env.local') })
+
 const flagOn = process.env.MEMBERSHIP_ENABLED === 'true'
 const found = []
 const renewal = []

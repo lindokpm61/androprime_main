@@ -3,6 +3,14 @@ import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // An escape hatch for building while `next dev` is listening. Both write the
+  // same `.next` by default, and the corruption that follows does NOT present
+  // as a build error — it presents as an unstyled page or a route returning
+  // 500, which reads as a CSS regression and has been misdiagnosed as one five
+  // times. Unset, this is byte-identical to the default; set, the build gets
+  // its own directory and the dev server is left alone:
+  //   NEXT_DIST_DIR=.next-build npm run build
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   async rewrites() {
     return [
       { source: '/og/default.png', destination: '/opengraph-image' },

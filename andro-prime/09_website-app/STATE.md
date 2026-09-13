@@ -4,7 +4,7 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-13 END OF SESSION (legals drafted in house, P3 + P8 built, membership can almost be switched on)
+## ▶️ PICK UP HERE — handoff, 2026-09-13 END OF SESSION, extended 2026-09-14 (legals drafted in house, P3 + P8 + **P7** built, membership can almost be switched on)
 
 **Read this block, then the switch-on checklist. Everything else below is history.**
 
@@ -40,9 +40,31 @@ unbuilt defects, and a legal-page sync.
 
 **`.env.local` has `MEMBERSHIP_ENABLED=true`** (local only, gitignored, set at
 Keith's request to view the membership surfaces). **While it is true,
-`npm run build` FAILS** on the P6 interlock with 16 sentences still telling a
-buyer there is no subscription. That is the interlock working. Set it to false
-for a build, or clear P6 first. The file carries a comment saying so.
+`npm run build` and `npm test` both FAIL** on the P6 interlock, with 13
+sentences on 7 pages plus `llms.txt` still telling a buyer there is no
+subscription. That is the interlock working. Set it to false for a build, or
+clear P6 first. The file carries a comment saying so.
+
+🔴 **THAT SENTENCE WAS FALSE UNTIL 2026-09-14, IN THE DIRECTION THAT MATTERS.**
+`npm run build` did **not** fail: it exited **0** with the flag on, because
+`verify-subscription-claims.js` was wired into `test:design` (so `npm test`)
+and **never onto the build path at all**. Its own header says *"the ordinary
+flag-off build stays green"* and *"turning the flag on for real is impossible
+until the copy is swept"*; neither was true of a build. Measured both ways
+before and after, not read. Two changes make the documented behaviour real:
+
+- **`prebuild`** now runs the interlock, so `npm run build` cannot compile a
+  membership-enabled app while the contradicting copy stands.
+- **The interlock loads `.env.local`** the way `next build` does. Without that
+  the gate read a different world than the thing it gated: a developer setting
+  the flag in `.env.local` — which is how the file itself says to do it — got a
+  green gate and a membership-enabled build. `dotenv` does not override a real
+  environment variable, so `MEMBERSHIP_ENABLED=false npm run build` still wins.
+
+⚠ **CONSEQUENCE FOR LOCAL WORK, AND IT IS THE POINT RATHER THAN A SIDE EFFECT:**
+with `.env.local` as it stands, **`npm test` now fails too**. It did not before,
+for the same reason the build did not. One line resolves it — set the flag false
+in `.env.local` until P6 clears, or prefix the command.
 
 ### What is owed, by owner
 
@@ -51,11 +73,69 @@ for a build, or clear P6 first. The file carries a comment saying so.
 | **Keith** | Sign off terms v1.3 + privacy v1.4. One signature closes P1 and P2 and removes 3c's fourth send-blocker |
 | **Keith** | **P6: one decision, not a writing job.** What the kit pages say instead of "no subscription unless you choose one". Give the direction in a sentence and the thirteen rewrites plus `llms.txt` are ours to draft; you approve and sign a fresh CA record for CA-026 C1 |
 | **Keith** | Decide whether to drop `email` from the Stripe portal's allowed customer updates (diverges receipts from the login) |
-| **Build** | **P7** — subscription checkout does not refuse a customer who already holds a live membership |
+| ~~**Build**~~ | ~~**P7** — subscription checkout does not refuse a customer who already holds a live membership~~ 🟢 **BUILT 2026-09-14**, see the handoff below |
 | **Build** | **A2** — two seeded membership rows live in production, due **16 and 17 November 2026**. The guard exists only on this branch, which deploys nothing |
 | **Build** | Sync the legal pages to `canonical-site/*/index.html`. The markdown is not what the site serves |
 | **Build** | A way to verify Stripe prices against the **deployed** environment. The checker runs where the developer is; the environment that takes the money is elsewhere |
 | **Ewa** | 3d's ruling (which result states may pull a retest date forward) and 3f's wording (20 states) |
+
+### 🟢 P7 IS BUILT, 2026-09-14 — and the first version of its tests passed with the defect fully reintroduced
+
+**The fix, which owed no decision.** `lib/membership/liveMembership.ts` is new and
+pure-ish: `liveMembershipFor` reads the one question, `refusesSecondMembership`
+is the rule. The subscription checkout route asks it **before the Stripe call**;
+a live member gets a 409 with `reason: already-a-member`, and `JoinButton`
+navigates him to `/account/membership` rather than showing the generic error,
+which invites a retry that would be refused again. The Stripe webhook's failed
+insert now raises `emitOpsAlert` instead of a `console.error`, because by the
+time it runs the card has already been charged and nothing unwinds that alone.
+
+**Three orderings/scopings that are decisions, recorded so they are not "tidied":**
+
+| Choice | Why |
+|---|---|
+| Asked **before** the offer window | An existing member's window is usually shut, so the other order answers him *"order a test to start a new one"* — wrong, and expensive advice for a man already paying us. 3e makes the collision likelier: a member who reorders gets a fresh result that re-opens the window |
+| Filters on `ACTIVE_MEMBER_STATUSES`, **not** `PORTAL_MANAGEABLE_STATUSES` | The lookup exists to PREDICT the insert, so it must describe the same rows the partial unique index does. The portal list is one wider (`unpaid`) and would refuse a man the database would have admitted |
+| Does **not** skip seeded `sub_dev_…` rows | The exact inverse of the portal's rule, and both are asserted. The portal filters fixtures because Stripe cannot retrieve them; the index has no opinion, so a seeded account's second subscription is the one **certain** to fail on insert |
+
+🔴 **THE TESTS WERE WRITTEN, PASSED, AND GUARDED NOTHING.** Fourteen assertions
+went green, including the central one — *the route refuses before it creates the
+Stripe session*. The P7 block was then deleted from the route to prove they
+fired. **347 passed, 0 failed, with the defect fully live.** Two causes, one
+shape: the anchor `indexOf('refusesSecondMembership')` matched the **import**,
+which survives deleting the call and sits above everything, so the ordering
+comparison was not merely true but maximally true; and a separate check had
+already failed against *correct* code because the file's comment **names the
+rule it declines to follow in order to explain why**. A third trap sat beside
+them: `indexOf` returns `-1`, which sorts below every real offset, so `a < b`
+inverts into a pass when `a` is absent.
+
+Fixed by searching only from `export async function POST` onward, stripping
+comments, and re-testing presence before order. **All four reintroductions now
+fail with the expected ids** (guard deleted → 16e/16f/16g; alert removed → 16l;
+wrong status list → 16h/16i; plus a control run showing which layer does the
+work). Suite 333 → 347. Observation 775.
+
+**Verified:** `npx tsc --noEmit` exit 0, `npm test` exit 0, and
+`MEMBERSHIP_ENABLED=false npm run build` exit 0. The build needed Keith's dev
+server on port 3000 stopped first, on his say-so; it is still stopped, and
+`npm run dev` restarts it.
+
+⚠ **`next.config.ts` now takes `NEXT_DIST_DIR`** (unset, byte-identical to the
+default) so a build can be given its own output directory rather than fighting a
+dev server for `.next`. It did not help here: the build guard names that remedy
+in its refusal message and then refuses it too, leaving only "kill the process
+on 3000". The hatch is kept because it is correct; the guard is the thing to
+fix. Observation 776.
+
+🔴 **AND RUNNING THE BUILD IS WHAT EXPOSED A FALSE GATE — see the corrected
+first-thing-to-check block above.** `npm run build` exited 0 with
+`MEMBERSHIP_ENABLED=true`, because the P6 interlock was never on the build path.
+Both documents said otherwise. Now wired via `prebuild`, and measured failing.
+
+**Still owed on P7:** the eye-check at item 5 of the switch-on checklist. With
+the flag off and only fixture rows in `memberships`, there is no state in which
+a second join can be clicked today.
 
 ### P5 re-checked at Keith's request, after the wrap
 

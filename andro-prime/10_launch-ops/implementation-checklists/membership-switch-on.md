@@ -111,9 +111,29 @@ environment. That is one variable, and it is item 2.
 
 `scripts/verify-subscription-claims.js` fails the build whenever the membership
 flag is true while any of the **thirteen sentences** telling a buyer there is no
-subscription remains. That is **P6**, and it is already enforced, so this line
-is a confirmation rather than a judgement: if the build passes, the sweep
-happened.
+subscription remains. That is **P6**, so this line is a confirmation rather than
+a judgement: if the build passes, the sweep happened.
+
+🔴 **THAT LAST SENTENCE WAS FALSE UNTIL 2026-09-14, AND THIS IS THE LINE IT
+WOULD HAVE BEEN TICKED ON.** The interlock was wired into `npm test`, never onto
+the build, so `npm run build` exited **0** with the flag on and the thirteen
+sentences untouched. Anyone working down this checklist would have run the
+build, seen green, and ticked P6 off at the exact moment real money was being
+switched on. Measured, both before and after the fix.
+
+Two changes make the line true: a **`prebuild`** hook that runs the interlock,
+and the interlock **loading `.env.local`** the way `next build` does — without
+the second, a flag set in `.env.local` was visible to the build and invisible to
+its gate. `MEMBERSHIP_ENABLED=false npm run build` still overrides the file.
+
+⚠ **A green build is only evidence if the gate is ON the build.** Before
+trusting this item, confirm the run actually printed the interlock's report:
+
+```
+npm run build 2>&1 | grep -c "MEMBERSHIP_ENABLED"
+```
+
+Zero means the gate did not run, whatever the exit code said.
 
 ---
 
@@ -127,9 +147,24 @@ flag should not flip while any of them is open.
 - [ ] **P2** — the terms and privacy notice are **synced to the canonical HTML**
       (`canonical-site/terms/index.html`, `canonical-site/privacy/index.html`).
       The markdown is not what the site serves.
-- [ ] **P7** — the subscription checkout refuses a customer who already holds a
-      live membership. **Unbuilt as at 2026-09-13.** Until it is, a double
-      submit charges a second subscription that no row records.
+- [x] 🟢 **P7 — the subscription checkout refuses a customer who already holds a
+      live membership. Built 2026-09-14.** `liveMembershipFor` +
+      `refusesSecondMembership` (`lib/membership/liveMembership.ts`) run before
+      the Stripe call; a live member gets a 409 and is sent to his account, and
+      `JoinButton` navigates there rather than offering a retry that would be
+      refused again. A failed insert in the Stripe webhook now raises
+      `emitOpsAlert` instead of a console line, because by then the card has
+      already been charged.
+
+      **Asked before the offer window, deliberately.** An existing member's
+      window is usually shut, so the other order answers him *"order a test to
+      start a new one"* — wrong, and expensive advice for a man already paying.
+
+      14 assertions, suite 333 → 347. **All four reintroductions were measured**
+      (deleting the guard; removing the alert; swapping the status list for the
+      portal's; and a control run) and each fails the expected ids. ⚠ **Still to
+      be verified by eye at item 5**: with the flag off and only fixture rows in
+      the table, there is no state in which a second join can be clicked today.
 - [ ] **A2** — the two seeded developer memberships are gone from production, or
       the guard that ignores them is deployed. Their retest dates are **16 and
       17 November 2026**, and the flag being off is the only thing holding them.

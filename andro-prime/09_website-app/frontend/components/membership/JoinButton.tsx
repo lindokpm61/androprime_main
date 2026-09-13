@@ -30,6 +30,18 @@ export function JoinButton({ children }: { children: React.ReactNode }) {
       }
 
       const data = await res.json()
+
+      // He is already a member, or became one between this page rendering and
+      // this click — a double submit, or a tab left open. The button is only
+      // ever on /account/membership, so reloading it is what corrects the stale
+      // view: the page re-derives member-versus-paywall state and shows him the
+      // membership he has. Retrying would be refused again, and the generic
+      // error below would invite exactly that.
+      if (res.status === 409 && data.reason === 'already-a-member') {
+        window.location.href = '/account/membership'
+        return
+      }
+
       if (data.url) {
         window.location.href = data.url
         return

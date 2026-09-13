@@ -403,6 +403,23 @@ export async function POST(request: NextRequest) {
 
         if (insertError) {
           console.error('[stripe-webhook] Failed to record subscription:', insertError)
+          // P7. By the time this runs Stripe has already created and charged
+          // the subscription, so a failed insert is a customer paying for a row
+          // that does not exist — and nothing downstream refunds or cancels on
+          // its own. The likeliest cause is `memberships_one_live_per_user`
+          // firing on a second membership the checkout gate did not stop, which
+          // is the case a human has to unwind by hand. That is what makes this
+          // an alert rather than the log line it used to be.
+          await emitOpsAlert({
+            name: 'subscription_insert_failed',
+            data: {
+              user_id: resolvedUserId,
+              product_slug,
+              stripe_subscription_id: session.subscription as string,
+              is_membership: isMembership,
+              error: insertError,
+            },
+          })
         } else {
           if (cioKey) {
             await emitEvent(cioKey, {
