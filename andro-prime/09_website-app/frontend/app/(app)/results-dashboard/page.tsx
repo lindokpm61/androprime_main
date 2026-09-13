@@ -9,6 +9,8 @@ import { AppStrip, AppShell } from '@/components/app/AppShell'
 import type { PreResultsOrderStatus, KitType } from '@/lib/results/types'
 import { urlFor } from '@/lib/hosts'
 import { numberWord, panelCount, panelSentenceList } from '@/lib/kits/panel'
+import { reorderHref } from '@/lib/kits/reorder'
+import { kitName } from '@/lib/kits/names'
 
 export const metadata: Metadata = {
   title: 'Your Results',
@@ -343,6 +345,15 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
   )
   const showHandoffLink = isGpHandoffEnabled() && hasGpReferral
 
+  // Defect 3e: the reorder path on the dashboard. `data.kits` is sorted most
+  // recently tested first, so kits[0] is the kit he actually took.
+  //
+  // The marker cards' own "Retest in 6-12 months" CTA is now resolved per kit
+  // in getDashboardData, so it points at the right product page rather than at
+  // the catalogue index. This block is the second half: a man who is not
+  // looking at a marker card still needs a way back to the kit he took.
+  const lastTestedKit = data.kits[0]?.kitType ?? null
+
   return (
     <ResultsReadyView
       kits={data.kits}
@@ -350,22 +361,54 @@ export default async function ResultsDashboardPage({ searchParams }: PageProps) 
       banner={showPasswordBanner ? <PasswordBanner /> : null}
       sidebarTop={devBar}
       belowTabs={
-        showHandoffLink ? (
-          <div className="f-tray" style={{ margin: '0 0 20px' }}>
-            <div className="f-core f-subfoot" style={{ marginTop: 0, paddingTop: 0, borderTop: 0 }}>
-              <div style={{ maxWidth: '44ch' }}>
-                <p className="f-blab">Taking this to your GP?</p>
-                <p className="f-sub">
-                  Prepare a one-page summary of your results, with the reference ranges and
-                  questions to ask, that you can print or save as a PDF.
-                </p>
+        <>
+          {showHandoffLink ? (
+            <div className="f-tray" style={{ margin: '0 0 20px' }}>
+              <div className="f-core f-subfoot" style={{ marginTop: 0, paddingTop: 0, borderTop: 0 }}>
+                <div style={{ maxWidth: '44ch' }}>
+                  <p className="f-blab">Taking this to your GP?</p>
+                  <p className="f-sub">
+                    Prepare a one-page summary of your results, with the reference ranges and
+                    questions to ask, that you can print or save as a PDF.
+                  </p>
+                </div>
+                <a href="/results-dashboard/handoff" className="f-btn">
+                  Prepare GP summary <span aria-hidden="true">&rarr;</span>
+                </a>
               </div>
-              <a href="/results-dashboard/handoff" className="f-btn">
-                Prepare GP summary <span aria-hidden="true">&rarr;</span>
-              </a>
             </div>
-          </div>
-        ) : null
+          ) : null}
+          {/*
+            Defect 3e, the reorder path. Points at the kit he actually took
+            rather than at the catalogue index, which is where his only pointer
+            used to land him: back at the shop front, as a brand new customer.
+
+            No price and no discount. Keith, 2026-09-13: same price for now. A
+            returning-customer discount needs the willingness-to-pay work behind
+            it and would set an anchor that cannot quietly be removed later.
+
+            Cross-host: /kits is MARKETING on the apex, this is the app host, so
+            a plain <a> through urlFor and never next/link.
+
+            ⚠ NEW COPY, OWES THE GUARDRAIL #1 PRE-FLIGHT.
+          */}
+          {lastTestedKit && (
+            <div className="f-tray" style={{ margin: '0 0 20px' }}>
+              <div className="f-core f-subfoot" style={{ marginTop: 0, paddingTop: 0, borderTop: 0 }}>
+                <div style={{ maxWidth: '44ch' }}>
+                  <p className="f-blab">Test again</p>
+                  <p className="f-sub">
+                    Order the same kit and your new numbers line up against these ones, on the
+                    same markers and the same ranges.
+                  </p>
+                </div>
+                <a href={urlFor(reorderHref(lastTestedKit))} className="f-btn">
+                  Order {kitName(lastTestedKit)} <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+          )}
+        </>
       }
     />
   )

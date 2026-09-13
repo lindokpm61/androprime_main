@@ -3,7 +3,9 @@ import { stripe } from '@/lib/stripe/client'
 import { getCurrentUser } from '@/lib/auth/session'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { HEALTH_PROCESSING_CONSENT_VERSION } from '@/lib/auth/consentVersions'
-import { isBundlesEnabled } from '@/lib/flags'
+import { isBundlesEnabled, isMembershipEnabled } from '@/lib/flags'
+import { latestMembershipForUser } from '@/lib/membership/latestMembership'
+import { decideKitPurchase, declinesSale } from '@/lib/membership/earlyRetest'
 import type { ComparableCoupon } from '@/lib/membership/pricingRules'
 import { resolveBundleCheckout } from '@/lib/bundles/checkout'
 import type { BundleConfig } from '@/lib/bundles/config'
@@ -99,6 +101,72 @@ export async function POST(request: NextRequest) {
     priceId = KIT_PRICE_IDS[kitType]
     if (!priceId) {
       return NextResponse.json({ error: `Price ID for ${kitType} is not configured` }, { status: 400 })
+    }
+  }
+
+  // ── Defect 3d: check what he already holds BEFORE taking his money ───────
+  //
+  // Keith, 2026-09-13: *"the fix belongs in checkout, not in the nightly job."*
+  // A member whose retest is already owed had no way to claim it early, so his
+  // only self-serve option was buying another kit at full retail — and that
+  // purchase did not consume the entitlement, so the sweep still posted the
+  // included kit as well. Two kits, paid twice.
+  //
+  // Placed BEFORE the details/consent branch deliberately: a sale we are about
+  // to decline should not first send him to /checkout/details to type a date of
+  // birth. Placed after kitType validation so a bad request still 400s first.
+  //
+  // ⚠ THIS DOES NOT DISPATCH ANYTHING, and must not be made to. The nightly
+  // sweep stays the only code path that turns a row into real postage. A member
+  // whose date has passed is already in that sweep's selection, so declining
+  // here and letting it run is what "dispatch the kit he holds" means in
+  // practice — no second dispatch path, no second chance to double-post.
+  //
+  // Flag off -> skipped entirely, so this is byte-identical to before
+  // membership existed. The whole block is best-effort: a membership read that
+  // throws must never block a kit sale, so it falls through to selling, which
+  // is exactly the behaviour that shipped before 3d was raised.
+  if (user && isMembershipEnabled()) {
+    try {
+      const membership = await latestMembershipForUser(user.id)
+      const decision = decideKitPurchase(membership, new Date())
+
+      if (declinesSale(decision.action)) {
+        // No new customer-facing copy is minted here. The client sends him to
+        // /account/membership, whose retest block already renders both of these
+        // states in APPROVED words ("Due now ... being prepared" and "On its
+        // way"). A new sentence on the checkout path would need its own
+        // pre-flight and would say the same thing twice.
+        console.log(
+          '[checkout/kit] Declining sale for user', user.id,
+          '- holds a retest:', decision.action,
+        )
+        return NextResponse.json(
+          { retestHeld: true, reason: decision.action },
+          { status: 200 },
+        )
+      }
+
+      // Branch 3 needs nothing carried forward from here. The clock reset is
+      // driven by `kit_orders.stripe_payment_intent` in processResult: a kit he
+      // PAID for carries one, a kit dispatched against an entitlement does not.
+      // Deriving it from the order rather than from a flag set here means the
+      // reset cannot be lost by a metadata round-trip through Stripe, and
+      // cannot misfire on the included retest's own result.
+
+      // The number nobody has yet: how often branch 2 WOULD have fired. Logged
+      // rather than inferred, so that when Ewa is asked to rule on the cadence
+      // table there is a count of the members it would have affected instead of
+      // an argument from first principles.
+      if (decision.fellThrough) {
+        console.log(
+          '[checkout/kit] Member', user.id,
+          'bought a kit while pending a retest due', decision.dueAt?.toISOString(),
+          '- sold under the unruled fall-through (3d branch 2 not yet ruled)',
+        )
+      }
+    } catch (err) {
+      console.error('[checkout/kit] Membership entitlement check failed; selling anyway:', err)
     }
   }
 

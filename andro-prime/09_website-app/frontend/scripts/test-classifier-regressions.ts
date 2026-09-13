@@ -10,6 +10,7 @@
 import { classify, type ClassifierInput } from '../lib/results/classifier'
 import { SCENARIOS } from '../lib/results/fixtures/registry'
 import { buildCioTraits } from '../lib/results/processResult'
+import { mayCarryPurchaseLink } from '../lib/results/retestGuidance'
 import type { CtaType, KitType, ScenarioName, NormalisedBiomarker, ResultState } from '../lib/results/types'
 
 interface MarkerAssertion {
@@ -275,6 +276,47 @@ for (const scenarioName of Object.keys(SCENARIOS) as ScenarioName[]) {
 }
 passes += 1
 console.log('[GUARD] no classifier CTA points at a dead route across all scenarios')
+
+// ── Defect 3f: CA-014 as a guard, not as three hand-written `if` branches ──
+//
+// A result that routes a man to his GP, or flags him, must carry NO link to a
+// paid kit. The current code obeys that by hand in three places and nothing
+// structurally stops a fourth from attaching a purchase CTA to a GP-routed
+// state. `mayCarryPurchaseLink` is that rule as a function, derived from the
+// badge, and this asserts every classified card in every scenario against it.
+//
+// 🔴 THIS GUARDS THE DIRECTION THAT HARMS SOMEBODY. The gap 3f describes (a
+// flagged man gets no retest guidance at all) is a hole we are still waiting on
+// Ewa to fill. The opposite error — selling a kit to a man we have just told to
+// see his doctor — is the one that must never ship, and it is the one a future
+// well-meaning "fix the 3f gap" commit is most likely to introduce by reaching
+// for the CTA that was already to hand.
+//
+// ⚠ IT IS NOT "NO FLAGGED CARD MAY SELL", which is what the first draft of this
+// guard asserted, and running it is what corrected the rule. A Monitor or
+// Action Needed marker may legitimately carry a CROSS-SELL to a different kit
+// and three of those ship today: low vitamin D offers the testosterone kit,
+// normal-testosterone offers the energy panel. CA-014 is about GP routing, not
+// about flagging. The guard asserted a compliance rule stricter than the one
+// actually approved, and four correct behaviours failed it.
+const PURCHASE_HREF = /^\/kits(\/|$)|^\/supplements\//
+for (const scenarioName of Object.keys(SCENARIOS) as ScenarioName[]) {
+  const classified = classify(fixtureToClassifierInput(scenarioName, []))
+  for (const card of classified) {
+    if (mayCarryPurchaseLink(card.state)) continue
+    for (const cta of [card.primaryCta, card.secondaryCta]) {
+      if (cta && PURCHASE_HREF.test(cta.href)) {
+        console.error(
+          `[FAIL] ${scenarioName} — ${card.markerName} is "${card.state}" (no purchase link permitted) ` +
+            `but carries CTA "${cta.type}" -> ${cta.href}`,
+        )
+        failures += 1
+      }
+    }
+  }
+}
+passes += 1
+console.log('[GUARD] no GP-routed or report-only card carries a link to a paid kit (CA-014, defect 3f)')
 
 // Upper-band boundary guard (Ewa, 2026-08-07). Both bands were added because
 // the engine previously had no ceiling on testosterone or vitamin D, so a

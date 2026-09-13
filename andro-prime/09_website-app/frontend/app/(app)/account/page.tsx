@@ -9,6 +9,7 @@ import { AddressSection } from '@/components/account/AddressSection'
 import { AppStrip, AppShell } from '@/components/app/AppShell'
 import { getAddress } from '@/lib/account/getAddress'
 import { urlFor } from '@/lib/hosts'
+import { reorderHref } from '@/lib/kits/reorder'
 import { formatLongDate } from '@/lib/date/format'
 
 export const metadata: Metadata = {
@@ -184,6 +185,11 @@ export default async function AccountPage() {
   // BUNDLES_ENABLED so the bundle address-check email links to a live surface.
   const address = isAccountAddressEnabled() ? await getAddress(user.id) : null
 
+  // The kit he last took. `orders` is sorted ordered_at descending, so this is
+  // orders[0] and needs no second query. Undefined for a customer with no
+  // orders, whose branch renders "Browse tests" instead (defect 3e).
+  const lastKit = account.orders[0]
+
   const orderCount = account.orders.length
   const resultCount = account.orders.filter((o) => o.hasResults).length
 
@@ -255,6 +261,43 @@ export default async function AccountPage() {
                 {account.orders.map((order) => (
                   <OrderRow key={order.id} order={order} />
                 ))}
+                {/*
+                  Defect 3e, the reorder path. Keith, 2026-09-13: *"reorder at
+                  the same price"*.
+
+                  🔴 THE REGISTER'S PREMISE WAS PARTLY WRONG. It said "no order
+                  history, no repurchase, no order again". The history is right
+                  there above this block and has been since the batch-3 rebuild;
+                  what was missing was only the repurchase. The claim was made
+                  from the Manage block's three links rather than from the whole
+                  page, which made the defect look bigger than it was.
+
+                  It points at the kit he LAST took, which is orders[0] because
+                  getAccountData sorts ordered_at descending. One link, and it
+                  deliberately states no price: the price lives on the kit page,
+                  and a number repeated here is a second call site that goes
+                  stale silently the first time one of them moves.
+
+                  Cross-host: /kits is MARKETING on the apex and this page is on
+                  the app host, so a plain <a> through urlFor, never next/link.
+
+                  ⚠ NEW COPY, OWES THE GUARDRAIL #1 PRE-FLIGHT. Two short
+                  sentences, no claim, no price, no urgency.
+                */}
+                {lastKit && (
+                  <div className="f-subfoot" style={{ marginTop: 18 }}>
+                    <div style={{ maxWidth: '44ch' }}>
+                      <p className="f-blab">Order again</p>
+                      <p className="f-sub">
+                        Same kit, same price. Your results stay in this account, so a second
+                        result lines up against the first.
+                      </p>
+                    </div>
+                    <a href={urlFor(reorderHref(lastKit.kitType))} className="f-btn">
+                      Order {lastKit.kitName} <span aria-hidden="true">&rarr;</span>
+                    </a>
+                  </div>
+                )}
               </>
             )}
           </div>

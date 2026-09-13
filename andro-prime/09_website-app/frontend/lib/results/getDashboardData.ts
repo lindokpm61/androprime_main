@@ -2,6 +2,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { ageFromDobIso } from '@/lib/date/age'
 import { classify } from './classifier'
 import { buildDashboardFromScenario } from './buildDashboardFromScenario'
+import { resolveRetestCta } from '@/lib/kits/reorder'
 import type {
   DashboardData,
   KitData,
@@ -144,9 +145,25 @@ export async function getDashboardData(
 
   if (kitMap.size === 0) return { state: 'no-results' }
 
+  // Defect 3e: point the retest CTA at the kit that produced the result rather
+  // than at the catalogue index.
+  //
+  // Done HERE and not in `classifier.ts` because that CTA table is one shared
+  // constant rendered on logged-out surfaces too, so it cannot know whose
+  // result it is attached to. `/kits` stays its correct default; this is the
+  // per-viewer resolution, and it is per KIT rather than per customer, so a
+  // man who took a Kit 1 and a Kit 2 gets each card pointing at its own kit.
+  // Every other CTA type passes through untouched.
   const kits: KitData[] = Array.from(kitMap.entries()).map(([kitType, kitResults]) => ({
     kitType: kitType as KitType,
-    results: kitResults,
+    results: kitResults.map((r) => ({
+      ...r,
+      markers: r.markers.map((m) => ({
+        ...m,
+        primaryCta: resolveRetestCta(m.primaryCta, kitType),
+        secondaryCta: resolveRetestCta(m.secondaryCta, kitType),
+      })),
+    })),
   }))
 
   // Most recently tested kit first

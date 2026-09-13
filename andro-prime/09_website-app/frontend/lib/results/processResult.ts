@@ -5,8 +5,9 @@ import { emitEvent, identifyUser } from '@/lib/customerio/emit'
 import { cioKeyForUserId } from '@/lib/customerio/identity'
 import { kitName } from '@/lib/kits/names'
 import { isTestosteroneAllClear } from './classifier'
-import { isRetestReminderEnabled, isBundlesEnabled } from '@/lib/flags'
+import { isRetestReminderEnabled, isBundlesEnabled, isMembershipEnabled } from '@/lib/flags'
 import { resolveConfirmationOutcome } from '@/lib/bundles/confirmation'
+import { resetMembershipClockOnPaidResult } from '@/lib/membership/clockReset'
 import { hasHealthProcessingConsent } from './healthProcessingConsent'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
@@ -362,6 +363,32 @@ export async function processVitallResult(
         `[process-result] confirmation bundle hook error (order ${orderId}):`,
         message,
       )
+    }
+  }
+
+  // --- Membership retest clock reset (defect 3d branch 3, dark behind MEMBERSHIP_ENABLED) ---
+  // Keith, 2026-09-13: a member may buy his own kit to go early, and the paid
+  // result RESETS his entitlement rather than running alongside it. Without
+  // this the sweep still fires on the old date and posts a second kit, which is
+  // the defect 3d is about, reached by a different route.
+  //
+  // Same placement discipline as the confirmation hook above: after the
+  // biomarker insert (so the classification reads normalised values) and before
+  // the CIO emit (a membership failure must never touch the customer's
+  // result_received event). Every early return above bypasses it by placement.
+  //
+  // It moves a DATE and nothing else — never claims, never dispatches, never
+  // consumes the entitlement — and it can only ever push the date later. Flag
+  // off -> skipped silently.
+  if (isMembershipEnabled()) {
+    try {
+      const outcome = await resetMembershipClockOnPaidResult(supabase, userId, orderId, new Date())
+      if (outcome === 'reset') {
+        console.log(`[process-result] membership retest clock reset (order ${orderId})`)
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err)
+      console.error(`[process-result] membership clock hook error (order ${orderId}):`, message)
     }
   }
 

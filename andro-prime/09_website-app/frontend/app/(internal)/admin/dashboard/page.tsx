@@ -5,6 +5,9 @@ import { isAdmin } from '@/lib/auth/isAdmin'
 import { getCashPosition } from '@/lib/admin/getCashPosition'
 import { getGateMetrics } from '@/lib/admin/getGateMetrics'
 import { findOrders, type OrderSearchResult } from '@/lib/admin/findOrders'
+import { findMembershipByEmail } from '@/lib/admin/retestDate'
+import { createSupabaseAdminClient } from '@/lib/supabase/admin'
+import { RetestDatePanel } from '@/components/internal/RetestDatePanel'
 import {
   InternalStrip,
   InternalHead,
@@ -78,7 +81,7 @@ function formatTimestamp(iso: string): string {
 }
 
 interface PageProps {
-  searchParams: Promise<{ q?: string | string[] }>
+  searchParams: Promise<{ q?: string | string[]; m?: string | string[] }>
 }
 
 export default async function AdminDashboardPage({ searchParams }: PageProps) {
@@ -89,11 +92,19 @@ export default async function AdminDashboardPage({ searchParams }: PageProps) {
   const params = await searchParams
   const qParam = params.q
   const orderQuery = (Array.isArray(qParam) ? qParam[0] : qParam)?.trim() ?? ''
+  const mParam = params.m
+  const memberQuery = (Array.isArray(mParam) ? mParam[0] : mParam)?.trim() ?? ''
 
-  const [cash, gate, orders] = await Promise.all([
+  const [cash, gate, orders, membership] = await Promise.all([
     getCashPosition(),
     getGateMetrics(),
     orderQuery ? findOrders(orderQuery) : Promise.resolve(null),
+    // Defect A1. Read with the admin client because support is looking up
+    // somebody else's membership, which RLS correctly forbids under the
+    // operator's own session.
+    memberQuery
+      ? findMembershipByEmail(createSupabaseAdminClient(), memberQuery, new Date())
+      : Promise.resolve(null),
   ])
 
   return (
@@ -165,6 +176,57 @@ export default async function AdminDashboardPage({ searchParams }: PageProps) {
 
         {/* ---------- 03 · ORDER LOOKUP ---------- */}
         <OrderLookup result={orders} query={orderQuery} />
+
+        {/* ---------- 04 · RETEST DATE (defect A1) ----------
+            The only lever support has over a member's retest date. Before this,
+            moving one meant editing Postgres by hand, which is not something a
+            person should do under time pressure.
+
+            🔴 IT IS THE ONLY CONTROL ON THIS PAGE THAT WRITES. Everything above
+            reads Stripe or Postgres; this one changes the field the nightly
+            sweep selects on, so a date in the past puts a real kit in the post
+            at our cost. The panel says so, the reason box is mandatory, and the
+            action re-checks the admin gate because a server action is its own
+            POST endpoint and does not inherit this page's guard. */}
+        <InternalPanel
+          n={4}
+          title="Member retest date"
+          sub="View a member's retest date and move it, with a reason recorded. Moving a date to today or earlier makes the next nightly sweep owe him a kit."
+        >
+          {membership === null ? (
+            <p className="f-fine" style={{ marginTop: 16 }}>
+              Enter a member email to move a date. Nothing is shown until you do.
+            </p>
+          ) : (
+            <DataTable head={['Field', 'Value']} minWidth={420}>
+              <tr><td>Email</td><td>{membership.email}</td></tr>
+              <tr><td>Status</td><td>{membership.status}</td></tr>
+              <tr><td>Entitlement</td><td>{membership.entitlement}</td></tr>
+              <tr>
+                <td>Next retest due</td>
+                <td className="f-int-num">
+                  {membership.nextRetestDueAt ? formatTimestamp(membership.nextRetestDueAt) : 'none'}
+                </td>
+              </tr>
+              <tr>
+                <td>Last released</td>
+                <td className="f-int-num">
+                  {membership.retestClaimedAt ? formatTimestamp(membership.retestClaimedAt) : 'never'}
+                </td>
+              </tr>
+            </DataTable>
+          )}
+
+          <form method="get" className="f-intsearch" style={{ marginTop: 18 }}>
+            <label htmlFor="m" className="sr-only">Member email to look up</label>
+            <input id="m" name="m" type="search" className="f-inp" defaultValue={memberQuery}
+              placeholder="name@example.com" />
+            {orderQuery && <input type="hidden" name="q" value={orderQuery} />}
+            <button type="submit" className="f-btn">Look up</button>
+          </form>
+
+          <RetestDatePanel defaultEmail={membership?.email ?? ''} />
+        </InternalPanel>
 
         <p className="f-intfoot">
           Plan-vs-actual variance not yet wired. See task 38 / memory item 53.

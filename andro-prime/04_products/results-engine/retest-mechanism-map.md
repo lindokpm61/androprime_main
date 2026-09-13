@@ -5,6 +5,13 @@
 asked about ordering a retest through the app. All three were found by reading the code,
 and all three are about the same missing thing: **there is no customer-initiated route to
 a retest anywhere in the product**, for a member or a non-member.
+**Last decided:** 2026-09-13 — **3a and 3b closed** (migration applied to production and
+verified live); **3c's entitlement paragraph settled**, which makes P1 a fourth activation
+gate on campaign 25; **3d's checkout half decided and built**; **3e decided and built**
+(reorder at the same price). What is now owed across 3c, 3d and 3f is **one thing wearing
+three hats: Ewa on the intervals and the audience.** Section 7's cadence table is the
+single decision that closes all three. Of the six 3x defects, four are now closed or built
+and the two that are not are both waiting on the same person.
 **Owner workspace:** `04_products/results-engine`.
 **Read with:** `2026-07-17-retest-cadence-table.md`, which is the other axis and is
 **still unsigned**. See the warning in section 5 before sending it to Ewa again.
@@ -257,8 +264,14 @@ member stays.
 > **Owed, and none of it should open a new ask:** the audience question and the
 > Phase-0 confirmatory-testing question (CA-026 audit F4) both belong in the
 > **already-drafted, UNSENT** packet, Gmail `r1901433818987540044`. Adding a
-> question while it is unsent is free. The entitlement paragraph is contract copy
-> against terms with no membership section, so it waits on P1 and is Keith's.
+> question while it is unsent is free.
+>
+> ✅ **The entitlement paragraph is SETTLED, 2026-09-13.** Keith's ruling: it stands,
+> ship-gated, not cut and not reworded. It is still contract copy against terms with
+> no membership section, so it takes the CA-026 D2 treatment. **The consequence is
+> that P1 becomes an activation gate on campaign 25** — a fourth independent
+> send-blocker alongside the draft state, the unstamped attribute and
+> `MEMBERSHIP_ENABLED`, and the only one of the four that is not ours to move.
 >
 > ⚠ **Two corrections the independent pass forced into the copy.** The draft had
 > trimmed CA-022's clause *"A retest is the only way to find out how your levels
@@ -281,7 +294,7 @@ no email today that tells a member their retest date is coming, which is the
 `next_retest_due_at` value this table exists to make quotable.
 
 
-### 3d. A member cannot claim his retest early, and paying to go early DUPLICATES it rather than consuming it
+### 3d. 🟢 CHECKOUT HALF DECIDED AND BUILT 2026-09-13. A member cannot claim his retest early, and paying to go early DUPLICATES it rather than consuming it
 
 **Raised by Keith, 2026-09-08:** *"What if a member wants to order his retest earlier
 than the retest order period? For instance, a retest that is set for three months, he
@@ -328,22 +341,128 @@ membership page.
 and per 3a every member gets 90 days regardless of whether he has a marker to move. So
 the interval he is waiting out may not be his interval at all.
 
-### 3e. A non-member has no way to reorder a kit, anywhere in the app
+✅ **DECIDED 2026-09-13, the half that needed no ruling. Keith: the fix belongs in
+CHECKOUT, not in the nightly job.** Do not quietly consume the entitlement when he pays
+-- that is worse than the current defect, because he pays full price and loses something
+he already owned. Check what he holds *before* taking his money:
+
+1. **Retest already due** -- sell him nothing, dispatch the kit he holds.
+2. **Not yet due, and his result state permits going early** -- bring the date forward,
+   dispatch, no charge.
+3. **Not yet due, and it does not** -- let him buy, and have the paid result **reset the
+   clock** rather than run alongside it. Otherwise the two-kits-in-a-fortnight outcome
+   returns by a different route.
+
+⚠ **Branches 1 and 3 are buildable today; branch 2 is not, and the decision did not
+change that.** Branches 1 and 3 decide themselves from what checkout already holds, a
+date and a kit he owns. **Branch 2 asks which result states permit going early, which is
+section 7's proposal and still needs Ewa.** Suggested, not decided: build 1 and 3 now and
+let 2 fall through to 3 until the cadence table has a row for the state in front of it.
+Falling through charges him and resets his clock, which never moves a date nobody has
+ruled on and still closes the half that costs real postage.
+
+**Still worth doing regardless, and it survives the decision:** the waiting block has no
+contact link at all. A support address turns a dead end into a human path and lets
+support move dates by hand until the table exists.
+
+#### What shipped, 2026-09-13
+
+| File | What it does |
+|---|---|
+| `lib/membership/earlyRetest.ts` | The rule, pure. `decideKitPurchase` returns one of five named outcomes; `resetRetestDueAt` holds the clamp |
+| `lib/membership/clockReset.ts` | Branch 3 at the database: read, guard, compare-and-set. Moves a date and nothing else |
+| `app/api/checkout/kit/route.ts` | Declines the sale before taking money, ahead of the details/consent branch |
+| `lib/results/processResult.ts` | Calls the reset after the biomarker insert, before the CIO emit |
+| `components/commerce/KitCheckoutButton.tsx` | Sends a declined buyer to `/account/membership` |
+| `app/(app)/account/membership/page.tsx` | The contact link. **New copy, owes a pre-flight** |
+| `scripts/test-membership.ts` | Section 13, 62 new assertions. Suite 236 → 298 |
+
+🔴 **THE CLAMP IS THE PART TO REMEMBER.** The clock reset may only ever push a retest
+LATER, never sooner. Without that guard an all-clear member on the annual cadence who
+buys a kit and flags something would have his retest pulled **265 days forward** by the
+bare cadence rule, which is precisely the ruling half nobody has answered. The software
+would have been inventing a clinical position. Asserted over a 6×6 grid of standing
+against computed dates, in both directions.
+
+⚠ **Nothing here posts a kit.** `'dispatch-held'` declines the sale; the kit goes out on
+the sweep's next run, because a member whose date has passed is already in its selection.
+The sweep stays the only code path that turns a row into real postage.
+
+⚠ **Two things were extended beyond the letter of the decision and Keith should confirm
+them.** (1) A retest already IN THE POST (`retest_claimed_at` inside the 14-day window)
+also declines the sale, on the reasoning that a lost sale is fixable by a support email
+and a duplicate kit is not. (2) Branch 2 is present in the code as an unreachable
+outcome behind `UNRULED`, so the day the cadence table lands it is a lookup rather than a
+rewrite.
+
+### 3e. 🟢 BUILT 2026-09-13. A non-member has no way to reorder a kit, anywhere in the app
 
 **Raised by Keith, 2026-09-08**, asking how a customer who needs another testosterone kit
-orders one.
+orders one. **Decided and built 2026-09-13: *"reorder at the same price"*.**
 
-**There is no reorder path.** No "order again", no repurchase, no order history. The
+**There is no reorder path.** No "order again", no repurchase, ~~no order history~~. The
 account page (`app/(app)/account/page.tsx`) offers exactly three links: the results
 dashboard, subscriptions, and a `mailto:` to support. The only in-app pointer is the
 results dashboard CTA **"Retest in 6-12 months" -> `/kits`**, which lands him on the
 public catalogue index rather than on the kit he actually took.
 
+🔴 **"NO ORDER HISTORY" WAS WRONG WHEN THIS WAS WRITTEN, AND IT MADE THE DEFECT LOOK
+BIGGER THAN IT WAS.** The account page has carried a Kit / Status / Date / Action history
+table since the batch-3 rebuild; the screenshot taken on 2026-09-13 shows two orders in
+it. The claim was made from the Manage block's three links rather than from the whole
+page. What was actually missing was only the repurchase: he could always SEE what he took
+and never ORDER it. Struck rather than deleted, because the shape of the error is the
+lesson — *a claim about a page, written from one block of it.*
+
 From there he buys as a brand-new customer: full price, re-enter the address, no order
 history, nothing carried across. Nothing in the checkout path recognises him as a
 returning customer.
 
-### 3f. A flagged result never suggests a retest; only an all-clear does
+#### What shipped, 2026-09-13
+
+| File | What it does |
+|---|---|
+| `lib/kits/reorder.ts` | NEW, pure. `reorderHref` and `resolveRetestCta` |
+| `lib/results/getDashboardData.ts` | Resolves the retest CTA **per kit**, session-side |
+| `app/(app)/account/page.tsx` | "Order again" under the test history |
+| `app/(app)/results-dashboard/page.tsx` | "Test again" below the tabs |
+| `scripts/test-reorder.ts` | NEW, 24 assertions, wired into `npm test` |
+
+**Same price, deliberately.** No returning-customer discount: that needs the
+willingness-to-pay work behind it, and one shipped now sets an anchor that cannot be
+quietly removed later. It also agrees with the standing rule already enforced at kit
+checkout, that kits are never discounted for anyone. **Neither block states a price at
+all** — the price lives on the kit page, and a number repeated here is a second call site
+that goes stale silently the first time one of them moves.
+
+🔴 **WHY THE CTA FIX IS A RESOLVER AND NOT A ONE-LINE EDIT.** The obvious fix is to change
+`CTAS.retestReminder.href` in `classifier.ts` from `/kits` to the right kit. It cannot be
+done there: that table is **one shared constant rendered on logged-out surfaces too**, and
+a static string cannot know whose result it is attached to. So the table keeps `/kits` as
+its correct DEFAULT and the resolution happens per viewer, per kit, where the viewer is
+known. `test-reorder.ts` (3b) asserts the shared table still says `/kits`, so a later
+"tidy-up" that points it at a specific product fails loudly instead of showing a stranger
+somebody else's kit.
+
+✅ **Verified by screenshot, not by a source read**, against the dev server with a real
+session: `/account` renders "Order again" under a two-row history, `/results-dashboard`
+renders "Test again", and a live-DOM read confirms **all three "Retest in 6-12 months"
+CTAs point at `/kits/energy-recovery`** for a man who took that kit, with no bare `/kits`
+link left on the page. `npm test` exit 0, typecheck clean, build clean.
+
+⚠ **The address prefill in the original suggestion was NOT built, and the suggestion was
+wrong about its cost.** It called the fix *"a link and a prefill"*. The link half is
+cheap; the prefill half is not. Checked against Stripe's API rather than assumed:
+`shipping_address_collection` accepts only `allowed_countries`, and `customer_email`
+prefills the email alone. **There is no shipping-address prefill on a guest Checkout
+session.** Getting one means attaching a persisted Stripe Customer that already carries an
+address, which changes the payment path and is a different piece of work. He still
+re-types his address.
+
+⚠ **New copy on both surfaces, owes the Guardrail #1 pre-flight.** No claim, no price, no
+urgency, but it is customer-facing and unapproved.
+
+### 3f. 🟡 SCOPED AND SOCKETED 2026-09-13, WORDS STILL EWA'S. A flagged result never suggests a retest; only an all-clear does
 
 Found while answering 3e, and it is the sharper half of it.
 
@@ -354,14 +473,65 @@ back low or equivocal gets `CTAS.gpReferral` instead, correctly per CA-014 -- an
 therefore **no retest prompt at all, ever, anywhere in the product**.
 
 The email that would otherwise catch him does not run either: mechanism 7 sits behind
-`RETEST_REMINDER_ENABLED` (off, CIO campaign 23 in draft) and stamps `retest_due_at`
-only on a **whole-result all-clear**.
+`RETEST_REMINDER_ENABLED` (off, ~~CIO campaign 23 in draft~~ **campaign 23 is `running`,
+re-verified against Customer.io on 2026-09-13**) and stamps `retest_due_at` only on a
+**whole-result all-clear**.
 
 🔴 **So the man most likely to need a second test is the one the product never invites to
 take one, on either surface.** This is not a bug in any single rule -- CA-014 is right
 that a GP-routed result must carry no upsell -- it is a gap between two rules that are
 each correct: "no upsell on a GP referral" and "tell people when to retest" have been
 implemented as though they were the same decision.
+
+#### What shipped 2026-09-13, and what deliberately did not
+
+**The screen half is built as a SOCKET, not a plug. The words are Ewa's and are not in
+the code.**
+
+| File | What it does |
+|---|---|
+| `lib/results/retestGuidance.ts` | NEW, pure. Which of three kinds of guidance a state is owed, **derived from `badgeFor`** so it is not a fourth list of "which states are bad" |
+| `scripts/test-classifier-regressions.ts` | CA-014 as a guard over every classified card in every scenario |
+| `scripts/test-retest-guidance.ts` | NEW, 62 assertions, wired into `npm test` |
+
+Three kinds, kept apart on purpose: **`offer`** (all-clear, the approved CTA already
+works and nothing changes), **`owed`** (flagged or GP-routed, needs a sentence with no
+link and no price, and that sentence does not exist), and **`none`** (report-only FAI,
+where nothing is missing — asserted separately so a later pass filling the gap does not
+mistake it for one).
+
+🔴 **THE NUMBER FOR EWA, printed by the test rather than argued:** **10 GP-routed states
+and 10 flagged states are owed retest wording. 9 all-clear states already have it.** That
+is the ask, and it is a count rather than "some flagged results have no guidance".
+
+⚠ **A rule was written stricter than the approved one, and running the guard is what
+caught it.** The first draft asserted *"only an all-clear may carry a purchase link"*.
+Four correct behaviours failed it: a Monitor or Action Needed marker may legitimately
+carry a **cross-sell to a different kit**, and three of those ship today (low vitamin D
+offers the testosterone kit; normal-testosterone offers the energy panel). **CA-014 is
+about GP routing, not about flagging.** Both sides of that boundary are now asserted, so
+the rule cannot be quietly tightened back to the wrong thing.
+
+#### 🔴 THE EMAIL HALF IS A HARD STOP, AND THE REASON CHANGED THIS WEEK
+
+The suggested fix said *"stamp the date for every result, and let the copy branch on the
+result state."* **Do not do this yet.** `retest_due_at` is the trigger for CIO campaign
+23, whose copy is CA-022, **and CA-022's approval is scoped in its own header to "every
+kit buyer whose result came back all-clear"**.
+
+Widening the stamp would point approved all-clear reassurance at the exact opposite
+cohort, GP-routed men included. That is the same defect 3c's independent pre-flight
+caught, **and it is worse here**: campaign 23 is `running`, not draft, so the only thing
+standing between a wider stamp and live sends is a feature flag.
+
+**The order is therefore fixed:** Ewa words the flagged cohort, the campaign's audience is
+corrected or a sibling campaign is built, and only then does the stamp widen. Doing it in
+any other order sends the wrong email to the most vulnerable reader on the list.
+
+⚠ **No customer-visible change shipped.** A man with a flagged result still sees no retest
+guidance, because the sentence that would give him one is not ours to write. What changed
+is that the gap is now a typed value with a count against it, and the direction that would
+harm somebody is guarded.
 
 ---
 
@@ -405,12 +575,12 @@ no longer exists.
 | 1 | ~~**The anchor decision** (section 2). Blocks every retest email.~~ ✅ **DECIDED 2026-09-07: the result landing**, with the timed bundles **exempt at purchase + 90**. No terms change, no code change on the bundle side. Nothing here is owed | Closed |
 | 2 | ~~3a: make `memberHasMarkerToMove` consult the classifier, or accept 90 days for everyone and delete the 365~~ ✅ **DECIDED AND BUILT 2026-09-13.** Keith took the classifier. Pure rule `decideRetestCadence` in `entitlement.ts`, IO in `sync.ts`, four non-collapsed outcomes, Sentry alert on the degraded read. Mechanism 5 is reachable | Closed |
 | 3 | ~~3b: advance the cycle on claim, or change the forecast and the copy to say one retest ever~~ ✅ **DECIDED, BUILT AND APPLIED 2026-09-13.** Keith took advance-on-claim via the dispatch table, which already existed. Two latent guard defects found and repaired in the same migration, applied to production and verified live | Closed |
-| 4 | 3c: decide whether a member gets a retest-due email at all. **Copy drafted and CIO campaign 25 built as a DRAFT on 2026-09-13**; pre-flight verdict `amber-ewa`. The audience question (approved copy travelling to a flagged cohort) and the Phase-0 question ride the unsent packet `r1901433818987540044`; the entitlement paragraph waits on P1. Attribute not yet stamped | Keith, then Ewa on the audience |
+| 4 | 3c: decide whether a member gets a retest-due email at all. **Copy drafted and CIO campaign 25 built as a DRAFT on 2026-09-13**; pre-flight verdict `amber-ewa`. The audience question (approved copy travelling to a flagged cohort) and the Phase-0 question ride the unsent packet `r1901433818987540044`; ✅ the entitlement paragraph is **SETTLED 2026-09-13** (Keith: it stands, ship-gated), which makes **P1 a fourth activation gate** on campaign 25 and the only one not ours to move. Attribute not yet stamped | Ewa on the audience; Keith still owes whether the email exists at all |
 | 5 | ~~Rewrite the 2026-07-17 pack's premise, then re-send~~ ✅ **Premise, §3a and §5 rewritten 2026-09-07**, and the sign-off email is DRAFTED (Gmail `r1901433818987540044`, five lettered questions). **Sending is Keith's act and has not happened.** | Keith to send |
 | 6 | The symptom overlay red-flag line (that pack's Q4b) — now **question 5 of the drafted email**, with a proposed red-flag list to accept, amend or replace | Ewa, once Keith sends |
-| 7 | 3d: decide which result states may pull a member's retest date forward, and make a self-bought kit **consume** the entitlement rather than run alongside it. The second half is a defect fix and needs no ruling; the first half is section 7's proposal and needs Ewa on the intervals | Keith, then Ewa, then build |
-| 8 | 3e: decide whether a returning customer gets a reorder path at all, and whether it is priced differently from a first purchase | Keith, then build |
-| 9 | 3f: decide what a GP-routed result says about retesting, given CA-014 forbids a kit upsell on it. A date with no purchase attached is the obvious candidate and is Ewa's to word | Keith to scope, Ewa to word |
+| 7 | 3d: ✅ **the second half is DECIDED AND BUILT 2026-09-13** — Keith: the fix belongs in **checkout, not the nightly job**. Branches 1 and 3 shipped behind `MEMBERSHIP_ENABLED`, 62 new assertions, and the clock reset is clamped so it can never hasten a retest. **What remains is which result states may pull the date forward**, section 7's proposal, and it is the whole of what is left of 3d | Ewa on the intervals |
+| 8 | 3e: ✅ **DECIDED AND BUILT 2026-09-13** — Keith: *"reorder at the same price"*. "Order again" on the account page, "Test again" on the dashboard, and the retest CTA now points at the kit he took rather than the catalogue index. No discount, and neither block states a price. **The address prefill was not built**: Stripe has no shipping-address prefill on a guest session, so that half is a different piece of work, not the "link and a prefill" the entry assumed. Copy owes a pre-flight | Pre-flight the copy |
+| 9 | 3f: ✅ **SCOPED AND SOCKETED 2026-09-13** — the separation of information from offer is built and CA-014 is now a guard over every classified card. **What is owed is the wording, and it is Ewa's: 10 GP-routed states and 10 flagged states.** Her answer may legitimately be "his GP decides the interval, not us", which is cheaper than a date. 🔴 **The email half is a hard stop until she answers**: widening `retest_due_at` would point CA-022's all-clear copy at the opposite cohort, and campaign 23 is `running`, not draft | Ewa to word |
 
 **Nothing in this file is a clinical decision.** It records what the code does
 today, so the decisions above can be made against facts rather than against four

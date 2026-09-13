@@ -4,7 +4,214 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-13 (four retest defects: three closed, one drafted and waiting on Ewa)
+## ▶️ PICK UP HERE — handoff, 2026-09-13 late (3d and 3e built; a question found P7, where the index fires after the charge)
+
+### WHAT THIS SESSION WAS
+
+Keith settled two questions and asked for one of them to be finished.
+
+**3c's entitlement paragraph.** It stands, ship-gated, not cut and not reworded:
+the CA-026 D2 treatment. **The consequence is that P1 is now a FOURTH activation
+gate on Customer.io campaign 25**, alongside the draft state, the unstamped
+attribute and `MEMBERSHIP_ENABLED`, and it is the only one of the four that is
+not ours to move. 3c can no longer close ahead of the solicitor.
+
+**3d's checkout half, decided and then built.** *"The fix belongs in checkout,
+not in the nightly job."* Check what he holds before taking his money, and never
+quietly consume the entitlement — that option was explicitly rejected, because a
+member who pays full retail and silently loses something he already owned is
+worse off than under the original defect.
+
+| File | What it does |
+|---|---|
+| `lib/membership/earlyRetest.ts` | NEW. The rule, pure. Five named outcomes plus the clamp |
+| `lib/membership/clockReset.ts` | NEW. Branch 3 at the database. Moves a date and nothing else |
+| `app/api/checkout/kit/route.ts` | Declines the sale before the details/consent branch |
+| `lib/results/processResult.ts` | Calls the reset after the biomarker insert, before the CIO emit |
+| `components/commerce/KitCheckoutButton.tsx` | A declined buyer goes to `/account/membership` |
+| `app/(app)/account/membership/page.tsx` | The contact link. 🔴 **New copy, owes a pre-flight** |
+| `scripts/test-membership.ts` | Section 13. Suite **236 → 298** |
+
+🔴 **THE CLAMP.** The clock reset may only push a retest LATER, never sooner.
+Without it, an all-clear member on the annual cadence who buys a kit and flags
+something would have his retest pulled **265 days forward** by the bare cadence
+rule — which is exactly the ruling half nobody has answered, implemented by the
+back door. Asserted over a 6×6 grid in both directions.
+
+⚠ **Nothing added here posts a kit.** `'dispatch-held'` declines the sale and
+the kit goes out on the sweep's next run, because a member whose date has passed
+is already in its selection. One belt, one place.
+
+⚠ **Two extensions beyond the letter of the decision, for Keith to confirm.**
+(1) A retest already in the post also declines the sale: a lost sale is fixable
+by a support email, a duplicate kit is not. (2) Branch 2 exists in code as an
+unreachable outcome behind `UNRULED`, so the cadence table becomes a lookup
+rather than a rewrite.
+
+**Verified:** `npm test` exit 0 (298 membership assertions), typecheck clean,
+production build clean, 78 static pages.
+
+**Still owed on 3d:** Ewa on which result states may pull a date forward. That
+is now the whole of what is left of it. A1 (an admin control to move a date) is
+still unbuilt, which is why the contact link matters.
+
+### 3e IS BUILT TOO: reorder at the same price
+
+Keith, 2026-09-13: *"reorder at the same price"*. Not behind any flag, so this
+one is live on the branch.
+
+| File | What it does |
+|---|---|
+| `lib/kits/reorder.ts` | NEW, pure. `reorderHref` + `resolveRetestCta` |
+| `lib/results/getDashboardData.ts` | Resolves the retest CTA per kit, session-side |
+| `app/(app)/account/page.tsx` | "Order again" under the test history |
+| `app/(app)/results-dashboard/page.tsx` | "Test again" below the tabs |
+| `scripts/test-reorder.ts` | NEW, 24 assertions, added to `npm test` |
+
+🔴 **"NO ORDER HISTORY" WAS WRONG IN THE REGISTER.** The account page has had a
+Kit / Status / Date / Action table since batch 3. The claim was written from the
+Manage block's three links rather than from the whole page, and it made the
+defect look bigger than it was. What was missing was only the repurchase.
+
+🔴 **THE CTA FIX HAD TO BE A RESOLVER.** `CTAS.retestReminder.href` in
+`classifier.ts` is one shared constant rendered on LOGGED-OUT surfaces too, so it
+cannot know whose result it is attached to. It keeps `/kits` as its default and
+the resolution happens per viewer in `getDashboardData`. A test asserts the
+shared table still says `/kits`, so a later tidy-up that points it at a specific
+product fails loudly rather than showing a stranger somebody else's kit.
+
+⚠ **The address prefill was NOT built and the suggestion misjudged its cost.**
+It said "a link and a prefill". Checked against Stripe rather than assumed:
+`shipping_address_collection` takes only `allowed_countries` and `customer_email`
+prefills the email alone, so **there is no shipping-address prefill on a guest
+session**. It needs a persisted Stripe Customer, which changes the payment path.
+
+✅ **Verified by screenshot with a real session**, not by a source read.
+(Captures were local only: `shots/` is untracked scratch in this repo and has
+never been committed, so do not go looking for them in git.) A live-DOM read
+confirms all three "Retest in 6-12 months" CTAs point at `/kits/energy-recovery`
+for a man who took that kit, with no bare `/kits` link left on the page.
+
+⚠ **New copy on both surfaces, owes the Guardrail #1 pre-flight.**
+
+**Verified:** `npm test` exit 0 (298 membership + 24 reorder), typecheck clean,
+production build clean, 78 static pages.
+
+### A1 IS BUILT: the one admin control over a member's retest date
+
+Panel 04 of `/admin/dashboard`. Look a member up by email, see his date, move
+it, say why. The reason is mandatory and is written to the audit trail with the
+operator's email and both dates. It closes what 3d's contact link routes into.
+
+| File | |
+|---|---|
+| `lib/admin/retestDate.ts` | NEW. Pure validation + the read and compare-and-set write |
+| `lib/admin/retestActions.ts` | NEW. Server action, **re-checks the admin gate itself** |
+| `components/internal/RetestDatePanel.tsx` | NEW. Panel 04 |
+| `scripts/test-admin-retest.ts` | NEW, 25 assertions over the refusal table |
+
+🔴 **IT IS THE ONLY CONTROL ON THAT PAGE THAT WRITES, AND IT POSTS REAL KITS.**
+The field it edits is the one the nightly sweep selects on, so a past date means
+tonight's sweep owes a kit. That is what it is *for*; the design makes it
+impossible to do without noticing rather than preventing it.
+
+🔴 **The gate is re-checked inside the action.** A server action is its own POST
+endpoint and does not inherit the page's guard — and that page's own header
+records its in-page check as the only gate there is.
+
+**One refusal is about the machine, not the money:** a retest already in the post
+cannot be moved backwards. The sweep claims before it inserts, so that would
+stamp the member claimed and send nothing — the 3b failure mode re-entered by
+hand. Forwards allowed; allowed again once the kit lands.
+
+**The audit goes in `lifecycle_events`** (already this app's general per-user
+event log, the contact form writes into it) so **no migration was needed**. A
+jsonb row is a weaker trail than a dedicated table; if this gets used often the
+upgrade is a real `membership_retest_adjustments` table, with a migration.
+
+✅ **Verified by screenshot, and looking at it found the last defect:** the
+operator had to type the same email twice, once to look up and once to move.
+Prefilled now. (Local capture only; `shots/` is untracked scratch.)
+
+⚠ **The admin allowlist is one address, so the screenshot needed a temporary
+local entry. It was reverted and the revert proved with `git diff`.**
+
+⚠ **Found on the way in, not yet a row:** `/admin/dashboard` is served from the
+APEX while the session cookie is host-only to the app host, which produced an
+infinite redirect when requested on the app host. Renders fine on the apex
+origin, so it may be a local host-mapping artefact. Worth five minutes before
+anyone relies on that page.
+
+### 3f IS SCOPED AND SOCKETED: the gap is typed and counted, the words are Ewa's
+
+Built as a socket, not a plug. `lib/results/retestGuidance.ts` decides which of
+three kinds of guidance a state is owed — `offer` (all-clear, unchanged),
+`owed` (flagged or GP-routed, needs a sentence with no link and no price, and
+that sentence does not exist), `none` (report-only FAI, where nothing is
+missing). **Derived from `badgeFor`**, so it is not a fourth list of "which
+states are bad" — which is the mistake `resultSeverity.ts` exists to prevent.
+
+🔴 **THE NUMBER FOR EWA, printed by the test rather than argued: 10 GP-routed
+states and 10 flagged states are owed retest wording; 9 all-clear states already
+have it.**
+
+⚠ **A rule was written stricter than the approved one and the guard caught it.**
+The first draft asserted "only an all-clear may carry a purchase link". Four
+correct behaviours failed: a Monitor or Action Needed marker may carry a
+CROSS-SELL to a different kit, and three ship today. **CA-014 is about GP
+routing, not about flagging.** Both sides now asserted.
+
+🔴 **THE EMAIL HALF IS A HARD STOP.** "Stamp the date for every result" would
+point CA-022's all-clear copy at the opposite cohort, GP-routed men included.
+**Campaign 23 is `running`, re-verified in Customer.io on 2026-09-13** — the
+repo record saying "draft" is wrong — so the only thing between a wider stamp
+and live sends is a feature flag. Order is fixed: Ewa words it, the campaign
+audience is fixed or a sibling built, then the stamp widens.
+
+⚠ **No customer-visible change.** A flagged man still sees no retest guidance,
+because that sentence is not ours to write.
+
+`npm test` exit 0 (62 new assertions), typecheck clean, build clean.
+
+### 🔴 NEW DEFECT P7: a second membership can be bought, and the index stops the row but not the charge
+
+Found 2026-09-13 by answering a question, not by sweeping. Keith asked what a
+reorder does to a membership; the answer is clean (a kit purchase creates no
+membership, and the only field that moves is `next_retest_due_at`, via 3d branch
+3). Reading the route to confirm that turned this up two lines above.
+
+**`app/api/checkout/subscription/route.ts` checks the membership flag and the
+30-day offer window, and never asks whether the user already has a live
+membership.** Reached by an existing member, Stripe creates and charges a second
+subscription; `createMembership` then fails on `memberships_one_live_per_user`;
+the whole failure is one `console.error`. No refund, no cancellation of the
+subscription Stripe just made, no ops alert. He pays £47 a month for a row that
+does not exist.
+
+🔴 **THE INDEX PROTECTS THE DATABASE, NOT THE CARD.** The constraint is real and
+correct — verified against production on 2026-09-13, a partial unique index over
+exactly the four statuses `ACTIVE_MEMBER_STATUSES` calls live. It fires *after*
+the money has moved. A data-integrity guard was being read as a commercial one.
+
+**Fix, no decision owed:** one lookup before the Stripe call, refuse and send him
+to `/account/membership`; raise `emitOpsAlert` on the failed insert (already
+imported, unused there); assert "a live member is refused" as a rule.
+
+⚠ Not reachable by clicking — `isMember` drives paywall vs member state — but the
+route's own comment already argues that a hidden paywall is not a gate because
+this is a public POST behind auth. That sentence is the case for the missing
+check. A double-submit or a stale tab gets there.
+
+⚠ **3e makes it more reachable**, without having created it: the only gate is a
+result inside 30 days, and reordering produces a fresh result that re-opens the
+window.
+
+Nothing has happened: the flag is off, no membership has ever been sold, and the
+two rows in the table are seeded dev accounts (A2).
+
+---
+
+## ▶️ Previous handoff, 2026-09-13 (four retest defects: three closed, one drafted and waiting on Ewa)
 
 ### WHAT THIS SESSION WAS
 

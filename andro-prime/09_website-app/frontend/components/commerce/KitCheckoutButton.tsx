@@ -41,6 +41,14 @@ export function KitCheckoutButton({ kitType, bundle, className, children }: Prop
         window.location.href = `/checkout/details?${q.toString()}`
         return
       }
+      // Defect 3d: he is a member and already holds this kit, either owed now
+      // or physically in the post. The route declined the sale; send him to the
+      // screen that already says so in approved words rather than minting a new
+      // sentence here. Reached only while MEMBERSHIP_ENABLED is on.
+      if (data.retestHeld) {
+        window.location.href = '/account/membership'
+        return
+      }
     } catch {
       // network error: allow retry
     }

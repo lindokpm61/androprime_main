@@ -238,6 +238,31 @@ export default async function MembershipPage({ searchParams }: PageProps) {
                     to be a member on that date. It is not a credit, there is no balance, and there
                     is nothing to keep track of.
                   </p>
+                  {/*
+                    🔴 NEW COPY, NOT YET PRE-FLIGHTED. Defect 3d, the two-minute
+                    interim. Before this line the waiting block was a dead end:
+                    a date, no button, no request and no contact link, so a
+                    member who wanted his retest sooner had no human path and
+                    his only self-serve option was buying a second kit, which is
+                    the defect. One address turns that into a conversation, and
+                    lets support move a date by hand until the cadence table
+                    exists (A1 is the admin control that does not exist yet).
+
+                    It deliberately promises a REPLY and not an outcome: nobody
+                    has ruled on which result states may go early, so the screen
+                    must not imply the date can be moved on request.
+
+                    ⚠ Owes the Guardrail #1 pre-flight before MEMBERSHIP_ENABLED
+                    goes on. Every other word on this screen is approved and
+                    verbatim; this one is not, and it is the only unapproved
+                    sentence here. No clinical claim, so Keith's and not Ewa's.
+                  */}
+                  <p className="f-fine" style={{ marginTop: 12 }}>
+                    Need it sooner?{' '}
+                    <a href="mailto:support@andro-prime.com" className="f-tlink">
+                      support@andro-prime.com
+                    </a>
+                  </p>
                 </>
               )}
               {entitlement.kind === 'due' && (

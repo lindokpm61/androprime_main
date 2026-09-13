@@ -22,6 +22,8 @@
 //  (10) betterCoupon: which discount a member actually gets at kit checkout.
 //  (11) Flagged-vs-loop: the three states the paywall has to tell apart.
 //  (12) The 30-day offer window: when a membership may be JOINED at all.
+//  (13) Defect 3d: what a member's kit purchase does about the retest he holds,
+//       including the clamp that stops the clock reset from ever hastening one.
 
 import {
   ACTIVE_MEMBER_STATUSES,
@@ -37,6 +39,14 @@ import {
   type MembershipLike,
   type SubscriptionStatus,
 } from '../lib/membership/entitlement'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import {
+  UNRULED,
+  decideKitPurchase,
+  declinesSale,
+  resetRetestDueAt,
+} from '../lib/membership/earlyRetest'
 import type { ResultState } from '../lib/results/types'
 import {
   ALL_CHECKIN_KEYS,
@@ -706,6 +716,143 @@ check('(12s) a member with a year-old result still holds his entitlement',
   !canJoinMembership(daysFromNow(-365), NOW) &&
     entitlementState(oldResultMember, NOW).kind === 'pending')
 
+
+// ───────────────────────────────────────────────────────────────────────────
+// (13) Defect 3d: what a member's KIT PURCHASE does about the retest he holds
+//
+// THE DECISION (Keith, 2026-09-13): the fix belongs in CHECKOUT, not in the
+// nightly job. Check what he holds before taking his money, and never quietly
+// consume the entitlement.
+//
+// This block asserts the three things that can go wrong and cost real money:
+//   - the sale is declined in exactly the two states where he already owns the
+//     kit, and in no others
+//   - branch 2 CANNOT fire while nobody has ruled on it, whatever the result
+//   - the clock reset can DELAY a retest and can never HASTEN one, which is the
+//     clamp that keeps this inside the decided half
+// ───────────────────────────────────────────────────────────────────────────
+
+const member = (over: Partial<MembershipLike> = {}): MembershipLike =>
+  make({ status: 'active', next_retest_due_at: iso(daysFromNow(60)), ...over })
+
+// -- which states decline the sale -----------------------------------------
+check('(13a) a pending retest does not block a purchase',
+  decideKitPurchase(member(), NOW).action === 'sell-and-reset')
+check('(13b) a retest already DUE declines the sale',
+  decideKitPurchase(member({ next_retest_due_at: iso(daysFromNow(-1)) }), NOW).action
+    === 'dispatch-held')
+check('(13c) a retest in the post declines the sale',
+  decideKitPurchase(member({ retest_claimed_at: iso(daysFromNow(-2)) }), NOW).action
+    === 'hold-in-flight')
+check('(13d) a non-member is an ordinary sale',
+  decideKitPurchase(null, NOW).action === 'sell')
+check('(13e) a lapsed member is an ordinary sale',
+  decideKitPurchase(member({ status: 'cancelled' }), NOW).action === 'sell')
+check('(13f) a member with no date set is an ordinary sale',
+  decideKitPurchase(member({ next_retest_due_at: null }), NOW).action === 'sell')
+
+// The money assertion, written as the rule rather than as a list of cases:
+// declining must be true for exactly the two owned states.
+const DECLINE_CASES: { label: string; m: MembershipLike | null; declines: boolean }[] = [
+  { label: 'none', m: null, declines: false },
+  { label: 'lapsed', m: member({ status: 'cancelled' }), declines: false },
+  { label: 'pending', m: member(), declines: false },
+  { label: 'due', m: member({ next_retest_due_at: iso(daysFromNow(-1)) }), declines: true },
+  { label: 'in flight', m: member({ retest_claimed_at: iso(daysFromNow(-2)) }), declines: true },
+]
+for (const c of DECLINE_CASES) {
+  check(`(13g) ${c.label} => declines ${c.declines}`,
+    declinesSale(decideKitPurchase(c.m, NOW).action) === c.declines)
+}
+
+// An expired claim is NOT in flight any more: past the 14-day window the kit
+// has reached him, so a new purchase is an ordinary one. Asserted because the
+// window is a presentation boundary elsewhere and a real gate here.
+check('(13h) a claim older than the in-flight window no longer blocks a sale',
+  decideKitPurchase(
+    member({ retest_claimed_at: iso(daysFromNow(-(RETEST_IN_FLIGHT_DAYS + 1))) }),
+    NOW,
+  ).action === 'sell-and-reset')
+
+// -- branch 2 is unreachable until Ewa rules --------------------------------
+check('(13i) UNRULED never produces bring-forward',
+  decideKitPurchase(member(), NOW, UNRULED).action !== 'bring-forward')
+check('(13j) ...and it is marked as a fall-through, not as an answer',
+  decideKitPurchase(member(), NOW, UNRULED).fellThrough === true)
+check('(13k) ruled-and-not-permitted is a real answer, not a fall-through',
+  decideKitPurchase(member(), NOW, { ruled: true, permitted: false }).fellThrough === false)
+check('(13l) the day a ruling permits it, the date moves instead of a sale',
+  decideKitPurchase(member(), NOW, { ruled: true, permitted: true }).action === 'bring-forward')
+// A ruling must never override an entitlement he has already been given.
+check('(13m) a ruling cannot resurrect a sale for a DUE retest',
+  decideKitPurchase(
+    member({ next_retest_due_at: iso(daysFromNow(-1)) }), NOW, { ruled: true, permitted: true },
+  ).action === 'dispatch-held')
+
+// -- the clamp --------------------------------------------------------------
+// THE CASE THAT MAKES THE CLAMP NECESSARY, spelled out because it is the one
+// that would silently implement branch 2: an all-clear member sits on the
+// annual cadence; he buys a kit, it flags something, and the bare cadence rule
+// would put his retest 265 days EARLIER than the date he was on.
+const annualDate = daysFromNow(365)
+const flaggedFromNewResult = firstRetestDueAt(NOW, true) // NOW + 90
+
+check('(13n) THE CLAMP: a sooner computed date is discarded',
+  resetRetestDueAt(annualDate, flaggedFromNewResult)?.moved === false)
+check('(13o) ...and the standing date is what is kept',
+  resetRetestDueAt(annualDate, flaggedFromNewResult)?.dueAt.getTime() === annualDate.getTime())
+
+// The case it exists for: a member 80 days into a 90-day cycle buys his own
+// kit. The new result re-anchors the cadence, pushing the entitlement out, so
+// the sweep does not post a second kit ten days later.
+const soonDate = daysFromNow(10)
+const pushedOut = resetRetestDueAt(soonDate, flaggedFromNewResult)
+check('(13p) a later computed date moves the entitlement', pushedOut?.moved === true)
+check('(13q) ...to the cadence applied to the NEW result',
+  pushedOut?.dueAt.getTime() === flaggedFromNewResult.getTime())
+
+check('(13r) an equal date is not a move', resetRetestDueAt(soonDate, soonDate)?.moved === false)
+check('(13s) no standing date means nothing to reset',
+  resetRetestDueAt(null, flaggedFromNewResult) === null)
+check('(13t) an unparseable standing date is refused rather than overwritten',
+  resetRetestDueAt(new Date('nonsense'), flaggedFromNewResult) === null)
+
+// The reset must never be able to shorten an entitlement, whatever it is handed.
+// Asserted over a range rather than at one point, because this is the direction
+// that takes something away from a paying member.
+for (const standing of [1, 10, 90, 200, 365, 400]) {
+  for (const computed of [1, 10, 90, 200, 365, 400]) {
+    const r = resetRetestDueAt(daysFromNow(standing), daysFromNow(computed))
+    check(`(13u) standing ${standing}d vs computed ${computed}d never moves earlier`,
+      r !== null && r.dueAt.getTime() >= daysFromNow(standing).getTime())
+  }
+}
+
+// -- the assumption branch 3 rests on, as a tripwire -------------------------
+//
+// 🔴 THIS IS A SOURCE READ, NOT A UNIT TEST, AND IT IS HERE ON PURPOSE.
+// `clockReset.ts` decides "did he pay for this kit?" from
+// `kit_orders.stripe_payment_intent`, and that only works because the dispatch
+// path inserts its kit_orders row WITHOUT one. Nothing in the type system says
+// so; it is a property of one insert in another file.
+//
+// If somebody adds a payment intent to that insert, every included retest
+// starts reading as a paid kit, and each one would quietly slide the member's
+// next retest out by a cycle. That failure is invisible: no error, no failed
+// test, just a date drifting on a screen nobody is watching. So the assumption
+// is asserted where it can fail loudly instead of in production.
+const dispatchSource = readFileSync(
+  join(__dirname, '..', 'lib', 'bundles', 'dispatch.ts'),
+  'utf8',
+)
+const kitOrderInsert = dispatchSource.slice(
+  dispatchSource.indexOf(".from('kit_orders')"),
+  dispatchSource.indexOf(".select('id')", dispatchSource.indexOf(".from('kit_orders')")),
+)
+check('(13v) the dispatch path still inserts kit_orders with no payment intent',
+  kitOrderInsert.length > 0 && !kitOrderInsert.includes('stripe_payment_intent'))
+check('(13w) ...and that insert was actually found, so the check is not vacuous',
+  kitOrderInsert.includes('user_id') && kitOrderInsert.includes('kit_type'))
 
 console.log(`test-membership: ${passes} passed, ${failures} failed`)
 if (failures > 0) process.exit(1)
