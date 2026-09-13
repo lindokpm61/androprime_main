@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation'
 import { isMembershipEnabled } from '@/lib/flags'
 import { PRODUCT_MAP } from '@/lib/subscriptions/products'
 import { PRICING } from '@/lib/pricing'
-import { KIT_NAMES } from '@/lib/kits/names'
 import {
   MEMBERSHIP_DISCLOSURE,
   MEMBERSHIP_INCLUDED_DAYS,
@@ -541,37 +540,46 @@ export default function MembershipPage() {
           what the customer signed up for is wider on our pages than on any
           comparator's. */}
       <FSection>
-        <div className="f-invert f-rise">
-          <div className="f-splitgrid">
-            <div>
-              <p className="f-blab f-invert-lab">What it costs, and when</p>
-              <h2 className="f-h2 f-invert-h">
-                {MEMBERSHIP_PRICE.replace('/mo', '')} a month,<br />from day {FIRST_CHARGE_DAY}.
-              </h2>
-              <p className="f-sub f-invert-p" style={{ marginTop: 16 }}>
-                Your first {INCLUDED_DAYS} days are paid for by the kit. On day {FIRST_CHARGE_DAY} the
-                card you bought the kit with is charged {MEMBERSHIP_PRICE.replace('/mo', '')}, and again
-                each month after that, until you cancel. That is an automatic renewal and we are not
-                going to describe it as anything else.
-              </p>
-              <p className="f-sub f-invert-p">
-                Before it happens you get an email with the date and the amount, sent while there is
-                still time to do something about it. Cancelling is self-serve in your account and
-                takes no longer than joining did.
-              </p>
-            </div>
+        {/* 🔴 THE QUOTE CARD CAME OUT ON 2026-09-13 (Keith, on the rendered page:
+            "I don't think we need the message in the white box"). It held the
+            canonical disclosure under a "The line, in full" label, plus a
+            paragraph explaining why the line is repeated here.
 
-            <div className="f-quotecard">
-              <p className="f-blab" style={{ marginBottom: 14 }}>The line, in full</p>
-              <blockquote>{DISCLOSURE}</blockquote>
-              <p className="f-fine" style={{ marginTop: 16 }}>
-                The same sentence appears beside the price on every kit page. It is here as well
-                because a man buying a {KIT_NAMES.testosterone} for £{PRICING.KIT_1.rrp} is buying a box
-                that comes through his letterbox, and he should not have to work out from a bank
-                statement that he bought anything else.
-              </p>
-            </div>
-          </div>
+            That paragraph was RATIONALE ADDRESSED TO US, printed on a customer
+            surface: it argued the case for showing the line rather than saying
+            anything the reader needed. And the card was redundant twice over,
+            because the prose to its left already states the included days, the
+            charge date, the amount, the renewal and the cancellation route in
+            better words.
+
+            ⚠ NOTHING IS LOST BY REMOVING IT. `MEMBERSHIP_DISCLOSURE` is the
+            shared source in `lib/membership/disclosure.ts` and still renders on
+            all seven kit surfaces via `MembershipDisclosure`, which is where a
+            buyer meets it at the point of sale. No test pinned it here; the only
+            reference to this file in `verify-subscription-claims.js` is
+            RENEWAL_ALLOW, which PERMITS renewal language rather than requiring
+            it.
+
+            The `f-splitgrid` wrapper went with it. At 980px it is `1fr 1fr`, so
+            one child would leave the prose in a half-width column beside dead
+            space. This now matches the shipped single-column inverted panel on
+            `/kits`: label, heading, prose, no inner wrapper. */}
+        <div className="f-invert f-rise">
+          <p className="f-blab f-invert-lab">What it costs, and when</p>
+          <h2 className="f-h2 f-invert-h">
+            {MEMBERSHIP_PRICE.replace('/mo', '')} a month,<br />from day {FIRST_CHARGE_DAY}.
+          </h2>
+          <p className="f-sub f-invert-p" style={{ marginTop: 16 }}>
+            Your first {INCLUDED_DAYS} days are paid for by the kit. On day {FIRST_CHARGE_DAY} the
+            card you bought the kit with is charged {MEMBERSHIP_PRICE.replace('/mo', '')}, and again
+            each month after that, until you cancel. That is an automatic renewal and we are not
+            going to describe it as anything else.
+          </p>
+          <p className="f-sub f-invert-p">
+            Before it happens you get an email with the date and the amount, sent while there is
+            still time to do something about it. Cancelling is self-serve in your account and
+            takes no longer than joining did.
+          </p>
         </div>
       </FSection>
 
