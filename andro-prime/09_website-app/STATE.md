@@ -56,6 +56,39 @@ for a build, or clear P6 first. The file carries a comment saying so.
 | **Build** | A way to verify Stripe prices against the **deployed** environment. The checker runs where the developer is; the environment that takes the money is elsewhere |
 | **Ewa** | 3d's ruling (which result states may pull a retest date forward) and 3f's wording (20 states) |
 
+### P5 re-checked at Keith's request, after the wrap
+
+✅ **The deterministic pre-flight on `/subscription/confirmed` is CLEAN**: 0 HARD,
+0 REVIEW, 3 CODE-COMMENT hits all in source comments. The price is read from
+`PRODUCT_MAP`, never typed. Still owed, unchanged: **Keith on the four new
+sentences** (standfirst, eyebrow, retest-date fallback, the "nothing to confirm"
+state) plus the CONTEXT.md judgement pass.
+
+🔴 **THE REBUILD IS NOT LIVE, and row 45 reads as though it were.** `main` still
+carries the old page. Verified two ways: `git show main:` and a fetch of
+production, which renders *"First box dispatching this week"*, *"First box
+ships"*, *"Letterbox-friendly"* and *"UK manufactured"* **today**, for products
+that are all `purchasable: false`. Same branch-versus-production gap as ruling
+B's footer. **The merge is what makes the rebuild real.**
+
+⚠ **Row 45's "not a live mis-statement today" reasoning is narrower than the
+situation, though its conclusion holds.** It argues from the flag gating the
+checkout POST so nobody can arrive at the page. True, and the page is a **public
+GET route returning 200 to anyone who types the URL**. What actually protects it
+is **three** things: the flag, the `noindex, nofollow` meta on the live page, and
+its absence from the sitemap and from any inbound link. All three re-checked
+2026-09-13. **A protection stated as one mechanism when it rests on three cannot
+be maintained**, because removing the noindex would read as an SEO tidy-up
+rather than as unshipping a guard.
+
+⚠ **A proxy that did not work, recorded so it is not repeated.** An anonymous
+`GET /membership` against production returned **200**, which looks like evidence
+the membership flag is on. It is not: `/membership` does not exist on `main` at
+all, so the request lands on the app host's login wall (defect H2) and the 200 is
+the login page's. **The flag's state in production remains unverified from here**
+since 2026-09-12, when it was checked with a real session. An instrument that
+cannot produce the distinguishing signal is not a weak check, it is not a check.
+
 ### Where the procedure lives
 
 **`../10_launch-ops/implementation-checklists/membership-switch-on.md`** — six
