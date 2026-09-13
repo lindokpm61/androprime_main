@@ -12,7 +12,13 @@
 
 import type { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import type { Database } from '@/lib/supabase/types'
-import { firstRetestDueAt } from './entitlement'
+import * as Sentry from '@sentry/nextjs'
+import {
+  decideRetestCadence,
+  firstRetestDueAt,
+  type LatestResultOutcome,
+} from './entitlement'
+import { latestClassifiedResult } from './latestResult'
 
 type Admin = ReturnType<typeof createSupabaseAdminClient>
 type SubscriptionStatus = Database['public']['Enums']['subscription_status']
@@ -22,29 +28,73 @@ export const MEMBERSHIP_SLUG = 'membership'
 /**
  * Does this member have a number worth moving in 90 days?
  *
- * THIS IS A DELIBERATE V1 SIMPLIFICATION AND A NAMED SEAM. The adopted cadence
- * (mockup, 2026-08-25) is: day 90 for a member with a flagged marker, annual
- * from the start for an all-clear member. Deciding that properly is a
- * CLASSIFIER question, not a SQL one: `biomarker_values` stores only value,
- * reference_low and reference_high, and our clinical action cutoff is
- * deliberately STRICTER than the lab reference interval (that gap is the whole
- * point of the two-range card). So "inside the lab range" does not mean
- * all-clear, and a SQL range check would wrongly mark a member all-clear when
- * they sit between our cutoff and the lab's.
+ * 🟢 THE SEAM THIS FILE NAMED IS NOW CLOSED (defect 3a, Keith 2026-09-13:
+ * *"point the check at the results engine instead of the row count"*). The v1
+ * body asked whether the member had ANY row in `lab_results`. Joining requires
+ * a result, so the answer was always yes, `ANNUAL_RETEST_DAYS` could never run,
+ * and every all-clear member was posted a 90-day retest at our cost. Its own
+ * comment said charging for that would be *"selling a test we do not think he
+ * needs"*, while the build gave him exactly that test for nothing.
  *
- * Until the classifier is wired in here, v1 errs in the MEMBER'S FAVOUR: anyone
- * with a result gets the 90-day first-cycle retest. Someone with no result yet
- * has nothing to move, so they go annual. Being wrong in this direction gives a
- * member a retest sooner than the rule strictly requires, which is a cost we
- * can absorb; being wrong the other way withholds the thing they paid for.
+ * ⚠ THE V1 COMMENT'S REASONING WAS RIGHT AND IS PRESERVED IN THE FIX. It is a
+ * CLASSIFIER question and not a SQL one: `biomarker_values` stores only value,
+ * reference_low and reference_high, and our action cutoff is deliberately
+ * stricter than the lab interval. A SQL range check would call a man all-clear
+ * whenever he sits in that gap, which is the whole point of the two-range card.
+ * So the verdict comes from `classify()`, via `latestClassifiedResult` and the
+ * same `isFlaggedState` predicate `retestPanel.ts` uses.
  *
- * To make it exact, replace the body with the classifier's verdict over the
- * member's most recent result. Nothing else needs to change.
+ * 🔴 THE RULE ITSELF IS PURE AND LIVES IN `entitlement.ts`. This function is the
+ * IO half: read, map the read to an outcome, hand it to `decideRetestCadence`,
+ * and alert if the answer was a fallback rather than a reading.
+ *
+ * ⚠ `latestClassifiedResult` RETURNS NULL FOR TWO DIFFERENT THINGS, and this is
+ * the one place the difference matters. For the retest PANEL both collapse
+ * safely to "send the kit he bought". Here they do not: "no result" is an
+ * honest annual, and "could not read it" is a 275-day swing on a silent error.
+ * So the cheap existence probe runs first to tell them apart. Two small queries,
+ * once per membership creation, is the right price for not moving a dispatch by
+ * nine months without saying so.
  */
 export async function memberHasMarkerToMove(
   supabase: Admin,
   userId: string,
 ): Promise<boolean> {
+  const outcome = await readLatestResultOutcome(supabase, userId)
+  const decision = decideRetestCadence(outcome)
+
+  if (decision.degraded) {
+    // An ops alert rather than a console line, because the consequence is a
+    // dispatch moved by ANNUAL_RETEST_DAYS - FIRST_CYCLE_RETEST_DAYS = 275 days,
+    // in silence, for a member who paid for the sooner one.
+    Sentry.captureMessage('[membership] retest cadence fell back: latest result unreadable', {
+      level: 'error',
+      tags: { area: 'membership', defect: '3a' },
+      extra: { userId, reason: decision.reason },
+    })
+  }
+
+  console.log(
+    '[membership] cadence for', userId,
+    '->', decision.hasMarkerToMove ? 'day 90' : 'annual',
+    `(${decision.reason}, ${decision.flaggedCount} flagged)`,
+  )
+
+  return decision.hasMarkerToMove
+}
+
+/**
+ * The read, mapped onto the pure rule's input.
+ *
+ * The existence probe is deliberately the FIRST query and deliberately tiny: it
+ * is the only thing that can distinguish a member who has no result from one
+ * whose result would not load. `latestClassifiedResult` cannot, because it
+ * returns null for a read error, for no row, and for a row with no biomarkers.
+ */
+async function readLatestResultOutcome(
+  supabase: Admin,
+  userId: string,
+): Promise<LatestResultOutcome> {
   const { data, error } = await supabase
     .from('lab_results')
     .select('id')
@@ -53,11 +103,16 @@ export async function memberHasMarkerToMove(
 
   if (error) {
     console.error('[membership] Could not read lab_results for cadence:', error.message)
-    // Same principle: on an unreadable result, give the sooner retest.
-    return true
+    return { status: 'unreadable' }
   }
+  if ((data?.length ?? 0) === 0) return { status: 'no-result' }
 
-  return (data?.length ?? 0) > 0
+  // He has a result, so from here a null is a FAILURE to read it, never an
+  // absence of one. That is what makes the two branches separable at all.
+  const latest = await latestClassifiedResult(supabase, userId)
+  if (!latest) return { status: 'unreadable' }
+
+  return { status: 'classified', states: latest.markers.map((m) => m.state) }
 }
 
 /**

@@ -227,8 +227,10 @@ export function DemoStage({ engine, journey, dates, preview = NO_PREVIEW }: Demo
   }, [engine, member, baselineValues, retestValues])
 
   const open = openMarker ? rows.find((r) => r.latest.markerName === openMarker) ?? null : null
-  /* Only a re-measured marker can be dragged in the member state: the others
-     have no second point, and moving history is the one thing the rail refuses. */
+  /* Only a re-measured marker can be dragged in the member state: a marker left
+     off a narrowed retest has no second point, and moving history is the one
+     thing the rail refuses. Every marker is draggable under the demo's Kit 3
+     retest; the guard is for members whose retest narrowed. */
   const editable = open ? (member ? open.previous !== null : true) : false
 
   return (
@@ -532,8 +534,8 @@ function MarkerControl({
   if (!editable) {
     return (
       <p className="ap-fixnote">
-        {result.markerName} was not re-measured: the included retest is a Kit 2 and this marker is
-        not on it. There is one reading, and one reading does not move.
+        {result.markerName} was not re-measured: it is not on the kit your retest was sent on. There
+        is one reading, and one reading does not move.
       </p>
     )
   }
@@ -613,8 +615,8 @@ const WATCH: Record<string, string[]> = {
   ],
   member: [
     'Open Vitamin D. 31 to 58, crossed out of the low band. That is the retest paying out.',
-    'Open Testosterone. There is no second point at all: the included retest is a Kit 2, and the hormone markers are not on it.',
-    'On any re-measured marker, look at the two plots. His energy rose too, and the app never says one caused the other.',
-    'Go to Record for all nine markers across both purchases, and note that only four of them moved.',
+    'Open Testosterone. Nine markers came back and this one went the other way, 10.5 to 10.1. Nothing we sell claims to move it, and after ninety days it has not.',
+    'On any marker with two plots, look at both. His energy rose too, and the app never says one caused the other.',
+    'Go to Record for all nine markers across both purchases. Every one was re-measured; four of them actually moved, and they are the four we sell against.',
   ],
 }

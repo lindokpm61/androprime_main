@@ -6,6 +6,39 @@ _Last updated: 2026-09-08 (🔴 **THE RETEST MAP NOW CARRIES SIX DEFECTS, NOT TH
 
 ---
 
+## 2026-09-13 — Three of the six retest defects are CLOSED, and the fourth is drafted
+
+Worked in order against `results-engine/retest-mechanism-map.md`. **Keith decided
+each one in session; every entry in the map's Owed table below is updated.**
+
+- ✅ **3a CLOSED.** *"Point the check at the results engine instead of the row
+  count."* The cadence check asked whether the member had ANY `lab_results` row;
+  joining requires one, so the 365-day path was unreachable and every all-clear
+  member was posted a 90-day retest at our cost. Now `decideRetestCadence` over
+  `isFlaggedState` — the same predicate the panel rule uses — with four
+  non-collapsed outcomes and a Sentry alert on a degraded read.
+- ✅ **3b CLOSED, migration LIVE IN PRODUCTION.** Keith took the dispatch-table
+  option; the table already existed, and the missing half was rolling the date
+  forward. **Two latent defects were found in the guard while implementing it** —
+  `membership_retest` was never an allowed `bundle_type` (every insert would have
+  failed) and the one-open-retest index guarded a status the table has never
+  allowed. Both repaired in `20260913_membership_retest_rolls_forward.sql`,
+  applied on Keith's go-ahead and verified against the live catalogue.
+- 🟡 **3c DRAFTED, not approved.** Copy written, pre-flighted, and built as
+  Customer.io campaign 25 in `draft`. Verdict **`amber-ewa`**.
+- ⏸ 3d, 3e, 3f untouched (ClickUp `869eyg5b6`).
+
+🔴 **THE SIGN-OFF PACKET BELOW SHOULD GAIN A SIXTH QUESTION BEFORE IT IS SENT.**
+It is still unsent, so this is free. The 3c pre-flight found that **CA-022's
+approval is scoped to all-clear kit buyers while the new email's audience is the
+flagged cohort, See-Your-GP included** — which is 3f, and Owed row 9 already
+reserves that wording to Ewa. The Phase-0 confirmatory-testing question (CA-026
+audit item F4) belongs in the same packet. **Expected reply then becomes six
+letters, not five**; update the expectation wherever it is recorded before
+sending, or a complete answer will read as a gap.
+
+---
+
 ## 📧 The retest cadence pack is rewritten and a sign-off email is DRAFTED for Keith (2026-09-07)
 
 **Gmail draft id `r1901433818987540044`, subject "Retest timing: five questions". NOT SENT.

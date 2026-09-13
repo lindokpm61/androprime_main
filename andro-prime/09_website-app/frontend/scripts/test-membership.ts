@@ -27,6 +27,8 @@ import {
   ACTIVE_MEMBER_STATUSES,
   ANNUAL_RETEST_DAYS,
   FIRST_CYCLE_RETEST_DAYS,
+  RETEST_IN_FLIGHT_DAYS,
+  decideRetestCadence,
   entitlementState,
   firstRetestDueAt,
   isActiveStatus,
@@ -35,6 +37,7 @@ import {
   type MembershipLike,
   type SubscriptionStatus,
 } from '../lib/membership/entitlement'
+import type { ResultState } from '../lib/results/types'
 import {
   ALL_CHECKIN_KEYS,
   ENERGY_QUESTION,
@@ -114,6 +117,82 @@ check('(2d) day 90 is 8-to-12 weeks, long enough for vitamin D or B12 to move',
 check('(2e) every retest after the first is annual',
   nextRetestAfter(flaggedFirst).getTime() === flaggedFirst.getTime() + ANNUAL_RETEST_DAYS * DAY_MS)
 
+// (2f onward) WHICH CADENCE, decided by the results engine rather than by a row
+// count. Defect 3a, closed 2026-09-13.
+//
+// THE REGRESSION THIS LOCKS. The old check asked whether the member had any row
+// in lab_results. Joining requires a result, so it always answered yes and the
+// annual path was unreachable: every all-clear member got a 90-day retest at our
+// cost. (2h) is the assertion that would have caught it, and it is written as
+// "an all-clear panel goes annual" rather than as a row count on purpose.
+const classified = (...states: ResultState[]) =>
+  decideRetestCadence({ status: 'classified', states })
+
+// ⚠ `optimal-testosterone` and NOT `normal-testosterone`. The first draft of
+// this test used the latter and failed, which is the useful kind of failure:
+// `normal-testosterone` is the 12-to-15 nmol/L low-end-of-normal band and it
+// badges as MONITOR, filled, so it is FLAGGED. A man there gets the 90-day
+// cadence, correctly, and the state's name is the only thing suggesting
+// otherwise. Asserted outright in (2t) so the next reader meets it as a rule
+// rather than as a broken test.
+const allClearPanel = classified('optimal-testosterone', 'shbg-normal', 'normal-vitamin-d')
+const flaggedPanel = classified('optimal-testosterone', 'low-vitamin-d', 'shbg-normal')
+
+check('(2f) a flagged marker gives the 90-day first cycle',
+  flaggedPanel.hasMarkerToMove && flaggedPanel.reason === 'flagged')
+check('(2g) and it counts them, for the log line',
+  flaggedPanel.flaggedCount === 1)
+check('(2h) THE 3a REGRESSION: an all-clear panel goes ANNUAL, not day 90',
+  allClearPanel.hasMarkerToMove === false && allClearPanel.reason === 'all-clear')
+check('(2i) an all-clear panel is a READING, not a fallback',
+  allClearPanel.degraded === false && allClearPanel.flaggedCount === 0)
+
+// The four outcomes are kept apart deliberately. Collapsing them is what made
+// the old version wrong, so assert that each is reachable and distinct.
+const noResult = decideRetestCadence({ status: 'no-result' })
+const unreadable = decideRetestCadence({ status: 'unreadable' })
+
+check('(2j) no result at all goes annual: he has nothing to move',
+  noResult.hasMarkerToMove === false && noResult.reason === 'no-result')
+check('(2k) and that is NOT degraded — "he has no numbers yet" is a fact, not a failed read',
+  noResult.degraded === false)
+check('(2l) an unreadable result errs in the MEMBER\'S favour, giving the sooner retest',
+  unreadable.hasMarkerToMove === true && unreadable.reason === 'unreadable')
+check('(2m) but it is marked degraded, so the caller can raise an ops alert',
+  unreadable.degraded === true)
+check('(2n) all four reasons are distinct',
+  new Set([flaggedPanel.reason, allClearPanel.reason, noResult.reason, unreadable.reason]).size === 4)
+
+// The two "nothing was flagged" outcomes must never be confused: one is his
+// data, the other is our failure to read it, and they take opposite cadences.
+check('(2o) all-clear and unreadable both saw no flag and take OPPOSITE cadences',
+  allClearPanel.flaggedCount === unreadable.flaggedCount &&
+    allClearPanel.hasMarkerToMove !== unreadable.hasMarkerToMove)
+
+// What the degraded path actually costs, stated as a number so nobody has to
+// work it out from two constants when deciding how loudly to alert.
+check('(2p) a silent degraded read would move a dispatch by 275 days',
+  ANNUAL_RETEST_DAYS - FIRST_CYCLE_RETEST_DAYS === 275)
+
+// The cadence and the retest PANEL must agree on what "flagged" means. Both
+// read isFlaggedState; this asserts the cadence actually honours it rather than
+// carrying its own list.
+check('(2q) a GP-routed testosterone is flagged for cadence, as it is for the panel',
+  classified('equivocal-testosterone').hasMarkerToMove)
+check('(2r) FAI alone never triggers the 90-day cycle: it carries no verdict (Ewa ruling 8)',
+  classified('fai-reported', 'optimal-testosterone').hasMarkerToMove === false)
+check('(2s) an empty panel reads as all-clear, which is why the caller must never send one',
+  classified().reason === 'all-clear')
+// The trap named above, asserted rather than left in a comment. If anyone ever
+// re-badges this state as outlined, a man at 13 nmol/L silently loses his
+// 90-day retest and nothing else in the suite would notice.
+check('(2t) THE NAMING TRAP: `normal-testosterone` is the 12-to-15 band, badges Monitor, and IS flagged',
+  classified('normal-testosterone').hasMarkerToMove &&
+    classified('normal-testosterone').reason === 'flagged')
+check('(2u) so the two testosterone states called "normal-ish" split, and only optimal is all-clear',
+  classified('optimal-testosterone').reason === 'all-clear' &&
+    classified('normal-testosterone').reason === 'flagged')
+
 // (3) entitlementState
 const make = (o: Partial<MembershipLike>): MembershipLike => ({
   status: 'active',
@@ -160,6 +239,75 @@ check('(3k) claimed beats due',
 check('(3l) claimed beats a cancelled status too',
   entitlementState(
     make({ status: 'cancelled', retest_claimed_at: iso(daysFromNow(-4)) }), NOW).kind === 'claimed')
+
+// (3m onward) THE RETEST ROLLS FORWARD. Defect 3b, closed 2026-09-13.
+//
+// THE REGRESSION THIS LOCKS. `claimed` used to win over everything with no
+// expiry, so one stamp ended the entitlement for good: GBP 47/month forever and
+// no second kit, while this screen's own copy, /membership and the year-1
+// forecast all said one retest per year. The date is the control now, and the
+// double-dispatch guard moved to bundle_dispatches' partial unique index.
+const claimedLongAgo = make({
+  status: 'active',
+  retest_claimed_at: iso(daysFromNow(-200)),
+  next_retest_due_at: iso(daysFromNow(-1)),
+})
+
+check('(3m) THE 3b REGRESSION: an OLD claim no longer blocks the next retest',
+  entitlementState(claimedLongAgo, NOW).kind === 'due')
+check('(3n) and it is genuinely dispatchable, not merely displayed as due',
+  isRetestDispatchable(claimedLongAgo, NOW))
+
+// The window itself. Inside it the kit is in the post; outside it he has it and
+// the useful thing on screen is the countdown to the next one.
+const justClaimed = make({
+  retest_claimed_at: iso(daysFromNow(-1)),
+  next_retest_due_at: iso(daysFromNow(ANNUAL_RETEST_DAYS - 1)),
+})
+const claimedAndArrived = make({
+  retest_claimed_at: iso(daysFromNow(-(RETEST_IN_FLIGHT_DAYS + 1))),
+  next_retest_due_at: iso(daysFromNow(ANNUAL_RETEST_DAYS - RETEST_IN_FLIGHT_DAYS - 1)),
+})
+
+check('(3o) a just-released retest reads as on its way',
+  entitlementState(justClaimed, NOW).kind === 'claimed')
+check('(3p) once it has arrived, the screen counts down to the next one instead',
+  entitlementState(claimedAndArrived, NOW).kind === 'pending')
+check('(3q) the in-flight window covers the address-check window plus posting',
+  RETEST_IN_FLIGHT_DAYS > 4 && RETEST_IN_FLIGHT_DAYS <= 21)
+check('(3r) a claim dated in the FUTURE is never in flight (clock skew, bad backfill)',
+  entitlementState(
+    make({ retest_claimed_at: iso(daysFromNow(3)), next_retest_due_at: iso(daysFromNow(30)) }),
+    NOW).kind === 'pending')
+check('(3s) an unparseable claim stamp falls through rather than throwing',
+  entitlementState(
+    make({ retest_claimed_at: 'not-a-date', next_retest_due_at: iso(daysFromNow(30)) }),
+    NOW).kind === 'pending')
+
+// The roll-forward arithmetic the sweep performs. Asserted here because the
+// sweep itself is IO; this is the rule it applies.
+const cycle1Due = firstRetestDueAt(started, true)
+const cycle2Due = nextRetestAfter(cycle1Due)
+const cycle3Due = nextRetestAfter(cycle2Due)
+check('(3t) the first cycle is 90 days and every cycle after it is a year',
+  cycle2Due.getTime() - cycle1Due.getTime() === ANNUAL_RETEST_DAYS * DAY_MS &&
+    cycle3Due.getTime() - cycle2Due.getTime() === ANNUAL_RETEST_DAYS * DAY_MS)
+check('(3u) rolling forward strictly advances, so a cycle can never repeat',
+  cycle3Due.getTime() > cycle2Due.getTime() && cycle2Due.getTime() > cycle1Due.getTime())
+
+// The member is excluded for exactly one cycle rather than forever, which is
+// the whole of 3b stated as one assertion.
+const dayAfterClaim = new Date(cycle1Due.getTime() + DAY_MS)
+const justAfterNextDue = new Date(cycle2Due.getTime() + DAY_MS)
+const rolled = make({
+  status: 'active',
+  retest_claimed_at: iso(cycle1Due),
+  next_retest_due_at: iso(cycle2Due),
+})
+check('(3v) the day after a claim he is NOT owed another',
+  isRetestDispatchable(rolled, dayAfterClaim) === false)
+check('(3w) a year later he IS owed another, which he never was before',
+  isRetestDispatchable(rolled, justAfterNextDue))
 
 // (4) The sweep's single question, across the full cross-product.
 //

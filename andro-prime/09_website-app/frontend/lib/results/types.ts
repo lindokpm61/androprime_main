@@ -27,16 +27,17 @@ export type ScenarioName =
   | 'multi-deficiency'
   | 'multi-deficiency-energy'
   | 'kit3-low-t-plus-vitamin-d-and-b12'
-  // The public demo's two purchases. Kit 3 first, then a Kit 2 retest ninety
-  // days on -- Keith's ruling, 2026-09-07 -- so only four of the nine markers
-  // ever get a second point. See `lib/results/demo.ts`.
+  // The public demo's two purchases. Kit 3 first, then a Kit 3 retest ninety
+  // days on, so all nine markers get a second point. The retest kit is NOT a
+  // choice made here: it is what `selectRetestPanel` returns for this man, who
+  // is flagged across both halves of the panel (D1, Keith 2026-09-13). See
+  // `lib/results/demo.ts`.
   //
-  // These replaced `demo-kit3-split` / `demo-kit3-retest` on 2026-09-07, when
-  // the demo was rebuilt from the prototype. The pair they replaced held the
-  // man the homepage readout shows; these hold the prototype's man, which is
-  // the one its screens were drawn for. The fixtures carry the full reasoning.
+  // The pair replaced `demo-kit3-split` / `demo-kit3-retest` on 2026-09-07,
+  // when the demo was rebuilt from the prototype; the retest half was renamed
+  // back on 2026-09-13 when its kit changed. The fixtures carry the reasoning.
   | 'demo-kit3-baseline'
-  | 'demo-kit2-retest'
+  | 'demo-kit3-retest'
 
 export interface SingleResult {
   resultId: string

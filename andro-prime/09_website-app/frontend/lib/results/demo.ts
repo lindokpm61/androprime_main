@@ -27,10 +27,24 @@ import {
  *      Keith chose this explicitly, having been shown what it costs: `/`'s
  *      sample readout and the demo now show different people. The fixtures
  *      carry the full note.
- *   2. THE RETEST IS A DIFFERENT KIT. Kit 3 buys nine markers; the included
- *      retest is a four-marker Kit 2. So **only four of the nine ever get a
- *      second point**, which no previous version of this file could express --
- *      it stacked two same-kit results and assumed every marker had a pair.
+ *   2. THE RETEST KIT IS NOT TYPED ANYWHERE. It is whatever
+ *      `selectRetestPanel` returns for this man's flags, and for him that is
+ *      the Kit 3 he bought, because he is flagged on both halves of the panel
+ *      and a Kit 2 cannot measure his testosterone.
+ *
+ *      ⚠ THIS IS THE SECOND HALF OF THE 2026-09-07 RULING, REVERSED ON
+ *      2026-09-13 (D1). That ruling said *"the initial buy is Kit 3 and the
+ *      rebuy or retest is Kit 2."* The first half stands. The second hard-coded
+ *      a kit, which is the thing D1 was raised to remove, and it is what made
+ *      the demo contradict the nightly job for five days. Keith, 2026-09-13:
+ *      *"If someone initially purchased Kit 3 and then has markers in Kit 3
+ *      that belong to Kit 1 and 2, then we just send out a Kit 3."*
+ *
+ *      The file still assumes nothing about pairing: `markerHistory` attaches a
+ *      retest reading only where one exists, which is the shape a NARROWED
+ *      retest needs. That path is now unexercised by the demo and is covered by
+ *      `scripts/test-marker-history.ts` instead, because real Kit 3 members
+ *      whose flags fall inside one half will hit it.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * 🔴 IT READS NO DATABASE AND TAKES NO USER. Everything below resolves to two
@@ -56,12 +70,14 @@ import {
 /* ------------------------------------------------------------- the purchases */
 
 /*
- * TWO PURCHASES, TWO KITS. Named separately rather than as a list, because they
- * are not interchangeable: the first defines the panel the whole app is drawn
- * against, and the second is a subset of it arriving ninety days later.
+ * TWO PURCHASES. Named separately rather than as a list, because they are not
+ * interchangeable: the first defines the panel the whole app is drawn against,
+ * and the second arrives ninety days later. They happen to be the same kit for
+ * this man, which is the rule's answer and not an assumption -- section 6 of
+ * `scripts/test-retest-panel.ts` fails if the fixtures stop agreeing with it.
  */
 export const DEMO_BASELINE_SCENARIO: ScenarioName = 'demo-kit3-baseline'
-export const DEMO_RETEST_SCENARIO: ScenarioName = 'demo-kit2-retest'
+export const DEMO_RETEST_SCENARIO: ScenarioName = 'demo-kit3-retest'
 
 /* ------------------------------------------------------------------ journey */
 
@@ -243,13 +259,13 @@ export interface DemoMarkerSeed {
 export interface DemoEngineInput {
   /** Kit 3. The panel the whole app is drawn against. */
   baselineKit: KitType
-  /** Kit 2. Four of the nine, ninety days later. */
+  /** Kit 3 again, ninety days later: what the retest rule returns for this man. */
   retestKit: KitType
   userAge: number | null
   symptomAnswers: { questionKey: string; answer: string | number | boolean }[]
   /** The nine, as first measured. Fixed: history does not move. */
   baselineSeeds: DemoMarkerSeed[]
-  /** The four that were retested. The rail's slider drives these. */
+  /** The nine, re-measured. The rail's slider drives these. */
   retestSeeds: DemoMarkerSeed[]
 }
 
@@ -273,7 +289,7 @@ function seedsOf(name: ScenarioName): DemoMarkerSeed[] {
  * BOTH POINTS ARE ALWAYS SENT, in every journey state. The waiting and result
  * states simply do not render the retest. Sending it conditionally would mean a
  * second payload shape and a second set of branches for no saving worth having:
- * four markers is a few hundred bytes.
+ * nine markers is a few hundred bytes.
  */
 export function getDemoEngineInput(): DemoEngineInput {
   const baseline = SCENARIOS[DEMO_BASELINE_SCENARIO]

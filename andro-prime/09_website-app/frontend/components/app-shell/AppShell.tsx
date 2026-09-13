@@ -81,11 +81,19 @@ import type { ClassifiedResult, KitType } from '@/lib/results/types'
  * One marker, as the demo shows it: the newest reading, and the earlier one
  * where a second purchase produced it.
  *
- * 🔴 `previous` IS NULL FOR FIVE OF THE NINE, AND THAT IS THE POINT. The first
- * purchase is Kit 3 and the included retest is Kit 2 (Keith, 2026-09-07), so the
- * hormone markers have one reading and the energy markers have two. Every screen
- * branches on this rather than on the journey state, which is what stops a
- * "was → now" appearing over a number that was never re-measured.
+ * 🔴 `previous` CAN BE NULL, AND EVERY SCREEN MUST STILL BRANCH ON IT even
+ * though the demo no longer produces one. The demo's retest is a Kit 3 (D1,
+ * Keith 2026-09-13), so all nine markers currently have two readings. That is
+ * this man's answer from `selectRetestPanel`, not a property of the app: a Kit 3
+ * member whose flags fall inside one half is sent a narrowed kit and his
+ * hormone rows come back with `previous` null.
+ *
+ * So the branch stays, and it is NOT dead code. It is simply no longer
+ * exercised by the demo, which means it is no longer checked by eye. The logic
+ * is covered by `scripts/test-marker-history.ts` section 3 (cross-kit: two of
+ * three re-measured, one measured once), which uses its own fixtures and does
+ * not read the demo's. What stops a "was → now" appearing over a number that
+ * was never re-measured is this branch, not the journey state.
  */
 export interface DemoRow {
   latest: ClassifiedResult
@@ -1041,7 +1049,13 @@ function RecordScreen({
       <div className="ap-card">
         <span className="ap-lbl">Two purchases, one picture</span>
         <p className="ap-body">
-          <b>Nine markers, two dates, {numberWord(retested.length)} of them re-measured.</b>{' '}
+          <b>
+            Nine markers, two dates,{' '}
+            {retested.length === rows.length
+              ? 'every one of them re-measured'
+              : `${numberWord(retested.length)} of them re-measured`}
+            .
+          </b>{' '}
           Which kit a number came from is a detail on the row, not something you have to navigate.
         </p>
       </div>

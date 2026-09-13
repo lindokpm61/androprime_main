@@ -24,7 +24,7 @@ import { cioKeyForUserId } from '@/lib/customerio/identity'
 import { dispatchSecondKit } from '@/lib/bundles/dispatch'
 import { ADDRESS_CHECK_WINDOW_DAYS } from '@/lib/bundles/config'
 import { isTriggerMatured, needsAddressCheck, isWindowElapsed } from '@/lib/bundles/sweep'
-import { isRetestDispatchable } from '@/lib/membership/entitlement'
+import { isRetestDispatchable, nextRetestAfter } from '@/lib/membership/entitlement'
 import { latestClassifiedResult } from '@/lib/membership/latestResult'
 import { selectRetestPanel, type RetestPanel } from '@/lib/membership/retestPanel'
 import type { KitType } from '@/lib/results/types'
@@ -82,7 +82,11 @@ export async function POST(request: NextRequest) {
     const { data: dueMemberships, error: dueError } = await supabase
       .from('memberships')
       .select('id, user_id, status, next_retest_due_at, retest_claimed_at')
-      .is('retest_claimed_at', null)
+      // 🔴 `.is('retest_claimed_at', null)` WAS HERE AND WAS DEFECT 3b. It made
+      // the first claim permanent: a member who had ever had a retest never
+      // appeared in this query again. The date is the control now, and after a
+      // claim it sits a year ahead, so it excludes him for exactly one cycle
+      // instead of forever.
       .not('next_retest_due_at', 'is', null)
       .lte('next_retest_due_at', nowIso)
 
@@ -138,19 +142,43 @@ export async function POST(request: NextRequest) {
           }
         }
 
-        // Claim FIRST. If the insert then fails, tomorrow's sweep sees the claim
-        // already set and under-dispatches, which a human can fix. Claiming
-        // second would risk a second real kit and real postage on a retry. Of
-        // the two failure modes only one is recoverable.
-        const { error: claimError } = await supabase
+        // Claim FIRST, and ROLL THE DATE FORWARD in the same update (defect 3b,
+        // Keith 2026-09-13). One statement moves the entitlement to the next
+        // cycle and records when this one was released.
+        //
+        // Claim-before-insert is unchanged and the reasoning is unchanged: if
+        // the insert then fails, tomorrow's sweep sees a date a year out and
+        // under-dispatches, which a human can fix. Claiming second would risk a
+        // second real kit and real postage on a retry. Of the two failure modes
+        // only one is recoverable.
+        //
+        // ⚠ THE `.eq('next_retest_due_at', ...)` IS THE CONCURRENCY GUARD and it
+        // replaces the old `.is('retest_claimed_at', null)`. Both are
+        // compare-and-set; the difference is that this one re-arms every cycle
+        // while the old one armed once in the member's lifetime. Two sweeps
+        // racing on the same membership: the first moves the date, the second
+        // matches nothing and updates no rows.
+        const previousDueIso = m.next_retest_due_at
+        const rolledDueAt = nextRetestAfter(new Date(previousDueIso as string))
+
+        const { data: claimed, error: claimError } = await supabase
           .from('memberships')
-          .update({ retest_claimed_at: nowIso })
+          .update({ retest_claimed_at: nowIso, next_retest_due_at: rolledDueAt.toISOString() })
           .eq('id', m.id)
-          .is('retest_claimed_at', null)
+          .eq('next_retest_due_at', previousDueIso as string)
+          .select('id')
 
         if (claimError) {
           console.error('[bundle-sweep] Failed to claim retest for membership', m.id, claimError.message)
           failures += 1
+          continue
+        }
+
+        // No row matched, so another run claimed this cycle between the select
+        // and the update. Not a failure, and explicitly NOT a dispatch: falling
+        // through would insert a second owed kit.
+        if (!claimed || claimed.length === 0) {
+          console.log('[bundle-sweep] Retest for membership', m.id, 'was claimed by a concurrent run; skipping')
           continue
         }
 

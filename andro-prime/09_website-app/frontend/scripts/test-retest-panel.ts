@@ -255,18 +255,21 @@ check('(5l) a Kit 1 buyer stays on Kit 1', kit1Man.kit === 'testosterone')
 check('(5m) no markers at all is the nothing-flagged path', selectRetestPanel([], 'testosterone').reason === 'nothing-flagged')
 
 // ───────────────────────────────────────────────────────────────────────────
-// (6) THE DEMO, WHICH IS THE OTHER HALF OF D1 AND IS STILL OPEN
+// (6) THE DEMO, WHICH IS THE OTHER HALF OF D1 AND IS NOW CLOSED
 //
-// D1 says one of two things has to move before /demo goes public: the job, or
-// the demo. The job has moved. This section measures whether the demo now
-// agrees, and TODAY IT DOES NOT.
+// D1 said one of two things had to move before /demo went public: the job, or
+// the demo. The job moved on 2026-09-12. The demo moved on 2026-09-13, when
+// Keith took option 2 of the three this section used to list:
+//
+//   *"If someone initially purchased Kit 3 and then has markers in Kit 3 that
+//   belong to Kit 1 and 2, then we just send out a Kit 3."*
 //
 // The demo's baseline man is flagged on six markers spanning BOTH halves of the
 // panel: equivocal testosterone and low free testosterone on the Kit 1 side,
 // low vitamin D, borderline B12, elevated hs-CRP and suboptimal ferritin on the
 // Kit 2 side. No rule that follows the flags can send him a Kit 2, because a
 // Kit 2 cannot measure his testosterone. The cheapest kit that covers all six
-// is the full Kit 3.
+// is the full Kit 3, and that is now the kit `demo-kit3-retest` carries.
 //
 // ⚠ The suggested fix in the register reads "if a flagged marker only exists on
 // Kit 3, send Kit 3", and that condition can never fire: Kit 3 is the union of
@@ -275,18 +278,12 @@ check('(5m) no markers at all is the nothing-flagged path', selectRetestPanel([]
 // send every member a Kit 2, including this one, which would re-measure four of
 // his six flagged markers and silently drop his testosterone.
 //
-// So the demo still needs a decision from Keith, and it is a product one:
-//   - make the demo's BASELINE man flagged only inside Kit 2, which keeps the
-//     Record tab's "what moved, what was never re-measured" argument but gives
-//     up the low-testosterone story that is the product's spine; or
-//   - make the demo's RETEST a Kit 3, which keeps the story and gives up the
-//     partial-remeasure teaching point; or
-//   - rule that the retest always re-measures the full panel he bought, which
-//     closes D1 by reverting this rule to its fallback.
-//
-// These assertions are the tripwire. When the decision lands and the fixtures
-// change, (6b) starts passing and (6a) fails, and whoever made the change is
-// told in one line which of the three they picked.
+// 🔴 THIS IS STILL A TRIPWIRE, IT HAS SIMPLY CHANGED SIGN. It asserts that the
+// kit typed into the demo's retest fixture is the kit the shipped rule derives
+// from the demo's baseline. Edit either fixture so they diverge and (6b) fails,
+// naming both kits, rather than /demo quietly going back to showing a journey
+// the nightly job would not produce. That is the failure D1 was raised for and
+// it went five days unnoticed.
 // ───────────────────────────────────────────────────────────────────────────
 
 const demoBaselineKit = SCENARIOS[DEMO_BASELINE_SCENARIO].payload.kitType as KitType
@@ -300,11 +297,34 @@ const demoPanel = selectRetestPanel(demoMarkers, demoBaselineKit)
 
 check('(6a) the demo baseline reads as a Kit 3, because it is flagged on both halves',
   demoPanel.kit === 'hormone-recovery' && demoPanel.flagged.length === 6)
-check('(6b) OPEN: the demo shows a Kit 2 retest, so the demo and the rule still disagree',
-  demoPanel.kit !== demoShownRetestKit)
-check('(6c) and the disagreement is the demo\'s baseline, not the rule: a Kit 2 cannot measure his testosterone',
+check(`(6b) the demo's retest fixture is the kit the rule derives (rule ${demoPanel.kit}, demo ${demoShownRetestKit})`,
+  demoPanel.kit === demoShownRetestKit)
+check('(6c) and it could not have been a Kit 2: a Kit 2 cannot measure his testosterone',
   demoPanel.flagged.includes('total-testosterone') &&
     !KIT_PANELS['energy-recovery'].includes('total-testosterone'))
+// Option 2 gave up the partial-remeasure teaching point, so assert the thing
+// that replaced it: all nine markers are re-measured, and the four that move
+// are the four we sell a product against. If someone flattens the hormone half
+// back out, or lets testosterone drift UP across a band, this fails.
+const demoRetest = SCENARIOS[DEMO_RETEST_SCENARIO].payload.biomarkers
+const demoBase = SCENARIOS[DEMO_BASELINE_SCENARIO].payload.biomarkers
+const valueOf = (list: typeof demoBase, name: string) =>
+  list.find((b) => b.name === name)?.value ?? NaN
+check('(6d) every one of the nine baseline markers is re-measured',
+  demoBase.length === 9 && demoRetest.length === 9 &&
+    demoBase.every((b) => demoRetest.some((r) => r.name === b.name)))
+check('(6e) testosterone does NOT rise: we hold no claim that anything we sell moves it',
+  valueOf(demoRetest, 'Testosterone') < valueOf(demoBase, 'Testosterone'))
+check('(6f) and it stays inside the equivocal band, so no verdict changes on the hormone half',
+  valueOf(demoRetest, 'Testosterone') >= 8 && valueOf(demoRetest, 'Testosterone') < 12)
+check('(6g) free testosterone stays under its floor, which the T/SHBG ratio forces',
+  valueOf(demoRetest, 'Free Testosterone') < 0.198)
+// FAI is printed next to copy saying it IS total T as a percentage of SHBG, so
+// the number has to actually be that or the screen contradicts its own caption.
+const faiDerived =
+  (valueOf(demoRetest, 'Testosterone') / valueOf(demoRetest, 'SHBG')) * 100
+check(`(6h) FAI is derived, not typed (${faiDerived.toFixed(2)} vs ${valueOf(demoRetest, 'Free Androgen Index')})`,
+  Math.abs(faiDerived - valueOf(demoRetest, 'Free Androgen Index')) < 0.05)
 
 // ───────────────────────────────────────────────────────────────────────────
 // (7) THE BLAST RADIUS: the kit he bought bounds the answer

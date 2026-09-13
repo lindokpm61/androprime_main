@@ -131,10 +131,15 @@ export function remeasured(histories: readonly MarkerHistory[]): MarkerHistory[]
 /**
  * Only the markers measured ONCE.
  *
- * Not a leftover list. Under a step-down retest these are most of the panel, and
- * the demo's Record tab is built around showing them: "not retested" is
- * information a member needs, because the alternative is a page that quietly
- * drops five of nine markers and reads as though they were never measured.
+ * Not a leftover list. Under a NARROWED retest these are most of the panel, and
+ * the Record tab is built around showing them: "not retested" is information a
+ * member needs, because the alternative is a page that quietly drops markers and
+ * reads as though they were never measured.
+ *
+ * ⚠ The demo stopped exercising this on 2026-09-13 (D1): its retest is a Kit 3,
+ * so every marker has two points. The function is NOT dead: `selectRetestPanel`
+ * narrows 30 of the 255 Kit 3 flag combinations. But it is no longer checked by
+ * eye anywhere, only by `scripts/test-marker-history.ts` section 3.
  */
 export function measuredOnce(histories: readonly MarkerHistory[]): MarkerHistory[] {
   return histories.filter((h) => h.previous === null)

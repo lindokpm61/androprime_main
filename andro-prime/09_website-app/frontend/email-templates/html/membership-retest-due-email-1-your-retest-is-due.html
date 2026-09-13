@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Your retest is due on {{ customer.membership_retest_due_at | date: "%-d %B" }}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Merriweather:wght@300;400;700&display=swap');
+    body { margin: 0; padding: 0; background-color: #f9fafb; }
+    * { box-sizing: border-box; }
+    a { color: #000000; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Georgia,'Times New Roman',serif;">
+
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f9fafb;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border:2px solid #000000;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:28px 40px 24px; border-bottom:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:#000000;">Andro Prime</p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 32px;">
+
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Your next check with Andro Prime is due on {{ customer.membership_retest_due_at | date: "%-d %B %Y" }}.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                It is included with your membership, so there is nothing to buy and nothing to arrange.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Levels do not stay still. They shift with the seasons, your training, your diet and your age. A retest is the only way to find out how your levels have changed since last time, and a second reading gives you a trend rather than a single snapshot.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Here is what happens next. On that date we prepare your kit. Before it ships we will email you to confirm the delivery address we hold, so you can change it if you have moved. Then it arrives, you take the sample the same way you did last time, and your new numbers appear in your account next to your old ones.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                One thing worth knowing: the retest is included while you are a member, and you need to be a member on that date. It is not a credit, there is no balance, and there is nothing to keep track of.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                If something has not felt right in the meantime, your GP is always a sensible place to start.
+              </p>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 28px;">
+                <tr>
+                  <td style="background-color:#000000;">
+                    <a href="https://app.andro-prime.com/account" style="display:inline-block; padding:12px 24px; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:13px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff; text-decoration:none;">Check the address we hold</a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Keith
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Andro Prime
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                ---
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                ## Provenance of each line
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                | Line | Source | |---|---| | "Levels do not stay still. They shift with the seasons, your training, your diet and your age." | <strong>CA-022 verbatim</strong>, Ewa 2026-07-18 | | "A retest is the only way to find out how your levels have changed since last time, and a second reading gives you a trend rather than a single snapshot." | <strong>CA-022 verbatim.</strong> An earlier draft kept only the second clause; the independent review found that the trimmed half is the retest framing `03_compliance/CONTEXT.md` mandates, and that dropping it left the trend sentence as the sole standing benefit proposition. Restored in full | | "your GP is always a sensible place to start" | <strong>CA-022</strong>, as a fragment. The shipped sentence inserts "in the meantime", so it is near-verbatim rather than verbatim | | "It is not a credit, there is no balance, and there is nothing to keep track of." | Live app copy, `account/membership` retest panel | | "you need to be a member on that date" | The 2026-08-24 entitlement reframing, stated in `entitlement.ts` and on `/membership` | | Everything else | New for this email, 2026-09-13 |
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                ---
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                ## Compliance pre-flight, 2026-09-13
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                <strong>Unit of scan:</strong> the extracted `## Email 1` payload. The rest of this file is apparatus and is reported separately, never folded into the headline count.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                | Unit | Result | |---|---| | Extracted payload | <strong>0 HARD / 0 REVIEW</strong> | | Whole file | <strong>0 HARD / 0 REVIEW</strong> | | Em dashes in shipped lines | <strong>0</strong> (four in apparatus, one in the `## Email 1` heading; none ships) | | Liquid lint, local | 0 errors, 0 warnings on this file; 0 errors across all 50 | | Liquid lint, live CIO bodies | 0 errors across all 33 |
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                🔴 <strong>Invariant 7 applies: the agent that drafted this copy did not clear it.</strong> An independent pass was run by the `compliance-reviewer` agent, and its verdict is the operative one: <strong>`amber-ewa`. Not approved.</strong> What it found that the drafting pass missed is recorded above and below, in its own words where it matters.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                ### What the copy does
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                Framed as measurement throughout: it states a date, an entitlement and a logistics sequence, and it interprets nothing. No marker is named, no value is given, no verdict is implied. EFSA table not applicable, no ingredient appears. Phase-0 boundary held on the face of the copy. The GP routing line is present and protective. Nothing is asked for and nothing is sold.
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                ### Outstanding, and who owns each
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                | # | Item | Owner | Route | |---|---|---|---| | 1 | <strong>Audience, not words.</strong> CA-022 was approved for all-clear kit buyers; the 90-day cadence sends this to flagged members, See-Your-GP included. That is 3f, reserved to Ewa | Ewa | <strong>Ride the already-drafted, UNSENT packet</strong> (Gmail `r1901433818987540044`, *"Retest timing: five questions"*) as a sixth question. Free to add while unsent; a separate ask spends her attention twice | | 2 | <strong>Phase-0 confirmatory-testing boundary.</strong> For a flagged member the retest is a second testosterone sample whose timing is set by the classifier's verdict on the first. CA-026 audit item F4 is still open on exactly this | Ewa + Keith | Same packet | | 3 | <strong>The entitlement paragraph is contract copy and there is no contract.</strong> `terms-and-conditions.md` contains no membership section; P1 (DMCC Act 2024 Part 4) is open with the solicitor. Same shape as CA-026's D2 sentence, which was ship-gated for this reason | Keith, then solicitor | P1 | | 4 | <strong>3c is itself undecided.</strong> The map's Owed row 4 is *"decide whether a member gets a retest-due email at all"*. This draft presupposes the answer | Keith | &mdash; | | 5 | 🔴 <strong>`ACCOUNT_ADDRESS_ENABLED` was missing from the activation gate list.</strong> With that flag off, `/account` renders no address at all, so the email's only call to action lands on a page that cannot do the thing it asks for. CA-027 gates the identical CTA on the same flag. <strong>Added to the gate list above</strong> | &mdash; | Corrected | | 6 | <strong>`\| date:` has no precedent in this repo and `%-d` is a GNU strftime extension</strong>, unverified against Customer.io's renderer. If the attribute is absent the subject degrades to "Your retest is due on ". Discharge at the test send, not before | &mdash; | Test send |
+              </p>
+              <p style="margin:0 0 20px; font-family:Georgia,'Times New Roman',serif; font-size:16px; line-height:1.7; color:#000000;">
+                No CA number is claimed; the highest in use is CA-046 and nothing is reserved. <strong>No new Ewa ask should be raised</strong>: one is drafted and unsent, and items 1 and 2 belong in it.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 40px 28px; border-top:2px solid #000000;">
+              <p style="margin:0; font-family:'Inter',Arial,Helvetica,sans-serif; font-size:12px; color:#6b7280; line-height:1.6;">
+                You're receiving this because you signed up with Andro Prime.
+                <br>
+                <a href="{% unsubscribe_url %}" style="color:#6b7280;">Unsubscribe</a> &nbsp;&middot;&nbsp;
+                Andro Prime Ltd &nbsp;&middot;&nbsp; United Kingdom
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

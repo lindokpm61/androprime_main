@@ -120,7 +120,37 @@ three names for one moment.
 
 ## 3. Six defects the map exposes
 
-### 3a. The all-clear member gets a 90-day retest, and the code says he must not
+### 3a. ✅ CLOSED 2026-09-13. The all-clear member gets a 90-day retest, and the code says he must not
+
+> **FIXED.** Keith, 2026-09-13: *"point the check at the results engine instead
+> of the row count."* `memberHasMarkerToMove` now loads the member's most recent
+> result, classifies it, and asks `isFlaggedState` — the same predicate the
+> retest **panel** rule uses, so cadence and panel cannot drift apart on what
+> "flagged" means. The rule itself is a pure function, `decideRetestCadence` in
+> `lib/membership/entitlement.ts`; `sync.ts` keeps only the IO.
+>
+> **Four outcomes, deliberately not collapsed to a boolean:** `flagged` → day 90,
+> `all-clear` → annual, `no-result` → annual (nothing to move, and not an error),
+> `unreadable` → day 90 **and marked `degraded`**. The failure direction is
+> unchanged and still favours the member, but the caller now raises a **Sentry
+> alert** on the degraded path rather than a console line, because the
+> consequence is a dispatch moved by 275 days in silence.
+>
+> **Mechanism 5 is now reachable**, which is the whole point.
+>
+> ⚠ **One trap the fix uncovered and the test now pins.** `normal-testosterone`
+> is the 12-to-15 nmol/L low-end-of-normal band and it badges as **Monitor**,
+> filled, so it **IS flagged**: a man there correctly gets the 90-day cadence.
+> Only `optimal-testosterone` is all-clear. The state's name is the only thing
+> suggesting otherwise, and the first draft of the test got it wrong.
+>
+> `scripts/test-membership.ts` section 2 grew from 5 assertions to 21; the suite
+> is 209 → 225. The regression assertion is written as *"an all-clear panel goes
+> annual"* rather than as a row count, so the original defect cannot return by a
+> different route.
+
+**What follows is the original entry, kept because the reasoning in it is why the
+fix is a classifier call and not a SQL one.**
 
 `firstRetestDueAt` picks 90 or 365 from `memberHasMarkerToMove`, which returns
 true when the member has **any** row in `lab_results`. It never consults the
@@ -139,7 +169,52 @@ cost, and it contradicts bucket C of the clinical table.
 boolean in directly. The test proves the arithmetic and cannot see that the input
 is impossible.
 
-### 3b. The membership retest is a one-shot, and the forecast sells it as annual
+### 3b. ✅ CLOSED 2026-09-13. The membership retest is a one-shot, and the forecast sells it as annual
+
+> **FIXED.** Keith, 2026-09-13, took option 1: *"introducing a small table holding
+> one row per dispatched retest."* **That table already existed** — `20260826_membership_v1.sql`
+> generalised `bundle_dispatches` from "the second kit of a bundle" to "a kit owed
+> to a user at a future date", with `source`, `membership_id` and a partial unique
+> index for the double-dispatch guard. So the work was the half that had never
+> been built: letting the date roll forward, and **repairing the two guards that
+> half depends on.**
+>
+> **The rule.** The sweep's selection query drops `retest_claimed_at is null`; the
+> claim update now advances `next_retest_due_at` by `nextRetestAfter(...)` in the
+> same statement, compare-and-set on the old due date. `retest_claimed_at` keeps
+> its storage and narrows its meaning to *when the last retest was released*.
+> `entitlementState` stops treating `claimed` as terminal: it wins only inside
+> `RETEST_IN_FLIGHT_DAYS` (14), so a member sees "On its way" while the kit is in
+> the post and a countdown afterwards, which is what the account screen's copy has
+> promised all along.
+>
+> 🔴 **TWO DEFECTS FOUND IN THE GUARD WHILE IMPLEMENTING IT.** Both were harmless
+> only because the terminator was masking them, so the code must not ship without
+> `20260913_membership_retest_rolls_forward.sql`:
+>
+> 1. **`membership_retest` was never an allowed `bundle_type`.** The sweep inserts
+>    it; `bundle_dispatches_bundle_type_check` allows only `confirmation`,
+>    `prove_it`, `full_picture`. The string appears in no migration. Verified
+>    against the live database. **Every membership retest insert would have
+>    failed**, and because the sweep claims before it inserts, each member would
+>    have been stamped claimed and sent nothing — permanently, under the old rule.
+> 2. **The one-open-retest unique index guards a status that does not exist.** Its
+>    predicate is `status in ('scheduled','address_check_sent')`, but the table has
+>    never allowed `address_check_sent`. The real machine is
+>    `scheduled → trigger_met → awaiting_window → dispatched`, so the guard covered
+>    one open state of three. Removing the terminator without fixing this opens a
+>    second-kit window mid-flight.
+>
+> `scripts/test-membership.ts` 225 → **236 assertions**; the regression is asserted
+> as "an OLD claim no longer blocks the next retest" plus "a year later he IS owed
+> another, which he never was before".
+>
+> ✅ **The migration was APPLIED to production on 2026-09-13** on Keith's explicit
+> go-ahead, and verified by reading the live catalogue rather than a success flag.
+> Ledger row `20260913002042`. No data was touched: no column added, none dropped,
+> no row rewritten.
+
+**What follows is the original entry.**
 
 Nothing in production calls `nextRetestAfter`. `next_retest_due_at` is written in
 exactly one place, `createMembership`, and never again. The nightly sweep stamps
@@ -152,7 +227,51 @@ indefinitely and the entitlement never returns.
 included per year."* The build does not do that, and the gap widens every year a
 member stays.
 
-### 3c. Nothing connects a member's retest to the reminder email
+### 3c. 🟡 DRAFTED 2026-09-13, NOT APPROVED. Nothing connects a member's retest to the reminder email
+
+> **The email exists as a draft and the Customer.io campaign is built and inert.**
+> Keith, 2026-09-13: *"create the email. Then run the pre-flight. You'll have to
+> then create the email in customer.io."* Copy:
+> `09_website-app/frontend/email-templates/sequences/membership-retest-due.md`.
+> Campaign **25**, `seq-08 — Membership Retest Due`, state `draft`, email action
+> `sending_state: draft`, date-triggered on `membership_retest_due_at` at 7 days
+> before, template 56. Nothing can send: the campaign is draft, the attribute is
+> never stamped, and `MEMBERSHIP_ENABLED` is off.
+>
+> **It is the retest notice only, not the renewal notice.** The suggestion was to
+> build one email rather than two, but that rests on P1 (DMCC Act 2024 Part 4),
+> which is open with the solicitor. Writing to an unsettled legal requirement
+> means writing it twice, and a renewal notice that is wrong is worse than one
+> that is absent.
+>
+> 🔴 **THE PRE-FLIGHT VERDICT IS `amber-ewa`, NOT APPROVED**, and the drafting pass
+> did not reach it. Deterministic floor was clean on both units, and an
+> independent `compliance-reviewer` pass (required: the agent that drafts copy may
+> not clear it) overturned the drafting verdict on a point no text-level check
+> could see. **CA-022's approval is scoped to "every kit buyer whose result came
+> back all-clear"; this email's audience is the flagged cohort, See-Your-GP
+> included**, because the 90-day cadence is what `decideRetestCadence` returns for
+> a flagged member. That makes it the first surface sending a retest prompt to a
+> GP-routed man, which is **3f**, reserved to Ewa by Owed row 9.
+>
+> **Owed, and none of it should open a new ask:** the audience question and the
+> Phase-0 confirmatory-testing question (CA-026 audit F4) both belong in the
+> **already-drafted, UNSENT** packet, Gmail `r1901433818987540044`. Adding a
+> question while it is unsent is free. The entitlement paragraph is contract copy
+> against terms with no membership section, so it waits on P1 and is Keith's.
+>
+> ⚠ **Two corrections the independent pass forced into the copy.** The draft had
+> trimmed CA-022's clause *"A retest is the only way to find out how your levels
+> have changed since last time"*, which is the retest framing `03_compliance`
+> mandates; restored verbatim. And `ACCOUNT_ADDRESS_ENABLED` was missing from the
+> activation gate list, so the email's only call to action pointed at a page that
+> renders no address while that flag is off; added, matching CA-027's gate on the
+> identical CTA.
+>
+> **Still owed in code:** nothing stamps `membership_retest_due_at`. Until it does,
+> the campaign cannot fire.
+
+**What follows is the original entry.**
 
 Mechanism 7 stamps `retest_due_at` only on a **whole-result all-clear**, for kit
 buyers. A member's retest is a real dispatched kit that arrives through
@@ -284,18 +403,22 @@ no longer exists.
 | # | Item | Owner |
 |---|---|---|
 | 1 | ~~**The anchor decision** (section 2). Blocks every retest email.~~ ✅ **DECIDED 2026-09-07: the result landing**, with the timed bundles **exempt at purchase + 90**. No terms change, no code change on the bundle side. Nothing here is owed | Closed |
-| 2 | 3a: make `memberHasMarkerToMove` consult the classifier, or accept 90 days for everyone and delete the 365 | Keith, then build |
-| 3 | 3b: advance the cycle on claim, or change the forecast and the copy to say one retest ever | Keith, then build |
-| 4 | 3c: decide whether a member gets a retest-due email at all | Keith |
+| 2 | ~~3a: make `memberHasMarkerToMove` consult the classifier, or accept 90 days for everyone and delete the 365~~ ✅ **DECIDED AND BUILT 2026-09-13.** Keith took the classifier. Pure rule `decideRetestCadence` in `entitlement.ts`, IO in `sync.ts`, four non-collapsed outcomes, Sentry alert on the degraded read. Mechanism 5 is reachable | Closed |
+| 3 | ~~3b: advance the cycle on claim, or change the forecast and the copy to say one retest ever~~ ✅ **DECIDED, BUILT AND APPLIED 2026-09-13.** Keith took advance-on-claim via the dispatch table, which already existed. Two latent guard defects found and repaired in the same migration, applied to production and verified live | Closed |
+| 4 | 3c: decide whether a member gets a retest-due email at all. **Copy drafted and CIO campaign 25 built as a DRAFT on 2026-09-13**; pre-flight verdict `amber-ewa`. The audience question (approved copy travelling to a flagged cohort) and the Phase-0 question ride the unsent packet `r1901433818987540044`; the entitlement paragraph waits on P1. Attribute not yet stamped | Keith, then Ewa on the audience |
 | 5 | ~~Rewrite the 2026-07-17 pack's premise, then re-send~~ ✅ **Premise, §3a and §5 rewritten 2026-09-07**, and the sign-off email is DRAFTED (Gmail `r1901433818987540044`, five lettered questions). **Sending is Keith's act and has not happened.** | Keith to send |
 | 6 | The symptom overlay red-flag line (that pack's Q4b) — now **question 5 of the drafted email**, with a proposed red-flag list to accept, amend or replace | Ewa, once Keith sends |
 | 7 | 3d: decide which result states may pull a member's retest date forward, and make a self-bought kit **consume** the entitlement rather than run alongside it. The second half is a defect fix and needs no ruling; the first half is section 7's proposal and needs Ewa on the intervals | Keith, then Ewa, then build |
 | 8 | 3e: decide whether a returning customer gets a reorder path at all, and whether it is priced differently from a first purchase | Keith, then build |
 | 9 | 3f: decide what a GP-routed result says about retesting, given CA-014 forbids a kit upsell on it. A date with no purchase attached is the obvious candidate and is Ewa's to word | Keith to scope, Ewa to word |
 
-**Nothing in this file is a clinical decision and nothing in it changes code.** It
-records what the code does today, so the decisions above can be made against facts
-rather than against four documents written at different times.
+**Nothing in this file is a clinical decision.** It records what the code does
+today, so the decisions above can be made against facts rather than against four
+documents written at different times.
+
+⚠ **The line that used to follow, "and nothing in it changes code", was retired
+on 2026-09-13.** Items 1 and 2 are now closed by shipped code, and a register
+that claims it can never move anything is one nobody updates when it does.
 
 ---
 

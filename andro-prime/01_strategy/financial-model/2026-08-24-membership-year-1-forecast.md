@@ -173,12 +173,24 @@ reaches its retest in month 13, so **zero retest cost appears in year one**. At 
 blended COGS of GBP 67.03 that is **GBP 6,599 of cost carried into year two** (was GBP 6,202 at Kit 2
 COGS), and it grows with the base. Year one looks better than the business is by roughly that amount.
 
-⚠️ **Two open defects make even that figure optimistic, and both are recorded elsewhere.** First,
-`../../04_products/results-engine/retest-mechanism-map.md` §3a: the 365-day path is **unreachable in the
-build**, so every member is currently stamped for a retest at day 90, which would land inside year one
-rather than month 13. Second, §3b: the build gives a member **one retest ever**, while this model and the
-customer copy both say one per year. **Until 3a and 3b are decided, both the timing and the recurrence of
-this liability are unsettled**, and this paragraph assumes the doc rather than the code.
+✅ **Both defects that made that figure unsafe were closed on 2026-09-13, and the model needed no
+change: the BUILD moved to meet it.** They are recorded in
+`../../04_products/results-engine/retest-mechanism-map.md`.
+
+- **§3a — the 365-day path was unreachable**, so every member was stamped for a retest at day 90,
+  which would have landed inside year one rather than month 13. The cadence check now consults the
+  results engine, so an all-clear member genuinely goes annual and **the month-13 assumption above
+  is now true of the code.**
+- **§3b — the build gave a member one retest EVER**, against the "one per year" in this model and in
+  the customer copy. The entitlement now rolls forward each cycle, so **the recurrence assumption is
+  also true of the code.**
+
+⚠️ **Two things follow for the numbers, and neither is a correction to them.** First, the figure above
+was already computed on the doc's assumptions, so it stands: **GBP 6,599 carried into year two at 98
+members.** Second, 3a's fix makes it more reliable rather than larger, because the day-90 cohort that
+would have pulled cost INTO year one no longer exists — an all-clear member is not sent a kit at all.
+**The day-90 retest now happens only for a member with a flagged marker**, which is a smaller set than
+"everyone" and is the set this model should be sized on when it is next rerun.
 
 **Supplement revenue is not modelled at all.** The shop sits outside the membership at member pricing, so
 anything it earns is upside on top of the above.

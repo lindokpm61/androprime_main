@@ -65,8 +65,8 @@ export interface RangeTrackProps {
    * 🔴 IT DRAWS A HOLLOW PIN AND A BAR BETWEEN THE TWO, which is the
    * prototype's two-point track. History is drawn as an outline and the current
    * reading as a solid pin, so which one is now is legible without a caption.
-   * Only four of the nine markers ever pass this: the included retest is a Kit 2
-   * and the hormone markers are not re-measured.
+   * Every marker passes this in the demo, whose retest is a Kit 3. A member sent
+   * a NARROWED retest has markers that do not, and they render without a bar.
    */
   previousValue?: number
 }

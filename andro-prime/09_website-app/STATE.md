@@ -4,7 +4,141 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-12 (D1: the retest panel follows the result, and the demo is now the half that disagrees)
+## ▶️ PICK UP HERE — handoff, 2026-09-13 (four retest defects: three closed, one drafted and waiting on Ewa)
+
+### WHAT THIS SESSION WAS
+
+Keith worked the retest family in the defect register top to bottom: **D1**, then
+**3a**, then **3b**, then **3c**. Three are closed. The fourth is drafted, built
+and deliberately inert.
+
+**Branch note: this is all on `redesign/direction-f`, 130 commits ahead of main,
+so none of it is deployed.** The one thing that IS live in production is the 3b
+migration, applied deliberately and separately (below).
+
+### D1 — CLOSED. The demo shows what the rule does
+
+The rule shipped 2026-09-12; the demo did not follow. It was never a three-way
+product choice, only **one hard-coded `kitType` in one fixture**. Keith,
+2026-09-13: *"If someone initially purchased Kit 3 and then has markers in Kit 3
+that belong to Kit 1 and 2, then we just send out a Kit 3 ... I don't see what's
+difficult about that."* `demo-kit2-retest.ts` is replaced by
+**`demo-kit3-retest.ts`**; section 6 of the test changed sign and now fails if the
+fixture stops matching the rule. The hormone half **drifts down** (testosterone
+10.5 → 10.1), chosen from three options because we hold no claim that anything we
+sell raises testosterone. Full detail in the previous handoff below.
+
+### 3a — CLOSED. The cadence check reads the results engine
+
+Keith: *"point the check at the results engine instead of the row count."*
+`memberHasMarkerToMove` used to ask whether the member had ANY `lab_results` row;
+joining requires one, so the answer was always yes and **the 365-day path could
+never run**. Every all-clear member was posted a 90-day retest at our cost, while
+the code's own comment called that *"selling a test we do not think he needs"*.
+
+Now: `decideRetestCadence` (pure, in `entitlement.ts`) over `isFlaggedState` — the
+**same predicate the retest panel uses**, so cadence and panel cannot drift on what
+"flagged" means. Four outcomes, deliberately not collapsed: `flagged` → day 90,
+`all-clear` → annual, `no-result` → annual, `unreadable` → day 90 **and degraded**,
+which raises a Sentry event rather than a console line because the consequence is a
+dispatch moved 275 days in silence.
+
+⚠ **Naming trap, now pinned by the test.** `normal-testosterone` is the 12-to-15
+nmol/L band and badges as **Monitor**, so it **IS flagged**. Only
+`optimal-testosterone` is all-clear. The first test fixture got this wrong.
+
+### 3b — CLOSED, AND THE MIGRATION IS LIVE IN PRODUCTION
+
+Keith took the dispatch-table option. **That table already existed**:
+`20260826_membership_v1.sql` had generalised `bundle_dispatches` into "a kit owed
+to a user at a future date". The missing half was letting the date roll forward.
+
+The sweep's selection drops `retest_claimed_at is null`; the claim update advances
+`next_retest_due_at` in the same statement, compare-and-set on the old due date.
+`entitlementState` stops treating `claimed` as terminal — it wins only inside
+`RETEST_IN_FLIGHT_DAYS` (14), which makes the account screen's existing copy
+(*"your next one is a year after that"*) true for the first time.
+
+🔴 **TWO LATENT DEFECTS WERE FOUND IN THE GUARD, both masked by the terminator
+being removed**, and both are repaired in
+**`20260913_membership_retest_rolls_forward.sql`**:
+
+1. **`membership_retest` was never an allowed `bundle_type`.** The sweep inserts
+   it; the constraint allowed three values and the string appeared in no
+   migration. **Every membership retest insert would have failed**, and the sweep
+   claims before it inserts, so each member would have been stamped claimed and
+   sent nothing — permanently, under the old rule.
+2. **The one-open-retest unique index guarded `address_check_sent`, a status the
+   table has never allowed.** It covered one open state of three.
+
+✅ **APPLIED TO PRODUCTION 2026-09-13** on Keith's explicit go-ahead, verified by
+reading the live catalogue rather than a success flag. Ledger row
+`20260913002042`; the connector stamps its own version, so the ledger name and the
+filename differ and that is recorded in the file header. No data touched.
+
+**The year-1 forecast needed no correction** — 3a and 3b together make its
+assumptions true of the code. Its "two open defects" paragraph is rewritten.
+
+### 3c — DRAFTED AND BUILT, NOT APPROVED. Verdict `amber-ewa`
+
+Copy at `email-templates/sequences/membership-retest-due.md`. **Customer.io
+campaign 25**, `seq-08 — Membership Retest Due`: state `draft`, email action
+`sending_state: draft`, date-triggered on `membership_retest_due_at` at **7 days
+before**, template 56. **Three independent things stop it sending**: draft state,
+the attribute is never stamped, `MEMBERSHIP_ENABLED` off.
+
+It is the **retest notice only, not the renewal notice** — that half rests on P1,
+open with the solicitor.
+
+🔴 **THE DRAFTING PASS CLEARED IT AND WAS WRONG.** Pre-flight invariant 7 forbids
+the agent that wrote copy from signing it off, so an independent
+`compliance-reviewer` pass ran and overturned the verdict on a point no text-level
+check can see: **CA-022's approval is scoped to "every kit buyer whose result came
+back all-clear", and this email's audience is the flagged cohort, See-Your-GP
+included.** That is 3f, reserved to Ewa. Two corrections it forced: CA-022's
+mandated retest-framing clause had been trimmed and is restored verbatim, and
+`ACCOUNT_ADDRESS_ENABLED` was missing from the activation gate list (with it off,
+`/account` renders no address, so the email's only CTA led nowhere).
+
+### 🔴 WHAT IS OWED, AND NONE OF IT SHOULD OPEN A NEW ASK
+
+- **Ewa, via the already-drafted and still UNSENT packet** (Gmail
+  `r1901433818987540044`, *"Retest timing: five questions"*): the 3c **audience**
+  question, and the **Phase-0 confirmatory-testing** question (CA-026 audit item
+  F4). Adding a question while the packet is unsent is free. **Sending is Keith's
+  act and has not happened.**
+- **Keith:** whether a member gets a retest-due email at all (the map's Owed row 4
+  — 3c presupposes the yes); and the **entitlement paragraph**, which is contract
+  copy while the terms carry no membership section, so it waits on **P1**.
+- **Code, small:** nothing stamps `membership_retest_due_at`. Needed in
+  `lib/membership/sync.ts` at both points the date is written. Until then campaign
+  25 cannot fire.
+- **Code, smaller:** the narrowed-retest UI (`previous === null`) is no longer
+  rendered anywhere now the demo's retest is a Kit 3. Tested, but unseen. Wants a
+  QA fixture before the first narrowed retest ships.
+- ⚠ **Adjacent, found on the way in and not actioned: CA-022's own campaign
+  (id 23) is `running` in Customer.io while its repo record says it "stays
+  DRAFT".** It has sent nothing — zero attempted, zero journeys started — because
+  its attribute is never stamped. No exposure, but the only thing preventing sends
+  is a feature flag, not the draft state the record claims.
+- Carried, untouched: the saturated-colour tone question; `/go`'s populated state;
+  the orphaned hero assets; the 14 defects from the 2026-09-12 rendered sweep; the
+  how-to-sample film and its QR; register rows 44, 45; the em dash in CA-014
+  consent copy; the `/demo` presentation decision (`869ez4jrt`) and density
+  question (`869erraqd`).
+- 🔴 **Still the only merge blocker: CA-045.**
+
+### Test status at 2026-09-13
+
+`npm test` exit 0. `test-membership` **209 → 236** (section 2 grew 5 → 21 for 3a,
+section 3 gained 11 for 3b), `test-retest-panel` **39 → 44**,
+`test-marker-history` 26, `test-host-routing` 96. `tsc --noEmit` clean.
+Production build clean on a fresh `.next`. Both demo screens verified as rendered
+screenshots, not source reads. Register artifact at **version 13**.
+
+---
+
+## ▶️ Previous handoff, 2026-09-13 (D1 IS CLOSED: the demo's retest is a Kit 3, because that is what the rule returns)
 
 ### WHAT THIS WAS
 
@@ -65,7 +199,19 @@ contributes 15 rather than 31 and 15 because FAI can never be flagged
 (`fai-reported` carries no verdict, Ewa ruling 8), so the Kit 1 half has five
 markers and four flaggable ones.
 
-Saving when it does fire: **£80** on a Kit 3 narrowed to Kit 1, **£60** to Kit 2.
+Saving when it does fire, **corrected 2026-09-13**: the retest is an entitlement
+the member never pays for, so the business bears COGS and the saving is the COGS
+delta, not the retail one. **£39.50** on a Kit 3 narrowed to Kit 1 and **£35.00**
+to Kit 2, from `04_products/catalogue/non-regulated-tier-v7.md` §5.1 (Vitall
+finger-prick: £58.50 / £63.00 / £98.00). The figures previously here, £80 and
+£60, were the RRP deltas (£179−£99, £179−£119) and overstated it by about half.
+
+⚠ **And the number that actually matters for the membership is the un-narrowed
+one.** A both-halves-flagged Kit 3 member is sent a full Kit 3 at day 90: £98 of
+COGS against £141 of membership revenue at £47/mo for that first quarter, before
+supplements, postage or payment fees. The narrowing rule does not touch that
+case, and the demo now depicts it. That is a margin question for Keith, not a
+defect, but it should be a decision rather than a discovery.
 
 Section 7 of the test asserts all of it, including the two facts the reasoning
 rests on: that Kit 1 and Kit 2 are disjoint, and that Kit 3 is exactly their
@@ -77,11 +223,56 @@ them quietly stopped being true.
 unflagged. That is option 1 below stated precisely: an all-clear on the whole
 testosterone half.
 
-### 🔴 THE DEMO STILL DISAGREES, AND IT IS NOT THE RULE THAT IS WRONG
+### 🟢 THE DEMO NOW AGREES. D1 IS CLOSED.
 
-D1 says one of two things has to move before `/demo` goes public. The job has
-moved; the demo has not, and running the shipped rule against the real fixture
-says why:
+**Keith ruled it on 2026-09-13:** *"If someone initially purchased Kit 3 and then
+has markers in Kit 3 that belong to Kit 1 and 2, then we just send out a Kit 3.
+Transversely, if someone buys Kit 1, then they'll only have markers in Kit 1 ...
+I don't see what's difficult about that."* He is describing the shipped rule
+exactly, and he is right that nothing about it needed deciding. **The only thing
+that ever disagreed was one hard-coded value in one fixture**, and the register's
+framing of this as a three-way product choice was wrong: option 3 reverted a rule
+he had asked for, and option 1 was never on the table. That framing survived into
+two handoffs unexamined.
+
+`demo-kit2-retest.ts` is replaced by **`demo-kit3-retest.ts`**: nine markers, same
+collection date, `kitType: 'hormone-recovery'`. Section 6 of the test is still a
+tripwire but has **changed sign** — it now fails if the fixture's kit stops being
+the kit the rule derives, and names both, so `/demo` cannot silently drift back
+to showing a journey the nightly job would not produce.
+
+**The hormone half drifts DOWN, and that is the compliance half of the decision.**
+Keith picked it from three options, shown the trade. Testosterone 10.5 → 10.1,
+SHBG 34.1 → 34.6, free T 0.19 → 0.18, albumin 44.0 → 43.6, FAI 30.8 → 29.2.
+Nothing on that half crosses a band; the two band crossings are still vitamin D
+and B12, which are the markers we sell a product against and hold an EFSA claim
+for. **We hold no claim that anything we sell raises testosterone** — the nearest
+signed one is CA-042 claim 12, *"vitamin D supplementation modestly increased
+serum testosterone in deficient men over a year"*, and this retest is at day 90 —
+so a visible rise here would have been the closest thing on the site to an
+efficacy claim. A drift down asserts nothing, and it makes the prototype's own
+argument (*"it does not move on anything we sell"*) visible instead of implied.
+
+⚠ **FAI and free T are NOT free values.** The report's own copy tells the reader
+FAI is total T as a percentage of SHBG, so 10.1 / 34.6 × 100 = 29.19 must hold or
+the screen contradicts its caption; free T tracks the same ratio. Asserted in
+section 6 (6h). Anyone editing testosterone or SHBG here recomputes both.
+
+⚠ **What option 2 cost, and where it went.** The Record tab's "what was never
+re-measured" teaching point is gone: all nine markers now have two points. It is
+replaced by the contrast — every marker re-measured, four of them moved, and the
+four that moved are the four we sell against. **The `previous === null` branch is
+NOT dead code**: `selectRetestPanel` narrows 30 of the 255 Kit 3 flag
+combinations, so real members will hit it. It is simply no longer exercised by
+the demo, which means it is no longer checked by eye anywhere. Covered by
+`scripts/test-marker-history.ts` section 3, which uses its own fixtures.
+
+**Verified rendered, both screens** (`shot.js` against a production build, not a
+source read): the Results tab shows five hormone rows each carrying a was → now
+pair, and the Record tab reads *"Nine markers, two dates, every one of them
+re-measured"* with a movement line on every row.
+
+For the record, the disagreement as it stood before the fix:
 
 **The demo's baseline man is flagged on six markers spanning both halves of the
 panel** — equivocal testosterone and low free testosterone on the Kit 1 side,
@@ -90,19 +281,19 @@ Kit 2 side. **No rule that follows the flags can send him a Kit 2**, because a
 Kit 2 cannot measure his testosterone. The rule sends him the full Kit 3.
 `/demo` shows him receiving a Kit 2.
 
-Three ways to close it, and it is a product call rather than a build one:
+Three ways were offered. **Keith took 2, and the framing of the other two was
+wrong in a way worth keeping** so it is not repeated:
 
-1. **Change the demo's baseline** so his flags sit only inside Kit 2. Keeps the
-   Record tab's "what moved, what was never re-measured" argument; gives up the
-   low-testosterone story that is the product's spine.
-2. **Make the demo's retest a Kit 3.** Keeps the story; gives up the
-   partial-remeasure teaching point, since all nine markers come back.
-3. **Rule that a retest always re-measures the full panel he bought.** Closes D1
-   by reverting this rule to its fallback. One line.
-
-Section 6 of the test carries the disagreement as a tripwire rather than leaving
-it to be rediscovered: when the fixtures change, the assertion that they
-disagree fails and names which of the three was picked.
+1. ~~**Change the demo's baseline** so his flags sit only inside Kit 2.~~ This
+   gives up the low-testosterone story, which is the product's spine. It was
+   never a real option and should not have been listed as one.
+2. ✅ **Make the demo's retest a Kit 3.** TAKEN 2026-09-13. Not "a product call":
+   it is what the rule already returns, so this was a data fix, one `kitType` in
+   one fixture, plus the hormone values and the copy that assumed four of nine.
+3. ~~**Rule that a retest always re-measures the full panel he bought.**~~ This
+   reverts the rule Keith asked for to its fallback and makes the whole of D1 a
+   no-op. Listing it as a peer of the other two overstated the openness of the
+   question.
 
 ### ⚠ THE FIX THE REGISTER SUGGESTED COULD NOT HAVE WORKED AS WRITTEN
 
@@ -129,8 +320,17 @@ covers the flagged markers, and is never dearer than the kit they came from.
 
 ### 🔴 WHAT IS STILL NOT DONE
 
-- **The demo decision above**, Keith. It is what still blocks `/demo` going
-  public.
+- 🟢 **The demo decision is MADE and BUILT (2026-09-13), so D1 no longer blocks
+  `/demo`.** What still gates the route going public is unchanged and is not D1:
+  CA-046, the full results report plus a membership price on an ungated surface.
+  The route stays `noindex` until that clears.
+- ⚠ **New, and small: the narrowed-retest UI is no longer visible anywhere.**
+  `/demo` was the only surface rendering a marker with `previous === null`, and
+  its retest is now a Kit 3. The logic is tested; nobody looks at it. Worth a QA
+  fixture or a `?preview=` state before the first real narrowed retest ships.
+- ⚠ **Owed to Keith, not a defect: the membership margin on an un-narrowed
+  retest.** £98 COGS at day 90 against £141 of first-quarter membership revenue.
+  See the corrected savings note above.
 - 🟢 **No clinical ruling is owed, and the claim that one was is withdrawn.**
   The defect register said from 2026-09-08 that "dropping five markers off a
   retest is a clinical statement, not a packing decision", and that was repeated
@@ -159,11 +359,15 @@ covers the flagged markers, and is never dearer than the kit they came from.
   (`869ez4jrt`) and the density question (`869erraqd`).
 - 🔴 **Still the only merge blocker: CA-045.**
 
-### Test status at 2026-09-12 (D1)
+### Test status at 2026-09-13 (D1 closed)
 
-`npm test` green, exit 0, including `test-retest-panel: 39 passed` and the
-unchanged `test-membership: 209 passed`. Both typechecks clean. Production build
-green, exit 0, fresh `.next`, no dev server listening.
+`npm test` green, exit 0, including **`test-retest-panel: 44 passed`** (39 plus
+the five new section-6 assertions: fixtures agree with the rule, all nine
+re-measured, testosterone does not rise, free T stays under its floor, FAI is
+derived rather than typed) and the unchanged `test-membership: 209 passed` and
+`test-marker-history: 26 passed`. `tsc --noEmit` clean, exit 0. Production build
+green, exit 0, fresh `.next`. Both demo screens verified as rendered
+screenshots; server stopped, port 3000 free.
 
 ---
 
