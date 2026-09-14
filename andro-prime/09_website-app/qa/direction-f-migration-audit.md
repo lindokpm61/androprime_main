@@ -1,6 +1,6 @@
 # QA: Direction F pre-migration audit
 
-**Status: IN PROGRESS — session 1, 2026-09-14.** Phases 0 to 4 done, 5 partly. The
+**Status: IN PROGRESS — session 2, 2026-09-15.** Phases 0 to 4 done, 5 mostly. The
 remaining phases are listed at the bottom with what each needs.
 
 Branch `redesign/direction-f` at `1a14ffc`, measured against production
@@ -8,6 +8,12 @@ Branch `redesign/direction-f` at `1a14ffc`, measured against production
 
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Full evidence logs are in the
 session scratchpad and are not committed (git holds the recipe, Drive holds the media).
+
+> **Session 2 in one line:** the environment half of Phase 5, and it found that the
+> production build has never received two of the variables the app reads — so GA4 and the
+> cookie banner have never run on the live site — plus one unauthenticated endpoint that
+> dispatches physical kits. Neither is a Direction F regression; both are live today.
+> Session 2's findings are in their own section, below the session 1 material.
 
 ---
 
@@ -30,6 +36,13 @@ whether or not anyone visits it.
 that would have shipped were found and fixed, one of which would have failed CI on the
 merge commit itself.
 
+**Session 2 adds no merge blocker and one launch blocker.** Everything it found is
+pre-existing and live on `main` today, so none of it is a reason to hold this branch — but
+`/api/vitall/dispatch` (S2-2) accepts an unauthenticated request to dispatch a physical kit,
+and that should be closed before the first real customer rather than before the merge. The
+two unbaked build variables (S2-1) are fixed in the branch and still need a Coolify change
+to take effect.
+
 ---
 
 ## What passed
@@ -47,6 +60,8 @@ merge commit itself.
 | `audit-link-integrity.js` (new) | 864 anchors, 84 internal targets, 108 fragments; 1 open finding |
 | `compliance-preflight/scan.js` over 165 changed copy files | no NEW claim exposure |
 | `route-conformance` | 36/36 measurable routes render Direction F |
+| `test:links:external` (session 2, first ever run) | **2088 anchors, 74 external URLs, 0 broken** |
+| `verify-env-contract.js` (session 2, new) | exit 0 after the two unbaked variables were fixed |
 
 Routes not measured are named with a reason everywhere: `/blog/preview/[slug]` (needs
 `PREVIEW_SECRET`) and `/membership` (needs `MEMBERSHIP_ENABLED=true`). Both 404 by design.
@@ -155,6 +170,204 @@ not.
 
 ---
 
+## Session 2, 2026-09-15 — the environment contract
+
+Phase 5's environment half: reconcile `.env.example` against every `process.env.*` read,
+cross-check against the build-argument versus runtime-variable split, and produce the
+definitive Coolify variable list. That list already existed (`deployment/env/vars.md`,
+swept 2026-07-26), so this was a re-sweep rather than a first draft — and the re-sweep is
+what found the gap.
+
+### 🔴 S2-1 Two variables the app reads have never reached a production build
+
+`frontend/Dockerfile` names its build secrets one at a time, each read with
+`$(cat /run/secrets/X 2>/dev/null || echo '')`. It mounted eight `NEXT_PUBLIC_*`
+variables. The app reads eight. **They were not the same eight.**
+
+| | Variable | State |
+|---|---|---|
+| 🔴 | `NEXT_PUBLIC_GA4_MEASUREMENT_ID` | read by 3 components, **never mounted** |
+| 🔴 | `NEXT_PUBLIC_APP_URL` | read by `lib/hosts.ts`, **never mounted** |
+| ⚠ | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | mounted, **read by nothing** |
+| ⚠ | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | mounted, **read by nothing** |
+
+**What the first one costs.** `GoogleAnalytics` returns `null` when the measurement id is
+empty, so **GA4 has never fired on the live site**. `CookieConsent` gates itself on the
+same variable, so **the cookie banner has never rendered in production either** — which
+means every Direction F change to it is unexercised there, including the ICO equal-weight
+rule for Accept and Reject and the `--f-consent-h` hero-clearance fix found on 2026-08-31.
+The whole chain degrades *consistently and by design* — no tag means no non-essential
+cookies means no banner is required — so nothing looked wrong anywhere.
+
+**Why nothing caught it.** `tsc` cannot: the reads are valid. The build cannot: an empty
+string is a string. A screenshot cannot: a page without analytics looks exactly like a page
+with analytics. `.env.local` and `.env.example` both carry the variable, so it works on the
+developer's machine and reads as configured everywhere a human would look.
+
+**Evidence, and the probe that was wrong first.** Grepping the production HTML for
+`googletagmanager` returns 0 — but so does the same grep against a *local build where GA4
+demonstrably works*, because `next/script` injects client-side and never appears in SSR
+HTML. That probe cannot tell broken from healthy. The valid probe is the compiled client
+chunk:
+
+| | `app/layout-*.js` | `googletagmanager` | `ga-consent-bootstrap` | `G-XXXXXXXX` literal |
+|---|---|---|---|---|
+| production | `fc18fcc45e10aa15` | present | present | **absent** |
+| local | `bbec9674cf9f7e02` | present | present | **present** |
+
+Same component code both sides; the value is empty on one. That is the defect.
+
+**The second one is harmless today and unsettable tomorrow.** `NEXT_PUBLIC_APP_URL` falls
+back to the literal `https://app.andro-prime.com`, which is correct in production by
+coincidence. The variable simply does nothing, so the two-host split cannot be pointed
+anywhere else — at a preview environment, for instance.
+
+**Fixed.** The mount list now matches the reads: `NEXT_PUBLIC_APP_URL` and
+`NEXT_PUBLIC_GA4_MEASUREMENT_ID` added, the two dead mounts removed (checkout is a
+server-side redirect and `@stripe/stripe-js` is not a dependency; Plausible was replaced by
+GA4 and no script tag for it survives). `.env.example` gained the three
+`STRIPE_PRICE_BUNDLE_*` ids and `STRIPE_COUPON_MEMBER`, all four reached only through a
+computed `process.env[key]` and therefore invisible to a grep.
+
+⚠ **The Dockerfile fix is necessary and NOT sufficient.** A mount with no value behind it
+still yields an empty string. **`NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL`
+must exist in Coolify before the next deploy**, or nothing changes. Values are in
+`frontend/.env.local`.
+
+⚠ **And it is a visible change.** The first deploy after this fix is the first time the
+cookie-consent banner appears on the live site, on every page, for every first-time
+visitor. Like the 26 SEO snippets already queued behind this branch, that should be a
+decision rather than a discovery.
+
+### 🔴 S2-2 `/api/vitall/dispatch` dispatches physical kits with no authentication
+
+Live on both production hosts today (`GET` returns 405, so `POST` is accepted). Pre-existing
+and unchanged by this branch.
+
+Given a `kit_orders.id`, the route reads the customer's full identity and address through
+the **service-role** client (bypassing RLS), calls Vitall's `order/create` — a real
+physical kit dispatch that costs money — flips the order row to `dispatched`, and emits a
+`kit_dispatched` Customer.io event. There is **no signature check, no shared secret, no
+session check, and no idempotency guard**: nothing compares the row's existing status, so
+repeated calls repeat the dispatch.
+
+It is an internal endpoint only by convention. Both legitimate callers —
+`app/api/webhooks/stripe/route.ts:531` and `lib/bundles/dispatch.ts:107` — reach it by
+`fetch()`ing the app's own public URL with a bare `Content-Type: application/json` and no
+credential of any kind. The sibling job routes are not like this:
+`/api/jobs/process-result` and `/api/jobs/bundle-sweep` both call `verifyQStashRequest`
+and 401 without a valid signature.
+
+The only barrier is knowing an order UUID, and a UUID is not a secret — order ids travel
+through confirmation pages, emails, Customer.io payloads and logs. There is also **no rate
+limiting anywhere in the repo** (`grep` for `rateLimit|ratelimit|Ratelimit` returns
+nothing), and `middleware.ts`'s matcher excludes `api` outright, so no edge layer covers it.
+
+**Not fixed here, deliberately, and this is the one place this session stopped and asked.**
+Every available fix fails closed on the money path, and the payment-to-dispatch chain is
+Gate 3 — open since April and never once proved end to end. A fail-closed fix shipped with
+a missing Coolify variable turns "anyone can dispatch a kit" into "nobody's paid order
+dispatches, silently", which is worse. Three options, in increasing order of both safety
+and effort:
+
+- **(a) Shared-secret header.** Both callers send `Authorization: Bearer <secret>`; the
+  route 401s without it. Matches the existing `REVALIDATE_SECRET` pattern. Smallest diff.
+  Requires the variable to be set in Coolify *before* the deploy that enforces it.
+- **(b) QStash-sign it** like the two `/api/jobs/*` routes, reusing `verifyQStashRequest`.
+  Consistent with the house pattern; a larger change to both call sites.
+- **(c) Delete the endpoint.** Extract the handler into a library function and have both
+  callers import it directly. The route exists only because two server modules call their
+  own app over the public internet instead of calling a function. This removes the attack
+  surface rather than guarding it, and it is the right end state.
+
+Recommendation: **(c)**, with **(a)** as the fast mitigation if the launch date is close.
+Either way, add the idempotency guard — the route should refuse an order that is already
+`dispatched` regardless of who is calling.
+
+### ✅ S2-3 The Sentry releases endpoint is not a deploy check, and cannot be
+
+`SENTRY_AUTH_TOKEN`, `SENTRY_ORG` and `SENTRY_PROJECT` are read by `next.config.ts`, which
+runs only at build time. **None of the three is a Docker build secret**, so the Coolify
+build cannot upload source maps and has never created a Sentry release. Production
+JavaScript stack traces are therefore minified — which is why the repo's own notes record
+"breadcrumbs are the payoff, not the stack trace" as a fact of life rather than as a
+fixable gap.
+
+Every release row in the Sentry org was written by a developer's local `npm run build`. On
+2026-09-15 all twelve most recent releases were `redesign/direction-f` commits that had
+never been merged or deployed, while production sat 163 commits behind at `7ecad99` — so
+the newest "release" named a commit that had never run anywhere but a laptop. Anything
+using that endpoint as a deploy canary reads the wrong answer confidently. Phase 9's
+canary ladder is unaffected (it already prefers the two-sided string check); the memory
+note that claimed otherwise has been corrected in all three places it was stated.
+
+Recorded in the new checker's `BUILD_TIME_NOT_MOUNTED` table with the consequence written
+out, so the decision is visible rather than absent. Mounting a Sentry write token into the
+build is Keith's call.
+
+### ✅ S2-4 Two orphan endpoints, one of them a live unauthenticated write
+
+Both confirmed to have no caller in the repo, both live in production.
+
+- `/api/founding-member/join` — returns **410 Gone**, deliberately, pending a lawful basis
+  for the founding-member list. Safe. No action.
+- `/api/forms/contact` — **unauthenticated, unthrottled, service-role insert** into
+  `lifecycle_events` with attacker-controlled `name`, `email` and `message`, and no length
+  limit. The contact page is entirely `mailto:` and has been for some time, so this
+  endpoint has no product value at all — it is pure attack surface. Recommend deleting it;
+  if it is kept, it needs the same treatment as S2-2.
+
+### The four "migration landmines" from the plan, re-tested
+
+The plan listed four to fix in Phase 5 as unambiguous. Re-testing each against the code
+changed two of the four answers:
+
+| Landmine | Verdict |
+|---|---|
+| `lib/activate/sendActivationLink.ts:26` emails a `http://localhost:3000` link | **Not a defect — unreachable.** Zero callers. `/activate` was retired 2026-09-12 and now redirects to `/how-to-sample`; `lib/activate/*` is marked-not-deleted on purpose. The sibling `/api/activate` route is live but auth-gated and user-scoped, and only stamps an engagement metric on the caller's own row. |
+| `lib/blog.ts:129` renders drafts on any non-production `NODE_ENV` | **Guarded by the platform.** The Dockerfile's runtime stage sets `ENV NODE_ENV=production` explicitly and `next build` sets it during the build, so the shipping container cannot take the drafts branch. Deliberate and documented for local review. No action. |
+| `lib/supabase/env.ts:1-3` ships a real project ref and anon JWT as silent fallbacks | **Real, but armed with nobody walking on it.** A missing variable yields a working client pointed at *production*, which is correct in production and wrong everywhere else. There is exactly one deploy target today, so it cannot currently fire. Worth fixing when a second environment appears, and it must be fixed *before* one does. |
+| 30 files hardcode `const BASE_URL = 'https://andro-prime.com'` | **Real, same shape, not fixed here.** `lib/site-url.ts` already exists as the single source and nine modules were migrated to it; the 29 page files and one route were not. In production the literal and the variable agree, so the only symptom is that a non-production deploy self-canonicalises to production. Touching every page's metadata during a migration audit adds risk without removing a live defect. Recommend a separate sweep, and before any preview environment exists. |
+
+Both remaining landmines are the same finding in two places: **a fallback that is correct
+in production is invisible until there is a second environment, and then it is wrong
+everywhere at once.** Neither blocks this merge; both block the first preview deploy.
+
+### ✅ S2-5 The external citation check has now run, and it is clean
+
+`npm run test:links:external`, never executed before, closes "Still to do" item 9.
+
+```text
+harvested 2088 anchors from 65 of 67 routes
+  90 distinct internal targets · 603 fragment links · 74 distinct external URLs
+  13 mailto:/tel: (shape only, never fetched)
+🟢 no broken links. 90 internal targets, 603 fragments, 74 external — all resolved.
+```
+
+Thirteen came back UNVERIFIED — 403 from SAGE, Mayo, JAMA, OUP, NEJM and AHA, and a `203`
+from PubMed — which the script deliberately does not count as failures, because those hosts
+block datacentre user agents as policy and the status says nothing about whether the
+citation is good. No 404, no 410, no DNS failure anywhere.
+
+Two notes for whoever reads this next. The corpus is **74 distinct external URLs, not the
+~120 the plan estimated** — the plan counted citations, the script counts distinct targets,
+and articles share sources. And the two unmeasured routes are the same two named
+everywhere else: `/blog/preview/[slug]` (needs `PREVIEW_SECRET`) and `/membership` (needs
+`MEMBERSHIP_ENABLED=true`), both 404 by design.
+
+### New tooling, session 2
+
+| File | Closes |
+|---|---|
+| `scripts/verify-env-contract.js` | Diffs the Dockerfile's build-secret list against the app's real `process.env` reads **in both directions**, asserts every read is documented in `.env.example`, asserts every build-time read in `next.config.ts` is either mounted or excused with a written reason, and fails if a computed `process.env[key]` site appears that its harvester does not know about. Wired into **`prebuild`** — so it fails inside the build that would otherwise ship the defect — and into `npm test`. |
+
+Proved by making it fail, three ways: a mount removed (assertion A), an export removed with
+the mount left in place (the second silent layer), and an excuse removed from
+`BUILD_TIME_NOT_MOUNTED` (assertion E). ⚠ The first two attempts at that proof were
+themselves invalid — one `sed` matched nothing and reported OK, and one deletion left a
+dangling string continuation so `node` exited non-zero on a `SyntaxError` that read exactly
+like the assertion firing. Observations 813 to 815.
+
 ## Still to do
 
 1. **Copy register reconciliation** — the 48 rows. The scanner cannot do this: it grades
@@ -174,7 +387,17 @@ not.
    implemented — `DESIGN.md` gap 1).
 8. **The `MEMBERSHIP_ENABLED=true` pass** — expect `npm test` and `npm run build` to fail,
    which is the P9 guard firing on register row 42a, not a regression.
-9. **External link check** — `npm run test:links:external`, ~120 citations, never run.
+9. ~~**External link check**~~ — **DONE in session 2, clean.** See below.
+
+### Owed to Keith, from session 2 — both are configuration, not code
+
+1. 🔴 **Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify** before
+   the next deploy. The Dockerfile now mounts them; a mount with no value behind it is
+   still an empty string, so without this step S2-1 is not actually fixed. Values are in
+   `frontend/.env.local`.
+2. 🔴 **Decide S2-2** — the unauthenticated kit-dispatch endpoint. Three options are set
+   out in the session 2 section with a recommendation; it is live today, so the decision
+   is a launch gate rather than a merge gate.
 
 ### Environment notes for the next session
 - `.env.local` `MEMBERSHIP_ENABLED` was set to **false** for this pass and left that way.

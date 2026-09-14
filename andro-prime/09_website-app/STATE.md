@@ -4,7 +4,101 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-14 late (**the pre-migration audit ran: six new checkers built, three defects fixed that would have shipped, and the copy pre-flight cleared Direction F of any NEW claim exposure. The three things blocking the merge are all signatures, and all three were already on the board**)
+## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2, the environment half of Phase 5. The production build has never received two of the variables the app reads, so GA4 and the cookie banner have never run on the live site; and one endpoint dispatches physical kits with no authentication. Neither is a Direction F regression — both are live on `main` today**)
+
+Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-09-15".
+Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing pushed to
+`main`, no deploy ran. The three merge blockers are unchanged and all three are signatures.
+
+### The two things that need Keith, and neither is code
+
+1. 🔴 **Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify.** The
+   Dockerfile mounted eight `NEXT_PUBLIC_*` build secrets and the app reads eight, and they
+   were not the same eight — these two were never mounted, and two that nothing reads were.
+   The branch fixes the list, but **a mount with no value behind it is still an empty
+   string**, so without the Coolify change nothing actually changes. Values are in
+   `frontend/.env.local`.
+
+   What it has been costing: `GoogleAnalytics` returns `null` on an empty measurement id,
+   so **GA4 has never fired in production**, and `CookieConsent` gates on the same
+   variable, so **the cookie banner has never rendered there either**. Every Direction F
+   change to that banner is unexercised on the live site, including the ICO equal-weight
+   rule for Accept and Reject. ⚠ Which means the first deploy after the fix is the first
+   time the banner appears, on every page, for every first-time visitor. Same shape as the
+   26 SEO snippets already queued behind this branch: a visible change arriving as a side
+   effect, and it should be a decision rather than a discovery.
+
+2. 🔴 **Decide what to do about `/api/vitall/dispatch`.** It is live on both production
+   hosts and takes an unauthenticated POST. Given a `kit_orders.id` it reads the customer's
+   full identity and address through the service-role client, calls Vitall's `order/create`
+   — a real physical kit dispatch that costs money — flips the row to `dispatched`, and
+   emits `kit_dispatched`. No signature, no secret, no session, **and no idempotency
+   guard**, so repeated calls repeat the dispatch. Both legitimate callers reach it by
+   `fetch()`ing the app's own public URL with no credential; the sibling `/api/jobs/*`
+   routes all verify a QStash signature.
+
+   Not fixed in-session on purpose: every fix fails closed on the money path, and Gate 3
+   (checkout end to end) has been open since April without ever being proved. A fail-closed
+   fix shipped with a missing Coolify variable turns "anyone can dispatch a kit" into
+   "nobody's paid order dispatches, silently". Three options with a recommendation are in
+   the audit doc; the short version is that the endpoint should not exist — both callers
+   should import a function instead of calling the app over the internet.
+
+### Fixed in the branch this session
+
+- **`frontend/Dockerfile`** — mount list now matches what the app reads. Added
+  `NEXT_PUBLIC_APP_URL` and `NEXT_PUBLIC_GA4_MEASUREMENT_ID`; removed
+  `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` (checkout is a server-side redirect and
+  `@stripe/stripe-js` is not a dependency) and `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` (replaced by
+  GA4, no script tag survives).
+- **`frontend/.env.example`** — gained the three `STRIPE_PRICE_BUNDLE_*` ids and
+  `STRIPE_COUPON_MEMBER`, all four reached only through a computed `process.env[key]` and
+  therefore invisible to a grep.
+- **`frontend/scripts/verify-env-contract.js`** (new) — holds the Dockerfile's list against
+  the app's real reads in both directions, and runs in **`prebuild`**, so it fails inside
+  the build that would otherwise ship the defect. Also in `npm test`.
+
+### Answered, so nobody re-derives them
+
+- **The Sentry releases endpoint is not a deploy check and cannot be.** `SENTRY_AUTH_TOKEN`
+  is not a build secret, so the Coolify build has never uploaded a source map or created a
+  release; every release row came from a local `npm run build`. On 2026-09-15 the twelve
+  newest releases were all branch commits that had never been deployed. Production stack
+  traces are minified for the same reason. Recorded in the checker with the consequence
+  written out; mounting a Sentry token into the build is Keith's call. The memory note that
+  claimed otherwise is corrected in all three places it was stated.
+- **Two of the plan's four "migration landmines" are not defects.** The
+  `sendActivationLink` localhost fallback is unreachable (zero callers; `/activate` was
+  retired 2026-09-12), and the `blog.ts` draft branch cannot fire in the container because
+  the Dockerfile sets `NODE_ENV=production` explicitly. The other two — the Supabase env
+  fallbacks and the 30 hardcoded `BASE_URL` constants — are real but **armed with nobody
+  walking on them**: both are correct in production and wrong only in a second environment,
+  and there is exactly one deploy target. Neither blocks this merge; both block the first
+  preview deploy.
+- **`/api/forms/contact`** is an orphan (the contact page is entirely `mailto:`) and is an
+  unauthenticated, unthrottled, service-role insert into `lifecycle_events`. Recommend
+  deleting it. `/api/founding-member/join` is the other orphan and is safely 410.
+- **There is no rate limiting anywhere in the repo**, and `middleware.ts`'s matcher excludes
+  `api` outright, so no edge layer covers any of the above.
+
+### Still not covered
+
+Unchanged from session 1, minus the environment work: gated routes with a real session, the
+10 fixture scenarios, per-corpus checks on all 18 slugs and 30 `/go/dNN`, the three error
+boundaries, forms and checkout end to end, screenshots at 1320 and 390, the
+`MEMBERSHIP_ENABLED=true` pass.
+
+✅ **The external citation check is now done and clean** — it had never been run. 2088
+anchors from 65 of 67 routes, 90 internal targets, 603 fragments and 74 distinct external
+URLs, **no broken links**. Thirteen came back UNVERIFIED (403 from SAGE, Mayo, JAMA, OUP,
+NEJM, AHA; `203` from PubMed), which the script deliberately does not count as failures
+because those hosts block datacentre agents as policy. The corpus is 74 distinct external
+URLs rather than the ~120 the plan estimated — articles share sources. It is slow: allow
+several minutes and run it with nothing else browser-based alongside it.
+
+---
+
+## ▶️ Previous handoff, 2026-09-14 late (**the pre-migration audit ran: six new checkers built, three defects fixed that would have shipped, and the copy pre-flight cleared Direction F of any NEW claim exposure. The three things blocking the merge are all signatures, and all three were already on the board**)
 
 Full report: **`qa/direction-f-migration-audit.md`** (the first thing in `qa/` that is not
 an empty April placeholder). Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`.
