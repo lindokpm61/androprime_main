@@ -36,18 +36,25 @@ import {
  * (a superseded pin is not a takedown; coverage and health are different
  * questions) that the numbers alone would be misread without.
  *
- * 🔴 THE THREE TONES SURVIVE, AND THEY ARE THE ONE THING HERE THAT IS A
- * DESIGN QUESTION RATHER THAN A TIDY-UP. Keith ruled on 2026-09-03 that
- * saturated colour means a clinical verdict and nothing else. This board is
- * admin-gated and no customer can reach it, and its red/amber/green say "this
- * lane is blocked", not "this number of yours needs watching" — but they are
- * the same three colours a customer meets on a results card, and that ruling was
- * made precisely because a reader does not read tokens. They are kept, moved off
- * twenty-six inline hexes onto three variables of their own in
- * `f-internal.css`, and deliberately NOT wired to `--color-status-*`. The
- * question is flagged there and in STATE.md. **Every tone is paired with a word**
- * (`BLOCKER`, `ATTENTION`, `empty lane`, `never`), so colour is never the only
- * carrier and the answer changes nothing about what the board can say.
+ * 🟢 THE THREE TONES SURVIVE, AND SINCE 2026-09-14 THAT IS A RULING RATHER THAN
+ * A PENDING QUESTION (defect R3). Keith ruled on 2026-09-03 that saturated
+ * colour means a clinical verdict and nothing else, and on 2026-09-14 that
+ * **the ruling is scoped to customer-facing surfaces.**
+ *
+ * The scope follows from what the original ruling was made about: amber meant
+ * "this number of yours needs watching" on one page and "buy this one, it is
+ * £179" on another, and the harm was a CUSTOMER reading one as the other. This
+ * board sits behind an allowlist of a single address, so the confusion it exists
+ * to prevent has no reader here. Anything customer-facing still takes the ruling
+ * in full.
+ *
+ * They are moved off twenty-six inline hexes onto three variables of their own
+ * in `f-internal.css`, and deliberately NOT wired to `--color-status-*`: the day
+ * somebody re-tunes the critical red for legibility on a results card, a content
+ * lane going red is not a reason to hold that change up. **Every tone is paired
+ * with a word** (`BLOCKER`, `ATTENTION`, `empty lane`, `never`), so colour is
+ * never the only carrier, which is why the question was a design one rather than
+ * a data-loss one and why reversing it would still cost nothing.
  *
  * 🔴 THE GATE IS STILL CHECKED IN THE PAGE. It is the only one: neither `/ops`
  * nor `/admin` is in the middleware matcher, and a layout is not a security

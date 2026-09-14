@@ -44,11 +44,25 @@
    nothing about the RULING's status quo moves here; only the hexes stop being
    repeated in twenty-six inline styles.
 
-   ⚠ OPEN FOR KEITH: whether the 2026-09-03 ruling is meant to reach an
-   admin-gated internal tool at all. Kept, because stripping the tones would
-   delete the information the board exists to carry, and because they were
-   already live. If the answer is that ink-only holds everywhere, the change is
-   these three values and nothing else. */
+   🟢 RULED 2026-09-14 (Keith), closing defect R3: THE 2026-09-03 RULING IS
+   SCOPED TO CUSTOMER-FACING SURFACES, and these three tones stay.
+
+   The reasoning is in what the original ruling was made ABOUT. Amber had come
+   to mean "this number of yours needs watching" on one page and "buy this one,
+   it is £179" on another, and the harm was a CUSTOMER reading one signal as the
+   other. No customer can reach this board: it sits behind an admin allowlist of
+   a single address. The confusion the ruling exists to prevent has no reader
+   here.
+
+   ⚠ THE SCOPE IS THE RULING'S, NOT A LOCAL EXEMPTION. Anything customer-facing
+   still takes the ruling in full, and `--color-status-*` remains reserved for a
+   clinical verdict on every surface without exception. What was decided is that
+   an internal tool is not in its territory, which is why these three live here
+   at their own values rather than borrowing the status triad.
+
+   If that is ever revisited, the change really is these three values and
+   nothing else: every tone is already paired with a word below, so ink-only
+   would cost no information. */
 .f-int {
   --int-bad:  #9E2A20;
   --int-warn: #9A5B00;

@@ -149,6 +149,13 @@ grey; **the only saturated colour in the system is the clinical status triad, an
 results or sample-report panel.** A serif display sits over a humanist sans, and small monospace
 labels mark the parts that are data.
 
+⚠ **That sentence is about the CUSTOMER-FACING system, and the scope was settled on 2026-09-14
+(defect R3).** The admin-gated internal boards — `/admin/dashboard` and `/ops/content` — carry three
+tones of their own in `f-internal.css`, at their own values and deliberately not `--color-status-*`.
+The 2026-09-03 ruling was made because a *customer* read amber as a clinical verdict on one page and
+a price on another; no customer can reach those boards. Every internal tone is also paired with a
+word, so colour is never its only carrier. Nothing a customer can see is exempt.
+
 Its own description, from the direction file: *Soft Structuralism, asymmetrical bento.* The four
 places it deliberately spends its permission are radius (28px squircle with a concentric inner
 core), shadow (very large, very low opacity, never hard), typeface, and ground (a soft luminance

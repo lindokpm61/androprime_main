@@ -67,8 +67,39 @@ export function ScrollReveal() {
       },
       { rootMargin: '0px 0px -12% 0px', threshold: 0.08 },
     )
+    /* 🔴 ANYTHING THE READER CAN ALREADY SEE IS REVEALED NOW, NOT OBSERVED
+       (defect R2). The `-12%` bottom margin above shrinks the root, and the 8%
+       threshold is measured against that REDUCED root — so an element whose top
+       lands in the bottom twelve per cent of the screen is plainly visible to
+       the reader and, correctly, not intersecting enough for the observer to
+       fire. It paints at zero opacity and stays there.
+
+       ⚠ AND IT CAN STAY THERE FOREVER, which is what separates this from the
+       marker-row observer below. That band can sit at the BOTTOM OF THE
+       DOCUMENT, where there is no further scroll to perform, so the thing that
+       would rescue it never happens. Measured on `/how-to-sample`: a five-step
+       list at 751px in a 900px window, seven per cent inside against a threshold
+       of eight. Six pixels.
+
+       ⚠ MOVING THE TARGET DOES NOT FIX THIS, IT MOVES IT. Re-pointing the
+       reveal at each step put step two at 850px with nothing inside at all.
+       There is no threshold that is both "arriving" for a section below the fold
+       and "arrived" for one already on screen, because those are two different
+       questions and only one of them is about intersection.
+
+       So the load-time question is asked against the REAL viewport, and the
+       observer is left to do the only job it is good at: things genuinely below
+       the fold. This predicate is deliberately the same one
+       `scripts/verify-scroll-reveal.js` uses to decide an element is stuck —
+       visible at all, and not yet opaque — so the fix and the check cannot
+       disagree about what "in the first screen" means. */
     document.querySelectorAll<HTMLElement>('.f-rise').forEach((el, i) => {
       el.style.transitionDelay = `${(i % 3) * 90}ms`
+      const r = el.getBoundingClientRect()
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.add('on')
+        return
+      }
       sections.observe(el)
     })
 
@@ -76,6 +107,16 @@ export function ScrollReveal() {
     // the within-row offsets (the ours band trails the lab band, the value
     // marker lands after both) on top of it, so the whole readout reads as one
     // instrument filling in rather than four unrelated animations.
+    //
+    // ⚠ THESE DELIBERATELY DO NOT GET R2's LOAD-TIME REVEAL, and the reason is
+    // the rootMargin rather than the threshold. This observer has none, so its
+    // root IS the viewport: a row the reader can fully see is 100% inside and
+    // fires on the initial observation, and a row at the document's bottom edge
+    // is fully on screen by definition. There is no unreachable band here, so a
+    // partially-visible row at load is simply not "properly on screen" yet —
+    // which is the 35% threshold doing its job, not failing to. Revealing those
+    // eagerly would start the data drawing before the reader can see it, which
+    // is the one thing this animation exists to prevent.
     const rows = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {

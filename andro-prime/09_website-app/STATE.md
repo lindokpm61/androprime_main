@@ -188,6 +188,50 @@ counts moved where real work landed since 2026-09-12 — `/blog` 29 → 36,
 `tsc --noEmit` exit 0, `MEMBERSHIP_ENABLED=false npm run build` exit 0 with the
 P9 interlock firing.
 
+### 🟢 R2 AND R3 CLOSED, 2026-09-14 — and R2 turned out to strand four pages, not one
+
+**R3 was one word from Keith and is recorded rather than built.** The 2026-09-03
+saturated-colour ruling is **scoped to customer-facing surfaces**, so the ops
+board keeps its three tones. Swept into `f-internal.css` (which had the question
+written into it), `ops/content/page.tsx`, `DESIGN.md` — whose *"the only
+saturated colour in the system"* sentence was stated absolutely — and the
+question block further down this file. No values changed.
+
+**R2 was a real build, and the register understated it.** The reveal observer
+carries `rootMargin: 0px 0px -12% 0px` with `threshold: 0.08`, so an element
+whose top lands in the bottom twelve per cent of the window is plainly visible
+to the reader and below the threshold measured against the *reduced* root. It
+paints at zero opacity and stays there — and **that band can sit at the foot of
+the document, where there is no scroll left to rescue it.**
+
+🔴 **SEVENTEEN (route, height) PAIRS STRAND CONTENT ON FOUR REAL PAGES.** The
+row named `/how-to-sample`, which was fixed by removing its reveal. Sweeping ten
+routes against fourteen viewport heights found the rest, including **`fb-grid`
+on `/blog` — the entire post grid — at every laptop height from 700 to 860**,
+plus `f-bios` on `/faq`, `f-faqgrid` on `/contact` and `f-splitgrid` on
+`/waitlist`. **A stuck reveal is a property of the pairing of a page and a
+viewport**, and the committed check fixes the viewport at 900, so it was testing
+one point of a two-dimensional space and reporting it as coverage.
+
+**The fix asks the load-time question against the real viewport** and leaves the
+observer the only job it is good at, things genuinely below the fold. Its
+predicate is deliberately the same one `verify-scroll-reveal.js` uses to call an
+element stuck, so the fix and the check cannot disagree about what "in the first
+screen" means. The marker-row observer is deliberately left alone: it has no
+rootMargin, so its root *is* the viewport and it has no unreachable band.
+
+⚠ **`test:design:live` WAS ALREADY RED, AND HAD BEEN.** `/privacy` and `/terms`
+failed *"has reveal targets"* on every run, because they have none — both render
+a legal document pinned to the canonical HTML, which is not ours to animate. The
+pages were right and the expectation was wrong. **A live check that fails for
+everyone is a check nobody runs**, and it is why R2 could not be verified with
+the committed tool until this was fixed. Declared and **asserted to have zero**
+rather than skipped, which is R1's rule one file over.
+
+✅ **Proved:** with the fix **174 passed, 0 failed** — green for the first time.
+With the fix reverted, **4 failures naming exactly the four elements the sweep
+found.** `npm test` exit 0, typecheck clean, build clean.
+
 ### P5 re-checked at Keith's request, after the wrap
 
 ✅ **The deterministic pre-flight on `/subscription/confirmed` is CLEAN**: 0 HARD,
@@ -1278,7 +1322,19 @@ of the three had was a table that fits eight columns without wrapping and a way
 to say "this one is bad". Everything else it takes: the tokens, the type ramp,
 `.f-tray`, `.f-counts`, `.f-blab`, `.f-banner`.
 
-### 🔵 ONE QUESTION FOR KEITH, AND IT IS A RULING QUESTION RATHER THAN A COPY ONE
+### 🟢 ANSWERED 2026-09-14 — THE RULING IS SCOPED TO CUSTOMER-FACING SURFACES
+
+**Keith, 2026-09-14, closing R3: the 2026-09-03 ruling does not reach an
+admin-gated internal tool, and the three tones stay.** The scope follows from
+what the original ruling was made about — a *customer* reading amber as a
+clinical verdict on one page and a price on another — and no customer can reach
+a board behind an allowlist of one address. Anything customer-facing still takes
+the ruling in full, and `--color-status-*` stays reserved for a clinical verdict
+everywhere without exception. Swept into `f-internal.css`, `ops/content/page.tsx`
+and `DESIGN.md`, whose "the only saturated colour in the system" sentence was
+stated absolutely and now carries the scope.
+
+_The question as it stood, kept for the record:_
 
 **Does the 2026-09-03 saturated-colour ruling reach an admin-gated internal
 tool?** That ruling says saturated colour means a clinical verdict and nothing

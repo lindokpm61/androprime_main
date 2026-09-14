@@ -89,6 +89,27 @@ const EXAMPLES = {
 /* Example URLs whose CORRECT status is not 200, keyed by the example rather
    than the route, since the example is what `goto` is given. */
 const EXPECT_STATUS = { '/this-url-does-not-exist-and-that-is-the-point': 404 };
+
+/* ---- routes that legitimately carry NO reveal target ----------------------
+
+   🔴 THIS SUITE WAS RED, AND HAD BEEN. `/privacy` and `/terms` failed "has
+   reveal targets" on every run, because they have none: both render a legal
+   document pinned to the canonical-site HTML, which is not ours to decorate
+   with entrance motion. The pages are right and the expectation was
+   wrong — "every rebuilt marketing route has reveals" is a category applied to
+   two routes it was never true of. A live check that fails for everyone is a
+   check nobody runs, so this was the reason R2 could not be verified with the
+   committed tool until it was fixed.
+
+   ⚠ DECLARED AND ASSERTED, NEVER SKIPPED, which is R1's rule one file over. A
+   skip would excuse these two forever; asserting ZERO targets means the day
+   somebody puts an `f-rise` on a legal page, this fails and the exemption gets
+   re-read instead of inherited. The reason is a fact about the route, so it is
+   checkable, so it is checked. */
+const NO_REVEAL_TARGETS = {
+  '/privacy': 'renders a canonical legal document, pinned by verify-legal-text.js',
+  '/terms': 'renders a canonical legal document, pinned by verify-legal-text.js',
+};
 /* /blog/[slug] is RESOLVED from the listing rather than written down: a
    hand-picked slug can be unpublished, and the first guess here (a plausible
    'what-is-shbg') 404d, which would have failed this check with a message about
@@ -224,7 +245,11 @@ const visibility = () => {
     await new Promise((r) => setTimeout(r, 1400));
     const top = await p.evaluate(visibility);
     t(`${route}: .js gate is on`, top.js, true);
-    t(`${route}: has reveal targets`, top.rises > 0, true);
+    if (NO_REVEAL_TARGETS[route]) {
+      t(`${route}: has none, as declared (${NO_REVEAL_TARGETS[route]})`, top.rises, 0);
+    } else {
+      t(`${route}: has reveal targets`, top.rises > 0, true);
+    }
     // The real invariant is not that something above the fold animates (the
     // homepage`s first screen is the hero, which carries no reveal target), it
     // is that nothing is left INVISIBLE inside the first screen at load.
@@ -290,6 +315,54 @@ const visibility = () => {
     t(`${route}: every section fired`, after.onRises, after.rises);
     if (after.bands) t(`${route}: no band left collapsed`, after.collapsedBands, 0);
     await p.close();
+  }
+
+  /* ---- R2: the band at the bottom of the screen -------------------------
+     The loop above runs ONE viewport, 1440x900, and at that height every route
+     happens to be clean. So it could not see R2 and did not: the defect was
+     found by eye on `/how-to-sample`, not by this check.
+
+     🔴 IT STRANDS CONTENT ON FOUR REAL PAGES, WHICH THE ORIGINAL REPORT DID NOT
+     KNOW. Sweeping ten routes against fourteen heights found SEVENTEEN pairs
+     that leave something invisible in the first screen, including `fb-grid` on
+     `/blog` — the entire post grid — at every laptop height from 700 to 860.
+     The `-12%` root margin means an element whose top lands in the bottom
+     twelve per cent is visible to the reader and below the observer's 8%
+     threshold, and at the foot of a document there is no scroll left to rescue
+     it.
+
+     ⚠ THE HEIGHT IS HALF THE TEST CASE. A stuck reveal is a property of the
+     PAIRING of a page and a viewport, so a check that fixes the viewport is
+     testing one point of a two-dimensional space and reporting it as coverage.
+     Each pair below was measured stranding a named element before the fix; each
+     is clean after it. Run the sweep again after any layout change that moves a
+     section boundary — `scripts/` has no home for it yet, and that is the
+     honest limit of this block: it pins the cases we found rather than the
+     space they came from. */
+  console.log('\nR2: the bottom band, at the heights where it bites\n');
+  {
+    const BAND_CASES = [
+      { route: '/faq', height: 740, was: 'f-bios at top 709, 0% inside the reduced root' },
+      { route: '/blog', height: 760, was: 'fb-grid at top 653, 1% inside' },
+      { route: '/contact', height: 940, was: 'f-faqgrid at top 922, 0% inside' },
+      { route: '/waitlist', height: 1080, was: 'f-splitgrid at top 1012, 0% inside' },
+    ];
+    for (const c of BAND_CASES) {
+      const p = await browser.newPage();
+      await p.setViewport({ width: 1440, height: c.height, deviceScaleFactor: 1 });
+      await p.goto(originFor(c.route) + c.route, { waitUntil: 'networkidle0', timeout: 120000 });
+      await new Promise((r) => setTimeout(r, 1400));
+      const stuck = await p.evaluate(() => [...document.querySelectorAll('.f-rise')].filter((el) => {
+        const r = el.getBoundingClientRect();
+        return r.top < window.innerHeight && r.bottom > 0 && parseFloat(getComputedStyle(el).opacity) < 0.99;
+      }).map((el) => {
+        const r = el.getBoundingClientRect();
+        return `${el.className} (top ${Math.round(r.top)})`;
+      }));
+      t(`${c.route} @${c.height}: nothing stranded in the bottom band (was: ${c.was})`, stuck.length, 0);
+      if (stuck.length) console.log(`       stuck: ${stuck.join(' | ')}`);
+      await p.close();
+    }
   }
 
   console.log('\nReduced motion: complete and at rest, nothing hidden\n');
