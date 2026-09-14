@@ -74,10 +74,56 @@ async function main(): Promise<void> {
     )
   }
 
-  const drafts: Draft[] = JSON.parse(fs.readFileSync(path.resolve(file), 'utf8'))
-  if (!Array.isArray(drafts) || drafts.length === 0) {
+  const raw: unknown = JSON.parse(fs.readFileSync(path.resolve(file), 'utf8'))
+  if (!Array.isArray(raw) || raw.length === 0) {
     throw new Error(`${file} holds no drafts. Fix the file rather than reading a pass into it.`)
   }
+
+  /* 🔴 VALIDATE THE SHAPE UP FRONT, AND DO NOT LET ONE BAD ENTRY END THE RUN.
+   *
+   * `"seoDescription": null` — the natural way to write "this article needs no
+   * description" — reached `.trim()` and threw. The throw escaped the per-draft
+   * loop, so the run died after the FIRST article and the other three were never
+   * examined. It exited 1, which reads as "found problems with the batch" rather
+   * than "checked one of four and crashed", and the difference matters: a batch
+   * is handed to a person on the strength of this output.
+   *
+   * A null is not an error worth stopping for either — it means the same thing as
+   * an absent key, which the baseline uses for every title-only article. So: null
+   * is normalised to absent, a non-string is a reported failure rather than an
+   * exception, and every draft gets looked at whatever its neighbours contain. */
+  const drafts: Draft[] = []
+  const shapeErrors: string[] = []
+  /* Keyed by slug as well as listed, because a failure that is not attributable to
+     a draft cannot be counted into that draft's label — and an unlabelled failure
+     is how a PASS ends up printed beside a broken entry. That has now happened
+     three times in this file, each time in a new place, so the count is carried
+     per slug rather than recomputed from list length at the point of printing. */
+  const shapeErrorsBySlug = new Map<string, number>()
+  const bump = (slug: string) =>
+    shapeErrorsBySlug.set(slug, (shapeErrorsBySlug.get(slug) ?? 0) + 1)
+
+  raw.forEach((entry, i) => {
+    const e = entry as Record<string, unknown>
+    if (typeof e?.slug !== 'string' || !e.slug) {
+      shapeErrors.push(`entry ${i} has no slug. A batch entry without one cannot be checked.`)
+      return
+    }
+    const clean: Draft = { slug: e.slug }
+    for (const field of ['seoTitle', 'seoDescription'] as const) {
+      const v = e[field]
+      if (v === undefined || v === null) continue // absent and null mean the same here
+      if (typeof v !== 'string') {
+        shapeErrors.push(`${e.slug}: ${field} is ${typeof v}, not a string or null.`)
+        bump(e.slug)
+        continue
+      }
+      clean[field] = v
+    }
+    if (typeof e.note === 'string') clean.note = e.note
+    drafts.push(clean)
+  })
+  const skipped = raw.length - drafts.length
 
   const db = createClient(url, key, { auth: { persistSession: false } })
   const { data, error } = await db
@@ -104,7 +150,7 @@ async function main(): Promise<void> {
   const approvedIds = new Set((reviews ?? []).map((r) => r.article_id as string))
   const SUFFIX = brandSuffix()
   const titleBudget = SEO_TITLE_MAX - SUFFIX.length
-  const failures: string[] = []
+  const failures: string[] = [...shapeErrors]
 
   console.log(
     `\nBare seoTitle budget: ${titleBudget} characters ` +
@@ -248,7 +294,7 @@ async function main(): Promise<void> {
        Same lesson both times, and the same one as the 127 exit code in
        `verify-article-seo.ts`: output that looks right beside a status, or a
        heading, that disagrees with it. Heading first, then everything about it. */
-    const mine = failures.length - failuresBefore
+    const mine = (failures.length - failuresBefore) + (shapeErrorsBySlug.get(d.slug) ?? 0)
     const label = mine === 0 ? 'PASS' : verdict.route !== 'seo' ? 'EWA ' : 'FAIL'
     console.log(`  ${label}  ${d.slug}${mine ? `  (${mine} failure${mine > 1 ? 's' : ''}, see below)` : ''}`)
     if (marks.length) console.log(`        ${marks.join(', ')}`)
@@ -260,7 +306,14 @@ async function main(): Promise<void> {
 
   console.log('')
   if (failures.length) {
-    console.error(`check-seo-drafts: ${failures.length} failure(s) over ${drafts.length} drafts.\n`)
+    console.error(
+      `check-seo-drafts: ${failures.length} failure(s) over ${drafts.length} draft(s)` +
+        // Say when entries were unreadable, so "N drafts" is never mistaken for
+        // "the whole file". A count that silently excludes what it could not parse
+        // reads as coverage.
+        (skipped ? `, plus ${skipped} entr${skipped === 1 ? 'y' : 'ies'} too malformed to check` : '') +
+        `.\n`,
+    )
     for (const f of failures) console.error(`  ${f}`)
     console.error('')
     process.exitCode = 1

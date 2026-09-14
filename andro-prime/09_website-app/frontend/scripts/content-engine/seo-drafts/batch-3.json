@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "ferritin-blood-test",
+    "seoTitle": "Ferritin Blood Test: What Iron Stores Mean",
+    "seoDescription": "What a ferritin blood test measures, what counts as low or normal for UK men, and why a low result is a GP conversation.",
+    "note": "Title DROPS one word, 'Your', because the approved title is 47 bare against a 46 budget. Nothing else changed. Description is the approved excerpt verbatim MINUS the 'Reviewed by GMC-registered GP Dr Ewa Lindo' sentence; no other word changed. Keeps 'why a low result is a GP conversation', which is the escalation clause."
+  },
+  {
+    "slug": "inflammatory-markers-blood-test",
+    "seoTitle": "Inflammatory Markers Blood Test",
+    "note": "Title only: the baseline asks for no seoDescription and none is proposed, so the live excerpt goes on rendering as the snippet. The approved title is 49 bare against a 46 budget; every shortening that keeps the promise ('What They Reveal' at 49, 'What They Show' at 47) is still over, so the promise clause DROPS entirely and the search term is kept whole. The live excerpt already carries the promise on the same search result."
+  },
+  {
+    "slug": "fbc-blood-test",
+    "seoTitle": "FBC Blood Test: What a Full Blood Count Shows",
+    "note": "Title only. The approved title is 49 bare against a 46 budget. ONE WORD SUBSTITUTED: 'Tells You' becomes 'Shows', which is the smallest cut that keeps both the search term and a grammatical promise; dropping ' You' alone leaves 'What a Full Blood Count Tells', which is not a sentence. Renders at 59 against a bound of 60, so there is one character of margin and the check is what guards it. No claim changes: 'shows' and 'tells you' assert the same thing about a test result."
+  },
+  {
+    "slug": "how-to-read-blood-test-results",
+    "seoTitle": "How to Read Your Blood Test Results: UK Guide",
+    "note": "Title only. DROPS two words from the approved title, 'A' and 'for Men'. An earlier draft cut the whole clause to 'How to Read Your Blood Test Results', and the fragment scan raised its strongest finding against it. The scanner's reason was the word 'Guide' being in its qualifier list, which is a false positive, but checking it surfaced a real one: the article is UK-specific (NHS ranges throughout), and a title that stands ALONE in a browser tab, a bookmark or an AI Overview would have lost that scope, even though the live excerpt carries 'GMC-reviewed UK guide for men' directly beneath it on a search result. Keeping 'UK Guide' fits in 45 of the 46 available. The male audience still drops, and survives in the excerpt."
+  }
+]
