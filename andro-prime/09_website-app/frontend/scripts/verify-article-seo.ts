@@ -157,10 +157,22 @@ async function main(): Promise<void> {
   const sb = createClient(url, key, { auth: { persistSession: false } })
   const { data, error } = await sb
     .from('blog_articles')
-    .select('slug,status,frontmatter')
+    .select('id,slug,status,frontmatter')
     .neq('status', 'archived')
   if (error) die(`blog_articles read failed: ${error.message}`)
   if (!data || data.length === 0) die('read 0 articles. Fix this reader rather than trusting a pass.')
+
+  /* Which articles have a recorded clinical sign-off. Read here rather than
+     inferred from `status`, because the two disagree in the live corpus. */
+  const { data: reviewRows, error: rErr } = await sb
+    .from('content_review_log')
+    .select('article_id')
+    .eq('status', 'approved')
+  if (rErr) die(`content_review_log read failed: ${rErr.message}`)
+  const approvedArticleIds = new Set((reviewRows ?? []).map((r) => r.article_id as string))
+  const approvedSlugs = new Set(
+    data.filter((r) => approvedArticleIds.has(r.id as string)).map((r) => r.slug as string),
+  )
 
   const SUFFIX = brandSuffix()
   const rows = data
@@ -253,11 +265,25 @@ async function main(): Promise<void> {
      Batch 1 was drafted straight off this list and included `cortisol-belly`,
      which is a draft sitting with the clinical reviewer; nothing here said so,
      and an independent compliance review caught it. Now it says so. */
+  const fieldsOf = (b: Baseline) =>
+    (b.title !== undefined ? 1 : 0) + (b.description !== undefined ? 1 : 0)
+
   const draftSlugs = new Set(rows.filter((r) => r.status !== 'published').map((r) => r.slug))
   const draftBaseline = BASELINE.filter((b) => draftSlugs.has(b.slug))
-  const draftFields = draftBaseline.reduce(
-    (n, b) => n + (b.title !== undefined ? 1 : 0) + (b.description !== undefined ? 1 : 0), 0,
+  const draftFields = draftBaseline.reduce((n, b) => n + fieldsOf(b), 0)
+
+  /* ⚠ AND PUBLISHED IS NOT APPROVED, WHICH IS A SECOND SUBTRACTION.
+     `status` says the row is served; `content_review_log` is where a clinical
+     sign-off actually lands. They came apart in the live corpus:
+     `14-signs-of-vitamin-d-deficiency` is published and has no approved row and no
+     ClickUp review task. It was found one batch after the draft gap, and it is the
+     same defect in a different column — so the number reports both rather than
+     waiting to be surprised a third time. */
+  const unapprovedSlugs = new Set(
+    rows.filter((r) => r.status === 'published' && !approvedSlugs.has(r.slug)).map((r) => r.slug),
   )
+  const unapprovedBaseline = BASELINE.filter((b) => unapprovedSlugs.has(b.slug))
+  const unapprovedFields = unapprovedBaseline.reduce((n, b) => n + fieldsOf(b), 0)
 
   if (failures.length) {
     console.error(`verify-article-seo: ${failures.length} failure${failures.length === 1 ? '' : 's'} over ${rows.length} articles.\n`)
@@ -278,10 +304,23 @@ async function main(): Promise<void> {
   )
   if (draftBaseline.length) {
     console.log(
-      `  Of those, ${draftFields} field(s) on ${draftBaseline.length} UNPUBLISHED article(s) ` +
-        `(${draftBaseline.map((b) => b.slug).join(', ')}) cannot be commissioned yet: a snippet ` +
-        `compresses approved copy, and a draft has none. Commissionable now: ` +
-        `${fieldsOwed - draftFields} fields across ${owed - draftBaseline.length} articles.`,
+      `  - ${draftFields} field(s) on ${draftBaseline.length} UNPUBLISHED article(s) ` +
+        `(${draftBaseline.map((b) => b.slug).join(', ')}): a snippet compresses approved copy, ` +
+        `and a draft has none.`,
+    )
+  }
+  if (unapprovedBaseline.length) {
+    console.log(
+      `  - ${unapprovedFields} field(s) on ${unapprovedBaseline.length} PUBLISHED article(s) with ` +
+        `no approved content_review_log row ` +
+        `(${unapprovedBaseline.map((b) => b.slug).join(', ')}): published is not approved, and ` +
+        `the whole routing rule rests on approved.`,
+    )
+  }
+  if (draftBaseline.length || unapprovedBaseline.length) {
+    console.log(
+      `  => Commissionable now: ${fieldsOwed - draftFields - unapprovedFields} fields across ` +
+        `${owed - draftBaseline.length - unapprovedBaseline.length} articles.`,
     )
   }
 }

@@ -46,6 +46,7 @@ import {
   sameFigure,
   authoritiesIn,
   hedgesIn,
+  sentences,
   ASSERTION_SHAPES,
   type NumToken,
 } from './classify-claims'
@@ -193,9 +194,38 @@ function readField(
   // It only fires when the text asserts something. A description with no figure
   // and no assertion shape has nothing to hedge, and demanding a "may" in it
   // would send every ordinary snippet to review.
+  /*
+   * ⚠ A VERBATIM SUBSET OF THE EXCERPT CANNOT HAVE DROPPED A QUALIFIER, AND
+   * WITHOUT THIS THE COMMONEST SHAPE IN THE WHOLE COMMISSION FAILED.
+   *
+   * Test 4 below compares the fragment's hedges against hedges anywhere in the
+   * approved copy — title, excerpt AND body. So a description carrying no hedge
+   * looks like a compression whenever the BODY hedges anything, which a clinical
+   * article always does. `b12-blood-test` hit it: the proposed description is the
+   * approved excerpt with one sentence removed, the removed sentence being the
+   * reviewer credential, and the restated clause is unchanged to the byte. It was
+   * routed to a clinician for dropping a qualifier it never had.
+   *
+   * The exemption is deliberately narrow. Matching is at SENTENCE granularity
+   * against the EXCERPT only, never the body:
+   *   · sentence granularity stops a truncated clause qualifying — lifting "under
+   *     25 is deficient" out of "levels may be low, so under 25 is deficient" is
+   *     not a sentence match;
+   *   · the excerpt only, because the excerpt IS the meta description today. A
+   *     snippet built from whole excerpt sentences shows a reader strictly less
+   *     than what that reader already sees in the same place, so it cannot be
+   *     adding a proposition. The body is a different surface with different
+   *     surrounding context and gets no such exemption.
+   */
+  const excerptSentences = new Set(sentences(approved.excerpt))
+  const isVerbatimExcerptSubset =
+    excerptSentences.size > 0 &&
+    sentences(text).length > 0 &&
+    sentences(text).every((s) => excerptSentences.has(s))
+
   const restatesSomething =
     numTokens(text).length > 0 || ASSERTION_SHAPES.some((s) => s.re.test(text))
-  if (restatesSomething) {
+  if (restatesSomething && !isVerbatimExcerptSubset) {
     const approvedHedges = hedgesIn(all)
     const proposedHedges = hedgesIn(text).filter((h) => !WEAK_HEDGES.has(h))
     if (approvedHedges.length && !proposedHedges.length) {

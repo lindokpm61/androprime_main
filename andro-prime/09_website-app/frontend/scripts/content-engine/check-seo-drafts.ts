@@ -82,11 +82,26 @@ async function main(): Promise<void> {
   const db = createClient(url, key, { auth: { persistSession: false } })
   const { data, error } = await db
     .from('blog_articles')
-    .select('slug, body, frontmatter, status')
+    .select('id, slug, body, frontmatter, status')
     .in('slug', drafts.map((d) => d.slug))
   if (error) throw new Error(`blog_articles read failed: ${error.message}`)
 
   const bySlug = new Map((data ?? []).map((r) => [r.slug as string, r]))
+
+  /* The SECOND half of the premise, and it is a different question from `status`.
+     `published` says the row is served; it does not say a clinician ever signed
+     it. `content_review_log` is where the sign-off actually lands, written by the
+     concierge and the sign-off sync, so it answers the question without needing a
+     ClickUp token — which matters, because a check that needs a second credential
+     is a check that gets skipped, and a skipped check reports green. */
+  const ids = (data ?? []).map((r) => r.id as string)
+  const { data: reviews, error: rErr } = await db
+    .from('content_review_log')
+    .select('article_id, status, reviewed_at')
+    .in('article_id', ids)
+    .eq('status', 'approved')
+  if (rErr) throw new Error(`content_review_log read failed: ${rErr.message}`)
+  const approvedIds = new Set((reviews ?? []).map((r) => r.article_id as string))
   const SUFFIX = brandSuffix()
   const titleBudget = SEO_TITLE_MAX - SUFFIX.length
   const failures: string[] = []
@@ -128,6 +143,28 @@ async function main(): Promise<void> {
           `rather than to clinical review because it compresses ALREADY-APPROVED copy; against a ` +
           `draft that premise is false, and a later clinical change to the title or excerpt would ` +
           `leave this snippet compressing superseded copy. Draft the field after the article ships.`,
+        failures,
+      )
+    }
+
+    /* 🔴 AND PUBLISHED IS NOT THE SAME QUESTION AS APPROVED.
+     *
+     * `status='published'` says the row is served. It says nothing about whether a
+     * clinician ever signed it, and those two came apart in the live corpus:
+     * `14-signs-of-vitamin-d-deficiency` is published, live, and has ZERO rows in
+     * `content_review_log` — no ClickUp review task either. It was found while
+     * assembling batch 2, one batch after the draft-status gap, and it is the same
+     * defect wearing a different column: the premise behind routing a snippet away
+     * from clinical review was assumed rather than tested.
+     *
+     * Two tests, because one of them would have passed this article. */
+    if (!approvedIds.has(row.id as string)) {
+      fail(
+        d.slug,
+        `no approved row in content_review_log, so nothing records that this article was ever ` +
+          `clinically signed off — even though it is '${row.status}'. An SEO snippet is routed away ` +
+          `from clinical review because it compresses APPROVED copy; published is not approved. ` +
+          `Resolve the article's sign-off before writing a snippet for it.`,
         failures,
       )
     }

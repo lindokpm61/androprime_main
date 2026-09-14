@@ -155,6 +155,48 @@ section('4b. The same sentence keeping one qualifier is a trim, not a claim move
   check('routes to SEO review', v.route === 'seo')
 }
 
+// ── 4c. A verbatim subset of the excerpt is not a compression ───────────────
+section('4c. A description built from whole excerpt sentences drops nothing')
+{
+  // The `b12-blood-test` shape, and the commonest one in the whole commission:
+  // the approved excerpt minus the reviewer-credential sentence. The restated
+  // clause is unchanged to the byte, so there is nothing to have dropped — but
+  // it carries no hedge, and the body hedges, so test 4 fired before this.
+  const v = guardSeoRevision({
+    seoDescription:
+      'Low vitamin D is associated with tiredness, low mood and aching bones.',
+    approved: APPROVED,
+  })
+  check('routes to SEO review', v.route === 'seo')
+  check('raises no findings', v.findings.length === 0)
+}
+
+section('4d. The exemption is sentence-granular, so a truncated clause is NOT exempt')
+{
+  // A fragment of an excerpt sentence, cut so the qualifier falls off the front.
+  // It is a substring of approved copy but not a whole sentence of it, so the
+  // exemption must not apply and the dropped-qualifier test must still run.
+  const v = guardSeoRevision({
+    seoDescription:
+      'A level under 25 nmol/L is deficient. Tiredness comes from low vitamin D.',
+    approved: APPROVED,
+  })
+  check('routes to clinical review', v.route === 'clinical')
+  check('is tier 2', v.findings.some((f) => f.tier === 2))
+}
+
+section('4e. The exemption reads the EXCERPT only, never the body')
+{
+  // Verbatim from the body, not the excerpt. The body is a different surface with
+  // different surrounding context, so lifting a sentence out of it is a real
+  // compression and gets no exemption.
+  const v = guardSeoRevision({
+    seoDescription: 'The NHS considers a level under 25 nmol/L to be deficient.',
+    approved: APPROVED,
+  })
+  check('routes to clinical review', v.route === 'clinical')
+}
+
 // ── 5. A claim with no number and no citation in it at all ──────────────────
 section('5. A net-new prevalence claim is caught despite carrying no figure')
 {

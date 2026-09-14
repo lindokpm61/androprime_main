@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "andropause-male-menopause",
+    "seoTitle": "Andropause (the \"male menopause\"): what it is",
+    "seoDescription": "Is the male menopause real? What andropause feels like, why a symptom list can't tell you the cause, and how to find where your testosterone sits.",
+    "note": "Title is the headline's first two clauses verbatim, keeping the exact search phrase; DROPS 'the symptoms, and what to do'. Description DROPS 'Reviewed by a GMC-registered GP' (trust signal, still rendered in the standfirst, byline, og:description, twitter:description and JSON-LD) and compresses 'find out where your testosterone actually sits' to 'find where your testosterone sits', losing 'actually'. Keeps 'can't tell you the cause', which is the qualifier doing the work."
+  },
+  {
+    "slug": "myth-of-normal-range",
+    "seoTitle": "Normal Testosterone Levels by Age",
+    "seoDescription": "The NHS \"normal\" testosterone range was built to flag illness, not to define wellness. Why \"within range\" doesn't mean \"well\", and what to do with it.",
+    "note": "Title DROPS 'what \"within range\" actually means', which the description carries. Description keeps the NHS attribution, both scare-quoted terms and the flag-illness/define-wellness contrast that is the article's whole argument; DROPS 'Here's' and 'actually' from 'what to actually do with the result'."
+  },
+  {
+    "slug": "liver-function-blood-test",
+    "seoTitle": "Liver Function Blood Test: What It Means",
+    "seoDescription": "What a liver function blood test measures, what counts as normal in the UK, and what a raised result really means for active men.",
+    "note": "Title DROPS 'the Numbers Mean for UK Men'; 'What It Means' is the shortest form that keeps the promise, since the full phrase renders at 62 and the bound is 60. Description is the approved excerpt verbatim MINUS the 'Reviewed by GMC-registered GP Dr Ewa Lindo' sentence. No other word changed."
+  },
+  {
+    "slug": "cholesterol-test",
+    "seoTitle": "Cholesterol Test: What the Numbers Mean",
+    "seoDescription": "What a cholesterol test measures, what counts as healthy in the UK, and ApoB: the cardiovascular marker most standard tests skip.",
+    "note": "Title DROPS ', and the One Most Men Miss'. Description is the approved excerpt verbatim MINUS the Ewa credential sentence. No other word changed. Keeps ApoB, which is the article's differentiator, and keeps 'most standard tests skip' with its hedge."
+  },
+  {
+    "slug": "thyroid-test",
+    "seoTitle": "Thyroid Test: What It Measures for Men",
+    "seoDescription": "What a thyroid test measures (TSH, Free T4, T3 and TPO antibodies), what counts as normal in the UK, and the symptoms men miss.",
+    "note": "Title DROPS 'and What the Numbers Mean'. Description is the approved excerpt verbatim MINUS the Ewa credential sentence. No other word changed; the four marker names are kept because they are the search terms."
+  },
+  {
+    "slug": "b12-blood-test",
+    "seoDescription": "What a B12 blood test measures, why active B12 (holotranscobalamin) matters more than total, and how to read your number.",
+    "note": "Description only: this article's title already renders inside the bound, so the baseline asks for no seoTitle and none is proposed. The excerpt is 165, five over. The approved excerpt verbatim MINUS the Ewa credential sentence, which is the whole of the cut. No other word changed."
+  }
+]
