@@ -4,7 +4,7 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family: six rows built, and the check found a defect the row that raised it could not see**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
+## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family built, and M7 turned out to be seventeen articles rather than the two a route sweep could see**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
 
 **Read this block, then the switch-on checklist. Everything else below is history.**
 
@@ -32,7 +32,7 @@ them turned out not to be what their rows said.
 | **M4** | `/waitlist` rendered its form twice under one hard-coded `id`, so both labels resolved to the first input. `useId` now |
 | **M5** | 🟢 **Needed no work. It was fixed four days BEFORE it was raised** — see below |
 | **M6** | Eight routes skipped a heading level under a STATE figure that said zero. All eight fixed, and the check comes first, which is what the row asked for |
-| **M7** | The homepage and `/supplement-waitlist` descriptions shortened; the two author pages get a `metaDescription` separate from `bio`. **The article route is allowlisted, not fixed**, and the reason is that its title and description are Ewa-signed article copy |
+| **M7** | Static pages and both authors fixed. 🔴 **Keith then ruled on the remainder the same day** — articles get `seoTitle` / `seoDescription` — and building it showed the corpus is **17 of 19 articles**, not the 2 the sweep saw |
 
 🔴 **THE THEME, AND IT IS A SEQUENCING RULE RATHER THAN A FINDING: BUILD THE
 DETECTOR BEFORE FIXING THE LIST, BECAUSE THE LIST IS A SAMPLE.** M1 enumerated
@@ -127,18 +127,65 @@ not have. **A live result that contradicts the source is a question about the
 server, not an answer about the code** — settle it with `curl <route> | grep`
 before believing either. Written into the script's own header.
 
-### What is NOT fixed, and why it is a decision rather than work
+### 🔴 KEITH RULED ON M7's REMAINDER THE SAME DAY, AND THE CORPUS IS SEVENTEEN ARTICLES
 
-**`/blog/[slug]` is on the new check's allowlist at 2 offences, dated today.**
-Its `<title>` is 89 characters and its description 192. Both are `frontmatter.title`
-and `frontmatter.excerpt` from the `blog_articles` row — **the headline and the
-card excerpt a reader sees, signed off by Ewa with the article.** There is no
-separate SEO field, so the only fixes available are editing 22 live headlines, or
-adding `seo_title` / `seo_description` to the table and the publish pipeline.
-⚠ **And a bound belongs in the article pipeline rather than here**: this sweep
-renders ONE sampled article and can only ever speak for the template, never for
-the corpus. The allowlist is a ratchet — the count may fall and never rise, and a
-route that goes clean is a failure.
+**Keith, 2026-09-14: add `seo_title` and `seo_description` to the table and to
+the publish pipeline.** Built. And building it made the real size of M7 visible
+for the first time.
+
+**The route sweep reported an 89-character title and a 192-character description
+on `/blog/[slug]`. Both were correct, and they were the 5th and the 7th worst of
+nineteen.** Measured against the corpus:
+
+| | |
+|---|---|
+| Articles over on at least one field | **17 of 19** |
+| Worst description | **260** characters |
+| Worst rendered title | **94** |
+| Articles already clean | 2 — `crp-blood-test`, `low-vitamin-d-symptoms` |
+
+**A route sweep's unit is a URL, and a dynamic route collapses a whole corpus
+into one of them.** `/blog/[slug]` renders one sampled row, so its silence about
+the other eighteen was structural rather than reassuring. That is the third time
+in a week this project has met the same shape — a reveal check measuring one
+viewport, ten design checks whose unit was a route rather than a component, and
+now this.
+
+**What shipped, and what deliberately did not.** `seoTitle` and `seoDescription`
+are new optional frontmatter keys; `generateMetadata` renders them and falls back
+to `title`/`excerpt`, so **an article that sets neither renders exactly what it
+rendered before**. `npm run verify:article-seo` measures every article through
+the same resolver the page renders with, on a dated ratchet seeded with all 17 —
+a number that may only fall, and that fails if an entry goes clean and is not
+removed. **No article copy changed and none is proposed.**
+
+⚠ **The 34 sentences are a commission, not a build task.** They are
+customer-facing copy on clinical articles and the descriptions summarise clinical
+content, so each takes the article route: drafted, pre-flighted, and **Ewa
+wherever a shortened description moves a claim rather than just trimming one**.
+
+⚠ **Keith asked for COLUMNS and these are frontmatter keys, which is flagged
+rather than folded in.** `blog_article_revisions` mirrors `body`, `frontmatter`
+and `keyword_coverage` and nothing else, so a column on `blog_articles` would
+have **no home on a revision — and Ewa's preview renders a revision**, so she
+could never see a proposed SEO description or rule on one. The pipeline also
+passes the frontmatter blob through wholesale (`import-blog-to-db`,
+`export-blog-from-db`, `draft-writer`, the `upsert_blog_article` RPC), so a key
+costs no pipeline code while a column needs a mapping at each end.
+
+**Proved end to end on the one DRAFT article, then reverted.** With the fields
+set, `<title>` rendered at 53 and the meta description at 140, **`og:title` kept
+the full editorial headline** (which is the split the unit test asserts), and the
+ratchet's stale-exemption rule fired because the article had gone clean while
+still baselined. The row was restored and the revert verified by frontmatter
+hash, not by the update returning success.
+
+🔴 **AND THE CHECK'S FAILING PATH WAS REPORTING THE WRONG EXIT CODE.** It printed
+its findings correctly and exited **127**: `process.exit(1)` tore the loop down
+while the Supabase socket was mid-close, Node aborted
+(`UV_HANDLE_CLOSING`), and the shell saw an abort rather than a failure. **It
+existed only on the failing path**, so a check watched only to pass would have
+looked perfect. `process.exitCode` and a natural return now produce a real 1.
 
 ### The refactor nobody asked for, and why it happened anyway
 

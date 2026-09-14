@@ -58,6 +58,43 @@ export interface ArticleFrontmatter {
   faq?: ArticleFaqItem[]
   // toc: explicit override. When undefined, TOC auto-shows for posts > 1500 words.
   toc?: boolean
+  /**
+   * seoTitle / seoDescription: what a SEARCH RESULT shows, when the headline and
+   * the card excerpt are the wrong length for one. Added 2026-09-14 on Keith's
+   * decision; defect register M7.
+   *
+   * 🔴 WHY THESE ARE NEEDED AT ALL. `title` is the headline a reader sees at the
+   * top of the article and `excerpt` is the card summary on `/blog`. Both are
+   * editorial copy, signed off with the article, and both were doing a second job
+   * they were never written for: Google cuts a title around 60 characters and a
+   * description around 160. Measured across the corpus on 2026-09-14,
+   * **17 of 19 articles were over on at least one** — the worst description was
+   * 260 characters and the worst rendered title 94. Shortening the headline to
+   * fit a snippet is the wrong half giving way, which is the same argument
+   * `lib/authors.ts` records for keeping `bio` and `metaDescription` apart.
+   *
+   * ⚠ BOTH ARE OPTIONAL AND THE FALLBACK IS THE CURRENT BEHAVIOUR. An article
+   * with neither renders exactly what it rendered before. That is deliberate:
+   * this shipped as a mechanism with 17 articles still to be written, and a
+   * required field would have meant either blocking the pipeline or inventing 34
+   * pieces of clinical copy in one pass. `scripts/verify-article-seo.ts` is what
+   * keeps the remainder visible, on a ratchet that may shrink and never grow.
+   *
+   * ⚠ THEY ARE FRONTMATTER KEYS RATHER THAN COLUMNS, AND KEITH ASKED FOR COLUMNS.
+   * Two things decided it. **`blog_article_revisions` mirrors `body`,
+   * `frontmatter` and `keyword_coverage` and nothing else** — so a column on
+   * `blog_articles` would have no home on a revision, and Ewa's preview, which
+   * renders a REVISION, could never show a proposed SEO description or let her
+   * rule on one. And the whole pipeline passes the frontmatter blob through
+   * wholesale (`import-blog-to-db`, `export-blog-from-db`, `draft-writer`, the
+   * `upsert_blog_article` RPC), so a key costs no pipeline code, while a column
+   * would need a mapping at each end — a second store for one fact, which is the
+   * shape this repo keeps getting bitten by. `seo_title` was the right spelling
+   * for the column that was asked for; `seoTitle` is the spelling for the place
+   * it landed, matching every other rendering field here.
+   */
+  seoTitle?: string
+  seoDescription?: string
   // status: publication gate. Only 'published' articles are visible in production.
   // Sourced from the blog_articles.status COLUMN (authoritative), not the frontmatter blob.
   status?: 'draft' | 'published' | 'archived'
@@ -80,6 +117,53 @@ export function isVisible(fm: Pick<ArticleFrontmatter, 'status'>): boolean {
 
 export interface ArticleMeta extends ArticleFrontmatter {
   slug: string
+}
+
+/* ---------------------------------------------------------------------------
+ * WHAT A SEARCH RESULT SHOWS, resolved in ONE place.
+ *
+ * `generateMetadata` renders it and `scripts/verify-article-seo.ts` measures it.
+ * If those two resolved it separately, the check would be asserting its own
+ * model of the page rather than the page — which is how a green check comes to
+ * mean nothing. Both call `resolveArticleSeo`.
+ *
+ * The bounds are the same numbers `scripts/verify-metadata.js` uses on the
+ * static routes, so a figure printed by either check is comparable with a figure
+ * on the defect register.
+ * ------------------------------------------------------------------------- */
+
+export const SEO_TITLE_MAX = 60
+export const SEO_DESCRIPTION_MAX = 160
+
+export interface ArticleSeo {
+  /** The bare page title. The root layout's template appends the brand. */
+  title: string
+  description: string
+  /** Which field each value came from, so a report can say why something is long. */
+  titleFrom: 'seoTitle' | 'title'
+  descriptionFrom: 'seoDescription' | 'excerpt'
+}
+
+/**
+ * The explicit SEO field when it is set and non-empty; the editorial field
+ * otherwise.
+ *
+ * ⚠ A whitespace-only `seoTitle` falls back rather than rendering a blank tab.
+ * That is not defensive padding: the value arrives from a YAML frontmatter block
+ * a human types, where `seoTitle: ""` and `seoTitle:` are both easy to produce
+ * and neither means "the title is empty".
+ */
+export function resolveArticleSeo(
+  fm: Pick<ArticleFrontmatter, 'title' | 'excerpt' | 'seoTitle' | 'seoDescription'>,
+): ArticleSeo {
+  const seoTitle = typeof fm.seoTitle === 'string' ? fm.seoTitle.trim() : ''
+  const seoDescription = typeof fm.seoDescription === 'string' ? fm.seoDescription.trim() : ''
+  return {
+    title: seoTitle || fm.title,
+    description: seoDescription || fm.excerpt,
+    titleFrom: seoTitle ? 'seoTitle' : 'title',
+    descriptionFrom: seoDescription ? 'seoDescription' : 'excerpt',
+  }
 }
 
 export interface ArticleFile {

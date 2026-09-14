@@ -1555,7 +1555,21 @@ Recorded so they are not rediscovered as surprises.
     `route-conformance` DOES**, and both are right: the conformance count excludes the nav and
     footer because they are worn by every route and would score an unrebuilt page as rebuilt, while
     a heading skip is a defect wherever the two headings were authored, and a reader tabbing the
-    page does not know which component one came from. **What is enforced is what a file can be read to prove.** Nothing
+    page does not know which component one came from.
+    🔴 **AND IT HANDS ONE QUESTION AWAY, BECAUSE A DYNAMIC ROUTE COLLAPSES A CORPUS INTO ONE URL.**
+    This sweep's unit is a URL, so `/blog/[slug]` is one row of nineteen rendered once. When it
+    reported an 89-character title and a 192-character description they were correct — and the 5th
+    and the 7th worst in the corpus; **17 of 19 articles were over on at least one field**, the
+    worst description 260 characters. Head LENGTHS for that route therefore moved to
+    `npm run verify:article-seo` (Keith's decision, 2026-09-14), whose unit is the ARTICLE and which
+    resolves through the same `resolveArticleSeo` the page renders with. The brand-doubling rule
+    stays here, because that is a fact about the route's metadata and the template above it rather
+    than about any article's copy. **The handoff is printed on every run**: an unexplained skip is
+    indistinguishable from an answered question, and silence gets read as coverage.
+    ⚠ **The general rule this leaves behind: every check fixes every variable it does not vary, and
+    reports the result as though it had covered them.** The route list looks like the covered
+    dimension because it is the one enumerated in the source; the viewport, the database row and
+    the user state are invisible precisely because they are set once, far from the assertion. **What is enforced is what a file can be read to prove.** Nothing
     here checks that a page looks right, that spacing follows the rhythm, or that a photograph
     is cropped to its focal point. **Seven checks now, not five:** `verify-f-scaffold.js` closed
     the "does a new page use the system at all" half of this gap on 2026-09-08, and

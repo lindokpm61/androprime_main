@@ -114,24 +114,32 @@ const DESC_MAX = 160
  * Empty is the intended state. An entry here means a defect that needs somebody
  * else's decision, not one that is merely inconvenient.
  */
-const ALLOW = [
-  {
-    route: '/blog/[slug]',
-    since: '2026-09-14',
-    max: 2,
-    why:
-      'Both offences are ARTICLE COPY, not markup. `<title>` is `frontmatter.title` and the ' +
-      'description is `frontmatter.excerpt`, and both come from the `blog_articles` row — the ' +
-      'headline and the card excerpt a reader sees, signed off by Ewa with the article. There is ' +
-      'no separate SEO field to shorten, so the only fixes available are editing 22 live ' +
-      'headlines or adding `seo_title` / `seo_description` to the table and the publish pipeline. ' +
-      'Either is an editorial decision, and a markup sweep is not where one gets taken. ' +
-      'WHAT WOULD RESOLVE IT: those two columns, plus a bound in the article pipeline rather ' +
-      'than here — this sweep renders ONE sampled article and can only ever speak for the ' +
-      'template, never for the corpus. Register M7, which calls itself the lowest-value row on ' +
-      'the register and notes the two long article titles by name.',
-  },
-]
+const ALLOW = []
+
+/*
+ * ROUTES WHOSE HEAD LENGTHS ARE SOMEBODY ELSE'S QUESTION.
+ *
+ * 🔴 A DYNAMIC ROUTE COLLAPSES A CORPUS INTO ONE URL, AND THIS SWEEP'S UNIT IS A
+ * URL. `/blog/[slug]` renders ONE sampled article, so any length it reports is a
+ * fact about that article and reads as a fact about the route. When M7 was
+ * raised it reported an 89-character title and a 192-character description, both
+ * correct — and the 5th and 7th worst of nineteen. **17 of 19 articles were
+ * over on at least one field**, and this check could not have said so.
+ *
+ * So the question moved rather than being allowlisted here. Keith's decision,
+ * 2026-09-14: articles get `seoTitle` / `seoDescription`, and
+ * `scripts/verify-article-seo.ts` measures every row in the corpus against the
+ * same bounds, through the same resolver the page renders with.
+ *
+ * ⚠ ONLY THE LENGTH RULES MOVE. The brand-doubling rule still applies here,
+ * because that is a fact about the ROUTE's metadata and the layout template
+ * above it, not about any article's copy. Two questions, two owners, and the
+ * owner is named rather than implied — an unexplained skip is how `/go` stayed
+ * outside the rebuild for six batches.
+ */
+const HEAD_OWNED_ELSEWHERE = {
+  '/blog/[slug]': '`npm run verify:article-seo`, which measures all 19 articles rather than the one this route samples',
+}
 
 /* ------------------------------------------------------------------ routes */
 
@@ -401,7 +409,7 @@ const BRAND = (() => {
     }
 
     /* ---- M7: what a search result shows ---- */
-    if (!data.noindex) {
+    if (!data.noindex && !(r.url in HEAD_OWNED_ELSEWHERE)) {
       if (data.title.length > TITLE_MAX) {
         findings.push({ url: r.url, kind: 'head', detail: `<title> is ${data.title.length} characters, over ${TITLE_MAX}: ${JSON.stringify(data.title)}` })
       }
@@ -449,6 +457,16 @@ const BRAND = (() => {
   } else {
     const unseen = ALLOW.filter((a) => !measured.includes(a.route))
     if (unseen.length) console.log(`  note  --routes run: ${unseen.length} allowlist entr${unseen.length === 1 ? 'y is' : 'ies are'} outside this route set and were not re-tested (${unseen.map((a) => a.route).join(', ')}).\n`)
+  }
+
+  /* Printed on every run, pass or fail. A question this check has handed to
+     another one must be visible here, or the next reader infers from silence
+     that it was asked. */
+  const handed = Object.entries(HEAD_OWNED_ELSEWHERE).filter(([url]) => measured.includes(url))
+  if (handed.length) {
+    console.log('')
+    console.log(`Head lengths NOT judged here (${handed.length}), because a dynamic route samples a corpus:`)
+    for (const [url, owner] of handed) console.log(`  ${url}  ->  ${owner}`)
   }
 
   console.log('')
