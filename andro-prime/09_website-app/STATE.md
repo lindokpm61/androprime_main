@@ -6,6 +6,35 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family built; M7 turned out to be seventeen articles rather than the two a route sweep could see, Keith ruled that an SEO snippet is reviewed as metadata rather than clinically, and the commission was then drafted, reviewed three times, approved and applied — 26 fields on 15 live articles, which will not RENDER until Direction F deploys**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
 
+### ▶️ WHAT THE NEXT SESSION PICKS UP, IN ORDER
+
+Nothing below is blocked on anything in this session. Session closed 2026-09-14,
+branch `redesign/direction-f` pushed at `5337b4c`, **not merged and not deployed**
+(Coolify builds `main`; production still serves `7ecad99`).
+
+1. **Keith's click, and it is the only thing anyone is waiting on for M7.** ClickUp
+   `869f1wwch` on Approvals & Sign-offs sits at `pending`; that list admits only a
+   named human to `approved`. The CA number is stamped at that moment — none was
+   reserved, because a prose reservation has been overtaken twice before.
+2. **The three remaining SEO fields, both blocked elsewhere.** `cortisol-belly`
+   (2) needs Ewa's ruling on its draft; `14-signs-of-vitamin-d-deficiency` (1)
+   needs its sign-off trail made retrievable per article — the remediation
+   `03_compliance/STATE.md` has had owed since 2026-07-31. Neither is a copy
+   problem. `npm run verify:article-seo` prints the split on every run.
+3. **Nothing in the M7 work needs re-verifying.** `npm test` 41 assertions,
+   `tsc --noEmit` clean on both projects, `verify:article-seo` and
+   `verify:proposed-seo` both exit 0, and the reconciler agrees at 805 entries.
+4. **The defect register artefact is current**: version 33 of
+   <https://claude.ai/artifact/A2fruYqhLty8Ve9N6ibdf3>, M7 marked
+   `Applied, not live`. Tally unchanged at 0 blocking / 14 open / 34 closed,
+   because nothing closed — nothing here is live.
+
+⚠ **The one thing to carry forward that is NOT about M7:** these fields sit in the
+database waiting on a branch merge, so **whenever Direction F is deployed, the
+26 snippets go live in the same push**. That is a copy change to 15 search results
+arriving as a side effect of a design deploy, and it should be a decision rather
+than a discovery.
+
 ### 🟢 THE M7 COMMISSION IS WRITTEN AND APPROVED. IT IS ALSO NOT VISIBLE YET, AND THAT IS THE THING TO KNOW
 
 **Keith approved 26 fields across 15 published articles on 2026-09-14** and they
