@@ -146,6 +146,35 @@ articles when it was seventeen. `audit-rendered-markup` therefore hands article
 head lengths to `verify-article-seo` and **prints the handoff on every run**,
 because an unexplained skip is indistinguishable from an answered question.
 
+🔴 **A REVISION CARRIES A SCOPE, AND THE REVIEW ROUTE FOLLOWS IT.**
+`blog_article_revisions.scope` is `'content'` or `'seo'` (Keith, 2026-09-14,
+defect register M7: *"review a revision of this type as it is an SEO description
+and tag, not a clinical observation"*). A `'content'` revision goes to Dr Ewa
+Lindo on **Content Review — Blog Articles** with the clinical checklist, as it
+always did. A `'seo'` revision — only `seoTitle` / `seoDescription` moved — goes
+to Keith on **Approvals & Sign-offs**, logged in `content_review_log` under
+`scope='seo-reopt'` with Keith as the reviewer and **no GMC number**, because
+writing a clinician's sign-off against copy she never saw is the one thing this
+route must not do.
+
+**The narrow label is enforced in the database, not asserted by the caller.**
+`stage_blog_revision(p_scope)` raises if a `'seo'` revision's body differs from
+the live body by a byte, or if its frontmatter differs anywhere outside those two
+keys. The caller that wants to skip clinical review is exactly the caller that
+must not be trusted about whether it may. **This is also why the SEO fields being
+frontmatter KEYS rather than columns now pays for itself twice**: the guard is one
+`jsonb` subtraction (`frontmatter - 'seoTitle' - 'seoDescription'`), which a pair
+of columns could not express as cheaply.
+
+**What the database cannot settle is whether a shortened line moved a claim**, and
+`scripts/content-engine/seo-revision-guard.ts` settles that against Ewa's own tier
+ladder (2026-08-18, Q14), importing the claim vocabulary from `classify-claims.ts`
+rather than restating it. A rewording is tier 1 and auto-passes; a net-new figure,
+citation or prevalence claim, or a dropped qualifier, falls back to the clinical
+route carrying its findings. The two rulings compose — a 260-character description
+cut to 160 is Ewa's *"compressed, on a surface that cannot carry the qualifier"*
+almost word for word — and the guard fails toward review in every uncertain case.
+
 🔴 **`components/app/AppShell.tsx` and `components/app-shell/AppShell.tsx` are
 different things and the names hide it.** The second is the `ap-` phone shell that
 `/demo` renders, typed against the demo's own data model. Keith ruled on

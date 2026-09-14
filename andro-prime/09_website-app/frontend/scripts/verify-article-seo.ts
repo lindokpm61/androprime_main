@@ -89,12 +89,28 @@ function die(m: string): never {
  * LOWERED and never raised, and an article that has gone clean is a FAILURE,
  * because a stale exemption is how the next real one hides.
  *
- * 🔴 THIS LIST IS THE DELIVERABLE, NOT AN APOLOGY. Writing 17 SEO titles and 17
- * SEO descriptions is a commission: they are customer-facing copy on clinical
- * articles, and the descriptions summarise clinical content, so they take the
- * article route (drafted, pre-flighted, Ewa where a claim moves) rather than
- * being generated in a build pass. What shipped on 2026-09-14 is the MECHANISM
- * plus this list, so the debt is counted and visible rather than unmeasured.
+ * 🔴 THIS LIST IS THE DELIVERABLE, NOT AN APOLOGY. It is a commission: 17
+ * articles, 15 seoTitles and 14 seoDescriptions — 29 fields, NOT 34. The run
+ * prints both numbers at the end, and prose should quote those lines rather than
+ * multiply 17 by 2, which is where "34 sentences" came from and why it appeared
+ * in four documents on the day this list was written. Five of the seventeen are
+ * over on one field only.
+ *
+ * ⚠ THEY NO LONGER TAKE THE CLINICAL ROUTE, AND THAT IS KEITH'S RULING OF
+ * 2026-09-14: "review a revision of this type as it is an SEO description and
+ * tag, not a clinical observation." An SEO field is staged as a scope='seo'
+ * revision, which `stage_blog_revision` will only record if the article body and
+ * every other frontmatter key are byte-identical, and which `reopt-concierge`
+ * routes to Keith's approvals list rather than to Dr Ewa Lindo.
+ *
+ * The one qualification is mechanical, not a matter of anyone's judgement:
+ * `scripts/content-engine/seo-revision-guard.ts` reads each proposed field
+ * against the article's own approved copy, and a field that arrives carrying a
+ * net-new figure, a net-new citation, a net-new prevalence claim or a dropped
+ * qualifier falls through to the clinical route after all. That is Ewa's own tier
+ * ladder (2026-08-18, Q14) applied to a 160-character surface, and a 260-to-160
+ * cut is her tier 2 almost word for word. Drafting and Guardrail #1 pre-flight
+ * are unchanged.
  *
  * Every number below was read from the live database on 2026-09-14, not
  * estimated. `title` is the RENDERED length including the " | Andro Prime" the
@@ -220,7 +236,19 @@ async function main(): Promise<void> {
   }
 
   const explicit = rows.filter((r) => r.titleFrom === 'seoTitle' || r.descriptionFrom === 'seoDescription')
+
+  /* TWO NUMBERS, BOTH PRINTED, BECAUSE THE SECOND ONE GOT MULTIPLIED BY HAND AND
+     CAME OUT WRONG. `BASELINE.length` counts ARTICLES; the commission is counted
+     in FIELDS, and the two are not related by a factor of two because five of the
+     seventeen are over on only one field. Three documents and this file's own
+     header said "34 sentences" (17 x 2) on the day the list was written, when the
+     list said 29. A count nobody can derive by hand is a count nobody can get
+     wrong, so both are printed and prose quotes these lines rather than
+     recomputing them. */
   const owed = BASELINE.length
+  const titlesOwed = BASELINE.filter((b) => b.title !== undefined).length
+  const descriptionsOwed = BASELINE.filter((b) => b.description !== undefined).length
+  const fieldsOwed = titlesOwed + descriptionsOwed
 
   if (failures.length) {
     console.error(`verify-article-seo: ${failures.length} failure${failures.length === 1 ? '' : 's'} over ${rows.length} articles.\n`)
@@ -235,6 +263,10 @@ async function main(): Promise<void> {
   )
   console.log(`  ${explicit.length} article${explicit.length === 1 ? '' : 's'} set an explicit seoTitle or seoDescription.`)
   console.log(`  ${owed} still on the baseline, dated ${SINCE}. That number is the copy still owed, and it may only fall.`)
+  console.log(
+    `  ${fieldsOwed} fields owed across those ${owed} articles ` +
+      `(${titlesOwed} seoTitle, ${descriptionsOwed} seoDescription). Quote THIS line, not a product of the other.`,
+  )
 }
 
 main().catch((e: unknown) => {

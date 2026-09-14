@@ -4,7 +4,7 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family built, and M7 turned out to be seventeen articles rather than the two a route sweep could see**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
+## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family built; M7 turned out to be seventeen articles rather than the two a route sweep could see, and Keith then ruled that an SEO snippet is reviewed as metadata rather than clinically — so a revision now carries a scope and the pipeline routes on it**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
 
 **Read this block, then the switch-on checklist. Everything else below is history.**
 
@@ -32,7 +32,7 @@ them turned out not to be what their rows said.
 | **M4** | `/waitlist` rendered its form twice under one hard-coded `id`, so both labels resolved to the first input. `useId` now |
 | **M5** | 🟢 **Needed no work. It was fixed four days BEFORE it was raised** — see below |
 | **M6** | Eight routes skipped a heading level under a STATE figure that said zero. All eight fixed, and the check comes first, which is what the row asked for |
-| **M7** | Static pages and both authors fixed. 🔴 **Keith then ruled on the remainder the same day** — articles get `seoTitle` / `seoDescription` — and building it showed the corpus is **17 of 19 articles**, not the 2 the sweep saw |
+| **M7** | Static pages and both authors fixed. 🔴 **Keith then ruled TWICE on the remainder the same day.** First: articles get `seoTitle` / `seoDescription` — and building it showed the corpus is **17 of 19 articles**, not the 2 the sweep saw. Then: **an SEO snippet is reviewed as metadata, not as a clinical observation** — so a revision carries a `scope`, the database refuses `'seo'` over a changed body, and the review routes to Keith unless a guard finds the shorter line moved a claim. **29 fields owed, not 34** |
 
 🔴 **THE THEME, AND IT IS A SEQUENCING RULE RATHER THAN A FINDING: BUILD THE
 DETECTOR BEFORE FIXING THE LIST, BECAUSE THE LIST IS A SAMPLE.** M1 enumerated
@@ -159,10 +159,52 @@ the same resolver the page renders with, on a dated ratchet seeded with all 17 �
 a number that may only fall, and that fails if an entry goes clean and is not
 removed. **No article copy changed and none is proposed.**
 
-⚠ **The 34 sentences are a commission, not a build task.** They are
-customer-facing copy on clinical articles and the descriptions summarise clinical
-content, so each takes the article route: drafted, pre-flighted, and **Ewa
-wherever a shortened description moves a claim rather than just trimming one**.
+⚠ **The commission is 29 fields, not 34 — and the 34 is worth a sentence because
+of how it got there.** 15 `seoTitle` and 14 `seoDescription` across the 17
+articles; five of the seventeen are over on one field only. 34 is 17 × 2, and it
+assumed every listed article was over on both. Four documents said 34 on the day
+the list was written, so `verify:article-seo` now PRINTS both counts at the end
+of a run and prose quotes that line rather than multiplying.
+
+### 🔴 AND THE SAME DAY, KEITH RULED THE REVIEW ROUTE: THIS IS METADATA
+
+**Keith, 2026-09-14: "review a revision of this type as it is an SEO description
+and tag, not a clinical observation."** Built, because the ruling could not be
+honoured any other way — nothing in the pipeline read a document, and
+`reopt-concierge` opened a task on the clinical list for every staged revision
+without exception. A change to a `<title>` tag arrived at a GMC-registered
+reviewer under a checklist about EFSA claims and TRT boundaries.
+
+| | |
+|---|---|
+| `blog_article_revisions.scope` | new column, `'content'` or `'seo'`, 169 existing rows backfilled to `content` |
+| `stage_blog_revision` | takes `p_scope`; **refuses** `'seo'` if the body or any non-SEO frontmatter key moved |
+| `reopt-concierge` | `'seo'` → Approvals & Sign-offs, `blocked_on='keith'`, reviewer logged as Keith |
+| `seo-revision-guard.ts` | the one qualification, below |
+
+🔴 **THE LABEL IS NOT TAKEN ON TRUST, AND THAT IS THE WHOLE REASON IT IS A COLUMN
+RATHER THAN A CONVENTION.** A caller asserting "this is metadata-only" is making
+precisely the claim that lets it skip clinical review, so it is the one claim it
+must not be believed on. `stage_blog_revision` compares the proposed body against
+the live body and the proposed frontmatter minus the two SEO keys against the live
+frontmatter minus the same two, and raises on any difference. Metadata-only is
+true by construction. **Proved against the live database**: a body change refused,
+a tampered `title` key refused, an SEO-only change accepted, all three inside a
+transaction that rolled back and left nothing behind.
+
+⚠ **The two rulings compose rather than conflict, and the seam is mechanical.**
+Ewa's tier ladder of 2026-08-18 (Q14) says a claim that is *"compressed, or on a
+surface that cannot carry the qualifier"* is tier 2 and comes to her itemised —
+which describes a 260-character description cut to 160 almost word for word.
+`seo-revision-guard.ts` reads each proposed field against the article's own
+approved title, excerpt and body: a **rewording** adds no proposition, is tier 1,
+auto-passes with no clinician, and is Keith's ruling operating normally. A
+**net-new figure, a net-new citation, a net-new prevalence claim, or a dropped
+qualifier** falls through to the clinical route carrying its findings, and Ewa's
+task says why it reached her. It fails toward review in every uncertain case.
+
+Drafting and Guardrail #1 pre-flight are unchanged. What has gone is the
+assumption that a search snippet is clinical copy because the article under it is.
 
 ⚠ **Keith asked for COLUMNS and these are frontmatter keys, which is flagged
 rather than folded in.** `blog_article_revisions` mirrors `body`, `frontmatter`

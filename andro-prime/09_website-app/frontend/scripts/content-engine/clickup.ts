@@ -8,7 +8,18 @@
 import { requireEnv } from './_shared'
 
 const API = 'https://api.clickup.com/api/v2'
-export const CONTENT_REVIEW_LIST_ID = '901218140081' // "Content Review — Ewa"
+export const CONTENT_REVIEW_LIST_ID = '901218140081' // "Content Review — Blog Articles" (Ewa)
+
+/**
+ * "Approvals & Sign-offs", in the Compliance & Approvals folder — KEITH's queue.
+ *
+ * A metadata revision lands here rather than on the clinical list, per his ruling
+ * of 2026-09-14 (defect register M7): a `<title>` tag and a meta description are
+ * an SEO description and tag, not a clinical observation. The split is enforced
+ * by `seo-revision-guard.ts`, which sends anything that stopped being metadata
+ * back to CONTENT_REVIEW_LIST_ID.
+ */
+export const APPROVALS_LIST_ID = '901219880207'
 
 function authHeaders(): Record<string, string> {
   return { Authorization: requireEnv('CLICKUP_API_TOKEN'), 'Content-Type': 'application/json' }

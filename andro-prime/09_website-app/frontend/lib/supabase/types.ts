@@ -103,6 +103,7 @@ export type Database = {
           frontmatter: Json
           id: string
           keyword_coverage: Json | null
+          scope: string
         }
         Insert: {
           article_id: string
@@ -112,6 +113,7 @@ export type Database = {
           frontmatter?: Json
           id?: string
           keyword_coverage?: Json | null
+          scope?: string
         }
         Update: {
           article_id?: string
@@ -121,6 +123,7 @@ export type Database = {
           frontmatter?: Json
           id?: string
           keyword_coverage?: Json | null
+          scope?: string
         }
         Relationships: [
           {
@@ -2046,6 +2049,7 @@ export type Database = {
           p_editor: string
           p_frontmatter: Json
           p_keyword_coverage: Json
+          p_scope?: string
           p_slug: string
         }
         Returns: string

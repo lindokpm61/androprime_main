@@ -76,9 +76,17 @@ export interface ArticleFrontmatter {
    * ⚠ BOTH ARE OPTIONAL AND THE FALLBACK IS THE CURRENT BEHAVIOUR. An article
    * with neither renders exactly what it rendered before. That is deliberate:
    * this shipped as a mechanism with 17 articles still to be written, and a
-   * required field would have meant either blocking the pipeline or inventing 34
-   * pieces of clinical copy in one pass. `scripts/verify-article-seo.ts` is what
-   * keeps the remainder visible, on a ratchet that may shrink and never grow.
+   * required field would have meant either blocking the pipeline or inventing 29
+   * pieces of copy in one pass. `scripts/verify-article-seo.ts` is what keeps the
+   * remainder visible, on a ratchet that may shrink and never grow, and it PRINTS
+   * that 29 rather than leaving it to be multiplied out of the 17 — which is how
+   * four documents came to say 34 on the day the list was written.
+   *
+   * ⚠ THEY ARE NOT CLINICAL COPY FOR REVIEW PURPOSES. Keith, 2026-09-14: "review
+   * a revision of this type as it is an SEO description and tag, not a clinical
+   * observation." An SEO field is staged as a scope='seo' revision and reviewed
+   * as metadata, unless `seo-revision-guard.ts` finds that the shorter line moved
+   * a claim rather than trimming one.
    *
    * ⚠ THEY ARE FRONTMATTER KEYS RATHER THAN COLUMNS, AND KEITH ASKED FOR COLUMNS.
    * Two things decided it. **`blog_article_revisions` mirrors `body`,
