@@ -22,7 +22,7 @@ The site is **one Next.js application** under `frontend/`, not separate static-H
 - `app/(internal)/`: the two admin-gated tools, `admin/dashboard` (Stripe cash, gate metrics, order lookup) and `ops/content` (the eight-panel content board). A route group, so both URLs are unchanged. Direction F since 2026-09-12, on their own layer: `styles/components/f-internal.css` plus `components/internal/InternalChrome.tsx` (strip, head, numbered panel, metric row, dense data table), imported only by that layout and by the blog preview route, so none of it reaches a customer bundle. 🔴 **The admin gate is in each PAGE, not in the layout, and must stay there:** neither route is in the middleware matcher, a layout is not a security boundary in Next, and `isAdmin()` is a hard-coded allowlist of one address. A consequence worth knowing before trying to screenshot either: no local dev session can open them.
 - `app/go/`: `page.tsx` is the **customer-facing** Instagram link-in-bio grid (one tile per post in the 30-day carousel run; renders only when `CAROUSEL_RUN_START` is set) and `go/[slug]/route.ts` is the click handler that records `bio_tile_click` and redirects. The page fires `bio_grid_view` server-side on every render, which is why it is excluded from the conformance sweep: measuring it would seed the campaign's own baseline. It was excluded for three months as "internal redirect, no UI", which describes the handler and not the page.
 
-Blog content lives in the **Supabase `blog_articles` table** (DB is the source of truth as of the Phase-1 content-engine decoupling, migration `20260619_blog_articles_db_backed.sql`). `lib/blog.ts` reads it (anon + published-only RLS for the public path; service-role for drafts/preview), rendered by `app/(marketing)/blog/[slug]/page.tsx` via `next-mdx-remote/rsc`. Visibility is the `status` column (`draft|published|archived`); publishing/editing/takedown is a DB write surfaced by **on-demand revalidation** (`app/api/revalidate` → `revalidateTag('blog'|'article:<slug>')`, 1h ISR backstop), **no Coolify redeploy**. `frontend/content/blog/*.mdx` is now a **backup mirror + import source**, not the live source: authoring still uses `/article` + `/publish-article` on MDX files, then `scripts/import-blog-to-db.ts` bridges file → DB (Phase 2 will move authoring directly onto the DB write path `upsert_blog_article()`). See `06_marketing/seo-ai-search/` + the SEO memory notes for the content engine.
+Blog content lives in the **Supabase `blog_articles` table** (DB is the source of truth as of the Phase-1 content-engine decoupling, migration `20260619_blog_articles_db_backed.sql`). `lib/blog.ts` reads it (anon + published-only RLS for the public path; service-role for drafts/preview), rendered by `app/(marketing)/blog/[slug]/page.tsx` via `next-mdx-remote/rsc`. Visibility is the `status` column (`draft|published|archived`); publishing/editing/takedown is a DB write surfaced by **on-demand revalidation** (`app/api/revalidate` → `revalidateTag('blog'|'article:<slug>')`, 1h ISR backstop), **no Coolify redeploy**. `frontend/content/blog/*.mdx` is now a **backup mirror + import source**, not the live source: authoring still uses `/article` + `/publish-article` on MDX files, then `scripts/import-blog-to-db.ts` bridges file → DB (Phase 2 will move authoring directly onto the DB write path `upsert_blog_article()`). See `06_marketing/seo-ai-search/` + the SEO memory notes for the content engine. **Every editorial field lives in the `frontmatter` jsonb blob, not in a column** — including `seoTitle` / `seoDescription` (added 2026-09-14 on Keith's ruling, defect register M7), which are what a SEARCH RESULT shows when the headline and the card excerpt are the wrong length for one; `resolveArticleSeo()` in `lib/blog.ts` falls back to `title`/`excerpt`, so an article setting neither renders what it always did. 🔴 **They are keys rather than columns for a reason worth keeping:** `blog_article_revisions` mirrors `body`, `frontmatter` and `keyword_coverage` and nothing else, so a column on `blog_articles` would have no home on a revision — and Ewa reviews a REVISION, so she could never see a proposed value or rule on one. The pipeline also passes the blob through wholesale at every stage (`import-blog-to-db`, `export-blog-from-db`, `draft-writer`, `upsert_blog_article`), so a key costs no pipeline code where a column needs a mapping at each end.
 
 ### `frontend/canonical-site/`: LIVE source (do NOT delete)
 
@@ -127,6 +127,25 @@ Direction F, and they are NOT marketing-shaped, so they do not compose `FPage`:
   `components/marketing`, and does NOT cover this tree, deliberately: `FPage` is a
   hero plus counted sections, which an app screen does not have.
 
+**WHAT EACH CHECK'S UNIT IS, added 2026-09-14.** Every check measures one kind of
+thing and is blind to the others, and the blindness is invisible in its output.
+Read this before trusting any of them to cover a question:
+
+| Unit | Checks | Blind to |
+|---|---|---|
+| Stylesheet / token | `verify-design-tokens`, `verify-modifier-specificity` | anything a page does with them |
+| File | `verify-retired-vocabulary`, `verify-dead-components`, `verify-metadata` | anything only visible once assembled |
+| Route (static read) | `verify-f-classes`, `verify-f-scaffold`, `verify-route-conformance` | inside a component; absence |
+| Route (rendered) | `route-conformance`, `audit-dark-contrast`, `verify-scroll-reveal`, `audit-rendered-markup` | anything varying per DB row behind one dynamic route |
+| Article (DB row) | `verify-article-seo` (a command: needs the service key) | everything that is not an article |
+
+🔴 **A dynamic route collapses a corpus into one URL.** `/blog/[slug]` renders one
+sampled article, so a route sweep's numbers for it are facts about that row that
+read as facts about the route — which is how defect M7 was recorded as two
+articles when it was seventeen. `audit-rendered-markup` therefore hands article
+head lengths to `verify-article-seo` and **prints the handoff on every run**,
+because an unexplained skip is indistinguishable from an answered question.
+
 🔴 **`components/app/AppShell.tsx` and `components/app-shell/AppShell.tsx` are
 different things and the names hide it.** The second is the `ap-` phone shell that
 `/demo` renders, typed against the demo's own data model. Keith ruled on
@@ -162,8 +181,8 @@ The two prefixes never mix on one element and neither module imports the other.
 | `lib/supabase/{client,server,admin,middleware,env,types}.ts` | DB access layer. `client` = browser/SSR-safe; `server`/`admin` = privileged. EU region only. |
 | `lib/customerio/emit.ts` | Emit events to Customer.io (checkout, signup, result, subscription). Critical integration. |
 | `lib/results/` | **Results engine.** `classifier.ts` (low/normal/elevated), `normaliser.ts`, `processResult.ts` (parse Vitall payload → classify → emit), `buildDashboardFromScenario.ts` + `getDashboardData.ts` (5-part sections), `biomarker-copy.ts` (Ewa-approved strings), `lowtNurtureConsent.ts` + `borderlineNurtureConsent.ts` (version-locked consent for the low-T and borderline-T 12–15 nurture opt-ins), `healthProcessingConsent.ts` (CA-018 health-data processing consent gate), `maintenanceOfferCopy.ts`, `seed.ts`, `types.ts`, `fixtures/`. |
-| `lib/blog.ts` | MDX frontmatter parse + `isVisible()` status gate + YAML date-as-Date guard. |
-| `lib/authors.ts` | Author/Person schema (Ewa credentials). |
+| `lib/blog.ts` | MDX frontmatter parse + `isVisible()` status gate + YAML date-as-Date guard + `resolveArticleSeo()`, the one resolver both `generateMetadata` and `verify-article-seo` read. |
+| `lib/authors.ts` | Author/Person schema (Ewa credentials). `bio` is the schema `Person.description` and has no length limit; `metaDescription` is the search snippet and is bounded. Two fields because one string was doing two jobs with two different limits. |
 | `lib/analytics/{ga4,events,consent,page-attribution}.ts` | GA4 (live, `G-D5M4J5M3F6`), event tracking, consent state, UTM attribution. |
 | `lib/auth/{actions,session,isAdmin}.ts` | Passwordless auth, session checks, admin gate. |
 | `lib/stripe/client.ts`, `lib/pricing.ts` | Stripe SDK + product/SKU metadata. |
