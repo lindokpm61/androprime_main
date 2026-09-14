@@ -832,7 +832,13 @@ a.fb-byline-n:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .fb-pbody { @apply flex flex-col gap-2.5; padding: 18px 20px 0; flex: 1; }
 .fb-pk { @apply flex flex-wrap items-center gap-2; }
-.fb-pcard h3 {
+/* h2 since 2026-09-14: a card title is the first subject under the page h1 on
+   `/blog` and on both `/authors/*`, so an h3 there skipped a level on all three
+   (register M6). h3 is kept in the selector at the same size, because the same
+   card is also rendered under an h2 elsewhere and would then be a level 3.
+   Both selectors are (0,1,1), which is what keeps the display face over
+   `.f-page :where(h1, h2, h3, h4)` at (0,1,0). */
+.fb-pcard h2, .fb-pcard h3 {
   font-family: var(--font-display);
   font-size: 18px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.18;
   color: var(--ink);

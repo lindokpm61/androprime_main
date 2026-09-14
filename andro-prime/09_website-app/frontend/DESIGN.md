@@ -1505,11 +1505,11 @@ Recorded so they are not rediscovered as surprises.
     the exact value the token’s own comment states as its floor for functional text on paper, and
     passes AA for the 12.5px it is set at.
     **A value that cannot be measured is usually a sign the design is wrong, not the ruler.**
-12. ⚠ **THE SYSTEM IS NOW PARTLY ENFORCED, AND THE BOUNDARY MATTERS.** Nine checks run in
+12. ⚠ **THE SYSTEM IS NOW PARTLY ENFORCED, AND THE BOUNDARY MATTERS.** Ten checks run in
     `npm test` (`npm run test:design`): token existence, class existence, modifier specificity, the
     scaffold, the dark-panel mechanism, the route-conformance report's freshness, the hero
-    field's geometry, **the absence of the retired V2.0 vocabulary, and that every component has a
-    consumer**.
+    field's geometry, **the absence of the retired V2.0 vocabulary, that every component has a
+    consumer, and that no page types the brand into a title the layout template already suffixes**.
     🔴 **THE LAST TWO WERE ADDED 2026-09-14 (defect register C4) BECAUSE THE OTHER SEVEN ARE ALL
     PRESENCE TESTS OVER A ROUTE OR A STYLESHEET.** None of them asked the ABSENCE question and none
     had a component as its unit, so a V2.0 component rendered inside a conformant route passed all
@@ -1525,9 +1525,37 @@ Recorded so they are not rediscovered as surprises.
     is load-bearing: a naive grep for the same vocabulary names sixteen files and three of them
     render it, the other thirteen being comments recording that the class was REMOVED. Writing down
     a removal is exactly what kept four dead components alive through the sweep that existed to find
-    them. Two more need a dev server and run on
-    demand, `npm run test:design:live`: the scroll-reveal paths and the rendered dark-ground
-    contrast sweep over 16 routes. **What is enforced is what a file can be read to prove.** Nothing
+    them.
+    🔴 **A TENTH WAS ADDED LATER ON 2026-09-14 (defect register M1 and M7), AND IT IS THE FIRST
+    ONE ABOUT THE `<head>`.** `verify-metadata.js` reads every `export const metadata` under `app/`
+    and fails if a page types the brand into its own `title` while `app/layout.tsx` appends it with
+    `title.template`, or if an INDEXABLE page's title passes 60 characters or its description 160.
+    Five pages were doing the first — `/order/confirmed`, `/checkout/details`, `/how-to-sample`,
+    `/subscription/confirmed` and `/go`, the last of which read *"Andro Prime | Andro Prime"* and
+    nothing else. ⚠ **The rule that the length bounds apply only to indexable pages is not a
+    softening**: a 210-character description on a `noindex` page is read by nothing, and a check
+    that fails over it is a check somebody switches off. ⚠ **And it reads the template out of the
+    layout rather than hard-coding it**, so removing the template cannot silently disarm the rule
+    that depends on it. Three more need a dev server and run on
+    demand, `npm run test:design:live`: the scroll-reveal paths, the rendered dark-ground
+    contrast sweep over 16 routes, and — new on 2026-09-14, defect register M4, M5 and M6 —
+    `audit-rendered-markup.js`, which loads every route in a real browser and asks four questions no
+    static read can answer: no heading level is skipped, no `id` appears twice, no focusable link or
+    button is announced with nothing to say, and the head lengths on the two routes whose metadata
+    is computed from the database.
+    🔴 **M6 IS THE ROW WORTH REMEMBERING, BECAUSE IT IS ABOUT A NUMBER RATHER THAN ABOUT HEADINGS.**
+    STATE recorded *"heading skips to 0"* from the August accessibility batch. That was true of the
+    routes measured then, and **every route rebuilt since was free to reintroduce it, because the
+    number was recorded and the check was not.** Eight had. Three of the eight were the shared
+    footer, whose own August fix carried its premise in a comment — *"the page's last heading is an
+    h2"* — which is a claim about every OTHER page, held by nothing; three routes have no `h2` at
+    all. The columns are `h2` now, which needs no premise, because a heading coming back up the
+    scale can never skip.
+    ⚠ **THE MARKUP AUDIT INCLUDES THE SHARED CHROME, WHICH IS THE OPPOSITE OF WHAT
+    `route-conformance` DOES**, and both are right: the conformance count excludes the nav and
+    footer because they are worn by every route and would score an unrebuilt page as rebuilt, while
+    a heading skip is a defect wherever the two headings were authored, and a reader tabbing the
+    page does not know which component one came from. **What is enforced is what a file can be read to prove.** Nothing
     here checks that a page looks right, that spacing follows the rhythm, or that a photograph
     is cropped to its focal point. **Seven checks now, not five:** `verify-f-scaffold.js` closed
     the "does a new page use the system at all" half of this gap on 2026-09-08, and

@@ -126,7 +126,16 @@ export default function WaitlistPage() {
                     style={{ textDecoration: 'none' }}
                   >
                     <div>
-                      <h3 className="f-prow-t">{KIT_NAMES[kit]}</h3>
+                      {/* NOT a heading, since 2026-09-14. It is the first line
+                          of a price row inside a hero panel, and the whole row
+                          is one link — a label on an instrument, not a subject.
+                          As an h3 it was the first heading after the page h1 and
+                          skipped a level (register M6), and M6's own advice for
+                          this shape is that the fix is a deletion rather than a
+                          renumbering. `.f-prow-t` is class-scoped, so the type is
+                          unchanged. Same change on `/kits`, the only other call
+                          site of this row. */}
+                      <p className="f-prow-t">{KIT_NAMES[kit]}</p>
                       <p className="f-prow-m">{n} &middot; {tag}</p>
                     </div>
                     <div className="f-prow-p">&pound;{price}</div>

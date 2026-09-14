@@ -260,7 +260,16 @@ export default function FaqPage() {
           {stats.map(({ stat, label, body }) => (
             <div className="f-bio" key={stat}>
               <p className="f-price" style={{ margin: '4px 0 8px' }}>{stat}</p>
-              <h3>{label}</h3>
+              {/* NOT a heading, since 2026-09-14. The comment above this section
+                  already decided what these are — "a strip of context under the
+                  hero, not a subject" — and an h3 said the opposite, loudly
+                  enough to skip a level under the page h1 (register M6). M6's
+                  advice for this exact shape is that the fix is a deletion
+                  rather than a renumbering: "Per year" is a caption on a number,
+                  and promoting it to h2 would have put three of them in the
+                  document outline ahead of the six real sections.
+                  `.f-bio .f-bio-t` carries the type the h3 had. */}
+              <p className="f-bio-t">{label}</p>
               <p>{body}</p>
             </div>
           ))}

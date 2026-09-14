@@ -28,7 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonical = `${BASE_URL}/authors/${author.slug}`
   return {
     title: `${author.name}: ${author.bylineRole}`,
-    description: author.bio,
+    // NOT `author.bio`, which is the schema.org Person description and runs to
+    // 213 and 189 characters — both cut in a search result (register M7).
+    // `metaDescription` is the same words, truncated at a sentence boundary;
+    // `lib/authors.ts` carries the reasoning and the schema below keeps the full
+    // bio, which is the half that has no length limit.
+    description: author.metaDescription,
     alternates: { canonical },
     robots: { index: true, follow: true },
     openGraph: {
@@ -147,9 +152,13 @@ function AuthorArticleList({ title, articles }: { title: string; articles: Artic
               <div className="fb-pk">
                 <span className="fb-mchip fb-mchip-q">{a.category}</span>
               </div>
-              <h3>
+              {/* h2, not h3: the section above it opens with a `.f-blab` LABEL
+                  rather than a heading, so an h3 here was the first heading
+                  after the page h1 and skipped a level (register M6).
+                  `.fb-pcard h2, .fb-pcard h3` keeps the size identical. */}
+              <h2>
                 <Link href={`/blog/${a.slug}`}>{a.title}</Link>
-              </h3>
+              </h2>
               <p>{a.excerpt}</p>
             </div>
             <div className="fb-pfoot">

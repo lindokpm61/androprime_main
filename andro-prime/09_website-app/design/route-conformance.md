@@ -49,7 +49,7 @@ a green line here means chrome and layout, not a finished route.
 | `/blog/[slug]` | 34 | `app/(marketing)/blog/[slug]/page.tsx` |
 | `/checkout/details` | 30 | `app/(marketing)/checkout/details/page.tsx` |
 | `/contact` | 47 | `app/(marketing)/contact/page.tsx` |
-| `/faq` | 54 | `app/(marketing)/faq/page.tsx` |
+| `/faq` | 55 | `app/(marketing)/faq/page.tsx` |
 | `/how-it-works` | 61 | `app/(marketing)/how-it-works/page.tsx` |
 | `/how-to-sample` | 33 | `app/(marketing)/how-to-sample/page.tsx` |
 | `/kits` | 78 | `app/(marketing)/kits/page.tsx` |

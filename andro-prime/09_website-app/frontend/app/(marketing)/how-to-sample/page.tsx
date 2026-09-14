@@ -64,7 +64,7 @@ import { urlFor } from '@/lib/hosts'
  */
 
 export const metadata: Metadata = {
-  title: 'How to take your sample | Andro Prime',
+  title: 'How to take your sample',
   description: 'Five steps, about five minutes. Your at-home finger-prick, start to finish.',
   robots: { index: false, follow: true },
 }

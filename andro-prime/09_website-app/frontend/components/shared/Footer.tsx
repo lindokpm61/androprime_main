@@ -91,10 +91,26 @@ export function Footer() {
 
             {/* Diagnostics column */}
             <div>
-              {/* h3, not h4: the page's last heading is an h2, so h4 skipped a level on
-                  every route on the site. The visual size is set by `.f-foot h3, .f-foot h4`
-                  in f-primitives.css and is unchanged. */}
-              <h3>Diagnostics</h3>
+              {/* 🔴 h2 SINCE 2026-09-14, AND THE POINT IS THAT IT NEEDS NO PREMISE.
+                  This was h4, then h3 on 2026-08-31 with the reason "the page's last
+                  heading is an h2, so h4 skipped a level". That reasoning was correct
+                  and it was a PREMISE ABOUT EVERY OTHER PAGE, held by nothing. Three
+                  routes have no h2 at all — `/checkout/details`, `/not-found`,
+                  `/subscription/confirmed` — so on those the footer skipped h1 to h3,
+                  and the fix had quietly become a second instance of the bug it fixed
+                  (register M6).
+
+                  A footer column is a top-level part of the document rather than a
+                  subsection of whatever section happened to end above it, so h2 is also
+                  the honest level. It cannot skip from ANY page: coming back UP the
+                  scale is never a skip. Visual size is set by `.f-foot h2, .f-foot h3,
+                  .f-foot h4` in f-primitives.css and is unchanged.
+
+                  Held by `scripts/audit-rendered-markup.js`, which measures the rendered
+                  heading sequence of every route with the chrome INCLUDED — because a
+                  reader tabbing the page does not know which component a heading came
+                  from. */}
+              <h2>Diagnostics</h2>
               <ul>
                 {diagnosticsLinks.map((link) => (
                   <li key={link.href}>
@@ -106,7 +122,7 @@ export function Footer() {
 
             {/* Company column */}
             <div>
-              <h3>Company</h3>
+              <h2>Company</h2>
               <ul>
                 {companyLinks.map((link) => (
                   <li key={link.href}>

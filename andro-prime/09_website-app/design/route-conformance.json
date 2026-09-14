@@ -203,12 +203,12 @@
       "href": "/faq",
       "file": "app/(marketing)/faq/page.tsx",
       "status": 200,
-      "classes": 54,
+      "classes": 55,
       "verdict": "F",
       "note": "",
       "source": {
         "scaffold": true,
-        "classes": 42,
+        "classes": 43,
         "rendersNothing": false
       }
     },

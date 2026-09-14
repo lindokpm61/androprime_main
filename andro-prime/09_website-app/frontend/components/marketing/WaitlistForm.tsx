@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useId, useState, FormEvent } from 'react'
 import Link from 'next/link'
 
 /**
@@ -61,6 +61,17 @@ interface WaitlistFormProps {
 // marketing_consent: true, so submission is gated on an explicit, unticked
 // consent checkbox (UK GDPR; no implied/pre-ticked consent for marketing).
 export function WaitlistForm({ align = 'left' }: WaitlistFormProps) {
+  /* /waitlist renders this form TWICE, and both copies hard-coded the same
+     literal id. Two labels pointing at it therefore both resolved to the FIRST
+     input: clicking the second form's label moved focus to a field somewhere
+     else on the page, and a screen reader announced the second field as
+     unlabelled. Register M4.
+
+     `useId` rather than a source key. `NewsletterForm` keys its id on the
+     `source` prop it already carries for analytics (register M3); this
+     component has no such prop, and the only one it does have is `align`,
+     which two instances on one page can legitimately share. */
+  const emailId = useId()
   const [email, setEmail] = useState('')
   const [consent, setConsent] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
@@ -116,10 +127,10 @@ export function WaitlistForm({ align = 'left' }: WaitlistFormProps) {
           inline row where a `.f-blab` above a 520px pill reads as a section
           opener, so the name goes to assistive tech and the placeholder carries
           the sighted case. */}
-      <label className="sr-only" htmlFor="waitlist-email">Your email address</label>
+      <label className="sr-only" htmlFor={emailId}>Your email address</label>
       <div className="f-inprow">
         <input
-          id="waitlist-email"
+          id={emailId}
           type="email"
           inputMode="email"
           autoComplete="email"

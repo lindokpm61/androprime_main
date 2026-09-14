@@ -59,7 +59,9 @@ const supplementWaitlistSchema = {
 export const metadata: Metadata = {
   title: 'Supplement Waitlist',
   description:
-    'Join the Andro Prime supplement waitlist. No payment, no commitment. Get early dispatch as soon as our manufacturing partner is confirmed and the range launches.',
+    // 161 characters until 2026-09-14, one over the bound a search result cuts
+    // at (register M7). "as soon as" -> "once"; same meaning, six characters.
+    'Join the Andro Prime supplement waitlist. No payment, no commitment. Get early dispatch once our manufacturing partner is confirmed and the range launches.',
   alternates: { canonical: `${BASE_URL}/supplement-waitlist` },
 }
 

@@ -54,7 +54,7 @@ import { isValidBundleType } from '@/lib/bundles/checkout'
  */
 
 export const metadata: Metadata = {
-  title: 'A few details for the lab | Andro Prime',
+  title: 'A few details for the lab',
   description: 'Two details we need before your kit ships.',
   robots: { index: false, follow: false },
 }

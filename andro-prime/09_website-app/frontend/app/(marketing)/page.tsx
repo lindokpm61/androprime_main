@@ -267,7 +267,14 @@ export const metadata: Metadata = {
   // Bare title: the root layout template appends " | Andro Prime" once.
   // (Setting the brand here too produced a double-branded <title>.)
   title: 'Premium At-Home Blood Tests for Men',
-  description: "Men's blood tests, results in days. A five-minute sample at home, analysed by a UKAS ISO 15189-accredited lab and explained in plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP.",
+  // 213 characters until 2026-09-14, so a search result cut it mid-sentence
+  // (register M7). Every fragment below is existing copy: the opening and the
+  // GP-routing sentence are verbatim from the 213-character version, and
+  // "UKAS ISO 15189-accredited lab, plain English" is verbatim from this page's
+  // own twitter.description. What it loses is "One price, nothing hidden.",
+  // which is CA-026 C1 and is rendered on the page itself. 156 characters, and
+  // `scripts/verify-metadata.js` holds it under 160.
+  description: "Men's blood tests, results in days. A five-minute sample at home, UKAS ISO 15189-accredited lab, plain English. Any result that needs a doctor goes to a GP.",
   alternates: { canonical: 'https://andro-prime.com' },
   openGraph: {
     title: 'Premium At-Home Blood Tests for Men | Andro Prime',

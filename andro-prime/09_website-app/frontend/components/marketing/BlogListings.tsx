@@ -148,9 +148,12 @@ export default function BlogListings({ articles }: Props) {
                       <span className="fb-mchip">{featured.category}</span>
                       <span className="fb-mchip fb-mchip-q">Latest</span>
                     </div>
-                    <h3>
+                    {/* h2, not h3: this is the first subject under the page h1,
+                        and an h3 here skipped a level on `/blog` (register M6).
+                        `.fb-pcard h2, .fb-pcard h3` keeps the size identical. */}
+                    <h2>
                       <Link href={featured.href}>{featured.title}</Link>
-                    </h3>
+                    </h2>
                     <p>{featured.excerpt}</p>
                   </div>
                   <div className="fb-pfoot">
@@ -176,9 +179,9 @@ export default function BlogListings({ articles }: Props) {
                   <div className="fb-pk">
                     <span className="fb-mchip fb-mchip-q">{a.category}</span>
                   </div>
-                  <h3>
+                  <h2>
                     <Link href={a.href}>{a.title}</Link>
-                  </h3>
+                  </h2>
                   <p>{a.excerpt}</p>
                 </div>
                 <div className="fb-pfoot">

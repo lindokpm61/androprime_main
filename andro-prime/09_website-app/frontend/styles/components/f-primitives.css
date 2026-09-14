@@ -834,7 +834,13 @@
 .f-bio { border-top: 1px solid var(--hair); padding: 15px 0 0; }
 /* Declared no family before 2026-08-30, so it inherited sans from .f-page and
    would have stayed sans while every other heading went serif. */
-.f-bio h3 { font-family: var(--font-display); font-size-adjust: cap-height 0.71; font-size: 18px; letter-spacing: -0.01em; margin: 10px 0; font-weight: 600; line-height: 1.25; color: var(--ink); }
+/* `.f-bio-t` is the same line when the card's top line is NOT a subject — a
+   caption on a statistic rather than a person's name. Added 2026-09-14 for
+   `/faq`'s three-statistic strip, whose h3 was the first heading after the page
+   h1 and skipped a level (register M6). Same declarations so the two are
+   indistinguishable on the page; the difference is only what a screen reader's
+   heading list contains. */
+.f-bio h3, .f-bio .f-bio-t { font-family: var(--font-display); font-size-adjust: cap-height 0.71; font-size: 18px; letter-spacing: -0.01em; margin: 10px 0; font-weight: 600; line-height: 1.25; color: var(--ink); }
 .f-bio p { font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
 
 /* ---------- FAQ, OPEN GRID ----------
@@ -1358,9 +1364,16 @@
 /* Column headings stay MONO, not display. They are furniture, the same register
    as the eyebrows and data labels, and a serif at 11.5px uppercase with 0.14em
    tracking would read as a mistake. */
-/* h3 since 2026-08-31 (h4 skipped a level after the page's h2s). h4 kept in
-   the selector so any not-yet-migrated markup keeps the same size. */
-.f-foot h3, .f-foot h4 {
+/* h2 since 2026-09-14, h3 since 2026-08-31, h4 before that. Each move was a
+   heading-skip fix and the first two were fixes with a PREMISE ABOUT THE PAGE
+   ABOVE: h3 assumed every page ends on an h2, and three of them have no h2 at
+   all. h2 assumes nothing, because a heading coming back UP the scale can never
+   skip. Register M6, and the reasoning is written out at the markup in
+   `components/shared/Footer.tsx`.
+
+   All three tags stay in the selector so the size is identical whichever one a
+   not-yet-migrated fragment uses. */
+.f-foot h2, .f-foot h3, .f-foot h4 {
   font-family: var(--font-mono); font-size-adjust: none;
   font-size: 11.5px;
   font-weight: 600;

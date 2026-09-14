@@ -61,7 +61,7 @@ import { getOrderRefForCheckoutSession } from '@/lib/orders/getOrderRefForChecko
  */
 
 export const metadata: Metadata = {
-  title: 'Order Confirmed | Andro Prime',
+  title: 'Order Confirmed',
   description: 'Your kit is on its way.',
   robots: { index: false, follow: false },
 }
@@ -175,7 +175,12 @@ export default async function OrderConfirmedPage({ searchParams }: PageProps) {
           {STEPS.map(({ num, title, body }) => (
             <div className="f-step" key={num}>
               <span className="f-no">{num}</span>
-              <h3 className="f-h4 mt-2.5 mb-2">{title}</h3>
+              {/* h2, not h3: this section opens with a `.f-blab` LABEL rather
+                  than a heading, so the three step titles were the first
+                  headings after the page h1 and skipped a level (register M6).
+                  A step IS a subject, so it is renumbered rather than demoted
+                  out of the outline. `.f-h4` sets the size, so nothing moves. */}
+              <h2 className="f-h4 mt-2.5 mb-2">{title}</h2>
               <p className="f-sub" style={{ fontSize: 15 }}>{body}</p>
             </div>
           ))}

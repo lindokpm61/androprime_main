@@ -298,7 +298,14 @@ export default function KitsPage() {
               {ORDER.map((kit) => (
                 <div className="f-prow" key={kit}>
                   <div>
-                    <h3 className="f-prow-t">{KIT_NAMES[kit]}</h3>
+                    {/* NOT a heading, since 2026-09-14 — the same change as
+                        `/waitlist`, the other call site of this row. It is a
+                        label on a price instrument rather than a subject. This
+                        page did not SKIP a level over it (an h2 precedes it
+                        here), which is exactly why the two copies had to move
+                        together: leaving this one an h3 would have made the same
+                        row mean two different things one click apart. */}
+                    <p className="f-prow-t">{KIT_NAMES[kit]}</p>
                     <p className="f-prow-m">
                       {kit === 'hormone-recovery'
                         ? `All ${panelCount(kit)} markers · Full picture`

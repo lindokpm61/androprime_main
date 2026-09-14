@@ -103,13 +103,17 @@ function die(m) { console.error(`ERROR: ${m}`); process.exit(1) }
 
 /* ---------- routes ---------- */
 
-// A dynamic segment needs a real value to render. Declared rather than guessed,
-// so a missing sample is a loud failure instead of a 404 scored as "not F".
-const SAMPLES = {
-  '/authors/[slug]': 'dr-ewa-lindo',
-  '/blog/[slug]': 'andropause-male-menopause',
-  '/blog/preview/[slug]': 'andropause-male-menopause',
-}
+/* The route walk, the dynamic-segment samples, the dark-launch flag list, the
+   app-host prefixes and the browser locator moved to `scripts/route-list.js` on
+   2026-09-14, when `audit-rendered-markup.js` (register M4, M5, M6) turned out
+   to need every one of them. They were data about the app rather than about
+   this report, and a second copy of a fact is invisible exactly while the
+   copies agree. Nothing about them changed in the move. */
+const {
+  discoverRoutes, SYNTHETIC, FLAG_GATED, hrefFor,
+  APP_HOST, APP_PREFIXES, onAppHost, hostRouting,
+  browserDriver, chromePath,
+} = require('./route-list')
 
 // Not part of the public surface, so not part of the count. Each says why, and
 // since 2026-09-14 each also carries the EVIDENCE that its why is still true —
@@ -121,74 +125,11 @@ const EXCLUDED = Object.fromEntries(
   Object.entries(EXCLUSIONS).map(([url, ex]) => [url, ex.why]),
 )
 
-/* WHICH HOST SERVES WHAT. Mirrors APP_ROUTE_PREFIXES in lib/hosts.ts, which is
-   the single source of truth for the route→host mapping. Duplicated here rather
-   than imported because this is a plain CJS script and that module is TS with
-   path aliases; the guard below fails loudly if the two ever diverge, so the copy
-   cannot rot silently. */
-const APP_HOST = (process.env.NEXT_PUBLIC_APP_URL || 'https://app.andro-prime.com').replace(/\/+$/, '')
-const APP_PREFIXES = ['/auth', '/results-dashboard', '/account', '/subscriptions', '/founding-member-status', '/supplement-waitlist-status', '/order/confirmed', '/subscription/confirmed']
-{
-  // The copy above must equal the real list. A route silently added to
-  // lib/hosts.ts and not here would be measured on the wrong host and reported
-  // with confidence, which is the exact failure this whole patch is fixing.
-  const ts = fs.readFileSync(path.join(ROOT, 'lib', 'hosts.ts'), 'utf8')
-  const block = ts.match(/export const APP_ROUTE_PREFIXES = \[([\s\S]*?)\] as const/)
-  if (!block) die('could not find APP_ROUTE_PREFIXES in lib/hosts.ts. Fix this reader rather than trusting a pass.')
-  // Comments FIRST. The real array carries a long comment explaining why
-  // '/membership' is NOT in it, and a bare string match reads that quoted path
-  // as a member, so the guard failed on its own reader and reported a list
-  // containing the one route the comment exists to exclude.
-  const body = block[1].replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ')
-  const real = [...new Set([...body.matchAll(/'([^']+)'/g)].map((m) => m[1]))].sort()
-  const mine = [...APP_PREFIXES].sort()
-  if (JSON.stringify(real) !== JSON.stringify(mine)) {
-    die(`APP_PREFIXES here disagrees with lib/hosts.ts.\n  hosts.ts: ${real.join(' ')}\n  here:     ${mine.join(' ')}\nUpdate this script's copy.`)
-  }
-}
-/* Exact-or-segment-boundary, never a bare startsWith: '/accounts-payable' must
-   not match '/account'. Same rule lib/hosts.ts matchesPrefix applies. */
-const onAppHost = (url) => APP_PREFIXES.some((p) => url === p || url.startsWith(p + '/'))
-
-/* 🔴 THE HOSTNAME IS THE APP HOST'S; THE SCHEME AND PORT ARE THE DEV SERVER'S.
-   `APP_HOST` is `https://app.andro-prime.com`. Chrome's resolver MAP redirects
-   where the NAME resolves to, and changes nothing else, so navigating to the
-   https URL made Chrome open a TLS handshake against a plain-HTTP dev server and
-   every app-host route came back as a load failure. `--ignore-certificate-errors`
-   does not help: there is no certificate, there is no TLS at all.
-   So the fetch origin keeps the app HOSTNAME, which is the only part the
-   middleware reads, and takes its scheme from BASE. The Host header still says
-   `app.andro-prime.com`, which is the whole point. */
-const APP_RESOLVABLE = !/^(localhost|127\.|\[?::1)/.test(new URL(APP_HOST).hostname)
-const APP_FETCH_ORIGIN = APP_RESOLVABLE
-  ? `${new URL(BASE).protocol}//${new URL(APP_HOST).hostname}`
-  : APP_HOST
-const originFor = (url) => (onAppHost(url) ? APP_FETCH_ORIGIN : BASE)
-
-// Dark-launch flags call `notFound()` on the route itself, so with the flag off
-// the page 404s BY DESIGN. Scoring that as "not rebuilt" would be a lie about a
-// route that is finished: /membership is one of the rebuilt ones. Declared here
-// so a 404 on one of these reads as "not measured" and names what would measure
-// it, while a 404 anywhere else stays an error.
-const FLAG_GATED = {
-  '/membership': 'MEMBERSHIP_ENABLED=true',
-  '/account/membership': 'MEMBERSHIP_ENABLED=true',
-  '/results-dashboard/handoff': 'GP_HANDOFF_ENABLED=true',
-}
-
-function routes(dir, acc = []) {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name)
-    if (e.isDirectory()) { if (!e.name.startsWith('_') && e.name !== 'api') routes(p, acc) }
-    else if (e.name === 'page.tsx') {
-      const rel = path.relative(APP, path.dirname(p)).split(path.sep).filter(Boolean)
-      // A `(group)` is an organisational folder, not a path segment.
-      const url = '/' + rel.filter((s) => !(s.startsWith('(') && s.endsWith(')'))).join('/')
-      acc.push({ url: url === '/' ? '/' : url.replace(/\/$/, ''), file: path.relative(ROOT, p).split(path.sep).join('/') })
-    }
-  }
-  return acc
-}
+/* The host routing this report needs, from `scripts/route-list.js`: which
+   prefixes the app host serves (guarded against `lib/hosts.ts`), and the
+   Chrome resolver mapping that makes an app-host route arrive at the dev
+   server carrying its real Host header rather than 308-ing to production. */
+const { originFor, resolverArgs, appHostname, appFetchOrigin, note: hostNote } = hostRouting(BASE)
 
 // A static second opinion, and the only evidence available for a route that
 // cannot be rendered anonymously. It reads the page file itself: a rebuilt page
@@ -221,14 +162,7 @@ function sourceSignal(file) {
   return { scaffold, classes: classes.size, rendersNothing }
 }
 
-// `not-found.tsx` is a rendered surface with no `page.tsx`, so the directory
-// walk cannot see it, and it was counted by hand as one of the rebuilt routes.
-// It is reached by asking for a URL that matches nothing.
-const SYNTHETIC = [
-  { url: '/not-found', href: '/__conformance_probe_404__', file: 'app/not-found.tsx', expectStatus: 404 },
-]
-
-const all = routes(APP).sort((a, b) => a.url.localeCompare(b.url))
+const all = discoverRoutes().sort((a, b) => a.url.localeCompare(b.url))
 if (all.length < 20) die(`found only ${all.length} routes under app/. Fix this collector rather than trusting a pass.`)
 
 /* EVERY EXCLUSION IS RE-EARNED HERE, BEFORE A SINGLE ROUTE IS RENDERED (R1).
@@ -252,12 +186,7 @@ if (brokenExclusions.length) {
 }
 
 const measured = all.filter((r) => !(r.url in EXCLUDED))
-for (const r of measured) {
-  if (r.url.includes('[') && !(r.url in SAMPLES)) {
-    die(`no sample value for the dynamic route ${r.url}. Add one to SAMPLES rather than letting it render a 404 and score as not-rebuilt.`)
-  }
-  r.href = r.url.replace(/\[[^\]]+\]/, (m) => SAMPLES[r.url])
-}
+for (const r of measured) r.href = hrefFor(r.url, 'route-conformance')
 for (const s of SYNTHETIC) if (fs.existsSync(path.join(ROOT, s.file))) measured.push(s)
 measured.sort((a, b) => a.url.localeCompare(b.url))
 
@@ -289,22 +218,8 @@ if (!definedClasses.size) die('parsed no f- classes out of the stylesheets. Fix 
 
 /* ---------- render ---------- */
 
-let puppeteer = null
-for (const c of ['puppeteer-core', path.join(ROOT, 'node_modules', 'puppeteer-core')]) {
-  try { puppeteer = require(c); break } catch { /* next */ }
-}
-if (!puppeteer) die('puppeteer-core not found. Fix: npm install puppeteer-core')
-
-const CHROME_CANDIDATES = [
-  process.env.CHROME_PATH,
-  'C:/Program Files/Google/Chrome/Application/chrome.exe',
-  'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-  `${process.env.LOCALAPPDATA || ''}/Google/Chrome/Application/chrome.exe`,
-  '/usr/bin/google-chrome',
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-].filter(Boolean)
-const chrome = CHROME_CANDIDATES.find((c) => fs.existsSync(c))
-if (!chrome) die('no Chrome binary found. Fix: set CHROME_PATH to the executable.')
+const driver = browserDriver()
+const chrome = chromePath()
 
 // Everything inside the shared chrome is removed before counting. The nav and
 // the footer are worn by every route including the ones still on the old
@@ -338,13 +253,8 @@ const COUNT = () => {
      instead of 308-ing to production. Only applied when the app host is a real
      remote name; if somebody has already pointed NEXT_PUBLIC_APP_URL at
      localhost, there is nothing to map. */
-  const appHostname = new URL(APP_HOST).hostname
-  const baseAuthority = new URL(BASE).host
-  const resolverArgs = APP_RESOLVABLE
-    ? [`--host-resolver-rules=MAP ${appHostname} ${baseAuthority}`]
-    : []
-  if (APP_RESOLVABLE) console.log(`  note  ${appHostname} mapped to ${baseAuthority}; app-host routes fetched from ${APP_FETCH_ORIGIN}`)
-  const browser = await puppeteer.launch({ executablePath: chrome, headless: 'new', args: ['--no-sandbox', ...resolverArgs] })
+  if (hostNote) console.log(`  note  ${hostNote}`)
+  const browser = await driver.launch({ executablePath: chrome, headless: 'new', args: ['--no-sandbox', ...resolverArgs] })
   const rows = []
   const seenClasses = new Set()
   for (const r of measured) {
@@ -414,7 +324,7 @@ const COUNT = () => {
     // An app-host route that will not load is almost always the scheme mismatch
     // the header describes, so name the remedy rather than leave the symptom.
     const appFails = errors.filter((e) => onAppHost(e.url))
-    if (appFails.length && APP_RESOLVABLE) {
+    if (appFails.length && resolverArgs.length) {
       const h = new URL(APP_HOST).hostname
       console.error(`\n${appFails.length} of them are served by ${h}, not by the apex.`)
       console.error('The usual cause is the dev server advertising https for the app host, so the')

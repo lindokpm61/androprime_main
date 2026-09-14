@@ -15,6 +15,21 @@ export interface Author {
   bylineRole: string
   // bio: ~30 word short bio for Person schema `description` + byline tooltip
   bio: string
+  // metaDescription: what `/authors/<slug>` puts in <meta name="description">.
+  //
+  // 🔴 IT EXISTS BECAUSE `bio` IS DOING TWO JOBS WITH TWO DIFFERENT LIMITS.
+  // As a schema.org Person.description it has no length constraint and wants to
+  // be complete; as a search snippet it is cut at about 160 characters, and both
+  // bios were over (213 and 189 — register M7). Truncating `bio` would have
+  // shortened the structured data to fit a snippet, which is the wrong half to
+  // give way.
+  //
+  // ⚠ EVERY WORD OF IT IS VERBATIM FROM `bio`. These are not new sentences: each
+  // is the opening of the bio cut at a sentence boundary, so no claim, credential
+  // or framing is introduced that has not already been approved. Ewa's keeps the
+  // GMC line and her registration in full, because a truncation that dropped a
+  // credential would be a change of substance rather than of length.
+  metaDescription: string
   // longBio: ~150-250 word author page body. May contain newlines (one paragraph per blank-line block).
   longBio: string
   initials: string
@@ -36,6 +51,8 @@ export const AUTHORS: Record<AuthorSlug, Author> = {
     jobTitle: 'Founder, Andro Prime',
     bylineRole: 'Founder, Andro Prime',
     bio: 'Founder of Andro Prime. Spent two years being told his test results were "normal" before tracking down what the standard panel was missing. Writes about navigating men’s health diagnostics.',
+    // The bio's first two sentences, verbatim. 139 characters; the full bio is 189.
+    metaDescription: 'Founder of Andro Prime. Spent two years being told his test results were "normal" before tracking down what the standard panel was missing.',
     longBio: `I spent two years being told I was normal.
 
 My testosterone came back borderline. My GP said it wasn’t worth treating. Probably stress. Within range for my age. I was tired by 2pm every day, training four times a week and getting nowhere, losing focus in meetings I used to run. Not myself. But apparently fine.
@@ -60,6 +77,10 @@ I write for Andro Prime about what I’ve learned navigating men’s health diag
     jobTitle: 'General Practitioner',
     bylineRole: 'GMC-registered GP',
     bio: 'GMC-registered GP with 20+ years UK clinical experience and Harley Street training in testosterone replacement therapy. Medical lead for Andro Prime; reviews all clinical content and signs off results-report copy.',
+    // The bio's first sentence plus its next clause, verbatim, with the
+    // semicolon closed to a full stop. 149 characters; the full bio is 213. What
+    // it drops is the description of her REVIEW DUTIES, not any credential.
+    metaDescription: 'GMC-registered GP with 20+ years UK clinical experience and Harley Street training in testosterone replacement therapy. Medical lead for Andro Prime.',
     longBio: `Dr Ewa Lindo is a GMC-registered GP with over 20 years of UK clinical experience and additional Harley Street training in testosterone replacement therapy. She currently practises at St James Medical Practice in Croydon, and previously spent nine years at Denmark Road Surgery in South Norwood. Her hospital background spans accident and emergency, paediatrics, obstetrics and gynaecology, dermatology, and surgical and medical house posts at St Helier and Epsom General Hospitals.
 
 She is the medical lead for Andro Prime. Her role is to review the clinical content men receive in their results reports, sign off the recommendation logic the platform uses, and make sure the line between wellness and clinical care is drawn honestly. She will be the prescriber when our clinical programme launches following CQC registration.`,

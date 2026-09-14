@@ -1,5 +1,14 @@
+import type { Metadata } from 'next'
 import { AuthCard } from '@/components/auth/AuthCard'
 import { signupAction } from '@/lib/auth/actions'
+
+/* The card's own heading as the document title, and noindex stated in the page
+   as well as in `robots.txt`. Register M2; the reasoning is written out once,
+   in `app/auth/login/page.tsx`. */
+export const metadata: Metadata = {
+  title: 'Create Your Account',
+  robots: { index: false, follow: false },
+}
 
 type SignupPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>

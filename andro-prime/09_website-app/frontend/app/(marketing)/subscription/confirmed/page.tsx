@@ -89,7 +89,7 @@ import { formatLongDate } from '@/lib/date/format'
  */
 
 export const metadata: Metadata = {
-  title: 'Membership Confirmed | Andro Prime',
+  title: 'Membership Confirmed',
   description: 'Your membership is live.',
   robots: { index: false, follow: false },
 }

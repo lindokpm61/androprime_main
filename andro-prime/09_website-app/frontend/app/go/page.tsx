@@ -45,7 +45,12 @@ import { SLA_COPY } from '@/lib/pricing'
  */
 
 export const metadata: Metadata = {
-  title: 'Andro Prime',
+  // The page's own H1, not a new sentence. The root layout appends
+  // " | Andro Prime", and this line used to type the brand as well, so the tab,
+  // the share preview and the bookmark all read "Andro Prime | Andro Prime" and
+  // nothing else — on the one page every Instagram profile visitor lands on.
+  // Register M1; held shut by `scripts/verify-metadata.js`.
+  title: 'Every post, and where it goes',
   // noindex: this is a routing surface for one Instagram profile link, not a page
   // anyone should reach from search. Deliberately NOT added to robots.ts disallow,
   // because a disallowed page cannot be crawled, so the crawler never reads this

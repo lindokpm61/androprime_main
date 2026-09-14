@@ -4,7 +4,177 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-14 (**C1 to C4 built: the five components the route count could not see, and the two checks that can**). Earlier the same day: P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
+## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family: six rows built, and the check found a defect the row that raised it could not see**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
+
+**Read this block, then the switch-on checklist. Everything else below is history.**
+
+### The one-line state
+
+The membership is closer to switch-on than it has ever been, and **nothing is
+waiting on anyone outside the business.** What is left is Keith's signature,
+**one** unbuilt defect and a legal-page sync.
+
+⚠ **That sentence is about the MEMBERSHIP and it is unchanged, for the second
+session running. The rebuild moved instead.** Defect register section 06,
+"Markup, labels and metadata", is now closed but for the one row that needs an
+editorial decision. **A2 is still the only unbuilt item on the switch-on
+checklist.**
+
+### What moved: M1, M2, M4, M5, M6 and M7
+
+Keith asked for the six open rows of the M family. All six are done, and two of
+them turned out not to be what their rows said.
+
+| Row | What happened |
+|---|---|
+| **M1** | Five pages typed `Andro Prime` into their own `title` while `app/layout.tsx` appends it with `title.template`, so the tab read the brand **twice**. The row named four. 🔴 **The check found the fifth** |
+| **M2** | All five `/auth/*` routes had **no metadata at all** and rendered the root default, so login, reset and sign-up were three identically-labelled tabs. Each now carries the heading its own card renders, plus `robots: index:false`. ⚠ **The row's layout claim is stale** — see below |
+| **M4** | `/waitlist` rendered its form twice under one hard-coded `id`, so both labels resolved to the first input. `useId` now |
+| **M5** | 🟢 **Needed no work. It was fixed four days BEFORE it was raised** — see below |
+| **M6** | Eight routes skipped a heading level under a STATE figure that said zero. All eight fixed, and the check comes first, which is what the row asked for |
+| **M7** | The homepage and `/supplement-waitlist` descriptions shortened; the two author pages get a `metaDescription` separate from `bio`. **The article route is allowlisted, not fixed**, and the reason is that its title and description are Ewa-signed article copy |
+
+🔴 **THE THEME, AND IT IS A SEQUENCING RULE RATHER THAN A FINDING: BUILD THE
+DETECTOR BEFORE FIXING THE LIST, BECAUSE THE LIST IS A SAMPLE.** M1 enumerated
+four routes with their rendered titles, measured in a real browser. Writing
+`verify-metadata.js` first and running it against the unfixed tree found a
+**fifth**: `/subscription/confirmed`, rendering *"Membership Confirmed | Andro
+Prime | Andro Prime"*. The sweep that raised M1 could not have seen it — the
+route is behind `MEMBERSHIP_ENABLED` and 404s with the flag off. Had the four
+been fixed first, the check would have been written afterwards, passed on its
+first run, and the fifth would have shipped invisibly. **The gap between what a
+detector finds and what the report listed is information about the instrument
+that produced the report**, and it is only available once.
+
+### Two rows that were not what they said, and both are worth reading
+
+🟢 **M5 WAS ALREADY FIXED, FOUR DAYS BEFORE IT WAS RAISED.** The row says each
+blog card wraps its photograph in an unnamed second link to the same article.
+The thumbnails have carried `tabIndex={-1}` and `aria-hidden="true"` since
+`583ffc8` on **2026-09-08**; the row was written on **2026-09-12** from a
+rendered sweep. The check was built and proved anyway, because the row's durable
+content is that the defect class must stay shut, not that this instance was
+open. It is now held by `audit-rendered-markup.js`, which was watched to find all
+seven of the unnamed links when the two attributes were removed.
+
+⚠ **M2'S SECOND CLAIM IS STALE AND IT WAS THE HALF WITH A QUESTION ATTACHED.**
+The row says *"there is no `app/auth/layout.tsx` at all, so these five pages
+render under the root layout alone"*, and suggests deciding the layout question
+in the same pass. That file has existed since **2026-09-08** (`af9986e`), four
+days before the row was written: it applies `.f-page` to the whole auth tree and
+its header argues at length that the missing nav and footer are deliberate.
+**So no decision is owed to Keith here.** M2's metadata half was correct and is
+what got built.
+
+⚠ **M6's DIAGNOSIS IS WRONG WHILE ITS MEASUREMENT IS RIGHT.** It says the
+pattern is *"a section eyebrow styled as an `h3` under the page `h1`"*. No
+eyebrow on any of the eight is a heading — every one is a `<p class="f-blab">`.
+The real pattern is the opposite: the section opens with a label that is NOT a
+heading, so the CARD titles inside it become the first heading after the `h1`.
+Its recommended remedy still applied to four of the six page-level cases.
+
+### The footer fix had a premise, and the premise is why it broke
+
+Three of M6's eight were the shared footer, and its history is the lesson.
+`h4` → `h3` on 2026-08-31, with the reason written into the markup: *"the page's
+last heading is an h2, so h4 skipped a level on every route on the site."*
+Correct, and **a premise about every other page on the site, held by nothing.**
+Three routes have no `h2` at all — `/checkout/details`, `/not-found`,
+`/subscription/confirmed` — so on those the footer skipped `h1` to `h3`, and the
+2026-08-31 fix had quietly become a second instance of the bug it fixed.
+
+They are `h2` now, which **needs no premise**: a heading coming back UP the scale
+can never skip, from any page. `.f-foot h2, .f-foot h3, .f-foot h4` keeps all
+three at the same size.
+
+### Two new checks, both proved by reintroducing the defect
+
+| Check | Where | What it asks |
+|---|---|---|
+| `scripts/verify-metadata.js` | `npm test`, static, no server | The brand is never typed where the template appends it; an indexable title stays under 60 and a description under 160. **44 metadata exports.** Reads the template out of `app/layout.tsx` rather than hard-coding it, so removing the template cannot silently disarm the rule |
+| `scripts/audit-rendered-markup.js` | `test:design:live`, real browser | Per route: no heading skipped, no `id` twice, no focusable link or button announced with nothing, the brand once in `<title>`, and the head lengths. **38 routes measured, 12 named as not measurable.** The chrome is INCLUDED, deliberately — a reader tabbing a page does not know which component a heading came from |
+
+**Each was watched to go red.** The metadata check on a brand typed back into a
+title, and on a description pushed over 160 — and watched NOT to fire on the same
+over-length description on a `noindex` page, which is the scoping rule it depends
+on. The live check on all four of its rules: the footer back to `h3`, the
+hard-coded `id`, the blog thumbnails back in the tab order (7 unnamed links), and
+the doubled brand.
+
+🔴 **THE FIRST PROOF RUN WAS WORTHLESS AND READ AS A PASS.** All four
+reintroductions reported `EXIT=1`, which is what a working check looks like.
+**None of them had run.** Git Bash rewrites a lone `--routes /checkout/details`
+argument into `C:/Program Files/Git/checkout/details`, so every run exited 1 on
+its own argument validation. It was caught only because no finding line was
+printed under an `EXIT=1` heading. **When the point of a run is to observe a
+failure, the failure's IDENTITY is the assertion and the exit code is not** —
+red is the outcome you were hoping for, which is exactly where confirmation bias
+stops you looking. `MSYS_NO_PATHCONV=1` is now in the proof script.
+
+### 🔴 A TRAP FOR ANY LIVE CHECK, MEASURED TWICE TODAY
+
+**`next dev` served a stale `Footer.tsx` for as long as the process lived.** The
+file was edited `h3` → `h2`; `grep` of the source and `curl` of the rendered page
+disagreed for minutes, through a `.next/cache` delete, and only a process kill
+fixed it — and the first kill missed, because stopping the background task killed
+the `npm` wrapper and left the real server holding port 3000, so the "restarted"
+server was the old one. It recurred later in the same session on the same file,
+which is a **shared server component** reached through every route's payload.
+
+The dangerous direction is not the false alarm. It is the mirror: a stale payload
+still holding the OLD markup after a fix, so the check reports a fix the tree does
+not have. **A live result that contradicts the source is a question about the
+server, not an answer about the code** — settle it with `curl <route> | grep`
+before believing either. Written into the script's own header.
+
+### What is NOT fixed, and why it is a decision rather than work
+
+**`/blog/[slug]` is on the new check's allowlist at 2 offences, dated today.**
+Its `<title>` is 89 characters and its description 192. Both are `frontmatter.title`
+and `frontmatter.excerpt` from the `blog_articles` row — **the headline and the
+card excerpt a reader sees, signed off by Ewa with the article.** There is no
+separate SEO field, so the only fixes available are editing 22 live headlines, or
+adding `seo_title` / `seo_description` to the table and the publish pipeline.
+⚠ **And a bound belongs in the article pipeline rather than here**: this sweep
+renders ONE sampled article and can only ever speak for the template, never for
+the corpus. The allowlist is a ratchet — the count may fall and never rise, and a
+route that goes clean is a failure.
+
+### The refactor nobody asked for, and why it happened anyway
+
+`scripts/route-list.js` is new: the route walk, the dynamic-segment samples, the
+dark-launch and token-gated maps, the app-host prefixes with their guard against
+`lib/hosts.ts`, and the browser locator. `route-conformance.js` had all of it and
+the new check needed every piece. **Writing a second `APP_PREFIXES` while
+building a check FOR consistency was not defensible**, so both scripts read one
+module. Proved behaviour-preserving the only way that counts: the report was
+regenerated and both `route-conformance.md` and `.json` came back **byte-identical**.
+
+### Where it is, and how it was verified
+
+`npm test` exit 0 with `MEMBERSHIP_ENABLED=false`, including the new
+`verify-metadata` (44 exports clean). `tsc --noEmit` clean. Production build
+clean. `npm run test:design:live` — **174 passed, 0 failing text nodes on dark
+grounds, 38 routes clean on the new markup audit.** `route-conformance.md`
+regenerated, still **36 of 36**, and `verify-route-conformance.js` green.
+
+**Seven surfaces verified by screenshot rather than by reading selectors**, because
+five of the fixes changed a CSS selector: the footer columns, `/blog` cards,
+`/authors/*` cards, `/faq`'s statistic strip, `/waitlist` and `/kits` price rows,
+and `/order/confirmed`'s steps. **Type is identical on all seven.**
+
+⚠ **Nothing deployed, and that is structural rather than a choice.** `main` is the
+deploy branch; a push to this one triggers no Coolify build.
+
+### 🔴 THE FIRST THING TO CHECK NEXT SESSION (unchanged from this morning)
+
+**`npm test` and `npm run build` both FAIL while `.env.local` carries
+`MEMBERSHIP_ENABLED=true`.** That is P9 working, not a regression. Set it false
+or prefix the command.
+
+---
+
+## ▶️ Previous handoff, 2026-09-14 (**C1 to C4 built: the five components the route count could not see, and the two checks that can**). Earlier the same day: P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
 
 **Read this block, then the switch-on checklist. Everything else below is history.**
 

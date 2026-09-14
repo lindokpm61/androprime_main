@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { consentAction } from '@/lib/auth/actions'
 
 /**
@@ -31,6 +32,15 @@ import { consentAction } from '@/lib/auth/actions'
  * separate consent moments and collapsing them would make a copy change to one
  * silently change the other.
  */
+
+/* The page's own H1 as the document title, and noindex stated in the page as
+   well as in `robots.txt`. Register M2; the reasoning is written out once, in
+   `app/auth/login/page.tsx`. The title is deliberately the heading a reader
+   sees and NOT the route name, which the header above records as misleading. */
+export const metadata: Metadata = {
+  title: 'A couple of quick questions',
+  robots: { index: false, follow: false },
+}
 
 type ConsentPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>
