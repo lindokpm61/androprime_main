@@ -106,7 +106,18 @@ function audit() {
     if (isGeo) {
       r.lines.push(['INFO', `GEO article — primary "${primaryQ}" is an LLM-prompt set, not a search phrase; strong-placement check skipped`])
     } else if (primaryQ) {
-      ;(primaryClaims[primaryRow] = primaryClaims[primaryRow] || []).push(slug)
+      // Only an article that names a ROW can collide with another on that row. Recording the
+      // claim unconditionally put every article with no `primary_query_csv_row` under the
+      // string key "undefined" — JS coerces it — so on 2026-09-14 four articles that share
+      // nothing were reported as one overlap, and one of the four reads a different CSV
+      // (`signs-of-stress-in-men` cites the staging-feeling-first file, whose row numbers
+      // could never resolve here anyway). A bucket keyed on the absence of a key is not an
+      // overlap, it is the check reporting on something it never resolved.
+      if (primaryRow !== undefined && primaryRow !== null && primaryRow !== '') {
+        ;(primaryClaims[primaryRow] = primaryClaims[primaryRow] || []).push(slug)
+      } else {
+        r.lines.push(['WARN', `no primary_query_csv_row — primary "${primaryQ}" cannot be overlap-checked against the csv`])
+      }
       const inStrong = hasPhrase(zones.strong, primaryQ)
       const inBody = hasPhrase(zones.full, primaryQ)
       if (inStrong) r.lines.push(['PASS', `primary "${primaryQ}" in title/heading`])

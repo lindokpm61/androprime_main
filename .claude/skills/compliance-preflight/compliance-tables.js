@@ -110,7 +110,30 @@ const REVIEW = [
 // trains the writer to reword defensively around the scanner, or to delete the
 // disclaimer, which is the opposite of the rule's purpose. Suite:
 // test-folded-negation.js.
-const APOS = "['’‘`´]";
+//
+// AND THE HTML ENTITY FORMS, WHICH ARE THE ONES JSX ACTUALLY CONTAINS (widened
+// 2026-09-14). `APOS` was a CHARACTER class, so it could express the five
+// literal apostrophes and could not express `&rsquo;` — a six-character
+// sequence. That is the spelling the site's own components use: the live footer
+// reads `They don&rsquo;t diagnose conditions, replace your GP, or…`, and the
+// scanner graded it 🔴 HARD, gating publish on the medical disclaimer itself.
+// Measured three ways on one sentence during the Direction F pre-migration
+// pre-flight: `don't` clean, `don’t` clean, `don&rsquo;t` HARD.
+//
+// This is the THIRD recurrence of one defect, and the shape is always the same:
+// somebody typed a contraction, and the encoding their editor or their language
+// produced was not in the table. 2026-08-11 was U+0027-only; Observation 802
+// found the mirror in `fragment-scan.js`'s QUALIFIER; this is the entity form.
+// The cause is a property of the AUTHORING process, not of the rule, which is
+// why it keeps reappearing in whichever table was written last. So `APOS` is now
+// an alternation rather than a class, and it is EXPORTED — `fragment-scan.js`
+// should build its QUALIFIER contractions from this rather than respelling them
+// (Observation 802's first recommendation, still owed there).
+//
+// Same permissive direction as 2026-08-11 and called out for the same reason: a
+// negated term is a disclaimer, and character encoding is not a compliance
+// signal. Suite: test-curly-negation.js.
+const APOS = "(?:['’‘`´]|&rsquo;|&lsquo;|&apos;|&#39;|&#8217;|&#x2019;)";
 const NEGATORS =
   `do(es)?\\s+not|don${APOS}?t|doesn${APOS}?t|not|never|no|cannot|can${APOS}?t|isn${APOS}?t|aren${APOS}?t` +
   `|nothing|none|neither|nor|nowhere|no part of|at no point|in no (way|sense)`;
@@ -153,4 +176,4 @@ function negatedAt(text, offset) {
   return NEG.test(sentenceAround(text, offset));
 }
 
-module.exports = { HARD, REVIEW, NEG, sentenceAround, negatedAt };
+module.exports = { HARD, REVIEW, NEG, APOS, sentenceAround, negatedAt };

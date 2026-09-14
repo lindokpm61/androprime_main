@@ -30,7 +30,22 @@
  * The marketing chrome would put a "Choose your test" CTA and a full footer
  * around a password field, and the cross-links at the bottom of the card already
  * carry the one route out ("Back to site").
+ *
+ * 🔴 IT IS A `<main id="main-content">`, NOT A `<div>`, AND THAT IS NOT COSMETIC.
+ * `SkipToContent` renders in the ROOT layout, so it is on every page including
+ * these five, and it points at `#main-content`. This layout shipped as a bare
+ * div on 2026-09-08, so on `/auth/login`, `/signup`, `/reset`, `/link` and
+ * `/consent` the skip link was the first focusable element on the page and its
+ * target did not exist — a WCAG 2.4.1 bypass-blocks failure, plus no `main`
+ * landmark at all for a screen reader. Every other layout in the app already
+ * renders one (marketing, app, demo, internal, lp, error, not-found, go); this
+ * was the only exception, and the omission was invisible to tsc, to the build,
+ * to the class checker and to a screenshot.
+ *
+ * Found 2026-09-14 by `audit-link-integrity.js`, which resolves every fragment
+ * against its target page's real id set. `.f-page` carries no element-qualified
+ * selector, so the tag change moves no pixels.
  */
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  return <div className="f-page">{children}</div>
+  return <main id="main-content" className="f-page">{children}</main>
 }

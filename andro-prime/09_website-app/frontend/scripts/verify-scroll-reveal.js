@@ -238,7 +238,19 @@ const visibility = () => {
     // A bad EXAMPLE must not read as a broken page. Without this, a 404 fails
     // "has reveal targets" and sends the reader looking at the motion layer.
     const wantStatus = EXPECT_STATUS[route] ?? 200;
-    if (resp && resp.status() !== wantStatus) {
+    /* 304 IS THE PAGE, NOT A BAD EXAMPLE. Chrome answers `304 Not Modified` from
+       its own cache, which means the body is byte-for-byte what we already have
+       — so for a checker's purposes it is a 200 that saved a download. Reading
+       it as a status mismatch reported `/` as "a bad example URL" and skipped
+       the homepage, the single most important route in this sweep, while the
+       run still printed a summary.
+       Found 2026-09-14. The same defect existed in two checkers written the same
+       day (`audit-link-integrity.js`, `audit-runtime-errors.js`), which makes it
+       a class rather than a one-off: a status range or equality test written
+       against the codes a developer has in mind, meeting the one the browser
+       actually sends. */
+    const cacheHit = resp && resp.status() === 304 && wantStatus === 200;
+    if (resp && !cacheHit && resp.status() !== wantStatus) {
       fail++; console.log(`  FAIL ${route}: returned ${resp.status()}, want ${wantStatus}, so this is a bad example URL, not a motion defect`);
       await p.close(); continue;
     }

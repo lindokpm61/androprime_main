@@ -96,78 +96,22 @@ if (!chrome) {
 
 /* ---------- the audit, evaluated inside the page ---------- */
 
-const AUDIT = () => {
-  const lum = ([r, g, b]) => {
-    const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4) }
-    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
-  }
-  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05) }
-  const parse = (s) => {
-    const m = String(s).match(/rgba?\(([^)]+)\)/)
-    if (!m) return null
-    const p = m[1].split(',').map((v) => parseFloat(v.trim()))
-    return { rgb: [p[0], p[1], p[2]], a: p.length > 3 ? p[3] : 1 }
-  }
-  const over = (fg, bg) => fg.rgb.map((c, i) => c * fg.a + bg[i] * (1 - fg.a))
+/* MOVED TO scripts/contrast-probe.js (2026-09-14). The compositing machinery
+   that used to live here is unchanged, character for character; what moved is
+   WHERE it lives, so that the light-ground sweep in audit-viewport-sweep.js
+   could not become a second, independently-maintained WCAG implementation.
+   Two of those that disagree is worse than either alone: the disagreement is
+   invisible for as long as they agree, and the first correction to one makes
+   the other the wrong answer nobody is looking at.
 
-  // The backdrop is whatever actually ends up behind the glyphs: every
-  // translucent ancestor composited down onto the root's own ground.
-  const bgOf = (el) => {
-    let n = el
-    let acc = [255, 255, 255]
-    const chain = []
-    while (n && n !== document.documentElement) {
-      const c = parse(getComputedStyle(n).backgroundColor)
-      if (c && c.a > 0) chain.push(c)
-      n = n.parentElement
-    }
-    const root = parse(getComputedStyle(document.documentElement).backgroundColor)
-    if (root && root.a > 0) chain.push(root)
-    for (let i = chain.length - 1; i >= 0; i--) acc = over(chain[i], acc)
-    return acc
-  }
+   The only parameter is which grounds to report. This file keeps its own
+   threshold, its own output format and its own place in test:design:live;
+   GROUND.dark reproduces exactly what the inline `lum(bg) < 0.2` did.
 
-  const out = []
-  for (const el of document.querySelectorAll('*')) {
-    if (el.children.length > 0) {
-      const hasOwnText = Array.from(el.childNodes).some((n) => n.nodeType === 3 && n.textContent.trim().length > 1)
-      if (!hasOwnText) continue
-    }
-    const txt = (el.textContent || '').trim()
-    if (txt.length < 2) continue
-    const cs = getComputedStyle(el)
-    if (cs.visibility === 'hidden' || cs.display === 'none') continue
-    const r = el.getBoundingClientRect()
-    if (r.width < 2 || r.height < 2) continue
-    const opa = parseFloat(cs.opacity)
-    const col = parse(cs.color)
-    if (!col) continue
-    const bg = bgOf(el)
-    const eff = { rgb: col.rgb, a: col.a * (isNaN(opa) ? 1 : opa) }
-    const fg = over(eff, bg)
-    const cr = ratio(fg, bg)
-    const size = parseFloat(cs.fontSize)
-    const weight = parseInt(cs.fontWeight, 10) || 400
-    const large = size >= 24 || (size >= 18.66 && weight >= 700)
-    const need = large ? 3 : 4.5
-    if (cr < need && lum(bg) < 0.2) {
-      const cls = el.className && (el.className.baseVal !== undefined ? el.className.baseVal : String(el.className))
-      out.push({
-        cls: String(cls || '').slice(0, 46),
-        tag: el.tagName,
-        ratio: Math.round(cr * 100) / 100,
-        need,
-        size: Math.round(size * 10) / 10,
-        opacity: isNaN(opa) ? 1 : opa,
-        color: cs.color,
-        bg: 'rgb(' + bg.map((v) => Math.round(v)).join(',') + ')',
-        text: txt.slice(0, 46),
-      })
-    }
-  }
-  const seen = new Set()
-  return out.filter((o) => { const k = o.cls + o.ratio; if (seen.has(k)) return false; seen.add(k); return true })
-}
+   The blind spot is unchanged and is now stated rather than implied: the probe
+   reads backgroundColor only, so text over an IMAGE is not measured. See
+   LIMITATION in that module. */
+const { PROBE, GROUND, LIMITATION } = require('./contrast-probe.js')
 
 /* ---------- drive ---------- */
 
@@ -188,7 +132,15 @@ const AUDIT = () => {
       await page.close()
       continue
     }
-    const fails = await page.evaluate(AUDIT)
+    const probed = await page.evaluate(PROBE, GROUND.dark)
+    const fails = probed.findings
+    // `examined` is what distinguishes a clean route from an unrendered one.
+    if (probed.examined === 0) {
+      console.log(`${route}  NOT MEASURED — the probe examined 0 elements; the page did not render`)
+      loadFails++
+      await page.close()
+      continue
+    }
     if (fails.length) {
       console.log(`\n${route}`)
       for (const f of fails) {

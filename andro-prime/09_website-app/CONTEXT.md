@@ -138,6 +138,38 @@ Read this before trusting any of them to cover a question:
 | Route (static read) | `verify-f-classes`, `verify-f-scaffold`, `verify-route-conformance` | inside a component; absence |
 | Route (rendered) | `route-conformance`, `audit-dark-contrast`, `verify-scroll-reveal`, `audit-rendered-markup` | anything varying per DB row behind one dynamic route |
 | Article (DB row) | `verify-article-seo` (a command: needs the service key) | everything that is not an article |
+| HTTP response | `verify-http-contract` (sitemap, robots, redirects, cache headers) | anything that renders correctly and says the wrong thing |
+| Link (rendered then fetched) | `audit-link-integrity` | whether the destination page is any good |
+| Route (runtime) | `audit-runtime-errors` | anything that fails silently without logging |
+| Route x viewport | `audit-viewport-sweep` (overflow, light-ground contrast) | text over an IMAGE, at any width |
+
+**The four rows below the article row were added 2026-09-14** by the Direction F
+pre-migration audit, and they close the gap that mattered most for a migration:
+until then **nothing in this repo had ever fetched a URL**. `test-host-routing`
+proves `routeDecision()` returns the right verdict and never makes a request, so a
+redirect could be correct in the function and wrong on the wire with every check
+green. `verify-http-contract` computes its expectations FROM `lib/hosts.ts` rather
+than restating them, and bails at exit 2 if its own Host-header mechanism is not
+reaching the server — without that self-test its app-host half passes vacuously,
+because the apex verdict for those paths is `pass`.
+
+🔴 **EVERY BROWSER CHECK MUST DISABLE THE HTTP CACHE.** Chrome answers a revisited
+route `304 Not Modified`, and on 2026-09-14 four separate checkers mis-handled it —
+two written that day, two long-committed — each silently dropping routes from a
+sweep that then printed a complete-looking summary and a clean verdict. A status
+branch written as `=== 200` or as a `>= 300 && < 400` range models the codes the
+author had in mind, and 304 is a property of the CLIENT'S CACHE rather than of the
+route, so it is in nobody's list. `page.setCacheEnabled(false)` removes the
+ambiguous code from the system instead of teaching four scripts about it, which is
+what `12_operations/automation/shot.js` has done from the start.
+
+🔴 **AND EMULATE `prefers-reduced-motion: reduce` WHEN MEASURING APPEARANCE.**
+`.f-rise` is hidden only under `.js`, and this design system honours reduced motion
+by never adding `.js`, so under it every element renders at rest BY DESIGN. A
+contrast sweep that does not emulate it measures pre-reveal elements and reports
+ratios of exactly 1.0:1 — foreground identical to background, which is not a colour
+defect. The tell is that such findings vary with viewport width, and a colour ratio
+cannot depend on how wide the window is.
 
 🔴 **A dynamic route collapses a corpus into one URL.** `/blog/[slug]` renders one
 sampled article, so a route sweep's numbers for it are facts about that row that

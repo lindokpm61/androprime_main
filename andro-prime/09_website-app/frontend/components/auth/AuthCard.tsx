@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { OAuthButtons } from '@/components/auth/OAuthButtons'
+import { urlFor } from '@/lib/hosts'
 
 /**
  * THE AUTH CARD, rebuilt in Direction F on 2026-09-08 from
@@ -65,13 +66,29 @@ const SUBMIT: Record<AuthMode, string> = {
 
 /* The cross-links, and each mode hides its own. Written as data so "each mode
    hides its own" is one filter rather than four hand-maintained conditionals,
-   which is how the set drifts. "Back to site" has no mode and always renders. */
-const XLINKS: { mode?: AuthMode; href: string; label: string }[] = [
+   which is how the set drifts. "Back to site" has no mode and always renders.
+
+   🔴 "BACK TO SITE" IS ABSOLUTE AND IS NOT A `next/link`, AND BOTH HALVES MATTER.
+   The auth tree is served on `app.andro-prime.com`, so a relative `/` resolved
+   against the CURRENT origin, not the marketing one: the browser asked the app
+   host for `/`, which `routeDecision` 307s to `/results-dashboard`, which is a
+   protected route, which bounces an unauthenticated visitor straight back to
+   `/auth/login`. **"Back to site", on the login page, returned you to the login
+   page.** Found 2026-09-14 by `audit-link-integrity.js`.
+
+   `urlFor('/')` asks `lib/hosts.ts` which origin actually serves a path, so the
+   href is the marketing origin wherever this card renders. And it renders as a
+   plain `<a>`: `hrefFor`'s own header spells out why a cross-host link must
+   never be a `Link` — Link cannot client-navigate across origins, and left as
+   one it would client-render the target on the wrong host and bypass the
+   middleware redirect entirely. The four `/auth/*` links stay `Link`s, because
+   they are same-host and client navigation between them is the point. */
+const XLINKS: { mode?: AuthMode; href: string; label: string; crossHost?: true }[] = [
   { mode: 'login', href: '/auth/login', label: 'Log in' },
   { mode: 'signup', href: '/auth/signup', label: 'Create account' },
   { mode: 'reset', href: '/auth/reset', label: 'Reset password' },
   { mode: 'link', href: '/auth/link', label: 'Email me a sign-in link' },
-  { href: '/', label: 'Back to site' },
+  { href: urlFor('/'), label: 'Back to site', crossHost: true },
 ]
 
 export function AuthCard({
@@ -195,9 +212,15 @@ export function AuthCard({
 
               <div className="f-xlinks">
                 {XLINKS.filter((l) => l.mode !== mode).map((l) => (
-                  <Link key={l.href} href={l.href} className="f-kchip">
-                    {l.label}
-                  </Link>
+                  l.crossHost ? (
+                    <a key={l.href} href={l.href} className="f-kchip">
+                      {l.label}
+                    </a>
+                  ) : (
+                    <Link key={l.href} href={l.href} className="f-kchip">
+                      {l.label}
+                    </Link>
+                  )
                 ))}
               </div>
             </div>

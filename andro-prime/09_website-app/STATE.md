@@ -4,7 +4,102 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family built; M7 turned out to be seventeen articles rather than the two a route sweep could see, Keith ruled that an SEO snippet is reviewed as metadata rather than clinically, and the commission was then drafted, reviewed three times, approved and applied — 26 fields on 15 live articles, which will not RENDER until Direction F deploys**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
+## ▶️ PICK UP HERE — handoff, 2026-09-14 late (**the pre-migration audit ran: six new checkers built, three defects fixed that would have shipped, and the copy pre-flight cleared Direction F of any NEW claim exposure. The three things blocking the merge are all signatures, and all three were already on the board**)
+
+Full report: **`qa/direction-f-migration-audit.md`** (the first thing in `qa/` that is not
+an empty April placeholder). Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`.
+Nothing merged, nothing pushed to `main`, no deploy ran.
+
+### The verdict
+
+**NO-GO, and nothing the audit found is the reason.** The blockers are CA-045 (ClickUp
+`869eur84c`, packet unsent and stale at 9 items when the scope is 10), CA-046 (`869exuphq`),
+and the 48-row copy-register reconciliation whose Closed section still reads `_None yet._`.
+Zero traffic does not soften CA-045: the gate governs shipping, and a page is live whether
+or not anyone visits it.
+
+Everything that can pass, passes: typecheck both projects, `npm test`, `npm run test:engine`,
+`npm run build` twice, 31 HTTP-contract assertions, **144 of 150 viewport cells with zero
+overflow and zero sub-AA light-ground text**, 46 of 48 routes with no runtime errors, 864
+anchors resolved.
+
+### Three defects fixed that would have shipped
+
+1. 🔴 **The merge commit would have failed CI.** `content-engine-ci.yml` fires on push to
+   `main` when `frontend/scripts/content-engine/**` or `package.json` change; the branch
+   changes both, and `test-content-doctor.ts` failed on two lines the branch itself added
+   to `compliance-preflight/SKILL.md`.
+2. 🔴 **"Back to site" on all five `/auth/*` pages returned you to the login page.** The
+   auth tree is on `app.andro-prime.com`, so a relative `/` resolved to the app origin,
+   307d to `/results-dashboard`, which is protected, which bounced back to `/auth/login`.
+3. 🔴 **The skip link pointed at nothing on all five `/auth/*` pages.** Every layout renders
+   `<main id="main-content">` except `app/auth/layout.tsx`, added 2026-09-08 as a bare
+   `<div>`. WCAG 2.4.1, no `main` landmark at all, invisible to tsc, the build, the class
+   checker and a screenshot.
+
+### The copy pre-flight, deterministic floor — CLEARED
+
+`compliance-preflight/scan.js` over all 165 changed copy files: 3 HARD and 38 REVIEW, and
+after triaging each against what is live on `origin/main`, **0 of 38 REVIEW and 1 of 3 HARD
+are new**. The one new HARD hit is "the NICE guideline our GP follows **treats** 25 to 70 as
+an indeterminate zone", the data sense the scanner's own rule names as benign. Recorded for
+the judgement pass, not ruled.
+
+⚠ A real defect in the scanner surfaced on the way: the negation guard recognised `don't`
+and `don’t` and **not `don&rsquo;t`**, the entity form JSX actually contains — so it graded
+the Footer's own medical disclaimer as HARD and would have gated publish on it. `APOS` is
+now an alternation and is exported; `fragment-scan.js` should build its QUALIFIER
+contractions from it (observation 802's first recommendation, still owed there).
+
+### Owed, by owner
+
+| Owner | Item |
+|---|---|
+| **Keith** | Send the CA-045 packet. It is stale on two counts and rebuilding it is cheap while unsent. |
+| **Keith** | The site logo does not go home on the app host — `/order/confirmed` and `/subscription/confirmed` emit 39 failed cross-origin RSC prefetches per load. Three options in the audit doc; the fix would de-optimise 20+ statically prerendered pages to repair two, so it is a deliberate trade. |
+| **Keith / Ewa** | Three unapproved ingredient claims **live today**, unchanged by this branch: "both of which support recovery processes" (`/faq`), "UC-II for joint-specific support" and "collagen that supports your joints" (collagen pages). |
+| **Keith** | `brain-fog` and `andropause-male-menopause` do not contain their own declared primary query. The first needs a copy decision, the second only a corrected frontmatter declaration. |
+| **Ewa** | CA-046, `/demo`. |
+| **Build** | `verify-scroll-reveal.js` stalls on `/blog` against a production build (`networkidle0` versus third-party Unsplash images) and blocks the `test:design:live` chain at link 2. |
+
+### New tooling in `frontend/scripts/`
+
+`verify-http-contract.ts`, `redirect-contract.js`, `audit-link-integrity.js`,
+`audit-runtime-errors.js`, `audit-viewport-sweep.js`, plus shared `page-walk.js` and
+`contrast-probe.js`. `audit-dark-contrast.js` re-pointed at the shared probe with output
+verified byte-identical, removing 75 lines of duplicated WCAG code. New npm scripts:
+`test:design:sweep`, `test:links:external`, `test:design:premerge`.
+
+🔴 **Four checkers mis-handled `304 Not Modified`** — two written that session, two
+long-committed — each silently dropping routes from sweeps that then printed a complete-
+looking summary. Root-cause fix applied: `setCacheEnabled(false)`, which `shot.js` has done
+from the start. Observation 811.
+
+### Environment, for whoever picks this up
+
+- `.env.local` `MEMBERSHIP_ENABLED` is now **false**, deliberately: it is the shipping
+  configuration and this file's own earlier guidance says to set it false before building.
+  Original at `.env.local.premigration-bak` (gitignored).
+- `STRIPE_PRICE_MEMBERSHIP` is unset in `.env.example` AND `.env.local` — in the latter it
+  appears only inside a comment, so a grep count finds it and a parse does not. It and nine
+  feature flags are now documented in `.env.example`; none of them was in any env file.
+- Serve a **production build**, not `next dev`, and do not run two browser checkers at once
+  — several navigation timeouts this session were contention, not defects.
+- The rollback target is `origin/main` = `7ecad99`. Local `main` is 3 commits ahead of it
+  and those three are already contained in the branch, so the branch is **163 commits / 452
+  files** ahead of production, not the 160 / 445 a diff against local `main` reports.
+
+### What the audit has NOT covered yet
+
+The seven gated `(app)` routes and both internal boards (never measured — anonymously they
+redirect), the 10 results fixtures, all 18 blog slugs individually, the 30 `/go/dNN`
+handlers, the three error boundaries, forms and checkout end to end, screenshots at 1320 and
+390, the `MEMBERSHIP_ENABLED=true` pass, and the external citation check. Listed with what
+each needs at the bottom of `qa/direction-f-migration-audit.md`.
+
+---
+
+## ▶️ Previous handoff, 2026-09-14 (**the whole M family built; M7 turned out to be seventeen articles rather than the two a route sweep could see, Keith ruled that an SEO snippet is reviewed as metadata rather than clinically, and the commission was then drafted, reviewed three times, approved and applied — 26 fields on 15 live articles, which will not RENDER until Direction F deploys**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
 
 ### ▶️ WHAT THE NEXT SESSION PICKS UP, IN ORDER
 

@@ -41,6 +41,19 @@ t('curly:    can’t cure', 'It can’t cure it.', true);
 t('straight: isn\'t a diagnosis', "That isn't a diagnosis.", true);
 t('curly:    isn’t a diagnosis', 'That isn’t a diagnosis.', true);
 
+/* THE ENTITY FORMS, added 2026-09-14. JSX does not contain the character — the
+ * live footer's source reads `They don&rsquo;t diagnose conditions`, and the
+ * scanner graded that 🔴 HARD while the identical sentence with either literal
+ * apostrophe cleared. A character class cannot express a six-character entity,
+ * so APOS became an alternation. Third recurrence of one defect: U+0027-only in
+ * August, the QUALIFIER mirror in Observation 802, and this. */
+t('entity:   don&rsquo;t diagnose', 'They don&rsquo;t diagnose conditions.', true);
+t('entity:   aren&rsquo;t diagnoses', 'Signs aren&rsquo;t diagnoses.', true);
+t('entity:   can&#8217;t cure', 'It can&#8217;t cure it.', true);
+t('entity:   isn&#x2019;t a diagnosis', 'That isn&#x2019;t a diagnosis.', true);
+t('entity:   doesn&apos;t treat', 'It doesn&apos;t treat anything.', true);
+t('entity:   don&#39;t treat', 'We don&#39;t treat anything.', true);
+
 /* Unaffected forms must keep working. */
 t('spaced:   does not constitute a diagnosis', 'This does not constitute a diagnosis.', true);
 t('phrase:   informational purposes only', 'For informational purposes only.', true);
@@ -54,6 +67,8 @@ t('apostrophe present but no negation', "The doctor's diagnosis was clear.", fal
 t('curly apostrophe, no negation', 'The doctor’s diagnosis was clear.', false);
 t('negation too far from the term', 'It is not the case. ' + 'x'.repeat(60) + ' We diagnose it.', false);
 t('possessive near cure, no negator', 'The clinic’s cure was expensive.', false);
+t('entity possessive, no negator', 'The doctor&rsquo;s diagnosis was clear.', false);
+t('entity apostrophe, bare claim', 'The clinic&rsquo;s cure was expensive.', false);
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail > 0 ? 1 : 0);

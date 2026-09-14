@@ -37,3 +37,10 @@ standalone-stderr.log
 start-stdout.log
 start-stderr.log
 phase4-*.log
+
+# impeccable skill scratch — design.json is tracked, these are per-session output
+.impeccable/critique/
+.impeccable/live/
+
+# alternate build dir used when a dev server holds .next (NEXT_DIST_DIR)
+/.next-build/

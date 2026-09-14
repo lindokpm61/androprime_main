@@ -71,7 +71,16 @@ if (cssFiles.length < 10) {
 }
 
 const read = (f) => fs.readFileSync(f, 'utf8').replace(/\r\n/g, '\n')
-const stripCssComments = (s) => s.replace(/\/\*[\s\S]*?\*\//g, ' ')
+// Blanks a comment to spaces but KEEPS its newlines, so byte offsets and line
+// numbers downstream still describe the real file. The old form collapsed each
+// comment to a single space, which destroyed every newline inside it; line
+// numbers were then counted on the stripped text and came out short by exactly
+// the number of comment newlines above the match. In a file as heavily
+// commented as `f-primitives.css` that is not a rounding error: the two
+// `--f-hero-pt` warnings were reported at :833 and live at :1502, and :833 is
+// unrelated biomarker-card CSS. A checker that names the wrong location is
+// worse than one that names none, because the reader edits what it points at.
+const stripCssComments = (s) => s.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '))
 const rel = (f) => path.relative(ROOT, f).split(path.sep).join('/')
 
 /* ---------- declarations ---------- */

@@ -2106,6 +2106,13 @@ check('NO SKILL TELLS AN AGENT TO WRITE A DATABASE-OWNED KEY INTO FRONTMATTER', 
     ['hook|preflight|', 'same prohibition'],
     ['hook|drive|', 'same prohibition'],
     ['hook|drive|pending', 'the graceful-degradation step naming the exact literal it forbids, because that literal was the defect'],
+    // Added 2026-09-14. Both arrived with the verdict-vocabulary check (`ae0bd82`) and are the
+    // scanner DESCRIBING ITS OWN INPUT, which is the one case this guard cannot distinguish from
+    // an instruction by shape alone: a checker's documentation has to quote the literal it hunts.
+    // Neither sentence tells anyone to write a key into an asset file, and the second one is an
+    // argument for NOT writing a literal at all.
+    ['compliance-preflight|status|', 'the "what counts as a verdict field" table row: `status:` / `status=` on a marker-row line. Names the token the scanner matches on, in a table defining the scan surface'],
+    ['compliance-preflight|status|FAI_REPORT_ONLY.badgeShort', 'the worked example of what is deliberately NOT flagged: a reference to a constant cannot drift from the constant, so the check judges string literals only'],
   ])
 
   const unexpected: string[] = []

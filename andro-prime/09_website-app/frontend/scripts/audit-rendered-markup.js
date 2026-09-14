@@ -330,6 +330,21 @@ const BRAND = (() => {
   for (const r of routes) {
     const page = await browser.newPage()
     await page.setViewport({ width: WIDTH, height: 1000 })
+    /* 🔴 NO HTTP CACHE, WHICH IS THE ROOT-CAUSE FIX FOR A DEFECT FOUND IN FOUR
+       SEPARATE CHECKERS ON 2026-09-14. With the cache on, Chrome answers a
+       revisited route with `304 Not Modified` — the body is byte-identical to
+       what it holds, so for a checker's purposes it is a 200 that skipped a
+       download. Every status test written as `=== 200` or as a `>= 300 && < 400`
+       range read that as a failure or as a redirect, and quietly dropped the
+       route: this script reported `/kits` as "returned 304, expected 200";
+       `verify-scroll-reveal.js` called `/` a bad example URL and skipped the
+       homepage; two new checkers dropped `/kits` and `/activate` from sweeps
+       that still printed a complete-looking summary.
+       Patching each status test treats the symptom. Turning the cache off means
+       the ambiguous code is never sent, which is what `shot.js` has done from
+       the start and for the same reason. The tolerance below stays as well,
+       because a checker should not depend on one line to be correct. */
+    await page.setCacheEnabled(false)
     let status = 0
     let landed = ''
     let data = null
@@ -346,6 +361,8 @@ const BRAND = (() => {
     await page.close()
 
     const expected = r.expectStatus || 200
+    // Belt and braces alongside setCacheEnabled(false) above: a 304 is the page.
+    if (status === 304 && expected === 200) status = 200
     if (status === 404 && r.url in FLAG_GATED) {
       notMeasured.push({ url: r.url, why: `404 with the dark-launch flag off; needs \`${FLAG_GATED[r.url]}\`` })
       continue
