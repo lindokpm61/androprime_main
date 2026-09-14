@@ -11,10 +11,46 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 ### The one-line state
 
 The membership is closer to switch-on than it has ever been, and **nothing is
-waiting on anyone outside the business.** What is left is Keith's signature, two
-unbuilt defects, and a legal-page sync.
+waiting on anyone outside the business.** What is left is Keith's signature,
+**one** unbuilt defect and a legal-page sync.
 
-### What moved today, in the order it matters
+⚠ **Updated 2026-09-14: this line said "two unbuilt defects" and P7 was one of
+them.** P7 is built (below), so **A2 is the only unbuilt item on the switch-on
+checklist** — the two seeded membership rows still live in production, due 16 and
+17 November 2026, behind a guard that lives only on a branch that deploys
+nothing.
+
+### What moved 2026-09-14, in the order it matters
+
+**Five register rows closed, and three of them were found by running a check
+rather than by reading one.** Full write-ups are in the dated sections below.
+
+| Row | What happened |
+|---|---|
+| **P7** | Built. The subscription checkout refuses a customer who already holds a live membership, **before** the Stripe call. The index only ever protected the database; it fires after the charge |
+| **P9** | **New defect, found by running the build P7 needed.** The P6 copy interlock was wired to `npm test` and **never onto the build**, so `npm run build` exited 0 with the flag on. Three documents said otherwise. Now on `prebuild`, and it reads `.env.local` the way `next build` does |
+| **R1** | The conformance report's excluded rows carried prose nothing re-tested. Each now names a fact in the route's own source that **fails** when it stops being true |
+| **R2** | The reveal observer stranded content on **four** pages, not the one the register named — including the whole `/blog` post grid at every laptop height from 700 to 860 |
+| **R3** | **Keith ruled:** the 2026-09-03 saturated-colour ruling is scoped to customer-facing surfaces. The ops board keeps its three tones. Swept into four documents |
+
+🔴 **THE THEME OF THE SESSION, BECAUSE IT RECURRED FOUR TIMES: a check that
+cannot be observed to fail is a claim.** P7's first fourteen assertions passed
+with the defect fully reintroduced (the anchor matched an `import`). P6's gate
+was not on the command it claimed to gate. R1's exclusions were unchecked prose
+inside a GENERATED file. R2's check asserted the right invariant on every route
+and found nothing, because it measured one viewport. **Every fix this session is
+now proved by deliberately reintroducing the defect and watching the check go
+red** — and `test:design:live` is green for the first time.
+
+### 🔴 THE FIRST THING TO CHECK NEXT SESSION (changed 2026-09-14)
+
+**`npm test` and `npm run build` both now FAIL while `.env.local` carries
+`MEMBERSHIP_ENABLED=true`.** That is P9 working, not a regression: before this
+session neither did, for the same reason. Set the flag false in `.env.local`
+until P6 clears, or prefix the command. The old warning said only the build
+failed, and it was wrong in the direction that mattered.
+
+### What moved on 2026-09-13, in the order it matters
 
 1. **P1 is not a solicitor blocker and never needed to be.** DMCC Act 2024 Part 4
    is **not in force**: commencement slipped spring 2026 → autumn 2026 → spring
@@ -36,7 +72,7 @@ unbuilt defects, and a legal-page sync.
    that the docs were already almost right while **`main` still serves "Andro
    Prime is a wellness information service" three times on the homepage**.
 
-### 🔴 THE FIRST THING TO CHECK NEXT SESSION
+### The same warning, in full, with the account of how it was wrong
 
 **`.env.local` has `MEMBERSHIP_ENABLED=true`** (local only, gitignored, set at
 Keith's request to view the membership surfaces). **While it is true,
