@@ -199,10 +199,12 @@ regenerated and both `route-conformance.md` and `.json` came back **byte-identic
 
 ### Where it is, and how it was verified
 
-**Commit `b13050b` on `redesign/direction-f`.** Thirty-two files: the three new
-scripts, the eleven route and component edits, two stylesheets, `package.json`,
-`lib/authors.ts`, the regenerated conformance report and its generator, and the
-four documents.
+**Commits `b13050b` and `cd4418f` on `redesign/direction-f`.** The first is the M
+family: thirty-two files, the three new scripts, the eleven route and component
+edits, two stylesheets, `package.json`, `lib/authors.ts`, the regenerated
+conformance report and its generator, and the four documents. The second is M7's
+remainder on Keith's ruling: nine files, two more scripts, and the article SEO
+field.
 
 `npm test` exit 0 with `MEMBERSHIP_ENABLED=false`, including the new
 `verify-metadata` (44 exports clean). `tsc --noEmit` clean. Production build
