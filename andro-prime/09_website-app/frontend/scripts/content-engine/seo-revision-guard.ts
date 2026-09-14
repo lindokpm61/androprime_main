@@ -50,6 +50,28 @@ import {
   type NumToken,
 } from './classify-claims'
 
+/**
+ * Hedges that do not count, ON THEIR OWN, as evidence a claim is still qualified.
+ *
+ * Found by feeding the guard a deliberately bad draft on 2026-09-14: *"Cortisol
+ * over 550 nmol/L causes belly fat. NICE says so. Here is what to do about your
+ * middle this week."* dropped every qualifier, and the dropped-qualifier test did
+ * not fire — because `hedgesIn` matched the word **"about"**, used there as a
+ * plain preposition. The draft was caught anyway, by the net-new figure and the
+ * net-new citation, which is the guard's depth working as intended; but a
+ * description that compressed a hedged claim while happening to contain "about"
+ * or "around" prepositionally would have passed on the strength of a word doing
+ * no work at all.
+ *
+ * These stay in the shared `HEDGES` list, which is right for `classify-claims.ts`
+ * where a whole post is being read and an incidental match costs little. Here the
+ * surface is 160 characters and a single incidental match is the difference
+ * between routing to a clinician and not, so this narrows locally rather than
+ * editing a vocabulary that a clinical ruling rests on. Narrowing makes the guard
+ * STRICTER, which is the safe direction.
+ */
+const WEAK_HEDGES = new Set(['about', 'around', 'up to', 'from', 'to'])
+
 /** Where a metadata revision goes once it has been read. */
 export type SeoRoute = 'seo' | 'clinical'
 
@@ -175,7 +197,7 @@ function readField(
     numTokens(text).length > 0 || ASSERTION_SHAPES.some((s) => s.re.test(text))
   if (restatesSomething) {
     const approvedHedges = hedgesIn(all)
-    const proposedHedges = hedgesIn(text)
+    const proposedHedges = hedgesIn(text).filter((h) => !WEAK_HEDGES.has(h))
     if (approvedHedges.length && !proposedHedges.length) {
       findings.push({
         field,

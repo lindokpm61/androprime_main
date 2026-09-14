@@ -47,6 +47,9 @@ import {
   SEO_DESCRIPTION_MAX,
   type ArticleFrontmatter,
 } from '../lib/blog'
+// Read from the layout that appends it, so changing the template cannot silently
+// change what this measures. Shared with `check-seo-drafts.ts`.
+import { brandSuffix } from './brand-suffix'
 
 /* `next` loads `.env.local`; a plain tsx script does not, and the first run of
    this check died on a key that was sitting in the file two directories up.
@@ -138,15 +141,6 @@ const BASELINE: Baseline[] = [
   { slug: 'how-to-read-blood-test-results', title: 69 },
 ]
 
-/* The brand suffix is READ from the layout that appends it, for the same reason
-   `verify-metadata.js` reads it: changing the template must not be a way of
-   silently changing what this check measures. One fact, one home, two readers. */
-function brandSuffix(): string {
-  const src = fs.readFileSync(path.join(ROOT, 'app', 'layout.tsx'), 'utf8')
-  const m = /template\s*:\s*(['"])([^'"]*)\1/.exec(src)
-  if (!m) die('no title.template in app/layout.tsx. Fix that file rather than this line.')
-  return m[2].replace('%s', '')
-}
 
 async function main(): Promise<void> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -250,6 +244,21 @@ async function main(): Promise<void> {
   const descriptionsOwed = BASELINE.filter((b) => b.description !== undefined).length
   const fieldsOwed = titlesOwed + descriptionsOwed
 
+  /* ⚠ AND THE COMMISSIONABLE COUNT IS SMALLER STILL, BECAUSE THIS CHECK MEASURES
+     DRAFTS TOO. The read is `.neq('status', 'archived')`, which is right for
+     MEASUREMENT — an unpublished article's head is worth knowing about before it
+     ships — and wrong for the COMMISSION. An SEO snippet is routed to Keith
+     rather than to clinical review because it compresses already-approved copy,
+     so a draft cannot have one written for it yet.
+     Batch 1 was drafted straight off this list and included `cortisol-belly`,
+     which is a draft sitting with the clinical reviewer; nothing here said so,
+     and an independent compliance review caught it. Now it says so. */
+  const draftSlugs = new Set(rows.filter((r) => r.status !== 'published').map((r) => r.slug))
+  const draftBaseline = BASELINE.filter((b) => draftSlugs.has(b.slug))
+  const draftFields = draftBaseline.reduce(
+    (n, b) => n + (b.title !== undefined ? 1 : 0) + (b.description !== undefined ? 1 : 0), 0,
+  )
+
   if (failures.length) {
     console.error(`verify-article-seo: ${failures.length} failure${failures.length === 1 ? '' : 's'} over ${rows.length} articles.\n`)
     for (const f of failures) console.error(`${f}\n`)
@@ -267,6 +276,14 @@ async function main(): Promise<void> {
     `  ${fieldsOwed} fields owed across those ${owed} articles ` +
       `(${titlesOwed} seoTitle, ${descriptionsOwed} seoDescription). Quote THIS line, not a product of the other.`,
   )
+  if (draftBaseline.length) {
+    console.log(
+      `  Of those, ${draftFields} field(s) on ${draftBaseline.length} UNPUBLISHED article(s) ` +
+        `(${draftBaseline.map((b) => b.slug).join(', ')}) cannot be commissioned yet: a snippet ` +
+        `compresses approved copy, and a draft has none. Commissionable now: ` +
+        `${fieldsOwed - draftFields} fields across ${owed - draftBaseline.length} articles.`,
+    )
+  }
 }
 
 main().catch((e: unknown) => {

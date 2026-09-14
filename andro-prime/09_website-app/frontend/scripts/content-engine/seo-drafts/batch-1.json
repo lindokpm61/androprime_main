@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "how-to-increase-testosterone-naturally",
+    "seoTitle": "How to Increase Testosterone Naturally",
+    "seoDescription": "The levers that genuinely move testosterone: body fat, strength training, sleep, alcohol and stress. Not booster pills. What the evidence supports.",
+    "note": "Title is the headline's first clause verbatim; what goes is the parenthetical. Description keeps all five levers and the 'not booster pills' correction. It DROPS: 'what's oversold', and 'why measuring where you stand beats guessing'. It also compresses 'losing excess body fat' to 'body fat', 'proper sleep' to 'sleep' and 'easing off alcohol and stress' to 'alcohol and stress', so the levers are named but the direction of each is now implied rather than stated."
+  },
+  {
+    "slug": "free-androgen-index",
+    "seoTitle": "Free Androgen Index: what your number means",
+    "seoDescription": "What the free androgen index (FAI) and SHBG tell you about usable testosterone, and why UK labs report a calculated free testosterone for men instead.",
+    "note": "DROPS TWO CLAUSES, both flagged for Keith. (1) 'Reviewed by GMC-registered GP Dr Ewa Lindo' - a trust signal, not a claim; it still renders in the standfirst, the reviewer byline, og:description, twitter:description and the JSON-LD, so only the SERP E-E-A-T signal is lost. (2) 'and when either figure adds anything' - the SfE/Jayasena scope limit (thresholds.md item 8: calculated free T only adds information when SHBG is high or low). Nothing left asserts more than the article does, but this is the one article with a history of copy cutting across Ewa's own ruling, so the omission is named rather than left in the diff. Title also drops 'the figure UK labs use instead', which the description carries instead."
+  },
+  {
+    "slug": "signs-of-stress-in-men",
+    "seoTitle": "Signs Your Body Is Under Stress",
+    "seoDescription": "Stress shows up in the body before most men name it: churning gut, tight chest, broken sleep, flat energy. What each signal is, and what to change.",
+    "note": "Keeps the hedge 'most', which is in the approved excerpt. DROPS: one symptom (breakouts), the word 'long' from 'long before most men name it', 'this week' from 'what to change this week', and 'the honest line for when it's more than stress'. Title drops 'the physical signals men miss'."
+  },
+  {
+    "slug": "why-am-i-always-tired",
+    "seoTitle": "Why Am I Always Tired? The Lifestyle Causes",
+    "seoDescription": "Most persistent tiredness in otherwise-healthy men comes down to everyday inputs, not illness. What's draining you, and when to see a doctor.",
+    "note": "Keeps 'Most' and 'otherwise-healthy', which are what hold the claim down, and keeps the 'not illness' contrast. DROPS: 'a short list of', 'what to change this week', and 'the honest line for' from the GP escalation. Title drops '(and When to Get Checked)'."
+  },
+  {
+    "slug": "brain-fog",
+    "seoTitle": "Brain Fog in Men: What Causes It",
+    "seoDescription": "Most everyday brain fog in otherwise-healthy men traces to fixable inputs, not a brain problem. What causes it, and when it's worth seeing a doctor.",
+    "note": "Keeps 'Most', 'otherwise-healthy' and the 'not a brain problem' correction, which is the reassurance the article exists to give. DROPS: 'a short list of', 'what to change this week', 'the honest line for'. 'fixable inputs' is verbatim from the approved excerpt and is ALREADY the live search snippet, so this batch does not change its exposure; the scanner's retest/efficacy rule fires on it and the independent review found no prior adjudication of the term. Title drops '(and When to Get Checked)'."
+  }
+]
