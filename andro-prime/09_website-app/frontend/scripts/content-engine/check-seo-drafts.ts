@@ -157,14 +157,26 @@ async function main(): Promise<void> {
      * defect wearing a different column: the premise behind routing a snippet away
      * from clinical review was assumed rather than tested.
      *
+     * ⚠ BUT THE ABSENCE OF A ROW IS NOT THE ABSENCE OF A SIGN-OFF, and the first
+     * version of the message said it was. That article IS signed off — by a
+     * blanket email of 2026-05-27 recorded only in commit `6d2da5b` and
+     * transcribed in `03_compliance/STATE.md`, which already calls it the weakest
+     * sign-off trail in the blog set and has had the remediation owed since
+     * 2026-07-31. A check that reads one table and concludes something about the
+     * whole sign-off universe is making a claim it did not test; the message now
+     * asserts only what this query saw. The block is still right, because the
+     * routing rests on a trail that can be retrieved per article.
+     *
      * Two tests, because one of them would have passed this article. */
     if (!approvedIds.has(row.id as string)) {
       fail(
         d.slug,
-        `no approved row in content_review_log, so nothing records that this article was ever ` +
-          `clinically signed off — even though it is '${row.status}'. An SEO snippet is routed away ` +
-          `from clinical review because it compresses APPROVED copy; published is not approved. ` +
-          `Resolve the article's sign-off before writing a snippet for it.`,
+        `no approved row in content_review_log, even though it is '${row.status}'. That is the ` +
+          `only store this check reads, and a sign-off can exist outside it — ` +
+          `14-signs-of-vitamin-d-deficiency is covered by a blanket approval email recorded in a ` +
+          `commit message and transcribed in 03_compliance/STATE.md. So this is not "never signed ` +
+          `off"; it is "no per-article record here". Resolve the article's sign-off TRAIL before ` +
+          `writing a snippet, because the snippet's whole routing rests on it being retrievable.`,
         failures,
       )
     }

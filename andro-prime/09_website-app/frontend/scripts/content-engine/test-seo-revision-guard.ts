@@ -197,6 +197,82 @@ section('4e. The exemption reads the EXCERPT only, never the body')
   check('routes to clinical review', v.route === 'clinical')
 }
 
+// ── 4f. Dropping a HEDGE-BEARING excerpt sentence is not exempt ─────────────
+//
+// The independent review's counter-example, reproduced verbatim. Every proposed
+// sentence is a verbatim excerpt sentence, so the first version of the exemption
+// fired and shipped a comparative with "is not a diagnosis" deleted. The
+// exemption's original justification was an argument about the wrong test:
+// "shows strictly less" is test 4's danger condition, not a safety argument.
+section('4f. A subset that deletes the sentence carrying the qualifier is NOT exempt')
+{
+  const twoSentence: ApprovedCopy = {
+    title: 'B12 Blood Test',
+    excerpt:
+      'Active B12 matters more than total B12 for how you feel. ' +
+      'This may vary by lab and is not a diagnosis.',
+    body: 'Active B12 is the fraction your cells can use. Levels may vary between labs.',
+  }
+  const v = guardSeoRevision({
+    seoDescription: 'Active B12 matters more than total B12 for how you feel.',
+    approved: twoSentence,
+  })
+  check('routes to clinical review', v.route === 'clinical')
+  check('is tier 2', v.findings.some((f) => f.tier === 2))
+}
+
+section('4g. The same shape with a hedge-FREE dropped sentence stays exempt')
+{
+  // This is the real b12 case: the only dropped sentence is the reviewer
+  // credential, which carries no qualifier. The fix must not break it.
+  const credentialTail: ApprovedCopy = {
+    title: 'B12 Blood Test',
+    excerpt:
+      'Active B12 matters more than total B12 for how you feel. ' +
+      'Reviewed by GMC-registered GP Dr Ewa Lindo.',
+    body: 'Active B12 is the fraction your cells can use. Levels may vary between labs.',
+  }
+  const v = guardSeoRevision({
+    seoDescription: 'Active B12 matters more than total B12 for how you feel.',
+    approved: credentialTail,
+  })
+  check('routes to SEO review', v.route === 'seo')
+  check('raises no findings', v.findings.length === 0)
+}
+
+// ── 4h. The twelve-character blind spot in the subset test ──────────────────
+//
+// `sentences()` drops anything <= 12 characters, and it applied to BOTH sides of
+// the subset comparison, so a short net-new sentence was deleted from the
+// proposal before `.every()` ran over it. The boundary sat exactly on the filter.
+// Both strings below are the "You have low testosterone" family from the
+// red-flag table and carry no figure, authority or assertion shape, so tests 1
+// to 3 are blind to them and the deterministic scanner returns 0/0 as well.
+section('4h. A short net-new sentence cannot hide under the length filter')
+{
+  /* The base must RESTATE something, or test 4 never runs and the case would
+     pass for a reason that has nothing to do with the exemption. The comparative
+     "matters more than" is what makes it checkable — the same shape the review
+     used. The dropped sentence is the hedge-free credential, so without the tail
+     this is exempt (4g proves it); the tail is the only thing under test. */
+  const fixture: ApprovedCopy = {
+    title: 'B12 Blood Test',
+    excerpt:
+      'Active B12 matters more than total B12 for how you feel. ' +
+      'Reviewed by GMC-registered GP Dr Ewa Lindo.',
+    body: 'Active B12 is the fraction your cells can use. Levels may vary between labs.',
+  }
+  const base = 'Active B12 matters more than total B12 for how you feel.'
+  for (const [label, tail] of [
+    ['9 characters', ' T is low.'],
+    ['12 characters', ' You are low.'],
+    ['39 characters', ' Your cells cannot use total B12 at all.'],
+  ] as const) {
+    const v = guardSeoRevision({ seoDescription: base + tail, approved: fixture })
+    check(`a net-new sentence of ${label} is not exempt`, v.route === 'clinical')
+  }
+}
+
 // ── 5. A claim with no number and no citation in it at all ──────────────────
 section('5. A net-new prevalence claim is caught despite carrying no figure')
 {

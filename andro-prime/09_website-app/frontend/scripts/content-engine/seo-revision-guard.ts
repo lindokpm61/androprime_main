@@ -46,7 +46,6 @@ import {
   sameFigure,
   authoritiesIn,
   hedgesIn,
-  sentences,
   ASSERTION_SHAPES,
   type NumToken,
 } from './classify-claims'
@@ -108,6 +107,40 @@ export interface ApprovedCopy {
 
 function approvedText(a: ApprovedCopy): string {
   return `${a.title}\n${a.excerpt}\n${a.body}`
+}
+
+/**
+ * Sentences with NO length filter, for the subset test only.
+ *
+ * 🔴 `sentences()` in `classify-claims.ts` drops anything twelve characters or
+ * shorter, which is right where it is used — a twelve-character line carries no
+ * traceable assertion in a whole post. It is catastrophic in a SUBSET test,
+ * because the filter applies to BOTH sides: a short net-new sentence is removed
+ * from the proposal before the comparison, so `.every()` is satisfied over a list
+ * the offending sentence was already deleted from. Vacuous satisfaction.
+ *
+ * Found by an independent review, with the boundary sitting exactly on the
+ * filter. Against the real b12 description:
+ *
+ *   + " T is low."      (9 chars)  -> exempt, and it should not be
+ *   + " You are low."   (12 chars) -> exempt, and it should not be
+ *   + " Your cells cannot use total B12 at all."  (39) -> correctly not exempt
+ *
+ * Both of the passing ones are the `You have low testosterone` family from the
+ * red-flag table: a definitive medical statement, carrying no figure, no
+ * authority and no assertion shape, so tests 1 to 3 are blind to them too. The
+ * deterministic scanner returned 0 HARD / 0 REVIEW on both, so this was a hole in
+ * BOTH layers rather than one backstopped by the other.
+ *
+ * The exemption's stated rule is "every SENTENCE of the proposed text appears in
+ * the excerpt". This makes the code test that rule, rather than testing "every
+ * sentence longer than twelve characters".
+ */
+function allSentences(text: string): string[] {
+  return normalise(text)
+    .split(/(?<=[.!?])\s+|\n+/)
+    .map((s) => s.trim())
+    .filter(Boolean)
 }
 
 function fmtFigure(f: NumToken): string {
@@ -195,8 +228,8 @@ function readField(
   // and no assertion shape has nothing to hedge, and demanding a "may" in it
   // would send every ordinary snippet to review.
   /*
-   * ⚠ A VERBATIM SUBSET OF THE EXCERPT CANNOT HAVE DROPPED A QUALIFIER, AND
-   * WITHOUT THIS THE COMMONEST SHAPE IN THE WHOLE COMMISSION FAILED.
+   * ⚠ A VERBATIM SUBSET OF THE EXCERPT THAT DROPS NO QUALIFIER IS NOT A
+   * COMPRESSION. Without this the commonest shape in the whole commission failed.
    *
    * Test 4 below compares the fragment's hedges against hedges anywhere in the
    * approved copy — title, excerpt AND body. So a description carrying no hedge
@@ -206,22 +239,49 @@ function readField(
    * reviewer credential, and the restated clause is unchanged to the byte. It was
    * routed to a clinician for dropping a qualifier it never had.
    *
-   * The exemption is deliberately narrow. Matching is at SENTENCE granularity
-   * against the EXCERPT only, never the body:
-   *   · sentence granularity stops a truncated clause qualifying — lifting "under
-   *     25 is deficient" out of "levels may be low, so under 25 is deficient" is
-   *     not a sentence match;
-   *   · the excerpt only, because the excerpt IS the meta description today. A
-   *     snippet built from whole excerpt sentences shows a reader strictly less
-   *     than what that reader already sees in the same place, so it cannot be
-   *     adding a proposition. The body is a different surface with different
-   *     surrounding context and gets no such exemption.
+   * 🔴 THE FIRST VERSION OF THIS EXEMPTION WAS JUSTIFIED BY AN ARGUMENT ABOUT THE
+   * WRONG TEST, AND AN INDEPENDENT REVIEW BROKE IT WITH A WORKED EXAMPLE. It said
+   * a whole-sentence subset "shows a reader strictly less, so it cannot be adding
+   * a proposition" — but ADDING is what tests 1 to 3 check. Test 4 checks whether
+   * a qualifier was REMOVED, and deleting a whole sentence is the most complete
+   * way to remove one. "Shows strictly less" is test 4's danger condition, not a
+   * safety argument for skipping it. The counter-example was two sentences, the
+   * second holding the hedge:
+   *
+   *   excerpt:  "Active B12 matters more than total B12 for how you feel.
+   *              This may vary by lab and is not a diagnosis."
+   *   proposed: "Active B12 matters more than total B12 for how you feel."
+   *
+   * Every proposed sentence was a verbatim excerpt sentence, so the exemption
+   * fired and the comparative shipped unqualified with "is not a diagnosis"
+   * deleted. So the exemption now carries the condition it always needed: the
+   * sentences being DROPPED must themselves carry no qualifier. A credential line
+   * carries none, which is why the real case still passes.
+   *
+   * Three narrowings, each load-bearing:
+   *   · SENTENCE granularity, so lifting "under 25 is deficient" out of "levels
+   *     may be low, so under 25 is deficient" is not a match;
+   *   · the EXCERPT only, never the body — the body is a different surface with
+   *     different surrounding context;
+   *   · the DROPPED sentences must be hedge-free, per the above.
    */
-  const excerptSentences = new Set(sentences(approved.excerpt))
-  const isVerbatimExcerptSubset =
-    excerptSentences.size > 0 &&
-    sentences(text).length > 0 &&
-    sentences(text).every((s) => excerptSentences.has(s))
+  const excerptAll = allSentences(approved.excerpt)
+  const excerptSet = new Set(excerptAll)
+  const proposedAll = allSentences(text)
+
+  /* Every proposed sentence is one of the excerpt's, measured WITHOUT the length
+     filter — see `allSentences`. */
+  const everySentenceIsApproved =
+    excerptSet.size > 0 &&
+    proposedAll.length > 0 &&
+    proposedAll.every((s) => excerptSet.has(s))
+
+  /* And nothing qualifying was thrown away with the sentences that went. */
+  const proposedSet = new Set(proposedAll)
+  const droppedSentences = excerptAll.filter((s) => !proposedSet.has(s))
+  const droppedHedges = droppedSentences.flatMap((s) => hedgesIn(s)).filter((h) => !WEAK_HEDGES.has(h))
+
+  const isVerbatimExcerptSubset = everySentenceIsApproved && droppedHedges.length === 0
 
   const restatesSomething =
     numTokens(text).length > 0 || ASSERTION_SHAPES.some((s) => s.re.test(text))
