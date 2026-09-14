@@ -152,6 +152,11 @@ regenerated and both `route-conformance.md` and `.json` came back **byte-identic
 
 ### Where it is, and how it was verified
 
+**Commit `b13050b` on `redesign/direction-f`.** Thirty-two files: the three new
+scripts, the eleven route and component edits, two stylesheets, `package.json`,
+`lib/authors.ts`, the regenerated conformance report and its generator, and the
+four documents.
+
 `npm test` exit 0 with `MEMBERSHIP_ENABLED=false`, including the new
 `verify-metadata` (44 exports clean). `tsc --noEmit` clean. Production build
 clean. `npm run test:design:live` — **174 passed, 0 failing text nodes on dark
