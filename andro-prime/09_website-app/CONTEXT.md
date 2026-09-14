@@ -146,6 +146,26 @@ articles when it was seventeen. `audit-rendered-markup` therefore hands article
 head lengths to `verify-article-seo` and **prints the handoff on every run**,
 because an unexplained skip is indistinguishable from an answered question.
 
+🔴 **ONE PENDING REVISION PER ARTICLE, AND THAT DECIDES WHICH WRITE PATH A CHANGE
+TAKES.** `blog_articles.proposed_revision_id` is a single pointer, so an SEO
+revision and a content revision cannot both be pending on the same article —
+`stage_blog_revision` overwrites it, and `promote_proposed_revision` then clears
+it, so the displaced revision survives in the table with nothing pointing at it.
+An approved metadata change therefore lands as a **`jsonb` merge on the live row**
+(`scripts/content-engine/apply-seo-drafts.ts`, dry by default, `--apply` spelled
+out, `--revert` exact) rather than through staging. The `scope='seo'` route below
+is for a revision that needs REVIEW; it is the wrong tool for one already
+approved, and the two look identical until you ask what the pointer is for.
+
+⚠ **A staged revision is a SNAPSHOT, so it can be silently wrong about a field
+nobody touched in it.** `promote_proposed_revision` copies a revision's whole
+`frontmatter` onto the article, so one staged before a key existed carries that
+key's absence as though it were a decision, and promoting it deletes the live
+value with no error. **`npm run verify:proposed-seo`** fails when any pending
+revision would drop a guarded key. Two 2026-08-18 re-opts would have wiped
+approved SEO fields on `why-am-i-always-tired` and
+`inflammatory-markers-blood-test`; the keys were carried forward onto both.
+
 🔴 **A REVISION CARRIES A SCOPE, AND THE REVIEW ROUTE FOLLOWS IT.**
 `blog_article_revisions.scope` is `'content'` or `'seo'` (Keith, 2026-09-14,
 defect register M7: *"review a revision of this type as it is an SEO description

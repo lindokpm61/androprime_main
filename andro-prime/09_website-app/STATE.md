@@ -4,7 +4,56 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family built; M7 turned out to be seventeen articles rather than the two a route sweep could see, and Keith then ruled that an SEO snippet is reviewed as metadata rather than clinically — so a revision now carries a scope and the pipeline routes on it**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
+## ▶️ PICK UP HERE — handoff, 2026-09-14 (**the whole M family built; M7 turned out to be seventeen articles rather than the two a route sweep could see, Keith ruled that an SEO snippet is reviewed as metadata rather than clinically, and the commission was then drafted, reviewed three times, approved and applied — 26 fields on 15 live articles, which will not RENDER until Direction F deploys**). Earlier the same day: C1 to C4, then P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
+
+### 🟢 THE M7 COMMISSION IS WRITTEN AND APPROVED. IT IS ALSO NOT VISIBLE YET, AND THAT IS THE THING TO KNOW
+
+**Keith approved 26 fields across 15 published articles on 2026-09-14** and they
+are on the live `blog_articles` rows. Board record: ClickUp `869f1wwch`, sitting
+at `pending` because that list's rule is that **only a named human sets a task to
+approved** — the flip is Keith's and is the one action outstanding. Repo mirror:
+`03_compliance/content-approval/approval-record-m7-seo-fields-2026-09-14.md`.
+
+🔴 **They do not render, and nothing further is owed to make them.**
+`resolveArticleSeo()` exists only on `redesign/direction-f`, 158 commits ahead of
+`main`; every other branch returns zero for it. Production serves a build with no
+concept of these keys and ignores them harmlessly. All 15 were revalidated (200
+each) and the rendered `<head>` re-read afterwards — still the old values, which
+is the expected result and is why it was checked rather than assumed. **They
+surface with the branch.**
+
+| | |
+|---|---|
+| Drafted, checked, approved | 26 fields, 15 articles, three batches |
+| Words changed from approved copy | **One, in 26** — `fbc-blood-test` says "Shows" for "Tells You", and that verb is Ewa's own in signed claim 39 |
+| Routed to the clinical reviewer | **None.** All 15 returned `route: 'seo'`, 0 findings |
+| Still on the ratchet | 3 fields, 2 articles, both blocked on something other than copy |
+
+⚠ **The applier is a `jsonb` merge, not a staged revision, and that was forced.**
+`why-am-i-always-tired` and `inflammatory-markers-blood-test` each already held a
+CONTENT re-opt staged 2026-08-18 and blocked on Keith. `stage_blog_revision`
+overwrites `proposed_revision_id`, which holds one pointer, so staging would have
+orphaned a month-old pending revision. **The `scope='seo'` route built earlier the
+same day is right for a revision that needs REVIEW and wrong for one already
+approved** — which is worth keeping, because the two look identical until you ask
+what the pointer is for.
+
+⚠ **And those pending revisions predate the fields.** Promoting one would copy a
+2026-08-18 frontmatter over the live row and silently delete the approved
+snippet. The keys were carried forward onto both, and **`npm run
+verify:proposed-seo` is new**: it fails if any pending revision would drop a key
+the live row carries. It caught both before the fix and passes all three after.
+The general shape is worth more than the two rows — a staged revision is a
+SNAPSHOT, and any snapshot taken before a field existed carries that field's
+absence as though it were a decision.
+
+**Three independent compliance reviews ran, one per batch, each adversarial.**
+They found one real error — batch 1 originally included `cortisol-belly`, an
+unpublished draft sitting with Ewa — and five defects in the checking tooling,
+all fixed and mutation-verified. The most instructive: a check that **reported
+PASS for entries it never checked**, and a `fragment-scan` source file that
+changes the findings in both directions depending on whether you point it at the
+database or the MDX mirror.
 
 **Read this block, then the switch-on checklist. Everything else below is history.**
 

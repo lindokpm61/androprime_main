@@ -122,23 +122,30 @@ function die(m: string): never {
 const SINCE = '2026-09-14'
 type Baseline = { slug: string; title?: number; description?: number }
 const BASELINE: Baseline[] = [
-  { slug: 'how-to-increase-testosterone-naturally', title: 94, description: 260 },
-  { slug: 'free-androgen-index', title: 93, description: 258 },
-  { slug: 'signs-of-stress-in-men', title: 76, description: 232 },
-  { slug: 'why-am-i-always-tired', title: 83, description: 229 },
-  { slug: 'brain-fog', title: 72, description: 224 },
+  /* 🟢 FIFTEEN ARTICLES AND 26 FIELDS CAME OFF THIS LIST ON 2026-09-14, WHICH IS
+     THE RATCHET DOING THE ONLY THING IT WAS BUILT TO DO. Keith approved the
+     commission and `apply-seo-drafts.ts` wrote the fields onto the live rows; the
+     next run failed, correctly, on the stale-exemption rule — "baselined at 83
+     and it now renders at 57, remove `title` from its baseline entry" — for every
+     article that had gone clean. This is that removal.
+
+     The two that remain are blocked on something other than copy, and neither is
+     a length problem:
+       · `cortisol-belly` is status='draft', sitting with the clinical reviewer
+         with three unticked rulings. A snippet compresses approved copy and a
+         draft has none.
+       · `14-signs-of-vitamin-d-deficiency` is published with no per-article
+         ClickUp task and no approved `content_review_log` row. It IS signed off,
+         by the blanket email of 2026-05-27 recorded in commit `6d2da5b` and
+         transcribed in `03_compliance/STATE.md`, which already calls it the
+         weakest sign-off trail in the blog set with remediation owed since
+         2026-07-31. The block is about retrievability, not about the words.
+
+     Both numbers below stay at their 2026-09-14 readings. The ratchet only turns
+     down, so neither may be raised, and either going clean without its entry
+     being removed is a failure. */
   { slug: 'cortisol-belly', title: 89, description: 221 },
-  { slug: 'andropause-male-menopause', title: 89, description: 192 },
-  { slug: 'myth-of-normal-range', title: 83, description: 174 },
-  { slug: 'liver-function-blood-test', title: 73, description: 173 },
-  { slug: 'cholesterol-test', title: 80, description: 173 },
-  { slug: 'thyroid-test', title: 78, description: 171 },
   { slug: '14-signs-of-vitamin-d-deficiency', description: 166 },
-  { slug: 'b12-blood-test', description: 165 },
-  { slug: 'ferritin-blood-test', title: 61, description: 164 },
-  { slug: 'inflammatory-markers-blood-test', title: 63 },
-  { slug: 'fbc-blood-test', title: 63 },
-  { slug: 'how-to-read-blood-test-results', title: 69 },
 ]
 
 
