@@ -130,8 +130,10 @@ before believing either. Written into the script's own header.
 ### 🔴 KEITH RULED ON M7's REMAINDER THE SAME DAY, AND THE CORPUS IS SEVENTEEN ARTICLES
 
 **Keith, 2026-09-14: add `seo_title` and `seo_description` to the table and to
-the publish pipeline.** Built. And building it made the real size of M7 visible
-for the first time.
+the publish pipeline.** Built — **as frontmatter keys `seoTitle` / `seoDescription`
+rather than columns, which he ratified later the same day** (see the closed flag
+below; the spelling differs from the ask on purpose and the reasons are recorded
+there). And building it made the real size of M7 visible for the first time.
 
 **The route sweep reported an 89-character title and a 192-character description
 on `/blog/[slug]`. Both were correct, and they were the 5th and the 7th worst of
@@ -206,14 +208,30 @@ task says why it reached her. It fails toward review in every uncertain case.
 Drafting and Guardrail #1 pre-flight are unchanged. What has gone is the
 assumption that a search snippet is clinical copy because the article under it is.
 
-⚠ **Keith asked for COLUMNS and these are frontmatter keys, which is flagged
-rather than folded in.** `blog_article_revisions` mirrors `body`, `frontmatter`
-and `keyword_coverage` and nothing else, so a column on `blog_articles` would
-have **no home on a revision — and Ewa's preview renders a revision**, so she
-could never see a proposed SEO description or rule on one. The pipeline also
-passes the frontmatter blob through wholesale (`import-blog-to-db`,
+🟢 **KEITH RULED ON THE COLUMNS QUESTION, 2026-09-14: FRONTMATTER KEYS. The flag
+is closed and nothing further is owed on it.** He originally asked for
+`seo_title` / `seo_description` columns; what shipped was `seoTitle` /
+`seoDescription` keys, raised as an engineering call inside his decision rather
+than folded in silently. He has now ratified the keys.
+
+The reasons, recorded because the decision should survive the next person who
+notices the spelling differs from the ask. `blog_article_revisions` mirrors
+`body`, `frontmatter` and `keyword_coverage` and nothing else, so a column on
+`blog_articles` would have **no home on a revision — and Ewa's preview renders a
+revision**, so she could never see a proposed SEO description or rule on one. The
+pipeline passes the frontmatter blob through wholesale (`import-blog-to-db`,
 `export-blog-from-db`, `draft-writer`, the `upsert_blog_article` RPC), so a key
-costs no pipeline code while a column needs a mapping at each end.
+costs no pipeline code while a column needs a mapping at each end. And the
+scope guard added later the same day **compares `frontmatter - 'seoTitle' -
+'seoDescription'` against the live blob in one jsonb expression** — the
+metadata-only invariant is cheap precisely because these are keys, and a pair of
+columns would have needed the comparison written out and kept in step by hand.
+
+⚠ **The consequence to hold on to: an SEO field is not a column and never becomes
+one.** Anything that reads or writes these values does it through the frontmatter
+blob and through `resolveArticleSeo`. A future migration that "tidies" them into
+columns would take Ewa's ability to review a proposed value with it, and would
+turn the scope guard from one expression into a hand-maintained list.
 
 **Proved end to end on the one DRAFT article, then reverted.** With the fields
 set, `<title>` rendered at 53 and the meta description at 140, **`og:title` kept

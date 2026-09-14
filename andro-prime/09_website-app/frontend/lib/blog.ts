@@ -88,18 +88,36 @@ export interface ArticleFrontmatter {
    * as metadata, unless `seo-revision-guard.ts` finds that the shorter line moved
    * a claim rather than trimming one.
    *
-   * ⚠ THEY ARE FRONTMATTER KEYS RATHER THAN COLUMNS, AND KEITH ASKED FOR COLUMNS.
-   * Two things decided it. **`blog_article_revisions` mirrors `body`,
-   * `frontmatter` and `keyword_coverage` and nothing else** — so a column on
-   * `blog_articles` would have no home on a revision, and Ewa's preview, which
-   * renders a REVISION, could never show a proposed SEO description or let her
-   * rule on one. And the whole pipeline passes the frontmatter blob through
-   * wholesale (`import-blog-to-db`, `export-blog-from-db`, `draft-writer`, the
-   * `upsert_blog_article` RPC), so a key costs no pipeline code, while a column
-   * would need a mapping at each end — a second store for one fact, which is the
-   * shape this repo keeps getting bitten by. `seo_title` was the right spelling
-   * for the column that was asked for; `seoTitle` is the spelling for the place
-   * it landed, matching every other rendering field here.
+   * 🟢 THEY ARE FRONTMATTER KEYS RATHER THAN COLUMNS, AND KEITH RULED FOR THE
+   * KEYS ON 2026-09-14. He asked for `seo_title` / `seo_description` columns; the
+   * keys were raised as an engineering call inside his decision rather than folded
+   * in quietly, and he then ratified them. This is settled, not pending.
+   *
+   * Three things decided it, and they are recorded because the next reader will
+   * notice the spelling differs from the ask and should not have to re-litigate it.
+   *
+   *   1. **`blog_article_revisions` mirrors `body`, `frontmatter` and
+   *      `keyword_coverage` and nothing else** — so a column on `blog_articles`
+   *      would have no home on a revision, and Ewa's preview, which renders a
+   *      REVISION, could never show a proposed SEO description or let her rule on
+   *      one.
+   *   2. The whole pipeline passes the frontmatter blob through wholesale
+   *      (`import-blog-to-db`, `export-blog-from-db`, `draft-writer`, the
+   *      `upsert_blog_article` RPC), so a key costs no pipeline code while a
+   *      column needs a mapping at each end — a second store for one fact, which
+   *      is the shape this repo keeps getting bitten by.
+   *   3. The scope guard added the same day compares
+   *      `frontmatter - 'seoTitle' - 'seoDescription'` against the live blob in a
+   *      single jsonb expression. The metadata-only invariant behind the whole
+   *      review route is one line BECAUSE these are keys; with columns it would be
+   *      a hand-maintained list of every other column, kept in step by whoever
+   *      remembers.
+   *
+   * ⚠ DO NOT "TIDY" THESE INTO COLUMNS LATER. It would take Ewa's ability to
+   * review a proposed value with it, and turn that one-line invariant into a
+   * list. `seo_title` was the right spelling for the column that was asked for;
+   * `seoTitle` is the spelling for the place it landed, matching every other
+   * rendering field here.
    */
   seoTitle?: string
   seoDescription?: string

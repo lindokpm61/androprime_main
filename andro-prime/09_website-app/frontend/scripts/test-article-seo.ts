@@ -158,6 +158,53 @@ section('6. The bounds match the static metadata check')
   )
 }
 
+// ── 7. They stay frontmatter keys, because Keith ruled they should ──────────
+//
+// KEITH, 2026-09-14: frontmatter keys, not columns. He asked for `seo_title` /
+// `seo_description` columns, the keys were raised as an engineering call inside
+// his decision, and he ratified them. The reasons are recorded in `lib/blog.ts`,
+// `CONTEXT.md` and `STATE.md`, and the strongest of them is load-bearing at
+// runtime: `stage_blog_revision` proves a revision is metadata-only with the
+// single expression `frontmatter - 'seoTitle' - 'seoDescription'`, and with
+// columns that becomes a hand-maintained list of every other column.
+//
+// "Do not tidy these into columns" is the kind of instruction that gets walked
+// past, because the moment of violation is one line of a migration nobody pauses
+// at. Section 5 already sets the precedent for holding a "do not tidy" rule with
+// an assertion rather than a comment; this does the same one layer down.
+section('7. The SEO fields are frontmatter keys and no column shadows them')
+{
+  const types = readFileSync(resolve(__dirname, '..', 'lib', 'supabase', 'types.ts'), 'utf8')
+  const start = types.indexOf('      blog_articles: {')
+  const end = types.indexOf('      borderline_nurture_consent: {', start)
+  const blogArticles = types.slice(start, end)
+
+  check(
+    'blog_articles has no seo_title column',
+    start > 0 && end > start && !/\bseo_title\b/.test(blogArticles),
+  )
+  check(
+    'blog_articles has no seo_description column',
+    start > 0 && end > start && !/\bseo_description\b/.test(blogArticles),
+  )
+
+  const blog = readFileSync(resolve(__dirname, '..', 'lib', 'blog.ts'), 'utf8')
+  check('ArticleFrontmatter declares seoTitle', /\n\s*seoTitle\?: string/.test(blog))
+  check('ArticleFrontmatter declares seoDescription', /\n\s*seoDescription\?: string/.test(blog))
+
+  // The invariant the keys buy. If this expression ever leaves the migration,
+  // the metadata-only guarantee behind the whole SEO review route has changed
+  // shape and the ruling above needs revisiting rather than quietly outliving it.
+  const migration = readFileSync(
+    resolve(__dirname, '..', '..', 'database', 'migrations', '20260914_blog_revision_scope.sql'),
+    'utf8',
+  )
+  check(
+    'the scope guard still proves metadata-only with one jsonb subtraction',
+    /frontmatter - 'seoTitle' - 'seoDescription'/.test(migration),
+  )
+}
+
 // ── Report ──────────────────────────────────────────────────────────────────
 console.log('')
 if (failures > 0) {
