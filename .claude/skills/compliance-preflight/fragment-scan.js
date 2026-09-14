@@ -171,13 +171,39 @@ function numberFindings(unitText, srcDigits) {
  * The qualifier vocabulary. Deliberately broad: a false "this fragment kept a
  * hedge" is a miss, so anything that softens an assertion counts.
  */
+/*
+ * ⚠ THE CONTRACTIONS ACCEPT EITHER APOSTROPHE, AND THAT IS A FIX RATHER THAN A
+ * DETAIL. Until 2026-09-14 every contraction here was spelled with the curly
+ * U+2019 only, so `"the part that isn't cortisol"` scored NOT HEDGED and the same
+ * sentence with a typographic apostrophe scored HEDGED. Nothing else differed.
+ *
+ * That produced the worst possible finding: "qualifier dropped — NOTHING on this
+ * slide hedges it", which this skill's own guidance singles out as the one to act
+ * on, raised against a sentence built out of two negations. A checker whose false
+ * positives land hardest on its highest-priority finding trains people to ignore
+ * that finding.
+ *
+ * It is the exact mirror of the NEG defect fixed on 2026-08-11, where the
+ * contractions matched U+0027 only and the curly form was graded HARD. Same
+ * cause, opposite direction, a different table — which is the tell that the
+ * project-wide rule is "never write a contraction into a compliance pattern with
+ * one apostrophe", not "fix this table".
+ *
+ * ⚠ DIRECTION OF TRAVEL, FLAGGED RATHER THAN SLIPPED IN, per the 2026-08-11
+ * precedent: this makes a REVIEW check MORE PERMISSIVE. A fragment carrying a
+ * straight-apostrophe contraction now counts as hedged where it previously did
+ * not. That is the intended reading in both spellings — typography is not a
+ * compliance signal — and the permissiveness it adds already existed for every
+ * author whose editor produced curly quotes.
+ */
+const APOS = '[’\']';
 const QUALIFIER = new RegExp(
   '\\b(may|might|can|could|often|usually|sometimes|typically|generally|commonly|' +
   'tend|tends|tended|roughly|about|around|approximately|almost|nearly|some|most|' +
   'many|suggestive|indicative|associated|linked|varies|vary|varying|average|' +
   'on average|worth|guide|guideline|rarely|seldom|likely|unlikely|possible|' +
-  'possibly|probably|partly|largely|mostly|up to|at least|isn’t|is not|' +
-  'not|never|doesn’t|don’t|cannot|can’t)\\b', 'i');
+  'possibly|probably|partly|largely|mostly|up to|at least|isn' + APOS + 't|is not|' +
+  'not|never|doesn' + APOS + 't|don' + APOS + 't|cannot|can' + APOS + 't)\\b', 'i');
 
 const STOP = new Set(('a an and or the of to in on for with is are was were be been it its ' +
   'this that these those you your yours he his they them their as at by from but if ' +
@@ -212,7 +238,28 @@ function sentences(text) {
 function qualifierFindings(unitText, srcSentences) {
   const out = [];
   for (const frag of sentences(unitText)) {
-    if (QUALIFIER.test(frag)) continue;           // fragment kept a hedge
+    /* ⚠ A SURVIVING HEDGE DOWNGRADES THIS FINDING; IT NO LONGER DELETES IT.
+     *
+     * This was `continue`, which suppressed the finding outright — and because
+     * QUALIFIER conflates negation with hedging and tests PRESENCE per sentence
+     * rather than ATTACHMENT, the token that cleared a sentence was often
+     * attached to a different proposition than the qualifier that had been
+     * dropped. On the copy that prompted this, `isn't` in "the part that isn't
+     * cortisol" silenced a finding about "worth a GP conversation" becoming
+     * "talk to a GP". It cleared for the wrong reason.
+     *
+     * Fixing the attachment problem properly needs parsing this does not do. But
+     * suppression was never the right response to an uncertain signal: a check
+     * whose uncertainty deletes findings is strictly worse than one whose
+     * uncertainty annotates them, because the reviewer cannot see what they were
+     * not shown. So a fragment that kept SOME hedge is reported at lower
+     * confidence rather than dropped, and the report says which.
+     *
+     * This makes the check report MORE, which is the safe direction and is the
+     * counterweight to the 2026-09-14 apostrophe widening that made QUALIFIER
+     * match more text. Flagged rather than slipped in, per the 2026-08-11
+     * precedent. */
+    const fragKeptAHedge = QUALIFIER.test(frag);
     /* Two content words is the floor, not three. A short headline is precisely
      * the dangerous case — at feed size it is often the only line read — and a
      * three-word minimum skipped every one of them, which would have made this
@@ -230,7 +277,7 @@ function qualifierFindings(unitText, srcSentences) {
       if (shared >= 2 && score > bestScore) { bestScore = score; best = src; }
     }
     if (best && bestScore >= 0.6 && QUALIFIER.test(best)) {
-      out.push({ frag, src: best, score: bestScore });
+      out.push({ frag, src: best, score: bestScore, fragKeptAHedge });
     }
   }
   /* Whether the hedge survives ANYWHERE on the same slide changes what the
@@ -304,9 +351,17 @@ for (const p of pairs) {
     }
 
     for (const q of qualifierFindings(unit.text, srcSentences)) {
-      const scope = q.hedgedElsewhere
-        ? 'this line only; the slide hedges elsewhere'
-        : 'NOTHING on this slide hedges it';
+      /* Three confidences, not two. The weakest is the one this line used to
+       * delete: the fragment sentence itself kept SOME qualifier, so it is
+       * probably fine — but "probably" is an annotation, not grounds for showing
+       * the reviewer nothing, because QUALIFIER cannot tell whether the surviving
+       * token attaches to the proposition whose hedge was dropped. */
+      const scope = q.fragKeptAHedge
+        ? 'this line kept a qualifier of its own, so this is likely fine; shown because ' +
+          'the surviving qualifier may attach to a different point'
+        : q.hedgedElsewhere
+          ? 'this line only; the slide hedges elsewhere'
+          : 'NOTHING on this slide hedges it';
       lines.push(`  🟠 REVIEW  qualifier dropped in compression — ${scope} (overlap ${(q.score * 100).toFixed(0)}%)`);
       lines.push(`              fragment: ${q.frag}`);
       lines.push(`              source:   ${q.src}`);
