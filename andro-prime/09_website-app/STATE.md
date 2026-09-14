@@ -99,6 +99,31 @@ controls, `aria-expanded` + `aria-controls`, no focus to steal or return.
   the routes still on V2.0 and is a site-wide change rather than a component rebuild. **Those two
   components are the next thing to take.**
 
+### Where it is, and the state the tree was actually left in
+
+**Commit `5dffd0b` on `redesign/direction-f`.** Twenty-six files: the four
+component rebuilds, the three error boundaries, the four deletions, the two new
+checks, the four stylesheet/primitive additions, `package.json`, the regenerated
+conformance report and its generator, the four documents, and `shot.js`.
+
+⚠ **Nothing deployed, and that is structural rather than a choice.** `main` is the
+deploy branch; a push to this one triggers no Coolify build. The change is
+therefore not live and `andro-prime.com` still serves the V2.0 components this
+closes.
+
+⚠ **THE TREE WAS CLEAN AT 02:53 ON 2026-09-14, AND THAT IS A TIMESTAMP RATHER THAN
+A PROPERTY.** Checked two ways rather than one: `git status --porcelain` showed
+only the pre-existing untracked files (`.impeccable/`, `shots/`, two `.bak`s, the
+`f-primitives.css.broken-2026-09-03` keepsake), and an mtime sweep of
+`andro-prime/` and `.claude/` over the preceding 45 minutes returned only files
+this session wrote. **A second session was working this same branch earlier
+tonight** — it is the one that built P7, P9, R1, R2 and R3 — and it woke at 02:39
+to record that its own close-out had described a clean tree while this session was
+ten minutes into rewriting the shared `package.json`. Nothing raced and nothing was
+lost. The lesson it filed is why this paragraph carries a clock: a close-out turns
+a momentary observation into a durable claim, and nothing in it re-checks whether
+the moment still holds.
+
 ### Verification, and the technique that made two of these photographable at all
 
 `npm test` exit 0 with `MEMBERSHIP_ENABLED=false`. `tsc --noEmit` clean on both projects. Production
