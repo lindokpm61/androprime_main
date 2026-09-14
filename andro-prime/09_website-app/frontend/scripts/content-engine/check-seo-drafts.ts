@@ -54,11 +54,16 @@ interface Draft {
   note?: string
 }
 
-const file = process.argv[2]
-if (!file) {
-  console.error('usage: check-seo-drafts.ts <drafts.json>')
+const argv = process.argv.slice(2)
+const file = argv.find((a) => !a.startsWith('--'))
+const emitIdx = argv.indexOf('--emit-sources')
+const emitDir = emitIdx >= 0 ? argv[emitIdx + 1] : null
+if (!file || (emitIdx >= 0 && !emitDir)) {
+  console.error('usage: check-seo-drafts.ts <drafts.json> [--emit-sources <dir>]')
   process.exit(1)
 }
+/* Narrowed at module level: control-flow narrowing does not cross into `main`. */
+const draftsFile: string = file
 
 function fail(slug: string, msg: string, failures: string[]): void {
   failures.push(`${slug}: ${msg}`)
@@ -74,9 +79,9 @@ async function main(): Promise<void> {
     )
   }
 
-  const raw: unknown = JSON.parse(fs.readFileSync(path.resolve(file), 'utf8'))
+  const raw: unknown = JSON.parse(fs.readFileSync(path.resolve(draftsFile), 'utf8'))
   if (!Array.isArray(raw) || raw.length === 0) {
-    throw new Error(`${file} holds no drafts. Fix the file rather than reading a pass into it.`)
+    throw new Error(`${draftsFile} holds no drafts. Fix the file rather than reading a pass into it.`)
   }
 
   /* 🔴 VALIDATE THE SHAPE UP FRONT, AND DO NOT LET ONE BAD ENTRY END THE RUN.
@@ -120,6 +125,44 @@ async function main(): Promise<void> {
       }
       clean[field] = v
     }
+
+    /* 🔴 AN ENTRY WHERE NOTHING COULD BE CHECKED MUST NOT REPORT AS CHECKED, AND
+     * THIS IS THE FOURTH TIME THAT FAMILY HAS APPEARED IN THIS FILE.
+     *
+     * Demonstrated by an independent review, on real copy: a 56-character
+     * description under the key `seoDescripton` was never measured, never
+     * guarded, never scanned, and printed as PASS under a summary line asserting
+     * three checks — exit 0. So did an entry proposing no field at all.
+     *
+     * The previous three instances were all about the LABEL being computed from
+     * the wrong thing. This one is different in kind and worse: the label was
+     * correct, because genuinely zero failures were recorded. The defect is that
+     * zero checks had run. A gate that reports success for work it never did is
+     * the one failure mode that cannot be caught by looking at its output.
+     *
+     * Two conditions, both about the INPUT rather than the verdict:
+     *   · an unknown key is a typo, not an extension — the schema is closed;
+     *   · a draft must propose at least one field, or there is nothing to check
+     *     and "checked" is a false statement about it. */
+    const known = new Set(['slug', 'seoTitle', 'seoDescription', 'note'])
+    for (const key of Object.keys(e)) {
+      if (!known.has(key)) {
+        shapeErrors.push(
+          `${e.slug}: unknown key "${key}". The schema is closed, so this is a typo rather than ` +
+            `an extension — and a value under a key nothing reads is never checked, never ` +
+            `measured, and reports as a clean draft.`,
+        )
+        bump(e.slug)
+      }
+    }
+    if (clean.seoTitle === undefined && clean.seoDescription === undefined) {
+      shapeErrors.push(
+        `${e.slug}: proposes neither seoTitle nor seoDescription, so nothing about it can be ` +
+          `checked. An entry with nothing in it must not report as a cleared draft.`,
+      )
+      bump(e.slug)
+    }
+
     if (typeof e.note === 'string') clean.note = e.note
     drafts.push(clean)
   })
@@ -229,7 +272,55 @@ async function main(): Promise<void> {
 
     const fm = (row.frontmatter ?? {}) as ArticleFrontmatter
     const live = resolveArticleSeo(fm)
-    const next = resolveArticleSeo({ ...fm, seoTitle: d.seoTitle, seoDescription: d.seoDescription })
+
+    /* 🔴 EMIT THE SOURCE THE FRAGMENT SCANNER SHOULD READ, BECAUSE THE OBVIOUS
+     * FILE IS THE WRONG ONE AND IT IS WRONG IN BOTH DIRECTIONS.
+     *
+     * `fragment-scan.js` needs a --source: the signed-off copy a snippet
+     * compresses. The tempting file is `content/blog/<slug>.mdx`, and pointing at
+     * it gives materially different findings from pointing at the database,
+     * because the scanner reads a whole file as prose and an MDX carries a large
+     * YAML frontmatter block. Measured on this batch:
+     *
+     *   · FALSE POSITIVES. `ferritin` and `fbc` each raise the scanner's
+     *     strongest tier against the MDX — "NOTHING on this slide hedges it",
+     *     83% overlap — by pairing the proposed TITLE against an `faq:` ANSWER in
+     *     the frontmatter. A title is not a compression of an FAQ answer.
+     *   · FALSE NEGATIVES. `how-to-read` raises a real finding against the
+     *     database and none against the MDX, because there the approved title is
+     *     a `title:` YAML key rather than a sentence, so nothing pairs with it.
+     *
+     * Two reviewers using the two files reached opposite conclusions about the
+     * same four strings, and neither report said which file it had read. So the
+     * correct source is produced here, from the same database read that backs
+     * every other check in this file, rather than assembled by hand each time.
+     * Title, excerpt and body, one clean text, no apparatus. */
+    if (emitDir) {
+      fs.mkdirSync(emitDir, { recursive: true })
+      fs.writeFileSync(
+        path.join(emitDir, `${d.slug}-source.md`),
+        `${fm.title ?? ''}\n\n${fm.excerpt ?? ''}\n\n${row.body ?? ''}`,
+        'utf8',
+      )
+    }
+    /* ⚠ ONLY OVERRIDE A FIELD THE DRAFT ACTUALLY PROPOSES.
+     *
+     * This was `{ ...fm, seoTitle: d.seoTitle, seoDescription: d.seoDescription }`,
+     * which sets an ABSENT field to `undefined` as an own property, clobbering any
+     * value the article already carries. `resolveArticleSeo` then falls back to
+     * the editorial field and the run prints a `description X -> Y` mark for a
+     * change nobody proposed — a measurement of a page that does not exist.
+     *
+     * Latent through this whole commission, because none of the 17 articles has
+     * either key set yet. It fires the first time a pass revises ONE field on an
+     * article that already carries the other, which is exactly what a
+     * re-optimisation does. Found by an independent review reading the code
+     * rather than by any run. */
+    const next = resolveArticleSeo({
+      ...fm,
+      ...(d.seoTitle !== undefined ? { seoTitle: d.seoTitle } : {}),
+      ...(d.seoDescription !== undefined ? { seoDescription: d.seoDescription } : {}),
+    })
 
     const renderedTitle = (next.title + SUFFIX).length
     const descLen = next.description.length
