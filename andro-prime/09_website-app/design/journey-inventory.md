@@ -522,6 +522,35 @@ exports `DemoThemeProvider`, `InternalChrome.tsx` exports several named pieces a
 On the 2026-09-13 run it named seven files: the four genuinely dead above, plus those three
 name-mismatch false positives.
 
+🟢 **CLOSED 2026-09-14 (defect register C3). THE FOUR ARE DELETED AND THE SWEEP IS NO LONGER A
+SNIPPET IN A DOC.** `KitCard`, `FaqAccordion`, `SectionEyebrow` and `JoinForm` are gone, with the
+now-empty `components/founding-member/` directory. `JoinForm`'s consumer had already been removed
+since this section was written — `/founding-member` is a ten-line `redirect('/kits')` with no
+import at all — so the "real consumer that never executes" case is history rather than current.
+
+**The derivation above is now `frontend/scripts/verify-dead-components.js`, and it runs in
+`npm test`.** Three things changed in making it executable:
+
+- **The unit is the set of names a file EXPORTS, read out of the file**, not the file name. That
+  deletes the third false-positive mode outright: `DemoTheme.tsx`, `InternalChrome.tsx` and
+  `articleMdx.tsx` now report live, which is what they are.
+- **A consumer is an IMPORT whose specifier resolves to the file**, or a `<Name` JSX tag (for an
+  `.mdx` article reaching a component through the MDX map). An import is structural, so a type
+  alias, a prose mention and a removal note are all invisible to it — which is the whole defect
+  this section records, closed by construction rather than by care.
+- **A dynamic import is no longer a blind spot**: `import('./x')` carries the same literal
+  specifier a static one does. What cannot be resolved is a COMPUTED specifier, and the check fails
+  loudly if one appears rather than silently reporting its target dead.
+
+The one inherited blind spot is stated in the script and stands: a component imported by a page
+that begins with an unconditional `redirect()` reads as live. **Read the consumer before deleting
+anything.** A component that is deliberately kept with no consumer goes in the script's `KEPT` list
+with a date and a reason; that list is empty today, which is the point.
+
+⚠ **The check was proved by reintroducing the defect**, not by watching it pass: a component with
+no consumer makes it exit 1, and naming that component in a comment and in a same-named type alias
+does NOT revive it.
+
 Four of the ten had died since the sweep, killed by the rebuild itself: `HeroBackground` (the
 Direction F homepage plays `/home/table.mp4`, not the old `/videos/hero.*`), and `ResultValue`,
 `ResultExplain`, `ResultEducate` — stages 1-3 of the five-stage results architecture, now rendered

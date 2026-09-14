@@ -386,6 +386,18 @@ its conformity block, and **`/` on the conflict-free receipt**, ruled by Keith o
 this list before adding an inverted block: the constraint is per page, and a second one silently
 costs the first its weight.
 
+⚠ **THE THREE KIT DETAIL PAGES SPEND THEIRS ON THE GP BLOCK, and that was found by trying to spend
+it twice (2026-09-14, defect register C1).** `/kits/testosterone`, `/kits/energy-recovery` and
+`/kits/hormone-recovery` each carry a full-bleed `.f-invert` holding the conformity statement —
+"your next step is a conversation with a GP" — which is the page's compliance argument and the one
+element on it that must not lose weight to a price card. `BundleChoice` was V2.0 and filled its
+bundle half `bg-black text-white`; rebuilt faithfully that would have been a SECOND inverted panel
+on all three pages, next to the buy button. **The emphasis goes to the accent ring `.f-tray-flag`
+instead**, which is what `/kits` uses to mark Kit 3 and what the frame chose there over an inverted
+card for a related reason: inverting "asked the page to change colour scheme mid-scroll". Two cards
+on the same ground, one ringed, is this system's settled answer to "mark the recommended option",
+and a reader has met it one page earlier.
+
 ⚠ **The homepage use is a departure from the direction, not a port.** `F-field.html:813` draws the
 receipt as an ordinary tray, and the build was faithful to it. The reasoning for overruling it: the
 panel is reserved for a statement of exactly this kind, the homepage was spending its one on
@@ -607,6 +619,52 @@ message a 2px leading-edge rule, borrowing `.f-nudge`'s pointing device. On a
 22px radius the border follows the curve and renders as a crescent, reading as a
 partial ring somebody had half-drawn. `.f-nudge` gets away with it by having no
 radius at all. Reach for elevation instead.
+
+### The form layer on a dark panel
+
+Added 2026-09-14 with the `NewsletterForm` rebuild (defect register C1), and it is the first F form
+to sit on ink. **Every control rendered invisible before it existed, and nothing would have reported
+it.** `.f-on-ink` re-points `--ink`, `--ink-2`, `--ink-3` and the hairlines at the on-ink ramp,
+which is why a paragraph inside a dark panel needs no edit. It deliberately does **not** re-point
+`--core` or `--paper` — and the whole form layer paints with exactly those two:
+
+| Control | Ground | Text | Result on ink |
+| --- | --- | --- | --- |
+| `.f-inp` | `var(--core)`, white | `var(--ink)` → near-white | white on white |
+| `.f-btn` | `var(--ink)` → near-white | `var(--paper)`, white | white on white |
+| `.f-btn .f-pip` | `--paper` at 18% | — | invisible on its own pill |
+| `.f-btn:disabled` | `var(--sunk)`, a LIGHT pill | `var(--ink-2)` → light grey | 1.7:1 |
+
+The class's own header says `--paper` stays white *"because `color: var(--paper)` on a dark ground
+is already correct"*. True of a chip sitting ON the panel; false the moment an element paints its
+own light ground and then puts paper-coloured text on it. Every previous `.f-on-ink` call site was
+reading matter — a lede, an alert, a numbered heading — so the pairing never came up.
+
+**Four rules, no new token.** The field becomes a well (`background: transparent`; its ring and text
+already resolve through the remap). The primary action inverts to a light pill with `--ink-ground`
+type, 19.9:1. The pip and the disabled fill take `--ink-ground` and `--on-ink` mixes. The raised
+banner gets its lift from ground rather than shadow, because a shadow on near-black is nothing.
+
+⚠ **The disabled button is the state to check first**, because it is the state a reader MEETS:
+"Subscribe" needs a valid address AND a ticked consent box, so the newsletter panel opens with it,
+on `/blog` and on all 22 article footers. `.f-on-ink .f-btn:disabled` is (0,3,0) on purpose —
+`.f-on-ink .f-btn` and `.f-btn:disabled` are both (0,2,0) and would tie, which is the specificity
+defect this system has now recorded six times.
+
+### The skip link states its own focus ring
+
+`.f-skip`, added 2026-09-14 (defect register C1's aside). It renders in the ROOT layout, before any
+route group, so it is on all 46 routes and **outside every `.f-page`** — which is why it cannot
+inherit the focus block above and declares `outline: 2px solid var(--paper)` itself. Hidden by
+`clip-path` plus a 1px box rather than `display: none`, which would remove it from the focus order
+and delete the feature, or a large negative offset, which makes some browsers scroll sideways when
+it takes focus.
+
+⚠ **The defect register's stated reason for listing it does not hold.** C1 says its
+`focus:bg-black` + `focus:outline-black` hurt "a keyboard user in dark mode". There is no dark mode:
+`prefers-color-scheme` appears twice in the whole stylesheet set, both scoped to `.ap-themed`, which
+only `/demo`'s phone stage wears, and the skip link sits on `<body>` outside it. It was site-wide
+chrome in a vocabulary the rest of the site had left, which is reason enough.
 
 🔴 **`.f-formrow`, NOT `.f-field`, AND THIS IS WHY.** `.f-field` is the HERO DATA
 CANVAS: `position: absolute`, z-index 1, sized to the hero. It was the obvious
@@ -1447,10 +1505,27 @@ Recorded so they are not rediscovered as surprises.
     the exact value the token’s own comment states as its floor for functional text on paper, and
     passes AA for the 12.5px it is set at.
     **A value that cannot be measured is usually a sign the design is wrong, not the ruler.**
-12. ⚠ **THE SYSTEM IS NOW PARTLY ENFORCED, AND THE BOUNDARY MATTERS.** Seven checks run in
+12. ⚠ **THE SYSTEM IS NOW PARTLY ENFORCED, AND THE BOUNDARY MATTERS.** Nine checks run in
     `npm test` (`npm run test:design`): token existence, class existence, modifier specificity, the
-    scaffold, the dark-panel mechanism, the route-conformance report's freshness, and the hero
-    field's geometry. Two more need a dev server and run on
+    scaffold, the dark-panel mechanism, the route-conformance report's freshness, the hero
+    field's geometry, **the absence of the retired V2.0 vocabulary, and that every component has a
+    consumer**.
+    🔴 **THE LAST TWO WERE ADDED 2026-09-14 (defect register C4) BECAUSE THE OTHER SEVEN ARE ALL
+    PRESENCE TESTS OVER A ROUTE OR A STYLESHEET.** None of them asked the ABSENCE question and none
+    had a component as its unit, so a V2.0 component rendered inside a conformant route passed all
+    seven without being looked at once. That is not hypothetical: the report read 36 of 36 routes
+    Direction F while `BundleChoice` (41 V2.0 tokens, 0 F classes) was on all three kit detail
+    pages, `PasswordBanner` (32) opened the results dashboard, `NewsletterForm` (27) was the blog's
+    only capture, and both error boundaries had never been touched — an error boundary has no route,
+    so no sweep that works from a route list has ever reached one. `verify-retired-vocabulary.js`
+    reads className attributes under `app/` and `components/` and fails outside a dated, shrinking
+    allowlist (three files, each with a count that may fall and never rise);
+    `verify-dead-components.js` fails on a component nothing imports and nothing renders.
+    ⚠ **Both read a comments-stripped view of the source and only the text of a `className`**, which
+    is load-bearing: a naive grep for the same vocabulary names sixteen files and three of them
+    render it, the other thirteen being comments recording that the class was REMOVED. Writing down
+    a removal is exactly what kept four dead components alive through the sweep that existed to find
+    them. Two more need a dev server and run on
     demand, `npm run test:design:live`: the scroll-reveal paths and the rendered dark-ground
     contrast sweep over 16 routes. **What is enforced is what a file can be read to prove.** Nothing
     here checks that a page looks right, that spacing follows the rhythm, or that a photograph

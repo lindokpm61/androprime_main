@@ -116,7 +116,7 @@ export default async function BlogPage() {
             Deep dives on diagnostic markers and what the evidence actually says, direct to your
             inbox. No schedule, no filler.
           </p>
-          <NewsletterForm theme="dark" source="blog-index" />
+          <NewsletterForm source="blog-index" />
         </div>
       </section>
     </FPage>

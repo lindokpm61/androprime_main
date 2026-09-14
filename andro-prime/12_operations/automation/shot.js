@@ -57,6 +57,23 @@
  *                      warning, for the same reason --expect exists: a capture
  *                      of the tab you did not mean to shoot looks exactly like
  *                      a capture of the one you did.
+ *   --type <sel=value> fill a text field before capturing, repeatable and
+ *                      applied after the clicks. The sibling of --click, for
+ *                      the state a reader reaches by USING a form: every
+ *                      Direction F form disables its submit until the form
+ *                      is valid, so the default capture is always of the
+ *                      inactive button. It sets the value through the native
+ *                      setter and fires a bubbling input event, because
+ *                      assigning .value does not reach React's onChange and
+ *                      leaves the component's state empty behind visible
+ *                      text. A selector matching nothing is a hard failure.
+ *   --focus <css>      focus the match last of all, and capture it focused.
+ *                      For a control whose only visible state is its focus
+ *                      state: the skip link, which is 1px and clipped until
+ *                      a keyboard reaches it. NOT --click, which follows an
+ *                      anchor's href and hands focus to the fragment target,
+ *                      so a skip link clicked is a skip link no longer
+ *                      focused and the capture shows nothing at all.
  *   --expect <css>     fail unless the selector is present in the served DOM,
  *                      repeatable. A screenshot cannot tell "my change did not
  *                      apply" from "the server served stale HTML"; this can.
@@ -154,6 +171,8 @@ const cookies = optAll('--cookie');
 const resolve = opt('--resolve', null);
 const hideSelectors = optAll('--hide');
 const clickSelectors = optAll('--click');
+const typeValues = optAll('--type');
+const focusSelector = opt('--focus', null);
 const expectSelectors = optAll('--expect');
 const expectText = optAll('--expect-text');
 
@@ -341,6 +360,65 @@ function findChrome() {
         // before the next click looks for its target.
         await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
         await new Promise((r) => setTimeout(r, 180));
+      }
+
+      // Typing, after the clicks and before the walk, for the same reason the
+      // clicks are there: a state a reader reaches by using the form is not
+      // reachable by navigating to a URL. Added 2026-09-14, when three F forms
+      // were rebuilt and their SUBMIT BUTTON IS DISABLED UNTIL THE FORM IS
+      // VALID — so the default capture of every one of them is the inactive
+      // state, and the filled state, which is the one the primary-action colour
+      // rules apply to, could not be photographed at all.
+      //
+      // 🔴 IT IS NOT `page.type`, AND THAT IS THE WHOLE OF THIS BLOCK. Setting
+      // `input.value` from script does not fire React's synthetic onChange: the
+      // field shows the text, the component's state stays empty, and the button
+      // stays disabled — a screenshot that looks like a bug in the component and
+      // is a bug in the capture. The native value setter plus a bubbling `input`
+      // event is what React's own test utilities do, and `page.type` is not
+      // enough either where a field is filled programmatically in one go.
+      for (const pair of typeValues) {
+        const eq = pair.indexOf('=');
+        if (eq < 1) throw new Error(`--type expects "selector=value", got "${pair}"`);
+        const sel = pair.slice(0, eq);
+        const value = pair.slice(eq + 1);
+        const ok = await page.evaluate((s, v) => {
+          const el = document.querySelector(s);
+          if (!el) return false;
+          const proto = el instanceof HTMLTextAreaElement
+            ? HTMLTextAreaElement.prototype
+            : HTMLInputElement.prototype;
+          const setter = Object.getOwnPropertyDescriptor(proto, 'value').set;
+          setter.call(el, v);
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+          el.dispatchEvent(new Event('change', { bubbles: true }));
+          return true;
+        }, sel, value);
+        if (!ok) {
+          throw new Error(
+            `--type "${sel}" matched nothing. Nothing was captured: a field that ` +
+            `silently stays empty yields a screenshot of the empty state.`);
+        }
+        await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
+        await new Promise((r) => setTimeout(r, 180));
+      }
+
+      // Focus, last, so nothing after it can steal focus back. The walk below
+      // scrolls, which does not blur, and the hide/click passes have run.
+      if (focusSelector) {
+        const ok = await page.evaluate((sel) => {
+          const el = document.querySelector(sel);
+          if (!el) return false;
+          el.focus();
+          return document.activeElement === el;
+        }, focusSelector);
+        if (!ok) {
+          throw new Error(
+            `--focus "${focusSelector}" matched nothing, or the match refused focus. ` +
+            `Nothing was captured: an unfocused control looks exactly like a control ` +
+            `whose focus state does not render.`);
+        }
+        await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r())));
       }
 
       // The walk. Reduced-motion disarms the reveal in this design system, but

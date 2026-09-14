@@ -3083,3 +3083,165 @@
    a row of them and wrong for the only action on a form. Compounded for the
    reason `.f-banner-msg` is. */
 .f-btn.f-btn-block { display: flex; width: 100%; justify-content: center; }
+
+/* ============================================================================
+   THE FORM LAYER ON A DARK PANEL, added 2026-09-14 with the `NewsletterForm`
+   rebuild (defect register C1).
+
+   🔴 EVERY CONTROL BELOW RENDERED INVISIBLE BEFORE THIS BLOCK EXISTED, AND
+   NOTHING WOULD HAVE REPORTED IT. `.f-on-ink` re-points `--ink`, `--ink-2`,
+   `--ink-3` and the two hairlines at the on-ink ramp, which is why a paragraph
+   inside a dark panel needs no edit. It deliberately does NOT re-point `--core`
+   or `--paper`, and the whole form layer is built out of exactly those two:
+
+     .f-inp          background: var(--core)   white pill
+                     color: var(--ink)       → near-WHITE text          white on white
+     .f-btn          background: var(--ink)  → near-WHITE pill
+                     color: var(--paper)       white text               white on white
+     .f-btn .f-pip   var(--paper) at 18%       white on a white pill    invisible
+     .f-btn:disabled background: var(--sunk)   a LIGHT pill on ink, carrying
+                     color: var(--ink-2)     → light grey text          1.7:1
+
+   The class's own header says --paper stays white *"because `color:
+   var(--paper)` on a dark ground is already correct"*. True of a chip sitting
+   ON the panel; false the moment the element paints its own light ground and
+   then puts paper-coloured text on it. Every previous `.f-on-ink` call site was
+   reading matter — a lede, an alert, a numbered heading — so the pairing never
+   came up, and `/blog` and every article footer are where it does.
+
+   ⚠ THE DISABLED BUTTON IS THE ONE TO CHECK FIRST, because it is the state a
+   reader MEETS. "Subscribe" is disabled until a valid address is typed AND the
+   consent box is ticked, so the newsletter card opens with it, on both of the
+   two surfaces this panel appears on. The light-mode rule reaches for `--sunk`,
+   which is the correct "not ink" ground on paper and a LIGHT pill on ink.
+
+   IT ADDS NO TOKEN AND NO SECOND VOCABULARY. Four properties change, all of
+   them to values already in the file: the ground comes off `--ink-ground`,
+   which is the stable handle that survives the remap, and the text comes off
+   the on-ink ramp the class already installed.
+
+   SPECIFICITY IS LOAD-BEARING AND IS NOT SOURCE ORDER. `.f-on-ink .f-btn` is
+   (0,2,0) and so is `.f-btn:disabled`, so those two TIE and the file position
+   would decide which colour a disabled button on ink gets. That is the defect
+   this stylesheet has now recorded six times. `.f-on-ink .f-btn:disabled` is
+   (0,3,0) and beats both, wherever it sits.
+   ============================================================================ */
+
+/* The field is a WELL on a dark panel rather than a raised white pill: the ring
+   and the text already resolve through the remap, so only the ground is wrong. */
+.f-on-ink .f-inp { background: transparent; }
+
+/* The primary action inverts: a light pill with dark type, which is what the
+   V2.0 panel did with `bg-white text-black` and is the only readable pairing
+   once the fill has come off the on-ink ramp. 19.9:1. */
+.f-on-ink .f-btn { color: var(--ink-ground); }
+.f-on-ink .f-btn .f-pip { background: color-mix(in srgb, var(--ink-ground) 16%, transparent); }
+
+/* Inactive, and READ rather than guessed at: --ink-2 resolves to #B9BDC4 here,
+   9.4:1 on the panel ground. The faint fill plus the ring carry the pill's
+   shape, which is the same argument the light-mode rule makes — a control that
+   has to be understood should not take WCAG's inactive exemption. */
+.f-on-ink .f-btn:disabled {
+  background: color-mix(in srgb, var(--on-ink) 9%, transparent);
+  color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+}
+.f-on-ink .f-btn:disabled .f-pip { background: color-mix(in srgb, var(--on-ink) 10%, transparent); }
+
+/* RAISED, WITHOUT A SHADOW TO RAISE IT WITH. `.f-banner-msg` is a white core
+   plus the ambient shadow, and neither device works on ink: the core inverts the
+   panel and a shadow on a near-black ground is nothing at all. The lift is
+   carried by ground instead, one step up the panel rather than down. */
+.f-on-ink .f-banner.f-banner-msg {
+  background: color-mix(in srgb, var(--on-ink) 7%, transparent);
+  box-shadow: inset 0 0 0 1px var(--hair-2);
+}
+
+/* ---------- THE BUNDLE CHOICE (defect register C1), added 2026-09-14 ---------
+
+   `BundleChoice` carried 41 V2.0 tokens and NO Direction F class while rendering
+   on all three kit detail pages, inside an `FClose` on a Direction F page, on
+   the money path. `route-conformance` scored those three routes finished
+   throughout, because it counts the classes a ROUTE renders and cannot look
+   inside a component. That gap is C4.
+
+   🔴 THE BUNDLE HALF IS NOT INK, AND THAT IS A RULE RATHER THAN A PREFERENCE.
+   The V2.0 version filled it `bg-black text-white`. DESIGN.md budgets the
+   inverted panel at ONE PER PAGE — "a second one silently costs the first its
+   weight" — and all three kit detail pages have already spent theirs on the
+   GP-conversation conformity block, which is the page's compliance statement and
+   the one thing on it that must not lose weight to a price card.
+
+   So the emphasis is the ACCENT RING, `.f-tray-flag`, which is the device
+   `/kits` already uses to mark Kit 3. The frame's own note says why it replaced
+   an inverted card there: inverting "asked the page to change colour scheme
+   mid-scroll". Two cards of the same ground, one ringed, is the idiom this
+   system settled on for exactly this decision, and the reader has already met it
+   one page back.
+
+   NOTHING HERE IS NEW GEOMETRY. The cards are `.f-tray > .f-core`, the badge is
+   `.f-flagchip`, the price is `.f-price`, the CTAs are `.f-btn` and
+   `.f-btn-ghost` at `.f-btn-block`. Two rules are added, for the one thing the
+   file had no shape for: a labelled money line inside a card. */
+
+/* A money line: label left, figure right, ruled above. Not `.f-spec`, which is a
+   THREE-column grid of spec wells and would leave a two-item breakdown sitting
+   in two of three columns; not `.f-kfoot`, which is the price-and-CTA baseline
+   row at the foot of a kit card and would put a component from the catalogue
+   index inside a detail-page offer. Named for what it is, per the `.f-field`
+   lesson: grep before borrowing. */
+.f-bline {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding: 11px 0;
+  border-top: 1px solid var(--hair);
+}
+.f-bline-v {
+  flex: none;
+  font-family: var(--font-sans); font-size: 15.5px; font-weight: 600;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--ink);
+}
+
+/* ---------- THE SKIP LINK (defect register C1's aside), added 2026-09-14 -----
+
+   `SkipToContent` is a correct, working skip link and was the last piece of
+   site-wide chrome still written in the retired vocabulary: `focus:bg-black`,
+   `focus:text-white`, `focus:font-black`, `focus:tracking-widest` and
+   `focus:outline-black`. It renders in the ROOT layout, before any route group,
+   so it is on all 46 routes and outside every `.f-page` — which is also why it
+   cannot borrow the focus block above and states its own ring.
+
+   ⚠ THE DEFECT REGISTER'S REASON FOR LISTING IT DOES NOT HOLD, AND THE ENTRY
+   IS STILL RIGHT. C1's aside says the black-on-black pairing hurts "a keyboard
+   user in dark mode". There is no dark mode: `prefers-color-scheme` appears
+   twice in the whole stylesheet set, both times scoped to `.ap-themed`, which
+   only `/demo`'s phone stage wears — and the skip link sits on `<body>`, outside
+   it, on `bg-white`. The pairing was never dark-on-dark in practice. What IS
+   true is that this is chrome on every route in a vocabulary the rest of the
+   site has left, and that is reason enough. Recorded rather than quietly fixed,
+   because the next reader will otherwise trust the dark-mode claim.
+
+   THE HIDING IS `clip-path` PLUS A 1px BOX, NOT `display: none` AND NOT
+   `left: -9999px`. `display: none` removes it from the focus order, which
+   deletes the feature; a large negative offset makes some browsers scroll the
+   page horizontally when it takes focus. */
+
+.f-skip {
+  position: absolute; left: 0; top: 0; z-index: 100;
+  width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+.f-skip:focus {
+  width: auto; height: auto; overflow: visible;
+  clip-path: none; white-space: normal;
+  left: 16px; top: 16px;
+  background: var(--ink); color: var(--paper);
+  border-radius: var(--radius-pill);
+  padding: 12px 22px;
+  font-family: var(--font-sans); font-size: 15px; font-weight: 600;
+  letter-spacing: -0.015em; text-decoration: none;
+  box-shadow: var(--shadow-ambient);
+  /* Stated here rather than inherited: the focus block above is scoped to
+     `.f-page`, and this element is outside it on every route. Paper on ink, so
+     the ring reads against the pill it traces. */
+  outline: 2px solid var(--paper); outline-offset: -5px;
+}

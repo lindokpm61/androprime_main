@@ -4,12 +4,17 @@
  * straight to the page's <main id="main-content">. Must be the first focusable
  * element in the DOM, so it's rendered at the top of the root <body>, before
  * the route-group layouts (and their Nav) mount.
+ *
+ * Rebuilt in Direction F on 2026-09-14 (defect register C1). It was the last
+ * piece of site-wide chrome in the retired vocabulary. The appearance, the
+ * hiding technique and the reason this element cannot use the shared `.f-page`
+ * focus block are all recorded on `.f-skip` in f-primitives.css.
  */
 export function SkipToContent() {
   return (
     <a
       href="#main-content"
-      className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-black focus:px-4 focus:py-2 focus:font-sans focus:text-sm focus:font-black focus:uppercase focus:tracking-widest focus:text-white focus:no-underline focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-black"
+      className="f-skip"
     >
       Skip to content
     </a>

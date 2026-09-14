@@ -4,9 +4,39 @@
 // KitCheckoutButton client components but holds no state of its own, so a page
 // can render it directly without its own 'use client' boundary.
 //
-// Matches the site's bold black-border visual language (see the kit detail pages'
-// "MATH" / dashboard-preview panels for precedent on the black-card + data-label
-// + font-mono price treatment).
+// ─────────────────────────────────────────────────────────────────────────────
+// REBUILT IN DIRECTION F, 2026-09-14 (defect register C1).
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// It carried 41 V2.0 tokens and ZERO F classes — the highest count of any file
+// in the tree — while rendering inside an `FClose` on three Direction F pages,
+// on the money path. `route-conformance.md` scored all three routes finished,
+// because it counts the `f-` classes a ROUTE renders and nothing in the check
+// family has a component as its unit. That gap is C4, and the check that closes
+// it (`verify-retired-vocabulary.js`) would have failed on this file every day
+// it stood.
+//
+// NOT ONE WORD CHANGED. Every string on screen is a prop, and every default in
+// this file is the string that shipped: the ribbon, the badge, the bundle title,
+// the savings note, both CTA labels and "Just this test. One sample, one
+// result." The three call sites pass the same values they passed yesterday. The
+// pricing arithmetic is unchanged because there is none — every figure is
+// passed in.
+//
+// 🔴 THE BUNDLE HALF IS NO LONGER INK, AND THAT IS A DESIGN RULING RATHER THAN
+// A PREFERENCE. The V2.0 card filled it `bg-black text-white`. DESIGN.md budgets
+// the inverted panel at ONE PER PAGE ("a second one silently costs the first its
+// weight"), and all three kit detail pages have already spent theirs on the
+// GP-conversation block — the page's conformity statement, and the one element
+// on it that must not lose weight to a price card. The emphasis moves to the
+// accent ring `.f-tray-flag`, which is what `/kits` uses to mark Kit 3 and what
+// the frame chose there in place of an inverted card, because inverting "asked
+// the page to change colour scheme mid-scroll". Reasoning in full in
+// f-primitives.css, "THE BUNDLE CHOICE".
+//
+// ⚠ THE COMPLIANCE NOTES BELOW ARE UNCHANGED AND STILL GOVERN. Nothing in this
+// rebuild touches the Recheck mechanic's wording or the savings comparison
+// basis, both of which were cleared and are reproduced through props.
 
 import { KitCheckoutButton } from './KitCheckoutButton'
 
@@ -68,63 +98,75 @@ export function BundleChoice({
   const savingsText = savingsNote ?? `£${savings} saving vs buying both tests separately`
   const cta = ctaLabel ?? `Order the Bundle: £${bundlePrice}`
   return (
-    <div className="grid md:grid-cols-2 border-4 border-black max-w-4xl mx-auto text-left bg-white">
-      {/* SINGLE KIT (unchanged path: the existing kit at its existing price) */}
-      <div className="p-8 md:p-10 border-b-4 md:border-b-0 md:border-r-4 border-black flex flex-col bg-white">
-        <div className="data-label mb-4 text-black">One-off test</div>
-        <h3 className="text-xl font-sans font-black uppercase tracking-tighter text-black mb-6">{kitLabel}</h3>
-        <div className="font-mono font-black text-3xl text-black mb-8">&pound;{singlePrice}</div>
-        <p className="font-serif text-black leading-relaxed mb-10 flex-grow">
-          Just this test. One sample, one result.
-        </p>
-        <KitCheckoutButton
-          kitType={kitType}
-          className="w-full bg-white hover:bg-black border-4 border-black text-black hover:text-white font-sans font-black uppercase tracking-widest text-sm px-6 py-4 transition-colors flex items-center justify-center gap-3 disabled:opacity-50"
-        >
-          Order the Kit: &pound;{singlePrice}
-        </KitCheckoutButton>
+    /* `alignItems: 'stretch'` against `.f-splitgrid`'s own `start`. That default
+       is right for two independent blocks of prose, and wrong here: these are
+       two prices being compared, and left at `start` the single-kit card ended
+       510px shorter than the bundle, so its "Order the Kit" pill sat level with
+       the bundle's PRICE rather than with the bundle's button. Measured in the
+       rendered page, not reasoned about. Stretching the trays makes the two
+       cards one height, and the `flexGrow` on each card's last paragraph is
+       what then drops both CTAs onto the same line. */
+    <div className="f-splitgrid" style={{ alignItems: 'stretch' }}>
+      {/* SINGLE KIT (unchanged path: the existing kit at its existing price).
+          The ghost CTA, not the filled one: two filled pills side by side would
+          make the choice by weight rather than by the ring, and `.f-btn-ghost`
+          is the same size and hit area by construction. */}
+      <div className="f-tray">
+        <div className="f-core" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <span className="f-kchip" style={{ alignSelf: 'flex-start' }}>One-off test</span>
+          <h3 className="f-h4" style={{ marginTop: 14 }}>{kitLabel}</h3>
+          <span className="f-price">&pound;{singlePrice}</span>
+          <p className="f-sub" style={{ marginTop: 14, flexGrow: 1 }}>
+            Just this test. One sample, one result.
+          </p>
+          <KitCheckoutButton
+            kitType={kitType}
+            className="f-btn f-btn-ghost f-btn-block"
+          >
+            Order the Kit: &pound;{singlePrice}
+          </KitCheckoutButton>
+        </div>
       </div>
 
-      {/* BUNDLE (dark until BUNDLES_ENABLED + solicitor/Ewa gates clear) */}
-      <div className="relative p-8 md:p-10 bg-black text-white flex flex-col">
-        <div className="absolute top-0 right-0 data-label !text-black bg-white px-3 py-1 border-b-4 border-l-4 border-black">
-          {ribbon}
-        </div>
-        <div className="data-label !text-black bg-white inline-block px-2 py-1 border-2 border-black w-max mb-4">
-          {badge}
-        </div>
-        <div className="data-label !text-white mb-4">{bundleName}</div>
-        <h3 className="text-xl font-sans font-black uppercase tracking-tighter text-white mb-6">
-          {title}
-        </h3>
-        <div className="font-mono font-black text-3xl text-white mb-6">&pound;{bundlePrice}</div>
-
-        <div className="space-y-3 mb-6 border-t border-b border-gray-700 py-4">
-          <div className="flex justify-between items-center gap-4">
-            <span className="font-serif text-sm text-gray-300">Today&rsquo;s test</span>
-            <span className="font-mono font-bold text-white">&pound;{basePortion}</span>
+      {/* BUNDLE. The ring marks it; the ground does not change. */}
+      <div className="f-tray f-tray-flag">
+        <div className="f-core" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
+            <span className="f-flagchip">{badge}</span>
+            <span className="f-kchip">{ribbon}</span>
           </div>
-          <div className="flex justify-between items-center gap-4">
-            <span className="font-serif text-sm text-gray-300">{retestLabel}</span>
-            <span className="font-mono font-bold text-white">&pound;{retestPortion}</span>
+          <p className="f-blab" style={{ marginTop: 16, marginBottom: 6 }}>{bundleName}</p>
+          <h3 className="f-h4">{title}</h3>
+          <span className="f-price">&pound;{bundlePrice}</span>
+
+          <div style={{ marginTop: 18 }}>
+            <div className="f-bline">
+              <span className="f-spec-k" style={{ marginBottom: 0 }}>Today&rsquo;s test</span>
+              <span className="f-bline-v">&pound;{basePortion}</span>
+            </div>
+            <div className="f-bline">
+              <span className="f-spec-k" style={{ marginBottom: 0 }}>{retestLabel}</span>
+              <span className="f-bline-v">&pound;{retestPortion}</span>
+            </div>
           </div>
+
+          {/* "vs buying both tests separately" (not "vs buying twice"): Full-picture's
+              second kit is the cheaper Energy & Recovery panel, so "twice" would
+              overstate the comparison basis (2 x base price). This phrasing is
+              accurate for all three bundles against the sum of the two standalone
+              test prices. Verifier finding 2026-07-24 (ASA pricing-accuracy risk). */}
+          <p className="f-blab" style={{ marginTop: 16, marginBottom: 0 }}>{savingsText}</p>
+
+          <p className="f-sub" style={{ marginTop: 14, flexGrow: 1 }}>{mechanic}</p>
+
+          <KitCheckoutButton
+            kitType={kitType}
+            bundle={bundleType}
+            className="f-btn f-btn-block"
+          >
+            {cta}
+          </KitCheckoutButton>
         </div>
-        {/* "vs buying both tests separately" (not "vs buying twice"): Full-picture's
-            second kit is the cheaper Energy & Recovery panel, so "twice" would
-            overstate the comparison basis (2 x base price). This phrasing is
-            accurate for all three bundles against the sum of the two standalone
-            test prices. Verifier finding 2026-07-24 (ASA pricing-accuracy risk). */}
-        <div className="data-label !text-white mb-8">{savingsText}</div>
-
-        <p className="font-serif text-sm text-gray-300 leading-relaxed mb-10 flex-grow">{mechanic}</p>
-
-        <KitCheckoutButton
-          kitType={kitType}
-          bundle={bundleType}
-          className="w-full bg-white hover:bg-gray-100 border-4 border-white text-black font-sans font-black uppercase tracking-widest text-sm px-6 py-4 transition-colors flex items-center justify-center gap-3 disabled:opacity-50"
-        >
-          {cta}
-        </KitCheckoutButton>
       </div>
     </div>
   )

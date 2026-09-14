@@ -218,7 +218,7 @@ export default function ArticleLayout({
             What your bloods actually tell you, what a reference range is and is not, and what moves
             a number. No schedule, no filler.
           </p>
-          <NewsletterForm theme="dark" source="article-footer" />
+          <NewsletterForm source="article-footer" />
         </div>
       </section>
 

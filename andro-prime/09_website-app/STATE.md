@@ -4,7 +4,7 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-13 END OF SESSION, extended 2026-09-14 (legals drafted in house, P3 + P8 + **P7** built, membership can almost be switched on)
+## ▶️ PICK UP HERE — handoff, 2026-09-14 (**C1 to C4 built: the five components the route count could not see, and the two checks that can**). Earlier the same day: P7 + P9 + R1 + R2 + R3. Before that, 2026-09-13: legals drafted in house, P3 + P8
 
 **Read this block, then the switch-on checklist. Everything else below is history.**
 
@@ -14,11 +14,114 @@ The membership is closer to switch-on than it has ever been, and **nothing is
 waiting on anyone outside the business.** What is left is Keith's signature,
 **one** unbuilt defect and a legal-page sync.
 
+⚠ **That sentence is about the MEMBERSHIP and it is unchanged. The rebuild moved instead.** The
+whole C family of the defect register closed on 2026-09-14: five components that the route-conformance
+count could not see, three error boundaries that no route-based sweep could reach, four dead
+components deleted, and two new checks in `npm test` that ask the two questions the route count
+cannot. **Nothing about that touches the switch-on checklist, and A2 is still the only unbuilt item
+on it.**
+
 ⚠ **Updated 2026-09-14: this line said "two unbuilt defects" and P7 was one of
 them.** P7 is built (below), so **A2 is the only unbuilt item on the switch-on
 checklist** — the two seeded membership rows still live in production, due 16 and
 17 November 2026, behind a guard that lives only on a branch that deploys
 nothing.
+
+### What moved 2026-09-14 (second session): the whole C family is closed
+
+**Defect register section 05, "What 100% of routes could not see", is done.** Four rows, and the
+fourth was the mechanism behind the other three.
+
+| Row | What happened |
+|---|---|
+| **C1** | Three components on scored routes carried ZERO Direction F classes, and all three are rebuilt: `BundleChoice` (41 V2.0 tokens, on all three kit detail pages, on the money path), `PasswordBanner` (32, opens the results dashboard by default), `NewsletterForm` (27, the blog's only email capture). `SkipToContent` (4, site-wide chrome) went with them |
+| **C2** | The three error boundaries are rebuilt: `app/error.tsx`, `app/(app)/error.tsx`, and `app/global-error.tsx`, **which was not V2.0 but NOTHING** — an unstyled `<h2>` on browser-default white, flush to the corner, no mark, no ground |
+| **C3** | `KitCard`, `FaqAccordion`, `SectionEyebrow` and `JoinForm` deleted, with the empty `components/founding-member/`. The sweep that missed them is now `scripts/verify-dead-components.js` in `npm test` rather than a shell snippet in a doc |
+| **C4** | `scripts/verify-retired-vocabulary.js` in `npm test`: the ABSENCE question, scoped to FILES rather than routes, with a dated allowlist that may shrink and never grow |
+
+🔴 **THE THEME, AND IT IS THE SAME ONE AS THE MORNING'S: A CHECK ANSWERS THE QUESTION IT ASKS, NOT
+THE ONE ITS HEADLINE IMPLIES.** `route-conformance.md` read *"36 of 36 measurable routes are
+Direction F"* and was correct about what it measured: it counts the `f-` classes a ROUTE renders.
+It never asks whether the retired vocabulary is ABSENT, and it cannot see inside a component. Five
+live components sat inside conformant routes and passed all seven design checks without being
+looked at once. **Two of them had no route at all** — an error boundary is not reachable by URL, and
+every sweep of this rebuild worked from a route list, so nothing had ever been pointed at them.
+The generator's headline now reads *"36 of 36 measurable routes RENDER Direction F chrome and
+layout"*, with the gap and the two new checks named underneath it.
+
+**Every fix is proved by reintroducing the defect.** `verify-retired-vocabulary` was watched to fail
+three ways (a retired class in a className; one MORE offence in an allowlisted file; an allowlisted
+file that has gone clean, which is a stale exemption) and to correctly NOT fail on the same classes
+written inside a comment. `verify-dead-components` was watched to fail on a component with no
+consumer, and to stay failing when that component was named in a comment and in a same-named type
+alias — which is the exact pair that fooled the sweep it replaces.
+
+### What C1 and C2 cost in words: five letter cases, and nothing else
+
+Register rows **47** and **47a**. No sentence, claim, price or approved block changed anywhere.
+`ENTER EMAIL ADDRESS`, `SET PASSWORD`, `SAVE PASSWORD`, `PASSWORD` and `CONFIRM PASSWORD` are now
+sentence case, because the capitals were V2.0 STYLING typed into strings — each of those elements
+also carried `uppercase` in its class list, so the shouting was said twice — and `.f-blab`
+uppercases in CSS, so the two field labels still render in capitals. Row 41 is the precedent.
+`global-error` gains `lang="en"`, which it never had, and the words "Andro Prime" as a mark.
+
+🔵 **ONE BEHAVIOUR CHANGE, FLAGGED RATHER THAN FOLDED IN.** `PasswordBanner`'s modal is now an
+in-place disclosure. The V2.0 overlay had no `role="dialog"`, no `aria-modal`, no focus trap, no
+Escape handler and no scroll lock; porting it meant porting four accessibility defects, and building
+it properly meant adding this system's first real modal for three fields. Same card, same three
+controls, `aria-expanded` + `aria-controls`, no focus to steal or return.
+
+### Three things found on the way that are NOT fixed
+
+1. **`setPasswordAction` unmounts its own confirmation.** It sets the dismissal cookie and
+   revalidates, and the server only renders `PasswordBanner` while that cookie is absent — so on
+   success the component is removed, taking the confirmation (and, before this, the toast) with it,
+   probably before anybody reads it. A server-action question, not a styling one.
+2. **`/api/founding-member/join` now has no caller in the repo.** Deleting `JoinForm` took the only
+   one. The route still exists and is still reachable; two other API routes cite it as precedent in
+   their comments. Out of scope for a component sweep, and worth a decision.
+3. **C1's and C2's dark-mode reasoning does not hold.** Both rows argue about black-on-near-black
+   "in dark mode". `prefers-color-scheme` appears twice in the whole stylesheet set, both scoped to
+   `.ap-themed`, which only `/demo`'s phone stage wears. The rows are still right: these were V2.0
+   surfaces on a site that is not. The reason recorded for them was wrong.
+
+### The two checks, and what they cost to keep honest
+
+- **`verify-retired-vocabulary.js`** reads className attributes, not files, and that distinction is
+  the whole correctness argument. A naive `grep -rlE` for the same vocabulary over `app/` and
+  `components/` names **sixteen** files today; **three** of them render it. The other thirteen match
+  inside COMMENTS, most of them recording that the V2.0 class was removed. Writing down a removal is
+  what would have kept those files failing forever — the identical defect that kept four dead
+  components alive through the sweep that existed to find them.
+- **The allowlist is three files and every entry carries a count that may fall and never rise:**
+  `SupplementWaitlistForm` (21) and `RelatedArticles` (8), both named in C1's own aside as the
+  deferred half of the rebuild, and `app/layout.tsx` (2), the root `<body>` ground, which sits under
+  the routes still on V2.0 and is a site-wide change rather than a component rebuild. **Those two
+  components are the next thing to take.**
+
+### Verification, and the technique that made two of these photographable at all
+
+`npm test` exit 0 with `MEMBERSHIP_ENABLED=false`. `tsc --noEmit` clean on both projects. Production
+build clean. `npm run test:design:live` **174 passed, 0 failed**, and the dark-ground contrast sweep
+over 16 routes reports **0 failing text nodes** — which is what clears the new on-ink form controls.
+`route-conformance.md` regenerated against a live dev server and `verify-route-conformance.js` green.
+
+🔴 **DEFECT REGISTER C2 SAYS THE ERROR BOUNDARIES ARE "NOT VISUALLY VERIFIED, AND THE REASON IS THE
+FINDING". THAT IS HALF RIGHT AND THE OTHER HALF IS NOW FALSE.** They are unreachable; they are not
+unphotographable. A throwaway route that renders the component directly, in the real app with the
+real stylesheet, was created, shot and deleted in the same change — the same trick got
+`PasswordBanner`, which lives behind auth. All five surfaces are verified as rendered screenshots at
+1320 and 390, including the states a capture normally cannot reach: the newsletter's DISABLED
+submit (its default), its enabled submit, its success banner, the password form expanded, and the
+skip link focused. ⚠ One caveat: `global-error` renders its own `<html>`/`<body>`, which a browser
+discards when nested, so the preview loses the body-level font declaration that production keeps.
+
+**`shot.js` gained two options to make that possible** and they are committed, not throwaway:
+`--type sel=value`, which sets a field through the native value setter and fires a bubbling `input`
+event (assigning `.value` does not reach React's `onChange`, so the field shows text, the state
+stays empty and the button stays disabled — a capture that looks like a component bug and is a
+capture bug), and `--focus sel`, because `--click` on an anchor hands focus to its fragment target
+and a clicked skip link is an unfocused skip link.
 
 ### What moved 2026-09-14, in the order it matters
 

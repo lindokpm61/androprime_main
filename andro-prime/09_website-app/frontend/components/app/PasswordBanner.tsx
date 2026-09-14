@@ -3,8 +3,70 @@
 import { useRef, useState, useTransition } from 'react'
 import { dismissPasswordPromptAction, setPasswordAction } from '@/lib/dashboard/actions'
 
+/**
+ * THE PASSWORD PROMPT, rebuilt in Direction F on 2026-09-14 (defect register C1).
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * WHY IT WAS STILL V2.0 ON A ROUTE THE REPORT SCORES AS FINISHED
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * 32 V2.0 tokens, 0 Direction F classes, rendering BY DEFAULT at the top of the
+ * results dashboard — it is suppressed only by a dismissal cookie, so it is the
+ * first thing a new customer sees on the screen batch 3 rebuilt. The route
+ * scored full marks throughout, because `route-conformance` counts the classes a
+ * ROUTE renders and cannot see inside a component. That gap is C4.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * EVERY WORD IS THE ONE THAT SHIPPED, AND FOUR LETTER CASES ARE NOT
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * The prompt sentence, the two validation messages, the minimum-characters line
+ * and the confirmation are character for character what was there. The action
+ * calls, the 8-character rule, the match check and the dismissal are untouched.
+ *
+ * `SET PASSWORD`, `SAVE PASSWORD`, `PASSWORD` and `CONFIRM PASSWORD` are now
+ * sentence case. The capitals were V2.0 STYLING typed into strings — each of
+ * those elements also carried `uppercase` in its class list, so the shouting was
+ * said twice — and under Direction F a `.f-btn` label is sentence case while
+ * `.f-blab` uppercases in CSS, so the two field labels still RENDER in capitals
+ * from a sentence-case source. Register row 41 made the identical call on
+ * `/checkout/details`: "the only text difference anywhere is letter case on two
+ * form-control labels." The arrow moved out of the `SAVE PASSWORD  →` string
+ * and into `.f-pip`, which is where every other arrow in the direction lives.
+ *
+ * Design and layout only, so no pre-flight of its own.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * 🔴 THE MODAL IS GONE, AND THAT IS A DECISION RATHER THAN A RESTYLE
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * The V2.0 version opened a fixed overlay: a `bg-black/60` scrim and a bordered
+ * card, dismissed by clicking the backdrop. It had NO `role="dialog"`, no
+ * `aria-modal`, no focus trap, no Escape handler and no scroll lock, so a
+ * keyboard user could tab straight out of it into the page behind and a screen
+ * reader was never told a dialog had opened. Porting it would have meant porting
+ * four accessibility defects into a fresh file, and building it properly would
+ * have meant adding the first real modal to a system that has none — for three
+ * fields.
+ *
+ * So the form is DISCLOSED IN PLACE instead: the same card grows a `.f-well`
+ * holding the same three controls. `aria-expanded` and `aria-controls` say what
+ * the button does, focus is never stolen and never needs returning, and there is
+ * nothing to trap. This is the one behaviour change in the rebuild, and it is
+ * flagged here rather than folded in quietly.
+ *
+ * ⚠ AND A LIVE DEFECT FOUND ON THE WAY IN, NOT FIXED HERE. `setPasswordAction`
+ * ends with `revalidatePath('/results-dashboard')`, and the server only renders
+ * this component while the dismissal cookie is absent — the same action sets it.
+ * So on success the parent stops rendering this component, and the confirmation
+ * below (and the V2.0 toast before it) is unmounted with it, probably before
+ * anybody reads it. The success branch is kept because it is correct whenever
+ * the client wins the race, but a confirmation that only shows sometimes is a
+ * server-action question, not a styling one, and belongs with whoever owns
+ * `lib/dashboard/actions.ts`.
+ */
 export function PasswordBanner() {
-  const [modalOpen, setModalOpen] = useState(false)
+  const [formOpen, setFormOpen] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [dismissed, setDismissed] = useState(false)
@@ -42,7 +104,7 @@ export function PasswordBanner() {
         setError(result.error)
         return
       }
-      setModalOpen(false)
+      setFormOpen(false)
       setSuccess(true)
       if (toastRef.current) clearTimeout(toastRef.current)
       toastRef.current = setTimeout(() => setSuccess(false), 4000)
@@ -51,90 +113,96 @@ export function PasswordBanner() {
 
   if (dismissed) return null
 
-  return (
-    <>
-      <div className="bg-black text-white py-3 px-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <p className="font-sans text-sm">
-          Set a password to make it easier to sign in next time.
-        </p>
-        <div className="flex items-center gap-4 shrink-0">
-          <button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="font-sans font-black text-xs uppercase tracking-widest border-2 border-white px-4 py-1.5 hover:bg-white hover:text-black transition-colors"
-          >
-            SET PASSWORD
-          </button>
-          <button
-            type="button"
-            onClick={handleDismiss}
-            aria-label="Dismiss"
-            className="text-white text-xl leading-none hover:opacity-60 transition-opacity"
-          >
-            ×
-          </button>
+  if (success) {
+    return (
+      <div className="f-pwd">
+        <div className="f-pwd-in">
+          <p className="f-pwd-t">
+            Password set. You can now sign in with your email and password.
+          </p>
         </div>
       </div>
+    )
+  }
 
-      {/* Modal overlay */}
-      {modalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
-          onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false) }}
-        >
-          <div className="bg-white border-2 border-black w-full max-w-sm p-8">
-            <h2 className="font-black font-sans text-xl uppercase tracking-tight mb-6">
-              Set your password.
-            </h2>
+  return (
+    <div className="f-pwd">
+      <div className="f-pwd-in">
+        <div className="f-pwd-row">
+          <p className="f-pwd-t">
+            Set a password to make it easier to sign in next time.
+          </p>
+          <div className="f-pwd-acts">
+            <button
+              type="button"
+              onClick={() => setFormOpen((open) => !open)}
+              aria-expanded={formOpen}
+              aria-controls="password-fields"
+              className="f-btn f-btn-sm"
+            >
+              Set password
+            </button>
+            <button
+              type="button"
+              onClick={handleDismiss}
+              aria-label="Dismiss"
+              className="f-pwd-x"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
 
+        {formOpen && (
+          <form id="password-fields" onSubmit={handleSubmit} className="f-well">
+            <div className="f-pwd-fields">
+              <label className="f-formrow">
+                <span className="f-blab">Password</span>
+                <input
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  minLength={8}
+                  className="f-inp"
+                  placeholder="Minimum 8 characters"
+                />
+              </label>
+              <label className="f-formrow">
+                <span className="f-blab">Confirm password</span>
+                <input
+                  name="confirm"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  minLength={8}
+                  className="f-inp"
+                  placeholder="Repeat password"
+                />
+              </label>
+            </div>
+
+            <p className="f-fine">Minimum 8 characters.</p>
+
+            {/* Not red, and `role="alert"` rather than colour: the status triad
+                owns saturation and a form validation message is not a verdict
+                about anybody's blood (tokens/colours.css). Same treatment as
+                every other F form error. */}
             {error && (
-              <p className="border border-black px-4 py-2 text-sm font-sans font-bold mb-4">
+              <p className="f-err" role="alert">
                 {error}
               </p>
             )}
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <label className="block">
-                <span className="data-label mb-2 block">PASSWORD</span>
-                <input
-                  name="password"
-                  type="password"
-                  required
-                  minLength={8}
-                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none focus:bg-gray-100"
-                  placeholder="Minimum 8 characters"
-                />
-              </label>
-              <label className="block">
-                <span className="data-label mb-2 block">CONFIRM PASSWORD</span>
-                <input
-                  name="confirm"
-                  type="password"
-                  required
-                  minLength={8}
-                  className="w-full border-2 border-black bg-white px-4 py-3 font-sans text-sm font-semibold text-black outline-none focus:bg-gray-100"
-                  placeholder="Repeat password"
-                />
-              </label>
-              <p className="font-serif text-sm text-gray-600">Minimum 8 characters.</p>
-              <button
-                type="submit"
-                disabled={isPending}
-                className="w-full border-2 border-black bg-black px-5 py-3 font-sans text-sm font-black uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black disabled:opacity-50"
-              >
-                {isPending ? 'SAVING…' : 'SAVE PASSWORD  →'}
+            <div className="f-pwd-save">
+              <button type="submit" disabled={isPending} className="f-btn">
+                {isPending ? 'Saving…' : 'Save password'}
+                <span className="f-pip" aria-hidden="true">&rarr;</span>
               </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Success toast */}
-      {success && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-black text-white font-sans text-sm px-6 py-3 border-2 border-black">
-          Password set. You can now sign in with your email and password.
-        </div>
-      )}
-    </>
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
   )
 }

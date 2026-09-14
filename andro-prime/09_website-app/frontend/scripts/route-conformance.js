@@ -467,7 +467,7 @@ const COUNT = () => {
 
   const md = `# Route conformance: Direction F
 
-**${f.length} of ${denom} measurable routes are Direction F (${pct}%).** Measured ${today}.
+**${f.length} of ${denom} measurable routes RENDER Direction F chrome and layout (${pct}%).** Measured ${today}.
 ${unmeasured.length ? `A further **${unmeasured.length}** could not be measured anonymously; they are listed below with the reason.` : ''}
 
 <!-- GENERATED FILE. Do not edit by hand: run \`npm run route-conformance\` with a dev
@@ -478,6 +478,27 @@ A route counts as Direction F when it renders at least one \`f-\`/\`fb-\` class 
 the shared chrome. The chrome is excluded by landmark (\`<header>\`, \`<footer>\`, the
 cookie banner) rather than by subtracting a remembered class count, because the nav
 and footer are worn by every route including the ones still on the old design.
+
+🔴 **THAT IS A TEST OF PRESENCE, AND THE HEADLINE USED TO OVERSTATE IT.** It read
+"*${f.length} of ${denom} measurable routes are Direction F*", which is what everybody
+was reading, and it is a stronger claim than anything measured here. **This file asks
+whether a route renders SOME Direction F. It never asks whether the retired V2.0
+vocabulary is ABSENT, and it cannot see inside a component**, because its unit is a
+rendered route.
+
+On 2026-09-12 that gap was worth five live components. This file read 36 of 36 while
+\`BundleChoice\` (41 V2.0 tokens, 0 F classes) was on all three kit detail pages,
+\`PasswordBanner\` (32) opened the results dashboard, \`NewsletterForm\` (27) was the
+blog's only email capture, and both error boundaries (18 and 21) had never been
+touched — an error boundary has no route, so no sweep that works from a route list
+has ever reached one. Defect register C1 to C4.
+
+**The absence question is asked by \`scripts/verify-retired-vocabulary.js\`**, which
+runs in \`npm test\`, reads className attributes in \`app/\` and \`components/\` rather
+than rendered routes, and fails when the retired vocabulary appears outside a dated,
+shrinking allowlist. **\`scripts/verify-dead-components.js\`** asks the third question
+this file cannot: whether a component has a consumer at all. Read the three together;
+a green line here means chrome and layout, not a finished route.
 
 ## Rebuilt (${f.length})
 
