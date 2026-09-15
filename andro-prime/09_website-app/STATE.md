@@ -4,7 +4,7 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2, the environment half of Phase 5. The production build has never received two of the variables the app reads, so GA4 and the cookie banner have never run on the live site; and one endpoint dispatches physical kits with no authentication. Neither is a Direction F regression — both are live on `main` today**)
+## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2: the environment half of Phase 5 plus the per-corpus checks. Four findings, all live on `main` today and none a Direction F regression — the production build has never received two of the variables the app reads, so GA4 and the cookie banner have never run on the live site; one endpoint dispatches physical kits with no authentication; and TWO accessibility defects sit on every published article, invisible until the viewport sweep stopped measuring one article of eighteen**)
 
 Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-09-15".
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing pushed to
@@ -71,6 +71,75 @@ Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing 
 - **`frontend/scripts/verify-env-contract.js`** (new) — holds the Dockerfile's list against
   the app's real reads in both directions, and runs in **`prebuild`**, so it fails inside
   the build that would otherwise ship the defect. Also in `npm test`.
+
+### The per-corpus checks are done, and the corpus was the point
+
+"Still to do" item 4 was the gap where the route sweep collapses `/blog/[slug]` to one URL,
+so every check built from it measured **one article of eighteen** — the same shape as defect
+M7. Closed for runtime errors, OG images and the carousel tiles.
+
+- **Runtime errors, all 18 articles: clean.** 65 of 67 routes measured. The only two
+  failures are `/order/confirmed` and `/subscription/confirmed`, which is session 1's
+  already-open logo-on-the-app-host item reproduced exactly at 39 failed requests per load.
+  Seventeen extra article renders found nothing new, and that IS the result: article content
+  does not introduce runtime errors.
+- **OG images: 36 of 36 generate** (18 slugs x card + social).
+- **All 30 `/go/dNN` tiles resolve**, 14 distinct destinations, all reachable.
+- **Error boundaries, structurally correct** — all three present, reporting to Sentry, and
+  `global-error.tsx` renders its own `<html>`/`<body>` as it must. Rendering them for real
+  still needs a deliberate throw.
+
+⚠ **The OG `card` variant is per-CATEGORY, not per-article, and that is deliberate.** Eleven
+cards came back byte-identical, which reads like a broken per-article system. It is not:
+`CardHero` shows brand plus category because the blog-list card already carries the title in
+HTML. Verified rather than assumed — the corpus splits 12 / 4 / 2 across three categories and
+the card sizes cluster 12 / 4 / 2 in exactly those groups. Do not "fix" it.
+
+🔴 **A local run of this app reads and writes the PRODUCTION database.** There is no local
+Supabase; `.env.local`'s project ref is the live project. `/go/[slug]` calls `trackEvent`
+through the service-role client, so curling the 30 tiles to test them would write 30 fake
+`bio_tile_click` rows into production analytics and fire 30 GA4 events. `verify-bio-grid.ts`
+therefore imports the schedule instead of driving the route. The same applies to item 3: the
+ten fixture scenarios are a deliberate production write, which is why `seed-result.ts`
+already demands `--yes`. That one is Keith's call.
+
+New tooling: `scripts/article-corpus.js` (shared corpus resolver, now the single copy —
+`audit-link-integrity.js`'s private one is gone), `scripts/verify-bio-grid.ts` (in `npm
+test`), and `--expand-corpus` on both `audit-runtime-errors.js` and `audit-viewport-sweep.js`.
+
+### 🔴 Two accessibility defects on EVERY published article, found by measuring the corpus
+
+Session 1's viewport sweep said **144 of 150 cells, zero overflow, zero sub-AA text** — and
+it was accurate about what it measured, which was one article. Across all 18: **58 findings
+in 195 cells.** Both defects are live on `main` today; neither is something this branch broke.
+
+1. **`--ink-3` on `--sunk` measures 4.10:1 against a 4.5 requirement**, at 10.5px, on the
+   "References" heading of every article (`.fb-refs-h`) and on table headers wherever an
+   article has a table (`.fb-prose table th`). WCAG 1.4.3 AA.
+
+   🔴 **The rule was already written down, with this exact number.** `f-primitives.css` on
+   `.f-banner-k`: *"--ink-2, not --ink-3: this key sits on `--sunk`, where --ink-3 measures
+   4.10:1. The same pairing that failed on twelve `.f-spec-k` instances."* This is the
+   **third** time it has shipped. In the table rule the forbidden pairing is set on two
+   adjacent lines. Fixed to `--ink-2` (6.8:1) at both sites.
+
+2. **The table scroll wrapper was written and never wired up.** At 390px
+   `/blog/b12-blood-test` scrolls the whole document horizontally (399px content, 390px
+   viewport). `.fb-tablewrap { overflow-x: auto }` has been in `f-blog.css` since the F blog
+   was built and is applied to **nothing** — `remark-gfm` emits a bare `<table>` and
+   `articleMdx.tsx` had no `table` entry. One article tripped it by 9px; any table a column
+   wider does the same, for every article written from here on. Fixed by mapping `table` to
+   the wrapper.
+
+⚠ **The rule is now enforced rather than restated.** A rule worded correctly, placed
+prominently, and walked past three times needs a mechanism, not a fourth wording. The check
+that catches this pairing already existed and already worked — what it lacked was the corpus.
+`test:design:premerge` now runs BOTH sweeps with `--expand-corpus`, so a merge is gated on all
+18 articles rather than on one representative of them.
+
+Why neither was visible before: `tsc` sees valid CSS and valid TSX, the build succeeds,
+`verify-design-tokens.js` checks that tokens exist rather than what they measure against a
+ground, and 4.1:1 does not look broken in a screenshot — it looks slightly grey.
 
 ### Answered, so nobody re-derives them
 

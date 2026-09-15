@@ -56,6 +56,7 @@ const {
   onAppHost, hostRouting, browserDriver, chromePath,
 } = require('./route-list.js')
 const { walkToRest, diagnose } = require('./page-walk.js')
+const { expandArticleRoutes } = require('./article-corpus.js')
 
 /* ------------------------------------------------------------- arguments */
 
@@ -74,6 +75,14 @@ if (has('--help') || has('-h')) {
 
 const BASE = (opt('--base', 'http://localhost:3000')).replace(/\/+$/, '')
 const ONLY_ROUTES = opt('--routes', null)
+/* `--expand-corpus` swaps the single `/blog/[slug]` placeholder for all 18
+   published articles. Off by default: a runtime-error sweep of the whole route
+   list is about the SHELL each page renders, and eighteen instances of one
+   template add eighteen page loads to re-prove the same nav. On, it is the only
+   way to see a defect that lives in ONE article's content — a malformed embed,
+   a component a single MDX file uses — which the collapsed route hides behind a
+   summary that was never wrong, only measured one article deep. */
+const EXPAND_CORPUS = has('--expand-corpus')
 const VERBOSE = has('--verbose')
 const CONSENT = opt('--consent', 'denied')
 const ALLOW_THIRD_PARTY = has('--allow-third-party')
@@ -247,6 +256,26 @@ async function main() {
   console.log('  ✓ positive control: the recorder catches a planted console.error and a planted throw\n')
 
   let routes = discoverRoutes().concat(SYNTHETIC.map((s) => ({ url: s.url, file: s.file, href: s.href })))
+
+  /* Expand BEFORE --routes filters, so `--expand-corpus --routes /blog/<slug>`
+     can name a concrete article. Filtering first would leave only the
+     placeholder for the expander to find, or nothing at all. */
+  if (EXPAND_CORPUS) {
+    const before = routes.length
+    const { routes: expanded, slugs, expanded: didExpand } = await expandArticleRoutes(routes, {
+      base: BASE, timeout: 15000,
+    })
+    if (!didExpand) {
+      await browser.close()
+      return bail(
+        `--expand-corpus found only ${slugs.length} article paths in the sitemap. ` +
+          `Below the floor, so the sweep would be a sample pretending to be a corpus.`,
+      )
+    }
+    routes = expanded
+    console.log(`  expanded /blog/[slug] to all ${slugs.length} published articles (${before} -> ${routes.length} routes)\n`)
+  }
+
   if (ONLY_ROUTES) {
     const want = new Set(ONLY_ROUTES.split(',').map((s) => s.trim()))
     routes = routes.filter((r) => want.has(r.url))

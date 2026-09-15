@@ -23,6 +23,29 @@ import Note from '@/components/marketing/Note'
 // previews exactly as it will publish. BlogToc is injected per-page (it needs the
 // page's extracted headings), so it is intentionally not in this map.
 export const mdxComponents = {
+  /*
+   * 🔴 GFM TABLES NEED THE SCROLL WRAPPER, AND UNTIL 2026-09-15 NOTHING APPLIED IT.
+   *
+   * `.fb-tablewrap { overflow-x: auto }` has existed in f-blog.css since the F
+   * blog was built, for exactly this: an article table is authored in markdown,
+   * its column count is whatever the author needed, and at 390px a wide one has
+   * nowhere to go. But remark-gfm emits a bare `<table>` and this map had no
+   * `table` entry, so the class was defined and applied to NOTHING — the rule
+   * was written, and the wiring was not.
+   *
+   * The symptom: at 390px `/blog/b12-blood-test` scrolled the whole document
+   * horizontally (content 399px against a 390px viewport). One article tripped
+   * it by 9px; any table one column wider would do the same. Found the first
+   * time the viewport sweep measured all 18 articles instead of one.
+   *
+   * The wrapper goes OUTSIDE the table, not on it: `overflow-x` on the table
+   * itself does not create a scroll container for its own box.
+   */
+  table: (props: React.ComponentProps<'table'>) => (
+    <div className="fb-tablewrap">
+      <table {...props} />
+    </div>
+  ),
   PullQuote,
   StatBox,
   EvidenceBox,

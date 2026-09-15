@@ -9,10 +9,12 @@ Branch `redesign/direction-f` at `1a14ffc`, measured against production
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Full evidence logs are in the
 session scratchpad and are not committed (git holds the recipe, Drive holds the media).
 
-> **Session 2 in one line:** the environment half of Phase 5, and it found that the
-> production build has never received two of the variables the app reads — so GA4 and the
-> cookie banner have never run on the live site — plus one unauthenticated endpoint that
-> dispatches physical kits. Neither is a Direction F regression; both are live today.
+> **Session 2 in one line:** the environment half of Phase 5 plus the per-corpus checks, and
+> it found four things — the production build has never received two of the variables the app
+> reads (so GA4 and the cookie banner have never run on the live site), one endpoint
+> dispatches physical kits with no authentication, and **two accessibility defects sit on
+> every published article** because until now the viewport sweep measured one article of
+> eighteen. None is a Direction F regression; all are live today.
 > Session 2's findings are in their own section, below the session 1 material.
 
 ---
@@ -54,7 +56,7 @@ to take effect.
 | `npm run test:engine` — 13 content-engine suites | exit 0 after the CI fix below |
 | `npm run build` | exit 0, twice |
 | `verify-http-contract.ts` (new) | **31 assertions**, exit 0 |
-| `audit-viewport-sweep.js` (new) | **144 of 150 cells**: zero overflow, zero sub-AA light-ground text |
+| `audit-viewport-sweep.js` (new) | 144 of 150 cells: zero overflow, zero sub-AA light-ground text — ⚠ **superseded**, this measured ONE article for `/blog/[slug]`; see S2-7 |
 | `audit-dark-contrast.js` | 0 failing nodes over 16 routes at 1440px |
 | `audit-runtime-errors.js` (new) | 46 of 48 routes clean |
 | `audit-link-integrity.js` (new) | 864 anchors, 84 internal targets, 108 fragments; 1 open finding |
@@ -62,6 +64,9 @@ to take effect.
 | `route-conformance` | 36/36 measurable routes render Direction F |
 | `test:links:external` (session 2, first ever run) | **2088 anchors, 74 external URLs, 0 broken** |
 | `verify-env-contract.js` (session 2, new) | exit 0 after the two unbaked variables were fixed |
+| `audit-runtime-errors.js --expand-corpus` (session 2) | **65 of 67 routes, all 18 articles clean**; the 2 failures are the known logo item |
+| `/api/og/blog/[slug]`, 18 slugs × 2 variants (session 2) | **36 of 36 generate** |
+| `verify-bio-grid.ts` (session 2, new) | **50 assertions**, all 30 `/go` tiles resolve |
 
 Routes not measured are named with a reason everywhere: `/blog/preview/[slug]` (needs
 `PREVIEW_SECRET`) and `/membership` (needs `MEMBERSHIP_ENABLED=true`). Both 404 by design.
@@ -397,6 +402,164 @@ and articles share sources. And the two unmeasured routes are the same two named
 everywhere else: `/blog/preview/[slug]` (needs `PREVIEW_SECRET`) and `/membership` (needs
 `MEMBERSHIP_ENABLED=true`), both 404 by design.
 
+### ✅ S2-6 The per-corpus checks, and the collapse that made them necessary
+
+"Still to do" item 4 named the gap precisely: the route sweep collapses `/blog/[slug]` to a
+single URL, so every check built from the route list measures **one article of eighteen**
+and prints a summary that is never wrong, only shallow. Same shape as defect M7, where a
+dynamic route hid seventeen articles behind one entry.
+
+`audit-link-integrity.js` had already solved this for citations, privately. The resolver now
+lives in **`scripts/article-corpus.js`** and both sweeps read it — the same consolidation
+that took 75 lines of duplicated WCAG probe out of `audit-dark-contrast.js`.
+
+| Corpus check | Result |
+|---|---|
+| **Runtime errors, all 18 articles** (`--expand-corpus`, 50 → 67 routes) | **65 of 67 measured, all 18 articles clean** |
+| **OG images, 18 slugs × 2 variants** | **36 of 36 generate**, 200 with real payloads |
+| **`/go/dNN`, all 30 tiles** | **50 assertions, 0 failed**; 14 distinct destinations all resolve |
+| **Error boundaries, structural** | all 3 present, correct, and reporting to Sentry |
+
+**The runtime sweep found nothing new, and that is the finding.** Seventeen extra article
+renders produced zero additional errors. The only two failing routes are `/order/confirmed`
+and `/subscription/confirmed` — session 1's already-open logo-on-the-app-host item,
+reproduced exactly at **39 failed requests per page load**. Article content does not
+introduce runtime errors; the one open defect is in the shared chrome, where session 1 put it.
+
+⚠ **`audit-runtime-errors.js` refused the first attempt rather than measuring a subset.**
+Passing 20 concrete paths to `--routes` returned `🔴 CANNOT RUN: --routes matched no known
+route` and exit 2, because `discoverRoutes()` yields the `[slug]` pattern and not the slugs.
+That refusal is the correct behaviour and is what exposed the real gap — the alternative,
+silently matching nothing and reporting "0 of 0 routes clean", is the failure this repo has
+already been bitten by twice.
+
+#### The OG card variant is per-CATEGORY, and that is deliberate
+
+Eleven `?variant=card` images came back byte-identical in size, which reads exactly like a
+per-article system that is not per-article. It is not a defect — `CardHero` renders brand
+plus category only, because the blog-list card already shows the title in HTML and the
+hero's job there is to differentiate categories rather than repeat content.
+
+Verified positively rather than assumed, because "they look the same" and "they are the
+same" are different claims. Four same-size cards hash identically; the published corpus
+splits **12 / 4 / 2** across Energy & Recovery, Testosterone and Inflammation & Recovery;
+and the card sizes cluster **12 / 4 / 2** in exactly those groups. The `social` variant is
+per-article and every one differs. Recorded so nobody "fixes" it later.
+
+#### 🔴 A local run of this app reads and writes the PRODUCTION database
+
+Not a new defect, but it constrains how the remaining phases can be run, and it is the
+reason one of these checks is not an HTTP check.
+
+`/go/[slug]` calls `trackEvent`, which uses the **service-role** client. There is no local
+Supabase in this repo — `.env.local`'s project ref *is* the live project. Driving the 30
+tiles over HTTP to "test" them writes 30 fake `bio_tile_click` rows into production
+analytics and fires 30 GA4 events. So `verify-bio-grid.ts` imports `buildSchedule()` instead:
+the schedule is pure, takes no arguments and reads no env, so it proves the same thing with
+no side effect. Its `--base` flag resolves the DESTINATIONS, which are ordinary marketing
+pages and safe to fetch, and never touches `/go` itself.
+
+The same applies to "Still to do" item 3: `scripts/seed-result.ts` already carries a
+`🔴 IT WRITES TO PRODUCTION` header and requires `--yes`, so the ten fixture scenarios are a
+deliberate production write and Keith's call, not something a sweep should do on its own.
+
+#### Error boundaries — the half that can be checked without breaking something
+
+All three exist, are client components, and report to Sentry with `captureException` and the
+`digest`. The structural rule that actually matters is satisfied: `global-error.tsx` renders
+its **own `<html>` and `<body>`** (it replaces the root layout, so without them it fails at
+runtime) plus a `main` landmark, while `app/error.tsx` and `app/(app)/error.tsx` correctly
+render neither. Note the check needed reading, not grepping: `app/error.tsx` matches
+`<html` — in a comment describing `global-error.tsx`.
+
+Still owed: rendering all three for real, which needs a deliberate throw. No sweep built
+from a route list can reach them.
+
+### 🔴 S2-7 Two defects on every published article, both invisible until the sweep measured the corpus
+
+This is what item 4 was for. Session 1's viewport sweep reported **144 of 150 cells: zero
+overflow, zero sub-AA light-ground text**, and it was accurate about what it measured — one
+article. Re-run across all 18 with `--expand-corpus`: **58 findings across 195 cells.**
+
+Both defects are on live, published content. Neither is a Direction F regression in the sense
+of "this branch broke it"; both have been shipping.
+
+#### S2-7a `--ink-3` on `--sunk` is 4.10:1, and the repo already said so
+
+57 of the 58 findings are one contrast failure in two places, at 10.5px:
+
+| Selector | Where | Ratio |
+|---|---|---|
+| `.fb-refs-h` | the "References" heading, **every article** | 4.10:1 (needs 4.5) |
+| `.fb-prose table th` | table headers, every article with a table | 4.10:1 (needs 4.5) |
+
+`rgb(107,112,120)` is `--ink-3`; `rgb(231,233,236)` is `--sunk`. WCAG 1.4.3 AA, and 10.5px
+is comfortably normal text, so 4.5 is the bar and there is no large-text exemption.
+
+🔴 **The rule was already written down, with this exact number.**
+`styles/components/f-primitives.css` on `.f-banner-k`:
+
+> `--ink-2, not --ink-3: this key sits on `--sunk`, where --ink-3 measures 4.10:1. The same
+> pairing that failed on twelve `.f-spec-k` instances.`
+
+So this is the **third** time the same pairing has shipped: twelve `.f-spec-k` instances,
+then `.f-banner-k`, now `.fb-refs-h` and `.fb-prose table th`. In the table rule the
+forbidden pairing is set on two adjacent lines — `color: var(--ink-3)` directly above
+`background: var(--sunk)`.
+
+**Fixed** to `--ink-2`, which measures 6.8:1 on the same ground, with the reason recorded at
+both sites.
+
+⚠ **And the rule has been converted rather than restated.** A rule correctly worded,
+prominently placed, and walked past three times does not need a fourth wording; it needs a
+mechanism. `test:design:premerge` now runs **both** sweeps with `--expand-corpus`:
+
+```json
+"test:design:premerge": "npm run test:design:live && npm run test:design:sweep:corpus &&
+   node scripts/audit-runtime-errors.js --expand-corpus && npm run test:links:external"
+```
+
+The check that catches this pairing already existed and already worked. What it lacked was
+the corpus — it was measuring one article and reporting a number that was never wrong, only
+shallow.
+
+#### S2-7b The table scroll wrapper was written and never wired up
+
+The 58th finding: at 390px, `/blog/b12-blood-test` scrolls the **whole document**
+horizontally — content 399px against a 390px viewport, overflowing element `table`.
+
+`.fb-tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch }` has been in
+`f-blog.css` since the F blog was built, for exactly this case. **It is applied to nothing.**
+A repo-wide search finds the class in the stylesheet and in no component, because
+`remark-gfm` emits a bare `<table>` and `components/marketing/articleMdx.tsx` had no `table`
+entry in its component map. The rule was written; the wiring was not.
+
+One article tripped it, by 9px. Any table one column wider does the same, and the blast
+radius is every article an author writes from here on. **Fixed** by mapping `table` in
+`mdxComponents` to the wrapper — outside the table, since `overflow-x` on the table itself
+does not create a scroll container for its own box.
+
+#### Why both were invisible
+
+Neither is reachable by the gates that pass. `tsc` sees valid CSS and valid TSX. The build
+succeeds. `verify-design-tokens.js` checks that tokens exist, not what they measure against a
+ground. `route-conformance` counts classes. A screenshot of the one representative article
+shows a References heading that looks fine, because 4.1:1 does not look broken — it looks
+slightly grey. And `.fb-tablewrap` is a CSS class with no consumer, which
+`verify-dead-components.js` does not cover because it checks components, not classes.
+
+The only instrument that could see either is a contrast probe and an overflow probe run over
+the real corpus at real widths. Both existed. Neither had been pointed at more than one
+article until now.
+
+### New tooling, session 2 (continued)
+
+| File | Closes |
+|---|---|
+| `scripts/article-corpus.js` | The shared corpus resolver. `articleSlugs()` reads the site's own sitemap — the answer that cannot disagree with the pages — and `expandArticleRoutes()` swaps the `[slug]` placeholder for the real corpus, with a floor below which it refuses rather than reporting a sample as a corpus. Removes the private copy from `audit-link-integrity.js`. |
+| `scripts/verify-bio-grid.ts` | All 30 carousel tiles resolve to their own destination. Needed because an unknown slug does **not** 404 — it 307s to `/test-selector` with `utm_content=unknown`, deliberately, so a broken tile is invisible from outside and can only be caught against the schedule. In `npm test`. |
+| `--expand-corpus` on `audit-runtime-errors.js` and `audit-viewport-sweep.js` | Both sweeps can now measure the corpus instead of one representative of it. Off by default: for checks about the shared shell, eighteen renders of one template is eighteen page loads to re-prove the same nav. |
+
 ### New tooling, session 2
 
 | File | Closes |
@@ -418,10 +581,13 @@ like the assertion firing. Observations 813 to 815.
 2. **Gated routes with a real session** — the seven `(app)` routes, both internal boards
    and `/blog/preview/[slug]` have never been measured; anonymously they redirect.
 3. **The 10 fixture scenarios** on the results dashboard (`npm run db:seed`).
-4. **Per-corpus checks** the route sweep collapses to one URL: all 18 blog slugs
-   individually, both author pages, all 30 `/go/dNN`, `/api/og/blog/[slug]` per slug.
-5. **Error boundaries** — `app/error.tsx`, `global-error.tsx`, `(app)/error.tsx`. No sweep
-   built from a route list has ever reached one.
+4. ~~**Per-corpus checks**~~ — **DONE in session 2** for runtime errors (all 18 articles),
+   OG images (18 × 2 variants) and all 30 `/go/dNN`; see S2-6. The viewport sweep gained the
+   same `--expand-corpus` flag. Author pages are covered by the route list already.
+5. **Error boundaries** — `app/error.tsx`, `global-error.tsx`, `(app)/error.tsx`. The
+   **structural** half is done in session 2 (all three present and correct, `global-error`
+   renders its own `<html>`/`<body>`). Still owed: rendering all three for real, which needs
+   a deliberate throw — no sweep built from a route list can reach one.
 6. **Forms and checkout end to end** — 14 client fetch targets all resolve to real route
    handlers (verified statically); none has been submitted. Gate 3 (checkout E2E) is still
    open from April.

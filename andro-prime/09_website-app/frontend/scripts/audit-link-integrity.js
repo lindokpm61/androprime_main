@@ -66,6 +66,7 @@ const {
 } = require('./route-list.js')
 const { CONTRACT } = require('./redirect-contract.js')
 const { walkToRest } = require('./page-walk.js')
+const { articleSlugs } = require('./article-corpus.js')
 
 /* ------------------------------------------------------------- arguments */
 
@@ -156,27 +157,9 @@ function connectTo(url) {
   return { url, host: undefined }
 }
 
-/** Every published article path, from the sitemap — the site's own answer. */
-function articleSlugs() {
-  return new Promise((resolve) => {
-    const u = new URL(BASE + '/sitemap.xml')
-    const mod = u.protocol === 'https:' ? https : http
-    const r = mod.request({ hostname: u.hostname, port: u.port, path: u.pathname, method: 'GET' }, (res) => {
-      let body = ''
-      res.setEncoding('utf8')
-      res.on('data', (c) => { body += c })
-      res.on('end', () => {
-        const paths = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)]
-          .map((m) => { try { return new URL(m[1]).pathname } catch { return '' } })
-          .filter((p) => p.startsWith('/blog/'))
-        resolve([...new Set(paths)])
-      })
-    })
-    r.on('error', () => resolve([]))
-    r.setTimeout(TIMEOUT, () => r.destroy())
-    r.end()
-  })
-}
+/* Every published article path, from the sitemap — the site's own answer.
+   Moved to scripts/article-corpus.js on 2026-09-15 so audit-runtime-errors.js
+   can expand the same corpus from the same resolver instead of a second copy. */
 
 /* --------------------------------------------------------------- harvest */
 
@@ -201,7 +184,7 @@ async function harvest() {
      Expanded only under --external, because rendering 18 more pages to re-check
      the same internal nav on each is 18 page loads for nothing. */
   if (WANT_EXTERNAL) {
-    const slugs = await articleSlugs()
+    const slugs = await articleSlugs({ base: BASE, timeout: TIMEOUT })
     if (slugs.length < 5) bail(`only ${slugs.length} article slugs found in the sitemap; external coverage would be a sample pretending to be a corpus.`)
     routes = routes.filter((r) => r.url !== '/blog/[slug]')
       .concat(slugs.map((p) => ({ url: p, file: 'app/(marketing)/blog/[slug]/page.tsx', href: p })))

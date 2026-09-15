@@ -371,7 +371,10 @@ a.fb-byline-n:hover { text-decoration: underline; text-underline-offset: 3px; }
 .fb-prose table th {
   font-family: var(--font-mono);
   font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
-  color: var(--ink-3); font-weight: 600;
+  /* --ink-2, not --ink-3, and the `background: var(--sunk)` on the next line is
+     why: that pairing measures 4.10:1. The rule is recorded on `.f-banner-k` in
+     f-primitives.css; this is the third place it has been broken. */
+  color: var(--ink-2); font-weight: 600;
   background: var(--sunk);
 }
 .fb-prose table td b, .fb-prose table td strong { color: var(--ink); font-weight: 600; }
@@ -684,7 +687,13 @@ a.fb-byline-n:hover { text-decoration: underline; text-underline-offset: 3px; }
 .fb-refs-h {
   font-family: var(--font-mono);
   font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--ink-3);
+  /* --ink-2, not --ink-3: `.fb-refs` above sets `background: var(--sunk)`, and
+     --ink-3 on --sunk measures 4.10:1 against a 4.5 requirement. Same pairing
+     that already failed on twelve `.f-spec-k` instances and on `.f-banner-k`,
+     where f-primitives.css records the rule. Found 2026-09-15 on all 18
+     published articles at once, the first time a viewport sweep measured the
+     whole corpus instead of one representative article. */
+  color: var(--ink-2);
   padding-bottom: 12px; margin-bottom: 14px;
   border-bottom: 1px solid var(--hair-2);
 }

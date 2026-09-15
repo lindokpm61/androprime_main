@@ -55,6 +55,7 @@ const {
   onAppHost, hostRouting, browserDriver, chromePath,
 } = require('./route-list.js')
 const { walkToRest, diagnose, judgeDiagnosis } = require('./page-walk.js')
+const { expandArticleRoutes } = require('./article-corpus.js')
 const { PROBE, GROUND, LIMITATION } = require('./contrast-probe.js')
 
 /* ------------------------------------------------------------- arguments */
@@ -76,6 +77,11 @@ const BASE = (opt('--base', 'http://localhost:3000')).replace(/\/+$/, '')
 const WIDTHS = (opt('--widths', '390,768,1320')).split(',').map((w) => parseInt(w.trim(), 10))
 const ONLY = opt('--only', null)
 const ONLY_ROUTES = opt('--routes', null)
+/* Same flag, same reason, same resolver as audit-runtime-errors.js: the route
+   list renders ONE article for /blog/[slug], and article CONTENT is exactly what
+   can overflow — a long unbreakable token, a wide table, an oversized figure —
+   so a layout sweep of one article proves the template and not the corpus. */
+const EXPAND_CORPUS = has('--expand-corpus')
 const VERBOSE = has('--verbose')
 
 const routing = hostRouting(BASE)
@@ -104,6 +110,26 @@ async function main() {
   })
 
   let routes = discoverRoutes().concat(SYNTHETIC.map((s) => ({ url: s.url, file: s.file, href: s.href })))
+
+  if (EXPAND_CORPUS) {
+    const before = routes.length
+    const { routes: expanded, slugs, expanded: didExpand } = await expandArticleRoutes(routes, {
+      base: BASE, timeout: 15000,
+    })
+    if (!didExpand) {
+      await browser.close()
+      return bail(
+        `--expand-corpus found only ${slugs.length} article paths in the sitemap; ` +
+          `below the floor, so the sweep would be a sample pretending to be a corpus.`,
+      )
+    }
+    routes = expanded
+    console.log(
+      `  expanded /blog/[slug] to all ${slugs.length} published articles ` +
+        `(${before} -> ${routes.length} routes)\n`,
+    )
+  }
+
   if (ONLY_ROUTES) {
     const want = new Set(ONLY_ROUTES.split(',').map((s) => s.trim()))
     routes = routes.filter((r) => want.has(r.url))
