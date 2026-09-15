@@ -10,7 +10,12 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 `lib/results/retestGuidance.ts` (new `resultMayCarryRetestOffer()`),
 `scripts/test-classifier-regressions.ts` (guards, both directions).
 **Rule owner:** Keith, 2026-09-15. Durable rule recorded in `03_compliance/CONTEXT.md`.
-**Not deployed, not committed** at time of writing.
+✅ **Committed `bd773eb` and pushed to `redesign/direction-f`, 2026-09-15.** 🔴 **NOT DEPLOYED, and
+not deployable from here:** Coolify builds `main` (`7ecad99`), which this commit is not an ancestor
+of — verified, not assumed. Production checked at the same time: HTTP 200 and the Direction F canary
+("Open the demo") absent from the homepage, with the probe positive-controlled against strings that
+are present. **These 16 links change for real customers the moment `redesign/direction-f` merges**,
+which is still gated on CA-046 and the copy-register reconciliation.
 
 **The rule: CA-014 binds the RESULT, not the marker.** When any marker on a result routes to a GP,
 that result offers no retest to buy.
