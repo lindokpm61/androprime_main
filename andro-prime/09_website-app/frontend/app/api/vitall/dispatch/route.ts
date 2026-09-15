@@ -4,6 +4,7 @@ import { emitEvent } from '@/lib/customerio/emit'
 import { cioKeyFromEmail } from '@/lib/customerio/identity'
 import { createOrder } from '@/lib/vitall/client'
 import { buildVitallPatient } from '@/lib/vitall/identity'
+import { isAlreadyDispatched } from '@/lib/vitall/alreadyDispatched'
 import type { VitallPatientAddress } from '@/lib/vitall/types'
 import type { KitType } from '@/lib/results/types'
 
@@ -19,6 +20,7 @@ interface DispatchBody {
   orderId: string
   kitType: KitType
 }
+
 
 /**
  * `users.sex` is `text` with a CHECK constraint (`sex IS NULL OR sex IN ('male','female')`),
@@ -65,13 +67,42 @@ export async function POST(request: NextRequest) {
   // Pull the full patient record from kit_orders → users
   const { data: order, error: orderError } = await supabase
     .from('kit_orders')
-    .select('id, user_id, shipping_address')
+    .select('id, user_id, shipping_address, status, vitall_order_id')
     .eq('id', orderId)
     .single()
 
   if (orderError || !order) {
     console.error('[vitall-dispatch] Could not load kit_orders row:', orderError?.message)
     return NextResponse.json({ error: 'Order not found' }, { status: 404 })
+  }
+
+  /*
+   * 🔴 IDEMPOTENCY. Nothing used to stop a repeat call: the route read the order,
+   * called Vitall, then set `status: 'dispatched'` unconditionally. A second POST
+   * with the same orderId created a second Vitall order — a second physical box,
+   * a second lab fee — and emitted a second `kit_dispatched` event. Added
+   * 2026-09-15; the route is reachable unauthenticated from the public internet
+   * (see S2-2 in the audit), so "only our own code calls it" was never a control.
+   *
+   * ⚠ THIS RETURNS 200, NOT 409, AND THAT IS LOAD-BEARING. `lib/bundles/dispatch.ts`
+   * marks a bundle `dispatched` only on a 2xx and otherwise leaves the row in
+   * `awaiting_window` for the next daily sweep to retry. The case this guard exists
+   * for is precisely the ambiguous one — Vitall succeeded, our write or our caller
+   * did not — and answering that retry with a non-2xx would strand the bundle in
+   * `awaiting_window` forever, retrying daily and being refused every time. The kit
+   * shipped, so the honest answer to "dispatch this" is "done", with
+   * `alreadyDispatched` saying it was not done just now.
+   */
+  if (isAlreadyDispatched(order)) {
+    console.warn(
+      `[vitall-dispatch] Refusing repeat dispatch for order ${orderId} ` +
+        `(status=${order.status}, vitall_order_id=${order.vitall_order_id ?? 'null'})`,
+    )
+    return NextResponse.json({
+      dispatched: true,
+      alreadyDispatched: true,
+      vitall_order_id: order.vitall_order_id,
+    })
   }
 
   const { data: user, error: userError } = await supabase

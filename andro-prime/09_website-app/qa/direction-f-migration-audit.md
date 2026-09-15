@@ -328,8 +328,46 @@ and effort:
   surface rather than guarding it, and it is the right end state.
 
 Recommendation: **(c)**, with **(a)** as the fast mitigation if the launch date is close.
-Either way, add the idempotency guard — the route should refuse an order that is already
-`dispatched` regardless of who is calling.
+
+#### ✅ The idempotency half is DONE (Keith approved 2026-09-15)
+
+The authentication decision is still open. The repeat-dispatch half is closed, because it is
+safe on its own: it only ever refuses work, so it cannot stop a legitimate first dispatch.
+
+**`status === 'dispatched'` would have been the wrong test**, and checking the real enum is
+what showed it. `order_status` runs `pending → paid → dispatched → sample_registered →
+processing → results_received`, plus `cancelled / refunded / sample_failed / on_hold /
+data_purged`. An order at `results_received` was dispatched long ago and has been through the
+lab; matching only the literal `dispatched` would wave it through and post a second box.
+
+**And `vitall_order_id` alone is not sufficient either.** It is the stronger signal — it
+exists only as the result of a real Vitall order — but **6 of the 7 `results_received` rows in
+production carry no `vitall_order_id`**, having been seeded rather than dispatched through the
+route. Either signal alone misses cases the other catches, so both are checked and either is
+enough.
+
+⚠ **It returns 200, not 409, and that is load-bearing.** `lib/bundles/dispatch.ts` marks a
+bundle `dispatched` only on a 2xx and otherwise leaves the row in `awaiting_window` for the
+next daily sweep. The case this guard exists for is precisely the ambiguous one — Vitall
+succeeded, our write or our caller did not — and answering that retry with a non-2xx would
+strand the bundle in `awaiting_window` **forever**, retrying daily and being refused every
+time. The kit shipped, so the honest answer to "dispatch this" is "done", with
+`alreadyDispatched: true` saying it was not done just now.
+
+The rule lives in `lib/vitall/alreadyDispatched.ts` rather than in the route, for the reason
+`buildVitallPatient` does: a route handler needs Supabase and a request, so a decision made
+inside one cannot be tested, and this one guards a physical dispatch and a lab fee.
+`scripts/test-vitall-already-dispatched.ts` drives it over the whole enum — **48 assertions**,
+in `npm test`. Proved by making it fail twice: reintroducing the original bug fails on
+`sample_registered`, `processing` and `results_received` by name, and dropping a status from
+the classification lists fails the enum-coverage assertion, which is what stops a future
+twelfth enum value defaulting to the branch that spends money.
+
+🔴 **Still open, and deliberately not fixed here:** `pending`, `cancelled`, `refunded` and
+`on_hold` are not "already done", they are **"should not dispatch at all"** — and the route
+still dispatches them today. A `pending` order has not been paid for. That is a different
+refusal needing a different answer to the caller, and widening a guard on the
+payment-to-dispatch path is a separate decision from making it idempotent.
 
 ### ✅ S2-3 The Sentry releases endpoint is not a deploy check, and cannot be
 

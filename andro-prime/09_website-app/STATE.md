@@ -58,6 +58,21 @@ Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing 
    the audit doc; the short version is that the endpoint should not exist — both callers
    should import a function instead of calling the app over the internet.
 
+   ✅ **The repeat-dispatch half IS done** (Keith approved 2026-09-15). Safe on its own
+   because it only ever refuses work. Two things checking the real enum revealed:
+   `status === 'dispatched'` would have been the wrong test, since an order at
+   `results_received` was dispatched long ago and would have been waved through; and
+   `vitall_order_id` alone is not sufficient either, because **6 of the 7
+   `results_received` rows in production carry no `vitall_order_id`**. Both signals are
+   checked, either is enough. It returns **200, not 409**, deliberately — the bundle sweep
+   only marks a bundle done on a 2xx, so refusing a retry would strand it in
+   `awaiting_window` forever. Rule in `lib/vitall/alreadyDispatched.ts`, 48 assertions in
+   `npm test`, proved by making it fail twice.
+
+   🔴 Still open beyond the auth decision: `pending`, `cancelled`, `refunded` and `on_hold`
+   are not "already done", they are "should not dispatch at all", and the route still
+   dispatches them. A `pending` order has not been paid for.
+
 ### Fixed in the branch this session
 
 - **`frontend/Dockerfile`** — mount list now matches what the app reads. Added
