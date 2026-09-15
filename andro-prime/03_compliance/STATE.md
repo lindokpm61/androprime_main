@@ -234,6 +234,36 @@ word replaces "Low" has to come from that check, not from the look of the number
 knew it was in use. This is why the scanner’s allowlist is DERIVED from the engine rather than
 written as a blacklist: a blacklist can only contain the words somebody already noticed.
 
+### ⚠ ADDENDUM 2026-09-15 — the table above is complete for SAMPLE PANELS and there are four more retired verdict words on the same page, in a shape the scanner cannot reach
+
+Found by the independent pre-flight pass during the Direction F Phase 4 gate. `NEXT_STEP` at
+`app/lp/hormone-recovery/page.tsx:158-162` renders four more verdict words as customer-visible
+badges (`<span className="f-no">{badge}</span>` at :391):
+
+| Badge | In `BADGES`? | |
+| --- | --- | --- |
+| `Optimal` | yes — **but out of its ruled scope** | see below |
+| `Suboptimal` | no | the same retired word the note above says nobody knew was in use — **it is in use in a second place on the same page** |
+| `Review` | no | |
+| `Complete` | no | |
+
+**Why the scanner reports zero here, and it is not a bug.** The verdict rule fires on a MARKER ROW:
+a line carrying `status:`/`ours:`/`v-ours` *and* `band:`/`label:`/`name:` *and* `value:`. These are
+`badge:` on a `{ title, body }` marketing card with no marker and no number, so the detector's own
+width excludes them by design. The skill already warns that *"the guard's width is the whole
+detector, and every key it does not know is a silent miss"* — this is an instance, and the honest
+grading is that **these are a RELATED class, not the same one**: the twelve above grade a named
+marker at a stated value, and these label an outcome scenario. Do not merge the counts; the
+sample-panel figure of twelve stands.
+
+🔴 **`Optimal` is the sharpest of the four, and it is the one word here that IS an engine label.**
+Keith's vocabulary ruling of 2026-08-07 (`lib/results/resultSeverity.ts:36-41`) retires `Optimal`
+as the label for merely in-range, in his own stated reason: *"we publish an article arguing that
+in-range is not the same as optimal and the badge should not contradict it."* It survives on
+testosterone alone. Here it badges the card titled **"All markers in range"**, across all nine
+markers — which is precisely the contradiction the ruling was written to prevent, on a page that
+links to the article making the argument. → **Ewa**, with the other three.
+
 **Scope note.** The 2026-07-25 CA-026 sweep covered `app/lp/*` for the UKAS claim, and the
 2026-08-31 sweep covered `app/(marketing)/*` for this vocabulary. Neither covered the other’s
 directory. The rule now covers both, mechanically, on every run.

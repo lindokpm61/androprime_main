@@ -7,6 +7,7 @@ import { cioKeyForUserId } from '@/lib/customerio/identity'
 import type { VitallWebhookPayload, VitallOrderStatusCode } from '@/lib/vitall/types'
 import type { Database } from '@/lib/supabase/types'
 import { siteUrl } from '@/lib/site-url'
+import { TERMINAL_ORDER_STATUSES_SQL_LIST } from '@/lib/orders/terminalStatus'
 
 type KitOrderStatus = Database['public']['Tables']['kit_orders']['Row']['status']
 
@@ -161,16 +162,36 @@ export async function POST(request: NextRequest) {
 
   const newStatus = STATUS_MAP[statusCode]
 
-  // Update kit_orders with latest Vitall status and store vitall_order_id
+  // Update kit_orders with latest Vitall status and store vitall_order_id.
+  //
+  // The `.not('status', 'in', …)` is a guard against a LATE lab callback erasing
+  // an ending. `order_status` is mostly a pipeline and this line advances it, but
+  // `refunded` / `cancelled` / `data_purged` are not stages — they are written by
+  // Stripe or by GDPR erasure, and nothing downstream re-checks them. The concrete
+  // case, live since the refund handler shipped (S2-9): an order refunded while its
+  // sample is already at the lab cannot be un-posted, so Vitall reports
+  // `results-available` hours later and, unguarded, that set `results_received` and
+  // destroyed the only record of the refund. Checked in the UPDATE rather than by a
+  // read-then-write, so a refund landing mid-check cannot slip through the window —
+  // the two senders are independent and that window is exactly when both fire.
   if (newStatus && partner_order_id) {
     const supabase = createSupabaseAdminClient()
-    const { error } = await supabase
+    const { data: touched, error } = await supabase
       .from('kit_orders')
       .update({ status: newStatus, vitall_order_id })
       .eq('id', partner_order_id)
+      .not('status', 'in', TERMINAL_ORDER_STATUSES_SQL_LIST)
+      .select('id')
 
     if (error) {
       console.error('[vitall-webhook] Failed to update kit_orders:', error.message)
+    } else if ((touched?.length ?? 0) === 0) {
+      // Zero rows is the guard firing (or an unknown order id). Say so — a silent
+      // no-op on the status path is indistinguishable from a successful write.
+      console.warn(
+        `[vitall-webhook] No status write for order ${partner_order_id} (lab said '${statusCode}' → '${newStatus}'): ` +
+          `the order is at a terminal status (refunded/cancelled/data_purged) or does not exist.`,
+      )
     }
   }
 

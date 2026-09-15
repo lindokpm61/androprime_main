@@ -151,8 +151,29 @@ function num(v: number): string {
  *
  * With `compare` on our bands are gone, and the only thing left to say is
  * whether the number is inside the interval the laboratory printed. That is a
- * statement about the lab's own range rather than a clinical verdict of ours,
- * which is why these two strings are not in `BADGES` and do not need to be.
+ * statement about the lab's own range rather than a clinical verdict of ours.
+ *
+ * 🔴 SELF-CLEARANCE WITHDRAWN 2026-09-15. This comment used to finish "...which
+ * is why these two strings are not in `BADGES` and do not need to be." That is
+ * a compliance clearance written by the code it clears, and it is not a thing a
+ * source comment can do. Two separate defects:
+ *
+ *   1. THE COUNT IS WRONG. Three strings render here outside `BADGES`, not two:
+ *      'Out of range' (this function), plus 'Within the normal range' and
+ *      'Outside the reference range' on the badge below. Only 'In range' is an
+ *      engine word. A comment that miscounts its own exemption is evidence the
+ *      exemption was never checked against the map.
+ *   2. THE CLEARANCE ITSELF IS NOT AVAILABLE. Per 03_compliance/STATE.md
+ *      (2026-08-31) a signed exception requires a real CA number, and there is
+ *      none for these. The reasoning above may well be right — a lab-range
+ *      statement is arguably not our verdict — but that is exactly the judgement
+ *      the gate exists to route to a person. The scanner derives its allowed
+ *      words FROM `BADGES` precisely so a page cannot widen them locally.
+ *
+ * These strings all render as toned verdicts (`data-tone`), which the
+ * compliance rules treat as a verdict whether or not it is thought of as copy.
+ * OWED TO EWA. Nothing changed here pending her ruling; recorded rather than
+ * quietly rewritten.
  */
 function verdictWord(r: ClassifiedResult, compare: boolean): string {
   if (isReportOnly(r)) return badgeFor(r.state).label
@@ -628,8 +649,24 @@ function MarkerScreen({
               <p>{r.recommendation}</p>
               {gp && (
                 <>
-                  {/* Carried verbatim from the approved kit-page copy; copy
-                      register row 30 records it as already-signed wording. */}
+                  {/* ⚠ CITATION CORRECTED 2026-09-15. This used to read "Carried
+                      verbatim from the approved kit-page copy; copy register row
+                      30 records it as already-signed wording." Neither half is
+                      true, and the comment is what stopped anyone checking.
+
+                      No surface renders this sentence. The approved forms are
+                      "That result earns us nothing." (kits/testosterone:547,
+                      kits/hormone-recovery:139, how-it-works:181) and "Low
+                      ferritin, for example, goes to a GP and earns us nothing."
+                      (kits/energy-recovery:563). This line is a RECOMBINATION of
+                      the two, so "verbatim" is wrong. And register row 30 says
+                      the opposite of what was claimed: it records the withdrawn
+                      strings, "including the verbatim 'That result earns us
+                      nothing'", as no longer rendered anywhere on /demo.
+
+                      OWED TO KEITH, then pre-flight. Left rendering unchanged
+                      rather than silently edited to an approved variant, per the
+                      rule that Keith's copy is not rewritten by a checker. */}
                   <div className="ap-receipt">A result that goes to a GP earns us nothing.</div>
                   <button type="button" className="ap-btn">
                     Download the GP summary

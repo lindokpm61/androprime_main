@@ -72,17 +72,52 @@ const ROOT = path.resolve(__dirname, '..')
    set to where the claims HAPPENED TO BE FOUND (seven page components) rather
    than to where customer-facing copy CAN live. A scope drawn around the known
    instances can only ever confirm the search that produced it. */
-const SCOPE = [path.join(ROOT, 'app'), path.join(ROOT, 'public')]
+/* 🔴 `components` ADDED 2026-09-15, and it is the THIRD axis of the same defect.
+   The scope had been widened once already — from "the seven page components where
+   the claims happened to be found" to `app` + `public` — and still omitted the one
+   directory whose whole purpose is copy rendered on MORE than one page. So
+   `components/commerce/BundleChoice.tsx:116` rendered the chip "One-off test" on
+   all three kit detail pages, unseen, with the widened scope reporting green.
+   A shared component is the highest-leverage place for a claim to hide, because a
+   single instance reaches every page that mounts it and no page's own file
+   contains the string. */
+const SCOPE = [path.join(ROOT, 'app'), path.join(ROOT, 'public'), path.join(ROOT, 'components')]
 const EXT = ['.tsx', '.txt', '.md']
 
 /* The phrases that assert the absence of a subscription or the one-off nature of
    the purchase. Matched case-insensitively against rendered text only: a JSX
-   comment explaining the problem is documentation, not a claim. */
+   comment explaining the problem is documentation, not a claim.
+
+   🔴 WIDENED 2026-09-15, AND THE REASON IS THIS FILE'S OWN ARGUMENT TURNED ON
+   ITSELF. The header above says a scope drawn around the known instances "can
+   only ever confirm the search that produced it", and fixes that for the
+   DIRECTORY SCOPE. The PHRASE LIST had exactly the same defect and nobody
+   noticed, because both were derived from the same thirteen sentences: the four
+   entries below the line were the four ways those thirteen happened to be
+   worded. The check therefore reported GREEN over `/kits/page.tsx:201` —
+
+       "Choose your kit. Pay once. Kit dispatched the same working day."
+
+   — which is the plainest statement of the thing the auto-renew ruling made
+   false, on the page that takes the money, in step 01 of how-it-works. Three
+   more sat in buy-adjacent chips. Found by the independent pre-flight pass on
+   2026-09-15 (Phase 4), not by this check.
+
+   The lesson generalises past this file: when a check is corrected for
+   overfitting along one axis, look for the SAME overfitting along every other
+   axis of the same check, because they were almost certainly derived from the
+   same sample. A widened scope searching for a narrow list is still a narrow
+   search; it just looks thorough. */
 const CLAIMS = [
   'no subscription',
   'one-off purchase',
   'one-off payment',
   'not a subscription',
+  // Added 2026-09-15 — each of these was rendering on a live buy surface while
+  // the check above reported clean.
+  'pay once',        // app/(marketing)/kits/page.tsx:201, step 01
+  'one-off test',    // components/commerce/BundleChoice.tsx:116, all 3 kit pages
+  'all-in, one-off', // app/lp/energy-recovery:376, app/lp/hormone-recovery:536
 ]
 
 /* 🔴 THE MIRROR SET, ADDED 2026-09-11. THE CHECK WAS ONE-DIRECTIONAL AND THAT WAS

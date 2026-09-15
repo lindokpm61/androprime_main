@@ -75,7 +75,49 @@ Four external services. All four are already declared in `.env.example` — only
   - `checkout.session.completed`
   - `invoice.payment_succeeded`
   - `customer.subscription.deleted`
+  - `invoice.payment_failed` — subscription CONFIRMED 2026-09-15 (see the note below: this had
+    been handled in code since Phase 7 while missing from this list, so whether T-07 dunning
+    could ever fire before that date is unproven either way)
+  - `charge.refunded` — handler shipped + subscribed 2026-09-15. ⚠ **Inert until the
+    `redesign/direction-f` branch deploys — see the ordering warning below**
+  - `charge.dispute.created` — handler shipped + subscribed 2026-09-15. ⚠ Same warning
 - `STRIPE_WEBHOOK_SECRET` copied from the registered webhook endpoint
+
+> 🔴 **ORDERING WARNING — a subscription added AHEAD of its handler's deploy destroys the
+> events it was added for, silently and permanently.**
+>
+> The handler claims the event id in `processed_stripe_events` **before** it branches on
+> `event.type` (the dedupe insert precedes the first `if`). That ordering is correct and
+> deliberate — it is what makes retries safe — but it means an event arriving while the
+> deployed build has no branch for it is *recorded as processed*, does nothing, and returns
+> 200. Stripe sees a successful delivery and never retries. After the real handler deploys, a
+> resend of that same event hits the unique constraint, returns `deduped: true`, and exits.
+> **The event can never be processed, and nothing anywhere reports a loss.**
+>
+> So the safe order is **deploy the handler, then subscribe the event** — never the reverse.
+> On 2026-09-15 it was done in the reverse order deliberately, with the window accepted as a
+> known risk (Keith's call: refunds are merchant-initiated only, there was one real order and
+> it was already refunded, so the probability was near zero). **While such a window is open,
+> the rule is: do not perform the action that generates the event.** Recorded in
+> `STATE.md` as a live constraint rather than left as folklore.
+
+> ⚠ **This list is the repo's ONLY record of what Stripe actually sends, and it has already
+> been wrong once.** The webhook has branched on `invoice.payment_failed` (the T-07 dunning
+> path) since Phase 7, and that event has never appeared in this list — so dunning emails may
+> never have been able to fire. Nobody noticed because a handler for an undelivered event is
+> indistinguishable from a handler for an event that simply has not happened yet.
+>
+> **A handler is not a subscription.** The two halves live in different systems and neither
+> can see the other, so adding a branch to `app/api/webhooks/stripe/route.ts` does nothing at
+> all until the event is ticked in Developers → Webhooks. Whenever you add a branch, add the
+> event here AND in the Dashboard in the same change.
+>
+> **How to check, in one look:** Developers → Webhooks → the andro-prime.com endpoint → the
+> subscribed-events list. The in-app cross-check is
+> `select distinct event_type from processed_stripe_events` — the webhook claims every event
+> id it receives *before* doing any work, so an event we are subscribed to leaves a row even
+> when the handler ignores it. An event type that never appears there has never been
+> delivered. (S2-9, `qa/direction-f-migration-audit.md`.)
 
 **Env vars to add to `.env.example`:**
 

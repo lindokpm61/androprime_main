@@ -43,8 +43,14 @@ import { READOUT_KIT_1 } from '@/lib/kits/sampleReadout'
  * `MEMBERSHIP_ENABLED` is off.
  *
  * ⚠ **The closing block still reads "One-off purchase. Includes lab fees and
- * delivery. No subscription." and two FAQ answers still say "This is a one-off
- * purchase."** Under the adopted ruling every kit buyer starts a subscription on
+ * delivery. No subscription." (line 428) and ONE FAQ answer still says "This is
+ * a one-off purchase." (line 63).**
+ *
+ * ⚠ Count corrected 2026-09-15: this said "two FAQ answers"; there is one.
+ * Register row 42a says "an FAQ answer" and was right. Recorded rather than
+ * silently edited, because an overstated defect count is the same class of
+ * error as an understated one — it just fails in the flattering direction for
+ * whoever later finds "fewer than described" and reads it as progress. Under the adopted ruling every kit buyer starts a subscription on
  * day 31, so those sentences are false the moment the flag goes on. They are
  * rendered UNCHANGED, deliberately: they are approved customer-facing copy and
  * rewriting them is a copy decision with its own pre-flight, not something a

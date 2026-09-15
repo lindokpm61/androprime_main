@@ -19,7 +19,7 @@ session scratchpad and are not committed (git holds the recipe, Drive holds the 
 > | S2-2 | An endpoint dispatched physical kits with no authentication | **endpoint removed** |
 > | S2-7 | Two accessibility defects on **every published article**, invisible while the sweep measured one article of eighteen | fixed, verified 58 findings → 0 |
 > | S2-8 | Gate 3 — payment to delivered email, on a **live** purchase | **closed** |
-> | S2-9 | A refund moves the money and nothing else, proven by refunding that purchase | open, three decisions |
+> | S2-9 | A refund moves the money and nothing else, proven by refunding that purchase | **decisions taken, handler shipped, events subscribed** — ⚠ inert until deploy, and refunding during that window destroys the event |
 >
 > Session 2's findings are in their own section, below the session 1 material.
 
@@ -35,7 +35,7 @@ defects:
 |---|---|---|---|
 | 1 | **CA-045** homepage + `/kits` imagery: 10 items, 8 questions. Packet is an unsent Gmail DRAFT and is stale (written for 9 items; the hero data field now renders on 5 surfaces, not 1). | Keith to send, Ewa + Keith to sign | ClickUp `869eur84c` |
 | 2 | **CA-046** `/demo`: a full results report, a membership price and ~2 dozen un-pre-flighted prototype strings on an ungated surface. | Ewa | ClickUp `869exuphq` |
-| 3 | **Copy register reconciliation.** 48 open rows, Closed section still `_None yet._`. 16 rows marked "Yes" need sign-off; 21 placement-only rows need a look. | Keith, then pre-flight | `redesign-copy-register.md` |
+| 3 | ✅ **Copy register reconciliation — RAN 2026-09-15.** Closed section written; every row dispositioned. ⚠ It was never 48 rows — **78** — the `## Closed` heading sat mid-table and 27 rows fell behind it. **The merge removes 15 HARD findings and adds none.** Still owed and not mine: 26 sign-off rows, 5 missing rulings. | Keith + Ewa to sign; the pass itself is done | `redesign-copy-register.md`, Closed section |
 
 Zero traffic does not soften CA-045: the gate governs SHIPPING, and a page is live
 whether or not anyone visits it.
@@ -59,7 +59,9 @@ only our own code can reach it, so the gap is much smaller than it was.
 Keith refunded the live Gate 3 order, and eighteen minutes later Stripe said refunded while the
 application still said `dispatched` — no webhook delivered, no row written, a kit in the post.
 Missing at three independent layers, and the obvious fix is the wrong Stripe event. See S2-9.
-Not a merge blocker; it is live on `main` today and has been all along.
+Not a merge blocker; it is live on `main` today and has been all along. **Closed in code on
+2026-09-15** once Keith took the three decisions it turned on — with one action still owed
+outside the repo, because a handler is not a subscription.
 
 ---
 
@@ -851,9 +853,98 @@ This is the Stripe version of the finding already recorded in S2-6 — there is 
 environment, so local runs hit production. There it cost 27 fake analytics rows. Here it would
 cost real money, and it is the reason this section could be evidenced at all.
 
-**Not fixed. Three separate decisions, none of them made here:** whether to subscribe to
-`charge.refunded`, what a refund should do to an order whose kit has already shipped, and
-whether a developer machine should hold a live payment key.
+**Decision 2026-09-15 (Keith): the live key stays. Accepted risk, not an oversight.** Solo
+machine, sole developer, and the alternative needed test-mode prices for all seven products
+before local checkout would work again. Recorded here and in `deployment/env/vars.md` next to
+the convention it breaks, so the next reader sees a decision rather than a defect and does not
+"fix" it back. ⚠ It stops being a solo-machine question the moment a second developer, a CI
+runner or a cloud dev environment touches this repo — revisit it then, not before.
+
+#### ✅ RESOLVED 2026-09-15 — all three decisions taken, code shipped, events subscribed in Stripe
+
+Keith took the three decisions in session. What follows is what was built against them.
+
+**(a) Subscribe to `charge.refunded` AND `charge.dispute.created`.** Both branches are now in
+`app/api/webhooks/stripe/route.ts`. A dispute is the same money leaving by a different door and
+the only one with a deadline, so it was worth the second branch.
+
+**(b) Record, stop the money, alert — do not attempt to unwind.** On a FULL refund the handler
+sets `kit_orders.status = 'refunded'`, cancels every `bundle_dispatches` row for that order
+still at `scheduled` / `trigger_met` / `awaiting_window`, and fires an `order_refunded` ops
+alert carrying the customer, kit, amounts, and whether the kit had already shipped. Results
+already received stay visible: `getDashboardData` only applies its terminal-status filter on
+the no-results-yet branch, so marking an order refunded never hides results the customer has.
+
+**(c) The live Stripe key stays on the developer machine.** Keith's call, made knowing the
+finding: solo machine, sole developer. Recorded as an accepted risk rather than silently
+dropped — see `deployment/env/vars.md`, which now carries the exception next to the convention
+it breaks, so the next reader does not "fix" it back.
+
+**Three things found while building it that the original finding did not name:**
+
+1. **A late lab callback erased the refund.** `charge.refunded` marks the order `refunded`, and
+   the kit cannot be un-posted — so the sample is still processed and Vitall reports
+   `results-available` hours later. The Vitall webhook wrote its status map straight onto the
+   row, so that callback set `results_received` and destroyed the only record in our system
+   that a refund happened. The same shape erases a `data_purged` GDPR erasure, which is worse:
+   that one carries a legal obligation and nothing else proves it. Fixed by a terminal-status
+   guard applied as a filter ON the UPDATE (`lib/orders/terminalStatus.ts`), not a read-then-
+   write — the two senders are independent and the race window is exactly when both fire.
+2. **`charge.refunded` fires on PARTIAL refunds too, with no field saying which.** The only
+   signal is the arithmetic, and this is not hypothetical: the T&Cs sell a bundle whose retest
+   portion is separately refundable ("you can ask us to refund the retest portion instead of
+   banking it, at any time before it is dispatched"). Treating a partial as a full refund would
+   mark a £179 order refunded over a £20 adjustment, hide it, and cancel the very retest still
+   owed. Split in `lib/orders/refund.ts`; a partial changes no status and only alerts, because
+   only a human knows which portion the money came off.
+3. **A refunded bundle still posted its second kit.** The second kit is owed by a
+   `bundle_dispatches` row, not a second charge, so the daily sweep carried on toward shipping
+   it at our cost after the money went back. That is the one piece of future spend a refund can
+   still reach, and it is now cancelled. Inert today (`BUNDLES_ENABLED` is off) and live the
+   moment it is flipped.
+
+**Proof:** `scripts/test-refund-classification.ts`, 100 assertions, wired into `npm test`.
+Proved by making it fail three ways — `>=` narrowed to `===` (over-refund misreads as partial),
+`scheduled` dropped from the cancellable list, `refunded` dropped from the terminal set. ⚠ The
+third control initially raised ONE failure where it should have raised two: the "every status is
+classified" assertion computed its pipeline list by filtering the enum with the constant under
+test, so dropping a value just moved it to the other side and the arithmetic still balanced. A
+test whose expected value is derived from the code under test cannot fail. Rewritten as two
+literal lists; the same control now raises two. Observation 821.
+
+✅ **SUBSCRIBED 2026-09-15.** Keith added `charge.refunded` and `charge.dispute.created` in
+Developers → Webhooks; the endpoint now carries six events. The same screenshot settled the
+open `invoice.payment_failed` question — it is ticked, and it is already handled on deployed
+`main`, so the T-07 dunning path is live now. (What that does **not** establish is history:
+the event was absent from the repo's record for months, so "working since Phase 7" is not a
+claim anyone can make. It works from 2026-09-15.)
+
+Stripe's own description of `charge.refunded`, read off that screen, is worth recording because
+it independently confirms the design decision above: *"Occurs whenever a charge is refunded,
+**including partial refunds**."* The full/partial split was not defensive programming.
+
+#### 🔴 A NEW FINDING CREATED BY THE ORDER THESE TWO STEPS WERE DONE IN
+
+Subscribing before deploying opened a window in which the events are **destroyed rather than
+queued**, and nothing reports it. Production runs `main` (`4a43864`), which has no branch for
+either event. The handler claims the event id in `processed_stripe_events` *before* it branches
+on `event.type` — correct, and what makes Stripe retries safe — so an event arriving now is
+recorded as processed, does nothing, and returns 200. Stripe reads that as successful delivery
+and never retries. After the deploy, a resend of the same event hits the unique constraint and
+exits `deduped: true`. **Permanently unprocessable, silently.**
+
+The general rule this yields: **deploy the handler, then subscribe the event — never the
+reverse** — and it applies to any consumer with an idempotency ledger that claims before it
+dispatches, which is most of them. The dedupe write is deliberately the first thing the handler
+does, so "no branch for this type" and "already handled this id" are indistinguishable to
+everything downstream.
+
+Keith accepted the window knowingly: refunds are merchant-initiated only, there is one real
+order and it is already refunded, so the probability is near zero. Verified clean at the time
+of writing — `processed_stripe_events` still 4 rows, all `checkout.session.completed`, newest
+`01:01:53`. **The live constraint while it is open ("do not issue a refund until the branch
+deploys"), and the deploy-time step that repairs the Gate 3 row, are both recorded at the top
+of `STATE.md`** rather than here, because that is the file the next session actually opens.
 ### New tooling, session 2 (continued)
 
 | File | Closes |
@@ -877,9 +968,28 @@ like the assertion firing. Observations 813 to 815.
 
 ## Still to do
 
-1. **Copy register reconciliation** — the 48 rows. The scanner cannot do this: it grades
-   what is on the page and cannot know a line was shortened from an approved original or
-   moved past the buying decision.
+1. ✅ **Copy register reconciliation — DONE 2026-09-15. Phase 4 ran, for the first time.**
+   Full write-up in `redesign-copy-register.md`'s Closed section. Headline: **the merge removes
+   fifteen HARD findings and adds none** (18 on `main`, 3 on the branch, sixteen of main's
+   eighteen being live verdict-vocabulary defects the branch fixes). `/membership` and `/demo`
+   return 0 HARD / 0 REVIEW. Ashwagandha clean across seven synonym forms. Every EFSA claim
+   exact. ⚠ It was never 48 rows — **78** — because the `## Closed` heading sat mid-table and
+   27 rows had been appended behind it. Every row now carries a disposition and an owner. The
+   independent second pass found nine further `/demo` findings a scanner cannot see, and six
+   corrections owed to the register itself. **Row 6, the register's only self-declared blocker,
+   turned out not to be clinical at all** — a mis-citation, corrected.
+
+   ⚠ **What the plan's own scoping missed, and a question from Keith found:** Phase 4 is defined
+   as "the branch diff", so the 18 articles and the 26 SEO snippets — both **database-served** —
+   could never appear in it. Scanned separately: articles **13 HARD / 53 REVIEW**, exactly the
+   figure the compliance skill recorded for that corpus on 2026-09-08, so zero drift; snippets
+   **0 HARD / 1 REVIEW**, carried from an approved excerpt and already live. The MDX mirror was
+   confirmed in step with the served bodies first. The fragment pass ran per-article with a named
+   source: **0 HARD on all fifteen, zero figure-not-in-source findings.**
+
+   **Still owed, and none of it is a pass — it is signatures:** 26 sign-off rows, 5 missing
+   rulings, and the CA-045 scope note that matters most (the packet describes ONE surface; the
+   `HeroField` layer now renders on **seven**).
 2. **Gated routes with a real session** — the seven `(app)` routes, both internal boards
    and `/blog/preview/[slug]` have never been measured; anonymously they redirect.
 3. **The 10 fixture scenarios** on the results dashboard (`npm run db:seed`).

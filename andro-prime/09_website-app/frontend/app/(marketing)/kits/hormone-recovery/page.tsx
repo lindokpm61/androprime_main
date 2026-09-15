@@ -59,10 +59,32 @@ import type { KitType } from '@/lib/results/types'
  *      into one at all. This change makes them consistent, not singular.
  *
  * FAI: the frame badges it "Reported"; the product badges it
- * FAI_REPORT_ONLY.badge ("Not interpreted"). The product wins, because that is
- * a clinical ruling (Ewa, thresholds.md item 8) and not a label choice. The
- * absent bar is deliberate for the same reason: resolveBarZones returns [] for
- * FAI because a coloured bar IS a verdict.
+ * FAI_REPORT_ONLY.badge ("Not interpreted"). The product wins.
+ *
+ * ⚠ CITATION CORRECTED 2026-09-15. This comment used to say the product wins
+ * "because that is a clinical ruling (Ewa, thresholds.md item 8) and not a label
+ * choice". Both halves of that were wrong, and copy-register row 6 was opened as
+ * a CLINICAL blocker owed to Ewa on the strength of it:
+ *
+ *   - Item 8 of that list is the GP-block set. The FAI item is 7 (and (8) in the
+ *     2026-06-16 locked list), and it reads "keep report-only — do not band in
+ *     men". It rules on BANDING. It names no display word at all.
+ *   - "Not interpreted" is KEITH's ruling K1 of 2026-08-12, recorded in
+ *     03_compliance/STATE.md, which replaced an incorrect "Borderline" on the
+ *     Kit 1 LP. Ewa separately approved the report-only WORDING on 2026-08-07
+ *     ("wording is fine for now" — her "for now" is doing work) and CA-034 E2
+ *     confirmed the `fai-reported` copy.
+ *
+ * So there is no contradiction between this page and the BADGES map, and no
+ * clinical question outstanding: Ewa ruled FAI is not banded, and both
+ * "Reported" (the engine/dashboard word) and "Not interpreted" (the marketing
+ * badge) satisfy that. Which word ships where is a consistency decision for
+ * Keith, not a ruling owed to Ewa. Row 6 is a documentation defect and PRODUCT.md
+ * was corrected in the same pass.
+ *
+ * The absent bar is deliberate and IS the clinical ruling: resolveBarZones
+ * returns [] for FAI because a coloured bar IS a verdict, and item 7 forbids
+ * banding it.
  *
  * What did NOT change: every word of copy, the metadata, the commerce
  * components, the bundles flag behaviour, the two attributed founder quotes,

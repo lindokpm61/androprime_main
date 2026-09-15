@@ -4,11 +4,37 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2: Phase 5's environment half, the per-corpus checks, and a LIVE purchase that closed Gate 3 — then a live refund that opened S2-9. Five findings, every one of them already live on `main` and none a Direction F regression: two build variables the production build never received, so GA4 and the cookie banner have never run on the live site (fixed, Keith set Coolify); an endpoint that dispatched physical kits with no authentication (REMOVED); two accessibility defects on every published article, invisible while the sweep measured one article of eighteen (fixed, 58 findings to 0); Gate 3 CLOSED on a real £99 payment traced to a delivered email in 5 seconds; and a refund that moves the money and nothing else, missing at three layers**)
+## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2: Phase 5's environment half, the per-corpus checks, and a LIVE purchase that closed Gate 3 — then a live refund that opened S2-9. Five findings, every one of them already live on `main` and none a Direction F regression: two build variables the production build never received, so GA4 and the cookie banner have never run on the live site (fixed, Keith set Coolify); an endpoint that dispatched physical kits with no authentication (REMOVED); two accessibility defects on every published article, invisible while the sweep measured one article of eighteen (fixed, 58 findings to 0); Gate 3 CLOSED on a real £99 payment traced to a delivered email in 5 seconds; and a refund that moved the money and nothing else, missing at three layers — **S2-9 now closed in code: Keith took all three decisions, the `charge.refunded` + `charge.dispute.created` handlers shipped with a terminal-status guard and 100 assertions, and the one thing still owed is two ticks in the Stripe dashboard**)
 
 Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-09-15".
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing pushed to
 `main`, no deploy ran. The three merge blockers are unchanged and all three are signatures.
+
+### 🔴 TWO LIVE CONSTRAINTS FROM S2-9 — read before refunding anything or deploying
+
+**1. DO NOT ISSUE A REFUND OR LET A DISPUTE HAPPEN UNTIL `redesign/direction-f` IS DEPLOYED.**
+Stripe was subscribed to `charge.refunded` and `charge.dispute.created` on 2026-09-15, but
+production runs `main` (`4a43864`), which has **no branch for either**. The deployed handler
+claims the event id in `processed_stripe_events` *before* it branches on `event.type`. So an
+event arriving now is recorded as processed, does nothing, returns 200 — Stripe sees a
+successful delivery and never retries — and after the deploy a resend hits the unique
+constraint and exits `deduped: true`. **The event becomes permanently unprocessable and
+nothing reports a loss.** Keith accepted this window knowingly on 2026-09-15: refunds are
+merchant-initiated only, there is one real order and it is already refunded, so the
+probability is near zero. It stops being near zero the moment a second real customer exists.
+Verified clean at the time of writing: `processed_stripe_events` still 4 rows, all
+`checkout.session.completed`, newest `01:01:53`.
+
+**2. ON THE DEPLOY, RESEND THE HISTORICAL REFUND EVENT — expires 2026-10-15.**
+The Gate 3 order `f83ef982-397f-4007-a469-bcc5f8913f49` still reads `status: dispatched` with
+the £99 refunded (`pi_3UFkkpLU0SDiIplT1Qob0G00`, untouched since `01:01:56.708`). Once the
+branch is live: **Stripe → Developers → Events → the `charge.refunded` from 01:20:06 on
+2026-09-15 → Resend to the `andro-prime.com` endpoint.** That repairs the row *and* proves the
+whole handler on a genuine Stripe event rather than unit tests — the one thing this work has
+not had. ⚠ **Stripe retains events for 30 days, so this is good until roughly 2026-10-15.**
+After that the only repair is a manual SQL update, and the end-to-end proof is gone with it.
+If the Resend option is not offered for an endpoint that was not subscribed when the event
+fired, fall back to the SQL and say so — do not report the handler as proven either way.
 
 ### ▶️ WHAT THE NEXT SESSION PICKS UP, IN ORDER
 
@@ -16,24 +42,26 @@ Nothing below is blocked on anything in this session. Branch `redesign/direction
 `bdefd1a`, **not merged and not deployed** — Coolify builds `main`, and production still
 serves `7ecad99`. Full detail: `qa/direction-f-migration-audit.md`, sections S2-1 to S2-9.
 
-1. **Three decisions on refunds, and none of them is mine to make** (S2-9). A refund moves the
-   money and nothing else: Keith refunded the live Gate 3 order at 01:20:06 and eighteen
-   minutes later Stripe said refunded while the app still said `dispatched`, with a kit in the
-   post. Missing at three layers — Stripe is not subscribed to the event, the handler has no
-   branch for it, and `kit_orders.status = 'refunded'` has no writer anywhere. The decisions:
-   (a) subscribe to **`charge.refunded`** — NOT `payment_intent.canceled`, which is the
-   obvious guess and catches nothing, because Stripe models this as a refund against the
-   charge and leaves the intent `succeeded`; (b) what a refund should DO to an order whose kit
-   has already shipped, since it cannot be un-posted; (c) whether a developer machine should
-   hold a live Stripe key — `.env.local` has `sk_live_`, against the repo's own convention.
+1. ✅ **S2-9 refunds — DONE in code and SUBSCRIBED in Stripe, 2026-09-15.** All three decisions
+   taken by Keith, handler and guards shipped, 100 assertions in `npm test`, and the endpoint
+   now carries all six events (`charge.refunded` and `charge.dispute.created` added; screenshot
+   confirms `invoice.payment_failed` is on too, which settles the old item 2 — see below).
+   Full detail in the S2-9 block, including three things the original finding did not name (a
+   late lab callback erased the refund; `charge.refunded` fires on partials the T&Cs actually
+   sell; a refunded bundle still posted its second kit). **Two live constraints came out of it
+   and are boxed immediately below — read them before touching Stripe or deploying.**
 
-2. **`invoice.payment_failed` may be handled but never delivered.** The webhook branches on
-   it (the T-07 dunning path), and the only record of the endpoint's subscription list
-   (`docs/phase7-implementation-plan.md:74`) names three events, not including it. If Stripe
-   is not sending it, dunning emails can never fire. Unverified from here — the Stripe
-   connector is not authorised in this session, and `processed_stripe_events` has only ever
-   recorded `checkout.session.completed`, which is consistent but not proof. One look at
-   Developers → Webhooks settles it.
+2. ✅ **`invoice.payment_failed` — SETTLED 2026-09-15, and it works.** The subscription list was
+   read directly off the Stripe endpoint: it is ticked, and unlike the two charge events it is
+   **already handled on deployed `main`**, so the T-07 dunning path is live right now with no
+   deploy needed. ⚠ **What is still unknown is the HISTORY**: this event has been handled in
+   code since Phase 7 while absent from the repo's record of the subscription list, and
+   `processed_stripe_events` has only ever recorded `checkout.session.completed`. That is
+   equally consistent with "never subscribed until today" and with "subscribed all along but
+   no invoice has ever failed" — there has been almost no subscription volume either way. So
+   do not claim dunning has been working since Phase 7; claim only that it works from
+   2026-09-15. The repo's record is now corrected in `docs/phase7-implementation-plan.md`,
+   which is what let this stay wrong for months.
 
 3. **The `pending` / `cancelled` gap on the dispatch path.** `dispatchKit` will still ship a
    kit for an order at `pending`, `cancelled`, `refunded` or `on_hold`. A `pending` order has
@@ -129,7 +157,7 @@ otherwise had excluded `app/go/` assuming it held only the route handler. Produc
 `events`, none from a real visitor.** Recorded so launch analytics are not misread as early
 traffic. Cause is the one already named: no local Supabase, so local runs hit production.
 
-### 🔴 A refund moves the money and nothing else — proven on the live Gate 3 order
+### ✅ A refund moved the money and nothing else — proven on the live Gate 3 order, fixed the same day
 
 Keith refunded the Gate 3 purchase on 2026-09-15 to see what would happen. Nothing happened,
 at three independent layers. Read from **live** Stripe (`livemode: true`), not inferred:
@@ -160,9 +188,56 @@ repo's own convention in `deployment/env/vars.md` ("sk_test_* locally"). A check
 machine charges a real card. Same shape as the Supabase finding below — no local environment, so
 local runs hit production — except here it costs money rather than fake analytics rows.
 
-**Not fixed. Three separate decisions:** whether to subscribe to `charge.refunded`, what a
-refund should do to an order whose kit has already shipped, and whether a dev machine should
-hold a live payment key.
+**✅ CLOSED IN CODE 2026-09-15 — Keith took all three decisions in session.**
+
+- **(a)** Subscribe to **`charge.refunded` AND `charge.dispute.created`**. Both branches shipped.
+- **(b)** **Record, stop the money, alert — do not attempt to unwind.** A full refund sets
+  `kit_orders.status = 'refunded'`, cancels every owed second kit on that order, and ops-alerts
+  with the customer/kit/amounts and whether the kit had already shipped. Results the customer
+  already has stay visible.
+- **(c)** **The live Stripe key stays on the dev machine — accepted risk, not an oversight.**
+  Solo machine, sole developer. Written up as a standing exception in `deployment/env/vars.md`
+  next to the convention it breaks (the old "locally configured with test keys" line there was
+  simply false and has been replaced). It expires the moment a second developer, a CI runner or
+  a cloud dev environment touches this repo.
+
+Shipped: `lib/orders/refund.ts`, `lib/orders/terminalStatus.ts`, two branches in
+`app/api/webhooks/stripe/route.ts`, a terminal-status guard on the Vitall webhook's status
+write, and `scripts/test-refund-classification.ts` (100 assertions, in `npm test`, proved by
+making it fail three ways). `npm test` 0, `typecheck` 0, `build` 0.
+
+**Three things the original finding did not name, found while building it:**
+
+1. **A late lab callback erased the refund.** The kit cannot be un-posted, so the sample is
+   still processed and Vitall reports `results-available` hours later — which set
+   `results_received` over `refunded` and destroyed the only record of the refund in our
+   system. Same shape erases a `data_purged` GDPR erasure, which carries a legal obligation.
+   Now guarded as a filter ON the update, not a read-then-write.
+2. **`charge.refunded` fires on PARTIAL refunds too**, with no field saying which — and the
+   T&Cs SELL a partial (the separately refundable retest portion of a bundle). Treating one as
+   full would mark a £179 order refunded over a £20 adjustment and cancel the retest still
+   owed. A partial now changes no status and only alerts.
+3. **A refunded bundle still posted its second kit** — owed by a `bundle_dispatches` row, not a
+   second charge, so the sweep carried on shipping at our cost after the money went back.
+   Inert while `BUNDLES_ENABLED` is off; live the moment it is flipped.
+
+✅ **SUBSCRIBED 2026-09-15, same session.** Keith added `charge.refunded` and
+`charge.dispute.created` in Developers → Webhooks; the endpoint now carries all six events,
+confirmed from the dashboard screen itself rather than inferred. That screen also settled the
+old open question on `invoice.payment_failed`: it is ticked, **and it is already handled on
+deployed `main`**, so the T-07 dunning path is live from 2026-09-15 with no deploy needed. ⚠ It
+does NOT establish history — the event was absent from the repo's record for months, so "dunning
+has worked since Phase 7" is not a claim anyone can make. Both events are now written into
+`docs/phase7-implementation-plan.md` with the one-look check and the ordering warning.
+
+⚠ **Stripe's own description of `charge.refunded`, read off that screen, independently confirms
+the design decision above:** *"Occurs whenever a charge is refunded, including partial refunds."*
+The full-versus-partial split was not defensive programming.
+
+🔴 **The two live constraints this created are at the TOP of this file**, not here, because they
+govern what Keith may do between now and the deploy. Short form: do not issue a refund until the
+branch deploys (an event now is destroyed silently), and resend the historical refund event once
+it does (expires ~2026-10-15 on Stripe's 30-day retention).
 
 ### Both of these are now DONE — kept because the reasoning still matters
 

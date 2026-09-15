@@ -38,7 +38,7 @@ For Coolify deployment instructions see `deployment/coolify/deploy.md`.
 | Variable | Type | Status | Notes |
 |---|---|---|---|
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Build | ✅ | pk_test_* locally; pk_live_* in production |
-| `STRIPE_SECRET_KEY` | Runtime | ✅ | sk_test_* locally; sk_live_* in production |
+| `STRIPE_SECRET_KEY` | Runtime | ✅ | sk_test_* locally; sk_live_* in production — ⚠ **see the standing exception below** |
 | `STRIPE_WEBHOOK_SECRET` | Runtime | ✅ | whsec_* — from Stripe webhook endpoint signing secret |
 | `STRIPE_PRICE_KIT_1` | Runtime | ✅ | Kit 1 — Testosterone Health Check (£99 — v2.2) |
 | `STRIPE_PRICE_KIT_2` | Runtime | ✅ | Kit 2 — Energy & Recovery (£119 — v2.2) |
@@ -52,8 +52,25 @@ For Coolify deployment instructions see `deployment/coolify/deploy.md`.
 | `STRIPE_COUPON_SUBSCRIBER10` | Runtime | ⏳ | Optional: subscriber kit discount. Discount only applied if the coupon id is set (`app/api/checkout/kit/route.ts`) |
 | `STRIPE_COUPON_LAUNCHDAY10` | Runtime | ⏳ | Optional: launch-day kit discount. Same conditional behaviour |
 
-> Locally configured with test keys. Switch to live keys for production deployment.
-> The three `STRIPE_PRICE_BUNDLE_*` prices back the two-kit bundle mechanism; SKU->env mapping is in `lib/bundles/config.ts`.
+The three `STRIPE_PRICE_BUNDLE_*` prices back the two-kit bundle mechanism; SKU->env mapping is in `lib/bundles/config.ts`.
+
+> ⚠ **STANDING EXCEPTION — the developer machine holds LIVE Stripe keys, deliberately.**
+> This file used to say "locally configured with test keys; switch to live keys for production
+> deployment". That was not true: `.env.local` carries `sk_live_*` alongside live price ids, so
+> a checkout run on the developer machine charges a real card. Found 2026-09-15 while
+> evidencing S2-9 (`qa/direction-f-migration-audit.md`) — and it is the only reason that
+> finding could be evidenced at all.
+>
+> **Keith's decision, same day, made knowing the finding: it stays.** Solo machine, sole
+> developer; the alternative needed test-mode prices created for all seven products before
+> local checkout would work again. This is an accepted risk, not an oversight — recorded here
+> so nobody "fixes" it back without knowing it was chosen.
+>
+> **Two things follow.** Running `npm run dev` and completing a checkout on this machine takes
+> real money from a real card: there is no test-mode safety net and no local Supabase either,
+> so the order lands in the production database (S2-6, same cause). And the exception is scoped
+> to a single-developer machine — **it expires the moment a second developer, a CI runner or a
+> cloud dev environment touches this repo.** Revisit it then, not before.
 
 ---
 

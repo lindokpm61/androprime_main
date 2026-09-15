@@ -16,6 +16,11 @@ import { isBundlesEnabled } from '@/lib/flags'
 import { BUNDLE_CONFIG } from '@/lib/bundles/config'
 import { isValidBundleType, isValidKitType, computeBundleDueAt } from '@/lib/bundles/checkout'
 import { dispatchKit } from '@/lib/vitall/dispatchKit'
+import {
+  isFullRefund,
+  isPartialRefund,
+  CANCELLABLE_DISPATCH_STATUSES,
+} from '@/lib/orders/refund'
 import type { KitType } from '@/lib/results/types'
 import { SITE_URL } from '@/lib/site-url'
 import { formatOrderRef } from '@/lib/orders/orderRef'
@@ -152,6 +157,36 @@ type InvoiceFields = {
   period_end?: number | null
   status_transitions?: { paid_at?: number | null } | null
   lines?: { data?: Array<{ period?: { end?: number | null } | null }> } | null
+}
+
+/**
+ * Structural views of the Stripe Charge and Dispute fields the refund/dispute
+ * handlers read, kept independent of the installed SDK's exact type surface —
+ * the same loose-cast pattern used for checkout sessions and invoices above.
+ */
+type ChargeFields = {
+  id: string
+  amount: number
+  amount_refunded: number
+  currency?: string | null
+  payment_intent?: string | { id?: string | null } | null
+}
+
+type DisputeFields = {
+  id: string
+  amount: number
+  currency?: string | null
+  reason?: string | null
+  status?: string | null
+  charge?: string | { id?: string | null } | null
+  payment_intent?: string | { id?: string | null } | null
+  evidence_details?: { due_by?: number | null } | null
+}
+
+/** Stripe returns an id or the expanded object; we only ever want the id. */
+function idOf(ref: string | { id?: string | null } | null | undefined): string | null {
+  if (typeof ref === 'string') return ref
+  return ref?.id ?? null
 }
 
 export async function POST(request: NextRequest) {
@@ -511,6 +546,10 @@ export async function POST(request: NextRequest) {
           data: { product_name: productName(resolved.productSlug) },
         })
       }
+    } else if (event.type === 'charge.refunded') {
+      await handleChargeRefunded(supabase, event.data.object as unknown as ChargeFields)
+    } else if (event.type === 'charge.dispute.created') {
+      await handleDisputeCreated(supabase, event.data.object as unknown as DisputeFields)
     }
   } catch (err) {
     console.error('[stripe-webhook] Unhandled error processing event:', err)
@@ -553,6 +592,244 @@ async function triggerVitallDispatch({
   } catch (err) {
     console.error('[stripe-webhook] Failed to trigger Vitall dispatch:', err)
   }
+}
+
+/**
+ * A refund landed on a charge. Record it, stop what it should stop, tell Keith.
+ *
+ * Added 2026-09-15 (S2-9). Before this, a refund moved the money and nothing
+ * else: Stripe was not subscribed to the event, the handler had no branch for
+ * it, and `kit_orders.status = 'refunded'` had no writer anywhere in the
+ * codebase while the account page already rendered a label for it. Proven on a
+ * live £99 order — refunded at 01:20, and eighteen minutes later the app still
+ * said `dispatched` with a kit in the post.
+ *
+ * What it cannot do is un-post that kit. So this is deliberately a RECORD-AND-
+ * STOP path, not an unwind: it makes our row agree with Stripe, kills the only
+ * future spend still attached to the order (an owed second kit), and hands a
+ * human the linkage. Everything already physical stays physical.
+ *
+ * Refunds here are always merchant-initiated — there is no self-serve refund in
+ * the product — so this handler never decides whether a refund was correct. It
+ * reports one that has already happened.
+ */
+async function handleChargeRefunded(
+  supabase: ReturnType<typeof createSupabaseAdminClient>,
+  charge: ChargeFields,
+) {
+  const paymentIntentId = idOf(charge.payment_intent)
+  const full = isFullRefund(charge)
+  const partial = isPartialRefund(charge)
+
+  const money = {
+    charge_id: charge.id,
+    payment_intent: paymentIntentId,
+    amount_charged: formatGbp(charge.amount),
+    amount_refunded: formatGbp(charge.amount_refunded),
+    currency: (charge.currency ?? 'gbp').toUpperCase(),
+  }
+
+  // No intent means no way to reach an order. Subscription refunds land here by
+  // design: `supplement_subscriptions` and `memberships` key on the
+  // subscription id and carry no payment intent, so there is no row to mark.
+  // Alert rather than return silently — the money moved either way.
+  if (!paymentIntentId) {
+    console.error('[stripe-webhook] Refund with no payment_intent:', charge.id)
+    await emitOpsAlert({ name: 'refund_unmatched', data: { ...money, reason: 'no_payment_intent' } })
+    return
+  }
+
+  // `.limit(2)` rather than `.single()`: one row is the expectation (a bundle's
+  // second kit carries a NULL payment intent, so the charge maps to exactly one
+  // order), but an unexpected duplicate should surface as an alert, not as a
+  // thrown PostgREST error inside a webhook that must still return 200.
+  const { data: orders, error: lookupError } = await supabase
+    .from('kit_orders')
+    .select('id, user_id, kit_type, status, order_seq, vitall_order_id')
+    .eq('stripe_payment_intent', paymentIntentId)
+    .limit(2)
+
+  if (lookupError) {
+    console.error('[stripe-webhook] Refund order lookup failed:', lookupError.message)
+    await emitOpsAlert({ name: 'refund_unmatched', data: { ...money, reason: 'lookup_failed' } })
+    return
+  }
+
+  const order = orders?.[0]
+
+  if (!order) {
+    console.error('[stripe-webhook] Refund matched no kit order:', paymentIntentId)
+    await emitOpsAlert({
+      name: 'refund_unmatched',
+      // Named separately from the kit case so the alert reads as "probably a
+      // subscription refund, check Stripe" rather than "we lost an order".
+      data: { ...money, reason: 'no_matching_kit_order' },
+    })
+    return
+  }
+
+  if (orders.length > 1) {
+    console.error('[stripe-webhook] Refund matched MULTIPLE kit orders:', paymentIntentId)
+    await emitOpsAlert({ name: 'refund_unmatched', data: { ...money, reason: 'multiple_matching_orders' } })
+    // Fall through: marking the first is still better than marking none, and the
+    // alert carries the intent id so a human can reconcile the rest.
+  }
+
+  const customerEmail = await cioKeyForUserId(supabase, order.user_id)
+  const context = {
+    ...money,
+    order_id: order.id,
+    order_ref: formatOrderRef(order.order_seq),
+    customer_email: customerEmail,
+    kit_type: order.kit_type,
+    status_before: order.status,
+    // The question Keith actually has to answer on reading the alert.
+    kit_already_shipped: Boolean(order.vitall_order_id),
+  }
+
+  // A partial refund is a supported product behaviour (the separately
+  // refundable retest portion of a bundle), not a half-broken full refund. The
+  // order is still live, so nothing is marked and nothing is cancelled — the
+  // whole response is to tell a human, because only a human knows which portion
+  // the money came off.
+  if (partial) {
+    console.warn(`[stripe-webhook] PARTIAL refund on order ${order.id} — status left at '${order.status}'.`)
+    await emitOpsAlert({ name: 'order_partially_refunded', data: context })
+    return
+  }
+
+  if (!full) {
+    // amount_refunded of 0: a refund object was created and then failed or was
+    // reversed. Nothing to record, but worth seeing.
+    console.warn('[stripe-webhook] charge.refunded with nothing refunded:', charge.id)
+    await emitOpsAlert({ name: 'refund_unmatched', data: { ...context, reason: 'zero_amount_refunded' } })
+    return
+  }
+
+  // Full refund. Mark the order — but never over `data_purged`, which records a
+  // GDPR erasure carried out on the lab side and is the only proof in our system
+  // that it happened. A refund is recoverable from Stripe at any time; that
+  // erasure record is not, so where the two collide the erasure wins and the
+  // refund is reported instead. See lib/orders/terminalStatus.ts.
+  const { data: updated, error: updateError } = await supabase
+    .from('kit_orders')
+    .update({ status: 'refunded' })
+    .eq('id', order.id)
+    .neq('status', 'data_purged')
+    .select('id')
+
+  if (updateError) {
+    console.error('[stripe-webhook] Failed to mark order refunded:', updateError.message)
+    await emitOpsAlert({ name: 'refund_write_failed', data: { ...context, error: updateError.message } })
+    return
+  }
+
+  const statusWritten = (updated?.length ?? 0) > 0
+  if (!statusWritten) {
+    console.warn(
+      `[stripe-webhook] Order ${order.id} refunded but left at 'data_purged' — erasure record preserved.`,
+    )
+  }
+
+  // Stop the second kit. A bundle is one payment for two kits, so refunding it
+  // takes the money back while the daily sweep carries on toward posting kit two
+  // at our cost — the one piece of future spend a refund can still reach.
+  let secondKitsStopped = 0
+  const { data: cancelled, error: cancelError } = await supabase
+    .from('bundle_dispatches')
+    .update({ status: 'cancelled' })
+    .eq('parent_order_id', order.id)
+    .in('status', [...CANCELLABLE_DISPATCH_STATUSES])
+    .select('id, kit_type, status')
+
+  if (cancelError) {
+    // Not fatal to the refund record, but it IS the money half — alert loudly.
+    console.error('[stripe-webhook] Failed to cancel owed second kits:', cancelError.message)
+    await emitOpsAlert({
+      name: 'refund_second_kit_not_stopped',
+      data: { ...context, error: cancelError.message },
+    })
+  } else {
+    secondKitsStopped = cancelled?.length ?? 0
+  }
+
+  console.warn(
+    `[stripe-webhook] REFUNDED order ${order.id} (${context.order_ref}) — ${money.amount_refunded} ${money.currency}; ` +
+      `${secondKitsStopped} owed second kit(s) cancelled; kit already shipped: ${context.kit_already_shipped}.`,
+  )
+
+  await emitOpsAlert({
+    name: 'order_refunded',
+    data: {
+      ...context,
+      status_written: statusWritten,
+      second_kits_stopped: secondKitsStopped,
+    },
+  })
+}
+
+/**
+ * A customer disputed a charge (chargeback).
+ *
+ * Handled alongside refunds because it is the same money leaving by a different
+ * door, and the one with a deadline: Stripe holds the amount plus a fee and
+ * gives a fixed window to submit evidence. Missing that window is the actual
+ * cost, and nothing else in this system would surface it.
+ *
+ * Deliberately does NOT touch the order. A dispute is not an outcome — the money
+ * is held pending, and it may come back. `order_status` has no value for "under
+ * dispute", and inventing one out of `refunded` would falsify the record on
+ * every dispute we go on to win. So this branch alerts and stops; if the dispute
+ * is lost, Stripe emits a refund-shaped event and the handler above records it.
+ */
+async function handleDisputeCreated(
+  supabase: ReturnType<typeof createSupabaseAdminClient>,
+  dispute: DisputeFields,
+) {
+  const paymentIntentId = idOf(dispute.payment_intent)
+
+  const base = {
+    dispute_id: dispute.id,
+    charge_id: idOf(dispute.charge),
+    payment_intent: paymentIntentId,
+    amount: formatGbp(dispute.amount),
+    currency: (dispute.currency ?? 'gbp').toUpperCase(),
+    reason: dispute.reason ?? 'unknown',
+    dispute_status: dispute.status ?? 'unknown',
+    // The deadline. Rendered as a date because "respond by 29 September" is the
+    // only part of this alert that changes what anyone does today.
+    evidence_due_by: formatStripeDate(dispute.evidence_details?.due_by),
+  }
+
+  let context: Record<string, unknown> = base
+
+  if (paymentIntentId) {
+    const { data: orders } = await supabase
+      .from('kit_orders')
+      .select('id, user_id, kit_type, status, order_seq, vitall_order_id')
+      .eq('stripe_payment_intent', paymentIntentId)
+      .limit(2)
+
+    const order = orders?.[0]
+    if (order) {
+      context = {
+        ...base,
+        order_id: order.id,
+        order_ref: formatOrderRef(order.order_seq),
+        customer_email: await cioKeyForUserId(supabase, order.user_id),
+        kit_type: order.kit_type,
+        order_status: order.status,
+        kit_already_shipped: Boolean(order.vitall_order_id),
+      }
+    }
+  }
+
+  console.error(
+    `[stripe-webhook] DISPUTE OPENED ${dispute.id} — ${base.amount} ${base.currency}, reason '${base.reason}', ` +
+      `evidence due ${base.evidence_due_by || 'unknown'}. Order NOT modified; respond in Stripe.`,
+  )
+
+  await emitOpsAlert({ name: 'charge_disputed', data: context })
 }
 
 // Create the bundle_dispatches row that owes the customer their second kit. The

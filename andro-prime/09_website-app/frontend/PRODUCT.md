@@ -179,7 +179,21 @@ there are exactly six of them:
 2026-08-26, when the membership screen needed the same answer and the alternative was a second list
 of "which states mean something is wrong". The badge still renders from it. **This entry pointed at
 the old path until 2026-09-02**, and it also listed the wrong words: it omitted Optimal, Reported
-and See Your GP, and invented "Not interpreted", which the engine has never returned.
+and See Your GP, and listed "Not interpreted", which the engine has never returned.
+
+⚠ **Corrected 2026-09-15: "Not interpreted" was not invented, and calling it so is what kept
+copy-register row 6 open as a clinical blocker.** It is a real ruling, just a different one on a
+different surface. **Keith's K1 of 2026-08-12** (`03_compliance/STATE.md`) set it as the MARKETING
+badge, replacing an incorrect "Borderline" on the Kit 1 LP, and `lib/kits/panel.ts` is where it
+lives. The engine's own word is "Reported" (`BADGES.fai-reported`), whose copy Ewa approved on
+2026-08-07 and confirmed at CA-034 E2.
+
+**Ewa's clinical ruling is item 7 of `thresholds.md`: "keep report-only — do not band in men."** It
+governs banding, not vocabulary, and BOTH words satisfy it. So there is no clinical question open
+here, and no contradiction between the engine and the kit pages — one word is the dashboard's, one
+is the marketing badge's. Whether they should be the same word is a consistency call for Keith.
+The mis-citation that made this look clinical is corrected at
+`app/(marketing)/kits/hormone-recovery/page.tsx`.
 
 🔴 **Normal / Borderline / Low is retired, and the claim that the product "uses it nowhere" was
 false when this file said it.** It was live on `/`, `/kits/testosterone` and the direction mockup
