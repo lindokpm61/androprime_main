@@ -539,6 +539,19 @@ radius is every article an author writes from here on. **Fixed** by mapping `tab
 `mdxComponents` to the wrapper — outside the table, since `overflow-x` on the table itself
 does not create a scroll container for its own box.
 
+#### Verified
+
+Re-run after both fixes, against a fresh production build:
+
+```text
+67 routes x 3 widths = 201 cells; 195 measured
+✓ positive control: both probes found a planted overflow and a planted 1.9:1 text node
+🟢 no overflow and no sub-AA light-ground text across 195 cells.
+```
+
+58 findings to 0, exit 0. The positive control fired on the same run, so the clean result is
+a measurement rather than a probe that stopped looking.
+
 #### Why both were invisible
 
 Neither is reachable by the gates that pass. `tsc` sees valid CSS and valid TSX. The build
