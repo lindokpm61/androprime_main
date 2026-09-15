@@ -19,11 +19,14 @@ export async function sendActivationLink(formData: FormData) {
     redirect(`/activate?kit=${kitCode}&error=Service+unavailable`)
   }
 
+  // Truthiness, not `??`: the Dockerfile exports an unsupplied build secret as
+  // the empty string, which `??` would pass through. See lib/hosts.ts. (This
+  // module has had no caller since /activate was retired on 2026-09-12, so the
+  // localhost fallback cannot actually be reached — corrected anyway rather than
+  // excepted, so the rule holds everywhere without a table of exemptions.)
   const headerStore = await headers()
   const origin =
-    headerStore.get('origin') ??
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    'http://localhost:3000'
+    headerStore.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
   const supabase = await createSupabaseServerClient()
   const redirectTo = `${origin}/auth/callback?next=${encodeURIComponent(`/activate?kit=${kitCode}`)}`

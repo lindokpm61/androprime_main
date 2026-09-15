@@ -19,6 +19,20 @@ Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing 
    string**, so without the Coolify change nothing actually changes. Values are in
    `frontend/.env.local`.
 
+   ✅ **Confirmed 2026-09-15: Coolify's build secrets do work**, so once the name is in
+   Coolify the mount delivers it. Proven with `NEXT_PUBLIC_SENTRY_DSN`, the one variable
+   with no fallback literal in the code — it is in the production bundle and byte-identical
+   to `.env.local`, which it could only be if the mount reached the build. Keith has added
+   the GA4 id and says the app URL was already there.
+
+   ⚠ **Adding the mount was not free, and the follow-up matters.** Before the mount,
+   `NEXT_PUBLIC_APP_URL` was genuinely unset, so `lib/hosts.ts`'s `?? fallback` worked.
+   With the mount, an unsupplied secret arrives as the **empty string**, which `??` passes
+   through — `APP_URL` becomes `''`, `isAppHost()` goes false for every request, and the
+   app host stops being routed at all. Guarded now (truthiness, not `??`, in `hosts.ts`
+   and `auth/callback`), and `verify-env-contract.js` fails any
+   `process.env.NEXT_PUBLIC_* ?? …` anywhere in the app.
+
    What it has been costing: `GoogleAnalytics` returns `null` on an empty measurement id,
    so **GA4 has never fired in production**, and `CookieConsent` gates on the same
    variable, so **the cookie banner has never rendered there either**. Every Direction F

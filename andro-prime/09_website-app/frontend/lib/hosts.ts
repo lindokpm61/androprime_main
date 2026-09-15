@@ -50,9 +50,29 @@ export const APP_ROUTE_PREFIXES = [
   '/subscription/confirmed',
 ] as const
 
-/** Where the app host lives. NEXT_PUBLIC_ is inlined at BUILD time. */
+/**
+ * Where the app host lives. NEXT_PUBLIC_ is inlined at BUILD time.
+ *
+ * 🔴 THE FALLBACK MUST TEST TRUTHINESS, NOT NULLISHNESS. `??` only fires on
+ * `null`/`undefined`, and the Dockerfile exports every build secret as
+ * `$(cat /run/secrets/X 2>/dev/null || echo '')` — so a variable Coolify does
+ * not supply arrives as the EMPTY STRING, which `??` passes straight through.
+ * `APP_URL` would then be `''`, `hostnameOf('')` throws and returns `''`, and
+ * `isAppHost()` compares against `''` and is false for every request — the app
+ * host stops being recognised at all, `middleware.ts` stops routing to it, and
+ * `urlFor()` throws on an empty base. A whole-site failure from a missing
+ * variable, with nothing in the build to report it.
+ *
+ * This was latent until 2026-09-15: before then the Dockerfile did not mount
+ * NEXT_PUBLIC_APP_URL at all, so it was genuinely `undefined` and `??` worked.
+ * Adding the mount is what made the empty-string path reachable, so the guard
+ * lands in the same change. `lib/site-url.ts` already does it this way.
+ */
+const configuredAppUrl = process.env.NEXT_PUBLIC_APP_URL
 export const APP_URL: string = (
-  process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.andro-prime.com'
+  configuredAppUrl && configuredAppUrl.trim()
+    ? configuredAppUrl
+    : 'https://app.andro-prime.com'
 ).replace(/\/+$/, '')
 
 function hostnameOf(url: string): string {

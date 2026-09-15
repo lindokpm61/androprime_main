@@ -130,6 +130,23 @@ function fail(msg) {
   problems.push(msg)
 }
 
+/**
+ * Blank out comments, preserving every newline so reported line numbers stay true.
+ *
+ * Needed because assertion F matches a code SHAPE, and this repo documents that
+ * shape in prose: `lib/site-url.ts`'s header explains the very `?? fallback`
+ * pattern it was written to replace, and matching that comment made the checker
+ * report the one module that already does it correctly. A checker that flags the
+ * documentation of a rule as a violation of it gets switched off. Same failure the
+ * content-doctor guard hit when the verdict scanner described its own input.
+ */
+function stripComments(src) {
+  const blankOut = (m) => m.replace(/[^\n]/g, ' ')
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, blankOut) // block and JSDoc
+    .replace(/(^|[^:"'`\\])\/\/[^\n]*/g, (m, p1) => p1 + blankOut(m.slice(p1.length)))
+}
+
 function walk(dir, out = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name)
@@ -320,6 +337,27 @@ function main() {
     if (documented.has(name)) continue
     const where = [...allRead.get(name)].sort().join(', ')
     fail(`${name} is read by the app but absent from .env.example. Read in: ${where}`)
+  }
+
+  /* F. `process.env.NEXT_PUBLIC_X ?? fallback` is a defect in THIS repo, however
+     correct it looks. The Dockerfile exports every build secret as
+     `$(cat ... || echo '')`, so an unsupplied variable arrives as the EMPTY
+     STRING — and `??` only fires on null/undefined, so it passes the empty
+     string through and the fallback never runs. The consumer then works with
+     `''` instead of its default. On NEXT_PUBLIC_APP_URL that emptied APP_URL,
+     which would have made `isAppHost()` false for every request site-wide.
+     Truthiness (`||`, or an explicit check) is the correct operator here. */
+  for (const file of files) {
+    const src = stripComments(fs.readFileSync(file, 'utf8'))
+    const rel = path.relative(ROOT, file).replace(/\\/g, '/')
+    for (const m of src.matchAll(/process\.env\.(NEXT_PUBLIC_[A-Z0-9_]+)\s*\?\?/g)) {
+      const line = src.slice(0, m.index).split('\n').length
+      fail(
+        `${rel}:${line} uses \`process.env.${m[1]} ?? …\`. The Dockerfile exports ` +
+          `an unsupplied build secret as the empty string, which \`??\` passes ` +
+          `through, so the fallback never runs. Use a truthiness check instead.`
+      )
+    }
   }
 
   // E. build-time-only reads outside the NEXT_PUBLIC_ prefix

@@ -33,7 +33,18 @@ function getPublicBaseUrl(request: NextRequest): string {
 
   // No usable request host (direct container traffic). The auth flow belongs to
   // the app host, so that is the correct fallback here — not SITE_URL.
-  return process.env.NEXT_PUBLIC_SITE_URL ?? APP_URL
+  //
+  // Truthiness, not `??`: the Dockerfile exports an unsupplied build secret as
+  // the empty string, and `??` would pass that through and return `''` as the
+  // base URL. See the note on APP_URL in lib/hosts.ts.
+  //
+  // ⚠ The comment above and this expression disagree about which host wins, and
+  // have since before 2026-09-15: the comment says the app host is correct, the
+  // code prefers SITE_URL and uses APP_URL only as its fallback. Left as-is here
+  // because changing it changes where an auth callback lands, which is not an
+  // empty-string fix. Flagged in qa/direction-f-migration-audit.md.
+  const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  return configuredSiteUrl && configuredSiteUrl.trim() ? configuredSiteUrl : APP_URL
 }
 
 export async function GET(request: NextRequest) {

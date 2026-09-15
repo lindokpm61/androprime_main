@@ -239,6 +239,48 @@ cookie-consent banner appears on the live site, on every page, for every first-t
 visitor. Like the 26 SEO snippets already queued behind this branch, that should be a
 decision rather than a discovery.
 
+### 🔴 S2-1b The fix for S2-1 introduced a worse bug, and `??` is why
+
+Caught on re-check after Keith confirmed the Coolify side. **Adding a mount is not
+free**: before 2026-09-15 the Dockerfile did not mount `NEXT_PUBLIC_APP_URL` at all, so
+the variable was genuinely `undefined` and `lib/hosts.ts`'s `?? 'https://app.andro-prime.com'`
+worked exactly as written. After the mount, the `export` line always runs — and an
+unsupplied secret becomes the **empty string**, which `??` passes straight through
+because it only fires on `null`/`undefined`.
+
+`APP_URL` would then be `''`. `hostnameOf('')` throws and returns `''`, so `APP_HOSTNAME`
+is `''`, so `isAppHost()` is false for **every** request: `middleware.ts` stops recognising
+the app host, and `urlFor()` throws on an empty base URL. A site-wide auth-routing failure
+from a variable nobody set, with nothing in the build to report it — strictly worse than
+the missing-analytics bug being fixed.
+
+**Build secrets do work in Coolify, so this would not have fired in practice.** Proven with
+the one variable that has no fallback literal anywhere in the code: `NEXT_PUBLIC_SENTRY_DSN`
+is present in the production bundle and byte-identical to `.env.local`, which it could only
+be if the mount reached the build. (Sentry *events* prove nothing here — the latest is
+`environment: development`, `url: http://localhost:3000`, and with zero production traffic
+an absence of production events is not evidence either way.)
+
+Guard added regardless, because "correct as long as someone remembers the variable" is the
+exact shape this session exists to remove. `lib/hosts.ts` and `app/auth/callback/route.ts`
+now test truthiness; `lib/site-url.ts` already did. `sendActivationLink.ts` was corrected
+rather than excepted, so the rule holds with no exemption table.
+
+**Assertion F** in `verify-env-contract.js` now fails any
+`process.env.NEXT_PUBLIC_* ?? …` in the scanned corpus. ⚠ Its first run reported
+`lib/site-url.ts` — a **false positive on its own documentation**, since that module's
+header explains the very `?? fallback` pattern it was written to replace. A checker that
+flags the documentation of a rule as a violation of it gets switched off, so the assertion
+strips comments before matching, blanking them in place to keep line numbers true. Proved
+both ways: a real `??` reinstated in `lib/hosts.ts` fires the assertion by name, and the
+restored tree passes.
+
+⚠ **Separately, and not fixed:** the comment above that fallback in
+`app/auth/callback/route.ts` says the app host is the correct choice, while the code prefers
+`SITE_URL` and uses `APP_URL` only as its fallback. The two have disagreed since before this
+session. Changing it changes where an auth callback lands, which is a different decision
+from an empty-string guard, so it is flagged rather than touched.
+
 ### 🔴 S2-2 `/api/vitall/dispatch` dispatches physical kits with no authentication
 
 Live on both production hosts today (`GET` returns 405, so `POST` is accepted). Pre-existing
