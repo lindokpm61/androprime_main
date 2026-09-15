@@ -552,7 +552,17 @@ build task and it should be specified after the anchor is decided, not before.
 
 ---
 
-## 5. ⚠️ Before the 2026-07-17 cadence table is chased again
+## 5. ✅ CLOSED 2026-09-15. ~~Before the 2026-07-17 cadence table is chased again~~
+
+> **The rewrite happened, the pack was sent, and it was answered the same evening.** Sent
+> 2026-09-15 19:46 UTC, answered 20:18 UTC: `1: A 2: A 3: A 4: C 5: A`. Record **CA-047**.
+> **A second packet the same evening (sent 21:06, answered 21:33, `1: A 2: A 3: B 4: B 5: A 6: A
+> 7: A 8: A`) closed the rest: EVERY ROW IS NOW RULED.** Round 1 reached only 21 of 26 because its
+> questions enumerated states in prose rather than by row. 🔴 **What blocks the build now is
+> structural, not clinical:** `normal-vitamin-d`'s seasonal ruling has no rule kind, both SHBG
+> states moved onto `recheck`, and two signed states still have no row. The section
+> below is kept because it explains why the pack could not be sent as written, which is the
+> reusable lesson, not because anything in it is still owed.
 
 That pack asks Ewa to resolve a contradiction **that has since been fixed**. Its
 section 1 says the dashboard button says "3 months", the card copy says "3-6
@@ -576,11 +586,11 @@ no longer exists.
 | 2 | ~~3a: make `memberHasMarkerToMove` consult the classifier, or accept 90 days for everyone and delete the 365~~ ✅ **DECIDED AND BUILT 2026-09-13.** Keith took the classifier. Pure rule `decideRetestCadence` in `entitlement.ts`, IO in `sync.ts`, four non-collapsed outcomes, Sentry alert on the degraded read. Mechanism 5 is reachable | Closed |
 | 3 | ~~3b: advance the cycle on claim, or change the forecast and the copy to say one retest ever~~ ✅ **DECIDED, BUILT AND APPLIED 2026-09-13.** Keith took advance-on-claim via the dispatch table, which already existed. Two latent guard defects found and repaired in the same migration, applied to production and verified live | Closed |
 | 4 | 3c: decide whether a member gets a retest-due email at all. **Copy drafted and CIO campaign 25 built as a DRAFT on 2026-09-13**; pre-flight verdict `amber-ewa`. The audience question (approved copy travelling to a flagged cohort) and the Phase-0 question ride the unsent packet `r1901433818987540044`; ✅ the entitlement paragraph is **SETTLED 2026-09-13** (Keith: it stands, ship-gated), which makes **P1 a fourth activation gate** on campaign 25 and the only one not ours to move. Attribute not yet stamped | Ewa on the audience; Keith still owes whether the email exists at all |
-| 5 | ~~Rewrite the 2026-07-17 pack's premise, then re-send~~ ✅ **Premise, §3a and §5 rewritten 2026-09-07**, and the sign-off email is DRAFTED (Gmail `r1901433818987540044`, five lettered questions). **Sending is Keith's act and has not happened.** | Keith to send |
-| 6 | The symptom overlay red-flag line (that pack's Q4b) — now **question 5 of the drafted email**, with a proposed red-flag list to accept, amend or replace | Ewa, once Keith sends |
+| 5 | ~~Rewrite the 2026-07-17 pack's premise, then re-send~~ ✅ **CLOSED. Rewritten 2026-09-07, SENT 2026-09-15 19:46 UTC, ANSWERED 20:18 UTC** (`1: A 2: A 3: A 4: C 5: A`, thread `1a0791e8fa8ed170`, record CA-047). 🔴 **Q4 came back C and rejected the §3a suppression rule**; cadence is now per marker, never per panel | Closed |
+| 6 | ~~The symptom overlay red-flag line (that pack's Q4b)~~ ✅ **SIGNED 2026-09-15 (Q5 = A), verbatim as drafted:** chest pain, breathlessness at rest or on light exertion, unexplained weight loss, blood in stool or urine, a new lump, fainting, or any symptom new and getting worse week on week. ⚠ **It is on-screen copy for a symptomatic man and owes a compliance pre-flight before it ships** | Pre-flight the copy |
 | 7 | 3d: ✅ **the second half is DECIDED AND BUILT 2026-09-13** — Keith: the fix belongs in **checkout, not the nightly job**. Branches 1 and 3 shipped behind `MEMBERSHIP_ENABLED`, 62 new assertions, and the clock reset is clamped so it can never hasten a retest. **What remains is which result states may pull the date forward**, section 7's proposal, and it is the whole of what is left of 3d | Ewa on the intervals |
 | 8 | 3e: ✅ **DECIDED AND BUILT 2026-09-13** — Keith: *"reorder at the same price"*. "Order again" on the account page, "Test again" on the dashboard, and the retest CTA now points at the kit he took rather than the catalogue index. No discount, and neither block states a price. **The address prefill was not built**: Stripe has no shipping-address prefill on a guest session, so that half is a different piece of work, not the "link and a prefill" the entry assumed. Copy owes a pre-flight | Pre-flight the copy |
-| 9 | 3f: ✅ **SCOPED AND SOCKETED 2026-09-13** — the separation of information from offer is built and CA-014 is now a guard over every classified card. **What is owed is the wording, and it is Ewa's: 10 GP-routed states and 10 flagged states.** Her answer may legitimately be "his GP decides the interval, not us", which is cheaper than a date. 🔴 **The email half is a hard stop until she answers**: widening `retest_due_at` would point CA-022's all-clear copy at the opposite cohort, and campaign 23 is `running`, not draft | Ewa to word |
+| 9 | 3f: ✅ **SCOPED AND SOCKETED 2026-09-13.** 🟡 **HALF-ANSWERED 2026-09-15, and it went the cheap way this entry predicted.** The GP-routed 10 are ruled: Ewa's Q3 = A is *"no Andro Prime retest interval at all, the GP directs the timing, and our card shows the referral rather than a retest date"* — which is exactly the *"his GP decides the interval, not us"* answer flagged here as cheaper than a date. The flagged 10 have an **interval** (3 months, Q2 = A) but **not a sentence**. ⚠ **A ruling on the interval is not the wording.** `retestGuidance.ts` classes both cohorts `owed`, meaning a sentence with no link and no price, and that sentence still does not exist for either. 🔴 **The email half is UNCHANGED and still a hard stop**: she did not rule on campaign 23's audience, CA-022 is still scoped to all-clear buyers, and campaign 23 is still `running` | Ewa to word; the interval is no longer the blocker, the sentence is |
 
 **Nothing in this file is a clinical decision.** It records what the code does
 today, so the decisions above can be made against facts rather than against four

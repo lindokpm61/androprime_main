@@ -1,9 +1,21 @@
 # Ewa packet: CA-045, the Direction F homepage imagery (2026-09-02)
 
-**Status: RAISED as a Gmail DRAFT, not sent.** Draft id `r-3136750216544571074`. Sending is
-Keith's act, not the assistant's. Nothing in CA-045 is approved by the existence of this packet.
+> ✅ **SUPERSEDED BY EVENTS 2026-09-15. SENT 19:46 UTC, ANSWERED 20:07, CA-045 APPROVED.**
+> Ewa replied `1: A 2: A 3: A 4: A 5: A 6: A 7: A` (thread `1a062879e02a792c`), Keith gave business
+> sign-off the same day, and ClickUp `869eur84c` is `approved`. Record:
+> `approval-record-ca-045-homepage-imagery-2026-09-15.md`.
+>
+> 🔴 **The two counts in the struck header below are BOTH wrong, and the second one matters.** The
+> email that actually went was **nine items, SEVEN questions**, and seven letters came back, so the
+> answer count was met exactly. **A reader trusting the "expected answer count is 8" line would
+> conclude an answer is missing when none is.** The packet's own self-contradiction on this (eight
+> versus seven) was one of the three corrections logged on 2026-09-15 before sending; the register
+> row and the approval record both carry seven.
 
-**Ten items, eight questions.** Expected answer count is **8**. A reply carrying fewer than eight
+~~**Status: RAISED as a Gmail DRAFT, not sent.** Draft id `r-3136750216544571074`. Sending is
+Keith's act, not the assistant's. Nothing in CA-045 is approved by the existence of this packet.~~
+
+~~**Ten items, eight questions.** Expected answer count is **8**.~~ A reply carrying fewer than eight
 letters leaves the missing ones UNANSWERED; never infer a ruling from an adjacent answer.
 
 ⚠ **AMENDED 2026-09-06, AND THE GMAIL DRAFT HAS NOT CAUGHT UP.** A new asset, `img-8`, was
@@ -66,7 +78,19 @@ This matters more than a typo: the whole point of the numbering discipline is th
 fewer letters than expected has an unanswered question in it, and a count that is wrong by one makes
 that check pass while a question sits unanswered.
 
-### 3. There are TWO ClickUp tasks for CA-045 and both are `pending`
+### 3. ~~There are TWO ClickUp tasks for CA-045 and both are `pending`~~ ✅ RESOLVED 2026-09-15
+
+> **The packet was sent 2026-09-15 19:46 UTC and answered 20:07; CA-045 is APPROVED.** `869eur84c`
+> is `approved` and canonical. **`869eqz4bd` is `superseded`** (Keith, "suspend the duplicate") and
+> renamed to point at the live task. No approval was set on the retired one, and none was inferred
+> from the other.
+>
+> ⚠ **Worth keeping, because the timing is the lesson.** For two weeks the duplicate was merely
+> redundant and retiring it looked like housekeeping. The moment `869eur84c` went `approved` it
+> became a **contradiction**: the board is the canonical answer to "is this signed off", and it was
+> returning two different answers depending on which task a reader opened. **A duplicate record is
+> tolerable while its copies agree and becomes a defect the instant one of them moves.** Retire
+> duplicates before the state they hold starts to change.
 
 - [`869eqz4bd`](https://app.clickup.com/t/869eqz4bd) — the older one, and the one **this packet
   names** for rulings. Its description is now materially stale: it says *"Nothing is owed yet. A

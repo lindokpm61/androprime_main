@@ -21,14 +21,33 @@
  * is open rather than closed: two of the six rows are geometry for markers the
  * page does not otherwise show.
  *
- * ⚠ COMPLIANCE, OPEN AND NOT SELF-CLEARED. Nothing here is labelled, no marker
- * is named, no value is stated, and at the opacities the field paints, no
- * individual band is readable. On that basis it is texture whose generative
- * source happens to be real, rather than a data display. That reading is not
- * ours to ratify. `03_compliance/STATE.md` carries it as an open question
- * against the CA-045 gate, and it must be answered before Direction F merges,
- * not before it is built: Keith ruled on 2026-09-01 that the gate governs
- * SHIPPING, not creating.
+ * ✅ COMPLIANCE: RATIFIED 2026-09-15 UNDER CA-045. Ewa was asked directly
+ * whether this is a data display, on the shipped render AND on an unmasked
+ * version showing what is actually drawn. She answered: "No, it is texture.
+ * Clear as it is." The reading below was ours to propose and is now hers to
+ * have ratified.
+ *
+ * 🔴 BUT SHE DID NOT PIN THE OPACITY, AND THAT MATTERS HERE MORE THAN ANYWHERE.
+ * The question offered her an option B reading "it is texture only because it
+ * is faint; clear, but the opacity must never be raised without asking you
+ * again." SHE TOOK A, NOT B. So there is no standing instruction obliging a
+ * re-ask, while the whole argument for texture-not-data rests on no individual
+ * band being readable at the opacity this paints at. TREAT A MATERIAL OPACITY
+ * INCREASE AS A NEW CLINICAL QUESTION ANYWAY. The approval does not require it;
+ * this comment does.
+ *
+ * 🔴 AND THE TWO UNSHOWN MARKERS STAY. Q7 asked whether hs-CRP and SHBG should
+ * come out of the pattern, since they appear nowhere else on the page. She said
+ * leave all six. The build check asserting the four SHARED markers match the
+ * sample result therefore CANNOT COVER THESE TWO, by construction. That gap is
+ * approved, not closed.
+ *
+ * ~~⚠ COMPLIANCE, OPEN AND NOT SELF-CLEARED.~~ Kept for the reasoning: nothing
+ * here is labelled, no marker is named, no value is stated, and at the opacities
+ * the field paints, no individual band is readable. On that basis it is texture
+ * whose generative source happens to be real, rather than a data display. It had
+ * to be answered before Direction F merged, not before it was built: Keith ruled
+ * on 2026-09-01 that the gate governs SHIPPING, not creating.
  */
 
 export interface FieldRow {

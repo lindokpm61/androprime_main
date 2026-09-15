@@ -264,9 +264,13 @@ copy of the word list here or anywhere else: cite the map.**
   ⚠ **Updated 2026-09-01, because the homepage now ships imagery.** **Seven** GENERATED lifestyle
   photographs and a GENERATED hero film are live on `/` from `public/home/`. They are not
   photographs of Keith, the kit, or any real customer, so the absence above still holds; they are
-  synthetic imagery of unnamed men in ordinary settings. 🔴 **All eight assets are gated by CA-045,
-  which is OPEN and needs Ewa and Keith.** Its unanswered question is whether the illegible letter in
-  the film reads as a lab result.
+  synthetic imagery of unnamed men in ordinary settings. ✅ **UPDATED 2026-09-15: CA-045 is
+  APPROVED.** Ewa cleared all nine items with no conditions on her direct written reply, and Keith
+  signed the same day. ~~🔴 All eight assets are gated by CA-045, which is OPEN and needs Ewa and
+  Keith. Its unanswered question is whether the illegible letter in the film reads as a lab
+  result.~~ **That question is answered: she ruled it reads as handwriting, clear as it is.** ⚠ Two
+  conditions survive the approval: the hero field's **opacity is not pinned**, and hs-CRP and SHBG
+  stay in that pattern where the four-marker build check cannot reach them.
   **`img-6` and `img-7` were commissioned 2026-09-01** for the Kit 1 and Kit 2 cards (gpt_image_2 via
   Higgsfield) and are added to the CA-045 row. **Generating imagery on a branch that deploys nothing
   is not what the gate governs; SHIPPING is** (Keith, 2026-09-01), so new assets may be made and

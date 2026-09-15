@@ -1400,8 +1400,15 @@ Recorded so they are not rediscovered as surprises.
    grounds: ink on light, paper plus a dark halo on ink fills and inverted panels. Verified 7
    `:focus-visible` rules and still 0 `outline: none` on all six routes. The ink-filled pill CTA,
    where the UA default ring was dark-on-dark and effectively invisible, now shows a white ring.
-6. 🔴 **CA-045 gates the homepage imagery and is OPEN.** Signers are Ewa and Keith. It arms when a
-   direction is built into the site, which has happened, so it blocks the merge to `main`.
+6. ✅ **CLOSED 2026-09-15. CA-045 is APPROVED and no longer blocks the merge.** Ewa cleared all
+   nine items with no conditions (`1: A` through `7: A`, direct written reply); Keith signed off
+   the same day and separately ruled the img-7 trainer mark fine, asset unchanged. ⚠ **Two
+   conditions survive it:** the hero field's **opacity is not pinned** (she took Q6 = A, not the
+   option that would have required re-asking her), and hs-CRP and SHBG stay in the pattern where
+   the four-marker build check cannot reach them. Record:
+   `../../03_compliance/content-approval/approval-record-ca-045-homepage-imagery-2026-09-15.md`.
+   ~~🔴 CA-045 gates the homepage imagery and is OPEN.~~ Signers were Ewa and Keith. It arms when a
+   direction is built into the site, which had happened, so it blocked the merge to `main`.
    **The register row covers EIGHT assets as of 2026-09-01**, not the five this entry used to say:
    seven photographs (img-6 and img-7 were generated for the kit cards) plus the hero film.
    ⚠ img-7’s trainers carry a logo-like mark, a trademark question rather than a clinical one.

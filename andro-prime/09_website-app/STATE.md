@@ -8,7 +8,12 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-09-15".
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing pushed to
-`main`, no deploy ran. The three merge blockers are unchanged and all three are signatures.
+`main`, no deploy ran. ~~The three merge blockers are unchanged and all three are signatures.~~
+🟢 **UPDATED 2026-09-15 (later): DOWN TO TWO. CA-045 IS APPROVED.** Ewa cleared all nine imagery
+items at 20:07 UTC with no conditions (`1: A` through `7: A`), Keith ruled the `img-7` trainer
+trademark question closed ("img-7 is fine", asset unchanged), and then signed the row off. **CA-046
+and the copy-register reconciliation are the only blockers left, and both are still signatures.**
+See "The merge blockers" below, including two conditions that survive CA-045's approval.
 
 ---
 
@@ -53,9 +58,11 @@ not seven surfaces, as this file said earlier today. It is **twenty-six**: `FHer
 defaults to `'field'`, so the `HeroField` layer is opt-OUT and exactly one route opts out. It sits
 behind both legal pages, all five landing pages and `/order/confirmed`. q6 now carries the number
 inside the question and a new option for the confirmation page. Two more corrections in the same
-pass: the packet contradicted itself on expected answer count (eight vs seven), and **there are two
+pass: the packet contradicted itself on expected answer count (eight vs seven), and ~~**there are two
 ClickUp tasks for CA-045, both `pending`, disagreeing** — neither retired, because which is
-canonical is Keith's call. Full detail in `03_compliance/STATE.md`.
+canonical is Keith's call~~. ✅ **RESOLVED 2026-09-15 (Keith): `869eur84c` is canonical and
+APPROVED; `869eqz4bd` is `superseded` and renamed to point at it.** Full detail in
+`../03_compliance/STATE.md`.
 
 🔴 **Also found: two packet attachments existed ONLY inside the Gmail draft**, and `update_draft`
 replaces rather than merges attachments, so editing one word of the body would have deleted all
@@ -144,11 +151,48 @@ down from 58 findings, with its positive control firing on the same run. Externa
 proof transfers to the branch (checked file by file — the only change on the proved path is
 the idempotency guard, and it was tested against the real order's states).
 
-### The three merge blockers are unchanged, and all three are signatures
+### 🟢 THE MERGE BLOCKERS ARE DOWN TO TWO. CA-045 IS APPROVED, 2026-09-15
 
-CA-045 (ClickUp `869eur84c`), CA-046 (`869exuphq`), and the 48-row copy-register
-reconciliation whose Closed section still reads `_None yet._`. Nothing technical is holding
-the merge.
+~~CA-045 (ClickUp `869eur84c`),~~ ✅ **APPROVED 2026-09-15, both signers in.** Remaining:
+**CA-046** (`869exuphq`, the public `/demo`) and the **48-row copy-register reconciliation** whose
+Closed section still reads `_None yet._`. Nothing technical is holding the merge, and both
+remaining blockers are still signatures.
+
+✅ **CA-045's clinical half is DONE.** The packet was sent 2026-09-15 19:46 UTC and Ewa answered
+**20:07 UTC**: `1: A 2: A 3: A 4: A 5: A 6: A 7: A`. All nine imagery items cleared, no conditions
+attached, and the photographs were judged **on the attached images** rather than on descriptions,
+which is what finally evidences the three questions (people, hands, sample) the register had
+recorded as never evidenced for them. Record:
+`../03_compliance/content-approval/approval-record-ca-045-homepage-imagery-2026-09-15.md`.
+
+✅ **The `img-7` trainer logo is RULED (Keith, 2026-09-15): "img-7 is fine."** Leave the asset as
+generated, no inpaint, no replacement, no rebuild of the image. It was a trademark question and not
+a clinical one. Reviewed at 4x crop and in both shipped renders: it is a generated chevron in the
+position real running brands use, it ships under `filter: grayscale(1)` on all three surfaces, and
+it is roughly 20px across at real card width. No trademark register search was performed, so this
+is a business judgement, not a clearance opinion.
+
+✅ **CA-045 IS APPROVED, 2026-09-15, and is no longer a merge blocker.** Keith gave his business
+sign-off ("CA-45 approved") after separately ruling the `img-7` question. Two separate acts, two
+pieces of evidence, neither inferred from the other. ClickUp `869eur84c` set to `approved` and
+renamed with the APPROVED prefix on his explicit instruction; register, approval record and
+`03_compliance/STATE.md` all mirrored the same day.
+
+⚠ **Two conditions survive the approval and are NOT closed by it.** Both were written down at the
+time precisely because a clean sheet reads as a clean slate: the hero field's **opacity is not
+pinned** (Ewa answered Q6 with A, not the option that would have required re-asking her before any
+increase, and the case for the field being texture rather than a data display rested on it being
+faint), and **hs-CRP and SHBG stay in the hero pattern** while appearing nowhere else on the page,
+so the build check asserting the four shared markers match the sample result still cannot cover
+those two.
+
+⚠ **Two side effects of her answering A rather than B on two questions, worth knowing before the
+merge rather than after.** She did **not** take the Q6 option that would have pinned the hero
+field's opacity, so **no standing instruction exists to re-ask her if it is raised**, even though
+the case for the field being texture rather than a data display rested on it being faint. And Q7 =
+A leaves hs-CRP and SHBG drawn in the hero pattern while they appear nowhere else on the page, so
+the build check asserting the four shared markers match the sample result **still cannot cover
+those two**. Approved, not closed.
 
 ⚠ **Two things will happen as side effects of the next deploy, and both should be decisions
 rather than discoveries:** the 26 approved SEO snippets go live on 15 search results, and the

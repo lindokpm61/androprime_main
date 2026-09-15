@@ -1,6 +1,8 @@
 # A result-triggered fast recheck must be prepaid or included, never a new sale
 
-**Decided:** 2026-09-07 · **Owner:** Keith · **Status:** ADOPTED
+**Decided:** 2026-09-07 · **Amended:** 2026-09-15 (§2 gains a third carve-out and §2a is new: the
+bucket B clinical interval is scoped out, and the stored value is `{ days: 90 }` rather than
+"3 months") · **Owner:** Keith · **Status:** ADOPTED
 **Raised in:** `2026-09-06-result-driven-retest-cadence.md` §8, which remains PROPOSED as a whole.
 **Recorded separately because** the constraint was adopted on its own, and a decision that lives
 only inside another document's body goes stale without anyone noticing. That failure has already
@@ -24,6 +26,85 @@ as a contradiction rather than being read as a decision.
 |---|---|
 | **The complement cross-sell** (`2026-07-08-post-result-cross-sell-complement-rule.md`) | It offers the markers the customer's kit did **not** measure. It is not a recheck, it re-tests nothing, and the honest "here is the panel we have not checked" framing is the compliant pattern the 2026-07-17 cadence table endorses. Unchanged. |
 | **seq-04 email 5**, the subscriber retest prompt at +75 days | It is anchored to `subscription_started`, not to a result. It measures **supplement effect** over 90 days of consistent use, and it is not fired by bad news. The rule exists to stop the system reacting to a worrying number with a checkout; this reacts to someone starting a supplement. Unchanged. |
+| **Every `recheck` cell** (the 3-month clinical interval), added 2026-09-15 | Ewa signed 3 months for every marker a man is acting on (CA-047). **It is not the mechanism this rule was written against.** §3 was aimed at a recheck firing *in days*, at the moment a man reads the worst number on his dashboard. A `recheck` exists to see whether an intervention moved a marker, which is the same species as seq-04 e5 above and a longer interval than it. **Scoped out on the substance, not on the arithmetic.** ⚠ **Scoped by RULE KIND, not by a list of markers** — see the note below, which is a correction. |
+
+> 🔴 **CORRECTED LATER THE SAME DAY, AND THE CORRECTION IS THE INTERESTING PART.** The row above
+> originally scoped the carve-out by **listing the markers**: low vitamin D, low and borderline
+> B12, normal-testosterone in the lower half, raised CRP on the lifestyle branch, suboptimal
+> ferritin. **Ewa's second reply, 75 minutes later, made that list wrong by four.** `ft-low`, the
+> CRP **joints = yes** branch, `shbg-low` and `shbg-high` all came back at 3 months and all carry
+> `recheck` rules, so all four belong inside the carve-out and none was named.
+>
+> Two of those four are the sharp case: **`shbg-low` and `shbg-high` are IN-RANGE states** sitting
+> in the cadence table's bucket C, so a list built by reading bucket B would never have found them
+> however carefully it was checked.
+>
+> **The row is now scoped by RULE KIND (`recheck`) rather than by a list of markers**, which is
+> both correct and self-maintaining: a marker Ewa rules on next month is inside the carve-out the
+> moment its rule is a `recheck`, with nothing to remember and nothing to update here.
+>
+> **The general lesson, since this repo keeps paying for it:** a carve-out enumerated by instance
+> goes stale every time the set grows, and it goes stale *silently*, because the list still reads
+> as complete. Scope by the property that made the instances qualify.
+
+## 2a. The 90-day boundary, decided 2026-09-15 (Keith)
+
+Ewa's 3-month bucket B interval landed almost exactly on this rule's threshold, so which side it
+falls on had to be settled before the cadence map could schedule anything. **It is settled two
+ways, deliberately, because the two halves fail differently.**
+
+### The decision
+
+1. **Bucket B is out of scope on the substance.** See the third row of §2 above. That is the
+   load-bearing half: it means the interval can later move to 84 days or 100 without reopening
+   the commercial question at all.
+2. **The stored value is `{ days: 90 }`, not "3 months".** 90 is not *less than* 90, so the cell
+   is outside the rule even for a reader who never finds the carve-out. That is the mechanical
+   half, and on its own it would be fragile, since it sits one day off the line.
+
+### Why it cannot be left as "3 months"
+
+**The type already forces an integer.** `recheck` is `{ days: n }` in the cadence design, so
+there is no "3 months" for the engine to hold. Someone writes a number, and the only question is
+who and when.
+
+🔴 **And if calendar-month arithmetic picks it, the rule's applicability depends on the month the
+man's blood was drawn.** Computed across every start date in 2026 to 2028:
+
+| 3 calendar months later | Start dates |
+|---|---|
+| 89 days | 58 |
+| 90 days | 154 |
+| 91 days | 250 |
+| 92 days | 634 |
+
+**58 of 1096 start dates, 5.3%, land under 90 days, and every one of them is in late January or
+February.** So a man who tests in February would fall inside a commercial rule that a man testing
+in March does not, for no reason anyone could defend. A leap year moves him back out again. That
+is the worst available outcome and it is the default one, arriving through nobody deciding
+anything.
+
+### Why the alternative was rejected
+
+**Treating 3 months as inside the rule would quietly undo Ewa's ruling of the same day.** Her
+Q4 = C exists precisely to keep a correctable deficiency being followed up when another marker
+routes to a GP. But §8 below says that where a fast recheck is clinically right and the customer
+holds no entitlement, the output is the GP route or the long window. So a man with low vitamin D
+and no membership would be given 6 to 12 months instead of his 3 months. **She would have
+preserved the follow-up clinically and we would have removed it commercially**, which is a worse
+position than never having asked her.
+
+### The honest objection, recorded rather than buried
+
+Setting 90 to sit one day outside a "less than 90" rule reads as lawyering if the number stands
+alone. **That is exactly why the §2 carve-out matters more than the integer**, and why it is
+written in terms of what bucket B is for rather than how many days it is. The 90 is a consequence
+of the scoping decision, not a way around the rule.
+
+⚠ **The guard this needs.** If anyone later restates bucket B as "12 weeks", that is 84 days and
+it crosses back under the threshold silently. **Any proposal to shorten a bucket B cell below 90
+days reopens this section**, and the shortening is what triggers it, not the clinical argument
+for it.
 
 ## 3. Why
 
@@ -93,6 +174,12 @@ job is to constrain the cadence map before any cell is filled in.
 - **No cell in `RETEST_CADENCE` may carry a sub-90-day interval for a customer with no prepaid
   or included entitlement.** Where the clinically right answer is a fast recheck and the customer
   holds neither, the correct output is the GP route or the long window, not a checkout.
+  ⚠ **Read with §2 and §2a (2026-09-15): every `recheck` cell is scoped OUT of this rule and is
+  stored as `{ days: 90 }`.** They are not sub-90-day intervals and this bullet does not reach
+  them. **Scoped by rule kind, deliberately, not by a list of markers** — the list version was
+  wrong within 75 minutes of being written. **The bullet still binds every `confirm` cell**, which
+  is where the sub-90-day intervals actually live: the sub-12 testosterone recheck at 0 days,
+  prepaid inside the Confirmation bundle, which is the model this whole rule was generalised from.
 - **It points the whole cadence feature at bundles and the membership, never at the shop.**
 - **It strengthens the membership proposition**, which currently lacks one. *"Your recheck is
   included, whenever your numbers say you need one"* is a real reason to be a member and a true

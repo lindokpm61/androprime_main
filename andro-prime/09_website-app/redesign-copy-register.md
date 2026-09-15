@@ -233,9 +233,15 @@ while ungraded, and that is a finding about `main`, not about this branch.
 
 ### What the pre-flight did NOT and could not clear
 
-- **CA-045** (`869eur84c`, `pending`) and **CA-046** (`869exuphq`, `pending`) — read from ClickUp,
-  not inferred from the repo. CA-045's packet is a Gmail **draft that has never been sent**, and its
-  q6/q7 wording describes one surface while the `HeroField` layer now renders on seven (rows 18, 34).
+- ✅ **CA-045** (`869eur84c`) — **APPROVED 2026-09-15**, read from ClickUp, not inferred from the
+  repo. Ewa cleared all nine items with no conditions on her direct written reply (`1: A` through
+  `7: A`); Keith signed the same day. ~~CA-045's packet is a Gmail draft that has never been
+  sent~~ — it was sent 19:46 UTC and answered 20:07. ⚠ **The q6/q7 caveat below SURVIVES the
+  approval and should be checked, not assumed away:** that wording describes one surface while the
+  `HeroField` layer now renders on seven (rows 18, 34). She ruled the field is texture rather than
+  a data display, and she did **not** take the option pinning its opacity, so nothing obliges a
+  re-ask if it is raised on any of those seven.
+- 🟠 **CA-046** (`869exuphq`, `pending`) — still open, still a merge blocker, unchanged.
 - **Row 6** — the FAI verdict contradiction between `PRODUCT.md` and the `BADGES` map. Independent of
   the redesign and **wrong on `main` today**. → Ewa.
 - **Rows 12a and 42a** — the sentences the auto-renew ruling made false. → Keith, then pre-flight.

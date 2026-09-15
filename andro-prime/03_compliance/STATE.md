@@ -2,6 +2,140 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
+## ✅ 2026-09-15 — CA-045 AND CA-047 BOTH APPROVED. ONE OF CA-047'S FIVE ANSWERS INVERTED A DESIGN RULE, AND ITS PRE-FLIGHT CAUGHT A MISSING 999 ESCALATION
+
+Both packets were sent within a minute of each other and both were answered inside 35 minutes, on
+Ewa's direct written reply from `ewalindo@live.co.uk`. **Both then went APPROVED the same day** on
+Keith's business sign-off: CA-045 outright, **CA-047 with conditions**, because its copy pre-flight
+ran and did **not** clear.
+
+### CA-045 — homepage direction F imagery. Nine items, seven letters, all A. ✅ APPROVED
+
+Sent 19:46 UTC, answered **20:07 UTC**, thread `1a062879e02a792c`: `1: A 2: A 3: A 4: A 5: A 6: A
+7: A`. Seven letters against the expected seven, so the count is met exactly and **nothing is
+inferred from an adjacent answer**. Every A was the unconditional option and she attached no
+conditions. Record: `content-approval/approval-record-ca-045-homepage-imagery-2026-09-15.md`.
+
+🟢 **The thing this packet was built to fix, it fixed.** This row's four-of-five evidence line
+(*"no people, hands, clinic, blood or sample"*) had been established on the hero **film frame** and
+silently inherited by the photographs, one of which contains people, hands and a sample tube. **All
+ten image files were attached and judged as images**, so `img-3` is now cleared on itself. The
+packet also carried its own corrections rather than letting Ewa inherit them: two asset
+descriptions in this register came from `alt` attributes and were wrong, and it said so.
+
+⚠ **Two things a clean sheet makes easy to over-read.**
+
+1. **Q6 came back A, not B.** Option B was *"clear, but the opacity must never be raised without
+   asking you again."* She did not take it, **so no standing instruction exists to re-ask her if
+   the hero field's opacity is raised** — while the packet's own case for the field being texture
+   rather than a data display rested on it being faint. Treat a material opacity increase as a new
+   question anyway; this record does not oblige it.
+2. **Q7 = A leaves hs-CRP and SHBG in the pattern**, and the build check asserting the four shared
+   markers match the page's sample result **cannot by its nature cover those two**. The asymmetry is
+   approved, not closed.
+
+✅ **THE `img-7` TRAINER LOGO IS RULED (Keith, 2026-09-15): "img-7 is fine."** Leave the asset as
+generated, no inpaint, no replacement. It was a trademark question and not a clinical one, flagged
+in the packet as his and explicitly outside Ewa's answer. Reviewed at 4x crop and in both shipped
+renders; the mark is a generated chevron in the position real running brands use, ships under
+`filter: grayscale(1)` on every surface, and is roughly 20px across at real card width. **No
+trademark register search was performed**, so this is Keith's business judgement and not a
+clearance opinion.
+
+✅ **CA-045 IS APPROVED, 2026-09-15. Both required signers are in.** Ewa on her direct written
+reply with no conditions, and **Keith on his direct instruction, "CA-45 approved"**. The `img-7`
+ruling and the business sign-off were two separate acts with two pieces of evidence, and **neither
+was inferred from the other** — which is the rule this workspace exists to enforce. ClickUp
+`869eur84c` set to `approved` and renamed with the APPROVED prefix on his explicit instruction.
+
+🟢 **This clears one of the three Direction F merge blockers.** CA-046 (the public `/demo`) and the
+48-row copy-register reconciliation remain, and nothing technical is holding the merge.
+
+⚠ **Approved is copy-approved, and two conditions survive it.** Both are in the record, because a
+clean sheet is not a clean slate: **the hero field's opacity is NOT pinned** (Ewa took Q6 = A, not
+the option that would have required re-asking her before any increase), and **hs-CRP and SHBG stay
+in the hero pattern** where the four-marker build check by its nature cannot cover them.
+
+### CA-047 — retest cadence. Four as drafted, and one that was not
+
+Sent 19:46 UTC, answered **20:18 UTC**, thread `1a0791e8fa8ed170`: `1: A 2: A 3: A 4: C 5: A`.
+**CA-047 opened on this** (highest in use was CA-046, nothing reserved). Record:
+`content-approval/approval-record-retest-cadence-2026-09-15.md`.
+
+🔴 **Q4 = C rejected the rule both design docs proposed.** They proposed that a GP-routed marker
+**suppresses** the whole-panel retest; the author's stated instinct was the middle option. She took
+neither. **The signed rule is that retest timing is decided per marker, never per panel**, so a man
+with a GP-routed CRP and a low vitamin D gets a GP referral **and** a 3-month vitamin D retest. She
+answered the related boundary affirmatively: a GP referral is not the end of our involvement for
+that panel.
+
+⚠ **The rejected rule was carrying the anti-upsell guard**, and that load is now unhomed: it rests
+entirely on `04_products/results-engine/2026-09-07-fast-recheck-must-be-prepaid-or-included.md`
+plus CA-014, neither written to carry it alone. ✅ **The related 90-day question is SETTLED the
+same day (Keith): bucket B is scoped OUT of the prepaid rule and the cell stores `{ days: 90 }`,
+not the phrase "3 months"** (`04_products/results-engine/2026-09-07-fast-recheck-must-be-prepaid-or-included.md`
+§2a). ⚠ **Correcting an earlier line in this entry: "3 months is exactly 90 days" is wrong.** It is
+**89 to 92 days** depending on the start date, and 58 of 1096 start dates across 2026 to 2028 fall
+under 90, every one of them in late January or February. Left as a phrase, the commercial rule
+would have applied to roughly 5% of men according to the month their blood was drawn.
+
+**Compliance items this creates:**
+
+- 🔴 **Q5's PRE-FLIGHT RAN 2026-09-15 AND DID NOT CLEAR. The red-flag line may not ship.**
+  Deterministic floor clean (0 HARD / 0 REVIEW). **The judgement pass found what the scanner cannot
+  see: the line she ratified routes ALL chest pain to a GP**, contradicting her own standing ruling
+  of **2026-08-18, "999 for sudden or severe, GP for the rest"**
+  (`correspondence/2026-08-18-keith-ewa-fifteen-rulings.md`, Ruling 1). As written, a man with
+  sudden severe chest pain is told to speak to his GP.
+
+  **Not a reviewer error.** Q5 asked which symptoms skip the "try another panel" step, not 999
+  versus GP, so the escalation is a layer above her answer rather than a correction to it. Her list
+  is almost word-for-word the GP half of the two-part block already live on `cholesterol-test`.
+
+  ✅ **The fix is additive, carries her signed wording, and needs NO new Ewa ask** — the 2026-08-18
+  sweep established that restoring signed wording verbatim raises no CA. It gains a "Read this part
+  first. Call 999 now if:" block above the GP list. ⚠ **Carry that sweep's derivative trap:** its
+  frontmatter FAQ needed the line too and was nearly missed, because it is machine-read into FAQ
+  schema, so fixing only the human-readable surface applies the ruling where a person reads and not
+  where an AI Overview does.
+
+  🟢 **This blocks that one line and nothing else.** The 21 signed interval cells and the Q4 = C
+  reduction rule are approved and buildable.
+- 🟢 **Q1 = A triggers no copy sweep.** Every customer surface already says 6 to 12 months; signing
+  makes it binding rather than incidental.
+- ⚠ **Q2 = A quietly narrows two cells** that were proposed as ranges (3–6 and 3–4) down to 3
+  months. A narrowing, so no claim widens, but the docs said something different yesterday.
+
+🔴 **Round 1 reached only 21 of the 26 rows.** Its questions enumerated the states they covered **in
+prose rather than by row id**, so the shortfall was invisible from both ends: Ewa answered every
+question asked and every answer was received. It surfaced only by hand-diffing her prose against the
+table. **The lesson, carried forward: a lettered question that restates its scope in prose cannot be
+reconciled against the artefact it fills without a manual diff.**
+
+✅ **A SECOND PACKET CLOSED IT THE SAME EVENING, AND THE TABLE IS NOW FULLY RULED.** Sent 21:06 UTC,
+answered **21:33** (thread `1a0a6ded1d6d688b`): `1: A 2: A 3: B 4: B 5: A 6: A 7: A 8: A`. **Eight
+letters against an expected count of eight, recorded in the approval record before sending.** The
+fix that worked was mechanical: the question-to-row mapping lives in the record, and the reply was
+counted against it rather than eyeballed.
+
+🔴 **Two answers changed the shape of the work rather than its values, and one of them falsified a
+decision taken 75 minutes earlier.** Q3 and Q4 came back **B**, putting both SHBG states at 3
+months, which makes them `recheck` rather than `maintenance` — a **rule-kind change on two
+in-range states**. The prepaid rule's carve-out, written earlier the same evening, had enumerated
+the bucket B markers **by name** and was short by four. **It is now scoped by rule kind instead.**
+A carve-out enumerated by instance goes stale silently, because the list still reads as complete.
+
+🔴 **Q5 = A preserves a seasonal ruling the lookup cannot store**, so `RETEST_CADENCE` needs a fifth
+rule kind before `normal-vitamin-d` can be filled. ⚠ **Q7's newly-signed copy does not exist in the
+product** and owes its own pre-flight, on the same screen as the red-flag line, which means that
+screen needs the 999 block above all of it.
+
+⚠ **One coverage item neither round closed:** two signed states have **no row** in the table at all
+(T > 29 nmol/L, vitamin D > 250 nmol/L). That is a missing row rather than an unanswered question,
+and no lettered packet would ever have caught it.
+
+---
+
 ## 2026-09-13 (later) — P1 is not a solicitor blocker. Terms v1.3 and Privacy v1.4 drafted in house; one publication item owed, and a wrong finding withdrawn after Keith caught it.
 
 **Keith ruled: no solicitor budget at this stage.** Terms and privacy are written in
@@ -119,7 +253,9 @@ while `terms-and-conditions.md` carries no membership section. Same shape as the
 CA-026 D2 sentence that was ship-gated for this reason. Waits on **P1**.
 
 **Verified against ClickUp, not inferred from the repo:** no CA covers a member
-retest notice, the highest in use is CA-046, nothing is reserved. CA-022
+retest notice, ~~the highest in use is CA-046~~ **(CORRECTED 2026-09-15: CA-047 was
+opened for the retest cadence table; the highest in use is now CA-047)**, nothing
+else is reserved. CA-022
 (`869e9fr53`) is `approved` and is the all-clear kit-buyer buy prompt, a different
 asset for a different audience.
 
@@ -358,8 +494,10 @@ illegible-letter question, was already open and still is.
 ### 🔴 CA-045 UPDATED 2026-09-15 BEFORE SENDING, AND ITS SCOPE WAS WRONG BY A FACTOR OF TWENTY-SIX
 
 Three corrections to the packet (`content-approval/ewa-packet-ca-045-homepage-imagery-2026-09-02.md`),
-all made while it is still unsent, which is the only cheap moment. **Still NOT sent. Sending is
-Keith's act.**
+all made while it is still unsent, which is the only cheap moment. ~~**Still NOT sent. Sending is
+Keith's act.**~~ ✅ **SENT LATER THE SAME DAY, 19:46 UTC, and answered at 20:07. CA-045 is
+APPROVED.** The corrections in this section are what made it correct to send; see the 2026-09-15
+entry at the top of this file.
 
 **1. q6 and q7 govern 26 routes, not the one the packet describes.** Not the two its first
 amendment said, and not the six its second said. `components/marketing/FPage.tsx` renders
@@ -389,9 +527,20 @@ which is the exact check the numbering exists for. Corrected; re-validated at ex
 still saying *"Nothing is owed yet. A mockup is not published"*, which stopped being true when the
 direction was built) and [`869eur84c`](https://app.clickup.com/t/869eur84c) (created at wrap on
 2026-09-03 *because the board appeared to have no CA-045 task*). So the question count reads five,
-seven or eight depending which of three records you open. **Neither retired: which is canonical is
-Keith's call**, and a duplicate merged from its title is how the surviving record loses whatever
+seven or eight depending which of three records you open. ~~**Neither retired: which is canonical is
+Keith's call**~~ — and a duplicate merged from its title is how the surviving record loses whatever
 only lived in the other. Both commented, no approval status touched.
+
+> ✅ **RESOLVED 2026-09-15 (Keith: "suspend the duplicate").** `869eur84c` is canonical and is
+> **APPROVED**; `869eqz4bd` is set to **`superseded`** and renamed to point at it. No approval was
+> set on the retired task and none was inferred from the other.
+>
+> ⚠ **The urgency changed at the moment CA-045 was approved, and that is the reusable part.** Two
+> `pending` tasks for one CA were merely redundant. One `approved` and one `pending` is a
+> **contradiction**, and since the board is the canonical answer to "is this signed off", it was
+> returning two different answers depending on which task a reader opened. **A duplicate is
+> tolerable while both copies agree and becomes a defect the instant one of them moves.** Retire
+> duplicates before the state they hold starts to change, not after.
 
 #### 🔴 Two packet attachments existed ONLY inside the Gmail draft, and a routine edit would have destroyed them
 
@@ -921,8 +1070,13 @@ Artefact: `06_marketing/seo-ai-search/2026-08-15-tier1-outreach-filled.md`.
 > restore, and nobody has timed it. That is a durability gap, not a publication-control gap, and
 > CA-039 does not govern it.
 >
-> 🟠 **CA-040, the takedown path, is STILL PENDING** and is the remainder of this section. It stays
-> on the main board because it asserts Ewa's clinical judgement, and its step 3 is still unverified.
+> ~~🟠 **CA-040, the takedown path, is STILL PENDING**~~ ✅ **APPROVED 2026-08-18. This line was
+> written on the 17th and the task closed on the 18th; nobody updated the mirror, and it sat stale
+> here for four weeks until the board was read on 2026-09-15.** It stays on the main board because
+> it asserts Ewa's clinical judgement. ⚠ **Its step 3 is still unverified and the approval is not
+> blocked on it** — the task says so in terms: whether deleting a Metricool post also removes its
+> CDN media is unknown, the procedure assumes the copy persists, and it was **approved with that
+> assumption standing**.
 
 ## ⚠️ OPEN FOR KEITH: two new rules were in `CONTEXT.md` and live as code, unapproved (2026-08-14)
 

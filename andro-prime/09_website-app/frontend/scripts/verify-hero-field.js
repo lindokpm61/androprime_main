@@ -83,7 +83,11 @@ for (const [name, v] of shared) {
 }
 
 const fieldOnly = Object.entries(field).filter(([, v]) => !v.onReadout).map(([k]) => k)
-console.log(`\n  field-only markers (uncheckable here, part of the open CA-045 question): ${fieldOnly.join(', ') || 'none'}`)
+// CA-045 Q7 asked whether these should be removed from the field, since they appear
+// nowhere else on the page. Ewa ruled 2026-09-15: leave all six. So this line is no
+// longer flagging an open question, it is naming a gap that is APPROVED and permanent:
+// these markers have no sample-result counterpart to be checked against, by design.
+console.log(`\n  field-only markers (uncheckable here by construction; CA-045 Q7 ruled 2026-09-15 that they stay): ${fieldOnly.join(', ') || 'none'}`)
 
 console.log(`\n${pass} passed, ${fail} failed`)
 process.exit(fail > 0 ? 1 : 0)

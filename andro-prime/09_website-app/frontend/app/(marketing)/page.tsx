@@ -32,13 +32,26 @@ import { FPage, FSection, FClose } from '@/components/marketing/FPage'
  *     yet", "We give the thinking away", "We do not sell you the answer".
  * So the direction is both the newer artefact and the approved one.
  *
- * 🔴 CA-045 IS THE MERGE BLOCKER ON THIS PAGE. The five photographs below are
- * generated imagery and the register row covers them explicitly, together with
- * the hero film. Its status is OPEN and its own words are that the gate "arms
- * when a direction is built into the site". This commit is that moment. It sits
- * on `redesign/direction-f`, which deploys nothing, so building it is safe and
- * MERGING IT IS NOT. Signers are Ewa and Keith; it fails the Keith-only entry
- * test at Q2 because a homepage hero is customer-facing.
+ * ✅ CA-045 IS APPROVED, 2026-09-15, AND NO LONGER BLOCKS THIS PAGE. Ewa
+ * (clinical) cleared all nine items with no conditions on her direct written
+ * reply; Keith gave the business sign-off the same day. The photographs below
+ * and the hero film are signed. Record:
+ * `03_compliance/content-approval/approval-record-ca-045-homepage-imagery-2026-09-15.md`.
+ *
+ * ⚠ TWO CONDITIONS SURVIVE THAT APPROVAL AND ARE NOT CLOSED BY IT. Ewa answered
+ * the hero-field question with A, not B, and B was the option that would have
+ * required re-asking her before any opacity increase, so THE OPACITY IS NOT
+ * PINNED even though the case for the field being texture rather than a data
+ * display rested on it being faint. And hs-CRP and SHBG stay drawn in that
+ * pattern while appearing nowhere else on the page, so the four-marker build
+ * check by its nature cannot cover them. See `lib/home/fieldRows.ts`.
+ *
+ * ~~🔴 CA-045 IS THE MERGE BLOCKER ON THIS PAGE.~~ Kept for the reasoning: the
+ * gate's own words were that it "arms when a direction is built into the site",
+ * this commit was that moment, and building on `redesign/direction-f` was safe
+ * because it deploys nothing while MERGING WAS NOT. Signers were Ewa and Keith;
+ * it failed the Keith-only entry test at Q2 because a homepage hero is
+ * customer-facing. Both have now signed.
  *
  * ⚠ And a discrepancy worth carrying: the register's evidence line ("no people,
  * hands, clinic, blood or sample") was established on the hero FILM frame. It
@@ -182,13 +195,18 @@ const RECORD_STEPS = [
  * anything about testosterone; Kit 3 is the nine-marker panel. None of the three
  * lines makes a symptom or outcome claim.
  *
- * 🔴 img-6 and img-7 are NEW generated assets (gpt_image_2, 2026-09-01) and are
- * NOT yet in CA-045. Generating them on this branch is fine because the branch
- * deploys nothing; SHIPPING them is what the gate covers. They must be added to
- * the CA-045 register and signed by Ewa and Keith before this merges. Both were
- * briefed to contain no clinic, no blood and no sample, which is deliberate:
- * the register's evidence line already overstates the existing five, so these
- * two were made easier to clear rather than harder.
+ * ✅ img-6 and img-7 (gpt_image_2, 2026-09-01) ARE NOW IN CA-045 AND SIGNED.
+ * Added to the register 2026-09-01 and cleared 2026-09-15: img-6 inside Q3 (the
+ * four ordinary-life photographs) and img-7 as its own Q5, both answered A with
+ * no conditions. Keith separately ruled img-7's logo-like trainer mark fine, a
+ * trademark question rather than a clinical one; the asset is unchanged.
+ *
+ * ~~🔴 img-6 and img-7 are NOT yet in CA-045.~~ Kept for the reasoning, which
+ * still governs the next new asset: generating them on this branch was fine
+ * because the branch deploys nothing, and SHIPPING is what the gate covers.
+ * Both were briefed to contain no clinic, no blood and no sample, deliberately,
+ * because the register's evidence line already overstated the existing five, so
+ * these two were made easier to clear rather than harder.
  */
 /* 🔴 THE NAMES COME FROM `lib/kits/names.ts`, NOT FROM HERE. This array used to
    carry its own short titles ("Testosterone", "Energy & Recovery", "Hormone &
