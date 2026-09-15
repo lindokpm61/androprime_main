@@ -4,11 +4,73 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2: the environment half of Phase 5 plus the per-corpus checks. Four findings, all live on `main` today and none a Direction F regression — the production build has never received two of the variables the app reads, so GA4 and the cookie banner have never run on the live site; one endpoint dispatches physical kits with no authentication; and TWO accessibility defects sit on every published article, invisible until the viewport sweep stopped measuring one article of eighteen**)
+## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2: Phase 5's environment half, the per-corpus checks, and a LIVE purchase that closed Gate 3 — then a live refund that opened S2-9. Five findings, every one of them already live on `main` and none a Direction F regression: two build variables the production build never received, so GA4 and the cookie banner have never run on the live site (fixed, Keith set Coolify); an endpoint that dispatched physical kits with no authentication (REMOVED); two accessibility defects on every published article, invisible while the sweep measured one article of eighteen (fixed, 58 findings to 0); Gate 3 CLOSED on a real £99 payment traced to a delivered email in 5 seconds; and a refund that moves the money and nothing else, missing at three layers**)
 
 Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-09-15".
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing pushed to
 `main`, no deploy ran. The three merge blockers are unchanged and all three are signatures.
+
+### ▶️ WHAT THE NEXT SESSION PICKS UP, IN ORDER
+
+Nothing below is blocked on anything in this session. Branch `redesign/direction-f` pushed at
+`bdefd1a`, **not merged and not deployed** — Coolify builds `main`, and production still
+serves `7ecad99`. Full detail: `qa/direction-f-migration-audit.md`, sections S2-1 to S2-9.
+
+1. **Three decisions on refunds, and none of them is mine to make** (S2-9). A refund moves the
+   money and nothing else: Keith refunded the live Gate 3 order at 01:20:06 and eighteen
+   minutes later Stripe said refunded while the app still said `dispatched`, with a kit in the
+   post. Missing at three layers — Stripe is not subscribed to the event, the handler has no
+   branch for it, and `kit_orders.status = 'refunded'` has no writer anywhere. The decisions:
+   (a) subscribe to **`charge.refunded`** — NOT `payment_intent.canceled`, which is the
+   obvious guess and catches nothing, because Stripe models this as a refund against the
+   charge and leaves the intent `succeeded`; (b) what a refund should DO to an order whose kit
+   has already shipped, since it cannot be un-posted; (c) whether a developer machine should
+   hold a live Stripe key — `.env.local` has `sk_live_`, against the repo's own convention.
+
+2. **`invoice.payment_failed` may be handled but never delivered.** The webhook branches on
+   it (the T-07 dunning path), and the only record of the endpoint's subscription list
+   (`docs/phase7-implementation-plan.md:74`) names three events, not including it. If Stripe
+   is not sending it, dunning emails can never fire. Unverified from here — the Stripe
+   connector is not authorised in this session, and `processed_stripe_events` has only ever
+   recorded `checkout.session.completed`, which is consistent but not proof. One look at
+   Developers → Webhooks settles it.
+
+3. **The `pending` / `cancelled` gap on the dispatch path.** `dispatchKit` will still ship a
+   kit for an order at `pending`, `cancelled`, `refunded` or `on_hold`. A `pending` order has
+   not been paid for. Much smaller now that the public endpoint is gone and only our own code
+   can call it, and the classification lists in `lib/vitall/alreadyDispatched.ts` are already
+   the right place to put it.
+
+4. **The ten fixture scenarios** (Still to do item 3) — nine of the ten results-dashboard
+   states have never been looked at. Blocked only on Keith: `scripts/seed-result.ts` writes to
+   PRODUCTION (no local Supabase) and demands `--yes`, so it means ten fake customers with
+   fake health results in the live database.
+
+5. **Not started, and none of it needs a decision:** the 14 non-checkout forms (item 6),
+   screenshots at 1320 and 390 (item 7, Phase 6), the `MEMBERSHIP_ENABLED=true` pass (item 8),
+   and rendering the three error boundaries, which needs a deliberate throw. Item 8 is now the
+   most consequential — the flag re-arms an early-retest block that sits directly on the kit
+   sale, and Gate 3 says nothing about that path.
+
+### What needs no re-verifying
+
+`npm test` exit 0, `typecheck` exit 0, `build` exit 0 with the removed route absent from the
+route table. The corpus viewport sweep is 195 cells clean after the two accessibility fixes,
+down from 58 findings, with its positive control firing on the same run. External citations:
+2088 anchors, 74 external URLs, zero broken. Gate 3 is closed on a **live** payment, and the
+proof transfers to the branch (checked file by file — the only change on the proved path is
+the idempotency guard, and it was tested against the real order's states).
+
+### The three merge blockers are unchanged, and all three are signatures
+
+CA-045 (ClickUp `869eur84c`), CA-046 (`869exuphq`), and the 48-row copy-register
+reconciliation whose Closed section still reads `_None yet._`. Nothing technical is holding
+the merge.
+
+⚠ **Two things will happen as side effects of the next deploy, and both should be decisions
+rather than discoveries:** the 26 approved SEO snippets go live on 15 search results, and the
+cookie-consent banner appears on the live site for the first time ever, on every page, now
+that the GA4 variable is set.
 
 ### ✅ GATE 3 IS CLOSED — open since April, closed 2026-09-15 on a real purchase
 
@@ -38,8 +100,26 @@ session's idempotency guard, checked against the order's real states rather than
 it would **not** have blocked the live purchase (`paid`, no vitall id) and **does** block a
 replay of it (`dispatched`, id 322953442).
 
-⚠ Caveat to keep: `MEMBERSHIP_ENABLED=true` re-arms that checkout block, which sits directly
-on the kit sale. Gate 3 says nothing about it, and the membership pass has still not been run.
+🔴 **CORRECTION — I read that flag from the wrong store.** "The flag is false in the shipping
+config" was asserted from `frontend/.env.local` and STATE.md guidance, neither of which is the
+production environment. ClickUp `869eqavre` (raised 2026-08-26, **still open**) says
+`MEMBERSHIP_ENABLED` is **`true` in Coolify**, along with `ACCOUNT_ADDRESS_ENABLED` — "a set
+that has drifted, not one variable". Same mistake S2-1 is about, inverted: there a variable
+present locally was absent in production; here one false locally may be true there.
+
+**Unverifiable from here.** The flag is runtime-only, so the build cannot reveal it, and
+production `/membership` returns **308** (still an app-host route at `7ecad99`) where the
+check needs a session; controls `/kits` → 200 and `/no-such-page` → 404 confirm the probe
+works. Gate 3 is unaffected — it ran on production code, which has no early-retest block at
+all. What is NOT established is that the branch's kit-checkout route stays inert after the
+merge: if the flag is on, that block is live on the kit sale path from the moment it deploys.
+
+✅ The branch improves this: it takes `/membership` out of `APP_ROUTE_PREFIXES`, so after the
+merge the apex `/membership` 404s when off and 200s when on — an **unauthenticated**
+discriminator, which is what `869eqavre` asked for and could not have.
+
+**Owed before merge, one look not a task:** confirm the flag in Coolify and audit the rest of
+the set against `deployment/env/vars.md` while there.
 
 ⚠ **Correction to the per-corpus section below:** the claim that "nothing links to `/go/`" was
 wrong. `app/go/page.tsx:132` renders ``href={`/go/${post.slug}`}``, and the grep that concluded
@@ -84,9 +164,13 @@ local runs hit production — except here it costs money rather than fake analyt
 refund should do to an order whose kit has already shipped, and whether a dev machine should
 hold a live payment key.
 
-### The two things that need Keith, and neither is code
+### Both of these are now DONE — kept because the reasoning still matters
 
-1. 🔴 **Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify.** The
+1. ✅ **DONE 2026-09-15 — Keith set the GA4 id in Coolify and confirmed the app URL was
+   already there.** ⚠ Consequence still pending: the first deploy after this is the first
+   time the cookie-consent banner appears on the live site, on every page. Original below.
+
+   🔴 **Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify.** The
    Dockerfile mounted eight `NEXT_PUBLIC_*` build secrets and the app reads eight, and they
    were not the same eight — these two were never mounted, and two that nothing reads were.
    The branch fixes the list, but **a mount with no value behind it is still an empty

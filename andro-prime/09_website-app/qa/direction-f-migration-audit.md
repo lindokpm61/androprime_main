@@ -9,12 +9,18 @@ Branch `redesign/direction-f` at `1a14ffc`, measured against production
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Full evidence logs are in the
 session scratchpad and are not committed (git holds the recipe, Drive holds the media).
 
-> **Session 2 in one line:** the environment half of Phase 5 plus the per-corpus checks, and
-> it found four things — the production build has never received two of the variables the app
-> reads (so GA4 and the cookie banner have never run on the live site), one endpoint
-> dispatches physical kits with no authentication, and **two accessibility defects sit on
-> every published article** because until now the viewport sweep measured one article of
-> eighteen. None is a Direction F regression; all are live today.
+> **Session 2 in one line:** the environment half of Phase 5, the per-corpus checks, and a
+> live purchase that closed Gate 3. Five findings, none of them a Direction F regression and
+> all of them live on `main` before this session started:
+>
+> | | Finding | State |
+> |---|---|---|
+> | S2-1 | The production build never received two variables the app reads, so GA4 and the cookie banner have never run on the live site | fixed; Keith set the Coolify values |
+> | S2-2 | An endpoint dispatched physical kits with no authentication | **endpoint removed** |
+> | S2-7 | Two accessibility defects on **every published article**, invisible while the sweep measured one article of eighteen | fixed, verified 58 findings → 0 |
+> | S2-8 | Gate 3 — payment to delivered email, on a **live** purchase | **closed** |
+> | S2-9 | A refund moves the money and nothing else, proven by refunding that purchase | open, three decisions |
+>
 > Session 2's findings are in their own section, below the session 1 material.
 
 ---
@@ -388,8 +394,10 @@ Recommendation: **(c)**, with **(a)** as the fast mitigation if the launch date 
 
 #### ✅ The idempotency half is DONE (Keith approved 2026-09-15)
 
-The authentication decision is still open. The repeat-dispatch half is closed, because it is
-safe on its own: it only ever refuses work, so it cannot stop a legitimate first dispatch.
+*(Written while the authentication decision was still open. It was resolved later the same
+day — the endpoint was removed; see the resolution above this block.)* The repeat-dispatch
+half went first, because it is safe on its own: it only ever refuses work, so it cannot stop a
+legitimate first dispatch.
 
 **`status === 'dispatched'` would have been the wrong test**, and checking the real enum is
 what showed it. `order_status` runs `pending → paid → dispatched → sample_registered →
@@ -695,7 +703,7 @@ the branch changes the path it proved. It changes six files on or near it. Check
 | File | Change | On the live kit chain? |
 |---|---|---|
 | `app/api/webhooks/stripe/route.ts` | date-format refactor, plus an ops alert on a **subscription** insert failure | **No** — subscriptions, not kits |
-| `app/api/checkout/kit/route.ts` | early-retest decline block, wrapped in `if (user && isMembershipEnabled())` | **No** — `MEMBERSHIP_ENABLED` is false in the shipping config, so the block is skipped and the route is byte-identical to production |
+| `app/api/checkout/kit/route.ts` | early-retest decline block, wrapped in `if (user && isMembershipEnabled())` | ⚠ **UNVERIFIED — see the correction below** |
 | `app/api/checkout/portal`, `checkout/subscription` | membership/portal work | **No** — not the kit path |
 | `app/api/vitall/dispatch/route.ts` | this session's idempotency guard | Yes, and see below |
 | `lib/vitall/alreadyDispatched.ts` | new, holds that guard | Yes, and see below |
@@ -711,9 +719,42 @@ guard blocks a REPEAT of that order now?    true    ← status 'dispatched', id 
 The live purchase would have completed unchanged with the guard in place, and a replay of it
 is now refused. **The Gate 3 proof transfers.**
 
-⚠ The one caveat worth keeping: `MEMBERSHIP_ENABLED=true` re-arms the checkout block, which
-sits directly on the kit sale. Gate 3 says nothing about that path, and the membership pass
-(item 8) has still not been run.
+#### 🔴 CORRECTION: I read that flag from the wrong store, and it may well be ON
+
+Earlier in this section I wrote that the kit-checkout change is inert because
+"`MEMBERSHIP_ENABLED` is false in the shipping config". **That was asserted from
+`frontend/.env.local` and from STATE.md's guidance — neither of which is the production
+environment.** It is exactly the mistake S2-1 is about, inverted: there, a variable present
+locally was absent in production; here, a variable false locally may be true in production.
+
+ClickUp `869eqavre`, raised 2026-08-26 and **still open**, says the opposite of what I
+assumed: *"`MEMBERSHIP_ENABLED` is **`true`** **in Coolify**, not off. Every doc, every commit
+message and the whole dark-launch design on this feature assumed it was off."* It records a
+£47/month paywall reachable on the live app host and `POST /api/checkout/subscription`
+returning a real `cs_live_…` Stripe Checkout URL, and notes `ACCOUNT_ADDRESS_ENABLED` had
+drifted too — *"a **set** that has drifted, not one variable"*.
+
+**I could not verify the current value from here.** The flag is runtime-only (not a
+`NEXT_PUBLIC_`, not a Docker build secret), so the build cannot reveal it, and on production
+`/membership` returns **308** — it is still an app-host route at `7ecad99`, where the check
+needs a signed-in session. The task's own discriminator says an unauthenticated request tells
+you nothing. Controls run alongside: `/kits` → 200, `/no-such-page` → 404, so the probe works
+and the 308 is a real routing answer rather than a broken request.
+
+**What this does to the Gate 3 conclusion.** Gate 3 itself is unaffected: it ran against
+production code, which has no early-retest block at all. What is *not* established is my claim
+that the branch's kit-checkout route is inert after the merge. If the flag is on in Coolify,
+that block **is** live on the kit sale path the moment this branch deploys, and nothing has
+exercised it.
+
+✅ **One thing the branch improves:** it removes `/membership` from `APP_ROUTE_PREFIXES`, so
+after the merge the apex `/membership` becomes a public page that 404s when the flag is off and
+200s when it is on — an *unauthenticated* discriminator, which is what the 2026-08-26 task
+asked for and could not have. Worth using as the Phase 9 flag assertion.
+
+**Owed before merge, and it is one look rather than a task:** confirm `MEMBERSHIP_ENABLED` in
+Coolify, and audit the rest of the flag set against `deployment/env/vars.md` while there —
+`869eqavre` step 2 says to assume more have drifted, since two of the three checked had.
 
 #### ⚠ Correction to S2-6: the audit's own checkers DID write to production analytics
 
