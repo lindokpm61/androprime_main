@@ -14,6 +14,74 @@ it is now stale on the item count as well. **Rebuild the draft before sending.**
 moment: `03_compliance/STATE.md` says corrections are free while the packet is unsent and expensive
 after, and that is exactly why this went in now rather than at the end of the branch.
 
+---
+
+## 🔴 AMENDED AGAIN 2026-09-15, AND THIS IS THE ONE THAT CHANGES WHAT IS BEING ASKED
+
+Three corrections, found while closing Phase 4 of the Direction F migration. **All three are free
+now and expensive the moment this is sent**, which is the whole argument of the note above.
+
+### 1. q6 and q7 govern TWENTY-SIX routes, not one, not two, and not six
+
+Every previous count in this packet, in the register and on the board was arrived at by listing the
+pages someone had **deliberately** added the hero field to. That is not how it gets onto a page.
+
+`components/marketing/FPage.tsx` renders `<HeroField />` inside `FHero`, and its prop signature is
+`ground?: 'field' | 'none'` **defaulting to `'field'`**. So the layer is opt-OUT, not opt-in: every
+route that renders an `FHero` carries it unless the caller passes `ground="none"`, and exactly one
+route in the codebase does (`/checkout/details`). Counted mechanically on 2026-09-15:
+
+`/` · `/about` · `/contact` · `/faq` · `/go` · `/how-it-works` · `/how-to-sample` · `/kits` ·
+`/kits/testosterone` · `/kits/energy-recovery` · `/kits/hormone-recovery` · `/lp/testosterone` ·
+`/lp/energy-recovery` · `/lp/hormone-recovery` · `/lp/collagen` · `/lp/daily-stack` ·
+`/membership` · `/order/confirmed` · `/privacy` · `/subscription/confirmed` ·
+`/supplement-waitlist` · `/supplements` · `/supplements/collagen` · `/supplements/daily-stack` ·
+`/test-selector` · `/waitlist`
+
+**Twenty-six.** Including both legal documents, the order confirmation, and all five landing pages.
+
+⚠ **Why every previous count was wrong, and it is not carelessness.** A shared component with a
+defaulted prop distributes a decision silently: nobody adds the layer to `/privacy`, so nobody
+records that `/privacy` has it, so no count built from the record can ever contain it. The register
+rows are accurate about what was *done* and structurally blind to what was *inherited*. The general
+rule this earns: **when asking whether a shared visual element is acceptable, count it from the
+component's callers and its default, never from the list of places it was deliberately added.**
+
+**What this changes about the question.** q6 asks whether the field reads as display or as texture,
+and q7 asks about the two markers the page never shows. Neither answer changes with the count. What
+changes is the **blast radius of the answer**, and one thing in it is genuinely new: the field now
+renders on `/privacy` and `/terms`-adjacent surfaces and on `/order/confirmed`, which is a
+post-purchase page. If the reading is ever anything other than texture, a data-derived ground on a
+confirmation page is a different question from the same ground on a marketing hero. **Ewa should be
+told the number before she answers, not after.**
+
+### 2. This packet contradicts itself on how many answers to expect
+
+The header says **eight** questions and the body carries eight numbered items, which is correct. But
+the Format paragraph says *"Seven contiguous items"* and the On-reply paragraph says *"Count the
+answers against the seven"*. Both are left over from before `img-8` became question 8 and are now
+wrong. **The expected answer count is 8.** Corrected in both places below.
+
+This matters more than a typo: the whole point of the numbering discipline is that a reply carrying
+fewer letters than expected has an unanswered question in it, and a count that is wrong by one makes
+that check pass while a question sits unanswered.
+
+### 3. There are TWO ClickUp tasks for CA-045 and both are `pending`
+
+- [`869eqz4bd`](https://app.clickup.com/t/869eqz4bd) — the older one, and the one **this packet
+  names** for rulings. Its description is now materially stale: it says *"Nothing is owed yet. A
+  mockup is not published"*, which stopped being true when the direction was built into the site;
+  it describes a **five**-question judgement pass; and its artefact paths point at
+  `design/mockups/directions/assets/f/`, the mockup, rather than `frontend/public/home/`.
+- [`869eur84c`](https://app.clickup.com/t/869eur84c) — the newer one, created at wrap on 2026-09-03
+  **because the board appeared to have no CA-045 task**. It did. This one describes **nine items as
+  seven questions**.
+
+So the item/question count now reads five, seven or eight depending on which of three records you
+open. ⚠ **Neither task has been retired and neither should be, by anyone, without Keith deciding
+which is canonical** — a duplicate that is merged from the title alone is how the surviving record
+loses the half that only lived in the other. Flagged, not resolved.
+
 | Question | Item(s) | Asset |
 |---|---|---|
 | 1 | hero film | `public/home/table.mp4` + `poster.jpg` |
@@ -51,11 +119,15 @@ sample") was established on the **film frame** and does not describe the photogr
 has never actually been cleared.
 
 **Format:** validated by `.claude/skills/signoff-email/validate.js`, exit 0, on both the drafted
-body and the copy read back out of Gmail after creation. Seven contiguous items, every item one
+body and the copy read back out of Gmail after creation. **Eight** contiguous items, every item one
 question and at least two lettered options, no em dashes, reply-by-letter instruction present.
+⚠ *Said "seven" until 2026-09-15; that predates `img-8` becoming question 8 and was simply wrong.*
 
-**On reply:** rulings go to ClickUp task `869eqz4bd` (Approvals & Sign-offs) FIRST, then mirror
-here. Count the answers against the seven before recording anything.
+**On reply:** rulings go to ClickUp (Approvals & Sign-offs) FIRST, then mirror here. **Count the
+answers against EIGHT** before recording anything. ⚠ *Said "the seven" until 2026-09-15. A
+too-low expected count is the one error this check cannot survive: it makes a reply with a missing
+answer look complete.* ⚠ **And confirm which task is canonical before writing to it** — there are
+currently two, `869eqz4bd` and `869eur84c`, both `pending`. See correction 3 above.
 
 ---
 
@@ -216,12 +288,28 @@ as a value.
 Our reading is that this is texture whose source happens to be real, rather than
 a display of data. That reading is not ours to ratify, which is why it is here.
 
+One thing you should know before you answer, because I had it wrong until this
+week. This pattern is not only on the homepage. It is built into the shared page
+frame and it is switched ON by default, so it sits behind the top of twenty six
+pages. Every page has to opt out of it, and exactly one does. The list includes
+the three kit pages, all five landing pages, the membership page, the privacy
+page, and the order confirmation page a man sees straight after he has paid.
+
+I am telling you the number because it changes the weight of the answer, not the
+question. Two of those pages are worth a separate thought. On a marketing page
+the pattern sits behind a sales argument. On the order confirmation page it sits
+behind a man who has just handed over money and is waiting for his kit, and that
+is the one place a faint pattern of ranges could most easily be taken for
+something of his own.
+
 Is this a data display?
 
-A: No, it is texture. Clear as it is.
+A: No, it is texture. Clear as it is, on all twenty six pages.
 B: It is texture only because it is faint. Clear, but the opacity must never be
    raised without asking you again.
-C: Yes, it is a data display. Do not use it.
+C: Texture is fine on the marketing pages, but take it off the order
+   confirmation page, where it could be read as his own result.
+D: Yes, it is a data display. Do not use it anywhere.
 
 7. Two markers in that pattern that the page never shows.
 
