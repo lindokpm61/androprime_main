@@ -54,7 +54,7 @@ frontend/app/api/
 
 ```
 Stripe → /api/webhooks/stripe
-  ├─ kit purchase    → INSERT kit_orders → trigger Vitall dispatch (app/api/vitall/dispatch) → emitEvent('purchase')
+  ├─ kit purchase    → INSERT kit_orders → trigger Vitall dispatch (lib/vitall/dispatchKit.ts) → emitEvent('purchase')
   └─ subscription    → INSERT supplement_subscriptions → emitEvent('subscription_started')
 
 Lab (Vitall — live) → /api/webhooks/vitall
@@ -68,4 +68,4 @@ The founding-member opt-in is retired (`/api/founding-member/join` returns 410 G
 
 ## Lab dispatch (Vitall — live)
 
-`/api/vitall/dispatch` is the live Vitall dispatch route (`KIT_TEST_CODES` maps each kit shortCode to its Vitall test codes). There is no Thriva route: Thriva/Forth were ruled out and Vitall is the confirmed lab (E2E-proven 2026-06-25).
+`lib/vitall/dispatchKit.ts` holds the live Vitall dispatch logic (`KIT_TEST_CODES` maps each kit shortCode to its Vitall test codes). It was `POST /api/vitall/dispatch` until 2026-09-15, when the route was removed: it was unauthenticated and service-role-backed, so anyone who knew an order id could post a physical kit. Both callers now import the function instead of fetching the app's own public URL. There is no Thriva route: Thriva/Forth were ruled out and Vitall is the confirmed lab (E2E-proven 2026-06-25).

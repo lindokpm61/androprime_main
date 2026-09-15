@@ -248,7 +248,7 @@ The two prefixes never mix on one element and neither module imports the other.
 - **Lists/results:** `founding-member/join` (**returns 410 Gone, retired 2026-06-04**), `supplement-waitlist/join`, `results/qualifier`, `lowt-nurture/consent`, `borderline-nurture/consent`
 - **Membership (behind `MEMBERSHIP_ENABLED`, 404 when off):** `membership/checkin` (one tap of the between-tests loop; writes `symptom_answers` with `context='checkin'` and no `order_id`)
 - **Account (GDPR, LIVE 2026-07-19):** `account/export` (data export), `account/erasure-request`
-- **Lab:** `vitall/dispatch`
+- **Lab:** `lib/vitall/dispatchKit.ts`
 - **Analytics/OG:** `events`, `og/blog/[slug]` (`?variant=card|social`)
 - **Content/ISR:** `revalidate` (on-demand `revalidateTag('blog'|'article:<slug>')`, the DB-write publish path, no redeploy)
 - **Dev/deprecated:** `dev/seed-result`, `activate`
@@ -423,7 +423,7 @@ is the only thing standing between an unverified mapping and a month of silent n
 
 **Dunning is Dashboard-only.** Stripe Smart Retries + failed-payment emails are account-level Dashboard settings, not in the public API. Decision (Stripe-native retries vs CIO T-07 emails; mutually exclusive) deferred to Phase 0b; see `STATE.md`.
 
-**Vitall kit mapping** (authoritative: `app/api/vitall/dispatch` `KIT_TEST_CODES` + `lib/results/normaliser.ts` exact, case-sensitive match):
+**Vitall kit mapping** (authoritative: `lib/vitall/dispatchKit.ts` `KIT_TEST_CODES` + `lib/results/normaliser.ts` exact, case-sensitive match):
 
 | Kit | shortCode | Biomarkers (Vitall `GET /tests`, 2026-06-22) |
 | --- | --- | --- |

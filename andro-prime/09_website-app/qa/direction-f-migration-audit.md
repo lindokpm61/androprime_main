@@ -38,12 +38,16 @@ whether or not anyone visits it.
 that would have shipped were found and fixed, one of which would have failed CI on the
 merge commit itself.
 
-**Session 2 adds no merge blocker and one launch blocker.** Everything it found is
-pre-existing and live on `main` today, so none of it is a reason to hold this branch — but
-`/api/vitall/dispatch` (S2-2) accepts an unauthenticated request to dispatch a physical kit,
-and that should be closed before the first real customer rather than before the merge. The
-two unbaked build variables (S2-1) are fixed in the branch and still need a Coolify change
-to take effect.
+**Session 2 adds no merge blocker, and its one launch blocker is now closed.** Everything it
+found is pre-existing and live on `main` today, so none of it was a reason to hold this branch.
+The unauthenticated kit-dispatch endpoint (S2-2) has been **removed**, after Gate 3 was proved
+on a live purchase. The two unbaked build variables (S2-1) are fixed in the branch and Keith
+has set them in Coolify. **Gate 3 itself is closed** (S2-8), on a live payment, so the
+live-mode Stripe webhook is proved.
+
+What remains on this path is a decision rather than a defect: the dispatch code still ships a
+kit for an order at `pending`, `cancelled`, `refunded` or `on_hold`. With the public door gone
+only our own code can reach it, so the gap is much smaller than it was.
 
 ---
 
@@ -286,7 +290,54 @@ restored tree passes.
 session. Changing it changes where an auth callback lands, which is a different decision
 from an empty-string guard, so it is flagged rather than touched.
 
-### 🔴 S2-2 `/api/vitall/dispatch` dispatches physical kits with no authentication
+### ✅ S2-2 CLOSED — the endpoint that dispatched physical kits with no authentication has been removed
+
+**Resolved 2026-09-15, in two steps and in the order Keith approved them.** The repeat-dispatch
+guard went in first because it was safe on its own; the removal waited until Gate 3 was proved
+on a live purchase, because restructuring the only path that turns money into a posted box
+while nobody had watched it work was the larger risk.
+
+**The route is gone.** Its body now lives in `lib/vitall/dispatchKit.ts`, and both callers —
+`app/api/webhooks/stripe/route.ts` and `lib/bundles/dispatch.ts` — import the function instead
+of `fetch`ing the app's own public URL. Verified against a running production build, with a
+control so the probe could tell "removed" from "still there":
+
+```text
+GET  /api/vitall/dispatch -> 404   (was 405, i.e. the route existed and took POST)
+POST /api/vitall/dispatch -> 404   text/html — Next's 404 page, NOT the route's
+                                   {"error":"Order not found"} JSON
+GET  /api/forms/contact   -> 405   control: a route that still exists still answers 405
+```
+
+The POST check needed that second layer: the old route ALSO answered 404 for an unknown order
+id, so the status alone was ambiguous. The content type settles it — an HTML 404 page is Next
+saying "no such route", not a handler saying "no such order".
+
+**Why removal rather than a shared secret.** A lock can be missing. A secret absent from the
+deployment environment turns "anyone can dispatch a kit" into "nobody's paid order dispatches,
+silently", which is worse than the hole it closes. A function that does not exist on the
+network cannot be called from the network and cannot be misconfigured into refusing its own
+callers. It also removes a network hop from the money path: no DNS, no TLS, no proxy, no cold
+start between a completed payment and the kit it owes.
+
+**The contract that had to survive.** `lib/bundles/dispatch.ts` decides whether to retry
+tomorrow by reading the response status and reports failures as `dispatch_status_${n}`. Those
+numbers are part of the contract, not an artefact of a transport that no longer exists, so
+`dispatchKit` returns every one of them unchanged — 400, 404, 422, 502, 500, 200. Collapsing
+them to a boolean would have silently changed which failures retry.
+
+Gates after the change: `npm test` exit 0 (including 48 repeat-dispatch assertions),
+`typecheck` exit 0, `build` exit 0 with the route absent from the route table. Ten documents
+that named the route as a current location were swept to point at the function.
+
+🔴 **Still open on this path:** the `pending` / `cancelled` / `refunded` / `on_hold` gap below.
+Removing the public door means only our own code can reach the dispatch now, which shrinks
+that gap a great deal — but the code still ships a kit for an order nobody has paid for.
+
+<details>
+<summary>The original finding, kept for the record</summary>
+
+### 🔴 S2-2 (as first written) `/api/vitall/dispatch` dispatches physical kits with no authentication
 
 Live on both production hosts today (`GET` returns 405, so `POST` is accepted). Pre-existing
 and unchanged by this branch.
@@ -368,6 +419,8 @@ twelfth enum value defaulting to the branch that spends money.
 still dispatches them today. A `pending` order has not been paid for. That is a different
 refusal needing a different answer to the caller, and widening a guard on the
 payment-to-dispatch path is a separate decision from making it idempotent.
+
+</details>
 
 ### ✅ S2-3 The Sentry releases endpoint is not a deploy check, and cannot be
 

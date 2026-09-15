@@ -9,7 +9,7 @@
  *   1. Seeds a throwaway test user + kit_order (status 'paid') in the TARGET DB,
  *   2. Calls the real Vitall /order/create (production unless VITALL_SANDBOX=true),
  *   3. Stores the returned vitall_order_id and flips the order to 'dispatched'
- *      (exactly what app/api/vitall/dispatch/route.ts does in production),
+ *      (exactly what lib/vitall/dispatchKit.ts does in production),
  *   4. Prints the partner_order_id (our id) + vitall_order_id for each, plus a
  *      paste-ready block for the email to Ben.
  *
@@ -48,7 +48,7 @@ const admin = createClient<Database>(SUPABASE_URL, SERVICE_KEY, {
 
 const EMAIL_PREFIX = 'vitall-live-test+'
 
-// Kit → Vitall shortCode (Ben Starling 2026-05-08), mirrors app/api/vitall/dispatch/route.ts.
+// Kit → Vitall shortCode (Ben Starling 2026-05-08), mirrors lib/vitall/dispatchKit.ts.
 const KIT_TEST_CODES: Record<KitType, string[]> = {
   testosterone: ['andro-prime-hormone-check'],
   'energy-recovery': ['andro-prime-energy-metabolism'],

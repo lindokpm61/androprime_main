@@ -27,7 +27,7 @@
 **Date:** April 2026
 **Last updated:** 16 April 2026
 
-> **Lab partner update (2026-05-01):** This plan was written against the Thriva API. Vitall is now the confirmed lab partner. Read "Thriva" throughout as "the lab partner (now Vitall)" — the live dispatch route lives at `app/api/vitall/dispatch/route.ts`.
+> **Lab partner update (2026-05-01):** This plan was written against the Thriva API. Vitall is now the confirmed lab partner. Read "Thriva" throughout as "the lab partner (now Vitall)" — the live dispatch logic lives at `lib/vitall/dispatchKit.ts` (it was a route at `app/api/vitall/dispatch/route.ts` until 2026-09-15).
 
 ---
 

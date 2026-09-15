@@ -1,10 +1,14 @@
 // Second-kit dispatch helper for the bundle sweep.
 //
-// `/api/vitall/dispatch` reads the patient + address from a kit_orders row, so
-// the owed second kit needs its own row. This helper creates that row (a fresh
-// address snapshot from the user's current address columns, no second Stripe
-// charge) and then calls the SAME dispatch endpoint the first kit uses, so the
-// second kit is just another ordinary Vitall order placed on our schedule.
+// `dispatchKit()` reads the patient + address from a kit_orders row, so the owed
+// second kit needs its own row. This helper creates that row (a fresh address
+// snapshot from the user's current address columns, no second Stripe charge) and
+// then calls the SAME dispatch path the first kit uses, so the second kit is just
+// another ordinary Vitall order placed on our schedule.
+//
+// That path was `POST /api/vitall/dispatch` until 2026-09-15, when the route was
+// removed and its body moved to `lib/vitall/dispatchKit.ts`. Same code, same
+// status codes, one fewer public door.
 //
 // Unlike the Stripe webhook's fire-and-forget first dispatch, this AWAITs the
 // dispatch response and only marks the bundle 'dispatched' on success — on any
@@ -14,7 +18,8 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '@/lib/supabase/types'
 import type { BundleDispatchRow } from './sweep'
 
-import { SITE_URL } from '@/lib/site-url'
+import { dispatchKit, type DispatchOutcome } from '@/lib/vitall/dispatchKit'
+import type { KitType } from '@/lib/results/types'
 
 export interface DispatchResult {
   ok: boolean
@@ -98,25 +103,27 @@ export async function dispatchSecondKit(
     }
   }
 
-  // Reuse the existing dispatch endpoint verbatim (it resolves the current
-  // address at call time and calls Vitall's order/create). AWAIT and check the
-  // response — on non-OK, leave the row in 'awaiting_window' so the next daily
-  // sweep retries; do NOT mark dispatched.
-  let response: Response
+  // Reuse the same dispatch logic verbatim (it resolves the current address at
+  // call time and calls Vitall's order/create). AWAIT and check the outcome —
+  // on non-OK, leave the row in 'awaiting_window' so the next daily sweep
+  // retries; do NOT mark dispatched.
+  //
+  // Was a `fetch()` to our own public `/api/vitall/dispatch` until 2026-09-15;
+  // that endpoint is gone because it was unauthenticated and could post a kit to
+  // anyone who knew an order id. `dispatchKit` returns the SAME status codes the
+  // route used to, precisely so the `dispatch_status_${n}` reasons below keep
+  // their meaning and so which failures retry does not silently change.
+  let outcome: DispatchOutcome
   try {
-    response = await fetch(`${SITE_URL}/api/vitall/dispatch`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ orderId: secondOrderId, kitType: bundleRow.kit_type }),
-    })
+    outcome = await dispatchKit({ orderId: secondOrderId, kitType: bundleRow.kit_type as KitType })
   } catch (err) {
     console.error('[bundle-dispatch] Vitall dispatch request failed for bundle', bundleRow.id, err)
     return { ok: false, orderId: secondOrderId, reason: 'dispatch_request_failed' }
   }
 
-  if (!response.ok) {
-    console.error('[bundle-dispatch] Vitall dispatch non-OK for bundle', bundleRow.id, response.status)
-    return { ok: false, orderId: secondOrderId, reason: `dispatch_status_${response.status}` }
+  if (!outcome.ok) {
+    console.error('[bundle-dispatch] Vitall dispatch non-OK for bundle', bundleRow.id, outcome.status)
+    return { ok: false, orderId: secondOrderId, reason: `dispatch_status_${outcome.status}` }
   }
 
   const { error: updateError } = await supabase

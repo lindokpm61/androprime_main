@@ -15,6 +15,8 @@ import { trackEvent } from '@/lib/analytics/events'
 import { isBundlesEnabled } from '@/lib/flags'
 import { BUNDLE_CONFIG } from '@/lib/bundles/config'
 import { isValidBundleType, isValidKitType, computeBundleDueAt } from '@/lib/bundles/checkout'
+import { dispatchKit } from '@/lib/vitall/dispatchKit'
+import type { KitType } from '@/lib/results/types'
 import { SITE_URL } from '@/lib/site-url'
 import { formatOrderRef } from '@/lib/orders/orderRef'
 import { formatLongDate } from '@/lib/date/format'
@@ -353,7 +355,6 @@ export async function POST(request: NextRequest) {
             await triggerVitallDispatch({
               orderId: order.id,
               kitType: kit_type ?? '',
-              siteUrl: SITE_URL,
             })
 
             // Bundle: schedule the owed second kit. Gated on BUNDLES_ENABLED and
@@ -518,21 +519,37 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ received: true })
 }
 
+/**
+ * Dispatch the kit this payment bought.
+ *
+ * Was a `fetch()` to our own public `/api/vitall/dispatch` until 2026-09-15.
+ * That endpoint is gone: it was unauthenticated, service-role-backed, and able
+ * to post a physical kit to anyone who knew an order id. Calling the function
+ * directly removes the door rather than locking it, and removes a network hop
+ * from the money path at the same time — no DNS, no TLS, no proxy, no cold
+ * start between a completed payment and the kit it owes.
+ *
+ * Still swallowing errors, deliberately and unchanged: Stripe retries a webhook
+ * that does not return 2xx, and a retry re-enters this handler. The order row is
+ * already written by the time this runs, so a dispatch failure must not fail the
+ * webhook. `dispatchKit` is idempotent, so a Stripe retry cannot double-post.
+ */
 async function triggerVitallDispatch({
   orderId,
   kitType,
-  siteUrl,
 }: {
   orderId: string
   kitType: string
-  siteUrl: string
 }) {
   try {
-    await fetch(`${siteUrl}/api/vitall/dispatch`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ orderId, kitType }),
-    })
+    const outcome = await dispatchKit({ orderId, kitType: kitType as KitType })
+    if (!outcome.ok) {
+      console.error(
+        `[stripe-webhook] Vitall dispatch did not succeed for order ${orderId}:`,
+        outcome.status,
+        outcome.body,
+      )
+    }
   } catch (err) {
     console.error('[stripe-webhook] Failed to trigger Vitall dispatch:', err)
   }

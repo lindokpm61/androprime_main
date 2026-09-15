@@ -14,7 +14,7 @@ All sequences are built in the Customer.io UI using these specs. Sequence IDs ma
 | `waitlist_signup` | `/api/forms/waitlist` | `{ email }` |
 | `newsletter_signup` | `/api/forms/newsletter` (blog "Health Intelligence Newsletter") | `{ email, source }` |
 | `purchase` | Stripe webhook | `{ kit_type, amount, order_id }` |
-| `kit_dispatched` | `/api/vitall/dispatch` (live; historic stub at `/api/thriva/dispatch`) | `{ kit_type, order_id }` |
+| `kit_dispatched` | `lib/vitall/dispatchKit.ts` (live; was `POST /api/vitall/dispatch` until 2026-09-15, historic stub at `/api/thriva/dispatch`) | `{ kit_type, order_id }` |
 | `result_received` | `/api/jobs/process-result` | `{ kit_type, result_id, order_id }` |
 | `subscription_started` | Stripe webhook | `{ product_slug, amount }` |
 | `founding_member_listed` | `/api/forms/founding-member-list` (list opt-in form submit) | `{ email, source }` |

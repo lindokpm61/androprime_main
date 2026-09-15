@@ -16,7 +16,7 @@ The mechanism is three pieces on top of the existing single-kit flow:
 2. **One daily sweep** (`/api/jobs/bundle-sweep`, QStash-scheduled) advances every row's state machine each run: matures due rows, sends the address-check email, and performs the second dispatch once the soft window elapses.
 3. **One result hook** (in `processVitallResult`) resolves the Confirmation bundle's outcome — trigger the retest, or bank it — when the first result lands.
 
-**The second dispatch reuses `/api/vitall/dispatch` verbatim** (no fork, no new Vitall integration code). That route already resolves the patient's *current* address at call time and inserts into `kit_orders`, so:
+**The second dispatch reuses the first kit's dispatch path verbatim** (`lib/vitall/dispatchKit.ts`; it was `/api/vitall/dispatch` when this was written, and the route was removed 2026-09-15) (no fork, no new Vitall integration code). That route already resolves the patient's *current* address at call time and inserts into `kit_orders`, so:
 
 - a customer who updates their address during the soft address-check window is handled with zero extra code
 - the second kit is created as an ordinary new `kit_orders` row (`stripe_payment_intent` left null — the shared bundle payment lives on the parent order; the row-to-row linkage is `bundle_dispatches`, not a second charge)
@@ -80,7 +80,7 @@ Key constants (all in `lib/bundles/config.ts`, each a single reviewable line for
 
   The hook only ever *sets dates* — it never dispatches or emails. All dispatch/email side effects live in the sweep.
 
-- **Second dispatch** (`lib/bundles/dispatch.ts`, `dispatchSecondKit`): builds a fresh address snapshot from the user's current address columns (not the original order snapshot), inserts a new `kit_orders` row (`status: 'paid'`, no `stripe_payment_intent`), links `second_order_id` back onto the bundle row **before** calling Vitall (so an ambiguous Vitall outcome plus a retry can never double-ship), then `POST /api/vitall/dispatch` and only marks the bundle `dispatched` on a 2xx response. Any failure leaves the row in `awaiting_window` so the next daily sweep retries — idempotent by construction (reuses an existing `second_order_id` if one was already created).
+- **Second dispatch** (`lib/bundles/dispatch.ts`, `dispatchSecondKit`): builds a fresh address snapshot from the user's current address columns (not the original order snapshot), inserts a new `kit_orders` row (`status: 'paid'`, no `stripe_payment_intent`), links `second_order_id` back onto the bundle row **before** calling Vitall (so an ambiguous Vitall outcome plus a retry can never double-ship), then calls `dispatchKit()` and only marks the bundle `dispatched` on an ok outcome — it returns the same status codes the route did, precisely so this retry rule keeps its meaning. Any failure leaves the row in `awaiting_window` so the next daily sweep retries — idempotent by construction (reuses an existing `second_order_id` if one was already created).
 
 ## 5. Bank-not-refund decision + refund-on-request ops path
 
@@ -176,4 +176,4 @@ Run only **after** the manual £70 Stripe refund has been issued. Prints the row
 - `components/commerce/KitCheckoutButton.tsx` + the three kit detail pages, `CheckoutDetailsForm.tsx` — edited (bundle choice + threading through the details redirect)
 - `lib/flags.ts` — edited (`isBundlesEnabled`)
 - `lib/supabase/types.ts` — edited (`bundle_dispatches` row type)
-- Reused unchanged: `app/api/vitall/dispatch/route.ts`, `lib/vitall/client.ts`, `lib/qstash/verify.ts`, `lib/customerio/emit.ts`, `lib/results/classifier.ts`
+- Reused unchanged: the dispatch path (`app/api/vitall/dispatch/route.ts` then; `lib/vitall/dispatchKit.ts` since 2026-09-15), `lib/vitall/client.ts`, `lib/qstash/verify.ts`, `lib/customerio/emit.ts`, `lib/results/classifier.ts`

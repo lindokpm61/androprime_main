@@ -1,11 +1,12 @@
 /**
  * Has a kit already been sent for this order?
  *
- * The rule lives here rather than inside `app/api/vitall/dispatch/route.ts` for
- * the same reason `buildVitallPatient` does: a route handler needs Supabase and
- * a request, so anything decided inside one is untestable, and this decision
- * guards a physical dispatch and a lab fee. Pure in, boolean out, and
- * `scripts/test-vitall-already-dispatched.ts` drives it over the whole enum.
+ * The rule lives here rather than inside the dispatch code itself
+ * (`lib/vitall/dispatchKit.ts`) for the same reason `buildVitallPatient` does:
+ * that function talks to Supabase and to Vitall, so anything decided inside it is
+ * untestable, and this decision guards a physical dispatch and a lab fee. Pure in,
+ * boolean out, and `scripts/test-vitall-already-dispatched.ts` drives it over the
+ * whole enum.
  *
  * ── WHY `status === 'dispatched'` IS THE WRONG TEST ───────────────────────
  * `order_status` runs pending → paid → dispatched → sample_registered →

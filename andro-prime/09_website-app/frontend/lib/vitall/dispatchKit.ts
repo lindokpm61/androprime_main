@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase/admin'
 import { emitEvent } from '@/lib/customerio/emit'
 import { cioKeyFromEmail } from '@/lib/customerio/identity'
@@ -8,6 +7,39 @@ import { isAlreadyDispatched } from '@/lib/vitall/alreadyDispatched'
 import type { VitallPatientAddress } from '@/lib/vitall/types'
 import type { KitType } from '@/lib/results/types'
 
+/**
+ * Dispatch a kit to Vitall for a paid order.
+ *
+ * ── WHY THIS IS A FUNCTION AND NOT A ROUTE (changed 2026-09-15) ───────────
+ * This was `POST /api/vitall/dispatch` until Gate 3 was proved on a live
+ * purchase. It existed as an HTTP endpoint only because two server modules
+ * called their own app over the public internet rather than calling a function,
+ * and the cost of that convenience was a door anyone could knock on:
+ * unauthenticated, service-role-backed, reading a customer's identity and
+ * address and creating a real Vitall order — a physical box and a lab fee. No
+ * signature, no secret, no session. The sibling `/api/jobs/*` routes all verify
+ * a QStash signature; this one verified nothing.
+ *
+ * Removing the route is a better fix than locking it, because a lock can be
+ * missing. A shared secret absent from the deployment environment turns "anyone
+ * can dispatch a kit" into "nobody's paid order dispatches, silently", which is
+ * worse. A function that does not exist on the network cannot be called from the
+ * network and cannot be misconfigured into refusing its own callers.
+ *
+ * It is also strictly MORE reliable than the HTTP hop it replaces: no DNS, no
+ * TLS, no proxy, no cold start, no request timeout between the webhook and the
+ * dispatch it triggers.
+ *
+ * ── THE RETURN SHAPE IS THE OLD HTTP CONTRACT, DELIBERATELY ───────────────
+ * `lib/bundles/dispatch.ts` decides whether to retry tomorrow by reading the
+ * response status, and reports failures as `dispatch_status_${status}`. Those
+ * numbers are therefore part of the contract, not an implementation detail of a
+ * transport that no longer exists, so every one of them is preserved exactly:
+ * 400 bad input, 404 order/user missing, 422 incomplete patient or address, 502
+ * Vitall refused, 500 our write failed, 200 dispatched or already dispatched.
+ * Collapsing them to a boolean would silently change which failures retry.
+ */
+
 // Maps our kit types to Vitall test shortCodes configured on our account.
 // Provided by Ben Starling (Vitall) 2026-05-08.
 const KIT_TEST_CODES: Record<KitType, string[]> = {
@@ -15,12 +47,6 @@ const KIT_TEST_CODES: Record<KitType, string[]> = {
   'energy-recovery': ['andro-prime-energy-metabolism'],
   'hormone-recovery': ['andro-prime-combo-test'],
 }
-
-interface DispatchBody {
-  orderId: string
-  kitType: KitType
-}
-
 
 /**
  * `users.sex` is `text` with a CHECK constraint (`sex IS NULL OR sex IN ('male','female')`),
@@ -38,28 +64,39 @@ type PatientSex = (typeof PATIENT_SEX)[number]
 const isPatientSex = (v: unknown): v is PatientSex =>
   typeof v === 'string' && (PATIENT_SEX as readonly string[]).includes(v)
 
-export async function POST(request: NextRequest) {
-  let body: DispatchBody
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
-  }
+export interface DispatchKitInput {
+  orderId: string
+  kitType: KitType
+}
 
-  const { orderId, kitType } = body
+export interface DispatchOutcome {
+  /** True for the cases the route used to answer 2xx. */
+  ok: boolean
+  /** The exact status the route used to return. See the header. */
+  status: number
+  /** The exact body the route used to return, for logs and callers. */
+  body: Record<string, unknown>
+}
 
+const fail = (status: number, error: string): DispatchOutcome => ({
+  ok: false,
+  status,
+  body: { error },
+})
+
+export async function dispatchKit({ orderId, kitType }: DispatchKitInput): Promise<DispatchOutcome> {
   if (!orderId || !kitType) {
-    return NextResponse.json({ error: 'Missing orderId or kitType' }, { status: 400 })
+    return fail(400, 'Missing orderId or kitType')
   }
 
   const testCodes = KIT_TEST_CODES[kitType]
   if (!testCodes) {
-    return NextResponse.json({ error: `Unknown kitType: ${kitType}` }, { status: 400 })
+    return fail(400, `Unknown kitType: ${kitType}`)
   }
 
   if (!process.env.VITALL_CLIENT_ID || !process.env.VITALL_CLIENT_SECRET) {
     console.warn('[vitall-dispatch] Vitall credentials not configured — skipping dispatch')
-    return NextResponse.json({ skipped: true, reason: 'vitall_not_configured' })
+    return { ok: true, status: 200, body: { skipped: true, reason: 'vitall_not_configured' } }
   }
 
   const supabase = createSupabaseAdminClient()
@@ -73,18 +110,17 @@ export async function POST(request: NextRequest) {
 
   if (orderError || !order) {
     console.error('[vitall-dispatch] Could not load kit_orders row:', orderError?.message)
-    return NextResponse.json({ error: 'Order not found' }, { status: 404 })
+    return fail(404, 'Order not found')
   }
 
   /*
-   * 🔴 IDEMPOTENCY. Nothing used to stop a repeat call: the route read the order,
-   * called Vitall, then set `status: 'dispatched'` unconditionally. A second POST
-   * with the same orderId created a second Vitall order — a second physical box,
-   * a second lab fee — and emitted a second `kit_dispatched` event. Added
-   * 2026-09-15; the route is reachable unauthenticated from the public internet
-   * (see S2-2 in the audit), so "only our own code calls it" was never a control.
+   * 🔴 IDEMPOTENCY. Nothing used to stop a repeat call: the code read the order,
+   * called Vitall, then set `status: 'dispatched'` unconditionally. A second
+   * invocation with the same orderId created a second Vitall order — a second
+   * physical box, a second lab fee — and emitted a second `kit_dispatched` event.
+   * Added 2026-09-15, while the surface was still a public HTTP endpoint.
    *
-   * ⚠ THIS RETURNS 200, NOT 409, AND THAT IS LOAD-BEARING. `lib/bundles/dispatch.ts`
+   * ⚠ THIS IS A 200, NOT A 409, AND THAT IS LOAD-BEARING. `lib/bundles/dispatch.ts`
    * marks a bundle `dispatched` only on a 2xx and otherwise leaves the row in
    * `awaiting_window` for the next daily sweep to retry. The case this guard exists
    * for is precisely the ambiguous one — Vitall succeeded, our write or our caller
@@ -98,11 +134,15 @@ export async function POST(request: NextRequest) {
       `[vitall-dispatch] Refusing repeat dispatch for order ${orderId} ` +
         `(status=${order.status}, vitall_order_id=${order.vitall_order_id ?? 'null'})`,
     )
-    return NextResponse.json({
-      dispatched: true,
-      alreadyDispatched: true,
-      vitall_order_id: order.vitall_order_id,
-    })
+    return {
+      ok: true,
+      status: 200,
+      body: {
+        dispatched: true,
+        alreadyDispatched: true,
+        vitall_order_id: order.vitall_order_id,
+      },
+    }
   }
 
   const { data: user, error: userError } = await supabase
@@ -118,7 +158,7 @@ export async function POST(request: NextRequest) {
 
   if (userError || !user) {
     console.error('[vitall-dispatch] Could not load user:', userError?.message)
-    return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    return fail(404, 'User not found')
   }
 
   // Per-order shipping snapshot wins for the lab dispatch (in case the user
@@ -152,18 +192,12 @@ export async function POST(request: NextRequest) {
 
   if (!user.first_name || !user.last_name || !user.date_of_birth || !isPatientSex(user.sex)) {
     console.error('[vitall-dispatch] Patient profile incomplete for order', orderId)
-    return NextResponse.json(
-      { error: 'Patient profile incomplete (missing name, DOB, or sex)' },
-      { status: 422 },
-    )
+    return fail(422, 'Patient profile incomplete (missing name, DOB, or sex)')
   }
 
   if (!address.line1 || !address.city || !address.postCode) {
     console.error('[vitall-dispatch] Shipping address incomplete for order', orderId)
-    return NextResponse.json(
-      { error: 'Shipping address incomplete' },
-      { status: 422 },
-    )
+    return fail(422, 'Shipping address incomplete')
   }
 
   let vitallOrderId: string
@@ -191,7 +225,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Vitall API error'
     console.error('[vitall-dispatch] createOrder failed:', message)
-    return NextResponse.json({ error: message }, { status: 502 })
+    return fail(502, message)
   }
 
   const { error: updateError } = await supabase
@@ -201,7 +235,7 @@ export async function POST(request: NextRequest) {
 
   if (updateError) {
     console.error('[vitall-dispatch] Failed to update kit_orders:', updateError.message)
-    return NextResponse.json({ error: 'Failed to update order status' }, { status: 500 })
+    return fail(500, 'Failed to update order status')
   }
 
   // Key the CIO event on the EMAIL (canonical identifier) so T-02 lands on the
@@ -213,5 +247,5 @@ export async function POST(request: NextRequest) {
     })
   }
 
-  return NextResponse.json({ dispatched: true, vitall_order_id: vitallOrderId })
+  return { ok: true, status: 200, body: { dispatched: true, vitall_order_id: vitallOrderId } }
 }

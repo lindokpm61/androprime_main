@@ -81,7 +81,22 @@ traffic. Cause is the one already named: no local Supabase, so local runs hit pr
    26 SEO snippets already queued behind this branch: a visible change arriving as a side
    effect, and it should be a decision rather than a discovery.
 
-2. 🔴 **Decide what to do about `/api/vitall/dispatch`.** It is live on both production
+2. ✅ **DONE — `/api/vitall/dispatch` has been REMOVED** (Keith approved 2026-09-15, after
+   Gate 3 was proved on a live purchase). Its body moved to `lib/vitall/dispatchKit.ts`;
+   both callers now import the function instead of fetching the app's own public URL.
+   Verified with a control so the probe could tell "removed" from "still there":
+   `GET` went 405 → **404**, the `POST` 404 is Next's HTML page rather than the route's
+   `{"error":"Order not found"}` JSON, and a route that still exists (`/api/forms/contact`)
+   still answers 405. Removal beat a shared secret because a missing secret would turn
+   "anyone can dispatch a kit" into "nobody's paid order dispatches, silently". The bundle
+   sweep's `dispatch_status_${n}` retry contract survives intact — `dispatchKit` returns the
+   same 400/404/422/502/500/200. Ten documents naming the route were swept.
+   🔴 Still open on this path: it will still ship a kit for an order at `pending`,
+   `cancelled`, `refunded` or `on_hold`. Much smaller now that only our own code can call it.
+
+   <details><summary>The original finding, kept for the record</summary>
+
+   🔴 **Decide what to do about `/api/vitall/dispatch`.** It is live on both production
    hosts and takes an unauthenticated POST. Given a `kit_orders.id` it reads the customer's
    full identity and address through the service-role client, calls Vitall's `order/create`
    — a real physical kit dispatch that costs money — flips the row to `dispatched`, and
@@ -111,6 +126,8 @@ traffic. Cause is the one already named: no local Supabase, so local runs hit pr
    🔴 Still open beyond the auth decision: `pending`, `cancelled`, `refunded` and `on_hold`
    are not "already done", they are "should not dispatch at all", and the route still
    dispatches them. A `pending` order has not been paid for.
+
+   </details>
 
 ### Fixed in the branch this session
 

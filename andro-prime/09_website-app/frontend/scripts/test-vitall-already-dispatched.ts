@@ -1,14 +1,17 @@
-// Unit tests for the repeat-dispatch guard on `POST /api/vitall/dispatch`.
+// Unit tests for the repeat-dispatch guard in `lib/vitall/dispatchKit.ts`.
 // Same runner-free style as the other suites: assert loudly, exit non-zero on
 // any failure. Run with `npx tsx scripts/test-vitall-already-dispatched.ts`.
 //
-// Why this file exists: until 2026-09-15 the dispatch route had no idempotency
+// Why this file exists: until 2026-09-15 the dispatch path had no idempotency
 // guard at all. It read the order, called Vitall, and set `status: 'dispatched'`
-// unconditionally, so a second POST with the same orderId created a second
+// unconditionally, so a second invocation with the same orderId created a second
 // Vitall order — a second physical box, a second lab fee, a second
-// `kit_dispatched` event. The route is reachable unauthenticated from the public
-// internet (S2-2 in qa/direction-f-migration-audit.md), so "only our own code
-// calls it" was never a control.
+// `kit_dispatched` event. At the time it was a PUBLIC, unauthenticated HTTP
+// endpoint (`POST /api/vitall/dispatch`), so "only our own code calls it" was
+// never a control. That route has since been removed and its body moved into
+// `lib/vitall/dispatchKit.ts` (S2-2 in qa/direction-f-migration-audit.md), which
+// closes the door — but the guard stays, because a caller bug, a Stripe webhook
+// retry or a bundle-sweep retry can still ask twice.
 //
 // What these assertions protect, specifically:
 //   (1) EVERY status in the `order_status` enum is classified. A twelfth value

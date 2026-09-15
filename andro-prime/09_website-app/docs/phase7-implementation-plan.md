@@ -28,7 +28,7 @@
 **Status:** Active (Thriva-era plan; Vitall selected 2026-05-01 — see migration note below)
 **Date:** April 2026
 
-> **Lab partner update (2026-05-01):** This plan was written against the Thriva API. Vitall has since been confirmed as the lab partner. Substitute "Vitall" for "Thriva" throughout the Phase 7 work: dispatch route now lives at `app/api/vitall/dispatch/route.ts`, env vars to be renamed `VITALL_*`, and webhook route to be added under `app/api/webhooks/vitall/`. The Thriva-named routes remain as historic stubs until retired.
+> **Lab partner update (2026-05-01):** This plan was written against the Thriva API. Vitall has since been confirmed as the lab partner. Substitute "Vitall" for "Thriva" throughout the Phase 7 work: dispatch logic now lives at `lib/vitall/dispatchKit.ts` (a route at `app/api/vitall/dispatch/route.ts` until 2026-09-15), env vars to be renamed `VITALL_*`, and webhook route to be added under `app/api/webhooks/vitall/`. The Thriva-named routes remain as historic stubs until retired.
 
 ---
 
