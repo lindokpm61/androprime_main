@@ -621,13 +621,40 @@ Every assertion above is read from the production database or the Customer.io AP
 inferred. The `kit_dispatched` event's recent attribute values contain this exact
 `order_id` and `vitall_order_id`, so the event that fired the email is provably this order's.
 
-⚠ **One thing Gate 3 does NOT yet answer: which Stripe MODE this was.** Webhook endpoints are
-per mode and do not copy from test to live, and a `pi_` id does not reveal its mode. The
-order exists, so the webhook for whichever mode was used is correctly configured. If this was
-a **live** payment, the live-mode endpoint is proven and the gate is fully closed. If it was
-**test**, the live-mode webhook remains the single highest-risk unknown at launch, because its
-failure mode is silent and expensive: the card is charged, no webhook fires, no order row is
-created, and nothing dispatches. Needs one line from Keith.
+✅ **It was a LIVE payment** (Keith, 2026-09-15). That was the open question, and it is the
+answer that matters: webhook endpoints are per mode and do not copy test → live, so this
+proves the **live-mode** endpoint is registered and firing. Phase 9 step 4 is therefore
+satisfied in advance of the deploy rather than after it, and the launch risk it existed to
+cover — card charged, no webhook, no order row, nothing dispatched, nothing saying so — is
+closed.
+
+#### Does the proof transfer to the code about to ship?
+
+Gate 3 was proved on **production `7ecad99`**, not on this branch, so the question is whether
+the branch changes the path it proved. It changes six files on or near it. Checked one by one:
+
+| File | Change | On the live kit chain? |
+|---|---|---|
+| `app/api/webhooks/stripe/route.ts` | date-format refactor, plus an ops alert on a **subscription** insert failure | **No** — subscriptions, not kits |
+| `app/api/checkout/kit/route.ts` | early-retest decline block, wrapped in `if (user && isMembershipEnabled())` | **No** — `MEMBERSHIP_ENABLED` is false in the shipping config, so the block is skipped and the route is byte-identical to production |
+| `app/api/checkout/portal`, `checkout/subscription` | membership/portal work | **No** — not the kit path |
+| `app/api/vitall/dispatch/route.ts` | this session's idempotency guard | Yes, and see below |
+| `lib/vitall/alreadyDispatched.ts` | new, holds that guard | Yes, and see below |
+
+So the only change on the proved path is the guard added in this session, and it only ever
+refuses. Checked against the real order's actual states rather than fixtures:
+
+```text
+guard would have BLOCKED the live purchase? false   ← status 'paid', no vitall_order_id
+guard blocks a REPEAT of that order now?    true    ← status 'dispatched', id 322953442
+```
+
+The live purchase would have completed unchanged with the guard in place, and a replay of it
+is now refused. **The Gate 3 proof transfers.**
+
+⚠ The one caveat worth keeping: `MEMBERSHIP_ENABLED=true` re-arms the checkout block, which
+sits directly on the kit sale. Gate 3 says nothing about that path, and the membership pass
+(item 8) has still not been run.
 
 #### ⚠ Correction to S2-6: the audit's own checkers DID write to production analytics
 

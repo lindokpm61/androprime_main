@@ -24,12 +24,22 @@ delivered email in 5 seconds**, every step read from the production DB or the Cu
 | 01:01:57 | email **sent** | campaign 12, "T-02 — Kit Dispatched", running |
 | 01:01:58 | email **delivered** | delivery metrics |
 
-⚠ **It does not tell us which Stripe MODE this was**, and a `pi_` id does not reveal it.
-Webhook endpoints are per-mode and do not copy test → live. The order exists, so the endpoint
-for whichever mode was used is correct. If this was **live**, the gate is fully closed. If
-**test**, the live-mode webhook stays the highest-risk unknown at launch, because it fails
-silently and expensively: card charged, no webhook, no order row, nothing dispatched. One line
-from Keith settles it.
+✅ **It was a LIVE payment** (Keith, 2026-09-15). Webhook endpoints are per-mode and do not
+copy test → live, so this proves the **live-mode** endpoint is registered and firing. Phase 9
+step 4 is satisfied ahead of the deploy, and the launch risk it covered is closed.
+
+✅ **And the proof transfers to the code about to ship.** Gate 3 ran on production `7ecad99`,
+so the question was whether the branch changes that path. It changes six files on or near it,
+and none of them changes the live kit chain: the stripe webhook diff is a date-format refactor
+plus a **subscription** ops alert; the kit checkout diff is an early-retest block wrapped in
+`if (user && isMembershipEnabled())`, and the flag is **false** in the shipping config, so
+that route is byte-identical to production. The only change on the proved path is this
+session's idempotency guard, checked against the order's real states rather than fixtures:
+it would **not** have blocked the live purchase (`paid`, no vitall id) and **does** block a
+replay of it (`dispatched`, id 322953442).
+
+⚠ Caveat to keep: `MEMBERSHIP_ENABLED=true` re-arms that checkout block, which sits directly
+on the kit sale. Gate 3 says nothing about it, and the membership pass has still not been run.
 
 ⚠ **Correction to the per-corpus section below:** the claim that "nothing links to `/go/`" was
 wrong. `app/go/page.tsx:132` renders ``href={`/go/${post.slug}`}``, and the grep that concluded
