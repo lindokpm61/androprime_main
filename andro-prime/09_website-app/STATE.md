@@ -10,6 +10,35 @@ Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-0
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing pushed to
 `main`, no deploy ran. The three merge blockers are unchanged and all three are signatures.
 
+### ✅ GATE 3 IS CLOSED — open since April, closed 2026-09-15 on a real purchase
+
+Keith bought a Kit 1 and the whole chain is now evidenced rather than assumed. **Payment to
+delivered email in 5 seconds**, every step read from the production DB or the Customer.io API:
+
+| Time (UTC) | Step | Evidence |
+|---|---|---|
+| 01:01:53.527 | order row created | `status: paid`, payment intent present |
+| 01:01:53.823 | purchase analytics | `events.kit_purchase`, 99 gbp, `testosterone` |
+| 01:01:56.708 | Vitall order + status flip | `vitall_order_id: 322953442`, `dispatched` |
+| 01:01:56 | Customer.io event | `kit_dispatched`, carrying this order id |
+| 01:01:57 | email **sent** | campaign 12, "T-02 — Kit Dispatched", running |
+| 01:01:58 | email **delivered** | delivery metrics |
+
+⚠ **It does not tell us which Stripe MODE this was**, and a `pi_` id does not reveal it.
+Webhook endpoints are per-mode and do not copy test → live. The order exists, so the endpoint
+for whichever mode was used is correct. If this was **live**, the gate is fully closed. If
+**test**, the live-mode webhook stays the highest-risk unknown at launch, because it fails
+silently and expensively: card charged, no webhook, no order row, nothing dispatched. One line
+from Keith settles it.
+
+⚠ **Correction to the per-corpus section below:** the claim that "nothing links to `/go/`" was
+wrong. `app/go/page.tsx:132` renders ``href={`/go/${post.slug}`}``, and the grep that concluded
+otherwise had excluded `app/go/` assuming it held only the route handler. Production proves it:
+**session 1's link crawl wrote 7 `bio_tile_click` rows**, and session 2's sweeps wrote 8
+`bio_grid_view` rows. Running total from QA: **27 grid views and 7 tile clicks in production
+`events`, none from a real visitor.** Recorded so launch analytics are not misread as early
+traffic. Cause is the one already named: no local Supabase, so local runs hit production.
+
 ### The two things that need Keith, and neither is code
 
 1. 🔴 **Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify.** The

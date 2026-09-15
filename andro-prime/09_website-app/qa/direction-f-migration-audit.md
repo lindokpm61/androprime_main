@@ -603,6 +603,61 @@ The only instrument that could see either is a contrast probe and an overflow pr
 the real corpus at real widths. Both existed. Neither had been pointed at more than one
 article until now.
 
+### ✅ S2-8 GATE 3 IS CLOSED — a real purchase, traced end to end
+
+Open since April, waiting on a real order. Keith bought a Kit 1 on 2026-09-15 and every link
+in the chain is now evidenced rather than assumed. **Payment to delivered email: 5 seconds.**
+
+| Time (UTC) | Step | Evidence |
+|---|---|---|
+| 01:01:53.527 | `kit_orders` row created | `status: paid`, `stripe_payment_intent` present |
+| 01:01:53.823 | Purchase analytics written | `events.kit_purchase`, value 99, currency gbp, `kit_id: testosterone` |
+| 01:01:56.708 | Vitall order created, status flipped | `vitall_order_id: 322953442`, `status: dispatched` |
+| 01:01:56 | Customer.io event | `kit_dispatched`, carrying the order id and the Vitall id |
+| 01:01:57 | Email **sent** | campaign 12, "T-02 — Kit Dispatched", `state: running`, transactional |
+| 01:01:58 | Email **delivered** | delivery metrics `sent` + `delivered` |
+
+Every assertion above is read from the production database or the Customer.io API, not
+inferred. The `kit_dispatched` event's recent attribute values contain this exact
+`order_id` and `vitall_order_id`, so the event that fired the email is provably this order's.
+
+⚠ **One thing Gate 3 does NOT yet answer: which Stripe MODE this was.** Webhook endpoints are
+per mode and do not copy from test to live, and a `pi_` id does not reveal its mode. The
+order exists, so the webhook for whichever mode was used is correctly configured. If this was
+a **live** payment, the live-mode endpoint is proven and the gate is fully closed. If it was
+**test**, the live-mode webhook remains the single highest-risk unknown at launch, because its
+failure mode is silent and expensive: the card is charged, no webhook fires, no order row is
+created, and nothing dispatches. Needs one line from Keith.
+
+#### ⚠ Correction to S2-6: the audit's own checkers DID write to production analytics
+
+S2-6 records that `/go/[slug]` writes a `bio_tile_click` row through the service-role client,
+and that `verify-bio-grid.ts` therefore imports the schedule rather than driving the route.
+That reasoning stands and that mitigation worked — session 2 wrote **zero** tile clicks.
+
+But the claim made while reaching it, that "nothing links to `/go/`", was **wrong**, and the
+production data proves it: **session 1's link crawl wrote 7 `bio_tile_click` rows** on
+2026-09-14 between 22:01 and 22:49.
+
+The error was in the search, not the reasoning. The grep excluded `app/go/` on the assumption
+it held only the route handler — but `app/go/page.tsx` is the GRID page, and line 132 renders
+``href={`/go/${post.slug}`}``. So the exclusion filter removed the one file that answered the
+question, and the template literal would have defeated a plain grep anyway. That is precisely
+the case `audit-link-integrity.js`'s own header describes: *"roughly a third of this site's
+internal links are template literals, so a grep over the source finds the SHAPE of a link and
+never its VALUE."* The browser-based crawler found them; the grep that was supposed to predict
+what it would find did not.
+
+Session 2's sweeps also wrote **8 `bio_grid_view` rows**, because the grid page emits that
+event server-side on every render and every route sweep loads it. Not preventable by choosing
+a different checker — the event fires on a plain GET of a public page.
+
+**Standing total from the audit: 19 + 8 = 27 `bio_grid_view` and 7 `bio_tile_click` rows in
+production `events`, all attributable to QA, none to a real visitor.** They are recorded here
+so that whoever first reads the launch analytics does not mistake them for early traffic. The
+underlying cause is the one already named in S2-6: there is no local Supabase, so a local run
+of this app reads and writes the production database.
+
 ### New tooling, session 2 (continued)
 
 | File | Closes |
@@ -639,9 +694,10 @@ like the assertion firing. Observations 813 to 815.
    **structural** half is done in session 2 (all three present and correct, `global-error`
    renders its own `<html>`/`<body>`). Still owed: rendering all three for real, which needs
    a deliberate throw — no sweep built from a route list can reach one.
-6. **Forms and checkout end to end** — 14 client fetch targets all resolve to real route
-   handlers (verified statically); none has been submitted. Gate 3 (checkout E2E) is still
-   open from April.
+6. **Forms** — 14 client fetch targets all resolve to real route handlers (verified
+   statically); none has been submitted. ✅ **Checkout is done: Gate 3 CLOSED 2026-09-15**
+   on a real purchase, traced payment to delivered email in 5 seconds. See S2-8. The one
+   thing it does not answer is which Stripe MODE was used.
 7. **Screenshots** at 1320 and 390 via `shot.js`, light theme only (dark mode is not
    implemented — `DESIGN.md` gap 1).
 8. **The `MEMBERSHIP_ENABLED=true` pass** — expect `npm test` and `npm run build` to fail,
