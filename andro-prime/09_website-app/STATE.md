@@ -46,10 +46,24 @@ boundaries), Phase 6 (screenshots at 1320 and 390), Phase 7 (the `MEMBERSHIP_ENA
 Phase 9 (everything, gated on the deploy).
 
 **What is NOT available to the next session, because it is signatures:** the whole remainder of
-Phase 4. 26 rows need sign-off, 5 need a ruling, and the two packets are unsent. ⚠ **The single
-highest-leverage thing anyone can do before CA-045 goes out is fix its scope**: the packet as
-drafted describes ONE surface, and the `HeroField` layer now renders on **seven**. Free now,
-expensive after it is sent.
+Phase 4. 26 rows need sign-off, 5 need a ruling, and the two packets are unsent.
+
+✅ **CA-045's scope was fixed on 2026-09-15, and it was wrong by more than anyone thought.** It is
+not seven surfaces, as this file said earlier today. It is **twenty-six**: `FHero`'s `ground` prop
+defaults to `'field'`, so the `HeroField` layer is opt-OUT and exactly one route opts out. It sits
+behind both legal pages, all five landing pages and `/order/confirmed`. q6 now carries the number
+inside the question and a new option for the confirmation page. Two more corrections in the same
+pass: the packet contradicted itself on expected answer count (eight vs seven), and **there are two
+ClickUp tasks for CA-045, both `pending`, disagreeing** — neither retired, because which is
+canonical is Keith's call. Full detail in `03_compliance/STATE.md`.
+
+🔴 **Also found: two packet attachments existed ONLY inside the Gmail draft**, and `update_draft`
+replaces rather than merges attachments, so editing one word of the body would have deleted all
+eleven silently. The two irreplaceable ones are the images that answer q6. Both regenerated into
+`03_compliance/content-approval/assets/ca-045/` with a README recording the method. **The Gmail
+draft is untouched and still carries the OLD body** — it needs rebuilding from the packet before
+Keith sends it, and the eleven attachments re-attached (nine from `frontend/public/home/`, two from
+that new directory).
 
 ### 🔴 TWO LIVE CONSTRAINTS FROM S2-9 — read before refunding anything or deploying
 

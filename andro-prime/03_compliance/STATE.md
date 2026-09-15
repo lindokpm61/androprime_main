@@ -355,6 +355,62 @@ man's hands at a kitchen table holding a small plain sample collection tube"*: p
 sample. Those four questions are **open for these five assets**, not evidenced. The fifth, the
 illegible-letter question, was already open and still is.
 
+### 🔴 CA-045 UPDATED 2026-09-15 BEFORE SENDING, AND ITS SCOPE WAS WRONG BY A FACTOR OF TWENTY-SIX
+
+Three corrections to the packet (`content-approval/ewa-packet-ca-045-homepage-imagery-2026-09-02.md`),
+all made while it is still unsent, which is the only cheap moment. **Still NOT sent. Sending is
+Keith's act.**
+
+**1. q6 and q7 govern 26 routes, not the one the packet describes.** Not the two its first
+amendment said, and not the six its second said. `components/marketing/FPage.tsx` renders
+`<HeroField />` inside `FHero`, whose prop is `ground?: 'field' | 'none'` **defaulting to
+`'field'`** — so the layer is opt-OUT and exactly one route in the codebase opts out
+(`/checkout/details`). It sits behind the top of both legal pages, all five landing pages, and
+`/order/confirmed`, which a customer reaches straight after paying.
+
+⚠ **Every previous count was built by listing pages someone DELIBERATELY added it to**, which is
+structurally incapable of finding the rest: nobody adds it to `/privacy`, so nobody records that
+`/privacy` has it, so no count derived from the record can ever contain it. Each amendment felt
+like diligence while reproducing the same error with a larger number. **Rule: derive the scope of a
+shared element from its callers and its default, never from the change log.** (Observation 832.)
+
+q6 now states the number **inside the question** rather than in a preamble, and gains an option
+covering `/order/confirmed` specifically, because a faint pattern of clinical ranges behind a man
+who has just paid is the one place it could most easily be taken for his own result. The question
+is unchanged; only its blast radius is.
+
+**2. The packet contradicted itself on expected answers**, saying eight in the header (correct, the
+body carries eight) and seven in both the format and on-reply paragraphs, left over from before
+`img-8` became q8. A too-low expected count makes a reply with a missing answer look complete,
+which is the exact check the numbering exists for. Corrected; re-validated at exit 0.
+
+**3. ⚠ There are TWO ClickUp tasks for CA-045 and both are `pending`** —
+[`869eqz4bd`](https://app.clickup.com/t/869eqz4bd) (older, named by the packet for rulings, and
+still saying *"Nothing is owed yet. A mockup is not published"*, which stopped being true when the
+direction was built) and [`869eur84c`](https://app.clickup.com/t/869eur84c) (created at wrap on
+2026-09-03 *because the board appeared to have no CA-045 task*). So the question count reads five,
+seven or eight depending which of three records you open. **Neither retired: which is canonical is
+Keith's call**, and a duplicate merged from its title is how the surviving record loses whatever
+only lived in the other. Both commented, no approval status touched.
+
+#### 🔴 Two packet attachments existed ONLY inside the Gmail draft, and a routine edit would have destroyed them
+
+Of the eleven attachments, nine are copies of files already in `frontend/public/home/`. **Two were
+not recoverable by any means**: renders of the hero data field, a canvas drawn at run time, one of
+them showing a state that deliberately never ships and therefore cannot be screenshotted from a
+running site. They are the two images that answer q6.
+
+`update_draft` has merge semantics for scalar fields and **replace semantics for attachments**, so
+changing one word of the body would have deleted all eleven silently. Caught by reading the tool's
+documentation before calling it, which is not a control.
+
+✅ **Both regenerated into version control 2026-09-15** at
+`content-approval/assets/ca-045/`, with a README recording the method so they are reproducible
+rather than one-off. The Gmail draft is untouched. **The rule this earns is the `/wrap`
+public-facing-asset rule one step further: evidence in an approval packet is the worst thing to hold
+only in an email, because its whole value is being the artefact a ruling attaches to, and a ruling
+whose evidence has vanished cannot be audited or revisited.** (Observation 830.)
+
 🔴 **And a second thing the gate never covered: the direction's COPY.** CA-045 records the
 scanner as N/A because the imagery has no words, which is correct for the imagery and left the words
 unscanned. Running `compliance-preflight/scan.js` over the built page returns **2 HARD, both verbatim
