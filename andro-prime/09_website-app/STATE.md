@@ -4,6 +4,54 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## 🔴 2026-09-15 — THE RESULTS ENGINE NOW SUPPRESSES A RETEST OFFER ACROSS A GP-ROUTED PANEL. 16 live links changed
+
+**Changed files:** `lib/results/classifier.ts` (one cross-marker pass in `classify()`),
+`lib/results/retestGuidance.ts` (new `resultMayCarryRetestOffer()`),
+`scripts/test-classifier-regressions.ts` (guards, both directions).
+**Rule owner:** Keith, 2026-09-15. Durable rule recorded in `03_compliance/CONTEXT.md`.
+**Not deployed, not committed** at time of writing.
+
+**The rule: CA-014 binds the RESULT, not the marker.** When any marker on a result routes to a GP,
+that result offers no retest to buy.
+
+🔴 **This changes what ships, and the number is not small: 16 `retest-reminder` links across 6 of
+the 14 fixtures**, measured before and after. A Kit 1 with testosterone at 8–12 was rendering a GP
+referral on the testosterone card **and "Retest in 6–12 months → `/kits`" on the SHBG, free-T and
+albumin cards.** `low-testosterone`, `high-crp`, `low-ferritin`,
+`kit3-low-t-plus-vitamin-d-and-b12` and both demo fixtures are affected.
+
+🔴 **THE ENGINEERING LESSON: A PER-ITEM GUARD CANNOT SEE A PER-COLLECTION RULE.** This repo already
+had a CA-014 regression guard. It is per **card**, it is correct, and **it passed the whole time
+this was broken**, because every individual card was compliant — a GP-routed card returns
+`gpReferral` and nothing else. `classify()` resolves CTAs per marker with no cross-marker pass, so
+the card next door never knew. **The new guard sits beside the old one rather than replacing it**,
+and the test file explains why so nobody merges them later.
+
+**What was deliberately NOT suppressed, and both are asserted:**
+
+- ✅ **The retest INTERVAL.** It lives in Ewa-signed card copy and is untouched. Removing it would
+  recreate defect 3f, the gap `retestGuidance.ts` exists to close: the man most likely to need a
+  second test being the one never told when to take one. **Only the link goes.**
+- ✅ **Complement cross-sells** (`kit1CrossSell`, `kit2CrossSell`). They offer a panel we have not
+  measured and re-test nothing. Suppressing them would assert a compliance rule **stricter than the
+  one approved**, which is the exact error `mayCarryPurchaseLink` records itself making in its first
+  draft. ⚠ **No fixture produces a GP referral and a cross-sell together**, so a synthetic panel was
+  built by hand for that assertion — without it the permissive half is unasserted and a later
+  "tighten the guard" commit looks correct and passes.
+
+**Matched on CTA `type`, not on href**, because `kit1CrossSell` also points at `/kits/...` and must
+survive. **Scoped by the property** (any GP-routed state), never by a list of markers.
+
+⚠ **Verification:** `npm test` green — 42 classifier regression assertions (up from 38),
+44 in `test-retest-cadence-seasonal`, `verify-cadence-coverage` at 30/30. The new guard was
+negative-tested by disabling the suppression, which fails it with all 16 links named individually.
+
+🔴 **Deploy note for whoever ships this:** it is a visible change on real results pages, not an
+inert one. The affected cards lose a button and keep their copy.
+
+---
+
 ## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2: Phase 5's environment half, the per-corpus checks, and a LIVE purchase that closed Gate 3 — then a live refund that opened S2-9. Five findings, every one of them already live on `main` and none a Direction F regression: two build variables the production build never received, so GA4 and the cookie banner have never run on the live site (fixed, Keith set Coolify); an endpoint that dispatched physical kits with no authentication (REMOVED); two accessibility defects on every published article, invisible while the sweep measured one article of eighteen (fixed, 58 findings to 0); Gate 3 CLOSED on a real £99 payment traced to a delivered email in 5 seconds; and a refund that moved the money and nothing else, missing at three layers — **S2-9 now closed in code: Keith took all three decisions, the `charge.refunded` + `charge.dispute.created` handlers shipped with a terminal-status guard and 100 assertions, and the one thing still owed is two ticks in the Stripe dashboard**)
 
 Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-09-15".

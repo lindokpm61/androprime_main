@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Register ID | CA-047 |
-| Artefact path | `04_products/results-engine/2026-07-17-retest-cadence-table.md` §3 (26 rows) + §3a (the mixed-panel reduction rule) + §4 Q4(b) (the straight-to-GP red-flag line). Fills `RETEST_CADENCE` as designed in `04_products/results-engine/2026-09-06-result-driven-retest-cadence.md` |
+| Artefact path | `04_products/results-engine/2026-07-17-retest-cadence-table.md` §3 (28 rows, 26 at sign-off + 2 added 2026-09-15) + §3a (the mixed-panel reduction rule) + §4 Q4(b) (the straight-to-GP red-flag line). Fills `RETEST_CADENCE` as designed in `04_products/results-engine/2026-09-06-result-driven-retest-cadence.md` |
 | Version | v1 (drafted 2026-07-17; premise, §3a and §5 rewritten 2026-09-07; sent 2026-09-15) |
 | Content type | Results-engine logic (retest intervals + whole-panel reduction) with one customer-facing copy item |
 | Submitted by | Keith Antony |
@@ -51,7 +51,7 @@ answering all five **is** the sign-off, with no separate approval question.
 |---|---|---|---|
 | 1 | The all-clear interval (bucket C) | **A** | *"6 to 12 months, as currently written."* **No copy sweep**: the dashboard, FAQ, how-it-works page and both LPs already say this. Signing makes it binding rather than incidental |
 | 2 | The interval when acting on a finding (bucket B) | **A** | *"3 months for all of them."* ⚠ **Narrows two proposed cells**: normal-testosterone (low half) was proposed 3–6 months, suboptimal-ferritin 3–4. Both are now 3 |
-| 3 | GP-routed results (bucket A) | **A** | *"No Andro Prime retest interval at all. The GP directs the timing, and our card shows the referral rather than a retest date."* All 8 bucket A rows become `clinician-led`. The prepaid sub-12 confirmatory recheck (signed 2026-07-26) is untouched |
+| 3 | GP-routed results (bucket A) | **A** | *"No Andro Prime retest interval at all. The GP directs the timing, and our card shows the referral rather than a retest date."* ⚠ **The question enumerated TEN bands and the table had EIGHT rows.** All 10 become `clinician-led`; the two without rows (T > 29, vitamin D > 250) were added to the table on 2026-09-15. The prepaid sub-12 confirmatory recheck (signed 2026-07-26) is untouched |
 | 4 | When one panel carries two different answers | 🔴 **C** | *"The vitamin D retest is scheduled normally. The two markers are unrelated and the GP referral does not conflict with it."* **This REJECTS the proposed rule.** See §3 below |
 | 5 | The straight-to-GP line | **A** | The red-flag list ratified **verbatim**, not in substance. She declined B (*with your additions or removals*) and C (*a different rule entirely*) |
 
@@ -91,7 +91,7 @@ and the cell stores `{ days: 90 }` rather than the phrase.** See
 under 90, all in late January or February. The commercial rule would otherwise have applied to
 about 5% of men according to the month their blood was drawn.
 
-## 4. Coverage — round 1 reached 21 of 26; round 2 closed the rest
+## 4. Coverage — round 1 reached 23 of 28; round 2 closed the rest
 
 🔴 **A fully answered email is not a fully signed table, and this record exists to prove it.** The
 first five questions enumerated the states they covered **in prose** rather than by row id, so the
@@ -100,7 +100,7 @@ received. **The gap was found by hand-diffing her prose against the table**, not
 
 | Bucket | Rows | After round 1 | After round 2 |
 |---|---|---|---|
-| A — clinician-managed | 8 | **8** | **8** |
+| A — clinician-managed | 8 → **10** | **8**, and 2 more ruled with nowhere to land | **10** (both rows added 2026-09-15) |
 | B — acting on a finding | 7 | 6 | **7** + the CRP joints = yes branch |
 | C — all-clear / maintenance | 11 | 7 | **11** |
 | §4 sub-items | 3 | 1 (Q4b) | **3** (Q4a and Q4c closed) |
@@ -109,12 +109,33 @@ received. **The gap was found by hand-diffing her prose against the table**, not
 answer count of eight was **written into this record before it was sent** so the reply could be
 counted rather than eyeballed. It matched.
 
-⚠ **Two signed states still have no row in the table at all**: **T > 29 nmol/L** and **vitamin D >
-250 nmol/L**, both ruled `clinician-led` in round 1's Q3. They exist in `thresholds.md` (added
-2026-08-07) but were never carried into the pack, so the table under-described bucket A when it was
-sent. **Both rows must be added before the `Record` can be exhaustive**, which is the whole reason
-that shape was chosen. **This is the one coverage item neither round closed**, because it is a
-missing row rather than an unanswered question.
+✅ **CLOSED 2026-09-15. Two signed states had no row in the table at all**: **T > 29 nmol/L** and
+**vitamin D > 250 nmol/L**, both ruled `clinician-led` in round 1's Q3. They existed in
+`thresholds.md` (added 2026-08-07) but were never carried into the pack, so the table
+under-described bucket A when it was sent. **Both rows have been added**, and so has a third the same day: ⚠ **`fai-reported` was in NEITHER
+this record nor the table nor the derived map**, and was rowed on 2026-09-15 as `none` — **derived
+from Ewa ruling 8 (2026-06-16), not from CA-047, and recorded in its own section rather than in a
+bucket so it claims no sign-off that did not happen.** The `Record` can now be exhaustive: 30 result
+states, 30 rows, verified mechanically on every build by `verify-cadence-coverage.js`. **This was the one coverage item
+neither round closed**, because it was a missing row rather than an unanswered question — and it
+closed **without a new ask**, for a reason worth recording.
+
+🔴 **The ruling already covered them, and the primary source proves it rather than an inference
+doing the work.** Re-read from the sent email (`1a0a69ae55223fe0`, 19:46 UTC) **before** the rows
+were written: Q3's question text lists the GP-routed bands and **ends with "testosterone above 29
+nmol/L, vitamin D above 250 nmol/L"**. She was shown both, by band, and answered **A**. Their GP
+routing was separately signed on 2026-08-07 (CA-044, *"over 29+"* and the vitamin D upper band).
+**Nothing here rests on an adjacent answer**, which is the standing bar for this kind of close.
+
+⚠ **So the defect was two records of one answer disagreeing, and the build was reading the thinner
+one.** The email covered ten states; the table offered eight rows. **A reply that matches its
+expected answer count exactly — as this one did — cannot detect that**, because the count is of
+ANSWERS and the shortfall was in ROWS. Count both, or the check only proves the reviewer replied.
+
+🔴 **A separate gate on these two states is still open and is NOT closed by this.** Their **card
+copy** remains drafted and unapproved (CA-044 §2 item A, `biomarker-copy.ts:81` and `:170`), live to
+customers since 2026-08-07 and re-verified as still unapproved on 2026-09-15. **The cadence cell
+carries no date and no copy, so it is unaffected**; the wording on those two cards is not.
 
 ## 4a. The follow-up packet — SENT AND ANSWERED 2026-09-15. Every row is now ruled.
 
@@ -151,10 +172,13 @@ carve-out row enumerated the bucket B markers **by name**, and that list was sho
 so no amount of re-reading bucket B would have found them. **The carve-out is now scoped by rule
 kind rather than by a list**, which is self-maintaining. Recorded in that doc's §2.
 
-**2. Q5 = A preserves a ruling the design cannot store.** "Retest heading into autumn or winter" is
-neither `{ days }` nor `{ fromMonths, toMonths }`. **`RETEST_CADENCE` needs a fifth kind before
-`normal-vitamin-d` can be expressed**, or the cell falls back to `clinician-led` and shows a man no
-date on a normal result. A design gap her answer exposed, not a defect in the answer.
+**2. Q5 = A preserved a ruling the design could not store.** ✅ **CLOSED 2026-09-15, no clinical
+input owed.** "Retest heading into autumn or winter" is neither `{ days }` nor
+`{ fromMonths, toMonths }`, so `RETEST_CADENCE` needed a **fifth kind** before `normal-vitamin-d`
+could be expressed — without it the cell falls back to `clinician-led` and shows a man no date on a
+normal result. A design gap her answer exposed, not a defect in the answer, and it was closed by
+design rather than by another question: `04_products/results-engine/2026-09-15-seasonal-retest-rule-kind.md`.
+**Her ruling and her wording are unchanged**, and the approved card copy still carries it verbatim.
 
 **3. Q7's copy is signed and does not exist.** Two sentences ratified verbatim that were written for
 the packet and have never been in the product. **Building them is a copy change owing its own
@@ -217,13 +241,18 @@ table above, which is what the reverse leg reconciles against.
   deterministic floor is clean, and the judgement pass found that the ratified line routes all
   chest pain to a GP, contradicting Ewa's standing 2026-08-18 ruling. The fix is additive, uses her
   own signed wording, and needs no new ask. **It blocks that line only; nothing else waits on it.**
-- ✅ **THE TABLE IS NOW FULLY RULED, 26 of 26 plus the joints branch and all three §4 sub-items.**
+- ✅ **THE TABLE IS NOW FULLY RULED, 28 of 28 plus the joints branch and all three §4 sub-items.**
   The follow-up packet (§4a) was sent and answered the same evening, eight letters for eight
-  questions. **Two rounds, both matching their expected answer counts exactly.**
-- 🔴 **Fully ruled is not buildable.** Three things stand between this and a working lookup, and
-  none is Ewa's: `normal-vitamin-d` needs a **fifth rule kind** the design does not have; **two
-  signed states have no row** in the table (T > 29, vitamin D > 250); and **two on-screen copy
-  items are signed but not compliance-cleared**, one of which failed its pre-flight.
+  questions. **Two rounds, both matching their expected answer counts exactly.** ⚠ **28, not the 26
+  recorded at sign-off**: round 1's Q3 ruled ten GP-routed bands and the table had eight rows, so
+  two signed cells had nowhere to land. Rows added 2026-09-15 against the sent email.
+- 🔴 **Fully ruled was not buildable, and two of the three blockers are now closed.** None was
+  Ewa's. ✅ `normal-vitamin-d`'s **fifth rule kind** exists
+  (`04_products/results-engine/2026-09-15-seasonal-retest-rule-kind.md`). ✅ The **two signed states
+  now have rows** (T > 29, vitamin D > 250). 🔴 **Still open:** two on-screen copy items are signed
+  but not compliance-cleared, one of which failed its pre-flight. ⚠ **And outside this record:** the
+  anti-upsell guard left unhomed by Q4 = C, plus CA-044 §2 item A, the unapproved card copy on the
+  two newly rowed states.
 - ✅ Condition 4, the 90-day boundary, was settled the same day; see §5.
 - Register updated: 2026-09-15. **CA-047 opened on this record** (highest in use was CA-046,
   nothing was reserved).

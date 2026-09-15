@@ -17,7 +17,7 @@ the right shape for a sign-off record and the wrong shape for a lookup.
 🔴 **After round 2 the buckets and the rule kinds no longer agree, and a build that reads the
 bucket headings will produce wrong cadences.** Two in-range states that sit in bucket C came back
 at 3 months, which is a `recheck`, not a `maintenance` window. One more came back seasonal, which
-is not a kind at all.
+was not a kind at all until 2026-09-15 and is now the fifth one (§2).
 
 **So: read the KIND column here. Never infer a kind from a bucket heading.**
 
@@ -40,14 +40,26 @@ card shows the referral rather than a retest date."*
 | `low-ferritin` | < 30 µg/L | yes |
 | `high-ferritin` | > 300 µg/L | yes |
 | `low-albumin` | < 35 g/L | yes |
-| **testosterone above 29 nmol/L** | T > 29 | 🔴 **NO ROW** |
-| **vitamin D above 250 nmol/L** | > 250 nmol/L | 🔴 **NO ROW** |
+| `high-testosterone` | T > 29 | ✅ **row added 2026-09-15** |
+| `high-vitamin-d` | > 250 nmol/L | ✅ **row added 2026-09-15** |
 
-🔴 **The last two are signed and have no row in the sign-off table.** Ewa's round 1 Q3 enumerated
-them; the table's bucket A was written before the 2026-08-07 upper bands existed and never gained
-them. They are in `thresholds.md`. **Add both rows to the sign-off table**, because a `Record`
+✅ **The last two were signed and had no row in the sign-off table. Both rows now exist.** Ewa's
+round 1 Q3 enumerated them; the table's bucket A was written before the 2026-08-07 upper bands
+existed and never gained them. They are in `thresholds.md`. The rows were needed because a `Record`
 missing two members of its key union will not compile, which is the entire reason that shape was
 chosen.
+
+**Verified at the primary source rather than inferred**, because a sign-off must never be read off
+an adjacent answer. The Q3 question as sent (Gmail `1a0a69ae55223fe0`, 19:46 UTC) lists the
+GP-routed bands and **ends with "testosterone above 29 nmol/L, vitamin D above 250 nmol/L"**. She
+was shown both and answered **A**, and their GP routing was separately signed on 2026-08-07
+(CA-044). ⚠ **Her answer covered ten states; the table offered eight rows.** The gap was in the
+table, not the ruling — which is why closing it needed no new ask.
+
+🔴 **Their card COPY is a different gate and it is still shut.** `biomarker-copy.ts:81` and `:170`
+both carry `NOT APPROVED` markers and have rendered to customers since 2026-08-07 (CA-044 §2
+item A), re-verified 2026-09-15. **A `clinician-led` cell carries no date and no copy, so the
+cadence is unaffected** — but nobody should read "row added" as "these two cards are clear".
 
 ### `confirm` — fast confirmatory recheck, in days. 3 states, and they are ALSO clinician-led
 
@@ -120,7 +132,7 @@ of the posture §2 of `2026-09-06-result-driven-retest-cadence.md` argues for of
 `BADGES` defect. It is her call and it is recorded here so the next marker's author knows the
 default will catch their state whether or not they think about it.
 
-### 🔴 `seasonal` — THE KIND DOES NOT EXIST. 1 state
+### ✅ `seasonal` — DESIGNED AND BUILT 2026-09-15. 1 state
 
 | Result state | Band | Ruling |
 |---|---|---|
@@ -132,14 +144,72 @@ said this to customers for months and still does, so **her answer changes no cop
 > "Given seasonal variation in the UK, it is worth retesting in autumn or winter; levels typically
 > fall between October and March even when summer levels are good."
 
-🔴 **None of the four designed kinds can hold it.** It is not `{ days }`, not
-`{ fromMonths, toMonths }`, and emphatically not `clinician-led`.
+**None of the four designed kinds could hold it.** It is not `{ days }`, not
+`{ fromMonths, toMonths }`, and emphatically not `clinician-led`. **A fifth kind now exists:**
+`2026-09-15-seasonal-retest-rule-kind.md`, built in
+`09_website-app/frontend/lib/results/retestCadence.ts`.
 
-**This is the single thing blocking the build**, and the failure mode is worse than a gap: with no
-fifth kind, this cell falls through to `clinician-led` and the product **shows a man no retest date
-at all on a perfectly normal vitamin D**. A silent wrong answer, on the most common in-range result
-the UK produces. **Design the kind before the map ships**, and make the fallback loud rather than
-silent in the meantime.
+```ts
+{ kind: 'seasonal'; window: SeasonalWindow; minGapDays: 90; minSpanDays: 30 }
+```
+
+**It resolves to a sampling WINDOW against the result date, not to a single date**, because her
+ruling constrains when the blood is drawn and a mechanism has to subtract its own lead time. Two
+guards, one inherited and one Keith's: a **90-day floor** (the prepaid-or-included rule reaches
+`seasonal`, unlike `recheck`, which is carved out of it) and a **30-day minimum usable window**.
+Swept over all 1096 anchor dates in 2026–2028: gaps run 90 to 302 days, never under 90, never past
+the 12-month edge of `maintenance`, and the one unavoidable annual discontinuity is placed in early
+December rather than on 30 September where the unguarded rule puts it.
+
+⚠ **What this cell no longer does is the point.** Before, it fell through to `clinician-led` and the
+product **showed a man no retest date at all on a perfectly normal vitamin D** — a silent wrong
+answer on the most common in-range result the UK produces. The kind is also the only one that can
+**fail to resolve** (a null `collectedAt` has no answer at all), and it says so out loud rather than
+guessing.
+
+---
+
+### ✅ `none` — report-only. We draw no conclusion, so we recommend no retest. 1 state
+
+**Decided 2026-09-15 (Keith).** Derived from Ewa ruling 8, 2026-06-16, and **no new clinical input
+was sought or needed** — see the boundary at the end of this section.
+
+| Result state | Band | Ruling |
+|---|---|---|
+| `fai-reported` | Free Androgen Index, deliberately not banded | **Ewa ruling 8, 2026-06-16: *"report-only, do not band it in men"*** |
+
+🔴 **THIS KIND IS NOT `clinician-led`, AND THE TWO MUST NEVER BE COLLAPSED.** Both yield no date,
+and that is precisely why they have to stay apart: **they yield it for opposite reasons, and one of
+them renders a GP referral.**
+
+- `clinician-led` says **a doctor decides the timing.** It is an assertion about the result, and the
+  card shows a referral instead of a date.
+- `none` says **we have no verdict at all**, so we make no claim in either direction. No referral,
+  no date, nothing.
+
+Borrowing `clinician-led` for FAI would assert a GP route on a marker that carries none. That is
+**the FAI `default:` defect in a new place**, and it is the one this repo has already paid for:
+ruling 8 was first implemented by omitting a `case`, and the default branch then told men an
+out-of-range value was *"within the normal range"* and that *"no action is needed"*.
+
+✅ **The shape mirrors `retestGuidance.ts` deliberately.** That module faced the identical question
+about GUIDANCE, for this same marker, and gave it its own `{ kind: 'none' }` rather than reusing a
+neighbour — with the reason in its own comment: *"nothing is missing here, and a later pass must
+not mistake it for a gap and fill it in."* Same marker, same ruling, same answer, same shape, and
+the test suite asserts that the precedent still holds rather than trusting that it does.
+
+⚠ **THE BOUNDARY, because this cell is DERIVED and the others are signed.** Ruling 8 is a ruling
+about banding, not about cadence. What makes the derivation safe is that **`none` records the
+ABSENCE of a recommendation** — it adds no claim, so it cannot overstate her. 🔴 **Giving FAI an
+actual retest date would be a new clinical claim and needs Ewa.**
+
+🔴 **HOW THIS CELL WAS FOUND, because the next one will be found the same way or not at all.** It
+was in **neither** the sign-off table nor this map, and never had been. It therefore survived two
+clinical sign-off rounds and three separate recorded counts of "every row is ruled" — **every one
+of which counted the rows that existed.** An item absent from every record is invisible to any
+check that reads a record. It surfaced only by diffing both documents against the `ResultState`
+union itself, while testing a sentence that had just been written into six files claiming the map
+was complete. That diff is now `scripts/verify-cadence-coverage.js`, wired into `npm test`.
 
 ---
 
@@ -160,11 +230,18 @@ unrelated and the GP referral does not conflict with it."*
 the CRP and a 3-month vitamin D retest on the same result**. She confirmed the related boundary
 explicitly: a GP referral is **not** the end of our involvement for that panel.
 
-⚠ **The rejected rule was carrying something other than cadence.** It was the anti-upsell guard
-stopping a man being sent to a doctor and scheduled a kit in the same breath. **That load is now
-unhomed** and rests entirely on the prepaid rule plus CA-014's no-upsell-on-a-GP-referral rule,
-neither of which was written to carry it alone. **Re-read both against this ruling before building
-the reduction.**
+✅ **The rejected rule was carrying something other than cadence, and that load is now re-homed
+(Keith, 2026-09-15).** It was the anti-upsell guard stopping a man being sent to a doctor and
+scheduled a kit in the same breath. Re-reading the prepaid rule and CA-014 against her ruling
+showed neither reached it: the prepaid rule binds only **sub-90-day** rechecks and `recheck` is 90
+and carved out, while CA-014 was being applied **per marker** though its wording is per **result**.
+
+🔴 **Applied at the result level it turned out to be live, not forward-looking: 16 retest links
+across 6 fixtures**, every one on a result that had just told a man to see his doctor. The per-card
+compliance guard passed throughout, because **a per-item check cannot see a per-collection rule.**
+Now `resultMayCarryRetestOffer()`, enforced in `classify()` and guarded from both directions.
+✅ **The retest INTERVAL survives** (Ewa-signed card copy; removing it would recreate defect 3f) and
+✅ **complement cross-sells survive** (they offer an untested panel and re-test nothing).
 
 ---
 
@@ -185,9 +262,10 @@ the reduction.**
 
 | # | Item | Blocking? |
 |---|---|---|
-| 1 | Design the **`seasonal`** rule kind | 🔴 **Yes.** Without it `normal-vitamin-d` shows no date on a normal result |
-| 2 | Add **T > 29** and **vitamin D > 250** rows to the sign-off table | 🔴 **Yes.** The `Record` cannot be exhaustive without them |
-| 3 | Re-home the **anti-upsell guard** after Q4 = C | 🔴 **Yes**, before the reduction is built |
+| 1 | ~~Design the **`seasonal`** rule kind~~ ✅ **DONE 2026-09-15.** `2026-09-15-seasonal-retest-rule-kind.md`; `lib/results/retestCadence.ts` + 44 assertions in `npm test`. Inert: nothing imports it yet | ~~🔴 Yes~~ **Unblocked.** Items 2 and 3 are now the blockers |
+| 2 | ~~Add **T > 29** and **vitamin D > 250** rows to the sign-off table~~ ✅ **DONE 2026-09-15.** Both rows added to bucket A; the table is now 28 rows. Signed under round 1 Q3, verified against the sent email, no new ask | ~~🔴 Yes~~ **Unblocked**, together with item 2b |
+| 2b | ~~Decide the `fai-reported` cell~~ ✅ **DONE 2026-09-15 (Keith): the sixth kind, `none`.** Found by diffing this map against the `ResultState` union — it was the one state in **neither** this map nor the sign-off table, and never had been. Rowed in both, and `retestCadence.ts` gained `{ kind: 'none' }`, mirroring the shape `retestGuidance.ts` already chose for this same marker. ⚠ **Derived from Ewa ruling 8, not signed as cadence** — safe only because the kind records the ABSENCE of a recommendation; **giving FAI a retest date would be a new claim and needs Ewa** | ~~🔴 Yes~~ **Unblocked.** 30 states, 30 rows, asserted on every build by `verify-cadence-coverage.js` |
+| 3 | ~~Re-home the **anti-upsell guard** after Q4 = C~~ ✅ **DONE 2026-09-15 (Keith).** It now lives in `resultMayCarryRetestOffer()`, enforced in `classify()`: **when any marker on a result is GP-routed, the result offers no retest to buy.** CA-014 read at the RESULT level, which is the level its own wording uses. ⚠ **It suppressed 16 live links across 6 fixtures** — the per-card guard had passed throughout, because a per-item check cannot see a per-collection rule. ✅ The retest **interval** survives (Ewa-signed card copy) and ✅ complement cross-sells survive (untested panels). Recorded in `03_compliance/CONTEXT.md` | ~~🔴 Yes~~ **Unblocked.** The reduction can be built |
 | 4 | Store every `recheck` as `{ days: 90 }`, never a month count | Yes |
 | 5 | Assert the **dual rule** on the three sub-12 states (`clinician-led` + `confirm`) in a fixture | Yes |
 | 6 | Fixture per signed cell. **The map no longer ships inert**, so building it moves real dates | Yes |

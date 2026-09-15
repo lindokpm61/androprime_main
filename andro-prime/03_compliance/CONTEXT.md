@@ -136,6 +136,36 @@ If any task risks crossing this line: stop. Route to Keith before proceeding.
 
 **Low-T result routing (changed 2026-06-04, Ewa CA-014):** A confirmed testosterone result < 12 nmol/L (Kit 1 or Kit 3) routes to a **GP referral** with no kit/supplement upsell, **not** the founding-member list (that was the old routing; it's superseded and verified in `09_website-app` `lib/results/classifier.ts`). Never infer low T from Kit 2 energy/recovery markers. A consent-gated nurture opt-in may sit alongside the referral (lawful basis pending solicitor). The **founding-member list** itself still exists as a standalone **non-cash email opt-in** (no payment is taken, no contractual right to a future TRT service is created, and customers can leave any time by emailing support), but it is no longer auto-triggered by a low-T result. The £75 deposit was shelved 2026-05-08; do not reference it in any new copy. **Companion rule (Keith, 2026-09-07):** a **result-triggered recheck falling under 90 days must be prepaid or included** in an entitlement the customer already holds, and may never trigger a new sale (`../04_products/results-engine/2026-09-07-fast-recheck-must-be-prepaid-or-included.md`). Same principle as this routing rule, applied to the case where the thing being sold is a repeat of the marker that came back wrong. It does not touch the complement cross-sell (untested markers) or the subscription-anchored seq-04 retest prompt.
 
+> 🔴 **SCOPE READING, Keith 2026-09-15: CA-014 BINDS THE RESULT, NOT THE MARKER.** Its wording is
+> *"a confirmed testosterone **result** < 12 nmol/L routes to a GP referral with no kit/supplement
+> upsell"*, and it is now applied that way. **This is a reading of an existing approval, not a new
+> clinical ruling, and nothing was put to Ewa** — it removes commercial pressure rather than adding
+> a claim, so no approved copy moves.
+>
+> **Why it needed settling.** `classify()` resolves CTAs per marker with no cross-marker pass, so
+> every card obeyed CA-014 for itself while the result did not: a Kit 1 with testosterone at 8-12
+> rendered a GP referral on the testosterone card **and** "Retest in 6-12 months" pointing at
+> `/kits` on the SHBG, free-T and albumin cards. **16 such links across 6 fixtures**, measured when
+> the rule was adopted. The per-card compliance guard passed the entire time, because **a per-item
+> check cannot see a per-collection rule.**
+>
+> **It surfaced because a rule that used to carry this load was removed.** Both cadence design docs
+> proposed that a GP-routed marker suppresses the whole-panel retest. Ewa rejected that on
+> 2026-09-15 (CA-047 Q4 = C) and was right on the question asked — whether the retest is
+> **scheduled**. She was never asked whether it may be **sold**. The cadence half went where she put
+> it; the commercial half is here.
+>
+> **Exactly what it suppresses:** the retest **offer** (the `retest-reminder` CTA). ✅ **The retest
+> INTERVAL survives** — it lives in Ewa-signed card copy, and removing it would recreate defect 3f.
+> ✅ **Complement cross-sells survive** (`kit1CrossSell`, `kit2CrossSell`): they offer a panel we
+> have not measured, re-test nothing, and killing them would assert a rule stricter than the one
+> approved. Scoped by the **property** (any GP-routed state), never by a list of markers.
+>
+> Implemented as `resultMayCarryRetestOffer()` in `lib/results/retestGuidance.ts`, enforced in
+> `classify()`, and guarded in `scripts/test-classifier-regressions.ts` from both directions —
+> including a synthetic panel no fixture produces, so the permissive half cannot be quietly
+> tightened later.
+
 **Ashwagandha silent ingredient:** Ashwagandha KSM-66 is in the Daily Stack. It has no approved EFSA claim. It is a silent ingredient: do not name it in any copy, email, social, affiliate brief, or influencer talking points. **This includes prohibition/prohibited-terms sections themselves**: the v2.2 PT/Influencer briefs breached the rule by printing the ingredient name inside their *own* prohibited-list; v2.3 enforces it via an approved-claims allowlist + scripted answers **without ever naming it**. Never regress this. All affiliate and influencer partners must be briefed in writing before code issuance. If a partner makes a public claim about it, the ASA complaint lands on Andro Prime. Partner-brief approvals are logged in `content-approval/` (CA-001…007); CA-001/002 (PT brief + attestation) still need **solicitor** sign-off on the commission clause before shipping.
 
 **Ewa signs off the system, not individual reports:** Dr Ewa Lindo approves the *recommendation logic* (thresholds, result→product mapping, copy); she does **not** review or interpret any individual customer's results. Never describe outputs as a "GP-built report", "personalised report", or "reviewed by our doctor". Use "Ewa-approved recommendation logic". No Ewa-led per-customer add-ons or bespoke interpretations. This keeps the results engine a wellness product, not a clinical act (which would cross the Phase 0 / post-CQC boundary). Source of truth: `clinical-governance-position.md` (APPROVED by Dr Ewa Lindo 2026-05-22).

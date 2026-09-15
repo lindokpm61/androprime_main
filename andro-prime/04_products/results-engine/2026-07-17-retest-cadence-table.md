@@ -9,34 +9,43 @@ Business sign-off: Keith, same day. Compliance record: **CA-047**. Earlier: PROP
 📐 **The build input is a different document.** This table is the **sign-off record**, grouped into
 the three buckets the questions were put in. `2026-09-15-retest-cadence-by-rule-kind.md` is the
 same rulings **keyed by rule kind**, which is what `RETEST_CADENCE` stores. 🔴 **After round 2 the
-buckets and the kinds no longer agree** (two bucket C states carry `recheck` rules, one has no kind
-at all), so **read the kind from that document and never from a bucket heading here.**
+buckets and the kinds no longer agree** (two bucket C states carry `recheck` rules, one carries
+`seasonal`, and one state sits outside the buckets entirely), so **read the kind from that document
+and never from a bucket heading here.**
 
-🔴 **Signed is not built, and two things still stand between this table and a working lookup:**
-**(1)** `normal-vitamin-d`'s seasonal ruling has no shape in the design's four rule kinds, and
-**(2)** the two on-screen copy items (§4 Q4(a) and Q4(b)) are clinically signed but **not
-compliance-cleared** — the Q4(b) pre-flight ran and failed on a missing 999 escalation.
+🔴 **Signed is not built.** One thing now stands between this table and a working lookup: the two
+on-screen copy items (§4 Q4(a) and Q4(b)) are clinically signed but **not compliance-cleared** — the
+Q4(b) pre-flight ran and failed on a missing 999 escalation. ✅ The two items that used to sit here
+are closed: `normal-vitamin-d`'s seasonal ruling has a shape (the `seasonal` kind,
+`2026-09-15-seasonal-retest-rule-kind.md`) and the two missing bucket A rows have been added.
 
-> ✅ **COVERAGE: EVERY ROW IS NOW RULED. 26 of 26, plus the joints = yes branch, plus §4's Q4(a),
-> Q4(b) and Q4(c).** Closed in two rounds, and the second round exists only because the first was
+> ✅ **COVERAGE: EVERY RESULT STATE THE ENGINE CAN PRODUCE NOW HAS A ROW. 30 of 30.** That is
+> **28 rows signed under CA-047**, plus the joints = yes branch, plus §4's Q4(a), Q4(b) and Q4(c),
+> plus **one row outside the three buckets** (`fai-reported`, report-only) that is **derived from
+> ruling 8 rather than signed here**. ✅ **Asserted mechanically on every build** —
+> `09_website-app/frontend/scripts/verify-cadence-coverage.js` diffs this table and the rule-kind
+> map against the engine's `ResultState` union, because a document cannot be trusted to notice that
+> it is the thing that is short. Closed in two rounds, and the second round exists only because the first was
 > written in prose rather than by row. Recording that, because it is the reusable lesson:
 >
 > | Round | Sent | Answered | Closed |
 > |---|---|---|---|
-> | Five questions | 2026-09-15 19:46 UTC | 20:18 UTC | 21 rows, and Q4 rejected the §3a suppression rule |
+> | Five questions | 2026-09-15 19:46 UTC | 20:18 UTC | 23 rows, and Q4 rejected the §3a suppression rule |
 > | Eight questions | 2026-09-15 21:06 UTC | 21:33 UTC | the remaining 5 rows, the joints branch, Q4(a) and Q4(c) |
 >
 > **Both replies matched their expected answer counts exactly** (five for five, eight for eight), so
 > nothing anywhere in this table was inferred from an adjacent answer.
 >
-> 🔴 **Two items remain, and NEITHER is Ewa's.**
+> ⚠ **Round 1 is recorded as 23 rows, not the 21 it was credited with at the time**, and the
+> correction is the interesting part. Its Q3 enumerated **ten** GP-routed bands and the table had
+> only **eight** rows to receive them, so two signed cells had nowhere to land and the round looked
+> thinner than it was. **The shortfall was in the table, not in the ruling.** Both rows were added
+> 2026-09-15 against the sent email; see the note under §3's bucket A.
 >
-> 1. **Two signed states still have no row here:** T > 29 nmol/L and vitamin D > 250 nmol/L, both
->    ruled `clinician-led` in the first round's Q3. They exist in `thresholds.md` (added 2026-08-07)
->    but were never carried into this pack. **Add both rows before building**, or the `Record`
->    cannot be exhaustive, which is the whole reason that shape was chosen.
-> 2. **`normal-vitamin-d` has a ruling the design cannot store.** See the shape note under §3's
->    bucket C table: the lookup needs a fifth kind before a seasonal rule can be expressed.
+> 🔴 **One item remains, and it is not Ewa's.** The §4 copy items are clinically signed and
+> compliance-blocked. ⚠ **Separately, and not a coverage item:** the card copy for the two newly
+> rowed states is still **drafted, not approved** (CA-044 §2 item A, open since 2026-08-07). That
+> gates their wording, not their cadence.
 **Owner workspace:** `04_products/results-engine`. Compliance authority: `03_compliance/CONTEXT.md` (Guardrail 1 — results copy is clinical, Ewa signs).
 **Why now:** raised from `09_website-app/docs/2026-07-17-retest-cta-mechanism-decision.md`. Related ClickUp task: `869e66e9c` (Ewa sign-off — the blocker for the whole retest-CTA fix).
 
@@ -135,9 +144,10 @@ Columns: result state → the band that triggers it → what CTA the card shows 
 
 > ✅ **SIGNED 2026-09-15 (Ewa, Q3 = A).** *"No Andro Prime retest interval at all. The GP directs
 > the timing, and our card shows the referral rather than a retest date."* Every row below is
-> `clinician-led`. **All eight rows are covered, and she signed two states this table has no rows
-> for** (see the addendum under the table). The prepaid sub-12 confirmatory recheck she signed on
-> 2026-07-26 is untouched and is the carve-out named in §3a rule 2.
+> `clinician-led`. **All ten rows are covered**: the eight this table was sent with, plus
+> `high-testosterone` and `high-vitamin-d`, which her Q3 enumerated by band and which were added as
+> rows on 2026-09-15 (see the note under the table). The prepaid sub-12 confirmatory recheck she
+> signed on 2026-07-26 is untouched and is the carve-out named in §3a rule 2.
 
 | Result state | Band | Card CTA today | Proposed cadence | Ewa — agreed | Notes |
 |---|---|---|---|---|---|
@@ -149,13 +159,27 @@ Columns: result state → the band that triggers it → what CTA the card shows 
 | low-ferritin | < 30 µg/L | GP referral | Per GP | ✅ **clinician-led, no date** (2026-09-15) | Iron dosing is clinician-managed. |
 | high-ferritin | > 300 µg/L | GP referral | Per GP | ✅ **clinician-led, no date** (2026-09-15) | Needs follow-up panel, not a home retest. |
 | low-albumin | < 35 g/L | GP referral | Per GP | ✅ **clinician-led, no date** (2026-09-15) | Separate clinical cause to establish first. |
+| high-testosterone | T > 29 nmol/L | GP referral | Per GP | ✅ **clinician-led, no date** (2026-09-15) | **Row added 2026-09-15**; band signed 2026-08-07 (CA-044, *"over 29+"*). A supraphysiological reading is what exogenous testosterone use looks like, so the referral is the answer and a retest date would be the wrong one. Deliberately **not** in `LOW_T_STATES`: it needs the GP referral without the low-T nurture opt-in. 🔴 **Card copy still unapproved, CA-044 item A.** |
+| high-vitamin-d | > 250 nmol/L | GP referral | Per GP | ✅ **clinician-led, no date** (2026-09-15) | **Row added 2026-09-15**; band signed 2026-08-07 (CA-044), on her own framing: *"a high/clinical review flag rather than just a technical out-of-range result"*. GP-blocked, so the D3 supplement CTA is suppressed on that card — the last thing a man above the ceiling should be offered is more D3. 🔴 **Card copy still unapproved, CA-044 item A.** |
 
-⚠ **Her Q3 named two GP-routed states that are not rows in this table:** **testosterone above 29
-nmol/L** and **vitamin D above 250 nmol/L**. Both are signed `clinician-led` on the same answer.
-They exist as upper bands in `thresholds.md` (added 2026-08-07) but were never carried into this
-pack, so the table under-described bucket A when it was sent. **Add both rows before building the
-lookup**, or two signed cells will be missing from a map whose whole design point is that it is
-exhaustive.
+🔴 **One cell is still missing, and it is a third state nobody had listed:** `fai-reported` (Free Androgen Index, report-only per Ewa ruling 8) has no row here and no entry in the rule-kind map. Found 2026-09-15 by diffing the table against the `ResultState` union rather than by reading either document. **No kind holds "we draw no conclusion from the number, so we recommend no retest of it"**, and `clinician-led` must not be borrowed for it, because that asserts a GP referral on a marker that carries none — which is the FAI `default:` defect in a new place.
+
+✅ **BOTH ROWS ADDED 2026-09-15, AND THE SIGN-OFF THEY RECORD ALREADY EXISTED.** Verified against the
+primary source rather than inferred: the Q3 question as sent (Gmail thread `1a0791e8fa8ed170`,
+19:46 UTC) enumerates the GP-routed states by band and **ends with "testosterone above 29 nmol/L,
+vitamin D above 250 nmol/L"**. Ewa answered **A**. So her answer covered **ten states**, and this
+table only ever had eight rows to put them in.
+
+⚠ **The gap was in the table, never in the ruling**, and that distinction is what made this safe to
+close without a new ask. The two bands existed in `thresholds.md` from 2026-08-07 but were never
+carried into this pack, so the table under-described bucket A at the moment it was sent. **Two
+records of the same answer disagreed, and the thinner one was the one the build was reading.**
+
+🔴 **A separate gate on these two rows, and it is still open.** The *cadence* is signed; the **card
+copy** for both states is **drafted, not approved**, and has been rendering to customers since
+2026-08-07 — `biomarker-copy.ts:81` and `:170`, CA-044 §2 item A. Re-checked 2026-09-15: both
+`NOT APPROVED` markers are still in the source and no later approval exists. **That blocks the
+wording on those cards; it does not block the cadence cell, which carries no date and no copy.**
 
 ### Bucket B — Acting on a finding (retest to see if it moved)
 
@@ -196,12 +220,38 @@ The "proposed cadence" here is the **default for someone in range and feeling we
 | shbg-low | below lab range | **Retest CTA** | 6–12 months | 🔴 **3 months** (2026-09-15, **follow-up Q3 = B**) — **NOT a maintenance rule** | She declined A (6–12, same as normal SHBG). ⚠ **This is a change of KIND, not of value: it leaves bucket C's `maintenance` shape entirely.** See the note under this table. |
 | shbg-high | above lab range | **Retest CTA** | 6–12 months | 🔴 **3 months** (2026-09-15, **follow-up Q4 = B**) — **NOT a maintenance rule** | As above. GP only if free-T also low. |
 | ft-normal | within lab range | None | 6–12 months | ✅ **6–12 months** (2026-09-15) | Her Q1 named "normal free T". |
-| normal-vitamin-d | 50–250 nmol/L | **Retest CTA** | Seasonal — retest heading into winter (~Oct) | ✅ **SEASONAL, as it stands** (2026-09-15, **follow-up Q5 = A**) | She declined B (6–12 months, drop the seasonal framing) and C (both). 🔴 **The lookup has no shape for this: see the note under this table.** No copy change; the card already says it. |
+| normal-vitamin-d | 50–250 nmol/L | **Retest CTA** | Seasonal — retest heading into winter (~Oct) | ✅ **SEASONAL, as it stands** (2026-09-15, **follow-up Q5 = A**) | She declined B (6–12 months, drop the seasonal framing) and C (both). ✅ **The lookup now has a shape for it: the `seasonal` kind, built 2026-09-15. See the note under this table.** No copy change; the card already says it. |
 | normal-crp | ≤ 1 mg/L | **Retest CTA** | 6–12 months | ✅ **6–12 months** (2026-09-15) | Her Q1 named "normal CRP (at or under 1 mg/L)". |
 | normal-ferritin | 100–300 µg/L | **Retest CTA** | 6–12 months | ✅ **6–12 months** (2026-09-15) | |
 | normal-b12 | Active B12 > 70 | **Retest CTA** | 6–12 months | ✅ **6–12 months** (2026-09-15) | Card copy already aligned (plant-based caveat). |
 | normal-albumin | ≥ 35 g/L | **Retest CTA** | 6–12 months | ✅ **6–12 months** (2026-09-15) | |
 | normal (default / unmapped marker) | in reference range | **Retest CTA** | 6–12 months | ✅ **6–12 months** (2026-09-15, **follow-up Q6 = A**) | ⚠ **She declined B, "no default at all".** That was the safer construction and the one §2 of the design doc argues for off the back of the `BADGES` defect. **A marker added later now inherits 6–12 months silently rather than showing no date.** Her call, recorded so the next marker's author knows. |
+
+### Outside the three buckets — Report-only (no verdict, therefore no retest recommendation)
+
+> ⚠ **THIS SECTION IS NOT PART OF CA-047 AND WAS NOT PUT TO EWA IN EITHER ROUND.** It is here
+> because the row has to exist somewhere and this is the sign-off record — but the signature it
+> cites is **ruling 8 of 2026-06-16**, not the 2026-09-15 cadence pack. Recorded as its own section
+> rather than dropped into bucket A, B or C, because putting it in one of those would claim a
+> sign-off that did not happen.
+
+| Result state | Band | Card CTA today | Proposed cadence | Ewa — agreed | Notes |
+|---|---|---|---|---|---|
+| fai-reported | Free Androgen Index, deliberately not banded | None (no CTA under any circumstance) | None — we draw no conclusion, so we recommend no retest | ✅ **`none`, no date** — **derived** from ruling 8 (2026-06-16), Keith 2026-09-15 | **Row added 2026-09-15.** 🔴 NOT `clinician-led`: that renders a GP referral and FAI carries none. |
+
+🔴 **This row is DERIVED, and every other row in this table is SIGNED. The difference matters.**
+Ruling 8 — *"report-only, do not band it in men"* — is a ruling about **banding**, not about
+cadence. What makes the derivation safe is that the cell records the **absence** of a
+recommendation: it adds no claim, so it cannot overstate her. ⚠ **Giving FAI an actual retest date
+would be a new clinical claim and needs Ewa.**
+
+🔴 **How it was found, because the next one will be found the same way or not at all.** It was in
+**neither** this table nor the rule-kind map, and never had been — so it survived two sign-off
+rounds and three separate recorded counts of "every row is ruled", **every one of which counted the
+rows that existed.** An item absent from every record is invisible to any check that reads a
+record. It surfaced only by diffing both documents against the engine's own `ResultState` union,
+while testing a just-written claim that the map was complete. That diff now runs on every build:
+`09_website-app/frontend/scripts/verify-cadence-coverage.js`.
 
 ---
 
@@ -219,13 +269,16 @@ out "the bucket B clinical interval" and **enumerates the markers by name**. Tha
 before this answer and is now short by four: `ft-low`, the CRP joints = yes branch, `shbg-low` and
 `shbg-high`. All four carry `recheck` rules at 90 days and belong inside the carve-out.
 
-**2. `normal-vitamin-d` cannot be expressed by any of the four kinds.** "Retest heading into autumn
-or winter" is neither `{ days: n }` nor `{ fromMonths, toMonths }`, and it is certainly not
-`clinician-led`. Her Q5 = A ratified the seasonal rule that the card has stated for months, which is
-the right clinical answer and changes no copy. **But `RETEST_CADENCE` needs a fifth kind, something
-like `seasonal`, before this cell can be filled at all.** This is a gap her answer exposed in the
-design, not a problem with her answer, and it must be resolved before the map is built or this row
-will quietly fall back to `clinician-led` and show a man no date on a perfectly normal result.
+**2. `normal-vitamin-d` could not be expressed by any of the four kinds.** ✅ **RESOLVED 2026-09-15,
+by design rather than by another question.** "Retest heading into autumn or winter" is neither
+`{ days: n }` nor `{ fromMonths, toMonths }`, and it is certainly not `clinician-led`. Her Q5 = A
+ratified the seasonal rule that the card has stated for months, which is the right clinical answer
+and changes no copy. **`RETEST_CADENCE` therefore needed a fifth kind before this cell could be
+filled at all**, or this row would quietly fall back to `clinician-led` and show a man no date on a
+perfectly normal result. That kind now exists — `seasonal`, in
+`2026-09-15-seasonal-retest-rule-kind.md` and `lib/results/retestCadence.ts` — and it resolves to a
+**sampling window** against the result date rather than to an elapsed interval. **Nothing in her
+ruling or her wording changed, and no copy moved.**
 
 ---
 
@@ -383,8 +436,8 @@ No copy or code change is made against any row until this sheet is signed.
 
 | | Name | Decision | Date |
 |---|---|---|---|
-| Clinical (cadence), round 1 | Dr Ewa Lindo | ✅ **Agreed with edits.** Direct written reply from `ewalindo@live.co.uk`, 2026-09-15 20:18 UTC, thread `1a0791e8fa8ed170`: `1: A 2: A 3: A 4: C 5: A`. Q4 = C **rejects** the §3a suppression rule; Q2 = A **narrows** two proposed cells to 3 months. Covered 21 of 26 rows | 2026-09-15 |
-| Clinical (cadence), round 2 | Dr Ewa Lindo | ✅ **Agreed with edits.** Direct written reply, 2026-09-15 21:33 UTC, thread `1a0a6ded1d6d688b`: `1: A 2: A 3: B 4: B 5: A 6: A 7: A 8: A`. Q3 and Q4 = B **move both SHBG states off the maintenance kind**; Q5 = A keeps the seasonal rule the lookup cannot yet store. **Closes the remaining 5 rows, the joints branch, and §4 Q4(a) and Q4(c)** | 2026-09-15 |
+| Clinical (cadence), round 1 | Dr Ewa Lindo | ✅ **Agreed with edits.** Direct written reply from `ewalindo@live.co.uk`, 2026-09-15 20:18 UTC, thread `1a0791e8fa8ed170`: `1: A 2: A 3: A 4: C 5: A`. Q4 = C **rejects** the §3a suppression rule; Q2 = A **narrows** two proposed cells to 3 months. **Covered 23 of 28 rows** — credited as 21 of 26 at the time, because its Q3 ruled ten GP-routed bands and the table then had only eight rows to hold them | 2026-09-15 |
+| Clinical (cadence), round 2 | Dr Ewa Lindo | ✅ **Agreed with edits.** Direct written reply, 2026-09-15 21:33 UTC, thread `1a0a6ded1d6d688b`: `1: A 2: A 3: B 4: B 5: A 6: A 7: A 8: A`. Q3 and Q4 = B **move both SHBG states off the maintenance kind**; Q5 = A keeps the seasonal rule, which the lookup now stores as the `seasonal` kind. **Closes the remaining 5 rows, the joints branch, and §4 Q4(a) and Q4(c)** | 2026-09-15 |
 | Business | Keith Antony | ✅ **APPROVED.** Direct instruction, "CA-47 approved" | 2026-09-15 |
 | Compliance pre-flight (final copy) | | 🔴 **RAN AND DID NOT CLEAR.** Deterministic floor clean; the judgement pass found the missing 999 escalation on Q4(b). **Q4(a)'s newly-signed copy has not been pre-flighted at all** and shares the same screen | 2026-09-15 |
 

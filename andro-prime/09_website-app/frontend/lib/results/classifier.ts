@@ -1,4 +1,5 @@
 import { BIOMARKER_COPY } from './biomarker-copy'
+import { resultMayCarryRetestOffer } from './retestGuidance'
 import type {
   NormalisedBiomarker,
   ClassifiedResult,
@@ -578,6 +579,28 @@ export function classify(input: ClassifierInput): ClassifiedResult[] {
 
   const tState = withStates.find((b) => b.markerName === 'Testosterone')?.state
 
+  // 🔴 CA-014 AT THE RESULT LEVEL. Adopted by Keith, 2026-09-15.
+  //
+  // Every card below already obeys CA-014 for ITSELF: a GP-routed state returns
+  // `gpReferral` and nothing else. But CTAs are resolved per marker with no
+  // cross-marker pass, so the card next door never knew — and a Kit 3 with
+  // testosterone under 12 rendered a GP referral on the testosterone card and
+  // "Retest in 6-12 months" pointing at `/kits` on the SHBG card. Both cards
+  // were individually correct. The RESULT was not, and CA-014's own wording is
+  // written at the result level: "a confirmed testosterone RESULT < 12 nmol/L
+  // routes to a GP referral with no kit/supplement upsell".
+  //
+  // ⚠ THIS IS THE ONLY PLACE THE RULE CAN LIVE, which is why it is here rather
+  // than inside `resolveCtas`. It is a fact about the panel, and `resolveCtas`
+  // is handed one marker at a time by construction.
+  //
+  // ✅ IT SUPPRESSES THE RETEST OFFER ONLY. Complement cross-sells survive on
+  // purpose: they offer a panel we have NOT measured, which is the honest
+  // pattern the cadence table endorses, and killing them would assert a
+  // compliance rule stricter than the one approved. The retest INTERVAL also
+  // survives — it is Ewa-signed and lives in the card copy. Only the link goes.
+  const mayOfferRetest = resultMayCarryRetestOffer(withStates.map((b) => b.state))
+
   // Pass 3 — resolve CTAs, copy, and build ClassifiedResult[]
   return withStates.map((b) => {
     const strategy: RecommendationStrategy =
@@ -586,7 +609,20 @@ export function classify(input: ClassifierInput): ClassifiedResult[] {
         : 'single'
 
     const copy = BIOMARKER_COPY[b.state]
-    const ctaResolution = resolveCtas(b.state, strategy, input)
+    const resolved = resolveCtas(b.state, strategy, input)
+
+    // Drop the retest OFFER (not the interval, and not a cross-sell) when any
+    // marker on this result routes to a GP. Matched on the CTA type rather than
+    // its href, because `kit1CrossSell` and `kit2CrossSell` also point at /kits
+    // and they are deliberately unaffected.
+    const suppressRetest = (c: Cta | null): Cta | null =>
+      c && c.type === 'retest-reminder' && !mayOfferRetest ? null : c
+
+    const ctaResolution = {
+      ...resolved,
+      primaryCta: suppressRetest(resolved.primaryCta),
+      secondaryCta: suppressRetest(resolved.secondaryCta),
+    }
 
     // When FT-LOW and Total T is also low (any sub-band), override the default
     // FT recommendation with the combined low-T + low-free-T message.

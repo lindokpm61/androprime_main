@@ -10,7 +10,7 @@
 import { classify, type ClassifierInput } from '../lib/results/classifier'
 import { SCENARIOS } from '../lib/results/fixtures/registry'
 import { buildCioTraits } from '../lib/results/processResult'
-import { mayCarryPurchaseLink } from '../lib/results/retestGuidance'
+import { mayCarryPurchaseLink, resultMayCarryRetestOffer } from '../lib/results/retestGuidance'
 import type { CtaType, KitType, ScenarioName, NormalisedBiomarker, ResultState } from '../lib/results/types'
 
 interface MarkerAssertion {
@@ -317,6 +317,111 @@ for (const scenarioName of Object.keys(SCENARIOS) as ScenarioName[]) {
 }
 passes += 1
 console.log('[GUARD] no GP-routed or report-only card carries a link to a paid kit (CA-014, defect 3f)')
+
+// ── CA-014 AT THE RESULT LEVEL (Keith, 2026-09-15) ────────────────────────
+//
+// The guard above is per CARD and it passes: a GP-routed card carries no
+// purchase link. **It passed the whole time this was broken**, because
+// `classify()` resolves CTAs per marker with no cross-marker pass, so the card
+// next door never knew. A Kit 1 with testosterone at 8-12 rendered a GP
+// referral on the testosterone card and "Retest in 6-12 months" pointing at
+// /kits on the SHBG, free-T and albumin cards. Every card was individually
+// correct. The RESULT was not, and CA-014 is written at the result level:
+// "a confirmed testosterone RESULT < 12 nmol/L routes to a GP referral with no
+// kit/supplement upsell".
+//
+// 🔴 A PER-ITEM GUARD CANNOT SEE A PER-COLLECTION RULE. That is the lesson,
+// and it is why this block sits beside the one above rather than replacing it.
+// Measured when the rule was adopted: 16 retest links across 6 fixtures, every
+// one on a result that had just told a man to see his doctor.
+//
+// ⚠ THIS LOAD USED TO SIT IN THE CADENCE REDUCTION. Both design docs proposed
+// that a GP-routed marker suppresses the whole-panel retest; Ewa rejected that
+// (CA-047 Q4 = C) and was right on the question she was asked — whether the
+// retest is SCHEDULED. She was never asked whether it may be SOLD. The cadence
+// half went where she put it; this is where the commercial half now lives.
+function expectResultRule(label: string, condition: boolean): void {
+  if (condition) {
+    passes += 1
+  } else {
+    failures += 1
+    console.error(`[FAIL] ${label}`)
+  }
+}
+
+const gpRoutedScenarios: ScenarioName[] = []
+for (const scenarioName of Object.keys(SCENARIOS) as ScenarioName[]) {
+  const classified = classify(fixtureToClassifierInput(scenarioName, []))
+  if (resultMayCarryRetestOffer(classified.map((c) => c.state))) continue
+  gpRoutedScenarios.push(scenarioName)
+  for (const card of classified) {
+    for (const cta of [card.primaryCta, card.secondaryCta]) {
+      if (cta && cta.type === 'retest-reminder') {
+        console.error(
+          `[FAIL] ${scenarioName} — the result carries a GP referral, but ${card.markerName} ` +
+            `("${card.state}") still offers a retest to buy -> ${cta.href}`,
+        )
+        failures += 1
+      }
+    }
+  }
+}
+expectResultRule(
+  'the result-level guard exercised at least one GP-routed fixture (otherwise it proved nothing)',
+  gpRoutedScenarios.length > 0,
+)
+console.log(
+  `[GUARD] no GP-routed RESULT offers a retest to buy (CA-014 at result level; ` +
+    `${gpRoutedScenarios.length} fixtures exercised)`,
+)
+
+// ✅ AND THE BOUNDARY IN THE OTHER DIRECTION, WHICH NO FIXTURE COVERS.
+//
+// The rule suppresses the retest OFFER and nothing else. A complement
+// cross-sell — a panel we have NOT measured — survives on a GP-routed result,
+// because it re-tests nothing and the "here is the panel we have not checked"
+// framing is the pattern the cadence table endorses. Suppressing it as well
+// would assert a compliance rule stricter than the one approved, which is
+// precisely the error the per-card guard above records itself making in its
+// first draft.
+//
+// 🔴 NO FIXTURE PRODUCES THIS COMBINATION, so without this synthetic panel the
+// permissive half of the rule is unasserted, and a later "tighten the guard"
+// commit would look correct and pass. Built by hand for that reason.
+const gpPlusCrossSell = classify({
+  kitType: 'energy-recovery',
+  userAge: 45,
+  symptomAnswers: [],
+  qualifierResponses: [],
+  biomarkers: [
+    { markerName: 'hs-CRP', value: 14, unit: 'mg/L', referenceLow: 0, referenceHigh: 5 },
+    { markerName: 'Vitamin D', value: 38, unit: 'nmol/L', referenceLow: 50, referenceHigh: 250 },
+  ],
+})
+const crpCard = gpPlusCrossSell.find((c) => c.markerName === 'hs-CRP')
+const vitDCard = gpPlusCrossSell.find((c) => c.markerName === 'Vitamin D')
+
+expectResultRule('(CA-014r a) the synthetic panel really is GP-routed',
+  crpCard?.state === 'high-crp' && crpCard?.primaryCta?.type === 'gp-referral')
+expectResultRule('(CA-014r b) …and really does carry a complement cross-sell',
+  vitDCard?.secondaryCta?.type === 'kit-1-cross-sell')
+expectResultRule('(CA-014r c) the cross-sell SURVIVES the GP referral on the same result',
+  vitDCard?.secondaryCta?.href === '/kits/testosterone')
+expectResultRule('(CA-014r d) the GP-routed card itself still carries no purchase link',
+  !!crpCard && ![crpCard.primaryCta, crpCard.secondaryCta].some(
+    (c) => c !== null && /^\/kits(\/|$)|^\/supplements\//.test(c.href)))
+
+// ⚠ THE INFORMATION MUST SURVIVE; ONLY THE OFFER GOES. If suppressing the CTA
+// also removed the interval, this would be defect 3f again — the man most
+// likely to need a second test being the one never told when to take one. The
+// interval lives in Ewa-signed card copy, so it is untouched, and that is
+// asserted rather than assumed.
+const lowTCards = classify(fixtureToClassifierInput('low-testosterone', []))
+const shbgCard = lowTCards.find((c) => c.markerName === 'SHBG')
+expectResultRule('(CA-014r e) the SHBG card lost its retest LINK',
+  shbgCard?.primaryCta === null)
+expectResultRule('(CA-014r f) …but kept its Ewa-signed copy, which is where the interval lives',
+  !!shbgCard && shbgCard.recommendation.length > 0 && shbgCard.explanation.length > 0)
 
 // Upper-band boundary guard (Ewa, 2026-08-07). Both bands were added because
 // the engine previously had no ceiling on testosterone or vitamin D, so a

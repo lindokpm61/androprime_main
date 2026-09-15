@@ -116,6 +116,57 @@ export function mayCarryPurchaseLink(state: ResultState): boolean {
 }
 
 /**
+ * 🔴 MAY THIS WHOLE RESULT OFFER THE MAN A RETEST TO BUY? CA-014 read at the
+ * RESULT level, which is the level its own wording is written at.
+ *
+ * ── WHY A SECOND FUNCTION, WHEN `mayCarryPurchaseLink` ALREADY EXISTS ──────
+ * That one is per CARD and it is correct: a GP-routed card carries no purchase
+ * link, and the regression harness asserts it across every scenario. But
+ * `classify()` resolves CTAs **per marker**, with no cross-marker pass, so the
+ * card next door never knew. A Kit 3 with testosterone under 12 renders a GP
+ * referral on the testosterone card **and** "Retest in 6-12 months" pointing at
+ * `/kits` on the SHBG card. Both cards obey the per-card rule. The result does
+ * not obey CA-014, whose wording is *"a confirmed testosterone **result** < 12
+ * nmol/L routes to a GP referral with no kit/supplement upsell"*.
+ *
+ * ⚠ THIS LOAD USED TO BE CARRIED SOMEWHERE ELSE, AND THAT IS WHY IT SURFACED
+ * NOW. Both cadence design docs proposed that a GP-routed marker suppresses the
+ * whole-panel retest. Ewa rejected that on 2026-09-15 (CA-047 Q4 = C) and she
+ * was right on the question she was asked: *"The two markers are unrelated and
+ * the GP referral does not conflict with it."* **She was ruling on whether the
+ * retest is SCHEDULED. She was not asked whether it may be SOLD.** The rejected
+ * rule was quietly carrying both, so the cadence half went where she put it and
+ * the commercial half was left with no home. This is its home.
+ *
+ * ── THE BOUNDARY, AND IT IS NARROWER THAN IT FIRST LOOKS ───────────────────
+ * ✅ A COMPLEMENT CROSS-SELL IS UNAFFECTED. `kit1CrossSell` and `kit2CrossSell`
+ * offer a panel we have **not** measured. That is not re-selling the thing that
+ * just came back wrong, the "here is the panel we have not checked" framing is
+ * the one the 2026-07-17 cadence table explicitly endorses, and it is already
+ * carved out of the prepaid-or-included rule on exactly this reasoning.
+ *
+ * 🔴 Suppressing them too would be the mistake `mayCarryPurchaseLink` above
+ * records itself making in its first draft: asserting a compliance rule
+ * STRICTER than the one actually approved. The rule is about re-selling a
+ * marker we already measured, on a result that just sent a man to a doctor.
+ *
+ * ── INFORMATION SURVIVES; ONLY THE OFFER GOES ─────────────────────────────
+ * The retest INTERVAL is Ewa-signed and already lives in the card copy. What
+ * this removes is the link. That is the same split this module's header argues
+ * for: a result can owe a man guidance about re-measuring without owing him a
+ * product — and here, without being allowed to sell him one.
+ *
+ * Scoped by the PROPERTY that makes a state qualify, never by a list of
+ * markers. The prepaid rule's carve-out was enumerated by marker and was wrong
+ * within 75 minutes when four more states joined the set.
+ */
+export function resultMayCarryRetestOffer(
+  states: readonly ResultState[],
+): boolean {
+  return !states.some((s) => badgeFor(s).label === 'See Your GP')
+}
+
+/**
  * The states currently owed wording, as a count rather than an argument.
  *
  * This is the number to put in front of Ewa: not "some flagged results have no

@@ -1,17 +1,26 @@
 # Result-driven retest cadence: the result picks the interval, not the mechanism
 
-**Status:** 🟢 **THE CLINICAL INPUTS HAVE LANDED, 2026-09-15. The proposal itself is still
-unbuilt.** Ewa answered all five questions of the cadence packet (`1: A 2: A 3: A 4: C 5: A`,
+**Status:** 🟢 **THE CLINICAL INPUTS LANDED 2026-09-15, AND SO DID EVERY DESIGN BLOCKER BEHIND
+THEM. The proposal itself is still unbuilt, and is now unblocked rather than waiting on anyone.** Ewa answered all five questions of the cadence packet (`1: A 2: A 3: A 4: C 5: A`,
 direct written reply 20:18 UTC, compliance record **CA-047**). **Section 4's reduction rule was
 REJECTED and is rewritten below.** A second packet the same evening (`1: A 2: A 3: B 4: B 5: A 6: A
 7: A 8: A`, 21:33 UTC) closed the rest, so **every row in the 2026-07-17 table is now ruled** and
-the map can be built with real values instead of arriving inert. No code has changed and no flag
-has moved.
+the map can be built with real values instead of arriving inert.
 
-🔴 **Fully ruled is not buildable. Two of round 2's answers changed the map's SHAPE:** `shbg-low`
+⚠ **"No code has changed" stopped being true on 2026-09-15.** No flag has moved and the map is
+still unwritten, but three files shipped: `lib/results/retestCadence.ts` (the six rule kinds and the
+seasonal resolver, imported by nothing but its test), and 🔴 **`classifier.ts` +
+`retestGuidance.ts`, which DID change live behaviour** — result-level CA-014 suppressed 16 retest
+purchase links across 6 fixtures. See §4.
+
+✅ **FULLY RULED WAS NOT BUILDABLE, AND NOW IT IS.** Two of round 2's answers changed the map's
+SHAPE: `shbg-low`
 and `shbg-high` moved off the `maintenance` kind onto `recheck` (§3), and `normal-vitamin-d`'s
-seasonal ruling **has no kind at all** and needs a fifth one (§3). Two signed states also still
-have no row in that table (T > 29 nmol/L, vitamin D > 250 nmol/L).
+seasonal ruling **had no kind at all** and needed a fifth one (§3). ✅ **The fifth kind was designed
+and built on 2026-09-15**: `2026-09-15-seasonal-retest-rule-kind.md`. ✅ **The two signed states that had no row in that table
+(T > 29 nmol/L, vitamin D > 250 nmol/L) were rowed on 2026-09-15.** ✅ **And a third state neither document
+ever listed — `fai-reported` — was found and rowed the same day, as the sixth kind, `none`.**
+The map is now complete over the union: 30 states, 30 rows. See §9.
 **Raised by:** Keith, 2026-09-06: *"a retest can be fired at any time based on the results.
 If testosterone is low, a recheck can be fired within days as opposed to weeks or months."*
 **Owner workspace:** `04_products/results-engine`.
@@ -21,8 +30,13 @@ build checklist. Read it before writing any of the code below. The 2026-07-17 ta
 sign-off record; its bucket headings are presentational and **no longer match the rule kinds**.
 
 **Depends on:** `retest-mechanism-map.md` (what the eight mechanisms do today),
-`2026-07-17-retest-cadence-table.md` (the clinical intervals, **still unsigned**).
-**Decisions needed:** two from Keith, one from Ewa. Section 9.
+`2026-07-17-retest-cadence-table.md` (the clinical intervals, ✅ **fully signed 2026-09-15**, 28
+rows plus one derived report-only row).
+**Decisions needed:** ✅ **none. All five §9 rows are closed as of 2026-09-15**, and so are all four
+build-checklist blockers in `2026-09-15-retest-cadence-by-rule-kind.md` §5. 🔴 **What remains is the
+BUILD** — checklist items 4 to 6 — plus two things owed elsewhere and neither of them cadence:
+the **3f wording** (Ewa; the flagged cohort has an interval but no sentence) and **3c**, whether the
+member retest-due email exists at all (Keith). Both tracked in `retest-mechanism-map.md` §6.
 
 ---
 
@@ -73,14 +87,17 @@ already paid for once.
 
 ## 3. The rule cannot be a number
 
-This is the clinically load-bearing part. Four kinds, not one:
+This is the clinically load-bearing part. **Six kinds as built, not the four proposed here** —
+`seasonal` (§ below) and `none` (`fai-reported`, report-only) were both added 2026-09-15. The
+authoritative list is `2026-09-15-retest-cadence-by-rule-kind.md` §2; this table is the design
+argument for why a rule cannot be a single number.
 
 | Kind | Means | Shape | Example states |
 |---|---|---|---|
 | `confirm` | Fast confirmatory recheck, measured in days | `{ days: n }` | The three sub-12 testosterone bands (Ewa, 2026-07-26, n = 0). ~~The only signed cell today.~~ **No longer the only one: 21 cells signed 2026-09-15, CA-047.** |
 | `recheck` | Acting on a finding, retest to see whether it moved | `{ days: n }` | `low-vitamin-d`, `low-b12` |
 | `maintenance` | Nothing to fix, long window | `{ fromMonths, toMonths }` | ~~Every in-range state~~ **CORRECTED 2026-09-15: NOT every in-range state.** `shbg-low` and `shbg-high` are in range and Ewa ruled both at **3 months**, which is a `recheck`. The bucket heading in the 2026-07-17 table is presentational; the KIND is what this map stores, and for those two they disagree |
-| 🔴 `seasonal` | **MISSING, and a signed cell needs it.** Retest against a time of year rather than an elapsed interval | undesigned | `normal-vitamin-d`. Ewa ruled 2026-09-15 (Q5 = A) that it stays *"retest heading into autumn or winter"*, which is what the card has said for months. **None of the four kinds above can hold that.** Until a fifth exists, this cell falls back to `clinician-led` and shows a man no date on a perfectly normal result |
+| ✅ `seasonal` | **DESIGNED AND BUILT 2026-09-15.** Retest against a time of year rather than an elapsed interval | `{ window, minGapDays: 90, minSpanDays: 30 }`, resolving to a sampling WINDOW against the result date | `normal-vitamin-d`. Ewa ruled 2026-09-15 (Q5 = A) that it stays *"retest heading into autumn or winter"*, which is what the card has said for months. `2026-09-15-seasonal-retest-rule-kind.md`; `lib/results/retestCadence.ts`. It is the only kind that can **fail to resolve** (a null anchor date has no answer), and it fails loudly rather than falling back to `clinician-led` |
 | `clinician-led` | **No Andro Prime date at all.** The GP directs it | no date | The GP-block set |
 
 ### Why `clinician-led` must be an explicit branch
@@ -142,10 +159,15 @@ GP-routed marker still renders as a referral; it simply stops speaking for the r
 🔴 **Two consequences to carry into the build, because rule 1 was load-bearing for something other
 than cadence.**
 
-- **The anti-upsell guard now rests entirely elsewhere.** It has to be
-  `2026-09-07-fast-recheck-must-be-prepaid-or-included.md` plus CA-014's no-upsell-on-a-GP-referral
-  rule. Neither was written to carry it alone. Re-read both against this ruling **before** building
-  the reduction, not after.
+- ✅ **RE-HOMED 2026-09-15 (Keith). The anti-upsell guard has its own rule now.** Re-reading the two
+  candidates against her ruling showed **neither reached the case**: the prepaid rule binds only
+  sub-90-day rechecks (and `recheck` is 90, and carved out), while CA-014 was being applied per
+  **marker** though its own wording is per **result**. Applied at the result level it proved **live,
+  not forward-looking — 16 retest links across 6 fixtures**, each on a result carrying a GP
+  referral, with the per-card guard passing throughout because a per-item check cannot see a
+  per-collection rule. Now `resultMayCarryRetestOffer()` in `lib/results/retestGuidance.ts`,
+  enforced in `classify()`. ✅ The retest **interval** survives and ✅ complement cross-sells survive.
+  Recorded in `../../03_compliance/CONTEXT.md`.
 - ✅ **SETTLED 2026-09-15 (Keith). Bucket B is scoped OUT of the prepaid rule, and the stored value
   is `{ days: 90 }` rather than "3 months".** Full reasoning and the arithmetic:
   `2026-09-07-fast-recheck-must-be-prepaid-or-included.md` §2a and the new third row of its §2.
@@ -208,13 +230,16 @@ signature~~ and was only *agreed* in the business sense, **is now clinically sig
 🔴 **Nothing is unsigned any more, so the inert-by-default safety net is gone. What remains is
 STRUCTURAL, and it is worse than an unsigned cell because it looks finished:**
 
-- **`normal-vitamin-d` has a ruling no kind can hold.** Seasonal, per Q5. Until a fifth kind
-  exists it falls through to `clinician-led` and **shows a man no date on a perfectly normal
-  result** — a silent wrong answer rather than a visible gap.
+- ✅ **CLOSED 2026-09-15. `normal-vitamin-d` had a ruling no kind could hold.** Seasonal, per Q5.
+  It would have fallen through to `clinician-led` and **shown a man no date on a perfectly normal
+  result** — a silent wrong answer rather than a visible gap. The fifth kind now exists and the
+  fallthrough is gone: `2026-09-15-seasonal-retest-rule-kind.md`.
 - **`shbg-low` and `shbg-high` carry `recheck` rules while sitting in the table's bucket C.** Read
   the kind, never the bucket heading.
 - **T > 29 nmol/L and vitamin D > 250 nmol/L are signed but have no row**, so the `Record` cannot
-  be exhaustive, which is the whole point of choosing a `Record`.
+  be exhaustive, which is the whole point of choosing a `Record`. ✅ **Both rows added 2026-09-15**,
+  and ⚠ **a third state missing from BOTH documents — `fai-reported` — was found and rowed the same
+  day** (the sixth kind, `none`). **30 states, 30 rows**, now asserted on every build.
 
 **The map can now ship with every cell populated.** That is the opposite of the original plan and
 it is why §7's old safety argument no longer applies: there is no longer a set of unsigned cells
@@ -267,7 +292,7 @@ trade the conflict-free position takes everywhere else.
 | 1 | ~~**The anchor**: adopt the result landing as the anchor for every retest date (section 5)~~ ✅ **DONE 2026-09-07, adopted as stated.** Superseded by: the timed-bundle fallback when no result ever arrives (`2026-09-07-anchor-everything-to-the-result.md` §5) | Keith | Building the timed-bundle change |
 | 2 | ~~**The prepaid-or-included constraint** (section 8): adopt or reject~~ ✅ **ADOPTED 2026-09-07**, `2026-09-07-fast-recheck-must-be-prepaid-or-included.md` | Keith | Nothing. Settled: the feature points at bundles and the membership, never at the shop |
 | 3 | ~~**The reduction ordering** (section 4): GP suppression versus shortest interval, and the low-T carve-out~~ ✅ **RULED 2026-09-15 (Ewa, Q4 = C). Suppression REJECTED; cadence is per marker, never per panel.** Section 4 rewritten. **New work this creates:** the anti-upsell guard rule 1 was carrying now rests solely on the prepaid rule + CA-014, and 3 months sits exactly on the 90-day boundary | Closed; two follow-ons opened | — |
-| 4 | ~~Fill the map cell by cell~~ ✅ **DONE 2026-09-15. EVERY CELL IS RULED**, in two rounds (21 in the first, the remaining 5 plus the joints branch in the second, both replies matching their expected answer counts exactly) | **Ewa** | Closed. 🔴 **But two things still block the build, and neither is hers:** `normal-vitamin-d`'s seasonal ruling has **no shape among the four kinds** (see §3's new `seasonal` row), and **two signed states still have no row** in the 2026-07-17 table at all (T > 29, vitamin D > 250), so the `Record` cannot yet be exhaustive |
+| 4 | ~~Fill the map cell by cell~~ ✅ **DONE 2026-09-15. EVERY CELL IS RULED**, in two rounds (21 in the first, the remaining 5 plus the joints branch in the second, both replies matching their expected answer counts exactly) | **Ewa** | ✅ **Closed, and so are both of the things that blocked the build behind it. Neither was hers.** (1) `normal-vitamin-d`'s seasonal ruling now has a shape, `2026-09-15-seasonal-retest-rule-kind.md`. (2) The **two signed states now have rows** in the 2026-07-17 table (T > 29, vitamin D > 250, added 2026-09-15 under round 1's Q3), so those two no longer block it. ✅ **`fai-reported` was then found missing from BOTH documents and rowed the same day as the sixth kind, `none`** — derived from ruling 8, not signed as cadence. 🔴 **One thing is left and it is not a clinical input:** the anti-upsell guard that Q4 = C unhomed still needs re-homing |
 | 5 | ~~Rewrite the 2026-07-17 table's justification before re-sending it~~ ✅ **DONE 2026-09-07, SENT 2026-09-15 19:46 UTC, ANSWERED 20:18 UTC** | Keith | Closed |
 
 **Item 5 is a real prerequisite and not housekeeping.** That table now becomes the document that
