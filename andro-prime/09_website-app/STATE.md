@@ -49,6 +49,41 @@ otherwise had excluded `app/go/` assuming it held only the route handler. Produc
 `events`, none from a real visitor.** Recorded so launch analytics are not misread as early
 traffic. Cause is the one already named: no local Supabase, so local runs hit production.
 
+### 🔴 A refund moves the money and nothing else — proven on the live Gate 3 order
+
+Keith refunded the Gate 3 purchase on 2026-09-15 to see what would happen. Nothing happened,
+at three independent layers. Read from **live** Stripe (`livemode: true`), not inferred:
+charge `refunded = true`, refund `re_3UFkk…` **succeeded, £99.00, at 01:20:06 UTC**. On our
+side at the same moment: `processed_stripe_events` still 4 rows with nothing newer than
+01:01:53, and the order row untouched since 01:01:56.708, still `status: dispatched`.
+
+Money back, kit in the post, application none the wiser, and nothing that will ever reconcile it.
+
+1. **Stripe never delivered anything.** The webhook claims every event id *before* doing any
+   work, so even an ignored event leaves a row. None appeared — the endpoint is not subscribed.
+2. **The handler would ignore it anyway.** It branches on four event types; no refund, no dispute.
+3. **Nothing can write the result.** `kit_orders.status` has a `refunded` value with **no writer
+   anywhere**, while `account/page.tsx` renders for it. See observation 820.
+
+⚠ **The obvious fix is the wrong event.** The payment intent is still `succeeded`, not
+`canceled` — Stripe models this as a refund against the CHARGE. Subscribing to
+`payment_intent.canceled` would catch nothing while looking like the fix. It is
+**`charge.refunded`**, with `charge.dispute.created` belonging in the same change.
+
+The asymmetry is instructive: the **lab's** cancellation path is complete (Vitall webhook sets
+`cancelled`, alerts ops, documents that refunding stays a human decision). The **merchant's**
+refund path was never exercised, because nobody refunds a test order — and this was the first
+real refund in the system's history.
+
+🔴 **Also found while reading it: `.env.local` holds an `sk_live_` Stripe key**, against the
+repo's own convention in `deployment/env/vars.md` ("sk_test_* locally"). A checkout run on a dev
+machine charges a real card. Same shape as the Supabase finding below — no local environment, so
+local runs hit production — except here it costs money rather than fake analytics rows.
+
+**Not fixed. Three separate decisions:** whether to subscribe to `charge.refunded`, what a
+refund should do to an order whose kit has already shipped, and whether a dev machine should
+hold a live payment key.
+
 ### The two things that need Keith, and neither is code
 
 1. 🔴 **Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify.** The

@@ -49,6 +49,12 @@ What remains on this path is a decision rather than a defect: the dispatch code 
 kit for an order at `pending`, `cancelled`, `refunded` or `on_hold`. With the public door gone
 only our own code can reach it, so the gap is much smaller than it was.
 
+🔴 **Session 2 then found one more, by testing it: a refund moves the money and nothing else.**
+Keith refunded the live Gate 3 order, and eighteen minutes later Stripe said refunded while the
+application still said `dispatched` — no webhook delivered, no row written, a kit in the post.
+Missing at three independent layers, and the obvious fix is the wrong Stripe event. See S2-9.
+Not a merge blocker; it is live on `main` today and has been all along.
+
 ---
 
 ## What passed
@@ -738,6 +744,75 @@ so that whoever first reads the launch analytics does not mistake them for early
 underlying cause is the one already named in S2-6: there is no local Supabase, so a local run
 of this app reads and writes the production database.
 
+### 🔴 S2-9 A refund moves the money and nothing else. Proven on the live Gate 3 order
+
+Keith refunded the Gate 3 purchase on 2026-09-15 to see what happened. What happened is
+nothing, and it is nothing at three independent layers.
+
+**The stimulus, read from LIVE Stripe** (`livemode: true`), not inferred:
+
+```text
+payment intent  pi_3UFkk…  status succeeded, £99.00 GBP received, created 01:01:47
+charge          ch_3UFkk…  refunded = true, amount_refunded = £99.00, disputed = false
+refund          re_3UFkk…  status succeeded, £99.00, reason requested_by_customer
+                           created 2026-09-15 01:20:06 UTC
+```
+
+**The effect, read from production:** none whatsoever.
+
+| | State | Last written |
+|---|---|---|
+| `processed_stripe_events` | still 4 rows, newest `checkout.session.completed` | 01:01:53 |
+| `kit_orders` row | `status: dispatched`, `vitall_order_id: 322953442` | 01:01:56.708 |
+
+The order row has not been touched since three seconds after the purchase. Eighteen minutes
+after the money went back, and counting, Stripe and the application disagree about whether this
+order exists — and a physical kit is in the post either way.
+
+#### Three layers, each independently missing
+
+1. **Stripe never delivered anything.** The webhook records every event id it receives
+   *before* doing any work, so an ignored event still leaves a row. No row appeared, which
+   means the endpoint is not subscribed to the event at all. The repo's only record of the
+   subscription list (`docs/phase7-implementation-plan.md`) names three events, none of them a
+   refund.
+2. **The handler would ignore it if it arrived.** `app/api/webhooks/stripe/route.ts` branches
+   on four event types — `checkout.session.completed`, `invoice.payment_succeeded`,
+   `invoice.payment_failed`, `customer.subscription.deleted`. No refund, no dispute.
+3. **Nothing can write the result.** `kit_orders.status` has a `refunded` value and **no
+   writer anywhere** in `app/`, `lib/` or `scripts/` — while `app/(app)/account/page.tsx`
+   classifies it as an "ended" status and renders for it. UI for a state the system cannot
+   reach. See observation 820.
+
+#### ⚠ The obvious fix is the wrong event
+
+The payment intent's status is still `succeeded`, **not** `canceled`. Stripe models this as a
+refund against the CHARGE, not a cancellation of the intent — so subscribing to
+`payment_intent.canceled` would catch nothing at all, while looking like the fix. The event is
+**`charge.refunded`**, and `charge.dispute.created` belongs in the same change.
+
+#### Why this direction was never built, while the other one was
+
+The asymmetry is instructive rather than careless. The **lab's** cancellation path is complete:
+`app/api/webhooks/vitall/route.ts` sets `cancelled`, alerts ops, and explicitly documents that
+no automatic Stripe refund follows because refunding stays a deliberate human decision. That
+path was built because the lab cancelling is a thing that happens during integration. The
+**merchant's** refund path was never exercised, because nobody refunds a test order — and the
+first real refund in the system's history was this one, deliberately, to find out.
+
+#### 🔴 And the local environment holds a LIVE Stripe key
+
+Found while reading the refund: `.env.local` carries `sk_live_…`. The repo's own convention
+(`deployment/env/vars.md`) is *"sk_test_* locally; sk_live_* in production"*. So a checkout run
+on a developer machine charges a real card.
+
+This is the Stripe version of the finding already recorded in S2-6 — there is no local
+environment, so local runs hit production. There it cost 27 fake analytics rows. Here it would
+cost real money, and it is the reason this section could be evidenced at all.
+
+**Not fixed. Three separate decisions, none of them made here:** whether to subscribe to
+`charge.refunded`, what a refund should do to an order whose kit has already shipped, and
+whether a developer machine should hold a live payment key.
 ### New tooling, session 2 (continued)
 
 | File | Closes |
