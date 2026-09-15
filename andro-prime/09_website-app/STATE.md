@@ -10,6 +10,47 @@ Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-0
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing pushed to
 `main`, no deploy ran. The three merge blockers are unchanged and all three are signatures.
 
+---
+
+### ▶️ SESSION 3 CLOSE-OUT, 2026-09-15 — branch at `7d32d65`, pushed, NOT merged, NOT deployed
+
+Coolify builds `main` (still `4a43864`); this work is on `redesign/direction-f`. Verified after
+the push: production is up and **"Open the demo" is absent from the homepage**, which is the
+Direction F canary that would have appeared had this deployed. So "no deploy ran" is evidenced,
+not assumed.
+
+**What session 3 did.** S2-9 refunds closed in code with all three of Keith's decisions taken and
+both Stripe events subscribed; and **Phase 4 of the plan — the copy pre-flight — RAN for the first
+time and is finished.** Detail in the commit message, in `redesign-copy-register.md`'s Closed
+section, and in the S2-9 block below.
+
+**▶️ WHERE THE NEXT SESSION STARTS: Phase 5.** It is the only phase with unstarted work that
+needs no signature, and none of it is blocked:
+
+1. **Four migration landmines, all verified still present**, all called "unambiguous, fix as we
+   go" by the plan and none of them fixed: `lib/activate/sendActivationLink.ts:29` falls back to
+   `http://localhost:3000` inside an emailed link (dormant only while `NEXT_PUBLIC_SITE_URL` is
+   set, which S2-1 proved is exactly the kind of thing that goes missing); `lib/supabase/env.ts`
+   ships a real project ref and anon key as silent fallbacks, so a missing variable yields a
+   working-but-wrong client instead of an error; `lib/blog.ts:132` renders drafts on any
+   non-`production` `NODE_ENV`; and 41 files declare their own `https://andro-prime.com`, so a
+   non-production deploy self-canonicalises to production.
+2. **Two orphan endpoints** still live with no caller in the repo: `/api/forms/contact` (the
+   contact page is all `mailto:`) and `/api/founding-member/join` (returns 410, its form deleted).
+   A decision, not a fix.
+3. **The 14 non-checkout forms** resolve to real handlers statically; not one has been submitted.
+
+**Then:** Phase 3's remainder (the seven gated routes with a real session, the ten fixture
+scenarios — blocked on Keith, they write to PRODUCTION — and rendering the three error
+boundaries), Phase 6 (screenshots at 1320 and 390), Phase 7 (the `MEMBERSHIP_ENABLED=true` pass),
+Phase 9 (everything, gated on the deploy).
+
+**What is NOT available to the next session, because it is signatures:** the whole remainder of
+Phase 4. 26 rows need sign-off, 5 need a ruling, and the two packets are unsent. ⚠ **The single
+highest-leverage thing anyone can do before CA-045 goes out is fix its scope**: the packet as
+drafted describes ONE surface, and the `HeroField` layer now renders on **seven**. Free now,
+expensive after it is sent.
+
 ### 🔴 TWO LIVE CONSTRAINTS FROM S2-9 — read before refunding anything or deploying
 
 **1. DO NOT ISSUE A REFUND OR LET A DISPUTE HAPPEN UNTIL `redesign/direction-f` IS DEPLOYED.**
