@@ -1,8 +1,7 @@
 # The symptom overlay screen: the composites
 
 **Status:** ✅ **APPROVED 2026-09-16. CA-048, both signers in** (Ewa clinical 5 of 5; Keith
-business, *"CA-48 approved"*). 🔴 **NOT BUILT. Approval fills the copy and authorises no build and
-no deploy; four conditions ride with it to the build.** **Owner workspace:** `04_products/results-engine`. **Drafted:** 2026-09-16.
+business, *"CA-48 approved"*). ✅ **BUILT 2026-09-16 and GATED OFF** (`SYMPTOM_OVERLAY_ENABLED`): `lib/results/symptomOverlay.ts`, `components/results-engine/SymptomOverlay.tsx`, 37 assertions in `npm test`. **All four build conditions are discharged.** 🔴 **It reaches nobody, and the blocker is the TRIGGER rather than the screen:** nothing in the product writes the symptom answer it keys off, and no route mounts the component, so flipping the flag renders nothing. **Owner workspace:** `04_products/results-engine`. **Drafted:** 2026-09-16.
 **Closes (when cleared):** build-checklist item 7 of `2026-09-15-retest-cadence-by-rule-kind.md` §5.
 **Ruling:** **`1: A 2: B 3: A 4: A 5: A`**, `ewalindo@live.co.uk` 2026-09-16 00:04 UTC, thread
 `1a0a77178beb2d2f`. Record: `03_compliance/content-approval/approval-record-symptom-overlay-screen-2026-09-16.md`.

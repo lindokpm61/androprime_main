@@ -103,6 +103,10 @@ second lands those cards say nothing about re-measuring, which is the 3f gap, an
    copy and owes a pre-flight before it ships.
 3. **The early-claim rule (Q4 = B) is unbuilt.** It touches dispatch, so it needs the clamp that
    already exists for the membership clock reset, and its own verification.
-4. **The alert container (Q5 = A) is unbuilt**, along with the rest of the CA-048 screen.
+4. ~~**The alert container (Q5 = A) is unbuilt**, along with the rest of the CA-048 screen.~~
+   ✅ **BUILT 2026-09-16.** The overlay renders inside `SystemAlert`, which is literally the
+   component the article uses, so her answer is implemented rather than approximated. **All four
+   CA-048 conditions are now discharged.** 🔴 **The screen still reaches nobody: the trigger it
+   reads is written by nothing in the product.**
 5. ⚠ **The `NOT APPROVED` markers in `biomarker-copy.ts:81` and `:170` should come out**, since Q1
    and Q2 approved both cards. A comment change, not a copy change.
