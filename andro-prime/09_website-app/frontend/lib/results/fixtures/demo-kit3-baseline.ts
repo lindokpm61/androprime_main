@@ -31,19 +31,46 @@ import type { ScenarioFixture } from './fixture-types'
  *   - Free testosterone 0.190 sits just BELOW the calculated range while total
  *     testosterone is inside it, which is the panel disagreeing with itself.
  *
+ * 🔄 AMENDED 2026-09-16 BY EWA'S RULING, CA-046 Q2 = C. She rejected the panel
+ * this fixture carried and set the shape of its replacement in her own words:
+ * "change the marker so maybe 2-3 are below range, keep the rest of the markers
+ * within range at different levels, use your best judgement as this is demo it
+ * more about the app then clinical correctness." Six of nine carried a verdict
+ * before; three do now.
+ *
+ * ⚠ "BELOW RANGE" WAS AMBIGUOUS AND THE READING IS RECORDED HERE RATHER THAN
+ * LEFT TO THE NEXT READER. Testosterone 10.5 is INSIDE the laboratory's 8.64 to
+ * 29.00 and BELOW our action band of 12, so the two readings of her phrase
+ * disagree about it. Adopted: **"below range" means the marker carries a
+ * not-in-range verdict badge from the engine.** Under the other reading only
+ * free T and vitamin D qualify, which is also inside her "2-3", so the choice
+ * does not change what ships.
+ *
+ * 🔴 TESTOSTERONE WAS DELIBERATELY NOT NORMALISED, AND THAT IS A CONSTRAINT
+ * RATHER THAN A PREFERENCE. Her Q3 = B keeps the GP referral on the page and
+ * only moves it off the opening screen, so the referral has to still exist.
+ * `equivocal-testosterone` is the only state on this panel that produces one.
+ * Normalising testosterone would have satisfied Q2 and silently deleted the
+ * thing Q3 approved. It is also the state Q4's reword is written against.
+ *
  * 🔴 NO VERDICT IS TYPED HERE. `classify()` reads these values against
  * `04_products/results-engine/thresholds.md` and decides every band, badge and
  * string. The states it should produce, recorded so a threshold change is
  * visible as a diff rather than as a silent re-band:
- *   testosterone 10.5  -> `equivocal-testosterone`  (GP)
+ *   testosterone 10.5  -> `equivocal-testosterone`  (GP)   ← carries a verdict
  *   SHBG 34.1          -> `shbg-normal`
- *   free T 0.190       -> `ft-low`
+ *   free T 0.190       -> `ft-low`                         ← carries a verdict
  *   albumin 44         -> `normal-albumin`
  *   FAI 30.8           -> `fai-reported`            (no verdict, ever)
- *   vitamin D 31       -> `low-vitamin-d`
- *   active B12 44      -> `borderline-b12`
- *   hs-CRP 1.9         -> `elevated-crp`
- *   ferritin 71        -> `suboptimal-ferritin`
+ *   vitamin D 31       -> `low-vitamin-d`                  ← carries a verdict
+ *   active B12 88      -> `normal-b12`              (was 44, `borderline-b12`)
+ *   hs-CRP 0.6         -> `normal-crp`              (was 1.9, `elevated-crp`)
+ *   ferritin 142       -> `normal-ferritin`         (was 71, `suboptimal-ferritin`)
+ *
+ * ⚠ FAI's VALUE still sits under its printed bracket (30.8 against 35 to 92.6)
+ * and cannot be moved without moving testosterone or SHBG, since it is
+ * arithmetic on both. It carries no verdict either way, which is Ewa ruling 8
+ * and is the point the demo makes about it, so it is left alone.
  *
  * ⚠ THE COLLECTION DATE IS FOUR DAYS BEFORE THE RESULT, ON PURPOSE. `demo.ts`
  * derives the result date as collection + `RESULT_LAG_DAYS`, so 10 August here
@@ -123,28 +150,34 @@ const fixture: ScenarioFixture = {
         status: 'low',
       },
       {
-        // The assay calls anything above 37.5 normal. NG239 treats 25 to 70 as
-        // indeterminate, so 44 is fine by the lab and unresolved by the
-        // guideline. The clearest case of the two ranges disagreeing.
+        // 🔄 CA-046 Q2 (Ewa, 2026-09-16): 44 -> 88. At 44 this was the clearest
+        // case of the two ranges disagreeing (fine by the assay's 37.5 floor,
+        // indeterminate under NG239's 25 to 70), and losing that is the one real
+        // cost of her ruling. 88 clears NG239 outright.
         name: 'Active B12',
-        value: 44.0,
+        value: 88.0,
         unit: 'pmol/L',
         referenceRange: { low: 37.5, high: null },
-        status: 'borderline',
+        status: 'optimal',
       },
       {
+        // 🔄 CA-046 Q2: 1.9 -> 0.6. Comfortably under the 1.0 ceiling rather
+        // than just under it, so the row reads as settled rather than borderline.
         name: 'hs-CRP',
-        value: 1.9,
+        value: 0.6,
         unit: 'mg/L',
         referenceRange: { low: null, high: 1.0 },
-        status: 'borderline',
+        status: 'optimal',
       },
       {
+        // 🔄 CA-046 Q2: 71 -> 142. Our band calls anything at or under 100
+        // suboptimal, so 71 carried a verdict; 142 sits mid-range on both ours
+        // (100 to 300) and the lab's (30 to 442).
         name: 'Ferritin',
-        value: 71.0,
+        value: 142.0,
         unit: 'ug/L',
         referenceRange: { low: 30.0, high: 442.0 },
-        status: 'borderline',
+        status: 'optimal',
       },
     ],
   },

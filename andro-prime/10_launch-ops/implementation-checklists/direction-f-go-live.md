@@ -42,17 +42,52 @@ value of this document.
 
 ## Gate A — before the merge
 
-**Five items. Nothing else blocks.**
+**Five items. Nothing else blocks.** 🔄 **A1 is CLOSED as of 2026-09-16, so four remain:
+A2 signatures, A3's two one-line fixes, A4 the screenshot pass, A5 the session-carried sweep.**
 
-### A1 · 🔴 `/demo`: clear CA-046, or decouple it. **Keith decides which, and it is the decision that sets the date.**
+### A1 · ✅ CLOSED 2026-09-16 BY OPTION 1. CA-046 IS APPROVED, BOTH SIGNERS, AND THE BUILD IS DONE.
+
+- [x] **Option 1 — send the packet and wait. TAKEN, AND IT CLOSED THE SAME DAY.** Keith sent it;
+      Ewa answered three rounds in a single evening. **8 asked / 8 answered · 8 / 8 · 1 / 1**, every
+      count met exactly and nothing inferred from an adjacent answer. Keith gave business sign-off
+      ("CA-046 approved") as a **separate act with separate evidence**. ClickUp `869exuphq` is
+      `approved`. Every ruling that created work is built, tested and looked at:
+      `typecheck` / `test` (44 suites) / `build` all exit 0, `scan.js` **0 HARD / 0 REVIEW** where it
+      was 1 REVIEW, and every screen rendered through `shot.js` at 1320 and 390 with `--expect-text`.
+      Record: `03_compliance/content-approval/ewa-packet-ca-046-public-demo-2026-09-16.md`.
+- [ ] ~~**Option 2 — decouple, and merge without the demo.**~~ **Not needed. Not taken.**
+
+> 🔴 **A1 CLOSING LEAVES ONE UNACTIONED LINE IN THE CODE, AND IT IS NOT A TICKBOX ON THIS GATE.**
+> `app/(demo)/demo/page.tsx:90` still sets `robots: { index: false, follow: false }`, and the comment
+> above it at line 24 says it stands *"UNTIL THE COMPLIANCE GATE CLEARS"*. **The gate has cleared and
+> that line has not moved**, so as things stand the demo ships hidden from Google. **Lifting it is a
+> separate, deliberate act from closing this gate** and it is the one that actually makes the page
+> public; it is Keith's, and nothing here should be read as having taken it.
+>
+> ⚠ **One condition survives the approval, the same way two survived CA-045.** Copy-register row 32c's
+> underlying question reaches `/demo` and has never been put to anyone: whether the *"Ask the
+> clinician"* benefit may be named on a public surface **at all**, given the register records that the
+> live member screen has only ever rendered that block EMPTY. CA-046 Q6 added the approved Phase 0
+> qualifier, which is a **mitigation and not an answer**. Ewa + Keith.
+>
+> 🟢 **What the three rounds changed on the branch**, so a reader does not have to reconstruct it: the
+> demo panel re-cut to three markers carrying a verdict (testosterone held at 10.5 deliberately,
+> because it is the only value producing the GP route her Q3 preserved); the results list reordered so
+> a referral is not the first badge; the `equivocal-testosterone` sentence reworded **for the demo
+> screen only, live report copy untouched**; Ewa's name off the public demo in **both** places;
+> the Phase 0 qualifier added in both places the benefit renders; the slider presets moved onto the
+> engine's own words, **derived by classifying each preset value rather than typed**; two
+> efficacy-adjacent lines reworded; the month-one notice moved to the third person; and the
+> supplements bullet removed by **importing `MEMBERSHIP_INCLUDES` rather than deleting the string**.
+
+<details><summary>The original A1, kept because option 2's reasoning is still the reference if a
+future surface needs decoupling</summary>
 
 CA-046 is the only external blocker on this gate, and it is with Ewa. `/demo` puts a full
 results report, a membership price and ~2 dozen un-pre-flighted prototype strings on an
 ungated surface.
 
-- [ ] **Option 1 — send the packet and wait.** ClickUp `869exuphq`. She has answered five-question
-      packets in 12, 22 and 35 minutes this month, so the wait may be short. The packet is drafted.
-- [ ] **Option 2 — decouple, and merge without the demo.** `/demo` is **not flag-gated**: it is a
+- **Option 2 — decouple, and merge without the demo.** `/demo` is **not flag-gated**: it is a
       plain route at `app/(demo)/demo/page.tsx` and the homepage links to it at
       `app/(marketing)/page.tsx:749`. Adding `DEMO_ENABLED` is the house pattern exactly —
       `lib/flags.ts` holds nine of them, all default OFF, and its own header states the property
@@ -62,6 +97,8 @@ ungated surface.
 ⚠ **Zero traffic does not soften option 1.** The gate governs SHIPPING, and a page is live
 whether or not anyone visits it. **That is exactly why option 2 is not a dodge:** a flagged-off
 route is not shipped.
+
+</details>
 
 ### A2 · 🔴 The copy register's owed signatures — 26 rows and 5 rulings
 
@@ -262,7 +299,7 @@ The defect rows it depends on, none of which blocks go-live:
 | Plan | Phase 7 | **E** |
 | Plan | Phase 8 | **B** |
 | Plan | Phase 9 | **C3** |
-| Plan | CA-046 | **A1** |
+| Plan | CA-046 | ✅ **approved 2026-09-16, both signers, three rounds (8/8, 8/8, 1/1), all build work done. A1 CLOSED by option 1.** ⚠ Two things it does not carry: `page.tsx:90` still sets `robots: noindex` and lifting it is a separate act; and copy-register row 32c's Phase 0 question survives the approval, unasked |
 | Plan | CA-045 | ✅ approved 2026-09-15, both signers. **The audit's Go/no-go table has not caught up** |
 | Plan | Register row 6 (FAI wording) | ✅ resolved — a mis-citation, not clinical. **Was never on the defects artefact** |
 | Plan | Nine undocumented flags | ✅ now in `.env.example`. **Was never on the defects artefact** |
@@ -275,11 +312,16 @@ are now closed. Nobody was ever going to notice either way. Any future blocker l
 
 ## The one-line answer
 
-**Five things stand between here and a live Direction F site: a decision about `/demo`,
-twenty-six signatures, two one-line fixes, a screenshot pass and a session-carried sweep.**
-Everything else on either document is either discharged by the merge itself, or is a
-membership switch-on that ships with its flag off, or is already live on `main` and no worse
-for waiting.
+🔄 **FOUR, as of 2026-09-16. `/demo` is done.** ~~Five things stand between here and a live
+Direction F site: a decision about `/demo`,~~ **twenty-six signatures, two one-line fixes, a
+screenshot pass and a session-carried sweep.** Everything else on either document is either
+discharged by the merge itself, or is a membership switch-on that ships with its flag off, or is
+already live on `main` and no worse for waiting.
+
+**A1 closed by option 1 on 2026-09-16**: CA-046 approved by both signers, three rounds answered the
+same evening (8/8, 8/8, 1/1), every ruling built, tested and rendered. ⚠ **Closing the gate did not
+lift the `noindex`**, which is still at `app/(demo)/demo/page.tsx:90` and is a separate deliberate
+act; and **copy-register row 32c's Phase 0 question survives the approval**, unasked.
 
 🔴 **And one of them has an ongoing cost while it waits.** Two result cards are selling a
 retest two clinical rulings forbid, to real customers, today. Merging is the only thing that

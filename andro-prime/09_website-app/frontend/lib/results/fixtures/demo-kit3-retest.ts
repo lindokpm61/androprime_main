@@ -65,20 +65,52 @@ import type { ScenarioFixture } from './fixture-types'
  *   albumin 43.6      -> `normal-albumin`         (was `normal-albumin`)
  *   FAI 29.2          -> `fai-reported`           (report-only, Ewa ruling 8)
  *   vitamin D 58      -> `normal-vitamin-d`       (was `low-vitamin-d`: BAND CROSSED)
- *   active B12 74     -> `normal-b12`             (was `borderline-b12`: BAND CROSSED)
- *   hs-CRP 1.1        -> `elevated-crp`           (was `elevated-crp`: same band, fell)
- *   ferritin 96       -> `suboptimal-ferritin`    (was `suboptimal-ferritin`: same band, rose)
+ *   active B12 96     -> `normal-b12`             (baseline now 88: rose inside the band)
+ *   hs-CRP 0.4        -> `normal-crp`             (baseline now 0.6: fell inside the band)
+ *   ferritin 168      -> `normal-ferritin`        (baseline now 142: rose inside the band)
  *
- * ⚠ TWO OF NINE CROSS A BAND AND SEVEN DO NOT, deliberately. A retest where
- * everything resolves is a pitch. Both crossings are on markers we sell a
- * product against and hold an EFSA claim for; nothing on the testosterone half
- * crosses anything, which is the whole point of the shape.
+ * 🔄 AMENDED 2026-09-16, AND THE AMENDMENT CAME FROM THE BASELINE. Ewa's CA-046
+ * Q2 = C normalised active B12, hs-CRP and ferritin in `demo-kit3-baseline.ts`.
+ * This file's three matching values were written as improvements ON THE OLD
+ * BASELINE, so leaving them alone would have inverted every one of them: 74
+ * against 88 is a fall, 1.1 against 0.6 is a RISE BACK OUT of the normal band,
+ * and 96 against 142 is a fall back into suboptimal. **The day-90 screen would
+ * have shown a stranger a man deteriorating on two markers that had been fine**,
+ * which is the opposite of what either fixture is for and is not something Ewa
+ * was shown or ruled on. All three were re-pointed at the new baseline.
  *
- * ⚠ HIS FLAGS DO NOT CHANGE, so the NEXT retest is a Kit 3 too. Total
- * testosterone and free testosterone are still flagged, hs-CRP and ferritin are
- * still flagged, and the rule reads the latest result. That is correct and it
- * is the demo's own argument: the markers that need a doctor did not move,
- * and the app keeps saying so rather than quietly dropping them.
+ * ⚠ ONE OF NINE NOW CROSSES A BAND, NOT TWO. Vitamin D is the only crossing
+ * left, because B12's crossing depended on a baseline that no longer exists. The
+ * argument the old shape carried is unchanged and is now carried by one marker:
+ * a retest where everything resolves is a pitch, so the four we sell against all
+ * move and nothing on the testosterone half moves at all.
+ *
+ * 🟢 THE D1 ARGUMENT AT THE TOP OF THIS FILE STILL HOLDS, and the only thing
+ * that changed is its arithmetic: "flagged on six markers spanning both halves"
+ * is now flagged on THREE, still spanning both halves, so Kit 3 is still what
+ * `selectRetestPanel` returns and `test-retest-panel` (6b) still passes.
+ *
+ * ⚠ WORTH THE SENTENCE, BECAUSE THIS CHANGE GOT IT WRONG FIRST. Normalising
+ * active B12, hs-CRP and ferritin looks like it strips the energy half of every
+ * flag and drops the man to a Kit 1. It does not: **vitamin D is an
+ * energy-panel marker** (`KIT_PANELS['energy-recovery']`) and is still
+ * `low-vitamin-d`. Testosterone and free testosterone hold the hormone half,
+ * vitamin D holds the energy half, and the span survives on one marker instead
+ * of four. The test caught the count and would not have caught the kit, because
+ * the kit never moved.
+ *
+ * 🔴 AT THE NEXT RETEST IT DOES CHANGE, and that is a real consequence rather
+ * than a comment. At day 90 vitamin D is `normal-vitamin-d`, so the only flags
+ * left are testosterone and free testosterone, **both hormone**, and the rule
+ * would return a Kit 1 for the retest after this one. The demo never renders
+ * that: `selectRetestPanel` is not called anywhere on the demo path and
+ * `retestKit` is read straight off `payload.kitType`. Recorded so the next
+ * reader does not discover it as a surprise.
+ *
+ * ⚠ HIS HORMONE FLAGS DO NOT CHANGE. Total testosterone and free testosterone
+ * are still flagged at day 90, and the rule reads the latest result. That is the
+ * demo's own argument and it survives: the markers that need a doctor did not
+ * move, and the app keeps saying so rather than quietly dropping them.
  *
  * ⚠ COLLECTED FOUR DAYS BEFORE THE RESULT, like the baseline, so `demo.ts`
  * derives a retest result on 12 November -- which is the first result plus
@@ -156,29 +188,36 @@ const fixture: ScenarioFixture = {
         status: 'optimal',
       },
       {
-        // Was 44, inside NG239's indeterminate 25 to 70. Now above it.
+        // 🔄 CA-046 Q2 knock-on: was 74 against a baseline of 44, which crossed
+        // NG239's indeterminate band. The baseline is now 88, already clear of
+        // it, so 74 would have read as a fall. 96 rises inside the normal band.
         name: 'Active B12',
-        value: 74.0,
+        value: 96.0,
         unit: 'pmol/L',
         referenceRange: { low: 37.5, high: null },
         status: 'optimal',
       },
       {
-        // Was 1.9. Fell, but 1.1 is still inside the same band, so the verdict
-        // does not change and the screen says so rather than celebrating.
+        // 🔄 CA-046 Q2 knock-on: was 1.1 against a baseline of 1.9. The baseline
+        // is now 0.6, so 1.1 would have been a RISE out of the normal band and
+        // the day-90 screen would have shown a stranger a man getting worse on a
+        // marker that had been fine. 0.4 keeps the direction of travel honest
+        // and introduces no new verdict at retest.
         name: 'hs-CRP',
-        value: 1.1,
+        value: 0.4,
         unit: 'mg/L',
         referenceRange: { low: null, high: 1.0 },
-        status: 'borderline',
+        status: 'optimal',
       },
       {
-        // Was 71. A real rise, still under 100, so still the same band.
+        // 🔄 CA-046 Q2 knock-on: was 96 against a baseline of 71. The baseline is
+        // now 142, so 96 would have been a FALL back into the suboptimal band.
+        // 168 is a real rise that stays inside ours (100 to 300).
         name: 'Ferritin',
-        value: 96.0,
+        value: 168.0,
         unit: 'ug/L',
         referenceRange: { low: 30.0, high: 442.0 },
-        status: 'borderline',
+        status: 'optimal',
       },
     ],
   },

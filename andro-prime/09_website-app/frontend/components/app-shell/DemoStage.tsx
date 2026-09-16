@@ -192,6 +192,51 @@ export function DemoStage({ engine, journey, dates, preview = NO_PREVIEW }: Demo
    * also what the engine would see in production -- and then joined by marker
    * name. Five of the nine find no partner and carry `previous: null`.
    */
+  /*
+   * 🔄 CA-046 ROUND 2, Q8 = C (Ewa, 2026-09-16). THE SLIDER'S PRESET BUTTONS SAY
+   * WHAT THE ENGINE SAYS, AND THEY ARE DERIVED RATHER THAN TYPED.
+   *
+   * They used to be labelled from a three-entry map of the engine's ZONE
+   * COLOURS: "In our band" / "Between the ranges" / "Outside our band". She was
+   * shown those three words and rejected them, choosing "they should use the
+   * engine's own six words instead" over leaving them or rewording them.
+   *
+   * 🔴 THE FIX IS NOT A NEW MAP OF SIX WORDS. A typed map is the thing that went
+   * wrong: a hand-written label can drift from the engine and nothing fails when
+   * it does, which is exactly the defect `04_products`-side vocabulary work has
+   * been closing all year. So a preset is labelled by CLASSIFYING THE VALUE THAT
+   * BUTTON SETS and printing the badge the engine returns for it. The button now
+   * says precisely what the card will say once it is pressed, and a threshold
+   * change moves the label with it.
+   *
+   * ⚠ IT STILL NAMES NO THRESHOLD, which is this control's standing invariant.
+   * A preset sits at the MIDPOINT of a zone, never at its edge, and no number is
+   * printed on the button.
+   *
+   * ⚠ TWO BUTTONS MAY CARRY THE SAME WORD, and that is correct rather than a
+   * bug: on testosterone more than one zone routes to the same verdict. The
+   * de-duplication is deliberate and is done at the call site, because three
+   * buttons reading "See your GP" would be a worse screen than two.
+   */
+  const verdictWordAt = useMemo(
+    () =>
+      (markerName: string, value: number): string | null => {
+        const rows = classify({
+          kitType: member ? engine.retestKit : engine.baselineKit,
+          biomarkers: (member ? engine.retestSeeds : engine.baselineSeeds).map((s) => ({
+            ...s,
+            value: s.markerName === markerName ? value : s.value,
+          })),
+          symptomAnswers: engine.symptomAnswers,
+          qualifierResponses: [],
+          userAge: engine.userAge,
+        })
+        const hit = rows.find((r) => r.markerName === markerName)
+        return hit ? badgeFor(hit.state).label : null
+      },
+    [engine, member]
+  )
+
   const rows = useMemo<DemoRow[]>(() => {
     const run = (
       kit: DemoEngineInput['baselineKit'],
@@ -404,6 +449,7 @@ export function DemoStage({ engine, journey, dates, preview = NO_PREVIEW }: Demo
                   result={open.latest}
                   editable={editable}
                   member={member}
+                  wordAt={(v) => verdictWordAt(open.latest.markerName, v)}
                   onValue={(v) => {
                     const name = open.latest.markerName
                     if (member) setRetestValues((p) => ({ ...p, [name]: v }))
@@ -449,10 +495,20 @@ export function DemoStage({ engine, journey, dates, preview = NO_PREVIEW }: Demo
           <div className="ap-ngrid">
             <div className="ap-ncard">
               <h3>Real</h3>
+              {/* 🔄 CA-046 Q5 = C: this paragraph said "the Ewa-approved thresholds".
+                  Her ruling is her name off the PUBLIC demo, and this instance renders
+                  in the INITIAL HTML, so it was the most visible one on the page while
+                  the card attribution needed a tap to reach. Replacement wording is the
+                  2026-05-26 re-sweep's, carried verbatim; "GP-approved" and "GP-built
+                  report" are both barred by `03_compliance/CONTEXT.md`.
+                  ⚠ The comment sits OUTSIDE the <p>. Put inside, between "that" and
+                  "serves", it ate the line-break JSX was using as the space and the
+                  page rendered "thatserves". Caught by a screenshot, not by the build,
+                  the tests or the scanner: every one of those was green on it. */}
               <p>
                 <b>Every band is the live one.</b> This page calls the same <b>classify()</b> that
-                serves a paying customer, against the Ewa-approved thresholds. Drag the slider and the
-                verdict is recomputed by the engine, not looked up in a table.
+                serves a paying customer, against thresholds signed off by a GMC-registered GP. Drag
+                the slider and the verdict is recomputed by the engine, not looked up in a table.
               </p>
               <p>
                 All nine markers are here, including the one with no verdict. Every explanation,
@@ -510,23 +566,43 @@ function MarkerControl({
   result,
   editable,
   member,
+  wordAt,
   onValue,
 }: {
   result: ClassifiedResult
   editable: boolean
   member: boolean
+  /** CA-046 round 2 Q8 = C: the engine's own verdict word for a given value. */
+  wordAt: (v: number) => string | null
   onValue: (v: number) => void
 }) {
   const max = barMaxFor(result)
   const decimals = (String(result.value).split('.')[1] ?? '').length
   const step = decimals >= 3 ? 0.005 : decimals === 2 ? 0.01 : decimals === 1 ? 0.1 : 1
 
-  // Midpoint of each of the engine's zones, so a click always lands in-band.
+  /*
+   * Midpoint of each of the engine's zones, so a click always lands in-band.
+   *
+   * 🔄 CA-046 round 2, Q8 = C: the label is now the verdict the ENGINE returns
+   * for that midpoint, not a word for the zone's colour. Two zones can resolve
+   * to the same verdict (on testosterone, more than one routes to the GP), so
+   * a word already used is dropped rather than repeated: three buttons carrying
+   * one word would demonstrate nothing, and the point of the control is that
+   * moving the value CHANGES the verdict. A preset the engine cannot label is
+   * dropped too, on the same principle as the rest of this file: no hand-written
+   * fallback word, because a fallback is how a typed vocabulary creeps back in.
+   */
   const presets: { at: number; label: string }[] = []
+  const seen = new Set<string>()
   let prev = 0
   for (const z of result.displayZones) {
     const top = z.upTo ?? max
-    presets.push({ at: Number(((prev + top) / 2).toFixed(3)), label: z.color })
+    const at = Number(((prev + top) / 2).toFixed(3))
+    const word = wordAt(at)
+    if (word && !seen.has(word)) {
+      seen.add(word)
+      presets.push({ at, label: word })
+    }
     prev = top
     if (z.upTo === null) break
   }
@@ -574,26 +650,41 @@ function MarkerControl({
             aria-pressed={Math.abs(p.at - result.value) < step / 2}
             onClick={() => onValue(p.at)}
           >
-            {ZONE_WORD[p.label] ?? p.label}
+            {p.label}
           </button>
         ))}
       </div>
       <p className="ap-fixnote">
         {member
-          ? 'The first result is fixed. History does not move, so the slider only drives the retest.'
+          ? /* 🔄 Pre-flight 2026-09-16: one word changed, to "locked". It had
+               carried a term the red-flag table in `03_compliance/CONTEXT.md`
+               bars from retest copy. The intended sense was `immutable` and the
+               line describes a slider, but this renders one line under a live
+               verdict badge, so the benign reading was not the only one a reader
+               had available. Meaning unchanged.
+               ⚠ The old wording is deliberately NOT quoted here: reprinting it
+               puts the barred term back into a scanned file and the scanner
+               cannot tell a quotation from a claim. */
+            'The first result is locked. History does not move, so the slider only drives the retest.'
           : `Current verdict: ${badgeFor(result.state).label}`}
       </p>
     </div>
   )
 }
 
-/* The engine's three zone colours, said in words. Not clinical bands and not
-   verdicts: `badgeFor` owns those and it is what the fixnote prints. */
-const ZONE_WORD: Record<string, string> = {
-  optimal: 'In our band',
-  warning: 'Between the ranges',
-  critical: 'Outside our band',
-}
+/* 🔄 REMOVED 2026-09-16, CA-046 round 2 Q8 = C.
+ *
+ * This held the engine's three zone COLOURS said in words, and its own comment
+ * argued they were "not clinical bands and not verdicts" because `badgeFor`
+ * owns those and prints the real one separately. Ewa was shown the three words
+ * and that argument, and took C: the buttons should use the engine's own six
+ * words instead. The labels are now derived per preset from `badgeFor`, in
+ * `MarkerControl` above.
+ *
+ * ⚠ Do not reintroduce a map here. The lesson of this row is that a typed
+ * vocabulary sitting beside a derived one will drift from it, and the drift is
+ * silent because nothing compares them.
+ */
 
 /*
  * The walkthrough, following the prototype's `WATCH` list state for state. Each
@@ -607,16 +698,31 @@ const WATCH: Record<string, string[]> = {
     'No percentage and no progress bar, because a number stuck at 60% for two days is worse than no number.',
     'Every tab has its own empty state. The plan has no number to move yet; the record has one point coming, not two.',
   ],
+  /* 🔄 REORDERED 2026-09-16, CA-046 Q3 = B, and this is the half of that ruling
+     the row order alone does not deliver. Moving the energy group to the top of
+     the panel stops the referral being the first BADGE a visitor meets, but the
+     rail was still telling him "Open Testosterone" as instruction one, which
+     walks him straight to it. Testosterone is now third. No wording changed and
+     nothing was added: this is the same four lines in a different order, and the
+     "reopen testosterone" line still follows the one that opens it. */
   result: [
-    'Open Testosterone. He is inside his laboratory’s range and under the number a GP acts on, and the card routes him out of the business.',
     'Open Free Androgen Index. It has a hollow marker and no verdict at all, on purpose.',
-    'Flip "show what everyone else shows", then reopen testosterone. Our bands disappear, the laboratory interval stays exactly where it was, and the page has nothing left to say.',
     'Go to Plan. Month one is included with the kit, so it is a notice with a charge date, not an ask. Note what it locks: nothing.',
+    'Open Testosterone. He is inside his laboratory’s range and under the number a GP acts on, and the card routes him out of the business.',
+    'Flip "show what everyone else shows", then reopen testosterone. Our bands disappear, the laboratory interval stays exactly where it was, and the page has nothing left to say.',
   ],
+  /* 🔄 Two lines reworded by the 2026-09-16 pre-flight, both for the same
+     reason: they attached a RESULT to the retest rather than to the reader's
+     own ninety days. "That is the retest paying out" and "four of them actually
+     moved, and they are the four we sell against" both read as efficacy on a
+     surface that has no claim behind it, and the second sat one line under a
+     sentence refusing exactly that inference. `03_compliance/CONTEXT.md`: never
+     use language that implies the supplement changed anything. Both are new
+     wording and both are in the follow-up packet. */
   member: [
-    'Open Vitamin D. 31 to 58, crossed out of the low band. That is the retest paying out.',
+    'Open Vitamin D. 31 to 58, crossed out of the low band. A retest tells you what changed. It is not why it changed.',
     'Open Testosterone. Nine markers came back and this one went the other way, 10.5 to 10.1. Nothing we sell claims to move it, and after ninety days it has not.',
     'On any marker with two plots, look at both. His energy rose too, and the app never says one caused the other.',
-    'Go to Record for all nine markers across both purchases. Every one was re-measured; four of them actually moved, and they are the four we sell against.',
+    'Go to Record for all nine markers across both purchases. Every one was re-measured. The four on the energy half moved, the five on the hormone half barely did, and the app never says why either happened.',
   ],
 }

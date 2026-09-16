@@ -295,8 +295,23 @@ const demoDash = buildDashboardFromScenario([DEMO_BASELINE_SCENARIO]) as unknown
 const demoMarkers = (demoDash.kits ?? []).flatMap((k) => k.results[0]?.markers ?? [])
 const demoPanel = selectRetestPanel(demoMarkers, demoBaselineKit)
 
+// 🔄 COUNT AMENDED 2026-09-16, 6 -> 3, BY EWA'S RULING AND NOT BY A CODE CHANGE.
+// CA-046 Q2 = C rejected the demo panel and set its replacement: "2-3 are below
+// range, keep the rest of the markers within range at different levels". Active
+// B12, hs-CRP and ferritin were normalised in `demo-kit3-baseline.ts`, so three
+// markers carry a verdict where six did.
+//
+// ⚠ THE KIT ASSERTION IS THE LOAD-BEARING HALF AND IT IS UNCHANGED. It is easy
+// to assume, as this change first did, that normalising three energy markers
+// leaves the man flagged on hormone only and drops him to a Kit 1. It does not:
+// VITAMIN D IS AN ENERGY-PANEL MARKER (`KIT_PANELS['energy-recovery']`) and is
+// still `low-vitamin-d`, so testosterone plus free testosterone plus vitamin D
+// still span both halves and Kit 3 is still the cheapest kit covering them.
+// That is exactly what 6b and 6c check, and both passed through this change
+// while only the hard-coded count failed. Keep the count assertion: it is what
+// noticed the fixture had moved at all.
 check('(6a) the demo baseline reads as a Kit 3, because it is flagged on both halves',
-  demoPanel.kit === 'hormone-recovery' && demoPanel.flagged.length === 6)
+  demoPanel.kit === 'hormone-recovery' && demoPanel.flagged.length === 3)
 check(`(6b) the demo's retest fixture is the kit the rule derives (rule ${demoPanel.kit}, demo ${demoShownRetestKit})`,
   demoPanel.kit === demoShownRetestKit)
 check('(6c) and it could not have been a Kit 2: a Kit 2 cannot measure his testosterone',

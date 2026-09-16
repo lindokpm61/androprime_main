@@ -2,7 +2,60 @@
 
 Volatile sales/lifecycle status for this workspace. Durable funnel logic, routing, lifecycle stages, and rules are in `CONTEXT.md`; task-level status lives in **ClickUp** (workspace `90121729875`). This file holds only dated live status. Update the date on each change.
 
-_Last updated: 2026-08-27 (site-funnel-model.md rewritten to v2 against the monitoring thesis; the stale "hero CTA pending Keith" line corrected)._
+_Last updated: 2026-09-16 (**the membership-pricing prohibition is NARROWED by a carve-out; the selling prohibition is untouched**; see below). Earlier: 2026-08-27 (site-funnel-model.md rewritten to v2 against the monitoring thesis; the stale "hero CTA pending Keith" line corrected)._
+
+---
+
+## 🔄 The membership-pricing prohibition is narrowed, and the selling one is not (2026-09-16)
+
+**Keith ruled.** `funnel/site-funnel-model.md` §2 listed *"Sell or price the membership"* as one
+absolute bullet under "What no acquisition surface may do". **It was one rule covering two different
+acts**, and its stated reason (*"it is not purchasable before a result exists"*) is an argument about
+selling rather than about stating a price.
+
+- **Selling: unchanged and absolute.** No acquisition surface may sell the membership.
+- **Pricing: now governed by a test rather than a prohibition.** *A surface MUST price it where it
+  can take money for a kit, and MAY price it where it demonstrably cannot take money at all.*
+
+**The obligation follows the buy button.** That is the discriminator Keith had already applied on
+2026-09-11 without naming it, when the `/lp/` pages were brought in because they carry their own buy
+buttons and take cold paid traffic.
+
+**Permitted today:** the four `/kits/` routes and three kit `/lp/` pages (2026-09-07 and 2026-09-11
+rulings), and **`/demo`** (this ruling). The demo cannot take money at all: both "Manage membership"
+buttons are inert, there is no join path, and membership is joinable only inside the 30 days after a
+result. It also hides nothing, because GBP 47 goes public on seven routes the moment
+`redesign/direction-f` merges.
+
+✅ **AND `/membership` IS NOW RULED TOO (Keith, same day): THE PUBLIC PAGE SHOULD EXIST, AND IT IS
+PUBLIC.** Copy-register row 32d, open since 2026-09-15, is closed.
+
+🟢 **The ruling confirms the test rather than excepting it.** `/membership` has **no join button and
+cannot have one** (joinable only inside the 30 days after a result, enforced server-side), so every
+CTA routes to `/kits` and it *demonstrably cannot take money*, which is the "MAY price it" limb. **The
+test predicted the answer before it was given**, which is the argument for writing rules as tests
+rather than as lists of permitted pages.
+
+🔴 **IT DOES NOT FLIP THE FLAG, and that distinction is the whole risk.** Row 32b is a sequencing gate
+and stands: the page is behind `MEMBERSHIP_ENABLED`, `notFound()`s when off, flag defaults false.
+**Re-checked 2026-09-16: `trial_period_days` appears nowhere in the repo except inside the comment on
+the membership page asserting its own absence**, `createMembership` charges from checkout, and the
+membership terms are still `DRAFT, not synced live`. A live page reading *"GBP 47/month after"* before
+the trial mechanic exists would be a mis-statement arriving **by merge rather than by decision**. *May
+exist* and *may ship* are two rulings; only the first has been given.
+
+🔴 **Also NOT decided by it:** row 32c's Phase 0 question (**Ewa's**, still open) on whether the *"Ask
+the clinician"* benefit may be named on a public surface at all, and whether `/` or `/kits` link to
+the page.
+
+⚠ **`09_website-app/frontend/PRODUCT.md` needed no change**: its version of the rule says *"no
+acquisition surface may sell it"* and is about selling only, so it stays true as written. Checked
+rather than assumed.
+
+⚠ **One wording item is open and it is not a gate.** The demo's plan screen says *"On 13 September
+your card is charged GBP 47 and it carries on monthly"*, in the second person, where it is describing
+the fictional man. The demonstration notice covers it; it is the one line on those screens that could
+read as an offer rather than a depiction.
 
 ---
 

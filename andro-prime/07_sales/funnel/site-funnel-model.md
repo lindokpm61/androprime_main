@@ -118,11 +118,87 @@ provenance rather than commerce.
 
 ### What no acquisition surface may do
 
-- **Sell or price the membership.** It is not purchasable before a result exists.
+- **Sell the membership.** It is not purchasable before a result exists, and a surface offering it
+  to someone with no result is selling an empty room. **This half is absolute and is unchanged.**
+- 🔄 **Price the membership: NARROWED 2026-09-16 (Keith). See the carve-out immediately below.**
+  It was written as an absolute and it is not one.
 - **Lead on the trend, the series, or "watch your number move."** Section 1b.
 - **Imply clinical services are live**, or describe outputs as a GP-built or personalised
   report. `03_compliance/CONTEXT.md`, Phase 0 boundary and the Ewa clinical-governance line.
 - **Mention ashwagandha KSM-66.** Anywhere, ever.
+
+#### The pricing carve-out (Keith, 2026-09-16)
+
+**Why this exists.** The bullet above was written 2026-08-27 as one rule covering two different acts,
+and its stated reason (*"it is not purchasable before a result exists"*) is an argument about
+**selling**, not about **stating a price**. Keith then overrode the pricing half three times without
+anyone amending this document, so the rule and the build have disagreed for nine days:
+
+| Ruling | Surfaces | The line |
+|---|---|---|
+| `01_strategy/2026-09-07-auto-renew-at-day-30.md` §4 | the four `/kits/` routes | *"Includes 30 days of membership. GBP 47/month after. Cancel anytime."* |
+| `01_strategy/2026-09-11-lp-kit-pages-carry-the-subscription-line.md` | the three kit `/lp/` pages | the same line |
+| **This entry, 2026-09-16** | **`/demo`** | the member screens keep the price they already render |
+
+**The test, which matters more than the list**, because a list goes stale the moment a surface is
+added and nobody amends this file again:
+
+> **A surface may not SELL the membership, ever. A surface MUST price it where it can take money for
+> a kit, and MAY price it where it demonstrably cannot take money at all.**
+
+That is the discriminator Keith already applied on 2026-09-11 without naming it, when the `/lp/` pages
+were brought in because *"they carry their own buy buttons and are the pages paid traffic hits cold,
+so the surprise risk is arguably highest there."* **The obligation follows the buy button.** Where a
+customer can spend, prominence at the point of sale is close to mandatory (the monitoring thesis:
+*"it must be prominent at the point of sale rather than in the T&Cs"*, which is the actual holding of
+the Numan ASA ruling A22-1153049, for BURYING a subscription rather than for having one). Where a
+customer cannot spend, a price is description rather than an offer.
+
+**Why `/demo` lands on the permitted side, recorded because the reasoning is the reusable part:**
+
+1. **It cannot take money.** Both "Manage membership" buttons are inert, there is no join path, and
+   membership can only be joined inside the 30 days after a result.
+2. **It hides nothing.** The moment `redesign/direction-f` merges, GBP 47 is public on seven other
+   routes. Gating the demo's price buys no protection and removes no surprise.
+3. **Hiding it would be the defect the rule exists to prevent, inverted.** A demonstration that
+   conceals the thing the customer gets charged for is the Numan pattern in miniature, and it would
+   contradict Keith's 2026-09-07 ruling that the demo *"should demonstrate everything that is
+   available that we're planning to do."*
+4. **It is a depiction, not an offer.** The member screens are a fictional man's day 90, under a
+   non-dismissible notice saying so.
+
+⚠ **ONE STRING ON THOSE SCREENS IS STILL WORTH A LOOK, and it is a wording question rather than a
+gate.** The plan screen reads *"On 13 September your card is charged GBP 47 and it carries on
+monthly. Cancel any time before then and nothing is taken."* That is second person, addressed to
+"you", and on a demonstration it is describing the fictional man. The notice covers it; it is the one
+line on those screens that could be read as an offer rather than a depiction.
+
+✅ **`/membership` IS RULED, SEPARATELY AND LATER THE SAME DAY (Keith, 2026-09-16): THE PUBLIC PAGE
+SHOULD EXIST, AND IT IS PUBLIC.** Copy-register row 32d asked the larger question this carve-out was
+careful not to answer, *"does a standalone public priced membership explainer exist at all"*. It has
+now been put and answered yes.
+
+🟢 **The ruling CONFIRMS the test rather than carving an exception to it**, which is the part worth
+keeping: `/membership` **has no join button and cannot have one**, because membership is joinable
+only inside the 30 days after a result, enforced server-side, so every CTA on it routes to `/kits`.
+It therefore *demonstrably cannot take money*, which is exactly the "MAY price it" limb above. The
+test predicted the answer before anyone gave it. **A rule stated as a test rather than a list of
+permitted pages is what made that possible, and it is the reason to keep writing them this way.**
+
+🔴 **THREE THINGS THIS RULING DOES NOT DO.**
+
+1. **It does not flip the flag.** Copy-register row 32b is a sequencing gate and it stands. The page
+   is behind `MEMBERSHIP_ENABLED`, `notFound()`s with the flag off, and the flag defaults false.
+   **Re-checked 2026-09-16: `trial_period_days` appears nowhere in the repo except inside the comment
+   on the membership page asserting its own absence**, and `createMembership` charges from checkout,
+   and the membership terms are still `DRAFT, not synced live`. A page reading *"GBP 47/month after"*
+   going live before the trial mechanic exists would be a mis-statement arriving **by merge rather
+   than by anyone deciding to ship it**. *May exist* and *may ship* are two rulings and only the first
+   has been given.
+2. **It does not answer the Phase 0 question**, copy-register row 32c, which is Ewa's and open:
+   whether the *"Ask the clinician"* benefit may be named on a public surface at all, given the live
+   member screen has only ever rendered that block empty.
+3. **It does not decide whether `/` or `/kits` link to it**, which was the other half of row 32a.
 
 ---
 

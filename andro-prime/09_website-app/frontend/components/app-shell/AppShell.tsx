@@ -21,6 +21,11 @@ import {
   adherenceSeries,
   loggedWithin,
 } from '@/lib/membership/checkin'
+/* 🔄 CA-046 / copy-register row 30a, Keith 2026-09-16. IMPORTED, NOT RETYPED,
+   and that is the whole fix. This file used to hardcode its own five-bullet
+   list, which is how a fourth benefit got onto a public page. The canonical
+   list is three items and owns its own rule. */
+import { MEMBERSHIP_INCLUDES } from '@/lib/membership/includes'
 import { CheckinRow } from '@/components/membership/CheckinRow'
 import { AdherenceChart } from '@/components/membership/AdherenceChart'
 import type { DemoDates, DemoJourneyId } from '@/lib/results/demo'
@@ -115,7 +120,35 @@ const GROUP_OF: Record<string, string> = (() => {
   return out
 })()
 
-const GROUP_ORDER = ['Hormone', 'Energy and recovery', 'Other']
+/*
+ * 🔄 CA-046 Q3 = B (Ewa, 2026-09-16): the GP referral may stay on the page, but
+ * it may not be the first thing a stranger meets. "Acceptable, but the demo
+ * should open on a different marker and let him find this one himself."
+ *
+ * ⚠ WHAT SHE PICTURED AND WHAT THE PAGE DOES ARE NOT QUITE THE SAME, and the
+ * packet's wording is why. It said the demo "opens on" the referral. `openMarker`
+ * starts null, so the demo actually opens on the results LIST, and testosterone
+ * was simply its FIRST ROW: the red badge is there on arrival, the approved
+ * recommendation only after a tap. Her ruling is implemented against what a
+ * visitor sees, which is the row order.
+ *
+ * So the energy group leads and the hormone group follows. First row is now
+ * vitamin D, which carries a verdict but not a referral; testosterone is one
+ * scroll away and is still the first row of its own group.
+ *
+ * 🔵 KEITH'S TO REVERSE, AND IT IS ONE LINE. This is the only place in this
+ * change where a product judgement was made rather than a ruling applied: a
+ * testosterone brand leading its demo panel with vitamin D is a real commercial
+ * cost, and the alternative reading of Q3 = B is to start the demo on the day-3
+ * waiting state instead (`DEFAULT_JOURNEY_ID` in `lib/results/demo.ts`), which
+ * shows no badge at all on arrival and leaves this order alone.
+ *
+ * 🟢 NO FIDELITY COST, which is the reason this was preferred: the real
+ * dashboard does not group markers at all, so there is no live order for the
+ * demo to diverge from. `components/app/` holds that surface; this file is
+ * `/demo` only.
+ */
+const GROUP_ORDER = ['Energy and recovery', 'Hormone', 'Other']
 
 /** The panel module's gloss for a marker, when it has one. */
 function subFor(markerName: string): string | null {
@@ -123,6 +156,45 @@ function subFor(markerName: string): string | null {
     (m) => m.name === markerName || m.name === `Total ${markerName}`
   )
   return entry?.measures ?? null
+}
+
+/*
+ * 🔄 CA-046 Q4 = B (Ewa, 2026-09-16). THE DEMO'S ONLY COPY OVERRIDE, AND IT IS
+ * SCOPED TO THIS SURFACE ON PURPOSE.
+ *
+ * Her approved `equivocal-testosterone` explanation opens "Your total
+ * testosterone sits in the grey zone just below the normal range." That sentence
+ * was signed for a report that did not draw the laboratory's own interval. This
+ * card does: it plots 10.5 INSIDE a bracket labelled 8.64 to 29.00, so the words
+ * and the picture argue with each other on the same screen. "The normal range"
+ * means OUR band; the reader sees the laboratory's.
+ *
+ * She was given three options and took **B, reword for this screen only**, and
+ * explicitly NOT C, which would have changed the live report and what existing
+ * customers see. So this map exists rather than an edit to `biomarker-copy.ts`,
+ * and it must stay a map: `components/app-shell/` renders `/demo` and nothing
+ * else, while the logged-in dashboard reads the approved string unchanged from
+ * `components/app/`.
+ *
+ * ⚠ ONLY THE FIRST SENTENCE IS REWRITTEN. Her second and third are carried
+ * verbatim, because nothing about the picture affects them. A future entry here
+ * needs the same test: does the SCREEN contradict the sentence, or do you simply
+ * prefer different words? Only the first is a reason to override signed copy.
+ *
+ * ⚠ NOT APPROVED YET. Q4 = B authorises a reword; it does not approve THIS
+ * reword. It is in the follow-up packet.
+ */
+const DEMO_EXPLANATION: Partial<Record<string, string>> = {
+  'equivocal-testosterone':
+    'Your total testosterone sits inside your laboratory’s range and below the level we act on, ' +
+    'which is why the bracket above shows it in range and this card does not. A reading here is ' +
+    'not a clear deficiency, but it is low enough to be worth confirming rather than dismissing. ' +
+    'Your free testosterone and SHBG results help put it in context, since they show how much of ' +
+    'your testosterone is actually available to your body.',
+}
+
+function demoExplanation(r: ClassifiedResult): string {
+  return DEMO_EXPLANATION[r.state] ?? r.explanation
 }
 
 function isReportOnly(r: ClassifiedResult): boolean {
@@ -626,14 +698,29 @@ function MarkerScreen({
           </p>
         ) : (
           <>
-            <p className="ap-body">{r.explanation}</p>
+            <p className="ap-body">{demoExplanation(r)}</p>
             {r.educationContext && (
               <div className="ap-sec">
                 <h4 className="ap-lbl">The evidence</h4>
                 <p>{r.educationContext}</p>
               </div>
             )}
-            <div className="ap-attrib">Andro Prime clinical logic · signed by Dr Ewa Lindo</div>
+            {/* 🔄 CA-046 Q5 = C (Ewa, 2026-09-16). The attribution line
+                "Andro Prime clinical logic · signed by Dr Ewa Lindo" used to sit
+                here. She asked for her name off the PUBLIC demo and kept inside
+                the customer report, so this is a removal on this surface only:
+                `components/app-shell/` renders `/demo` and nothing else, and the
+                logged-in dashboard is `components/app/`. Do not restore it here.
+                What replaces it says the same thing about the logic without
+                naming her, so the card is not left with no provenance at all.
+                ⚠ The replacement is NOT free wording. "GP-approved" and
+                "GP-built report" are both barred by `03_compliance/CONTEXT.md`
+                ("never describe outputs as a GP-built report"); the form below
+                is the one the 2026-05-26 re-sweep put in their place, carried
+                verbatim. It is still NEW ON THIS SURFACE and goes to Ewa. */}
+            <div className="ap-attrib">
+              Andro Prime recommendation logic, signed off by a GMC-registered GP
+            </div>
           </>
         )}
 
@@ -947,11 +1034,40 @@ function MonthOneNotice({ dates }: { dates: DemoDates }) {
   const amount = PRODUCT_MAP.membership.price.split('/')[0]
   const charge = formatDemoDateNoYear(dates.firstCharge)
 
+  /*
+   * 🔄 REWORDED TO THIRD PERSON 2026-09-16 (Keith), AND ONLY THE THREE SENTENCES
+   * THIS FILE WROTE ITSELF.
+   *
+   * 🔴 THE PROBLEM WAS A FINANCIAL CLAIM IN THE SECOND PERSON ON AN UNGATED PAGE.
+   * It read "You are a member until <date>" over "On <date> your card is charged
+   * GBP 47 and it carries on monthly". A stranger with no account and nothing
+   * bought could read that as a charge to HIM. The demonstration notice at the
+   * top of the stage covers the RESULTS being a sample and says nothing about a
+   * charge, so it did not reach this card. Raised by the 2026-09-16 pre-flight
+   * as the one string on these screens that could read as an offer rather than
+   * a depiction; Keith ruled the demo keeps its price ungated and this reworded.
+   *
+   * 🟢 "He" is not a new voice. The stage already establishes it: "Tap through it
+   * as he would", "the panel moves him between the three states", "He is inside
+   * his laboratory's range". This card now matches the frame the page already set.
+   *
+   * ⚠ THE COST, so it is a choice rather than an oversight: the other screens
+   * inside the phone stay in the second person ("Your results", "Your plan"),
+   * because that is what the real app says and the demo's whole argument is that
+   * it IS the real app. So the voice is mixed inside the phone, deliberately, and
+   * only on the card that makes a claim about money. One edit to revert.
+   *
+   * 🔴 THE BULLETS BELOW ARE NOT TOUCHED AND MUST NOT BE. The retest sentence and
+   * the includes list are approved customer-facing copy carried verbatim from
+   * `lib/membership/includes.ts`, whose header states that rewording any of it is
+   * a copy decision with its own pre-flight, not a refactor. They stay in the
+   * second person even though this paragraph no longer does.
+   */
   return (
     <div className="ap-notice">
-      <h3>You are a member until {charge}.</h3>
+      <h3>He is a member until {charge}.</h3>
       <p>
-        It came with your kit. You have one number to move and{' '}
+        It came with his kit. He has one number to move and{' '}
         {daysBetween(dates.firstCharge, dates.retestDue)} days to move it.
       </p>
       <div className="ap-price">
@@ -960,9 +1076,9 @@ function MonthOneNotice({ dates }: { dates: DemoDates }) {
       </div>
       <p>
         <b>
-          On {charge} your card is charged {amount} and it carries on monthly.
+          On {charge} his card is charged {amount} and it carries on monthly.
         </b>{' '}
-        Cancel any time before then and nothing is taken.
+        He can cancel any time before then and nothing is taken.
       </p>
       <ul className="ap-incl">
         <li>
@@ -973,23 +1089,43 @@ function MonthOneNotice({ dates }: { dates: DemoDates }) {
             is no balance to keep track of.
           </span>
         </li>
-        <li>
-          <i aria-hidden="true">+</i>
-          <span>Your plan, your streak and your daily data, kept running.</span>
-        </li>
-        <li>
-          <i aria-hidden="true">+</i>
-          <span>Every marker explained against both ranges, ours and your lab&rsquo;s.</span>
-        </li>
-        <li>
-          <i aria-hidden="true">+</i>
-          <span>Ask the clinician. Questions answered every month, published for all members.</span>
-        </li>
-        <li>
-          <i aria-hidden="true">+</i>
-          <span>Supplements at member price, only where we test the marker.</span>
-        </li>
+        {/* 🔄 REMOVED 2026-09-16 (Keith), copy-register row 30a: a FIFTH bullet,
+            "Supplements at member price, only where we test the marker."
+            Keith's reason: it goes nowhere, and the product range is not
+            finalised. It was also already forbidden: `lib/membership/includes.ts`
+            holds the canonical list as THREE items and states the rule, that
+            member pricing is for supplements which have no delivery path today
+            and a paywall must not list a benefit that cannot be delivered.
+            `/membership` obeyed it; this file had retyped its own list instead.
+
+            🔴 THE FIX IS THE IMPORT, NOT THE DELETION. Removing the string would
+            have left the next person free to type a fourth. Mapping the constant
+            means the canonical list is the only list, and a benefit cannot be
+            added here without being added where the rule lives.
+
+            ⚠ The retest bullet above stays hand-built on purpose: it is an
+            ENTITLEMENT rather than an inclusion, it carries a date, and
+            `includes.ts` deliberately keeps it out of this array for exactly
+            that reason. Its wording is still that file's `MEMBERSHIP_RETEST_TERMS`,
+            verbatim. */}
+        {MEMBERSHIP_INCLUDES.map((line) => (
+          <li key={line}>
+            <i aria-hidden="true">+</i>
+            <span>{line}</span>
+          </li>
+        ))}
       </ul>
+      {/* 🔄 CA-046 Q6 = A (Ewa, 2026-09-16). Copy-register row 32e: row 32c added
+          this sentence to `/membership` and nothing carried it across, so `/demo`
+          rendered the same benefit twice to the same cold visitor with no
+          qualifier at all. Carried VERBATIM from the approved `/membership`
+          wording; not a new sentence, a placement change. `site-funnel-model.md`
+          §2 is the rule behind it: an acquisition surface may not imply clinical
+          services are live. */}
+      <p className="ap-notice__foot">
+        Clinician answers are general and published to every member; they are not individual medical
+        advice and they do not replace your GP.
+      </p>
       <button type="button" className="ap-btn" data-variant="ghost">
         Manage membership
       </button>
@@ -1226,7 +1362,10 @@ function YouScreen({
           <button type="button" className="ap-rowlink">
             <span className="ap-rowlink__t">
               <span className="ap-rowlink__n">Ask the clinician</span>
-              <span className="ap-rowlink__d">Answered generally, published for all members</span>
+              <span className="ap-rowlink__d">
+                Answered generally, published for all members. Not individual medical advice, and no
+                replacement for your GP.
+              </span>
             </span>
             {CHEV}
           </button>
