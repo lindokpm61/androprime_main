@@ -425,9 +425,48 @@ function resolveCtas(
     return { ...base, primaryCta: CTAS.retestReminder }
   }
 
-  // SHBG — no direct product CTA per spec
-  if (state === 'shbg-low' || state === 'shbg-normal' || state === 'shbg-high') {
+  // SHBG — no direct product CTA per spec.
+  //
+  // 🔴 SPLIT 2026-09-16, AND THE OLD SHAPE IS WHY IT WENT WRONG. One branch used
+  // to cover all three SHBG states and hand every one of them
+  // `retestReminder`, "Retest in 6-12 months" pointing at /kits. That is
+  // correct for `shbg-normal` and wrong for the other two, and **a line that is
+  // right for one of its three branches reads as right**, which is how it
+  // survived two clinical rulings that both contradict it:
+  //
+  //   1. Ewa moved `shbg-low` and `shbg-high` off `maintenance` onto a 3-month
+  //      `recheck` on 2026-09-15 (CA-047 round 2, Q3 = B and Q4 = B). The card
+  //      was still offering 6 to 12 months. They are IN-RANGE states sitting
+  //      under an all-clear bucket heading, which is exactly why nobody looked.
+  //   2. Ewa ruled on 2026-09-16 (CA-048 follow-up packet, Q3 = B) that the
+  //      flagged ten say **"your GP decides when to repeat this, not us"**.
+  //      A card that sells a retest cannot also say that.
+  //
+  // ⚠ NEITHER RULING COULD HAVE CORRECTED THIS ON ITS OWN. `RETEST_CADENCE`
+  // knows both states are 3-month rechecks, and it is inert — nothing reads it
+  // — so the map could not contradict the card. The cadence and the card are
+  // two layers holding the same fact, and only one of them was swept.
+  //
+  // `shbg-normal` keeps the offer: it really is a 6-to-12-month `maintenance`
+  // state, and removing its CTA would assert a rule stricter than the one
+  // approved.
+  if (state === 'shbg-normal') {
     return { ...base, primaryCta: CTAS.retestReminder }
+  }
+
+  // 🔴 NO RETEST OFFER. Same shape as `ft-low` and `suboptimal-ferritin` below,
+  // which are in the same flagged cohort and already return no CTA.
+  //
+  // ⚠ THE INTERVAL IS NOT REPLACED HERE, AND THAT IS NOT AN OVERSIGHT. The
+  // sentence these cards are owed — the GP decides the timing — is new
+  // customer-facing copy for all ten flagged states, and it owes its own
+  // compliance pre-flight. Removing a wrong offer and adding a new sentence are
+  // two changes; this is the first. Until the second lands these cards say
+  // nothing about re-measuring, which is the 3f gap, and 3f is tracked.
+  // DO NOT "restore" the retest link to close that gap: it is the thing the
+  // ruling removed.
+  if (state === 'shbg-low' || state === 'shbg-high') {
+    return { ...base, primaryCta: null }
   }
 
   // Free T — CTA logic follows Total T (FT-LOW with T-LOW handled by T-LOW card; no duplicate)

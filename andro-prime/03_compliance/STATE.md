@@ -2,6 +2,37 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
+## 🔴 2026-09-16 — CA-049: FIVE MORE ANSWERS IN 90 MINUTES, AND ONE OF THEM PUT TWO LIVE CARDS IN BREACH
+
+**`1: A 2: A 3: B 4: B 5: A`**, Ewa, 02:03 UTC, thread `1a0a7e88d3e90ab6`. 🔴 **Keith's business
+sign-off owed.** Record: `content-approval/approval-record-symptom-overlay-followups-2026-09-16.md`.
+ClickUp `869f2k7he`.
+
+✅ **CA-044 §2 ITEM A IS CLOSED, WITH NO COPY CHANGE.** Q1 and Q2 approved both card wordings
+exactly as written, so **40 days of live unapproved copy resolves to "the words were right, they had
+simply never been signed."** Both were quoted to her verbatim, 6 of 6 fields diffed against source,
+so she ruled on the exact text that is on the site. ⚠ **Next: remove the `NOT APPROVED` markers at
+`biomarker-copy.ts:81` and `:170`**, which is a comment change, not a copy change.
+
+🔴 **Q3 = B GAVE THE FLAGGED TEN THE SAME ANSWER AS THE GP-ROUTED TEN** — *"your GP decides when to
+repeat this, not us"* — and that immediately put two live cards in breach. `shbg-low` and
+`shbg-high` were rendering **"Retest in 6-12 months"** pointing at `/kits` on `main`, which **two**
+of her rulings contradicted at once: the interval (she moved both to 3 months on 2026-09-15) and the
+offer itself. ⚠ **Neither ruling could have caught it, because `RETEST_CADENCE` holds the correct
+rule and is inert**, and it survived because **one branch covered three SHBG states and was correct
+for `shbg-normal`**. ✅ **Corrected the same day, guarded from both directions, guard watched
+failing.** 🔴 **Not on production**: the correction is on `redesign/direction-f` and Coolify builds
+`main`.
+
+✅ **Q4 = B** lets a member pull his retest forward to 3 months on a flagged result (blast radius:
+it dispatches a kit sooner; unbuilt). ✅ **Q5 = A** keeps the alert container on the 999 block,
+closing CA-048 build condition 2.
+
+🔴 **Still owed:** Keith's sign-off; **the flagged-ten sentence**, whose substance is ruled but whose
+wording is new copy for ten cards and owes its own pre-flight; and the two unbuilt items.
+
+---
+
 ## ✅ 2026-09-16 — CA-048 APPROVED, BOTH SIGNERS, 22 MINUTES. IT CLOSES THE 999 ESCALATION CA-047'S PRE-FLIGHT CAUGHT, AND ONE ANSWER WENT AGAINST THE REVIEW
 
 **CA-048, the symptom overlay screen.** The screen shown to a man whose results are in range and who
@@ -305,8 +336,8 @@ CA-026 D2 sentence that was ship-gated for this reason. Waits on **P1**.
 **Verified against ClickUp, not inferred from the repo:** no CA covers a member
 retest notice, ~~the highest in use is CA-046~~ ~~**(CORRECTED 2026-09-15: CA-047 was
 opened for the retest cadence table; the highest in use is now CA-047)**~~
-**(CORRECTED AGAIN 2026-09-16: CA-048 was opened for the symptom overlay screen, so
-the highest in use is now CA-048. Checked repo-wide with an absolute path before the
+**(CORRECTED AGAIN 2026-09-16: CA-048 was opened for the symptom overlay screen and
+CA-049 for its follow-up packet, so the highest in use is now CA-049. Checked repo-wide with an absolute path before the
 number was stamped, because a shell search that inherits the wrong directory returns
 empty and an empty result is exactly what an ID-reservation check is looking for.)**
 Nothing else is reserved. CA-022

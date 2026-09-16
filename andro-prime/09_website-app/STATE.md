@@ -4,6 +4,52 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## 🔴 2026-09-16 — TWO LIVE CARDS WERE SELLING A RETEST TWO OF EWA'S RULINGS FORBID. Corrected
+
+**Changed:** `lib/results/classifier.ts` (the SHBG CTA branch, split three ways into two),
+`scripts/test-classifier-regressions.ts` (a guard, asserted from both directions).
+**Authority:** CA-047 round 2 Q3 = B and Q4 = B (2026-09-15) plus CA-049 Q3 = B (2026-09-16).
+**Full reasoning:** `03_compliance/content-approval/approval-record-symptom-overlay-followups-2026-09-16.md` §3.
+
+**What was live on `main`:** `shbg-low` and `shbg-high` rendered **"Retest in 6-12 months"**
+pointing at `/kits`. Verified on `main` before acting, at `classifier.ts:428-430` with the label at
+`:65`, **not** inferred from the working tree.
+
+🔴 **Two of her rulings contradicted it at once.** The interval was wrong: she moved both states off
+`maintenance` onto a **3-month `recheck`** on 2026-09-15. And the offer should not have been there
+at all: on 2026-09-16 she ruled the flagged ten say **"your GP decides when to repeat this, not
+us"**, and a card that sells a retest cannot also say that.
+
+⚠ **WHY IT SURVIVED BOTH, AND THE SHAPE IS THE LESSON.** One branch covered three SHBG states and
+handed all of them the same CTA. **It is correct for `shbg-normal`**, which really is a
+6-to-12-month `maintenance` state. **A line that is right for one of its three branches reads as
+right.** And the two it was wrong for are **in-range** states sitting under the sign-off table's
+all-clear bucket heading, so no amount of re-reading bucket B would have found them.
+
+🔴 **NEITHER RULING COULD HAVE CORRECTED IT.** `RETEST_CADENCE` holds the right 3-month rule for
+both states and **is inert**, so the map could not contradict the card. Two layers held the same
+fact and only one was ever swept. This is the decision-sweep pattern, not a coding slip.
+
+✅ **The fix is idiomatic:** `shbg-low` and `shbg-high` now return `primaryCta: null`, the same shape
+`ft-low` and `suboptimal-ferritin` already use, and both of those are in the same flagged cohort.
+`shbg-normal` keeps its offer, because removing it would assert a rule **stricter** than the one
+approved.
+
+✅ **Guarded from both directions and the guard was watched failing.** Restoring the old three-state
+branch fails it with both states named; the file was then restored and hash-compared. Full suite
+green, `npm test` exit 0, `tsc` clean.
+
+⚠ **The interval is NOT replaced on those cards, deliberately.** The sentence the flagged ten are
+owed is new copy for ten states and owes its own pre-flight. Removing a wrong offer and adding a new
+sentence are two changes; this is the first. **Do not "restore" the retest link to close the gap:
+it is the thing the ruling removed.**
+
+🔴 **NOT ON PRODUCTION.** This is on `redesign/direction-f`; Coolify builds `main`. **The two cards
+are still wrong for real customers until the branch merges**, which is gated on CA-046 and the
+copy-register reconciliation.
+
+---
+
 ## ✅ 2026-09-16 — THE RETEST CADENCE MAP IS IN THE CODEBASE, AND NOTHING IMPORTS IT
 
 **Changed files:** `lib/results/retestCadence.ts` (the `RETEST_CADENCE` map, the rule values, the

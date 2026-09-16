@@ -467,6 +467,78 @@ for (const c of boundaryCases) {
 }
 console.log('[GUARD] testosterone and vitamin D upper bands route to GP at the agreed cut-points')
 
+// ───────────────────────────────────────────────────────────────────────────
+// 🔴 THE SHBG SPLIT. Two clinical rulings, one `if`, and it was RIGHT FOR ONE
+// OF ITS THREE STATES, which is why it survived both of them.
+//
+// Until 2026-09-16 a single branch handed `shbg-low`, `shbg-normal` and
+// `shbg-high` the same `retest-reminder` CTA, "Retest in 6-12 months" pointing
+// at /kits. Correct for `shbg-normal`. Wrong for the other two, twice over:
+//
+//   1. CA-047 round 2, Q3 = B and Q4 = B (Ewa, 2026-09-15) moved both off
+//      `maintenance` onto a 3-month `recheck`. The card still said 6 to 12.
+//   2. CA-048 follow-up, Q3 = B (Ewa, 2026-09-16): the flagged ten say the GP
+//      decides when to repeat this, not us. A card selling a retest cannot.
+//
+// ⚠ NEITHER RULING COULD HAVE CAUGHT IT. `RETEST_CADENCE` holds the correct
+// 3-month rule for both states and is inert, so the map could not contradict
+// the card. Two layers held the same fact and only one was swept.
+//
+// ⚠ AND `shbg-low` / `shbg-high` ARE IN-RANGE STATES sitting under the sign-off
+// table's all-clear bucket heading, so no amount of re-reading bucket B would
+// have found them. This is the same trap the rule-kind projection exists for.
+//
+// ASSERTED FROM BOTH DIRECTIONS, deliberately. The permissive half matters as
+// much as the restrictive one: stripping `shbg-normal`'s offer too would assert
+// a compliance rule STRICTER than the one approved, which is the error
+// `mayCarryPurchaseLink` records itself making in its first draft.
+// ───────────────────────────────────────────────────────────────────────────
+const shbgCases: Array<{
+  value: number
+  expectState: ResultState
+  expectCta: string | null
+  why: string
+}> = [
+  { value: 10, expectState: 'shbg-low', expectCta: null,
+    why: '3-month recheck, and the GP decides the timing' },
+  { value: 40, expectState: 'shbg-normal', expectCta: 'retest-reminder',
+    why: 'genuinely 6 to 12 months; its offer must SURVIVE' },
+  { value: 90, expectState: 'shbg-high', expectCta: null,
+    why: '3-month recheck, and the GP decides the timing' },
+]
+
+for (const c of shbgCases) {
+  const [card] = classify({
+    kitType: 'testosterone',
+    biomarkers: [{
+      markerName: 'SHBG',
+      value: c.value,
+      unit: 'nmol/L',
+      referenceLow: 18,
+      referenceHigh: 55,
+    }],
+    symptomAnswers: [],
+    qualifierResponses: [],
+    userAge: 42,
+  })
+  if (card.state !== c.expectState) {
+    console.error(`[FAIL] SHBG ${c.value} — state is "${card.state}", expected "${c.expectState}"`)
+    failures += 1
+  } else if ((card.primaryCta?.type ?? null) !== c.expectCta) {
+    console.error(
+      `[FAIL] SHBG ${c.value} ("${c.expectState}") — CTA is ` +
+        `"${card.primaryCta?.type ?? 'none'}", expected "${c.expectCta ?? 'none'}" (${c.why})`,
+    )
+    failures += 1
+  } else {
+    passes += 1
+  }
+}
+console.log(
+  '[GUARD] the two SHBG states Ewa moved to a 3-month recheck offer no retest to buy, ' +
+    'and shbg-normal still does',
+)
+
 // A result above the ceiling must never report all-clear to Customer.io.
 for (const t of [{ v: 24, clear: true }, { v: 35, clear: false }]) {
   const traits = buildCioTraits(

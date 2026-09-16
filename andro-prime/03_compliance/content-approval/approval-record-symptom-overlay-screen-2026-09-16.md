@@ -114,9 +114,13 @@ it the whole retest-cadence checklist.** Items 1, 2, 2b and 3 closed 2026-09-15;
 
 🔴 **None of these is a sign-off question, and approval does not discharge any of them.**
 
-1. **The NHS citation ships as a live link** (settled by Q1 = A) (settled by Q1 = A). ⚠ **The `SystemAlert`
-   container is NOT settled** and was not put to her; on `cholesterol-test` the block sits inside
-   one titled *"When to see your GP, not us"*, and ordering alone does not reproduce that weight.
+1. ✅ **The NHS citation ships as a live link.** Settled by Q1 = A: the paragraph carries over
+   *"exactly as it appears on the articles"*, and on the article it is a link. Build work.
+2. ✅ **The 999 block keeps its alert container.** Settled by **CA-049 Q5 = A, 2026-09-16**: the
+   same presentation as on the article, where it sits inside a `SystemAlert` titled *"When to see your
+   GP, not us"*. ⚠ **This was the one condition needing a clinical read rather than a build
+   decision**, because ordering alone does not reproduce the weight of an alert box on a safety
+   escalation. It is now ruled and still unbuilt.
 3. **Sweep every surface this lands on for a second, machine-read copy.** The `cholesterol-test`
    frontmatter FAQ at `:56-66` is live proof this is a real trap, and it is also where the
    "Otherwise," precedent lives.
