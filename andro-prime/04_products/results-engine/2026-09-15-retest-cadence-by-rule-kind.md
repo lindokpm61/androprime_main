@@ -1,6 +1,9 @@
 # RETEST_CADENCE: the signed map, keyed by rule kind
 
 **Status:** ✅ **Every cell below is clinically signed.** CA-047, Ewa, 2026-09-15, in two rounds.
+✅ **AND BUILT, 2026-09-16** — `RETEST_CADENCE` in `lib/results/retestCadence.ts`, checklist items 4,
+5 and 6 closed, 117 assertions in `npm test`. 🔴 **Nothing reads it yet**, so no date has moved for
+any customer. See §6.
 **Owner workspace:** `04_products/results-engine`. **Business sign-off:** Keith, 2026-09-15.
 **This document decides nothing.** It is the same rulings as `2026-07-17-retest-cadence-table.md`,
 re-projected into the shape the code actually stores. Where the two disagree on presentation, this
@@ -266,11 +269,81 @@ Now `resultMayCarryRetestOffer()`, enforced in `classify()` and guarded from bot
 | 2 | ~~Add **T > 29** and **vitamin D > 250** rows to the sign-off table~~ ✅ **DONE 2026-09-15.** Both rows added to bucket A; the table is now 28 rows. Signed under round 1 Q3, verified against the sent email, no new ask | ~~🔴 Yes~~ **Unblocked**, together with item 2b |
 | 2b | ~~Decide the `fai-reported` cell~~ ✅ **DONE 2026-09-15 (Keith): the sixth kind, `none`.** Found by diffing this map against the `ResultState` union — it was the one state in **neither** this map nor the sign-off table, and never had been. Rowed in both, and `retestCadence.ts` gained `{ kind: 'none' }`, mirroring the shape `retestGuidance.ts` already chose for this same marker. ⚠ **Derived from Ewa ruling 8, not signed as cadence** — safe only because the kind records the ABSENCE of a recommendation; **giving FAI a retest date would be a new claim and needs Ewa** | ~~🔴 Yes~~ **Unblocked.** 30 states, 30 rows, asserted on every build by `verify-cadence-coverage.js` |
 | 3 | ~~Re-home the **anti-upsell guard** after Q4 = C~~ ✅ **DONE 2026-09-15 (Keith).** It now lives in `resultMayCarryRetestOffer()`, enforced in `classify()`: **when any marker on a result is GP-routed, the result offers no retest to buy.** CA-014 read at the RESULT level, which is the level its own wording uses. ⚠ **It suppressed 16 live links across 6 fixtures** — the per-card guard had passed throughout, because a per-item check cannot see a per-collection rule. ✅ The retest **interval** survives (Ewa-signed card copy) and ✅ complement cross-sells survive (untested panels). Recorded in `03_compliance/CONTEXT.md` | ~~🔴 Yes~~ **Unblocked.** The reduction can be built |
-| 4 | Store every `recheck` as `{ days: 90 }`, never a month count | Yes |
-| 5 | Assert the **dual rule** on the three sub-12 states (`clinician-led` + `confirm`) in a fixture | Yes |
-| 6 | Fixture per signed cell. **The map no longer ships inert**, so building it moves real dates | Yes |
-| 7 | Pre-flight the two copy items **as one screen**, with the 999 block above them | Only for the copy |
+| 4 | ~~Store every `recheck` as `{ days: 90 }`, never a month count~~ ✅ **DONE 2026-09-16.** `RECHECK_DAYS = 90`, one named integer, asserted to be an integer and asserted to be the value every `recheck` rule carries | ~~Yes~~ **Closed** |
+| 5 | ~~Assert the **dual rule** on the three sub-12 states (`clinician-led` + `confirm`) in a fixture~~ ✅ **DONE 2026-09-16.** The three cells carry both rules; the suite asserts that exactly three cells are dual, that they are those three, that each reduces to the confirmatory recheck, and that the reduction does not depend on which rule the cell lists first | ~~Yes~~ **Closed** |
+| 6 | ~~Fixture per signed cell. **The map no longer ships inert**, so building it moves real dates~~ ✅ **DONE 2026-09-16.** `scripts/test-retest-cadence-map.ts`, 117 assertions, in `npm test` | ~~Yes~~ **Closed** |
+| 7 | ~~Pre-flight the two copy items **as one screen**, with the 999 block above them~~ ✅ **DONE 2026-09-16. Pre-flighted, and APPROVED as CA-048, both signers in.** It was **three** screens, not two: Kit 3 had no wording and now has one. ⚠ **Approval fills the copy and authorises no build:** four conditions ride with the screen, of which the render obligation is undischarged and the alert container is undecided | ~~Only for the copy~~ **Closed** |
+
+✅ **EVERY ROW IS NOW CLOSED (2026-09-16).** Items 1, 2, 2b and 3 on 2026-09-15; items 4, 5 and 6
+with the map and its fixture on 2026-09-16; item 7 with CA-048. ⚠ **A closed checklist is not a
+shipped feature:** the map is built and **read by nothing**, and the screen is approved and **not
+built**. Both of those are separate pieces of work with their own verification, and neither is
+tracked by this table any more.
 
 ⚠ **Item 6 retires a safety property that used to be true.** The design doc argued the map could be
 built with no observable effect, because only one cell was signed. Every cell is signed now. **The
 build needs its own verification; it can no longer rely on being inert.**
+
+---
+
+## 6. Build record — 2026-09-16
+
+✅ **THE MAP IS BUILT. Items 4, 5 and 6 are closed, and nothing reads it yet.**
+`RETEST_CADENCE` in `09_website-app/frontend/lib/results/retestCadence.ts`, beside the six kinds it
+was waiting on. 30 states, 30 cells, 33 rules (the three duals are the difference).
+
+**The shape changed by one word, and the reason is item 5.** The design doc proposed
+`Record<ResultState, RetestRule>`; what is built is `Record<ResultState, RetestCell>`, where a cell
+is a **non-empty tuple** of rules. A single-rule cell cannot hold the three sub-12 testosterone
+states, which carry `clinician-led` **and** `confirm` at once and always have — so the alternative
+was a second map of confirm overlays, which is the duplicated-fact shape this repo keeps paying
+for. ⚠ **The tuple is non-empty by construction on purpose:** an empty cell reads as "nothing
+decided" and behaves as "nothing recommended", and "we recommend nothing" is a real clinical
+position (`none`) that has to be **stated**. `Record` already made a missing state a compile error;
+the tuple makes an empty one a compile error too.
+
+**The reduction is built with it**, as signed: `clinician-led` contributes nothing and suppresses
+nothing, `confirm` always wins, otherwise shortest-wins, and no contributor means no date.
+⚠ **`confirm`-always-wins is written as its own branch although every `confirm` is currently zero
+days**, so "wins" and "shortest" agree today and the branch looks redundant. It is asserted against
+a **synthetic 180-day `confirm` that no fixture produces**, because the agreement is a coincidence
+of the current value: move the confirmatory recheck off zero and a pure shortest-wins rule would
+silently stop scheduling the confirmatory sample.
+
+🔴 **"No date" and "no answer" are kept apart in the return type.** A `seasonal` rule with a null
+anchor has no answer at all (`collectedAt` is nullable in the schema), and the reduction reports it
+as `unresolved` rather than collapsing it into "no retest recommended" — the same defect the
+seasonal kind exists to close, one layer up.
+
+**The fixture is an independent restatement, not a read-back.** Every expected rule is a literal
+(`{ kind: 'recheck', days: 90 }`), never the constant the code uses, so changing `RECHECK_DAYS` to
+84 fails the suite instead of quietly agreeing with itself. ⚠ **That property was verified by
+breaking the map four ways** — shortening the interval past the 90-day commercial floor, moving
+`shbg-low` into the maintenance bucket, deleting the `confirm` from a dual cell, and collapsing
+`fai-reported` into `clinician-led` — and confirming the suite failed each time (16, 4, 9 and 4
+assertions respectively) before restoring the file and checking the hash matched.
+
+**Two cross-checks the suite adds that neither document asked for:**
+
+- **The prepaid-or-included rule, expressed over the map instead of over a list of markers.** Swept
+  across every 2026 anchor date: **no cell contributes a sub-90-day interval** except `confirm`,
+  which is prepaid inside the Confirmation bundle by construction. That is
+  `2026-09-07-fast-recheck-must-be-prepaid-or-included.md` §1 as an assertion rather than a promise.
+- **`clinician-led` and the "See Your GP" badge are asserted to be the same set, in both
+  directions.** They are two independently maintained maps encoding one clinical fact, and
+  `resultMayCarryRetestOffer()` derives from the badge — so a disagreement would route a man to his
+  doctor on the card while quietly scheduling him a retest, or the reverse.
+
+⚠ **The confirmatory `0` is stored twice** — here and as `CONFIRMATION_INTERVAL_DAYS` in
+`lib/bundles/config.ts`, which the bundle dispatch path reads. It is **not** imported, because
+`config.ts` reaches `classifier.ts` and `classifier.ts` is where this map gets wired in next; the
+import would build the cycle in advance. The duplication is held shut by an assertion instead, so
+the two diverging is a failing build rather than a silent disagreement.
+
+🔴 **WHAT IS NOT DONE: THE WIRING.** None of the eight mechanisms in `retest-mechanism-map.md`
+reads this yet, and nothing imports the map but its test. **No date moves for any customer as a
+result of this change.** That is deliberate — this change is reviewable line by line against a
+clinical document, the next one changes what lands in a man's letterbox — but it means the map is
+**correct and inert**, which is exactly the state item 6's warning says cannot be relied on twice.
+The wiring is the next piece of work and it needs its own verification against the eight
+mechanisms, not this one.

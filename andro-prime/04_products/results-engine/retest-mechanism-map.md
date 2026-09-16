@@ -610,6 +610,16 @@ is already exactly that. **`2026-09-06-result-driven-retest-cadence.md` proposes
 one exhaustive `Record<ResultState, RetestRule>` that every mechanism in the table above reads from,
 so the cadence becomes a property of the result rather than of whichever mechanism fired.
 
+> ✅ **THE LOOKUP NOW EXISTS (2026-09-16), AND NO MECHANISM IN THE TABLE ABOVE READS IT.**
+> `RETEST_CADENCE` in `lib/results/retestCadence.ts`: 30 signed cells, the reduction, and a fixture
+> per cell (`scripts/test-retest-cadence-map.ts`, 117 assertions). Built as
+> `Record<ResultState, RetestCell>` rather than `…, RetestRule>` — a cell is a non-empty tuple,
+> because the three sub-12 testosterone states carry `clinician-led` and `confirm` at once.
+> 🔴 **Every row of the table above still picks its interval exactly the way it did before**, so
+> the three defects this section answers are unchanged and every date in the table is still live.
+> **The wiring is the next piece of work**, and it is the one that moves real dates. Build record:
+> `2026-09-15-retest-cadence-by-rule-kind.md` §6.
+
 It closes owed items 1 and 2 in section 6 as a side effect (a result-driven cadence can only be
 anchored to the result, and the membership stops needing a cadence rule of its own). It does NOT
 close item 3, the one-shot.

@@ -2,6 +2,56 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
+## ✅ 2026-09-16 — CA-048 APPROVED, BOTH SIGNERS, 22 MINUTES. IT CLOSES THE 999 ESCALATION CA-047'S PRE-FLIGHT CAUGHT, AND ONE ANSWER WENT AGAINST THE REVIEW
+
+**CA-048, the symptom overlay screen.** The screen shown to a man whose results are in range and who
+has recorded that he still does not feel well: a 999 escalation, then the straight-to-GP red-flag
+list, then a suggestion to test a panel we have not measured. **Assembled from copy already signed
+under CA-047 and the 2026-08-18 rulings.** Record:
+`content-approval/approval-record-symptom-overlay-screen-2026-09-16.md`. ClickUp `869f2jyce`.
+
+**Ewa, clinical, 5 of 5, 00:04 UTC, 22 minutes after sending:** `1: A 2: B 3: A 4: A 5: A`.
+**Keith, business, same day, direct instruction: *"CA-48 approved"*.**
+
+✅ **THIS CLOSES THE ITEM CA-047'S PRE-FLIGHT LEFT OPEN.** That pre-flight ran and did not clear,
+because Ewa's ratified red-flag line routed **all** chest pain to a GP, contradicting her own
+standing 2026-08-18 ruling. The remedy was additive and carried her own signed wording, and it is
+now signed onto this surface by Q1 = A.
+
+🔴 **Q2 = B WENT AGAINST THE REVIEW, AND ANYONE EDITING THAT SCREEN MUST READ THIS FIRST.** An
+independent compliance pass called the **"Otherwise,"** option *"the single most useful thing to put
+in front of her"*: her red-flag list opens with an unqualified **"chest pain"** while the paragraph
+above routes *sudden or severe* chest pain to 999, so a man matches **both lists**, and the
+`cholesterol-test` FAQ already resolves exactly that after the word "Otherwise". **The question
+named the conflict, quoted the precedent, and she chose the drafted line anyway.** ⚠ **A considered
+ruling, not an oversight. Inserting an "Otherwise," later reverses a clinical ruling rather than
+tidying a sentence**, and the losing argument is kept in full in the record's §3 so the case can be
+seen to have been made and lost.
+
+✅ **AND IT IS THE CASE FOR ASKING RATHER THAN ADOPTING.** Both options went to her because the
+reviewer's argument was strong but was not the reviewer's to make. Adopting it would have put an
+unsigned change into a screen she was about to sign, and it would have looked like diligence.
+
+✅ **Q3 = A CLOSED THE EXPENSIVE BRANCH.** She kept reader self-triage over asking the red-flag
+symptoms directly, so **no new special-category health data is collected and the DPIA is
+untouched**. The alternative would have meant asking every customer about blood in stool, lumps and
+fainting.
+
+🔴 **APPROVAL FILLS THE COPY AND AUTHORISES NO BUILD.** Four conditions ride with the screen, none of
+them a sign-off question: the NHS citation as a live link (settled by Q1 = A); **the `SystemAlert`
+container, which is UNDECIDED and was never put to her**; a sweep of every surface for a second,
+**machine-read** copy (the `cholesterol-test` frontmatter FAQ is the live proof of that trap); and
+🔴 **the render obligation, which is UNDISCHARGED** — nothing has been rendered, and contrast,
+truncation and whether the 999 block clears the fold on a phone all leave the string correct in the
+DOM.
+
+**The pre-flight evidence stands against the exact approved text**, because no sentence changed
+between the pre-flight and the sign-off: deterministic `0 HARD / 0 REVIEW` on payload and whole
+file, verbatim 4 of 4 against live sources, and **two judgement passes, one of them independent**
+because the session that assembled the copy is barred from clearing it.
+
+---
+
 ## ✅ 2026-09-15 — CA-045 AND CA-047 BOTH APPROVED. ONE OF CA-047'S FIVE ANSWERS INVERTED A DESIGN RULE, AND ITS PRE-FLIGHT CAUGHT A MISSING 999 ESCALATION
 
 Both packets were sent within a minute of each other and both were answered inside 35 minutes, on
@@ -253,9 +303,13 @@ while `terms-and-conditions.md` carries no membership section. Same shape as the
 CA-026 D2 sentence that was ship-gated for this reason. Waits on **P1**.
 
 **Verified against ClickUp, not inferred from the repo:** no CA covers a member
-retest notice, ~~the highest in use is CA-046~~ **(CORRECTED 2026-09-15: CA-047 was
-opened for the retest cadence table; the highest in use is now CA-047)**, nothing
-else is reserved. CA-022
+retest notice, ~~the highest in use is CA-046~~ ~~**(CORRECTED 2026-09-15: CA-047 was
+opened for the retest cadence table; the highest in use is now CA-047)**~~
+**(CORRECTED AGAIN 2026-09-16: CA-048 was opened for the symptom overlay screen, so
+the highest in use is now CA-048. Checked repo-wide with an absolute path before the
+number was stamped, because a shell search that inherits the wrong directory returns
+empty and an empty result is exactly what an ID-reservation check is looking for.)**
+Nothing else is reserved. CA-022
 (`869e9fr53`) is `approved` and is the all-clear kit-buyer buy prompt, a different
 asset for a different audience.
 

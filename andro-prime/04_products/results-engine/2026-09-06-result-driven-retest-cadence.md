@@ -1,17 +1,29 @@
 # Result-driven retest cadence: the result picks the interval, not the mechanism
 
-**Status:** 🟢 **THE CLINICAL INPUTS LANDED 2026-09-15, AND SO DID EVERY DESIGN BLOCKER BEHIND
-THEM. The proposal itself is still unbuilt, and is now unblocked rather than waiting on anyone.** Ewa answered all five questions of the cadence packet (`1: A 2: A 3: A 4: C 5: A`,
+**Status:** 🟢 **BUILT, AND NOT YET WIRED (2026-09-16).** The lookup this document proposes now
+exists — `RETEST_CADENCE`, 30 cells, with the reduction and a fixture per signed cell; checklist
+items 4, 5 and 6 are closed. 🔴 **No mechanism reads it, so no customer's date has moved.** What
+remains is the wiring, and it is a separate piece of work with its own verification. Earlier:
+**THE CLINICAL INPUTS LANDED 2026-09-15, AND SO DID EVERY DESIGN BLOCKER BEHIND
+THEM.** Ewa answered all five questions of the cadence packet (`1: A 2: A 3: A 4: C 5: A`,
 direct written reply 20:18 UTC, compliance record **CA-047**). **Section 4's reduction rule was
 REJECTED and is rewritten below.** A second packet the same evening (`1: A 2: A 3: B 4: B 5: A 6: A
 7: A 8: A`, 21:33 UTC) closed the rest, so **every row in the 2026-07-17 table is now ruled** and
 the map can be built with real values instead of arriving inert.
 
-⚠ **"No code has changed" stopped being true on 2026-09-15.** No flag has moved and the map is
-still unwritten, but three files shipped: `lib/results/retestCadence.ts` (the six rule kinds and the
-seasonal resolver, imported by nothing but its test), and 🔴 **`classifier.ts` +
+⚠ **"No code has changed" stopped being true on 2026-09-15, and "the map is unwritten" stopped
+being true on 2026-09-16.** No flag has moved. Shipped so far: `lib/results/retestCadence.ts` (the
+six rule kinds, the seasonal resolver, **and now the map itself plus the reduction** — imported by
+nothing but its test), `scripts/test-retest-cadence-map.ts`, and 🔴 **`classifier.ts` +
 `retestGuidance.ts`, which DID change live behaviour** — result-level CA-014 suppressed 16 retest
 purchase links across 6 fixtures. See §4.
+
+⚠ **The built shape differs from §2 below by one word, and §2 is left as written.** It is
+`Record<ResultState, RetestCell>`, a cell being a non-empty tuple of rules, because a single-rule
+cell cannot hold the three sub-12 testosterone states that carry `clinician-led` and `confirm` at
+once (§3, "the one genuine exception"). The argument in §2 for an exhaustive `Record` is unchanged
+and is what the build used; only the value type moved.
+**Build record: `2026-09-15-retest-cadence-by-rule-kind.md` §6.**
 
 ✅ **FULLY RULED WAS NOT BUILDABLE, AND NOW IT IS.** Two of round 2's answers changed the map's
 SHAPE: `shbg-low`
@@ -33,8 +45,10 @@ sign-off record; its bucket headings are presentational and **no longer match th
 `2026-07-17-retest-cadence-table.md` (the clinical intervals, ✅ **fully signed 2026-09-15**, 28
 rows plus one derived report-only row).
 **Decisions needed:** ✅ **none. All five §9 rows are closed as of 2026-09-15**, and so are all four
-build-checklist blockers in `2026-09-15-retest-cadence-by-rule-kind.md` §5. 🔴 **What remains is the
-BUILD** — checklist items 4 to 6 — plus two things owed elsewhere and neither of them cadence:
+build-checklist blockers in `2026-09-15-retest-cadence-by-rule-kind.md` §5. ✅ **Checklist items 4,
+5 and 6 are closed as of 2026-09-16** — the map, the reduction and a fixture per signed cell.
+🔴 **What remains is the WIRING** — no mechanism reads the map yet — plus two things owed elsewhere
+and neither of them cadence:
 the **3f wording** (Ewa; the flagged cohort has an interval but no sentence) and **3c**, whether the
 member retest-due email exists at all (Keith). Both tracked in `retest-mechanism-map.md` §6.
 

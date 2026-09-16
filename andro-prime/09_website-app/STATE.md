@@ -4,6 +4,42 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## ✅ 2026-09-16 — THE RETEST CADENCE MAP IS IN THE CODEBASE, AND NOTHING IMPORTS IT
+
+**Changed files:** `lib/results/retestCadence.ts` (the `RETEST_CADENCE` map, the rule values, the
+reduction), `scripts/test-retest-cadence-map.ts` (new, 117 assertions), `package.json` (the suite
+joins `npm test`, between the seasonal one and `verify-cadence-coverage.js`).
+**Clinical authority:** CA-047, Ewa, 2026-09-15. **Build record:**
+`04_products/results-engine/2026-09-15-retest-cadence-by-rule-kind.md` §6.
+**Not committed at time of writing.** Full suite green, `npm test` exit 0; `tsc --noEmit` clean.
+
+🔴 **NO RUNTIME BEHAVIOUR CHANGED, AND THAT IS CHECKABLE RATHER THAN ASSERTED: nothing imports the
+map but its own test.** No route, no job, no email and no card reads it. The eight mechanisms in
+`retest-mechanism-map.md` each still pick their interval from their own constant. **Wiring them
+onto the map is the next change and it is the one that moves real dates** — deliberately split,
+because this half is reviewable against a clinical document line by line and that half is not.
+
+**What is in it:** 30 result states, 30 cells, 33 rules (three states carry two rules), six kinds,
+and the whole-result reduction — `clinician-led` contributes nothing and suppresses nothing,
+`confirm` always wins, otherwise shortest-wins, and no contributor means no date. The return type
+keeps **"no date" and "no answer" apart**: a `seasonal` rule with a null `collectedAt` reports
+`unresolved` rather than collapsing into "no retest recommended".
+
+⚠ **`Record<ResultState, RetestCell>`, not `…, RetestRule>`.** A cell is a non-empty tuple, because
+the three sub-12 testosterone states are GP-routed **and** carry a confirmatory recheck at once.
+The tuple's non-emptiness is load-bearing: an empty cell would read as "nothing decided" and behave
+as "nothing recommended", which is a real clinical position that must be stated, not implied.
+
+✅ **The test restates all thirty cells as literals rather than importing the constants**, and that
+was verified by breaking the map four ways and watching the suite fail each time (16, 4, 9 and 4
+assertions), then restoring the file and comparing hashes. It also asserts the prepaid-or-included
+floor over every 2026 anchor date, that `clinician-led` and the "See Your GP" badge are the same
+set in both directions, and that the confirmatory `0` still matches `CONFIRMATION_INTERVAL_DAYS` in
+`lib/bundles/config.ts` — a duplicated fact left deliberately unimported (it would pull
+`classifier.ts`, where the map gets wired in next) and held shut by that assertion instead.
+
+---
+
 ## 🔴 2026-09-15 — THE RESULTS ENGINE NOW SUPPRESSES A RETEST OFFER ACROSS A GP-ROUTED PANEL. 16 live links changed
 
 **Changed files:** `lib/results/classifier.ts` (one cross-marker pass in `classify()`),

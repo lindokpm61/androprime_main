@@ -1,6 +1,11 @@
 /**
- * THE `seasonal` RETEST RULE KIND, and the rule union it completes.
+ * THE RETEST CADENCE MAP: six rule kinds, thirty signed cells, one reduction.
  * PURE: no database, no env, NO CLOCK. The anchor date is always an argument.
+ *
+ * The header below is the argument for the `seasonal` kind, which is the one
+ * kind that needed designing rather than transcribing. THE MAP ITSELF, the
+ * shared rule values and the whole-result reduction are at the bottom of the
+ * file, under `THE MAP`.
  *
  * ── WHY A FIFTH KIND EXISTS ───────────────────────────────────────────────
  * `2026-09-15-retest-cadence-by-rule-kind.md` maps every signed result state
@@ -66,27 +71,34 @@
  * the month his blood happened to be drawn. Swept, not assumed. See
  * `scripts/test-retest-cadence-seasonal.ts`.
  *
- * ── WHAT THIS FILE DELIBERATELY DOES NOT CONTAIN ──────────────────────────
- * 🔴 NO `RETEST_CADENCE` MAP — STILL, BUT NO LONGER BECAUSE IT IS BLOCKED.
- * ✅ All four blockers closed 2026-09-15: the `seasonal` kind (item 1), the two
- * missing signed rows (item 2), the `fai-reported` cell (item 2b) and the
- * re-homed anti-upsell guard (item 3). **What remains is the build itself**,
- * checklist items 4 to 6, and it is deliberately not done here: writing the map
- * is what makes this module live, and the map moves real dates the moment it is
- * read. Shipping the kinds without it is what keeps this change inert.
+ * ── THE MAP IS NOW HERE (2026-09-16), AND WITH IT ITS OWN VERIFICATION ────
+ * ✅ Checklist items 4, 5 and 6 are closed in the `THE MAP` section below:
+ * every `recheck` stores the integer `{ days: 90 }` and never a month count
+ * (4); the three sub-12 testosterone states carry `clinician-led` AND `confirm`
+ * at once, deliberately (5); and all thirty signed cells are restated
+ * independently in `scripts/test-retest-cadence-map.ts` (6).
  *
- * ⚠ WHOEVER WRITES THE MAP OWNS THREE THINGS THIS FILE DOES NOT. Item 4: store
- * every `recheck` as the integer `{ days: 90 }`, never a month count. Item 5:
- * assert the DUAL rule on the three sub-12 testosterone states, which carry
- * `clinician-led` and `confirm` at once, deliberately. Item 6: a fixture per
- * signed cell — the map can no longer rely on arriving inert, because every
- * cell is signed now.
+ * 🔴 ITEM 6 EXISTS BECAUSE THE SAFETY PROPERTY THIS MODULE SHIPPED WITH IS
+ * SPENT. Until 2026-09-15 only one cell was signed, so the map would have
+ * arrived inert and could lean on that. Every cell is signed now: the map is
+ * a live clinical instruction the moment anything reads it, so it carries a
+ * test that fails when the code and the sign-off disagree, rather than an
+ * argument that disagreement cannot matter yet.
+ *
+ * ── WHAT THIS FILE STILL DELIBERATELY DOES NOT CONTAIN ────────────────────
+ * 🔴 NO WIRING. None of the eight mechanisms in `retest-mechanism-map.md`
+ * reads this yet, and nothing imports the map but its test. That is the next
+ * change and it is deliberately separate: this one is reviewable line by line
+ * against a clinical document, and the next one changes what lands in a man's
+ * letterbox.
  *
  * 🔴 NO CUSTOMER-FACING SENTENCE. `biomarker-copy.ts` already carries Ewa's
  * approved wording for this state, verbatim, and has for months — which is why
  * her answer changes no copy. Surfacing the COMPUTED window to a customer as a
  * date would be new copy and needs its own pre-flight. Do not.
  */
+
+import type { ResultState } from './types'
 
 /**
  * A recurring calendar window, given as month/day boundaries. It wraps the year
@@ -101,7 +113,7 @@ export interface SeasonalWindow {
 }
 
 /**
- * THE SIX KINDS. `Record<ResultState, RetestRule>` over this union is what
+ * THE SIX KINDS. `Record<ResultState, RetestCell>` over this union is what
  * makes adding a biomarker state without deciding its retest rule a COMPILE
  * ERROR — the reason `BADGES` and `BIOMARKER_COPY` are shaped the same way, and
  * the reason the 2026-08-07 `default:` defect never reached either of them.
@@ -302,10 +314,13 @@ function isoDay(ms: number): string {
  * that already exist: it can tie a `recheck` at 90 and it can never be later
  * than the 12-month edge of `maintenance`.
  *
- * 🔴 NOT THE WHOLE REDUCTION. Rule 2 (`confirm` always wins and is never
- * suppressed) belongs with the map, and the map is still blocked. This function
- * is only the per-rule half, so that the seasonal kind's contribution is
- * defined before anything reduces over it.
+ * ⚠ THE PER-RULE HALF ONLY, AND THAT SPLIT IS LOAD-BEARING. Rule 2 (`confirm`
+ * always wins and is never suppressed) cannot be expressed here, because a
+ * function over ONE rule cannot say which of several wins. It lives in
+ * `reduceContributions()` at the bottom of this file. Reading a per-rule answer
+ * as if it were the whole-result answer is the same class of mistake as the
+ * per-card CA-014 guard that passed while sixteen links were live: a per-item
+ * check cannot see a per-collection rule.
  */
 export function intervalDaysFor(
   rule: RetestRule,
@@ -331,4 +346,318 @@ export function intervalDaysFor(
     case 'none':
       return null
   }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// THE MAP — build checklist items 4, 5 and 6 of
+// `2026-09-15-retest-cadence-by-rule-kind.md` §5.
+//
+// 🔴 THIS SECTION MOVES REAL DATES THE MOMENT A MECHANISM READS IT. Until
+// 2026-09-15 the safety argument for building any of this was that only one
+// cell was signed, so the map would arrive inert. Every cell is signed now, so
+// that argument is spent and this section carries its own verification instead:
+// `scripts/test-retest-cadence-map.ts` restates all thirty signed cells
+// independently and fails if the map and the sign-off drift apart.
+//
+// ⚠ NOTHING IMPORTS THIS YET. Writing the map and wiring the eight mechanisms
+// onto it are separate changes, deliberately: this one is reviewable against a
+// clinical document, and the next one changes what lands in a man's letterbox.
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * The rules one result state carries. **Non-empty by construction**, which is
+ * the whole reason it is a tuple type rather than `RetestRule[]`.
+ *
+ * 🔴 AN EMPTY CELL WOULD BE THE `default:` DEFECT IN ITS THIRD COSTUME. It
+ * reads as "nothing decided here" and behaves as "no retest recommended",
+ * which is a real clinical position (`none`) that must be STATED rather than
+ * implied by an absence. `Record<ResultState, …>` already makes a missing state
+ * a compile error; the tuple makes an empty one a compile error too.
+ *
+ * ⚠ MORE THAN ONE RULE IS NOT A CONFLICT. The three sub-12 testosterone states
+ * carry `clinician-led` AND `confirm`, deliberately — see the cells themselves.
+ */
+export type RetestCell = readonly [RetestRule, ...RetestRule[]]
+
+/**
+ * 🔴 BUCKET B IS STORED AS AN INTEGER OF DAYS, NEVER AS "3 months" (item 4).
+ * Three calendar months is 89 to 92 days depending on the start date, and 58 of
+ * the 1096 start dates across 2026-2028 land UNDER 90 — all of them in late
+ * January or February. Stored as a phrase, the prepaid-or-included rule would
+ * have applied to roughly 5% of men according to the month their blood happened
+ * to be drawn. Keith, 2026-09-15:
+ * `2026-09-07-fast-recheck-must-be-prepaid-or-included.md` §2a.
+ *
+ * ⚠ THE GUARD: any proposal to shorten this below 90 reopens §2a. "12 weeks"
+ * is 84 days and crosses back under the threshold silently.
+ */
+export const RECHECK_DAYS = 90
+
+/** Ewa, CA-047 round 1 Q2 = A: *"3 months for all of them"*, and round 2 Q1-Q4. */
+export const RECHECK_RULE: RetestRule = { kind: 'recheck', days: RECHECK_DAYS }
+
+/**
+ * Ewa, CA-047 round 1 Q1 = A: *"6 to 12 months, as currently written"*, and
+ * round 2 Q6 for the `normal` fallback. No copy moved when this was signed —
+ * the dashboard, the FAQ, how-it-works and both landing pages already said it.
+ * Signing made the value binding rather than incidental.
+ */
+export const MAINTENANCE_RULE: RetestRule = {
+  kind: 'maintenance',
+  fromMonths: 6,
+  toMonths: 12,
+}
+
+/**
+ * Ewa, CA-047 round 1 Q3 = A: *"No Andro Prime retest interval at all. The GP
+ * directs the timing, and our card shows the referral rather than a retest
+ * date."* Never a fallthrough: see the `none` kind above for the other state
+ * that yields no date, for the opposite reason.
+ */
+export const CLINICIAN_LED_RULE: RetestRule = { kind: 'clinician-led' }
+
+/**
+ * The confirmatory second morning sample on a sub-12 testosterone. Ewa signed
+ * the zero on **2026-07-26**; it is due immediately, and it is prepaid inside
+ * the Confirmation bundle, so the worst number on a man's dashboard never
+ * triggers a checkout.
+ *
+ * ⚠ THE SAME CLINICAL RULING IS ALSO STORED AS `CONFIRMATION_INTERVAL_DAYS` IN
+ * `lib/bundles/config.ts`, AND THAT IS A DUPLICATED FACT. It is not imported
+ * here on purpose: `config.ts` imports `classifier.ts`, and `classifier.ts` is
+ * where this map gets wired in next — importing it would build the cycle in
+ * advance and would drag an env read into a module whose header promises
+ * purity. The duplication is instead held shut by an assertion in
+ * `scripts/test-retest-cadence-map.ts`, so the two diverging is a failing
+ * build rather than a silent disagreement. **If that test is ever deleted,
+ * import the constant instead — do not simply leave two copies unwatched.**
+ */
+export const CONFIRM_DAYS = 0
+
+/** Fast confirmatory recheck. Prepaid inside the Confirmation bundle, always. */
+export const CONFIRM_RULE: RetestRule = { kind: 'confirm', days: CONFIRM_DAYS }
+
+/**
+ * 🔴 THE SIGNED MAP. Thirty states, thirty cells, every one clinically ruled.
+ * Sign-off record: `2026-07-17-retest-cadence-table.md` (CA-047, Ewa,
+ * 2026-09-15, two rounds). Build input, keyed by kind:
+ * `2026-09-15-retest-cadence-by-rule-kind.md` §2. Business sign-off: Keith.
+ *
+ * ⚠ READ THE KIND, NEVER THE BUCKET. The sign-off table groups states into
+ * three presentational buckets, and after round 2 the buckets and the kinds no
+ * longer agree: `shbg-low` and `shbg-high` are IN-RANGE states sitting under an
+ * "all-clear / maintenance" heading, and Ewa ruled both at 3 months, which is a
+ * `recheck`. A build that derives a kind from a bucket heading gets those two
+ * wrong, and gets them wrong silently.
+ */
+export const RETEST_CADENCE: Record<ResultState, RetestCell> = {
+  // ── `clinician-led` — no Andro Prime date at all. 10 states ──────────────
+  // Ewa, CA-047 round 1 Q3 = A.
+  //
+  // ⚠ THE FIRST THREE CARRY TWO RULES AT ONCE, AND IT IS NOT A CONTRADICTION
+  // (item 5). They are GP-routed AND get an immediate confirmatory recheck,
+  // because the confirmatory second morning sample is precisely the thing a GP
+  // needs in order to act. We supply it; we do not diagnose. That framing is
+  // the recorded position from the 2026-06-04 low-T routing decision, and it is
+  // what makes the immediate recheck defensible rather than opportunistic.
+  'severely-low-testosterone': [CLINICIAN_LED_RULE, CONFIRM_RULE], // T < 5.2
+  'low-testosterone': [CLINICIAN_LED_RULE, CONFIRM_RULE], //           T 5.2-8
+  'equivocal-testosterone': [CLINICIAN_LED_RULE, CONFIRM_RULE], //     T 8-12
+  'critically-low-vitamin-d': [CLINICIAN_LED_RULE], //                 < 25 nmol/L
+  'high-crp': [CLINICIAN_LED_RULE], //                                 > 10 mg/L
+  'low-ferritin': [CLINICIAN_LED_RULE], //                             < 30 µg/L
+  'high-ferritin': [CLINICIAN_LED_RULE], //                            > 300 µg/L
+  'low-albumin': [CLINICIAN_LED_RULE], //                              < 35 g/L
+  // ⚠ These two were signed in the same Q3 answer but had NO ROW in the
+  // sign-off table until 2026-09-15 — it was written before the 2026-08-07
+  // upper bands existed and never gained them. Her answer covered ten states;
+  // the table offered eight rows. Verified at the primary source (the Q3 mail
+  // as sent, Gmail `1a0a69ae55223fe0`, ends "testosterone above 29 nmol/L,
+  // vitamin D above 250 nmol/L"), never inferred from an adjacent answer.
+  // 🔴 Their card COPY is a separate gate and it is still shut: both carry
+  // NOT APPROVED markers in `biomarker-copy.ts` and have rendered since
+  // 2026-08-07 (CA-044 §2 item A). A `clinician-led` cell carries no date and
+  // no copy, so cadence is unaffected — but "row added" is not "card cleared".
+  'high-testosterone': [CLINICIAN_LED_RULE], //                        T > 29
+  'high-vitamin-d': [CLINICIAN_LED_RULE], //                           > 250 nmol/L
+
+  // ── `recheck` — acting on a finding, 90 days. 10 states ──────────────────
+  // Ewa, CA-047 round 1 Q2 = A and round 2 Q1-Q4.
+  'normal-testosterone': [RECHECK_RULE], //     T 12-20. ⚠ proposed 3-6 months, NARROWED to 3
+  'low-vitamin-d': [RECHECK_RULE], //           25-50 nmol/L
+  'low-b12': [RECHECK_RULE], //                 active B12 < 25
+  'borderline-b12': [RECHECK_RULE], //          active B12 25-70
+  'suboptimal-ferritin': [RECHECK_RULE], //     30-100 µg/L. ⚠ proposed 3-4 months, NARROWED to 3
+  // Both CRP states are 90 days on BOTH branches of the joint-symptom question.
+  // Round 1 scoped itself to "no joint symptoms", so the joints = yes branch was
+  // asked separately (round 2 Q2) rather than inferred. Them agreeing is the
+  // answer, not an assumption — which is why cadence needs no joints branch.
+  'elevated-crp': [RECHECK_RULE], //            hs-CRP 1-3
+  'moderate-crp': [RECHECK_RULE], //            hs-CRP 3-10
+  'ft-low': [RECHECK_RULE], //                  free T < lab reference low. Round 2 Q1
+  // 🔴 THE TWO CELLS THIS WHOLE PROJECTION EXISTS FOR. In-range states, under an
+  // "all-clear" bucket heading, ruled at 3 months. Round 2 Q3 = B and Q4 = B.
+  // They also falsified the prepaid rule's original carve-out within 75 minutes,
+  // because that carve-out was enumerated by MARKER; it is now scoped by rule
+  // KIND, and `recheck` is outside the prepaid rule on the substance.
+  'shbg-low': [RECHECK_RULE], //                < lab reference low
+  'shbg-high': [RECHECK_RULE], //               > lab reference high
+
+  // ── `maintenance` — nothing to fix, 6 to 12 months. 8 states ─────────────
+  // Ewa, CA-047 round 1 Q1 = A and round 2 Q6.
+  'optimal-testosterone': [MAINTENANCE_RULE], // T > 20 nmol/L
+  'shbg-normal': [MAINTENANCE_RULE],
+  'ft-normal': [MAINTENANCE_RULE],
+  'normal-crp': [MAINTENANCE_RULE], //           <= 1 mg/L
+  'normal-ferritin': [MAINTENANCE_RULE], //      100-300 µg/L
+  'normal-b12': [MAINTENANCE_RULE], //           active B12 > 70
+  'normal-albumin': [MAINTENANCE_RULE], //       >= 35 g/L
+  // ⚠ A REAL DEFAULT, BY HER CHOICE AND AGAINST THIS REPO'S USUAL POSTURE.
+  // Round 2 offered "no default at all, every marker ruled individually,
+  // anything unruled shows no date" and she DECLINED it (Q6 = A). So a marker
+  // added later inherits 6 to 12 months silently rather than showing nothing.
+  // Recorded here so the next marker's author knows the default will catch
+  // their state whether or not they think about it.
+  'normal': [MAINTENANCE_RULE],
+
+  // ── `seasonal` — a time of year, not an elapsed interval. 1 state ────────
+  // Ewa, CA-047 round 2 Q5 = A. She declined "6 to 12 months like the other
+  // in-range markers" and declined the hybrid. The card has said this for
+  // months, so her answer changed no copy. See the file header for the guards.
+  'normal-vitamin-d': [NORMAL_VITAMIN_D_RULE], // 50-250 nmol/L
+
+  // ── `none` — report-only. 1 state ────────────────────────────────────────
+  // Derived from Ewa ruling 8 (2026-06-16), not signed as cadence. Safe only
+  // because the kind records the ABSENCE of a recommendation. 🔴 Giving FAI an
+  // actual retest date would be a new clinical claim and needs Ewa.
+  'fai-reported': [FAI_REPORTED_RULE],
+}
+
+/** The rules a state carries. Total by construction; there is no fallthrough. */
+export function cadenceFor(state: ResultState): RetestCell {
+  return RETEST_CADENCE[state]
+}
+
+/**
+ * Whether a rule owes a date at all. The two kinds that owe none owe it for
+ * opposite reasons (a GP decides the timing, versus we have no verdict), and
+ * both are still an ANSWER rather than a gap — which is why an unresolvable
+ * `seasonal` is a different thing from either and is reported separately.
+ */
+export function ruleOwesDate(rule: RetestRule): boolean {
+  return rule.kind !== 'clinician-led' && rule.kind !== 'none'
+}
+
+/** One rule of one marker's state, and what it contributes to the reduction. */
+export interface CadenceContribution {
+  state: ResultState
+  rule: RetestRule
+  /** Days from the anchor, or `null` where this rule contributes no date. */
+  days: number | null
+}
+
+/**
+ * The whole-result answer. A Kit 3 carries nine markers and the customer needs
+ * one date.
+ *
+ * 🔴 `unresolved` IS NOT DECORATION. A `seasonal` rule with no anchor date has
+ * no answer at all, and the difference between "no retest is recommended" and
+ * "a retest is recommended and we could not work out when" must survive the
+ * reduction. `SingleResult.collectedAt` is nullable in the schema, so this is a
+ * real runtime state. Collapsing it into `no-date` would reproduce the exact
+ * defect the `seasonal` kind exists to close.
+ */
+export type ResultCadence =
+  | {
+      kind: 'scheduled'
+      days: number
+      driver: ResultState
+      rule: RetestRule
+      unresolved: readonly ResultState[]
+    }
+  | { kind: 'no-date'; unresolved: readonly ResultState[] }
+
+/** Every rule of every state, flattened, with its contribution resolved. */
+export function contributionsFor(
+  states: readonly ResultState[],
+  anchorIso: string | null,
+): CadenceContribution[] {
+  const out: CadenceContribution[] = []
+  for (const state of states) {
+    for (const rule of cadenceFor(state)) {
+      out.push({ state, rule, days: intervalDaysFor(rule, anchorIso) })
+    }
+  }
+  return out
+}
+
+/**
+ * ✅ THE REDUCTION AS SIGNED — CA-047 round 1 Q4 = C, Ewa, 2026-09-15.
+ *
+ * 🔴 SHE REJECTED THE SUPPRESSION RULE BOTH DESIGN DOCUMENTS PROPOSED. Her
+ * words: *"The vitamin D retest is scheduled normally. The two markers are
+ * unrelated and the GP referral does not conflict with it."* So:
+ *
+ *   1. A `clinician-led` state yields no date for that marker and **suppresses
+ *      nothing**. A GP-routed CRP and a low vitamin D on one result return a
+ *      referral AND a 3-month vitamin D retest. That is the worked example as
+ *      put to her.
+ *   2. A `confirm` rule **always wins and is never suppressed**.
+ *   3. Otherwise the shortest interval among the states that have one.
+ *   4. If no state has one, there is no date.
+ *
+ * ⚠ RULE 2 IS A RULING, NOT AN OPTIMISATION. Today every `confirm` is zero
+ * days, so "wins" and "shortest" happen to agree and the branch looks
+ * redundant. It is written as its own branch because the agreement is a
+ * coincidence of the current value: if Ewa ever moves the confirmatory recheck
+ * off zero, a 90-day `recheck` would start beating it under a pure
+ * shortest-wins rule and the confirmatory sample would silently stop being
+ * scheduled. `scripts/test-retest-cadence-map.ts` asserts this against a
+ * synthetic long `confirm` that no fixture produces.
+ *
+ * ⚠ TIES KEEP THE EARLIER CONTRIBUTION, so the reduction is deterministic in
+ * input order. A tie is reachable: a `seasonal` marker resolving at exactly its
+ * 90-day floor ties a `recheck`. Only `driver` differs; `days` is identical, and
+ * `days` is what the customer sees.
+ *
+ * 🔴 WHAT THIS DELIBERATELY DOES NOT DECIDE: whether the result may OFFER the
+ * retest for sale. That is `resultMayCarryRetestOffer()` in `retestGuidance.ts`
+ * — CA-014 read at the result level — and it is a separate question from when
+ * the retest is due. Ewa was asked whether a GP-routed marker changes the
+ * SCHEDULE and said no; she was never asked whether it may be SOLD. Do not
+ * merge the two here.
+ */
+export function reduceContributions(
+  contributions: readonly CadenceContribution[],
+): ResultCadence {
+  const unresolved = contributions
+    .filter((c) => ruleOwesDate(c.rule) && c.days === null)
+    .map((c) => c.state)
+
+  const dated = contributions.filter(
+    (c): c is CadenceContribution & { days: number } => c.days !== null,
+  )
+  const confirms = dated.filter((c) => c.rule.kind === 'confirm')
+  const pool = confirms.length > 0 ? confirms : dated
+
+  if (pool.length === 0) return { kind: 'no-date', unresolved }
+
+  let best = pool[0]
+  for (const c of pool) if (c.days < best.days) best = c
+
+  return {
+    kind: 'scheduled',
+    days: best.days,
+    driver: best.state,
+    rule: best.rule,
+    unresolved,
+  }
+}
+
+/** Nine markers, one date. The reduction applied to a whole result. */
+export function resultCadenceFor(
+  states: readonly ResultState[],
+  anchorIso: string | null,
+): ResultCadence {
+  return reduceContributions(contributionsFor(states, anchorIso))
 }

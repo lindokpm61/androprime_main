@@ -181,15 +181,17 @@ default that answers confidently is what costs.**
 
 ## 8. What this deliberately does not do
 
-- 🔴 **No `RETEST_CADENCE` map — and as of the end of 2026-09-15, no longer because anything is
-  blocking it.** When this document was written, items 2 and 3 did block it. ✅ **All four blockers
-  closed the same day:** the two missing signed rows (item 2), a third state found missing from
-  both documents and given the sixth kind `none` (item 2b, `fai-reported`), and the anti-upsell
-  guard re-homed as result-level CA-014 (item 3). **What is left is the build itself, checklist
-  items 4 to 6.**
-  **Shipping the kinds without the map is what keeps this change inert** — nothing imports it yet,
-  so no date moves. §7 of `2026-09-06-result-driven-retest-cadence.md` warned that the map can no
-  longer rely on being inert; this item still can, and is the last one that will be able to.
+- ~~🔴 **No `RETEST_CADENCE` map**~~ ✅ **BUILT 2026-09-16, in this same file, with checklist items
+  4, 5 and 6.** When this document was written, items 2 and 3 blocked it; all four blockers closed
+  on 2026-09-15 (the two missing signed rows, the `fai-reported` cell as the sixth kind `none`, and
+  the anti-upsell guard re-homed as result-level CA-014).
+  ⚠ **The inertness argument this bullet made has now been SPENT, exactly as it predicted.** It
+  said shipping the kinds without the map is what keeps the change inert, and that this was the
+  last item that could rely on it. The map is still inert today — nothing imports it but its test —
+  but it is inert **by an absence of wiring**, not by an absence of signed values, and an absence
+  of wiring is one import away from being untrue. That is why the map carries a fixture per signed
+  cell instead of an argument. Build record:
+  `2026-09-15-retest-cadence-by-rule-kind.md` §6.
   ⚠ **Corrected at wrap, and the correction is the point:** this bullet asserted a blocker that had
   been cleared hours earlier, in a document created the same morning. **Recency is not currency** —
   a doc is stale relative to the last write in its subject area, not to its own creation time.
