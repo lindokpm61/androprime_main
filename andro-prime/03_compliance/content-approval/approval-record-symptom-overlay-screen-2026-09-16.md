@@ -112,7 +112,12 @@ it the whole retest-cadence checklist.** Items 1, 2, 2b and 3 closed 2026-09-15;
 
 ## 5. Conditions that ride with this screen to the build
 
-🔴 **None of these is a sign-off question, and approval does not discharge any of them.**
+🔴 **None of these is a sign-off question, and approval discharged none of them.**
+✅ **ALL FOUR ARE NOW CLOSED (2026-09-16): 1 and 2 by ruling, 3 by checking, 4 by rendering.**
+🔴 **The screen still reaches no customer, and the reason is the TRIGGER, not the screen.**
+`ClassifierInput.symptomAnswers` is written by nothing in the product, so the condition "he
+has said he still feels wrong" can never be true. Building that capture collects health
+information and is its own compliance question. **CA-048 is complete; the feature is not.**
 
 1. ✅ **The NHS citation ships as a live link.** Settled by Q1 = A: the paragraph carries over
    *"exactly as it appears on the articles"*, and on the article it is a link. Build work.
@@ -121,12 +126,47 @@ it the whole retest-cadence checklist.** Items 1, 2, 2b and 3 closed 2026-09-15;
    GP, not us"*. ⚠ **This was the one condition needing a clinical read rather than a build
    decision**, because ordering alone does not reproduce the weight of an alert box on a safety
    escalation. It is now ruled and still unbuilt.
-3. **Sweep every surface this lands on for a second, machine-read copy.** The `cholesterol-test`
-   frontmatter FAQ at `:56-66` is live proof this is a real trap, and it is also where the
-   "Otherwise," precedent lives.
-4. 🔴 **The render obligation is UNDISCHARGED.** Nothing here has been rendered. Contrast,
-   truncation and whether the 999 block clears the fold on a phone are failures that leave the
-   string correct in the DOM, so no text-level check can see them.
+3. ✅ **DISCHARGED 2026-09-16, by checking rather than by asserting.** Two findings, and the first
+   one raises the bar rather than lowering it.
+
+   🔴 **The trap is the NORM on this wording, not an exception. Two surfaces carry the 999
+   escalation and BOTH carry a second, machine-read copy**: `cholesterol-test` (1 in the body, 2 in
+   the frontmatter FAQ) and `signs-of-stress-in-men` (3 in the body, 2 in the frontmatter). So the
+   condition was right to exist, and any future *article* surface must be assumed to need the sweep
+   rather than checked hopefully.
+
+   ✅ **But the results screen has no second copy to sweep, because it emits no structured data at
+   all.** Every `application/ld+json` emitter in the app is under `app/(marketing)`; no results,
+   dashboard or account route emits any. **Verified by enumerating the emitters, not by searching
+   the results routes for an absence** — a search that finds nothing cannot distinguish "there is
+   none" from "I looked in the wrong place".
+
+   ⚠ **This discharge is scoped to the results screen and expires if that changes.** The moment any
+   results surface gains JSON-LD, FAQ schema or any other machine-read rendering, this condition is
+   live again and nothing will re-raise it automatically.
+4. ✅ **DISCHARGED 2026-09-16. It was rendered and looked at, in both themes, at phone width.**
+   Built as `components/results-engine/SymptomOverlay.tsx` behind `SYMPTOM_OVERLAY_ENABLED`,
+   mounted on a temporary page, served by a real dev server and captured with
+   `12_operations/automation/shot.js` at 390x844. Full page in light, and the Kit 3 box alone in
+   dark. **Not a description of a render and not stripped HTML.**
+
+   **What the render confirms**, none of which a text check could have: all three composites draw
+   inside the `SystemAlert` box with its kicker and title, the order holds (999, then the GP list,
+   then the closing), **the NHS citation renders as a live underlined link**, the copy is legible
+   at phone width in both themes with no truncation, and the Kit 3 composite visibly offers
+   nothing to buy.
+
+   ⚠ **One occlusion, and it is worth recording precisely because it is NOT a defect in this
+   component.** The site-wide cookie banner is pinned to the bottom of the viewport on a first
+   visit and covers the lower part of whatever is on screen, this box included. It affects every
+   page equally and clears on dismissal. 🔴 **But note what follows from the approved order: the
+   999 block is FIRST, so the banner can never be the thing covering it.** The ordering Ewa signed
+   for clinical reasons turns out to carry a render benefit nobody designed for, and any future
+   reordering loses it silently.
+
+   ⚠ **The harness was temporary and has been deleted, so this discharge is a point-in-time fact,
+   not a repeatable check.** Re-rendering means rebuilding the page. A permanent preview surface
+   would make it repeatable and is not built.
 
 ⚠ **AND ONE THING A FUTURE EDITOR MUST NOT DO.** Q2 = B declined the "Otherwise," option with the
 conflict named and the precedent quoted. §3 keeps the losing argument in full, so the case can be

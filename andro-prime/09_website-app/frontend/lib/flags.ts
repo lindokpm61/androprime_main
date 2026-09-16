@@ -140,3 +140,25 @@ export function isEvidenceDisclosureEnabled(): boolean {
 export function isMembershipEnabled(): boolean {
   return process.env.MEMBERSHIP_ENABLED === 'true'
 }
+
+/**
+ * The symptom overlay: the screen a man is shown when every marker is in range
+ * and he has said he still does not feel right. Copy signed as CA-048 (Ewa +
+ * Keith, 2026-09-16), container settled by CA-049 Q5 = A.
+ *
+ * 🔴 OFF, AND THE BLOCKER IS THE TRIGGER RATHER THAN THE SCREEN.
+ * `ClassifierInput.symptomAnswers` is written by nothing in the product: the
+ * key this reads appears in one fixture and is asked on no surface, so the
+ * condition "he has said he still feels wrong" can never be true today.
+ * Building that capture is separate work and a compliance question of its own,
+ * because it collects health information.
+ *
+ * ⚠ THIS FLAG IS NOT THE ONLY THING HOLDING IT BACK, AND NOBODY SHOULD READ IT
+ * THAT WAY. Turning it on renders nothing, because no route mounts the
+ * component and no result carries the answer. It exists so the signed copy is
+ * under test and the CA-048 render obligation could be discharged against a
+ * real render. **Flipping it is not the act that ships this screen.**
+ */
+export function isSymptomOverlayEnabled(): boolean {
+  return process.env.SYMPTOM_OVERLAY_ENABLED === 'true'
+}

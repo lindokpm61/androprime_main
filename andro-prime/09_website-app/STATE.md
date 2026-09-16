@@ -4,6 +4,43 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## ✅ 2026-09-16 — THE SYMPTOM OVERLAY IS BUILT, RENDERED AND GATED OFF. CA-048 is fully discharged
+
+**New:** `lib/results/symptomOverlay.ts` (the signed copy plus the trigger, pure),
+`components/results-engine/SymptomOverlay.tsx` (renders it inside `SystemAlert`),
+`scripts/test-symptom-overlay.ts` (**37 assertions**, in `npm test`).
+**Changed:** `lib/flags.ts` (`SYMPTOM_OVERLAY_ENABLED`), `.env.example`, the component index,
+`package.json`. **Approval:** CA-048 both signers, container by CA-049 Q5 = A.
+
+✅ **ALL FOUR CA-048 BUILD CONDITIONS ARE NOW CLOSED**: the NHS link and the alert container by
+ruling, the machine-read surface sweep by checking, and **the render obligation by rendering**.
+
+🔴 **AND IT STILL REACHES NOBODY, BECAUSE THE BLOCKER WAS NEVER THE SCREEN.**
+`ClassifierInput.symptomAnswers` is written by **nothing** in the product: the key it reads appears
+in exactly one fixture and is asked on no surface, so the condition *"he has said he still feels
+wrong"* can never be true. ⚠ **Flipping the flag renders nothing** — no route mounts the component
+either — and the flag comment says so, because a flag that looks like the last gate invites someone
+to treat it as one. **Building the capture is separate work and collects health information, so it
+is a compliance question before it is a build.**
+
+✅ **THE COPY IS ASSERTED AGAINST THE APPROVED ARTEFACT, NOT AGAINST ITSELF.** The suite reads
+`2026-09-16-symptom-overlay-screen-copy.md` off disk and diffs all eight signed strings against it,
+normalising only line wrapping and the apostrophe, **and saying so** — a normalisation is the one
+class of difference a check can no longer see. That caught a real mismatch: the module had been
+written with a curly apostrophe where both sources use a straight one.
+
+✅ **Two rulings are pinned as assertions rather than as comments**, because both would be reversed
+by a plausible-looking tidy-up: no `"Otherwise,"` in the lead-in (CA-048 Q2 = B declined it), and no
+retest interval in any closing paragraph (CA-049 Q3 = B: the GP decides the timing, not us).
+
+✅ **RENDERED AND LOOKED AT**, at 390px in both themes, via a real dev server and
+`12_operations/automation/shot.js`. The order holds, the NHS citation is a live underlined link, and
+nothing truncates. ⚠ **One occlusion, and it is not this component's**: the site-wide cookie banner
+sits over the foot of any first-visit page. 🔴 **Note what the approved order buys: the 999 block is
+FIRST, so the banner can never cover it.** A reordering would lose that silently.
+
+---
+
 ## 🔴 2026-09-16 — TWO LIVE CARDS WERE SELLING A RETEST TWO OF EWA'S RULINGS FORBID. Corrected
 
 **Changed:** `lib/results/classifier.ts` (the SHBG CTA branch, split three ways into two),
