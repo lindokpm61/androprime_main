@@ -1,15 +1,25 @@
 # Approval Record — Retest wording, the early-claim rule, and the escalation container (v1)
 
+> 🔴 **THE STORE IS CLICKUP [`869f2k7he`](https://app.clickup.com/t/869f2k7he).** That task carries
+> the full CA-049 record and **it is the one that is right** if it and this file ever disagree.
+> This file is the mirror, kept because the repo needs the reasoning next to the code it governs.
+>
+> ⚠ **That task sits `pending`, and that is correct, not a contradiction.** Both signers have
+> decided; what is outstanding is **the click**, which the list's own rule reserves to a named
+> human: *"Only a named human sets a task to approved, never Claude or automation."* Recording the
+> decision and performing the click are two different acts. Same shape as `869f1wwch`.
+
 | Field | Value |
 |---|---|
 | Register ID | CA-049 |
+| ClickUp (the store) | `869f2k7he` |
 | Artefact path | Three separate things that shared one packet: the retest sentence owed to the **flagged ten** result states (`retest-mechanism-map.md` §6 owed item 9 / defect 3f); **which results let a member pull his retest date forward** (owed item 7 / defect 3d); and whether the 999 escalation keeps its **alert container** on a results screen (CA-048 build condition 2) |
 | Version | v1 (asked 2026-09-16) |
 | Content type | Two clinical rulings that become on-screen copy and a scheduling rule, plus one presentation ruling on a safety escalation |
 | Submitted by | Keith Antony |
 | Submitted date | 2026-09-16 |
 | Required signers | Ewa (clinical) + Keith (business) |
-| Decision | ✅ **Ewa IN, 2026-09-16.** 🔴 **Keith's business sign-off owed.** ⚠ **Q3 = B contradicted two live cards and they were corrected the same day** (§3) |
+| Decision | ✅ **APPROVED, BOTH SIGNERS, 2026-09-16.** Ewa 5 of 5 at 02:03 UTC; Keith's business sign-off the same day, direct instruction: *"CA-49 approved"*. ⚠ **Q3 = B contradicted two live cards and they were corrected the same day** (§3), and 🔴 **that correction is NOT on `main`** (§5) |
 
 ## 1. Pre-flight evidence (mandatory)
 
@@ -94,11 +104,28 @@ second lands those cards say nothing about re-measuring, which is the 3f gap, an
 | Signer | Role | Decision | Date |
 |---|---|---|---|
 | Dr Ewa Lindo | Clinical | ✅ **Agreed, 5 of 5.** `1: A 2: A 3: B 4: B 5: A`, direct written reply 02:03 UTC | 2026-09-16 |
-| Keith Antony | Business | 🔴 **Owed** | — |
+| Keith Antony | Business | ✅ **Approved**, direct instruction: *"CA-49 approved"* | 2026-09-16 |
+
+⚠ **What this sign-off does and does not do.** It signs the RECORD: Ewa's five answers are accepted
+as the business position, and the same-day SHBG correction in §3 is accepted with them. **It
+authorises no build.** Items 2 and 3 below are unchanged by it — the flagged-ten sentence is new
+customer-facing copy that still owes its own pre-flight, and the early-claim rule is unbuilt work
+that touches dispatch. 🔴 **And it does not move the correction onto production**, which is now the
+sharpest thing on this record.
 
 ## 5. What this leaves owed
 
-1. 🔴 **Keith — business sign-off on this record.**
+~~1. 🔴 **Keith — business sign-off on this record.**~~ ✅ **GIVEN 2026-09-16**, *"CA-49 approved"*.
+**CA-049 is fully signed**, and the list below is what signing it did not do.
+
+1. 🔴 **THE §3 CORRECTION IS NOT ON PRODUCTION, AND IT IS THE LARGEST THING THIS RECORD LEAVES
+   OPEN.** Verified on `main` at sign-off time: `classifier.ts` still carries the unsplit
+   three-state branch, so `shbg-low` and `shbg-high` are still rendering **"Retest in 6–12 months"
+   → `/kits`** to real customers. The fix, its guard and its watched failure all live on
+   `redesign/direction-f`, which is **183 commits ahead of `main`**, and Coolify builds `main`.
+   ⚠ **A breach corrected on a branch is a breach that is still live**, and signing this record
+   does not change that. **The merge is the discharge, not the commit** — and that merge is gated
+   on CA-046 and the copy-register reconciliation, so it is not a one-command fix.
 2. **The flagged-ten sentence.** Her ruling gives the substance; the wording for ten cards is new
    copy and owes a pre-flight before it ships.
 3. **The early-claim rule (Q4 = B) is unbuilt.** It touches dispatch, so it needs the clamp that
@@ -108,5 +135,15 @@ second lands those cards say nothing about re-measuring, which is the 3f gap, an
    component the article uses, so her answer is implemented rather than approximated. **All four
    CA-048 conditions are now discharged.** 🔴 **The screen still reaches nobody: the trigger it
    reads is written by nothing in the product.**
-5. ⚠ **The `NOT APPROVED` markers in `biomarker-copy.ts:81` and `:170` should come out**, since Q1
-   and Q2 approved both cards. A comment change, not a copy change.
+5. ~~⚠ **The `NOT APPROVED` markers in `biomarker-copy.ts:81` and `:170` should come out**, since Q1
+   and Q2 approved both cards. A comment change, not a copy change.~~
+   ✅ **DONE 2026-09-16**, and it was **two call sites, not one**. Both markers in
+   `biomarker-copy.ts` now record the approval instead of the absence of one, naming the question
+   number, the answer and the date, and adding that editing any of the three fields reopens it.
+   ⚠ **`retestCadence.ts` held a SECOND copy of the same fact** — a comment on the
+   `high-testosterone` / `high-vitamin-d` cells asserting *"both carry NOT APPROVED markers … the
+   gate is still shut"*. Removing only the markers would have left that sentence stating the
+   opposite of the code it describes, which is worse than leaving both stale, since the
+   contradiction only becomes visible once one side is corrected. Both were updated in the same
+   change and each now points at the other. **No copy field moved; `stateLabel`, `explanation` and
+   `recommendation` are byte-for-byte what Ewa read.**

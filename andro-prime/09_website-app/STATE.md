@@ -4,6 +4,90 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## ▶️ PICK UP HERE — handoff, 2026-09-16 — THERE IS ONE GO-LIVE PLAN NOW, AND IT IS IN THE REPO
+
+### ▶️ WHERE THE NEXT SESSION STARTS
+
+**Open `10_launch-ops/implementation-checklists/direction-f-go-live.md` and work Gate A. Tick
+the boxes in that file.** Do not rebuild the sequencing from this STATE entry or from the
+defects artefact; both point at the plan, and the plan is the only one with tick boxes.
+
+**Three of Gate A's five items need no signature and no decision, so they are where to start:**
+
+1. **A3 — two one-line landmine fixes.** `lib/activate/sendActivationLink.ts:29` (a
+   `http://localhost:3000` fallback inside an emailed link) and `lib/supabase/env.ts:1-3`
+   (a real project ref and anon key as silent fallbacks). Both verified still present
+   2026-09-16. Leave the other two landmines for Gate D.
+2. **A4 — the screenshot pass**, plan Phase 6, never started. Every route at 1320 and 390,
+   `--theme light` only, via `12_operations/automation/shot.js`, `--expect-text` on every shot.
+3. **A5 — the routes no anonymous sweep can reach**: the seven `(app)` routes with a real
+   session carried by `shot.js --cookie`, both internal boards, `/blog/preview/[slug]`, and a
+   deliberate throw to render all three error boundaries.
+
+🔵 **Two things need Keith before they can move**, and one of them sets the merge date:
+**the `/demo` decision** (send the CA-046 packet, or add `DEMO_ENABLED` and ship without it —
+A1), and **whether to run `npm run db:seed`**, which writes ten fake customers with fake health
+results to the PRODUCTION database (inside A5).
+
+⚠ **Nothing in this session was merged or deployed.** Work is on `redesign/direction-f`;
+Coolify builds `main`, still at `4a43864`.
+
+---
+
+
+**`10_launch-ops/implementation-checklists/direction-f-go-live.md`.** It merges what is still
+open in the migration plan with what is still open on the defects register, and **it is its own
+status store** — tick the boxes in it, not in a handoff.
+
+🔴 **THE GATE IS FIVE ITEMS, NOT SEVENTEEN, AND SEPARATING TWO GATES IS WHY.** Both source
+documents treated go-live as one event. **Eleven of the seventeen open defect rows are not about
+going live at all**: six are the membership switch-on (`3c`, `3d`, `P1`, `P2`, `P4`, `P6`) and
+`MEMBERSHIP_ENABLED` ships **false**; five more (`H1`, `H2`, `H3`, `S6`, half of `S5`) are live
+on `main` today, so waiting fixes nothing. What is left before the merge: **a decision about
+`/demo`, 26 signatures, two one-line fixes, the screenshot pass, and a session-carried sweep.**
+
+✅ **`/demo` has a cheap decouple and nobody had noticed.** It is **not** flag-gated — a plain
+route at `app/(demo)/demo/page.tsx` with a homepage CTA at `app/(marketing)/page.tsx:749`.
+Adding `DEMO_ENABLED` is the house pattern exactly (`lib/flags.ts`, nine flags, all default OFF,
+header: *"with the flag OFF the app is byte-identical to before the feature existed"*), and it
+takes **CA-046 off the merge path entirely**. Keith's call: send the packet, or gate and ship.
+
+🔴 **The merge now has a REASON, not just a bar.** It discharges `3f`'s live compliance breach
+(two cards selling a retest two rulings forbid, to real customers, today), `A2`'s November date,
+`M7`'s 26 snippets, `P5`'s rebuilt page and `S1`'s dead analytics. **It is the only item on
+either document where waiting has an ongoing cost to a customer.**
+
+⚠ **Corrected in the same pass, because the reconciliation found them stale:** the migration
+plan's own header told readers not to re-derive nine blockers, **three of which were resolved**;
+the audit's Go/no-go table named CA-045 as blocker 1 **two minutes after it was approved**; and
+its "Owed to Keith" list carried two items that had been done for a day. All three now say so.
+
+---
+
+## ✅ 2026-09-16 — CA-049 IS SIGNED BY BOTH, AND THE `NOT APPROVED` MARKERS CAME OUT OF TWO FILES, NOT ONE
+
+**Changed:** `lib/results/biomarker-copy.ts` (both markers), `lib/results/retestCadence.ts` (the
+comment on the `high-testosterone` / `high-vitamin-d` cells). **Comment-only: `git diff` shows no
+changed line that is not a comment**, so `stateLabel`, `explanation` and `recommendation` are
+byte-for-byte the strings Ewa read.
+
+**Authority:** the 2026-09-16 packet, questions 1 and 2, both **A** — *"yes, leave it exactly as it
+is"* — read back from the sent mail and her reply at source (thread `1a0a7e88d3e90ab6`), not from a
+document quoting them. That closes **CA-044 §2 item A** with no copy change; **CA-044 as a whole is
+still pending** on its 3 EFSA lines. Keith's business sign-off on **CA-049** landed the same day.
+
+⚠ **IT WAS TWO CALL SITES AND ONLY ONE WAS NAMED.** Every document said *"remove the markers at
+`biomarker-copy.ts:81` and `:170`"*. `retestCadence.ts` carried a second copy of the same fact —
+*"both carry NOT APPROVED markers … the gate is still shut"* — so doing only what was asked would
+have left that sentence asserting the opposite of the code beside it. **A duplicated fact is
+invisible while the copies agree; the first correction is what makes it visible**, which makes a
+one-site fix to a two-site fact worse than no fix. Both now point at each other.
+
+✅ **Each marker was replaced by its own approval, not deleted.** Question number, answer, date, and
+the line that matters: **editing any of the three fields reopens the approval.**
+
+---
+
 ## ✅ 2026-09-16 — THE SYMPTOM OVERLAY IS BUILT, RENDERED AND GATED OFF. CA-048 is fully discharged
 
 **New:** `lib/results/symptomOverlay.ts` (the signed copy plus the trigger, pure),
@@ -176,7 +260,7 @@ inert one. The affected cards lose a button and keep their copy.
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-15 (**audit session 2: Phase 5's environment half, the per-corpus checks, and a LIVE purchase that closed Gate 3 — then a live refund that opened S2-9. Five findings, every one of them already live on `main` and none a Direction F regression: two build variables the production build never received, so GA4 and the cookie banner have never run on the live site (fixed, Keith set Coolify); an endpoint that dispatched physical kits with no authentication (REMOVED); two accessibility defects on every published article, invisible while the sweep measured one article of eighteen (fixed, 58 findings to 0); Gate 3 CLOSED on a real £99 payment traced to a delivered email in 5 seconds; and a refund that moved the money and nothing else, missing at three layers — **S2-9 now closed in code: Keith took all three decisions, the `charge.refunded` + `charge.dispute.created` handlers shipped with a terminal-status guard and 100 assertions, and the one thing still owed is two ticks in the Stripe dashboard**)
+## ▶️ Previous handoff, 2026-09-15 (**audit session 2: Phase 5's environment half, the per-corpus checks, and a LIVE purchase that closed Gate 3 — then a live refund that opened S2-9. Five findings, every one of them already live on `main` and none a Direction F regression: two build variables the production build never received, so GA4 and the cookie banner have never run on the live site (fixed, Keith set Coolify); an endpoint that dispatched physical kits with no authentication (REMOVED); two accessibility defects on every published article, invisible while the sweep measured one article of eighteen (fixed, 58 findings to 0); Gate 3 CLOSED on a real £99 payment traced to a delivered email in 5 seconds; and a refund that moved the money and nothing else, missing at three layers — **S2-9 now closed in code: Keith took all three decisions, the `charge.refunded` + `charge.dispute.created` handlers shipped with a terminal-status guard and 100 assertions, and ~~the one thing still owed is two ticks in the Stripe dashboard~~ ⚠ **corrected 2026-09-16: this header contradicted its own body, which records both events subscribed with a screenshot confirming it. What is actually owed is the two LIVE CONSTRAINTS — no refund or dispute until the branch deploys, and resend the historical event before ~2026-10-15**)
 
 Full report: **`qa/direction-f-migration-audit.md`**, section "Session 2, 2026-09-15".
 Plan: `~/.claude/plans/we-need-to-run-parsed-oasis.md`. Nothing merged, nothing pushed to

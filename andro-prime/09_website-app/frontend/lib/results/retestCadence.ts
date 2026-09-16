@@ -474,10 +474,14 @@ export const RETEST_CADENCE: Record<ResultState, RetestCell> = {
   // the table offered eight rows. Verified at the primary source (the Q3 mail
   // as sent, Gmail `1a0a69ae55223fe0`, ends "testosterone above 29 nmol/L,
   // vitamin D above 250 nmol/L"), never inferred from an adjacent answer.
-  // 🔴 Their card COPY is a separate gate and it is still shut: both carry
-  // NOT APPROVED markers in `biomarker-copy.ts` and have rendered since
-  // 2026-08-07 (CA-044 §2 item A). A `clinician-led` cell carries no date and
-  // no copy, so cadence is unaffected — but "row added" is not "card cleared".
+  // ✅ Their card COPY was the separate gate and it is now OPEN: both wordings
+  // were quoted to Ewa verbatim on 2026-09-16 (packet questions 1 and 2) and
+  // both came back A, "leave it exactly as it is", closing CA-044 §2 item A
+  // with no copy change after 40 days live and unsigned. The `NOT APPROVED`
+  // markers in `biomarker-copy.ts` were removed with that ruling, and this
+  // comment is the second place that fact lives: if one moves, move both.
+  // A `clinician-led` cell carries no date and no copy, so cadence was never
+  // affected either way.
   'high-testosterone': [CLINICIAN_LED_RULE], //                        T > 29
   'high-vitamin-d': [CLINICIAN_LED_RULE], //                           > 250 nmol/L
 

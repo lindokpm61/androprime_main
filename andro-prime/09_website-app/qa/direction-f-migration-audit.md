@@ -27,13 +27,20 @@ session scratchpad and are not committed (git holds the recipe, Drive holds the 
 
 ## Go / no-go
 
-**NO-GO, and nothing found in this audit is why.** The three blockers are the ones that
-were already on the board before it started, and all three are signatures rather than
-defects:
+> ▶ **SEQUENCING LIVES ELSEWHERE AS OF 2026-09-16.** This document is the **evidence**; what to
+> do next, in what order, is
+> `andro-prime/10_launch-ops/implementation-checklists/direction-f-go-live.md`, which merges
+> what is open here with what is open on the defects register and carries its own tick boxes.
+>
+> **The gate is now TWO items, not three:** CA-046 (or a decision to flag `/demo` off), and the
+> copy register's 26 owed signatures plus 5 rulings. CA-045 cleared and the pre-flight ran.
+
+**NO-GO, and nothing found in this audit is why.** The blockers are the ones that were already
+on the board before it started, and every one is a signature rather than a defect:
 
 | # | Blocker | Owner | Where |
 |---|---|---|---|
-| 1 | **CA-045** homepage + `/kits` imagery: 10 items, 8 questions. Packet is an unsent Gmail DRAFT and is stale (written for 9 items; the hero data field now renders on 5 surfaces, not 1). | Keith to send, Ewa + Keith to sign | ClickUp `869eur84c` |
+| 1 | ✅ **CA-045 — APPROVED 2026-09-15, BOTH SIGNERS.** ~~Homepage + `/kits` imagery: 10 items, 8 questions. Packet is an unsent Gmail DRAFT and is stale.~~ Ewa cleared all nine items at 20:07 UTC with no conditions (`1: A` … `7: A`) and Keith signed the same day. ⚠ **This row was written at 20:09, two minutes after the approval it describes as outstanding**, and stood uncorrected until 2026-09-16. ⚠ Two conditions survive the approval and are not closed by it: the hero field's opacity is **not** pinned, and hs-CRP and SHBG stay in the hero pattern uncovered by the build check | ✅ none | ClickUp `869eur84c` |
 | 2 | **CA-046** `/demo`: a full results report, a membership price and ~2 dozen un-pre-flighted prototype strings on an ungated surface. | Ewa | ClickUp `869exuphq` |
 | 3 | ✅ **Copy register reconciliation — RAN 2026-09-15.** Closed section written; every row dispositioned. ⚠ It was never 48 rows — **78** — the `## Closed` heading sat mid-table and 27 rows fell behind it. **The merge removes 15 HARD findings and adds none.** Still owed and not mine: 26 sign-off rows, 5 missing rulings. | Keith + Ewa to sign; the pass itself is done | `redesign-copy-register.md`, Closed section |
 
@@ -1010,15 +1017,23 @@ like the assertion firing. Observations 813 to 815.
    which is the P9 guard firing on register row 42a, not a regression.
 9. ~~**External link check**~~ — **DONE in session 2, clean.** See below.
 
-### Owed to Keith, from session 2 — both are configuration, not code
+### Owed to Keith, from session 2 — ✅ BOTH CLOSED, and this list was stale
 
-1. 🔴 **Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify** before
-   the next deploy. The Dockerfile now mounts them; a mount with no value behind it is
-   still an empty string, so without this step S2-1 is not actually fixed. Values are in
-   `frontend/.env.local`.
-2. 🔴 **Decide S2-2** — the unauthenticated kit-dispatch endpoint. Three options are set
-   out in the session 2 section with a recommendation; it is live today, so the decision
-   is a launch gate rather than a merge gate.
+1. ✅ ~~**Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify.**~~
+   **Keith set them, 2026-09-15.** ⚠ Re-check them against the deployed build in Gate C3 of
+   the go-live plan anyway: `lib/supabase/env.ts`'s silent fallback means a missing variable
+   produces a working-but-wrong client rather than an error, so this has to be checked
+   **positively** and cannot be confirmed by the absence of a failure.
+2. ✅ ~~**Decide S2-2** — the unauthenticated kit-dispatch endpoint.~~ **Decided and done,
+   2026-09-15: the route is REMOVED**, its body extracted to `lib/vitall/dispatchKit.ts`,
+   after Gate 3 was proved on a live purchase. What survives is a smaller decision, carried to
+   Gate D: `dispatchKit` still ships a kit for an order at `pending`, `cancelled`, `refunded`
+   or `on_hold`.
+
+⚠ **Both of these read as outstanding for a day after they were done**, which is the same
+failure as the CA-045 row at the top of this file. **A "still owed" list is only as good as the
+discipline of striking things off it**, and nothing here strikes itself off. The go-live plan
+carries the tick boxes for exactly this reason.
 
 ### Environment notes for the next session
 - `.env.local` `MEMBERSHIP_ENABLED` was set to **false** for this pass and left that way.

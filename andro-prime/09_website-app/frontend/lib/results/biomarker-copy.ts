@@ -77,12 +77,15 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
       'Your testosterone is in a strong zone. No intervention is indicated for this marker. Testing again in 6–12 months will confirm it is staying there. A second reading gives you a trend, not just a snapshot.',
   },
 
-  // Ewa set the threshold ("over 29+") on 2026-08-07 and routed it to GP. The
-  // WORDING BELOW IS DRAFTED, NOT APPROVED: her reply gave the number, and the
-  // email had put the wording to her as her call. Deliberately does not name a
-  // cause, and asks about what the man is taking as a question for his GP
-  // rather than an accusation from us. No supplement CTA reaches this card,
-  // because it is a GP-block state.
+  // Ewa set the threshold ("over 29+") on 2026-08-07 and routed it to GP.
+  // WORDING APPROVED 2026-09-16, exactly as it stands: quoted to her verbatim
+  // as question 1 of the 2026-09-16 packet and answered A, "yes, leave it
+  // exactly as it is". Closes CA-044 §2 item A for this card with no copy
+  // change; recorded under CA-049's pre-flight evidence. It had been live and
+  // unsigned for 40 days. Deliberately does not name a cause, and asks about
+  // what the man is taking as a question for his GP rather than an accusation
+  // from us. No supplement CTA reaches this card, because it is a GP-block
+  // state. Any edit to these three fields reopens the approval.
   'high-testosterone': {
     stateLabel: 'Your testosterone is above the laboratory reference range',
     explanation:
@@ -167,9 +170,14 @@ export const BIOMARKER_COPY: Record<ResultState, BiomarkerCopy> = {
 
   // Ewa asked for this on 2026-08-07: "can we treat >250 nmol/L as a
   // high/clinical review flag rather than just a technical out-of-range
-  // result?" WORDING DRAFTED, NOT APPROVED. Being a GP-block state, no
-  // supplement CTA can render here, which is the point: the last thing a man
-  // above the ceiling should be offered is more D3.
+  // result?" WORDING APPROVED 2026-09-16, exactly as it stands: quoted to her
+  // verbatim as question 2 of the 2026-09-16 packet and answered A, "yes,
+  // leave it exactly as it is". Closes CA-044 §2 item A for this card with no
+  // copy change; recorded under CA-049's pre-flight evidence. It had been live
+  // and unsigned for 40 days. Being a GP-block state, no supplement CTA can
+  // render here, which is the point: the last thing a man above the ceiling
+  // should be offered is more D3. Any edit to these three fields reopens the
+  // approval.
   'high-vitamin-d': {
     stateLabel: 'Your Vitamin D is above the laboratory reference range',
     explanation:

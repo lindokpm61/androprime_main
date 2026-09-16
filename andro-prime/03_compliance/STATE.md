@@ -2,17 +2,26 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
-## 🔴 2026-09-16 — CA-049: FIVE MORE ANSWERS IN 90 MINUTES, AND ONE OF THEM PUT TWO LIVE CARDS IN BREACH
+## 🔴 2026-09-16 — CA-049 IS APPROVED BY BOTH SIGNERS, AND THE BREACH ONE OF ITS ANSWERS EXPOSED IS STILL LIVE ON PRODUCTION
 
-**`1: A 2: A 3: B 4: B 5: A`**, Ewa, 02:03 UTC, thread `1a0a7e88d3e90ab6`. 🔴 **Keith's business
-sign-off owed.** Record: `content-approval/approval-record-symptom-overlay-followups-2026-09-16.md`.
-ClickUp `869f2k7he`.
+**`1: A 2: A 3: B 4: B 5: A`**, Ewa, 02:03 UTC, thread `1a0a7e88d3e90ab6`. ✅ **APPROVED, BOTH
+SIGNERS, 2026-09-16** — Keith's business sign-off followed the same day, *"CA-49 approved"*.
+⚠ **Signing the record authorises no build.** Record:
+`content-approval/approval-record-symptom-overlay-followups-2026-09-16.md`. ClickUp `869f2k7he`.
 
 ✅ **CA-044 §2 ITEM A IS CLOSED, WITH NO COPY CHANGE.** Q1 and Q2 approved both card wordings
 exactly as written, so **40 days of live unapproved copy resolves to "the words were right, they had
 simply never been signed."** Both were quoted to her verbatim, 6 of 6 fields diffed against source,
-so she ruled on the exact text that is on the site. ⚠ **Next: remove the `NOT APPROVED` markers at
-`biomarker-copy.ts:81` and `:170`**, which is a comment change, not a copy change.
+so she ruled on the exact text that is on the site. ✅ **THE `NOT APPROVED` MARKERS ARE OUT
+(2026-09-16), AND IT WAS TWO CALL SITES, NOT TWO LINE NUMBERS.** Both markers in
+`biomarker-copy.ts` now record the approval — question number, answer, date, and that editing any of
+the three fields reopens it — and ⚠ **`retestCadence.ts` held a SECOND copy of the same fact**,
+a comment on the `high-testosterone` / `high-vitamin-d` cells asserting *"both carry NOT APPROVED
+markers … the gate is still shut"*. **Removing only the markers would have left that sentence
+stating the opposite of the code it describes**, which is worse than leaving both stale, because a
+duplicated fact is invisible while the copies agree and the first correction is what makes it
+visible. Both were changed together and each now points at the other. Comment-only: no copy field
+moved, and `stateLabel`, `explanation` and `recommendation` are byte-for-byte what Ewa read.
 
 🔴 **Q3 = B GAVE THE FLAGGED TEN THE SAME ANSWER AS THE GP-ROUTED TEN** — *"your GP decides when to
 repeat this, not us"* — and that immediately put two live cards in breach. `shbg-low` and
@@ -28,8 +37,15 @@ failing.** 🔴 **Not on production**: the correction is on `redesign/direction-
 it dispatches a kit sooner; unbuilt). ✅ **Q5 = A** keeps the alert container on the 999 block,
 closing CA-048 build condition 2.
 
-🔴 **Still owed:** Keith's sign-off; **the flagged-ten sentence**, whose substance is ruled but whose
-wording is new copy for ten cards and owes its own pre-flight; and the two unbuilt items.
+🔴 **STILL OWED, AND THE FIRST ONE IS THE ONLY LIVE RISK ON THE LIST: THE §3 CORRECTION IS NOT ON
+`main`.** Re-verified on `main` at sign-off: `classifier.ts` still carries the unsplit three-state
+branch, so **`shbg-low` and `shbg-high` are still selling "Retest in 6-12 months" → `/kits` to real
+customers right now.** The fix, its guard and its watched failure are all on `redesign/direction-f`,
+**183 commits ahead of `main`**, and Coolify builds `main`. ⚠ **A breach corrected on a branch is a
+breach that is still live**, and neither Ewa's ruling nor Keith's sign-off moves it — **the merge is
+the discharge, not the commit.** Then: **the flagged-ten sentence**, whose substance is ruled but
+whose wording is new copy for ten cards and owes its own pre-flight; and the early-claim rule,
+unbuilt and touching dispatch.
 
 ---
 
