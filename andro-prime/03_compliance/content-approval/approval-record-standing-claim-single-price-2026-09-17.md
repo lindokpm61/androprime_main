@@ -180,11 +180,28 @@ this block and has not.
 
 ## 5. Outcome
 
-- Final decision: **PENDING signature, and nothing is owed before it.** ✅ **All three copy
-  items are RULED (Keith, 2026-09-17): J-1 option A, J-2 yes, J-3 leave it.** J-1 and J-2
-  required no code change because both were already what is built; J-3 produced a dated,
-  guarded `CLAIMS_ALLOW` entry rather than a copy change. J-4 is engineering and is recorded
-  rather than signed.
+- Final decision: ✅ **APPROVED. Keith, 2026-09-17.**
+- **Evidence, and it is the hub rather than this file.** Board task `869f3m9hx` on list
+  `901219880207` read back at status `approved` on 2026-09-17 via
+  `09_website-app/frontend/scripts/clickup-approval-task.ts --dry-run`. Per
+  `content-approval/README.md` the task status IS the decision on this board. **The register
+  row and this file are both copies of that.**
+- ⚠ **The signature block in section 4 is deliberately still empty**, on the same basis as
+  CA-050: Claude does not write in it, and the operative act was Keith's board move. Its
+  absence is not a missing approval.
+- ✅ **All three copy items were ruled BEFORE the signature** (J-1 option A, J-2 yes, J-3
+  leave it), so **this approval carries no open item**. J-1 and J-2 required no code change
+  because both were already what is built; J-3 produced a dated, guarded `CLAIMS_ALLOW` entry
+  rather than a copy change. J-4 is engineering, recorded rather than signed.
+- Register updated: 2026-09-17, row CA-051, APPROVED.
+- 🔴 **CONDITION 6 NOW BINDS THIS RECORD.** Any change to these sentences, or any new
+  surface stating the position in its own words rather than through the module, needs a fresh
+  record. That is not boilerplate: it is the exact test that closed the cheap route for these
+  strings when CA-050 was signed a few hours earlier and forced them into their own number.
+  **The cheapest moment to change approved copy is before it is approved.**
+- **What is still owed on the flip, and it is not this record's:** H-A, the charge date with
+  no starting point, which survives CA-050's signature by that record's condition 1 and needs
+  its own record when built. Nothing on CA-051 is waiting.
 - ⚠ **The board task NAME still reads "four decisions" and the repo script writes content
   only, so it cannot be corrected from here.** The body is authoritative. This is the same
   one-fact-in-two-places shape `README.md` warns about for PENDING/APPROVED in task names,

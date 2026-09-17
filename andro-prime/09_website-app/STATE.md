@@ -163,7 +163,12 @@ design with the flag on; rebuild flag-off afterwards to restore the shipping art
    `03_compliance/content-approval/approval-record-membership-renewal-copy-c1-2026-09-17.md`.
    ⚠ **It needs its own record when built** (CA-052), because it changes CA-050's just-approved
    sentences.
-2. ✅ **DONE 2026-09-17: row 42b's flag-on strings are CA-051.** Board `869f3m9hx` at `pending`,
+2. ✅ **CLOSED 2026-09-17. CA-051 IS APPROVED** (Keith; board `869f3m9hx` read back at `approved`,
+   register row and record mirrored). All three copy items were ruled before the signature, so it
+   carries no open item and **row 42b is closed**. ⚠ **Its condition 6 now binds:** changing these
+   sentences needs a fresh record — the same test that forced them out of CA-050 hours earlier.
+   **The cheapest moment to change approved copy is before it is approved.** Detail below.
+   Row 42b's flag-on strings became CA-051. Board `869f3m9hx`,
    record `approval-record-standing-claim-single-price-2026-09-17.md`, register row added, the
    approvals-board guard enforced hub-before-register by blocking the record write until the task
    existed. Pre-flight 0 HARD / 0 REVIEW on both payloads, **delta zero new wording**. ✅ **J-1 RULED
