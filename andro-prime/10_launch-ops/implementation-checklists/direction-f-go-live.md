@@ -42,8 +42,8 @@ value of this document.
 
 ## Gate A — before the merge
 
-**Five items. Nothing else blocks.** 🔄 **A1 is CLOSED as of 2026-09-16, so four remain:
-A2 signatures, A3's two one-line fixes, A4 the screenshot pass, A5 the session-carried sweep.**
+**Five items. Nothing else blocks.** 🔄 **A1 is CLOSED as of 2026-09-16 and A3 as of 2026-09-17,
+so three remain: A2 signatures, A4 the screenshot pass, A5 the session-carried sweep.**
 
 ### A1 · ✅ CLOSED 2026-09-16 BY OPTION 1. CA-046 IS APPROVED, BOTH SIGNERS, AND THE BUILD IS DONE.
 
@@ -115,20 +115,45 @@ compliance findings and adds none** — 18 on `main` today against 3 on the bran
 of main's eighteen are live verdict-vocabulary defects the branch fixes. **Waiting is not the
 conservative option here.**
 
-### A3 · 🟡 Two migration landmines that put a wrong answer in front of a customer
+### A3 · ✅ CLOSED 2026-09-17. Both fixed, and the shape is now guarded rather than just removed.
 
 From plan Phase 5, defect `S5`. Both verified still present on 2026-09-16. Take these two now
 and leave the other two for Gate D — these are the two that reach a person.
 
-- [ ] `lib/activate/sendActivationLink.ts:29` — falls back to `http://localhost:3000` **inside an
+- [x] `lib/activate/sendActivationLink.ts:29` — fell back to `http://localhost:3000` **inside an
       emailed link**. Dormant only while `NEXT_PUBLIC_SITE_URL` is set, and `S1` is the standing
-      proof that exactly this class of variable goes missing with nothing noticing
-- [ ] `lib/supabase/env.ts:1-3` — ships a real project ref and anon key as **silent fallbacks**, so
-      a missing variable yields a working-but-wrong client instead of an error
+      proof that exactly this class of variable goes missing with nothing noticing.
+      **Now `headerStore.get('origin') || SITE_URL`.** It was the third *"resolve the origin from
+      the request, fall back to the site"* caller, and `lib/site-url.ts` exists to hold that
+      fallback once — its header already names the other two. This one was missed, and it was the
+      only copy still spelling the fallback `localhost`
+- [x] `lib/supabase/env.ts:1-3` — shipped a real project ref and anon key as **silent fallbacks**, so
+      a missing variable yielded a working-but-wrong client instead of an error.
+      **All three fallbacks removed; the getters now throw and name the variable.**
+      ⚠ It was invisible because the fallback ref and the live project are the SAME today:
+      production was correct by coincidence, not by configuration, and would have stayed correct
+      right up until the ref changed. `isSupabaseConfigured()` is untouched, so the call sites that
+      degrade gracefully still do
 
-⚠ **The shared shape, and the reason both are here rather than in Gate D:** each degrades into
+⚠ **The shared shape, and the reason both were here rather than in Gate D:** each degrades into
 something that *works and is wrong* rather than something that fails. A fallback indistinguishable
 from success is a decision to fail silently, taken by whoever wrote the `||`.
+
+🟢 **What makes this closed rather than fixed-for-now: `verify-env-contract.js` gained assertion G**,
+which fails on a hardcoded Supabase URL, a JWT literal or a `localhost:3000` origin anywhere in the
+302-module corpus. **Assertion A sees a variable arriving empty; G sees what answers it** — the two
+defects above both survived A precisely by supplying an answer instead of an error. It matches on
+comment-stripped source, so the three modules that now *describe* the rule in prose do not trip it.
+
+**Verified, and each check was made capable of failing first:** G was run against a probe
+reintroducing all three literals verbatim (3 errors, exit 1) before being trusted at exit 0; the
+throw path was exercised at 9/9 including the **empty string**, which is how the Dockerfile actually
+delivers an unsupplied secret; `typecheck` and the full `npm test` chain exit 0.
+🔴 **And the one real risk was settled by measurement, not reasoning: `SUPABASE_SERVICE_ROLE_KEY` is
+deliberately not a Docker build secret**, so a build-time read would now break the Coolify deploy.
+Making that getter throw *unconditionally* and rebuilding — the only version of the test that cannot
+be masked by `.env.local` — passed, with the probe string absent from the output. No build-time path
+reaches it.
 
 ### A4 · 🔴 Look at it — plan Phase 6, never started
 
@@ -216,9 +241,17 @@ Defect `S4`. Stripe retains events for 30 days.
 - [ ] `node scripts/audit-runtime-errors.js --base https://andro-prime.com`
 - [ ] `node scripts/audit-viewport-sweep.js --base https://andro-prime.com`
 - [ ] **Build arguments, positively.** Check the served `NEXT_PUBLIC_SITE_URL` in a canonical tag,
-      the Supabase URL in a client request, the GA4 id. `lib/supabase/env.ts`'s silent fallback
-      means a missing variable produces a working-but-wrong client rather than an error, **so this
-      cannot be checked by looking for an error**
+      the Supabase URL in a client request, the GA4 id.
+      🔄 **Amended 2026-09-17, and the amendment CHANGES WHAT THIS STEP CATCHES.** This item used to
+      read *"`lib/supabase/env.ts`'s silent fallback means a missing variable produces a
+      working-but-wrong client rather than an error, so this cannot be checked by looking for an
+      error."* A3 removed that fallback, so a missing Supabase variable now **throws and names
+      itself**. Check positively anyway: **the reasoning only ever applied to Supabase**, and
+      `NEXT_PUBLIC_SITE_URL` and the GA4 id still degrade silently — `SITE_URL` falls back to the
+      production origin (correct by coincidence, and the reason `lib/site-url.ts` says so in its
+      header) and an absent GA4 id renders no tag **and no cookie banner**, which is a consistent,
+      invisible, wrong state. So the step is unchanged; only the count of variables that would have
+      stayed quiet has gone from three to two
 - [ ] `/api/og/blog/[slug]` on a sample of slugs. It fetches Google Fonts **at request time** and
       degrades silently under restricted egress, so it cannot fail locally
 

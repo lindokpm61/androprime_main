@@ -47,6 +47,16 @@
  *   D. The dynamic `process.env[...]` sites are still exactly the known ones.
  *      A fourth one would put its keys outside this script's harvest, and the
  *      script would keep passing while checking an incomplete list.
+ *   G. No module carries a hardcoded CREDENTIAL OR ORIGIN as a fallback. A is
+ *      about a variable arriving empty; G is about what happens next. Until
+ *      2026-09-17 `lib/supabase/env.ts` answered a missing variable with the real
+ *      production project ref and the real anon key, and
+ *      `lib/activate/sendActivationLink.ts` answered one with
+ *      `http://localhost:3000` inside a link that gets EMAILED. Neither failed.
+ *      Both are the shape A exists to prevent, surviving A by supplying an answer
+ *      instead of an error — and the supabase one was invisible because the
+ *      fallback ref and the live project happened to be the same, so production
+ *      was correct by coincidence rather than by configuration.
  *
  * ⚠ A AND B ARE BOTH ESCAPABLE, DELIBERATELY, VIA THE TABLES BELOW — with a
  * reason recorded next to each escape. The point is not that the two lists can
@@ -377,13 +387,60 @@ function main() {
     )
   }
 
-  report(publicRead.length, allRead.size, configReads.size)
+  /* G. A hardcoded credential or origin standing in for a variable. Matched on
+     COMMENT-STRIPPED source for the same reason F is: this repo documents each
+     rule beside the code that obeys it — `lib/site-url.ts` and both modules fixed
+     on 2026-09-17 all name `http://localhost:3000` in prose — and a checker that
+     reports the documentation of a rule as a violation of it gets switched off.
+
+     Each entry records what a match DOES, not that it is untidy. The test for
+     adding one is whether the literal answers a missing variable with something
+     that works: that is the property A cannot see, because by then the variable
+     has already arrived empty and the `||` has already run. */
+  const CREDENTIAL_LITERALS = [
+    {
+      re: /['"`]https:\/\/[a-z0-9-]+\.supabase\.co/g,
+      what: 'a Supabase project URL',
+      why:
+        'a missing NEXT_PUBLIC_SUPABASE_URL then yields a working client pointed at ' +
+        'whichever project was typed here, which is correct only for as long as the ' +
+        'two happen to agree',
+    },
+    {
+      re: /['"`]eyJ[A-Za-z0-9_-]{10,}/g,
+      what: 'a JWT literal (a Supabase anon or service-role key)',
+      why: 'a missing key variable then authenticates as whoever that token belongs to',
+    },
+    {
+      re: /['"`][^'"`\n]*localhost:3000/g,
+      what: 'a localhost origin',
+      why:
+        'it reaches a customer inside an emailed link or a redirect, where it is a ' +
+        'browser error rather than a login, and only once the variable goes missing',
+    },
+  ]
+  for (const file of files) {
+    const src = stripComments(fs.readFileSync(file, 'utf8'))
+    const rel = path.relative(ROOT, file).replace(/\\/g, '/')
+    for (const { re, what, why } of CREDENTIAL_LITERALS) {
+      for (const m of src.matchAll(re)) {
+        const line = src.slice(0, m.index).split('\n').length
+        fail(
+          `${rel}:${line} hardcodes ${what}. Read it from the environment and throw ` +
+            `when it is absent — ${why}. A fallback indistinguishable from success ` +
+            `is a decision to fail silently, taken by whoever wrote the \`||\`.`
+        )
+      }
+    }
+  }
+
+  report(publicRead.length, allRead.size, configReads.size, files.length)
 }
 
 /* The counts are part of the output on PURPOSE. A checker whose corpus silently
    shrinks — a moved directory, a stale pattern — keeps printing OK, and the only
    visible difference is a number nobody was shown. Print what was inspected. */
-function report(publicCount, totalCount, configCount) {
+function report(publicCount, totalCount, configCount, moduleCount) {
   if (problems.length) {
     console.error('verify-env-contract: FAIL\n')
     for (const p of problems) console.error(`  ERROR: ${p}\n`)
@@ -394,7 +451,7 @@ function report(publicCount, totalCount, configCount) {
   console.log(
     `verify-env-contract: OK — ${publicCount} NEXT_PUBLIC_ variables mounted and exported, ` +
       `${totalCount} variables documented, ${configCount} build-time reads in next.config.ts ` +
-      `(${excused} deliberately unmounted).`
+      `(${excused} deliberately unmounted), ${moduleCount} modules clean of hardcoded credentials.`
   )
 }
 

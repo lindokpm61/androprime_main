@@ -485,14 +485,16 @@ changed two of the four answers:
 
 | Landmine | Verdict |
 |---|---|
-| `lib/activate/sendActivationLink.ts:26` emails a `http://localhost:3000` link | **Not a defect — unreachable.** Zero callers. `/activate` was retired 2026-09-12 and now redirects to `/how-to-sample`; `lib/activate/*` is marked-not-deleted on purpose. The sibling `/api/activate` route is live but auth-gated and user-scoped, and only stamps an engagement metric on the caller's own row. |
+| `lib/activate/sendActivationLink.ts:26` emails a `http://localhost:3000` link | ✅ **FIXED 2026-09-17** (Gate A item A3), now `headerStore.get('origin') \|\| SITE_URL`. The verdict below was right that it is unreachable — zero callers; `/activate` was retired 2026-09-12 and redirects to `/how-to-sample`; `lib/activate/*` is marked-not-deleted on purpose — and it was corrected anyway rather than excepted, so the rule needs no table of exemptions. ⚠ **Being unreachable is why it survived three passes:** each one re-derived "no caller, no defect" and stopped, which is a correct answer to a question nobody was asking. The cost of the fix was one import. *(Original verdict: "Not a defect — unreachable." The sibling `/api/activate` route is live but auth-gated and user-scoped, and only stamps an engagement metric on the caller's own row.)* |
 | `lib/blog.ts:129` renders drafts on any non-production `NODE_ENV` | **Guarded by the platform.** The Dockerfile's runtime stage sets `ENV NODE_ENV=production` explicitly and `next build` sets it during the build, so the shipping container cannot take the drafts branch. Deliberate and documented for local review. No action. |
-| `lib/supabase/env.ts:1-3` ships a real project ref and anon JWT as silent fallbacks | **Real, but armed with nobody walking on it.** A missing variable yields a working client pointed at *production*, which is correct in production and wrong everywhere else. There is exactly one deploy target today, so it cannot currently fire. Worth fixing when a second environment appears, and it must be fixed *before* one does. |
+| `lib/supabase/env.ts:1-3` ships a real project ref and anon JWT as silent fallbacks | ✅ **FIXED 2026-09-17** (Gate A item A3). All three fallbacks removed; the getters throw and name the variable, and `verify-env-contract.js` **assertion G** now fails if any hardcoded Supabase URL, JWT literal or `localhost:3000` origin returns to the corpus. `isSupabaseConfigured()` is untouched, so call sites that degrade gracefully still do. *(Original verdict: "Real, but armed with nobody walking on it… worth fixing when a second environment appears, and it must be fixed before one does." That reasoning held, and the deadline it set — before a second environment — is now met with room to spare.)* |
 | 30 files hardcode `const BASE_URL = 'https://andro-prime.com'` | **Real, same shape, not fixed here.** `lib/site-url.ts` already exists as the single source and nine modules were migrated to it; the 29 page files and one route were not. In production the literal and the variable agree, so the only symptom is that a non-production deploy self-canonicalises to production. Touching every page's metadata during a migration audit adds risk without removing a live defect. Recommend a separate sweep, and before any preview environment exists. |
 
-Both remaining landmines are the same finding in two places: **a fallback that is correct
+Both of those landmines were the same finding in two places: **a fallback that is correct
 in production is invisible until there is a second environment, and then it is wrong
-everywhere at once.** Neither blocks this merge; both block the first preview deploy.
+everywhere at once.** 🔄 **Amended 2026-09-17: the `env.ts` half is fixed, so ONE instance of
+that finding is left** — the 30 files hardcoding `BASE_URL`. It still does not block the merge,
+and it still blocks the first preview deploy.
 
 ### ✅ S2-5 The external citation check has now run, and it is clean
 
@@ -1021,9 +1023,14 @@ like the assertion firing. Observations 813 to 815.
 
 1. ✅ ~~**Set `NEXT_PUBLIC_GA4_MEASUREMENT_ID` and `NEXT_PUBLIC_APP_URL` in Coolify.**~~
    **Keith set them, 2026-09-15.** ⚠ Re-check them against the deployed build in Gate C3 of
-   the go-live plan anyway: `lib/supabase/env.ts`'s silent fallback means a missing variable
-   produces a working-but-wrong client rather than an error, so this has to be checked
-   **positively** and cannot be confirmed by the absence of a failure.
+   the go-live plan anyway, and check **positively**: the absence of a failure confirms nothing
+   for *these two*. 🔄 **Amended 2026-09-17:** this used to reason from `lib/supabase/env.ts`'s
+   silent fallback, which A3 has since removed — a missing Supabase variable now throws. The
+   instruction stands unchanged because **it never depended on Supabase**: an unset
+   `NEXT_PUBLIC_GA4_MEASUREMENT_ID` renders no tag and, because `CookieConsent` gates on the same
+   variable, no banner either — consistent, invisible and wrong — and `NEXT_PUBLIC_APP_URL`
+   falls back to a literal that is correct in production by coincidence. Those are the two this
+   item is actually about.
 2. ✅ ~~**Decide S2-2** — the unauthenticated kit-dispatch endpoint.~~ **Decided and done,
    2026-09-15: the route is REMOVED**, its body extracted to `lib/vitall/dispatchKit.ts`,
    after Gate 3 was proved on a live purchase. What survives is a smaller decision, carried to

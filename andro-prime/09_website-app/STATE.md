@@ -91,13 +91,33 @@ screenshot. Both are gated, a session is needed, and the only documented seeder 
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-17 (session close)
+## ▶️ PICK UP HERE — handoff, 2026-09-17 (session close, amended late for A3)
 
 **The sequencing home is unchanged: `10_launch-ops/implementation-checklists/direction-f-go-live.md`.**
-Work Gate A and tick the boxes in that file. **This session did not touch Gate A.** It closed the
-copy half of Gate E instead, so the go-live list is exactly as long as it was this morning.
+Work Gate A and tick the boxes in that file. The session that wrote this block closed the copy half
+of Gate E and did not touch Gate A; **a later session on the same day closed A3**, so Gate A is now
+three items, not four. Both are recorded below rather than in a fourth PICK UP HERE block.
 
-### 🟢 What closed: every copy record gating the flag flip
+### ✅ A3 closed, 2026-09-17 — the two fallbacks that fail silently are gone
+
+`lib/activate/sendActivationLink.ts` now reads `headerStore.get('origin') || SITE_URL`: it was the
+third *"resolve from the request, fall back to the site"* caller, `lib/site-url.ts` exists to hold
+that fallback once, and this was the one copy still spelling it `http://localhost:3000` — inside a
+link that gets emailed. `lib/supabase/env.ts` no longer defaults anything; all three getters throw
+and name the variable. ⚠ **That one was invisible because the hardcoded ref and the live project are
+the same today** — production was correct by coincidence rather than by configuration.
+
+🟢 **It is guarded, not just fixed: `verify-env-contract.js` assertion G** fails on a hardcoded
+Supabase URL, a JWT literal or a `localhost:3000` origin across the 302-module corpus. **Assertion A
+sees a variable arriving empty; G sees what answers it**, which is how both defects survived A.
+Proven able to fail (3 errors against a probe reintroducing all three literals) before being trusted
+at 0. `typecheck`, the full `npm test` chain and `npm run build` all exit 0.
+🔴 **The deploy risk was measured, not reasoned about:** `SUPABASE_SERVICE_ROLE_KEY` is deliberately
+**not** a Docker build secret, so a build-time read would break the Coolify build. Making that getter
+throw unconditionally and rebuilding — the only form of the test `.env.local` cannot mask — passed
+with the probe string absent. No build-time path reaches it.
+
+### 🟢 What closed earlier the same day: every copy record gating the flag flip
 
 | | |
 |---|---|
@@ -126,13 +146,13 @@ and `869f1bbxn`; written into the module header, Gate E and copy-register row 42
 
 ### What the next session picks up, in order
 
-1. **🟢 Gate A, unchanged and still the go-live path.** Four items:
+1. **🟢 Gate A, still the go-live path. ✅ A3 CLOSED 2026-09-17, so THREE items remain:**
    **A2** — 26 rows needing sign-off plus 5 needing a ruling (Keith, and Keith + Ewa);
-   **A3** — two one-line fixes, `lib/activate/sendActivationLink.ts:29` (a `http://localhost:3000`
-   fallback inside an emailed link) and `lib/supabase/env.ts:1-3` (a real project ref and anon key as
-   silent fallbacks); **A4** — the screenshot pass, never started; **A5** — the seven `(app)`
+   **A4** — the screenshot pass, never started; **A5** — the seven `(app)`
    routes, both internal boards, `/blog/preview/[slug]` and all three error boundaries, none of which
    an anonymous sweep can reach.
+   **A2 is the only one of the three that needs a person who is not at a terminal**, so it is the
+   one to start, and A4 is the largest.
 2. **🟠 THE STANDING TIE, and it is the one thing on Gate E that can still go wrong quietly.**
    CA-050's **K-1** and CA-052's **N-2** are the same exception stated on two surfaces:
    *"your first 30 days are included in the price of every kit"* and *"it starts when your first
