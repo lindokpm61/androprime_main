@@ -151,18 +151,29 @@ design with the flag on; rebuild flag-off afterwards to restore the shipping art
 
 ### What it left owed, in the order it matters
 
-1. 🔴 **H-A, unchanged and still first.** It is a condition on the flag flip, not on CA-050's
-   signature. **It is blocked rather than pending:** CA-050 condition 6's re-submission test means
-   changing those sentences needs a fresh record, and CA-050 is `pending` Keith (`869f3guna`). Do not
-   apply it unilaterally.
-2. 🔴 **Row 42b's flag-on strings owe Keith a signature**, and there is a routing choice:
-   **put them on CA-050 while it is still unsigned** (same paragraph family, same ruling, and its
-   condition 6 is what makes them need a signature at all), or open CA-051 if CA-050 is signed first.
-   Inside it sits one real decision: **the `/about` spec chip has no pure-deletion form.**
-   `{ 'One price', 'For the test, and nothing after it' }` dies in both halves, so deleting the false
-   half deletes the chip and leaves three trust rows instead of four. What is implemented introduces
-   **no new word** — C1's flag-on heading with the full stops dropped — and the alternative is
-   dropping the chip. Keith rules.
+1. 🔴 **H-A, still first, and it is now UNBLOCKED rather than blocked.** ✅ **CA-050 was
+   APPROVED by Keith on 2026-09-17** (board `869f3guna`, read back at `approved`; register row and
+   record both mirrored). Its condition 1 says the HARD item survives the signature *"whether or not
+   this record is signed first"*, so H-A is the one item of the eight that still gates the flip.
+   **What changed is that it can now be actioned:** while CA-050 was pending, condition 6's
+   re-submission test meant touching those sentences needed a fresh record that could not be opened.
+   **Its fix is already an approved sentence** — the homepage string in CA-050's own payload states
+   the fact correctly: *"It starts when your first result lands, and on day 31 it becomes £47 a
+   month."* `/kits` and both kit-LP FAQs say it without the starting point. Detail in section 2 of
+   `03_compliance/content-approval/approval-record-membership-renewal-copy-c1-2026-09-17.md`.
+   ⚠ **It needs its own record when built** (CA-052), because it changes CA-050's just-approved
+   sentences.
+2. ✅ **DONE 2026-09-17: row 42b's flag-on strings are CA-051.** Board `869f3m9hx` at `pending`,
+   record `approval-record-standing-claim-single-price-2026-09-17.md`, register row added, the
+   approvals-board guard enforced hub-before-register by blocking the record write until the task
+   existed. Pre-flight 0 HARD / 0 REVIEW on both payloads, **delta zero new wording**. 🔵 **Four
+   items sit on it and J-1 is a choice rather than a signature: the `/about` chip has no
+   pure-deletion form.** `{ 'One price', 'For the test, and nothing after it' }` dies in both halves,
+   so deleting the false half deletes the chip and leaves three trust rows instead of four. What is
+   implemented introduces **no new word** — CA-050's approved flag-on heading with the full stops
+   dropped — and the alternative is dropping the chip. **The judgement it needs is about register:**
+   those words were approved as a money-block heading and are being asked to work as a trust-strip
+   fact beside two credentials.
 3. 🟠 **The two homepage metadata fields ship at the MERGE**, not at the flip, so they are the
    only part of 42b that is not flag-protected. They are **row 48's owed item extended**: that row
    already recorded the meta `description` dropping *"One price, nothing hidden."* as owed to Keith,

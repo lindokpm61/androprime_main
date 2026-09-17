@@ -218,11 +218,34 @@ this block and has not.
 
 ## 5. Outcome
 
-- Final decision: **PENDING.** Not approved: 1 hard item and 7 flagged, awaiting Keith.
-- Register updated: 2026-09-17, row CA-050, PENDING.
-- Notes: supersedes CA-026's **C1 item only** on approval; the rest of CA-026 stands, and
-  the flag-off branch continues to render the CA-026 C1 text byte for byte, so nothing
-  currently live changes when this is signed.
+- Final decision: ✅ **APPROVED. Keith, 2026-09-17.**
+- **Evidence, and it is the hub rather than this file.** Board task `869f3guna` on list
+  `901219880207` read back at status `approved` on 2026-09-17 via
+  `09_website-app/frontend/scripts/clickup-approval-task.ts --dry-run`. Per
+  `content-approval/README.md`, the task status IS the decision on this board, and
+  `approved` is a closed-type status so ClickUp stamps who moved it and when. **The
+  register row and this file are both copies of that.**
+- ⚠ **The signature block in section 4 is deliberately still empty.** Claude does not
+  write in it, and the operative act was Keith's board move rather than a line typed here.
+  If a countersigned in-file record is wanted for the audit trail, Keith writes that row
+  himself; its absence is not a missing approval.
+- Register updated: 2026-09-17, row CA-050, APPROVED.
+- 🔴 **THE HARD ITEM SURVIVED THE APPROVAL AND IS NOW UNBLOCKED RATHER THAN CLOSED.**
+  Condition 1 says so in its own words: H-A is a condition on the flag flip *"whether or
+  not this record is signed first"*. It is the only one of the eight items that gates the
+  flip, and the baseline is not a safe fallback because it is false in the other
+  direction. **Until CA-050 was signed, H-A could not be actioned at all** — condition 6's
+  re-submission test meant changing those sentences needed a fresh record and this one was
+  pending. That block is now lifted. Its fix is already an approved sentence: the homepage
+  string in this same payload states the fact correctly.
+- **Superseded:** CA-026's **C1 item only**. The rest of CA-026 stands, and the flag-off
+  branch continues to render the CA-026 C1 text byte for byte, so **nothing currently live
+  changed on signature.**
+- **What this approval did NOT cover, recorded so the boundary is not assumed away:** the
+  A1 standing claim under the same flag. Those strings are new to the module and were not
+  in this record's enumerated payload, so under condition 6 they took their own number,
+  **CA-051** (`approval-record-standing-claim-single-price-2026-09-17.md`, board
+  `869f3m9hx`, pending). Defect H2b, copy-register row 42b.
 
 ---
 

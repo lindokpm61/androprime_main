@@ -288,7 +288,8 @@ The defect rows it depends on, none of which blocks go-live:
 | Defect | `3c` `3d` `P1` `P2` `P4` `P6` | **E** |
 | Defect | `3f` breach half · `A2` · `M7` render · `P5` rebuild · `S1` | **B**, discharged by merging; verified in **C4** |
 | Defect | `3f` sentence · ~~`H1`~~ · ~~`H2`~~ · ~~`H3`~~ · `S6` · `R4` · `S5` (2 of 4) | **D** — H1/H2/H3 closed 2026-09-17 |
-| Defect | `H2b` · `H-A` · the `/about` chip | **E** — applied behind the flag 2026-09-17, owed Keith's signature before the flip. Copy-register row 42b. **Not a go-live blocker: `MEMBERSHIP_ENABLED` ships false**, except the two homepage metadata fields, which ship at the merge and are row 48's owed item extended from one call site to three |
+| Defect | `H2b` · the `/about` chip | **E** — applied behind the flag 2026-09-17, **now CA-051** (board `869f3m9hx`, pending), owed Keith before the flip. Copy-register row 42b. **Not a go-live blocker: `MEMBERSHIP_ENABLED` ships false**, except the two homepage metadata fields (CA-051 item J-2), which ship at the MERGE and are row 48's owed item extended from one call site to three |
+| Defect | `H-A` | **E** — ✅ **unblocked 2026-09-17 when CA-050 was approved**, and it is the one item of that record's eight that survives the signature as a condition on the flip (record condition 1, in its own words). Its fix is already an approved sentence: the homepage string in CA-050's payload states the starting point correctly. **Needs its own record when built** |
 | Defect | `S5` (first 2) | **A3** |
 | Defect | `S4` | constraint 1 → **B**; constraint 2 → **C2**, dated |
 | Defect | `P5` copy approval | inside **A2**'s 26 rows (register row 45) |

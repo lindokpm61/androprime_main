@@ -25,21 +25,31 @@ if (!outDir) {
 }
 mkdirSync(outDir, { recursive: true })
 
+/*
+ * 🔴 EXHAUSTIVE BY CONSTRUCTION SINCE 2026-09-17, NOT BY A HAND-WRITTEN LIST.
+ *
+ * This used to enumerate the eleven fields by name. That is a second place to
+ * remember something, and the thing it is used for is deciding whether copy has
+ * been reviewed — so a field missing from the list produces a pre-flight that
+ * scans a payload with the new strings taken out of it, and reports clean.
+ *
+ * It was one commit from happening: `standingClaim`, `aboutFactLabel` and
+ * `aboutFactSub` were added to the interface for defect H2b and none of them
+ * would have appeared here. The scan would have run, returned zero delta, and
+ * the zero would have been about the wrong text.
+ *
+ * Walking the returned object means a field cannot be added to `SubscriptionCopy`
+ * without entering the dump. Key order follows the object literal, so the two
+ * payloads stay diffable run to run.
+ */
 function render(membershipEnabled: boolean): string {
   const c = subscriptionCopy(membershipEnabled)
-  return [
-    c.c1Kicker,
-    c.c1Heading.join(' '),
-    ...c.c1Paragraphs,
-    c.orderStep01,
-    c.kitFootnote,
-    c.lpTestosteroneFootnote,
-    c.secureCheckout,
-    c.allInChip,
-    c.faqTestosterone,
-    c.faqHormoneRecovery,
-    c.homepageMembership,
-  ].join('\n\n') + '\n'
+  const parts: string[] = []
+  for (const value of Object.values(c) as unknown[]) {
+    if (Array.isArray(value)) parts.push(...(value as string[]))
+    else parts.push(String(value))
+  }
+  return parts.join('\n\n') + '\n'
 }
 
 for (const [name, on] of [['baseline-flag-off', false], ['new-flag-on', true]] as const) {
