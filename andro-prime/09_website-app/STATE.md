@@ -151,7 +151,14 @@ design with the flag on; rebuild flag-off afterwards to restore the shipping art
 
 ### What it left owed, in the order it matters
 
-1. ✅ **H-A IS BUILT AND IS CA-052, board `869f3mqwj` at `pending`.** One decision (N-1) and
+1. 🟢 **CLOSED 2026-09-17. CA-052 IS APPROVED, AND IT WAS THE LAST COPY RECORD GATING THE FLIP.**
+   Board `869f3mqwj` read back at `approved`; register row and record mirrored. **CA-050, CA-051 and
+   CA-052 are all signed, the interlock reads 0 sentences on 0 pages, and nothing still outstanding
+   on `MEMBERSHIP_ENABLED` is a copy question.** What remains is engineering plus the Phase-0
+   compliance read `lib/flags.ts` names as its own gate. ⚠ Condition 6 binds all three now:
+   changing any of those sentences needs a fresh record.
+
+   *Detail, kept because it is the reasoning:* H-A was built as CA-052. One decision (N-1) and
    one signature. The clause is **lifted verbatim from CA-050's own approved homepage sentence**,
    so it introduces no new wording; it is now one constant, `RENEWAL_CLAUSE`, with four consumers.
    **Delta measured field by field against the approved baseline rather than described: flag OFF

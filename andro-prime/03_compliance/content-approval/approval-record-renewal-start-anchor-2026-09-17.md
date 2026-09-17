@@ -150,7 +150,31 @@ this block and has not.
 
 ## 5. Outcome
 
-- Final decision: **PENDING signature, and nothing is owed before it.** ✅ **N-1 is RULED (Keith, 2026-09-17): no change, the built version stands**, and no code moved on the ruling. N-2 is a standing flag tying this record to CA-050's K-1 rather than a decision, and N-3 is a note.
+- Final decision: ✅ **APPROVED. Keith, 2026-09-17.**
+- **Evidence, and it is the hub rather than this file.** Board task `869f3mqwj` on list
+  `901219880207` read back at status `approved` on 2026-09-17 via
+  `09_website-app/frontend/scripts/clickup-approval-task.ts --dry-run`. Per
+  `content-approval/README.md` the task status IS the decision on this board. **The register
+  row and this file are both copies of that.**
+- ⚠ **The signature block in section 4 is deliberately still empty**, on the same basis as
+  CA-050 and CA-051: Claude does not write in it, and the operative act was Keith's board
+  move. Its absence is not a missing approval.
+- ✅ **N-1 was RULED before the signature** (no change, the built version stands) and **no
+  code moved on the ruling**, because the option chosen was the one already implemented.
+  N-2 is a standing flag rather than a decision; N-3 is a note.
+- Register updated: 2026-09-17, row CA-052, APPROVED.
+- 🟢 **THIS WAS THE LAST COPY RECORD GATING THE FLAG FLIP.** CA-050, CA-051 and CA-052
+  are all signed; `verify-subscription-claims.js` reads 0 sentences on 0 pages; and **nothing
+  still outstanding on `MEMBERSHIP_ENABLED` is a copy question.** What remains is
+  engineering (`STRIPE_PRICE_MEMBERSHIP`, the Coolify build argument, the terms Membership
+  section) plus the Phase-0 compliance read that `lib/flags.ts` names as its own gate.
+- 🔴 **CONDITION 6 NOW BINDS THIS RECORD.** Any change to these sentences, or a new
+  surface stating the renewal in its own words rather than through the module, needs a fresh
+  record. **This session opened CA-051 and CA-052 for exactly that reason**, so the rule is
+  not theoretical: the cheapest moment to change approved copy is before it is approved.
+- **Superseded:** CA-050's C1 paragraph and its two kit-LP FAQ answers only. The rest of
+  CA-050 stands, **its homepage sentence is unchanged**, and CA-051 is untouched. **Nothing
+  currently live changed on signature: the flag-off payload is unchanged in every field.**
 - Register updated: 2026-09-17, row CA-052, PENDING.
 - Notes: supersedes CA-050's C1 paragraph and two FAQ answers on approval; the rest of
   CA-050 stands and its homepage sentence is unchanged. **Nothing currently live changes:
