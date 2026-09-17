@@ -5,6 +5,8 @@ import { panelCardLabels } from '@/lib/kits/panel'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { SIZES_HEROGRID } from '@/lib/ui/image-sizes'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 
 /**
  * /how-it-works, rebuilt in Direction F on 2026-08-30 from
@@ -199,6 +201,8 @@ const faqItems = [
 ]
 
 export default function HowItWorksPage() {
+  /* Read per request, never at module scope: see subscriptionCopy.ts. */
+  const copy = subscriptionCopy(isMembershipEnabled())
   return (
     <FPage>
       <JsonLd data={howItWorksSchema} />
@@ -488,10 +492,12 @@ export default function HowItWorksPage() {
         <div className="f-splitgrid f-rise">
           <div>
             <p className="f-blab">Where we stand</p>
+            {/* CA-026 A1, from the module since 2026-09-17: register row 42b.
+                It was a literal here, wrapped across three JSX lines, which is
+                precisely why a single-line grep for the sentence found llms.txt
+                and missed this. */}
             <p className="f-stand" style={{ marginTop: 12, fontSize: 'clamp(1.25rem, 2.4vw, 1.7rem)' }}>
-              Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any
-              result that needs a doctor, low testosterone included, goes to a GP, and those results
-              earn us nothing.
+              {copy.standingClaim}
             </p>
           </div>
           <div className="f-tray" style={{ marginBottom: 0 }}>

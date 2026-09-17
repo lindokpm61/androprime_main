@@ -139,6 +139,26 @@ const CLAIMS = [
   'pay once',        // app/(marketing)/kits/page.tsx:201, step 01
   'one-off test',    // components/commerce/BundleChoice.tsx:116, all 3 kit pages
   'all-in, one-off', // app/lp/energy-recovery:376, app/lp/hormone-recovery:536
+  /* 🔴 ADDED 2026-09-17, AND IT IS THE FOURTH INSTANCE OF THIS FILE'S OWN DEFECT
+     — the first one along the SUBJECT axis rather than the directory axis.
+
+     The scope had been widened three times (page components -> `public/` ->
+     `components/`) and each note above reasons about WHERE copy can live. None
+     asked what a one-off purchase can be ASSERTED WITH. This list greps for
+     "no subscription", "one-off" and "pay once"; the CA-026 A1 standing claim
+     says it in words none of those match, *"You pay one price for the test"*,
+     and so did `public/llms.txt` until H2 removed it on 2026-09-17.
+
+     With this entry absent the check printed **"0 sentence(s) on 0 page(s)"**
+     and the verdict **"nothing asserts a one-off purchase. The copy sweep is
+     done."** over seven live instances on five files. That is worse than the
+     three directory misses, because those reported a partial count while this
+     one reported COMPLETION. Register row 42b, defect H2b.
+
+     ⚠ A WIDENED DIRECTORY SCOPE SEARCHING FOR A NARROW VOCABULARY IS STILL A
+     NARROW SEARCH. When adding a claim, ask what else the same commercial fact
+     can be said with, not only where else it can be said. */
+  'one price',       // about:88 + :114, how-it-works:492, lp/collagen:254, lp/daily-stack:294, homepage og+twitter
 ]
 
 /* 🔴 THE MIRROR SET, ADDED 2026-09-11. THE CHECK WAS ONE-DIRECTIONAL AND THAT WAS
@@ -262,6 +282,26 @@ const LINKED_COPY = [
       'nothing claim is the fourth and is separable, so it need not be reopened.',
       'Keep sentence four byte-identical and Ewa does not re-enter: the rewrite',
       'was ruled business rather than clinical on 2026-09-11.',
+    ],
+  },
+  {
+    label: 'CA-026 A1, the standing claim',
+    /* Whitespace-tolerant for the same reason as C1: on `/how-it-works` the
+       sentence wrapped across three JSX lines, so a single-line grep for it
+       returned `llms.txt` and the two `/lp/` pages and silently missed the
+       one on the page that argues the position. */
+    pattern: /kept\s+apart\s+at\s+Andro\s+Prime/i,
+    note: [
+      'THREE SENTENCES, NOT FOUR — do not read C1\'s structure onto it. The one',
+      'that dies is the MIDDLE one, "You pay one price for the test". The GP',
+      'claim is the third and is Ewa\'s; keep it byte-identical and she does not',
+      're-enter, the same rule as C1 sentence four.',
+      '',
+      'It lived as a LITERAL in FOUR page stores until 2026-09-17 (defect H2b):',
+      '/about, /how-it-works, /lp/collagen and /lp/daily-stack. They now read it',
+      'from subscriptionCopy.ts; llms.txt keeps the deletion because a static',
+      'file cannot read a flag. `scripts/test-standing-claim.ts` asserts the two',
+      'stores agree and that no page has re-imported the literal.',
     ],
   },
 ]

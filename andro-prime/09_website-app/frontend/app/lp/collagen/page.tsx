@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FHero } from '@/components/marketing/FPage'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 
 /**
  * /lp/collagen, rebuilt in Direction F on 2026-09-11.
@@ -118,6 +120,8 @@ const FAQ_ITEMS = [
 ]
 
 export default function CollagenLpPage() {
+  /* Read per request, never at module scope: see subscriptionCopy.ts. */
+  const copy = subscriptionCopy(isMembershipEnabled())
   return (
     <FPage>
       <JsonLd data={lpSchema} />
@@ -250,8 +254,9 @@ export default function CollagenLpPage() {
           </div>
         </div>
 
+        {/* CA-026 A1, from the module since 2026-09-17: register row 42b. */}
         <p className="f-sub f-rise" style={{ marginTop: 26 }}>
-          Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.
+          {copy.standingClaim}
         </p>
       </FSection>
 

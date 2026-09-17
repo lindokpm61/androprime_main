@@ -294,11 +294,20 @@ export const metadata: Metadata = {
   // own twitter.description. What it loses is "One price, nothing hidden.",
   // which is CA-026 C1 and is rendered on the page itself. 156 characters, and
   // `scripts/verify-metadata.js` holds it under 160.
+  //
+  // 🔴 2026-09-17, register row 42b: `openGraph` and `twitter` below carried
+  // "One price, nothing hidden." for three more days after THIS field dropped
+  // it. One fact, three call sites, and fixing the one the report pointed at
+  // left the other two asserting a single price on every share card and every
+  // social unfurl. They take the same cut, UNCONDITIONALLY rather than behind
+  // the flag: `export const metadata` is evaluated at module scope, so it cannot
+  // read `isMembershipEnabled()` per request, and "Nothing hidden." is true in
+  // both flag states. Same treatment, and the same reason, as `public/llms.txt`.
   description: "Men's blood tests, results in days. A five-minute sample at home, UKAS ISO 15189-accredited lab, plain English. Any result that needs a doctor goes to a GP.",
   alternates: { canonical: 'https://andro-prime.com' },
   openGraph: {
     title: 'Premium At-Home Blood Tests for Men | Andro Prime',
-    description: 'Results in days from a five-minute at-home sample, analysed by a UKAS ISO 15189-accredited lab and explained in plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP.',
+    description: 'Results in days from a five-minute at-home sample, analysed by a UKAS ISO 15189-accredited lab and explained in plain English. Nothing hidden. Any result that needs a doctor goes to a GP.',
     url: 'https://andro-prime.com',
     type: 'website',
     images: [{ url: '/og/default.png', width: 1200, height: 630, alt: 'Andro Prime at-home blood tests for men' }],
@@ -306,7 +315,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Premium At-Home Blood Tests for Men | Andro Prime',
-    description: 'Results in days. UKAS ISO 15189-accredited lab, plain English. One price, nothing hidden. Any result that needs a doctor goes to a GP.',
+    description: 'Results in days. UKAS ISO 15189-accredited lab, plain English. Nothing hidden. Any result that needs a doctor goes to a GP.',
     images: ['/og/default.png'],
   },
 }

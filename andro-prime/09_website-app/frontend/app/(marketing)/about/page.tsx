@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 
 /**
  * /about, rebuilt in Direction F on 2026-09-09.
@@ -81,11 +83,17 @@ const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
    this same page; the turnaround is the site-wide "2 to 5 working days"; the
    dashboard delivery line is the fourth spec row. Nothing here is a number this
    page is the first surface to state. */
-const facts = [
+/* 🔴 A FUNCTION, NOT A CONST, SINCE 2026-09-17 (register row 42b). The fourth
+   chip is flag-dependent and `isMembershipEnabled()` reads `process.env` on each
+   call, so a module-scope array bakes the flag in at process start. That is the
+   exact trap `subscriptionCopy.ts`'s header records and the reason both
+   supplement landing pages had to turn their `FAQ_ITEMS` constants into
+   functions. The first three rows are unchanged and flag-independent. */
+const factsFor = (copy: { aboutFactLabel: string; aboutFactSub: string }) => [
   { label: 'UKAS ISO 15189', sub: 'The lab that runs your sample' },
   { label: 'GMC-registered', sub: 'A GP signs off the report copy' },
   { label: '2 to 5 days', sub: 'From lab receipt to your dashboard' },
-  { label: 'One price', sub: 'For the test, and nothing after it' },
+  { label: copy.aboutFactLabel, sub: copy.aboutFactSub },
 ]
 
 /* Keith's four paragraphs, verbatim. The fourth is set as `.f-pull` rather than
@@ -106,12 +114,15 @@ const ewaStory = [
   'She understands the gap between what the NHS flags as deficient and what actually leaves men functioning well. That gap is what Andro Prime exists to close.',
 ]
 
-/* 🔴 THE CA-026 A1 STANDING CLAIM, RENDERED VERBATIM. Not one word of this may
-   be reworded, reflowed into two sentences, or split across two elements. It is
-   an approved standing claim and the container is the only thing this rebuild
-   is allowed to change. */
-const STANDING_CLAIM =
-  'Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.'
+/* 🔴 THE CA-026 A1 STANDING CLAIM. It used to be a literal here; since
+   2026-09-17 it comes from `lib/membership/subscriptionCopy.ts` (register row
+   42b, defect H2b), because its middle sentence — "You pay one price for the
+   test" — stops being true the moment `MEMBERSHIP_ENABLED` goes on, and this was
+   one of FOUR page stores carrying the paragraph verbatim.
+
+   The rule it used to state still holds and now holds in the module: not one
+   word may be reworded, reflowed into two sentences, or split across two
+   elements. With the flag off it renders byte-identical to what shipped. */
 
 /* The four principles, bodies verbatim. The mono footer pair is the `.f-step`
    component's own meta row and is a FACT in each case, never a claim: it names
@@ -155,6 +166,8 @@ const labSpec = [
 ]
 
 export default function AboutPage() {
+  /* Read per request, never at module scope: see subscriptionCopy.ts. */
+  const copy = subscriptionCopy(isMembershipEnabled())
   return (
     <FPage>
       <JsonLd data={aboutSchema} />
@@ -219,7 +232,7 @@ export default function AboutPage() {
           directly under the hero and outside the numbered spine. */}
       <section className="f-wrap">
         <div className="f-trustrow">
-          {facts.map(({ label, sub }) => (
+          {factsFor(copy).map(({ label, sub }) => (
             <div key={label}>
               <span className="f-trust-l">{label}</span>
               <span className="f-trust-s">{sub}</span>
@@ -308,7 +321,7 @@ export default function AboutPage() {
           <h2 className="f-h2 f-invert-h" style={{ marginTop: 10 }}>
             A result that needs a doctor<br /><span style={{ opacity: 0.62 }}>earns us nothing.</span>
           </h2>
-          <p className="f-sub f-invert-p" style={{ marginTop: 18 }}>{STANDING_CLAIM}</p>
+          <p className="f-sub f-invert-p" style={{ marginTop: 18 }}>{copy.standingClaim}</p>
         </div>
       </FSection>
 

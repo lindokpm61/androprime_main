@@ -40,6 +40,33 @@ import { MEMBERSHIP_INCLUDED_DAYS, MEMBERSHIP_FIRST_CHARGE_DAY } from '@/lib/mem
  * same call as the rendered answer or the structured data stops matching the
  * visible content.
  *
+ * ── 🔴 AND "PER REQUEST" IS NOT WHEN IT IS READ ON SIX OF THE NINE ────────
+ * The rule above is necessary and **it is not sufficient**, which nothing here
+ * said until 2026-09-17. On a STATICALLY PRERENDERED route "each call" happens
+ * once, during `next build`, so the flag is baked into HTML however correct the
+ * call site is. As at 2026-09-17 the build marks `/`, `/kits`, `/lp/testosterone`,
+ * `/lp/energy-recovery`, `/lp/hormone-recovery`, `/about`, `/how-it-works`,
+ * `/lp/collagen` and `/lp/daily-stack` as `○ (Static)`; only the three
+ * `/kits/*` pages and `/membership` are `ƒ (Dynamic)` and read it per request.
+ *
+ * **This is the coexistence condition, reached through the deploy rather than
+ * through the copy, and it was measured rather than reasoned about.** With
+ * `MEMBERSHIP_ENABLED=true` set in the shell and the server RESTARTED but NOT
+ * rebuilt: `/kits` served the flag-OFF heading *"One price."* while
+ * `/kits/testosterone` served the flag-ON footnote. One site, one flag, two
+ * states, one click apart — on the page that takes the money.
+ *
+ * ⚠ **SO THE FLIP IS A REBUILD AND REDEPLOY, NEVER AN ENV CHANGE AND A
+ * RESTART.** Coolify bakes `MEMBERSHIP_ENABLED` at build time for these routes
+ * exactly as it does every `NEXT_PUBLIC_*`. `verify-subscription-claims.js`
+ * cannot see this: it reads source, and in source every call site is correct.
+ *
+ * ⚠ **AND IT IS WHY A FLAG-ON SCREENSHOT NEEDS ITS OWN BUILD.** Restarting with
+ * the flag on and shooting a static route captures the flag-OFF copy and looks
+ * exactly like a capture that worked. Build with the flag set (`npx next build`
+ * directly — `npm run build`'s prebuild gate fails by design with the flag on),
+ * shoot, then rebuild flag-off to restore the shipping artefact.
+ *
  * ⚠ **NUMBERS ARE DERIVED, NEVER TYPED** (pre-flight finding F5). The draft was
  * written with "GBP 47" while the built disclosure derives "£47" from
  * `PRODUCT_MAP`, and on `/kits` the two would render within a screen of each
@@ -98,6 +125,11 @@ export interface SubscriptionCopy {
   faqHormoneRecovery: string
   /** The homepage membership sentence. Register row 12a. */
   homepageMembership: string
+  /** CA-026 A1, the standing claim. Four page stores. Register row 42b. */
+  standingClaim: string
+  /** `/about`'s fourth spec chip: label and sub. Register row 42b. */
+  aboutFactLabel: string
+  aboutFactSub: string
 }
 
 /**
@@ -111,6 +143,34 @@ export interface SubscriptionCopy {
  */
 const GP_SENTENCE =
   'If a result needs action, the next step is a GP conversation, and we earn nothing from it.'
+
+/**
+ * 🔴 CA-026 A1, THE STANDING CLAIM, AND THE MIDDLE SENTENCE THAT STOPS BEING
+ * TRUE. Register row 42b, defect H2b.
+ *
+ * A1 is approved verbatim copy and it renders on FOUR page stores — `/about`
+ * (that page's one inverted panel), `/how-it-works`, `/lp/collagen` and
+ * `/lp/daily-stack` — plus `public/llms.txt`, which took the deletion
+ * treatment on 2026-09-17 because a static file cannot read a flag. The four
+ * pages CAN read one, so they take the interlock instead and keep the approved
+ * words byte for byte with the flag off.
+ *
+ * ⚠ IT IS THREE SENTENCES, NOT FOUR. Do not read C1's structure onto it. The
+ * sentence that dies is the MIDDLE one, *"You pay one price for the test"*, for
+ * the same reason C1's heading lost "One price": there are two prices now.
+ *
+ * 🔴 THE THIRD SENTENCE IS THE CONFLICT-FREE GP CLAIM AND IT IS EWA'S, the same
+ * way `GP_SENTENCE` is in C1. It is kept byte-identical and held in its own
+ * constant so a future edit has to mean it. **Rework it and she re-enters.**
+ *
+ * ✅ THE FLAG-ON STRING IS NOT NEW WORDING. It is byte-identical to what
+ * `public/llms.txt:7` already serves on this branch, so this introduces no word
+ * that has not already been applied under the same ruling. That is the slot-2
+ * property restated: keep the true half, drop the false half, add nothing.
+ */
+const STANDING_CLAIM_OPENING = 'Testing and selling are kept apart at Andro Prime.'
+const STANDING_CLAIM_GP =
+  'Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.'
 
 export function subscriptionCopy(membershipEnabled: boolean): SubscriptionCopy {
   if (!membershipEnabled) {
@@ -135,6 +195,10 @@ export function subscriptionCopy(membershipEnabled: boolean): SubscriptionCopy {
       homepageMembership:
         'Holding that record over time is an optional membership. It is offered once your first ' +
         'result is back, never before, and you never need it to buy a kit or to read your own results.',
+      standingClaim:
+        STANDING_CLAIM_OPENING + ' You pay one price for the test. ' + STANDING_CLAIM_GP,
+      aboutFactLabel: 'One price',
+      aboutFactSub: 'For the test, and nothing after it',
     }
   }
 
@@ -174,5 +238,22 @@ export function subscriptionCopy(membershipEnabled: boolean): SubscriptionCopy {
       `days are included in the price of every kit. It starts when your first result lands, and on ` +
       `day ${MEMBERSHIP_FIRST_CHARGE_DAY} it becomes ${MEMBERSHIP_PRICE} a month. Cancel anytime. ` +
       `You never need it to read your own results.`,
+    /* Pure deletion of the middle sentence. The result is byte-identical to
+       `public/llms.txt:7`, which took the same cut on 2026-09-17. */
+    standingClaim: STANDING_CLAIM_OPENING + ' ' + STANDING_CLAIM_GP,
+    /* 🔵 KEITH'S CALL, AND THE ONE PLACE IN THIS MODULE WITH NO PURE-DELETION
+       FORM. The chip is `{ label, sub }` and BOTH halves die together: "One
+       price" is false on its own and "nothing after it" is the false half, so
+       deleting the false half deletes the chip and leaves `/about` with three
+       spec rows instead of four.
+
+       What is here instead introduces NO NEW WORD: it is C1's flag-on heading,
+       `c1Heading` above, with the full stops dropped to match the chip row's
+       own convention (no other label or sub on that strip carries one). The
+       alternative is dropping the chip. Recorded for ruling in register row
+       42b; if Keith prefers the deletion, remove the fourth entry of `facts`
+       in the flag-on branch of `/about` rather than rewording this. */
+    aboutFactLabel: 'Nothing hidden',
+    aboutFactSub: 'Not even the renewal',
   }
 }

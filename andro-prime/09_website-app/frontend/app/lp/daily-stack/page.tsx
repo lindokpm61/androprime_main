@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FHero } from '@/components/marketing/FPage'
 import { SupplementWaitlistForm } from '@/components/supplement-waitlist/SupplementWaitlistForm'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 
 /**
  * /lp/daily-stack, rebuilt in Direction F on 2026-09-11.
@@ -147,6 +149,8 @@ const FAQ_ITEMS = [
 ]
 
 export default function DailyStackLpPage() {
+  /* Read per request, never at module scope: see subscriptionCopy.ts. */
+  const copy = subscriptionCopy(isMembershipEnabled())
   return (
     <FPage>
       <JsonLd data={lpSchema} />
@@ -287,11 +291,11 @@ export default function DailyStackLpPage() {
           </div>
         </div>
 
-        {/* The conflict-free paragraph. Approved standing copy, carried verbatim
-            and left OUTSIDE the panel: it is an argument rather than a
-            conformity statement, and prose takes no container. */}
+        {/* The conflict-free paragraph, CA-026 A1. Left OUTSIDE the panel: it is
+            an argument rather than a conformity statement, and prose takes no
+            container. From the module since 2026-09-17, register row 42b. */}
         <p className="f-sub f-rise" style={{ marginTop: 26 }}>
-          Testing and selling are kept apart at Andro Prime. You pay one price for the test. Any result that needs a doctor, low testosterone included, goes to a GP, and those results earn us nothing.
+          {copy.standingClaim}
         </p>
       </FSection>
 

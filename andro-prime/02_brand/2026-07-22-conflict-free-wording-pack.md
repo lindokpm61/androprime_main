@@ -29,6 +29,28 @@ The paragraph that carries the position on About and How-it-works, and in shorte
 **A3 (fuller, About page):**
 > Most men's health brands make their money after a bad result. We built Andro Prime the other way round. You pay one price for the test. Any result that needs a doctor goes to a GP, and earns us nothing. And no result changes what we offer or what it costs. The report has no reason to lean.
 
+> 🔴 **SCOPE NOTE ADDED 2026-09-17 — A1'S MIDDLE SENTENCE DOES NOT SURVIVE MEMBERSHIP.
+> The approved wording above is unchanged and stays the flag-OFF text.** Under
+> `01_strategy/2026-09-07-auto-renew-at-day-30.md` the first 30 days of membership are included
+> in the kit price and the card is charged on day 31, so *"You pay one price for the test"* describes
+> a product that no longer exists once `MEMBERSHIP_ENABLED` is on. Same reason C1's heading lost
+> "One price" (register row 42a) and `public/llms.txt` lost the sentence in `1475c75`.
+>
+> **This note exists because the pack is the IMPORT SOURCE, and a page-only sweep re-imports what the
+> source still states.** Defect H2b: after `llms.txt` was fixed, the identical sentence was still
+> rendering on four pages and two homepage metadata fields, and the gate built to catch it reported
+> `0 sentence(s) on 0 page(s)`.
+>
+> **Do not copy A1 into a new surface by hand.** The flag-gated pair lives in
+> `09_website-app/frontend/lib/membership/subscriptionCopy.ts` as `standingClaim`; consume that.
+> Flag off it is byte-identical to the text above, asserted against THIS FILE by
+> `scripts/test-standing-claim.ts`, so if this wording is ever revised that suite fails rather than
+> the two stores drifting apart quietly.
+>
+> ⚠ **Sentence three, the GP-and-we-earn-nothing claim, is untouched in both states and is Ewa's.**
+> It is held in its own constant for that reason. Rework it and she re-enters; A2 and A3 carry the
+> same sentence and the same rule. The register row is 42b, owner Keith.
+
 *(Compliance F1, applied 2026-07-22: earlier drafts claimed "we earn the same whether your results are fine or not". That absolute is not substantiable once supplements attach post-result; the revenue actually skews in the customer's favour, so the claim above is both true and stronger: a low result earns us nothing.)*
 
 ## B. Homepage hero

@@ -91,7 +91,96 @@ screenshot. Both are gated, a session is needed, and the only documented seeder 
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-17
+## ▶️ PICK UP HERE — handoff, 2026-09-17 (late)
+
+**The sequencing home is unchanged: `10_launch-ops/implementation-checklists/direction-f-go-live.md`.**
+Work Gate A and tick the boxes in that file. This block records what moved late on 2026-09-17.
+
+### What closed
+
+**🟢 H2b, item 2 of the handoff below.** The CA-026 A1 standing claim asserted a single price on
+five files, seven times. Four pages (`/about`, `/how-it-works`, `/lp/collagen`, `/lp/daily-stack`) now
+read it from `subscriptionCopy.ts` as `standingClaim`: **flag off is byte-identical to approved A1**,
+flag on is A1 minus its middle sentence — and **that flag-on string is not new wording, it is
+byte-identical to what `public/llms.txt:7` already serves** after `1475c75`, so nothing was added.
+The third sentence is the conflict-free GP claim, held in its own constant and byte-identical in both
+states, **so Ewa does not re-enter**. The homepage `openGraph` and `twitter` descriptions took the cut
+**unconditionally**, because `export const metadata` is module-scope and cannot read a flag.
+
+**🔴 The gate built to catch exactly this had been reporting the work COMPLETE.**
+`verify-subscription-claims.js` greps for "no subscription", "one-off" and "pay once"; A1 says it as
+"one price". It had been widened three times along its **directory** axis and never once along its
+**vocabulary** axis, so it printed `0 sentence(s) on 0 page(s)` and the verdict *"the copy sweep is
+done"* over seven live instances. One entry took it to **8 on 6**; it now reads **1 on 1**. A
+directory miss under-counts, which a reader can act on; **a vocabulary miss reported completion**,
+which closes the question instead.
+
+**Verified:** 29 assertions in `scripts/test-standing-claim.ts` (in `npm test`), with **both fixtures
+read from other files rather than typed** — flag-off against the approved wording pack, flag-on
+against `llms.txt` — plus an anti-re-import case asserting no page carries the literal again.
+`typecheck` / `test` / `build` exit 0. Rendered and shot in **both** flag states at 1320 and 390,
+`--expect-text` on every shot, and the `/about` trust row looked at directly in both states: four
+chips, no wrap. `shots/h2b-off/`, `shots/h2b-on/`.
+
+**The import source is annotated too**, which was the half the handoff below flagged:
+`02_brand/2026-07-22-conflict-free-wording-pack.md` now carries a scope note under A1 saying the
+middle sentence does not survive membership and to consume the module rather than copy the paragraph.
+The approved text is unchanged and the suite asserts against it, so a future revision fails loudly
+instead of the two stores drifting.
+
+### 🔴 The thing that was NOT on anyone's list, and it gates the flip
+
+**The flag does not mean what the runbook says it means.** Six of the nine consumers of
+`subscriptionCopy.ts` are `○ (Static)` — including `/kits` and the homepage — so
+`isMembershipEnabled()` is evaluated **at build time** there, however correct the call site is. The
+module's header rule *"call it per request, never at module scope"* is necessary and **not
+sufficient**, and nothing said so.
+
+**Measured, not reasoned about.** With `MEMBERSHIP_ENABLED=true` set and the server restarted but
+**not rebuilt**: `/kits` served the flag-OFF heading *"One price."* while `/kits/testosterone`
+(dynamic) served flag-ON copy. **Two states, one site, one click apart, on the page that takes the
+money** — which is precisely the coexistence the interlock exists to forbid, arriving through the
+deploy mechanism rather than through the copy. The gate cannot see it: it reads source, and in source
+every call site is correct.
+
+⚠ **So the flip is a REBUILD AND REDEPLOY, never an env change and a restart**, and a flag-on
+screenshot needs its own build (`npx next build` directly — `npm run build`'s prebuild gate fails by
+design with the flag on; rebuild flag-off afterwards to restore the shipping artefact). Written into
+`subscriptionCopy.ts`'s header, into Gate E of the go-live plan, and into copy-register row 42b.
+**This predates this session's change and applies to the whole interlock.**
+
+### What it left owed, in the order it matters
+
+1. 🔴 **H-A, unchanged and still first.** It is a condition on the flag flip, not on CA-050's
+   signature. **It is blocked rather than pending:** CA-050 condition 6's re-submission test means
+   changing those sentences needs a fresh record, and CA-050 is `pending` Keith (`869f3guna`). Do not
+   apply it unilaterally.
+2. 🔴 **Row 42b's flag-on strings owe Keith a signature**, and there is a routing choice:
+   **put them on CA-050 while it is still unsigned** (same paragraph family, same ruling, and its
+   condition 6 is what makes them need a signature at all), or open CA-051 if CA-050 is signed first.
+   Inside it sits one real decision: **the `/about` spec chip has no pure-deletion form.**
+   `{ 'One price', 'For the test, and nothing after it' }` dies in both halves, so deleting the false
+   half deletes the chip and leaves three trust rows instead of four. What is implemented introduces
+   **no new word** — C1's flag-on heading with the full stops dropped — and the alternative is
+   dropping the chip. Keith rules.
+3. 🟠 **The two homepage metadata fields ship at the MERGE**, not at the flip, so they are the
+   only part of 42b that is not flag-protected. They are **row 48's owed item extended**: that row
+   already recorded the meta `description` dropping *"One price, nothing hidden."* as owed to Keith,
+   and the `openGraph` and `twitter` fields three lines below kept it for three more days. One fact,
+   three call sites.
+4. 🟠 **One line is still flagged and it is probably a false positive**: `lp/hormone-recovery:353`,
+   *"One test instead of two. One price instead of two."* That counts **prices in a bundle
+   comparison**, not payments over time — the same shape as `BundleChoice`'s "One-off test" chip,
+   which **Keith ruled a false positive on 2026-09-16**. It is deliberately left unexempted so it
+   surfaces for the same ruling rather than being quietly exempted here.
+5. 🟠 **Items 2 to 6 of the handoff below are untouched**: the two board defects
+   (`869ejbmb9`, CA-043), the independent pre-flight not being discharged, the approvals reconciler
+   needing a PRIMARY-task notion, and K-1 (*"included in the price of every kit"* being unconditional
+   while `startOnResult.ts` refuses a membership under 12).
+
+---
+
+## ▶️ Previous handoff, 2026-09-17 (earlier the same day)
 
 **The sequencing home is unchanged: `10_launch-ops/implementation-checklists/direction-f-go-live.md`.**
 Work Gate A and tick the boxes in that file. The 2026-09-16 handoff below is still accurate about
