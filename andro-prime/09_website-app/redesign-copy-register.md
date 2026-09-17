@@ -379,6 +379,44 @@ The split is driven by the file's own "Words changed?" column, per step 2 of the
 | ✅ **No words — deterministic floor passed, placement look owed** | **40** | 1, 2, 3, 5, 8, 9, 15, 16, 17, 18, 19, 20, 21, 26, 28, 32e, 34, 35, 35a, 35b, 35c, 37, 38, 38b, 38c, 39, 41, 42, 43, 43a, 44a, 45a, 45b, 46, 46a, 47, 47a, 48a, 48b, 48c |
 | 🔵 **Nothing owed — recorded for context only** | **5** | 12b, 36, 39a, 40, 41a |
 
+#### ✅ SIGN-OFF PASS, 2026-09-17 (Keith). Thirteen of the 26 are signed and two rows changed.
+
+Worked from `10_launch-ops/implementation-checklists/a2-signoff-packet-2026-09-17.md`, which is the
+table above reduced to the rows still owed. ⚠ **The counts in the disposition table are as at
+2026-09-15 and are NOT edited here**, because that table is the record of what that pass found; this
+block is the record of what has been decided since. Read them together, newest first.
+
+| Decision | Rows | What Keith agreed |
+|---|---|---|
+| ✅ **SIGNED — batch, no claim in any of them** | **13, 24, 25, 14, 35f** | Section labels and product names. Two-or-three-word section names in the ruled grammar, plus the move onto the already-approved long kit names, plus three retired machine-voice literals. |
+| ✅ **SIGNED — new short copy, pre-flight clean** | **4, 27, 31, 44, 35d, 35e** | The `/kits` section 01 standfirst, the `/how-it-works` caption, the "Open the demo" CTA and demo closing strip, the `/how-to-sample` two-sentence standfirst, and the blog index and article furniture. |
+| ✅ **SIGNED — a rewrite of unregistered copy** | **45** | `/subscription/confirmed`. It was confirming a product that cannot be bought; the replacement is assembled from approved strings wherever one exists. |
+| 🔧 **RULED "FIX IT", and it is fixed** | **7** | See below — and it was **five instances, not two**. |
+| 🔧 **RULED "build it", and it is built** | **38a** | See below. |
+| 🔴 **NOT ANSWERED, and not inferred** | **32** | `/membership`, the largest single block of new copy on the branch. It was not in the decision list and **nothing here should be read as approving it.** |
+
+🔴 **ROW 7 WAS FIVE INSTANCES, AND THE ROW NAMES TWO SURFACES.** Row 7 says `/kits` and
+`/test-selector`. The false count was live in **five** places: `/kits` twice (*"answer 3 questions"*
+and *"Takes less than a minute"*), the `/kits` close heading (*"Three questions."*),
+**`/test-selector` itself** (*"Three questions. About 60 seconds."* — on the very page the claim
+describes), and **`/go`** (*"three questions will point you at the right test"*), which row 7 does not
+list at all and which is the page every Instagram profile visitor lands on. **Every count and the
+duration are REMOVED rather than corrected**: the five-step version has never been timed, so a
+replacement number would be a new and unverified claim, and a corrected count has to be re-checked
+every time the selector changes. Fixing only the two named surfaces would have been worse than
+fixing none, because a duplicated claim is invisible while the copies agree.
+
+🔧 **ROW 38a: THE CONTROL IS BUILT.** `/supplement-waitlist`'s FAQ 4 promised a product choice the
+form never had. `SupplementWaitlistForm` now renders one **only where the host declares no product**
+(`interestedInProduct="any"`, i.e. `/supplement-waitlist` and `/supplements`), so `/supplements/*` and
+both `/lp/*` routes are untouched and the V2.0 branch never renders it. Neither box ticked sends
+`'any'`, which is exactly what those pages sent before, so ignoring the control changes nothing.
+`'both'` was added to `ALLOWED_PRODUCTS` in the join route: an unknown value is silently dropped to
+null there, so without it the control would have *looked* like it worked while recording nothing.
+⚠ **One clause of that FAQ answer is still not built and is not claimed to be:** *"You can change
+your mind later"* has no self-serve route, only emailing `hello@andro-prime.com`. A real route, not a
+control.
+
 #### By owner, which is the list a signer actually needs
 
 **🔴 EWA — clinical / claims.** Rows **22, 23** (marker values and verdicts changed on the sample

@@ -103,8 +103,18 @@ export default async function BioGridPage() {
         <section className="f-narrow f-sec f-sec-cont">
           {posts.length === 0 ? (
             <>
+              {/*
+                FIXED 2026-09-17 (Keith, copy-register row 7: "fix it"). This said
+                "three questions" about a selector that is five steps. ⚠ Row 7 names
+                `/kits` and `/test-selector` and does NOT name this page, so a fix
+                scoped to the row's own surface list would have left the same false
+                count live on the page every Instagram profile visitor lands on.
+                Fixed here in the same change: a duplicated claim is invisible while
+                the copies agree, and correcting one of them is what makes the
+                disagreement visible.
+              */}
               <p className="f-sub" style={{ marginTop: 0 }}>
-                Nothing posted yet. In the meantime, three questions will point you at the right test.
+                Nothing posted yet. In the meantime, the selector will point you at the right test.
               </p>
               {/* Deliberately NOT /go/d01. That slug belongs to the first carousel, so
                   every pre-run click would be recorded against a post nobody has seen,

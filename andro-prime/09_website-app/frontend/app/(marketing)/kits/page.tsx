@@ -26,10 +26,12 @@ import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
  *
  * COPY IS CARRIED VERBATIM FROM THE V2.0 PAGE. The 2026-08-28/29 approval covers
  * LAYOUTS, NOT COPY, so a redraw is not the place to rewrite live marketing copy.
- * Two known drifts are therefore carried as found and flagged where they sit:
- * "answer 3 questions" and "takes less than a minute" both describe a selector
- * that is now five steps. Frame O flags the same two. Fixing them is a copy
- * change with its own compliance pre-flight, not a side effect of a restyle.
+ * ✅ The two drifts this header used to carry as found — "answer 3 questions" and
+ * "takes less than a minute", both describing a selector that is now five steps —
+ * were FIXED on 2026-09-17 on Keith's row 7 ruling, as a copy change in its own
+ * right rather than a side effect of a restyle. ⚠ There were FIVE instances, not
+ * the two this header and Frame O both named: the same claim was also live on
+ * `/test-selector` itself and on `/go`, neither of which row 7 lists.
  *
  * The kit cards and the comparison table are now DERIVED from lib/kits/panel.ts
  * rather than hand-written. That module is the single source of truth for which
@@ -325,14 +327,16 @@ export default function KitsPage() {
 
               <div className="f-panelfoot">
                 {/*
-                  Copy drift, carried as found: the selector is five steps now
-                  (three questions, a four-question price study with an age band,
-                  then the reveal and an email capture), not three questions.
-                  Frame O flags the same sentence. Changing it is a copy edit with
-                  its own pre-flight, not part of a restyle.
+                  FIXED 2026-09-17 (Keith, copy-register row 7: "fix it"). This read
+                  "answer 3 questions" while the selector is five steps: three
+                  questions, a four-question price study with an age band, then the
+                  reveal and an email capture. The count is REMOVED rather than
+                  restated, because a corrected number is a new claim that has to be
+                  re-checked every time the selector changes, and the sentence does
+                  not need one to do its job.
                 */}
                 <p className="f-sub" style={{ fontSize: 15 }}>
-                  Not sure which kit fits your symptoms? Use the selector and answer 3 questions.
+                  Not sure which kit fits your symptoms? Use the selector.
                 </p>
                 <Link
                   className="f-btn f-btn-ghost f-btn-sm"
@@ -647,14 +651,18 @@ export default function KitsPage() {
       <section className="f-wrap">
         <FClose inSection>
           <p className="f-blab">Still not sure</p>
-          <h2>Three questions. One clear recommendation.</h2>
+          <h2>A few questions. One clear recommendation.</h2>
           {/*
-            Copy drift, carried as found: "less than a minute" describes the
-            three-question version, not the current five-step selector.
+            FIXED 2026-09-17 (Keith, copy-register row 7: "fix it"). The heading said
+            "Three questions" and the body said "Takes less than a minute"; both
+            described the three-question version, not the current five-step selector.
+            Both counts are REMOVED rather than corrected. The timing sentence goes
+            entirely: we have never measured how long the five-step version takes, so
+            any replacement number would be a new and unverified claim, and the
+            sentence that remains already tells a reader what the selector does.
           */}
           <p className="f-sub" style={{ margin: '0 auto' }}>
-            The test selector asks about your main symptoms and tells you which kit fits best. Takes
-            less than a minute.
+            The test selector asks about your main symptoms and tells you which kit fits best.
           </p>
           <div className="f-btns" style={{ justifyContent: 'center', marginTop: 20 }}>
             <Link href="/test-selector" className="f-btn">

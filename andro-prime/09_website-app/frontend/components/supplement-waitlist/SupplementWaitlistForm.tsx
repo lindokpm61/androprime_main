@@ -59,16 +59,32 @@ import Link from 'next/link'
  * saturation and a failed POST is not a verdict about anybody's blood. The V2.0
  * branch rendered it in a bordered grey box, so this is not a change of weight.
  *
- * 🔴 A COPY DEFECT WAS FOUND HERE AND DELIBERATELY NOT FIXED, because fixing it
- * is a copy change and that pass was a restyle. `/supplement-waitlist`'s FAQ
- * answers *"Can I choose which product I want updates about?"* with *"Yes. The
- * form lets you tell us whether you are interested in the Daily Stack, the Joint
- * and Recovery Collagen, or both. You can change your mind later."* THIS FORM HAS
- * NO SUCH CONTROL in either world and never has: `interestedInProduct` is a prop
- * the PAGE sets and this component forwards as a hidden field. The claim reads as
- * true because the two detail routes pass a real value, so the FIELD exists in
- * the payload while the CONTROL does not. Either the control gets built or the
- * answer gets rewritten; both are Keith's. Register row 38; OBS-670.
+ * ✅ THE CONTROL THE FAQ PROMISED NOW EXISTS. Built 2026-09-17, Keith's ruling on
+ * register row 38a: *"build it"*, chosen over rewriting the answer.
+ *
+ * The defect it closes: `/supplement-waitlist`'s FAQ answers *"Can I choose which
+ * product I want updates about?"* with *"Yes. The form lets you tell us whether you
+ * are interested in the Daily Stack, the Joint and Recovery Collagen, or both."* —
+ * and this form had no such control in either world and never had. The claim read
+ * as true because the two detail routes pass a real value, so the FIELD existed in
+ * the payload while the CONTROL did not. OBS-670.
+ *
+ * 🔴 IT RENDERS ONLY WHERE THE HOST DECLARES NO PRODUCT (`interestedInProduct` is
+ * `'any'`), which is `/supplement-waitlist` and `/supplements`. That is the same
+ * host-declares-its-own-world rule the `variant` prop follows: a page that already
+ * knows which product it is about should not ask, and asking there would invite an
+ * answer contradicting the page a reader is standing on. So `/supplements/*` and
+ * both `/lp/*` routes are untouched, and the V2.0 branch below never renders it.
+ *
+ * ⚠ IT IS OPTIONAL, AND LEAVING IT ALONE IS EXACTLY TODAY'S BEHAVIOUR. Neither box
+ * ticked sends `'any'`, the value those two pages already sent, so a man who
+ * ignores the control is recorded as he is recorded now rather than as a blank.
+ *
+ * ⚠ ONE CLAUSE OF THAT FAQ ANSWER IS STILL NOT BUILT AND IS NOT CLAIMED TO BE.
+ * *"You can change your mind later"* has no self-serve route: the only path is
+ * emailing `hello@andro-prime.com`, which the success copy already offers for
+ * unsubscribing. That is a real route rather than a false statement, but it is not
+ * a control, and nothing here should be read as having closed it.
  */
 
 export interface SupplementWaitlistFormProps {
@@ -98,6 +114,25 @@ export function SupplementWaitlistForm({
   const [consent, setConsent] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [wantsDailyStack, setWantsDailyStack] = useState(false)
+  const [wantsCollagen, setWantsCollagen] = useState(false)
+
+  /* The host declaring `'any'` is the host saying "this page is not about one
+     product", which is the only case where asking makes sense. */
+  const canChooseProduct = interestedInProduct === 'any'
+
+  /* `'both'` is a real stored value, not a UI convenience: see ALLOWED_PRODUCTS in
+     the join route. Neither box ticked resolves to `'any'`, which is what these two
+     pages sent before this control existed. */
+  const resolvedProduct = !canChooseProduct
+    ? interestedInProduct
+    : wantsDailyStack && wantsCollagen
+      ? 'both'
+      : wantsDailyStack
+        ? 'daily-stack'
+        : wantsCollagen
+          ? 'collagen'
+          : 'any'
 
   const emailValid = EMAIL_RE.test(email)
   const canSubmit = emailValid && consent && status !== 'submitting'
@@ -117,7 +152,7 @@ export function SupplementWaitlistForm({
           consent: true,
           source_marker: sourceMarker,
           source_kit: sourceKit,
-          interested_in_product: interestedInProduct,
+          interested_in_product: resolvedProduct,
         }),
       })
 
@@ -138,16 +173,61 @@ export function SupplementWaitlistForm({
 
   const done = status === 'success' || status === 'already'
 
-  /* The three hidden fields, identical in both worlds. */
-  const hidden = (sourceMarker || sourceKit || interestedInProduct) ? (
+  /* The three hidden fields, identical in both worlds. `resolvedProduct` rather
+     than the raw prop, so the hidden field cannot disagree with what the POST
+     actually sends — they were the same value until the control existed. */
+  const hidden = (sourceMarker || sourceKit || resolvedProduct) ? (
     <>
       {sourceMarker && <input type="hidden" name="source_marker" value={sourceMarker} />}
       {sourceKit && <input type="hidden" name="source_kit" value={sourceKit} />}
-      {interestedInProduct && (
-        <input type="hidden" name="interested_in_product" value={interestedInProduct} />
+      {resolvedProduct && (
+        <input type="hidden" name="interested_in_product" value={resolvedProduct} />
       )}
     </>
   ) : null
+
+  /* The control itself. F world only, and only where the host declared no product.
+     No new field vocabulary: `.f-blab` and `.f-consent` are the layer `/test-selector`
+     added and `/auth/*` reused, which is the rule this component already follows.
+
+     ⚠ THE RULE AND THE GAP UNDER THE FIELDSET ARE NOT DECORATION. These two boxes
+     and the CONSENT box beneath them are the same control in the same vocabulary,
+     and at even spacing a reader scans three checkboxes as ONE group — putting an
+     optional product preference at the same visual weight as the GDPR consent,
+     which is a distinct legal act and the only thing here that gates submission.
+     Caught by looking at the render rather than by reading the markup. */
+  const productChoice =
+    canChooseProduct && variant === 'f' ? (
+      <fieldset
+        style={{
+          border: 0,
+          padding: 0,
+          margin: '0 0 30px',
+          borderBottom: '1px solid var(--f-rule, rgba(0,0,0,.08))',
+          paddingBottom: 22,
+        }}
+      >
+        <legend className="f-blab" style={{ padding: 0 }}>
+          Which are you interested in?
+        </legend>
+        <label className="f-consent" style={{ marginTop: 10 }}>
+          <input
+            type="checkbox"
+            checked={wantsDailyStack}
+            onChange={(e) => setWantsDailyStack(e.target.checked)}
+          />
+          <span>Daily Stack</span>
+        </label>
+        <label className="f-consent">
+          <input
+            type="checkbox"
+            checked={wantsCollagen}
+            onChange={(e) => setWantsCollagen(e.target.checked)}
+          />
+          <span>Joint and Recovery Collagen</span>
+        </label>
+      </fieldset>
+    ) : null
 
   /* ------------------------------------------------------------------ F ---- */
 
@@ -194,6 +274,8 @@ export function SupplementWaitlistForm({
                 autoComplete="email"
               />
             </label>
+
+            {productChoice}
 
             <label className="f-consent">
               <input

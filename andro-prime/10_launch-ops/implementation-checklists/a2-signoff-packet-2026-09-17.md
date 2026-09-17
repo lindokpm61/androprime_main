@@ -8,6 +8,40 @@
 > `03_compliance/content-approval/README.md`), mirrored into the register row. For anything needing a
 > fresh CA number, the board task is created **before** the register row —
 > `.claude/hooks/approvals-board-guard.js` enforces that order.
+>
+> ⚠ **None of these rows needs a CA number.** Per that README, webpage sign-off does not live in the
+> CA register, and none of them supersedes an approved record: rows 42a, 48 and 12a did, which is why
+> those became CA-050/051/052. The precedent for Keith's own closures is the register row carrying
+> `(Keith, date)`, as rows 30a, 32a and 32d do. Recorded that way in
+> `09_website-app/redesign-copy-register.md`, under the dated sign-off pass.
+
+---
+
+## ✅ ANSWERED 2026-09-17 (Keith)
+
+| Part | Decision | State |
+|---|---|---|
+| **1** — batch, section labels and names (13, 24, 25, 14, 35f) | **Approved** | ✅ Recorded |
+| **2** — new short copy (4, 27, 31, 44, 35d, 35e) | **Approved** | ✅ Recorded |
+| **3.1** — row 32, `/membership` | 🔴 **NOT ANSWERED** | See below |
+| **3.2** — row 45, `/subscription/confirmed` | **Approved** | ✅ Recorded |
+| **3.3** — row 7, the selector claim | **"fix it"** | 🔧 Fixed, **five** instances |
+| **4** — row 38a ruling | **(a) build it** | 🔧 Built |
+| **5** — Ewa's packet | **Draft it** | ✉️ Gmail draft `r74807119575631549`, **not sent** |
+
+🔴 **PART 3.1 WAS NOT IN THE ANSWER AND HAS NOT BEEN INFERRED FROM THE PARTS EITHER SIDE OF IT.**
+Row 32 is the largest single block of new copy on the branch and it remains **unsigned**. Inferring
+it from adjacent answers is the exact failure the sign-off process exists to prevent, and it is
+invisible afterwards because the list looks complete. It is still owed.
+
+🔧 **3.3 was five instances, not the two row 7 names.** The false count was also live on
+`/test-selector` itself, the page the claim describes, and on `/go`. Every count and the timing claim
+were removed rather than corrected, because the five-step version has never been timed and a
+corrected number needs re-checking every time the selector changes.
+
+🔧 **4 is built, with one clause deliberately not claimed.** The control renders only where the host
+declares no product. *"You can change your mind later"* still has no self-serve route, only emailing
+`hello@andro-prime.com`. Real route, not a control, and not recorded as closed.
 
 ---
 

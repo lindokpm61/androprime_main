@@ -9,6 +9,14 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const ALLOWED_PRODUCTS = new Set([
   'daily-stack',
   'collagen',
+  /* Added 2026-09-17 with the product control on `/supplement-waitlist`. The FAQ
+     there has always answered "Daily Stack, the Joint and Recovery Collagen, or
+     BOTH", and until now there was no control and no value that could carry the
+     third option — so "both" had to collapse to `any`, which means "no preference"
+     and is a different thing. An unknown value is silently dropped to null here,
+     so without this entry the control would have looked like it worked while
+     recording nothing. Register row 38a; OBS-670. */
+  'both',
   'complete-mens-stack',
   'any',
 ])

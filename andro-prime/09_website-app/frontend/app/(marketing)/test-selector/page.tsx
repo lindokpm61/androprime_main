@@ -165,9 +165,19 @@ export default function TestSelectorPage() {
         <h1 className="f-h1" style={{ marginTop: 18 }}>
           Not sure which kit is right for you?
         </h1>
+        {/*
+          FIXED 2026-09-17 (Keith, copy-register row 7: "fix it"). This said
+          "Three questions. About 60 seconds." on the selector itself, which is
+          five steps: three questions, a four-question price study with an age
+          band, then the reveal and an email capture. Both the count and the
+          duration are REMOVED rather than corrected — we have never measured the
+          five-step version, so a replacement number would be a new and unverified
+          claim, and this sentence's real job is the routing explanation that
+          follows it.
+        */}
         <p className="f-stand" style={{ marginTop: 20 }}>
-          Three questions. About 60 seconds. We route you to the best starting point based on
-          symptoms, training load, and how clear or mixed the picture sounds.
+          We route you to the best starting point based on symptoms, training load, and how clear
+          or mixed the picture sounds.
         </p>
         <div className="f-btns" style={{ marginTop: 26 }}>
           <a href="#selector" className="f-btn">
