@@ -4,7 +4,9 @@ can be diffed. The BOARD is the hub and outranks this file; this is the mirror.
 Written by `09_website-app/frontend/scripts/clickup-approval-task.ts`.
 -->
 
-**You owe four decisions, and one of them is a real choice rather than a signature.** Nobody else is required. Ewa is not a signer on this one, for the same reason and on the same tested condition as CA-050.
+✅ **TWO OF THE THREE COPY DECISIONS ARE RULED (Keith, 2026-09-17). J-3 is the one still open, and it does NOT block your signature.** Nobody else is required. Ewa is not a signer on this one, for the same reason and on the same tested condition as CA-050.
+
+⚠ **The task NAME still reads "four decisions" and cannot be edited by the repo script, which writes content only.** The body is authoritative. Same one-fact-in-two-places shape the README warns about for PENDING/APPROVED in task names.
 
 **Artefact:** `09_website-app/frontend/lib/membership/subscriptionCopy.ts`: `standingClaim`, `aboutFactLabel`, `aboutFactSub`, both flag branches. Renders on `/about`, `/how-it-works`, `/lp/collagen` and `/lp/daily-stack`. Plus the `openGraph` and `twitter` descriptions on the homepage, which are on a different gate.
 
@@ -27,7 +29,13 @@ CA-050 was approved on 2026-09-17, so folding these strings into it is no longer
 
 A1's third sentence is the conflict-free GP claim and is the only part in her remit. It is untouched, byte-identical in both flag states, and held in its own constant so a future edit has to be deliberate. Same structure and same argument as `GP_SENTENCE` under CA-050, and the same 2026-09-11 ruling: what changes here is a price sentence. Asserted by test, not by eye. **Rework that sentence and she re-enters.**
 
-## What you are deciding
+## What you have ruled, and what is left
+
+- ✅ **J-1 RULED: OPTION A, Keith 2026-09-17.** The chip stays, carrying CA-050's approved flag-on heading. **This is what was already implemented, so no code changed on the ruling** and the trust strip keeps four rows in both flag states. The alternative, dropping the chip, is recorded as considered and refused rather than never raised. Original framing kept below.
+- ✅ **J-2 RULED: YES, Keith 2026-09-17.** The two homepage share-card descriptions lose *"One price,"* unconditionally. **Already applied on the branch in `c364f6f`**, so nothing further is built; this converts it from an applied-but-unapproved change into an approved one. It remains the only item here that ships at the **merge** rather than at the flip.
+- 🔵 **J-3 IS STILL OPEN, AND THE DISTINCTION MATTERS: it does not block this signature, it blocks the FLIP.** The line is not part of this record's payload; it is an existing line the widened detector now reports. But `verify-subscription-claims.js` fails whenever `MEMBERSHIP_ENABLED` is true while any claim stands, so **that one line is currently enough to stop the flag going on.** It is the only line the gate reports: 1 sentence on 1 page.
+
+### The original framing, kept because the reasoning is the record
 
 - 🔵 **J-1, the `/about` trust chip. This is the real one.** Flag-off it reads `One price / For the test, and nothing after it`. **Both halves die together**, so there is no pure-deletion form: deleting the false half deletes the chip and leaves three trust rows instead of four. What is implemented introduces **no new word**, being CA-050's approved flag-on heading (*Nothing hidden / Not even the renewal*) with the full stops dropped to match the chip convention. **The judgement is about register, not wording:** those words were approved as a money-block heading and are being asked to work as a trust-strip fact beside "UKAS ISO 15189" and "GMC-registered", which are credentials. **The alternative is dropping the chip.** Looked at rendered in both states at 1320: four chips, no wrap either way.
 - 🟠 **J-2, the two homepage share-card descriptions.** *"One price, nothing hidden."* becomes *"Nothing hidden."*, **unconditionally**, because `export const metadata` cannot read a flag. **This is the only item here that ships at the MERGE rather than at the flip**, so if you reject it, it reverts before Gate B, not before Gate E. It is not new: copy-register row 48 already recorded the meta `description` dropping this exact string as owed to you on 2026-09-14, and the two fields three lines below it kept it. One fact, three call sites.
@@ -48,10 +56,10 @@ The record states the judgement pass as **thin rather than claiming an independe
 
 ## Conditions recorded against approval
 
-`STRIPE_PRICE_MEMBERSHIP` is still unset, inherited from CA-050. J-1 must be answered before the flip because both options are implementable and only one is implemented. J-2 is on the merge gate, not the flip gate.
+`STRIPE_PRICE_MEMBERSHIP` is still unset, inherited from CA-050. ✅ **J-1 is answered**, so the condition that used to sit here is discharged. J-2 is on the merge gate rather than the flip gate and is now approved. 🔵 **J-3 remains a condition on the flip**, because the interlock fails with the flag on while that line stands. J-4 is engineering and is recorded rather than signed.
 
 ---
 
-⚠ **Claude created this at `pending` and did not move it.** Only you set it to approved.
+⚠ **Claude created this at `pending` and did not move it, and has not moved it now.** Recording your two rulings and performing the approval are two different acts; only you set it to approved. **Nothing is owed before you can:** J-1 and J-2 are answered and both were already built, and J-3 is a condition on the flip rather than on this record.
 
 ⚠ **The record file was written about a minute before this task, and the guard caught it.** `.claude/hooks/approvals-board-guard.js`, added after CA-050 went into the register with no task at all, blocked the write and named the fix. The ordering is recorded here rather than tidied away, because a guard that fires and gets quietly worked around is worse than no guard.

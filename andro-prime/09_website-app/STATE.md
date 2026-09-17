@@ -166,14 +166,21 @@ design with the flag on; rebuild flag-off afterwards to restore the shipping art
 2. ✅ **DONE 2026-09-17: row 42b's flag-on strings are CA-051.** Board `869f3m9hx` at `pending`,
    record `approval-record-standing-claim-single-price-2026-09-17.md`, register row added, the
    approvals-board guard enforced hub-before-register by blocking the record write until the task
-   existed. Pre-flight 0 HARD / 0 REVIEW on both payloads, **delta zero new wording**. 🔵 **Four
-   items sit on it and J-1 is a choice rather than a signature: the `/about` chip has no
-   pure-deletion form.** `{ 'One price', 'For the test, and nothing after it' }` dies in both halves,
-   so deleting the false half deletes the chip and leaves three trust rows instead of four. What is
-   implemented introduces **no new word** — CA-050's approved flag-on heading with the full stops
-   dropped — and the alternative is dropping the chip. **The judgement it needs is about register:**
-   those words were approved as a money-block heading and are being asked to work as a trust-strip
-   fact beside two credentials.
+   existed. Pre-flight 0 HARD / 0 REVIEW on both payloads, **delta zero new wording**. ✅ **J-1 RULED
+   OPTION A AND J-2 RULED YES, Keith 2026-09-17, and NEITHER MOVED A LINE OF CODE** because both
+   were already what is built: the `/about` chip keeps four rows carrying CA-050's approved flag-on
+   heading (*Nothing hidden / Not even the renewal*), and the two homepage share-card descriptions
+   keep the unconditional cut. The alternative on J-1, dropping the chip, is recorded as considered
+   and refused rather than never raised. Both rulings are on the board task and in the record.
+   🔵 **J-3 is the only copy item left, and the distinction matters: it does NOT block the
+   signature, it blocks the FLIP.** `lp/hormone-recovery:353`, *"One test instead of two. One price
+   instead of two."* is not part of CA-051's payload — it is an existing line the widened detector
+   now reports — but `verify-subscription-claims.js` fails with the flag on while any claim stands,
+   so **that one line is currently enough to stop the flag going on.** It is the only line the gate
+   reports: 1 sentence on 1 page. **One ruling clears it either way:** a false positive gets a dated
+   `CLAIMS_ALLOW` entry naming the file and the phrase, exactly as `BundleChoice`'s chip did on
+   2026-09-16; anything else is a copy change and needs its own record. ⚠ **Nothing is owed before
+   Keith signs CA-051.**
 3. 🟠 **The two homepage metadata fields ship at the MERGE**, not at the flip, so they are the
    only part of 42b that is not flag-protected. They are **row 48's owed item extended**: that row
    already recorded the meta `description` dropping *"One price, nothing hidden."* as owed to Keith,
