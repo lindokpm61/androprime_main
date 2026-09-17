@@ -27,7 +27,7 @@
 | **3.2** — row 45, `/subscription/confirmed` | **Approved** | ✅ Recorded |
 | **3.3** — row 7, the selector claim | **"fix it"** | 🔧 Fixed, **five** instances |
 | **4** — row 38a ruling | **(a) build it** | 🔧 Built |
-| **5** — Ewa's packet | **Draft it** | ✉️ Gmail draft `r74807119575631549`, **not sent** |
+| **5** — Ewa's packet | **Draft it** | ✅ **SENT AND ANSWERED 2026-09-17.** 7 asked, 7 answered: `1: A 2: A 3: A 4: A 5: B 6: A 7: A` |
 
 🟡 **PART 3.1 IS SIGNED BY KEITH AND IS STILL NOT APPROVED, BECAUSE ROW 32 HAS TWO SIGNERS.** Its
 "Owed to" cell reads *"Ewa + Keith for anything read as a clinical cadence claim"* — the 90-day and

@@ -128,14 +128,32 @@ export const PANEL_MARKERS: Record<PanelMarkerId, PanelMarker> = {
  * is true and claims nothing; never restore "Bioavailable testosterone ratio",
  * which is the free-T stand-in framing the ruling refuses.
  *
- * `badgeShort` exists only for the one card whose badge column is a fixed `w-24`
- * (`/lp/hormone-recovery`), where the long form wraps. Both are compressions of
- * the same engine stateLabel; neither carries a verdict.
+ * 🔄 ONE WORD NOW, AND IT IS "Reported". Keith, 2026-09-17, closing copy-register
+ * row 6. The marketing badge read "Not interpreted" while the engine and the
+ * dashboard read "Reported", so the same marker carried two words on two
+ * surfaces one click apart.
+ *
+ * 🔴 THIS SUPERSEDES KEITH'S OWN RULING K1 OF 2026-08-12, which set
+ * "Not interpreted" here after it replaced an incorrect "Borderline" on the Kit 1
+ * LP. It is recorded as his decision overriding his own earlier one, NOT as a
+ * clinical ruling: Ewa was asked and answered "Reported" on 2026-09-17, but the
+ * question should not have gone to her. Her item 7 rules that FAI is not BANDED
+ * and names no display word, both words satisfy it, and the header of
+ * `/kits/hormone-recovery` had already recorded — on 2026-09-15 — that which word
+ * ships where is a consistency decision for Keith. Her answer is input, not
+ * authority. The absent bar, which IS her ruling, is untouched:
+ * `resolveBarZones` still returns [] for FAI.
+ *
+ * ⚠ `badgeShort` IS GONE, and it was already dead. It was documented as existing
+ * "only for the one card whose badge column is a fixed `w-24`
+ * (`/lp/hormone-recovery`), where the long form wraps" and had ZERO call sites —
+ * so the comment described a consumer that did not exist. With one word it would
+ * also have been a second constant holding the same string, which is the
+ * duplicated-fact shape this file's own neighbours warn about.
  */
 export const FAI_REPORT_ONLY = {
   sub: 'Ratio of total T to SHBG',
-  badge: 'Not interpreted',
-  badgeShort: 'Reported',
+  badge: 'Reported',
 } as const
 
 /** The markers each kit measures, in the order every surface presents them. */

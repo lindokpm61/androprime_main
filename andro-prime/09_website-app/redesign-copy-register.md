@@ -428,6 +428,47 @@ null there, so without it the control would have *looked* like it worked while r
 your mind later"* has no self-serve route, only emailing `hello@andro-prime.com`. A real route, not a
 control.
 
+#### ✉️ EWA'S PASS, 2026-09-17. Seven asked, seven answered, one change.
+
+Sent 22:35, answered 22:50, in the letter-reply format: **1: A · 2: A · 3: A · 4: A · 5: B · 6: A ·
+7: A**. Counted against the seven asked, per the rule that a short reply is a gap and never an
+inferred yes. Thread `1a0b11bba5d7fb3c`.
+
+| Item | Row | Ruling | Consequence |
+|---|---|---|---|
+| 1 | **6** | "Reported" | ⚠ **See the correction below. This question should not have gone to her.** |
+| 2 | **22** | Stands | The four changed values and their verdicts on `/kits/energy-recovery`. No work. |
+| 3 | **22** | Stands | The new hs-CRP row, bands coinciding. No work. |
+| 4 | **23** | Stands | Kit 3's milder demonstration, no Action-needed row. No work. |
+| 5 | **32c** | 🔧 **B — remove** | *"Ask the clinician"* may NOT be named on a page a cold reader reaches. **Built.** |
+| 6 | **32** | Approved | The 90/365 cadence may be stated publicly as written. 🟢 **This discharges row 32's clinical half, so row 32 is now APPROVED by both required signers.** |
+| 7 | **33** | Approved | `img-9` and its caption *"A date, written down"*. No work. |
+
+🔴 **ITEM 1 WAS PUT TO THE WRONG PERSON, AND THE REGISTER IS WHY.** Row 6 above still reads as a live
+clinical contradiction owed to Ewa. It is not, and has not been since **2026-09-15**: the header of
+`app/(marketing)/kits/hormone-recovery/page.tsx` records that row 6 is a **documentation defect that
+was already corrected**, that Ewa's item 7 rules on **banding** and names no display word, that both
+words satisfy it, and that *"which word ships where is a consistency decision for Keith, not a ruling
+owed to Ewa"* — and that **"Not interpreted" was KEITH's own ruling K1 of 2026-08-12**. The email was
+built from this row's text without re-testing it against the code, which is the failure this file
+keeps recording about other documents. Her answer is retained as **input, not authority**.
+✅ **Resolved as Keith's decision, 2026-09-17: one word, "Reported", everywhere**, superseding his own
+K1. `FAI_REPORT_ONLY.badge` carries it; `badgeShort` was deleted as already dead (zero call sites
+against a comment claiming one). The absent bar, which IS her ruling, is untouched.
+
+🔧 **ITEM 5, AND THE SCOPE KEITH ADDED.** She was shown `/membership`. Keith extended the removal to
+**`/demo`**, which is equally public and ungated and whose reader is exactly the cold visitor her
+reasoning names; that extension is **recorded as his, not as her words**, so it can be revisited
+without misreading her. Kept on the in-app member screen and on `/subscription/confirmed`, both read
+after a purchase. `MEMBERSHIP_INCLUDES_PUBLIC` is **derived from the canonical list by filter, never
+retyped** (row 30a's lesson), and throws at load if the filter stops removing exactly one line —
+proven by pointing the prefix at a non-matching string and watching it fail.
+⚠ **Two approved sentences went with it**, recorded rather than tidied away: row 32c's qualifier on
+`/membership` and **CA-046 Q6's on `/demo`**. Both existed only to mitigate the line she has now
+removed; kept, they would assert a clinical service on a surface that no longer names one. Her later
+ruling removes the NEED for Q6, it does not overturn Q6. `/membership`'s *"Three things"* became
+*"Two things"* because it counts the list above it.
+
 #### By owner, which is the list a signer actually needs
 
 **🔴 EWA — clinical / claims.** Rows **22, 23** (marker values and verdicts changed on the sample

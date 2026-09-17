@@ -60,8 +60,12 @@ import type { KitType } from '@/lib/results/types'
  *      🔴 STILL OPEN, and named in the frame: whether the two tables collapse
  *      into one at all. This change makes them consistent, not singular.
  *
- * FAI: the frame badges it "Reported"; the product badges it
- * FAI_REPORT_ONLY.badge ("Not interpreted"). The product wins.
+ * FAI: 🔄 SETTLED 2026-09-17 — one word, "Reported", on every surface.
+ * `FAI_REPORT_ONLY.badge` now carries it, so the frame and the product agree and
+ * the paragraph below is history rather than a live disagreement. Keith's
+ * decision, superseding his own K1 of 2026-08-12; the reasoning is on the
+ * constant in `lib/kits/panel.ts`. This comment used to read "the frame badges it
+ * Reported; the product badges it Not interpreted. The product wins."
  *
  * ⚠ CITATION CORRECTED 2026-09-15. This comment used to say the product wins
  * "because that is a clinical ruling (Ewa, thresholds.md item 8) and not a label

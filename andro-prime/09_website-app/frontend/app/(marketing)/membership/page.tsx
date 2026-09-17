@@ -11,7 +11,7 @@ import {
   MEMBERSHIP_FIRST_CHARGE_DAY,
 } from '@/lib/membership/disclosure'
 import { FIRST_CYCLE_RETEST_DAYS, ANNUAL_RETEST_DAYS } from '@/lib/membership/entitlement'
-import { MEMBERSHIP_INCLUDES as includes } from '@/lib/membership/includes'
+import { MEMBERSHIP_INCLUDES_PUBLIC as includes } from '@/lib/membership/includes'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { SIZES_HEROGRID } from '@/lib/ui/image-sizes'
@@ -455,23 +455,26 @@ export default function MembershipPage() {
                   </div>
                 ))}
               </div>
-              {/* 🔴 THE SECOND SENTENCE IS A COMPLIANCE ADDITION, NOT A STYLE ONE, and it
-                  is the one finding the Guardrail #1 pre-flight produced against this
-                  page. Item 3 ("Ask the clinician") is carried verbatim from the in-app
-                  paywall, but the SURFACE changed: in-app it is read by a member who has
-                  already met the product, and here it is read cold. `site-funnel-model.md`
-                  §2 forbids an acquisition surface implying clinical services are live,
-                  and the Phase 0 boundary in `03_compliance/CONTEXT.md` is the rule
-                  behind that. "Published for all members" already carries the
-                  general-not-individual point, but it carries it by implication.
-                  This states it, in the footer's own approved words ("They don't
-                  diagnose conditions, replace your GP, or constitute medical advice"),
-                  so the page does not depend on a reader weighting a subordinate
-                  clause correctly. Registered as row 32c. */}
+              {/* 🔄 ROW 32c IS CLOSED, AND IT CLOSED THE OTHER WAY. Ewa, 2026-09-17,
+                  item 5 = B: "Ask the clinician" may NOT be named on a page a visitor
+                  can read without having tested, so it is gone from this list, which now
+                  renders `MEMBERSHIP_INCLUDES_PUBLIC`.
+
+                  The qualifier that used to close this paragraph went with it, and that
+                  is a deletion of APPROVED copy rather than a tidy-up, so it is recorded
+                  rather than done quietly: row 32c added *"Clinician answers are general
+                  and published to every member; they are not individual medical advice
+                  and they do not replace your GP"* precisely to mitigate the line Ewa
+                  has now removed. With nothing left to qualify it would assert a
+                  clinical service on a page that no longer offers one, which is the
+                  `site-funnel-model.md` §2 defect pointing the other way.
+
+                  ⚠ "Three things" became "Two things" for the same reason. It is a count
+                  of the list above it, and the list is shorter; leaving it would have
+                  been a false statement introduced BY a compliance fix. */}
               <p className="f-fine" style={{ marginTop: 18 }}>
-                Three things, and this list is deliberately short. We do not list a benefit we cannot
-                deliver yet. Clinician answers are general and published to every member; they are not
-                individual medical advice and they do not replace your GP.
+                Two things, and this list is deliberately short. We do not list a benefit we cannot
+                deliver yet.
               </p>
             </div>
           </div>

@@ -25,7 +25,7 @@ import {
    and that is the whole fix. This file used to hardcode its own five-bullet
    list, which is how a fourth benefit got onto a public page. The canonical
    list is three items and owns its own rule. */
-import { MEMBERSHIP_INCLUDES } from '@/lib/membership/includes'
+import { MEMBERSHIP_INCLUDES_PUBLIC } from '@/lib/membership/includes'
 import { CheckinRow } from '@/components/membership/CheckinRow'
 import { AdherenceChart } from '@/components/membership/AdherenceChart'
 import type { DemoDates, DemoJourneyId } from '@/lib/results/demo'
@@ -1108,24 +1108,31 @@ function MonthOneNotice({ dates }: { dates: DemoDates }) {
             `includes.ts` deliberately keeps it out of this array for exactly
             that reason. Its wording is still that file's `MEMBERSHIP_RETEST_TERMS`,
             verbatim. */}
-        {MEMBERSHIP_INCLUDES.map((line) => (
+        {MEMBERSHIP_INCLUDES_PUBLIC.map((line) => (
           <li key={line}>
             <i aria-hidden="true">+</i>
             <span>{line}</span>
           </li>
         ))}
       </ul>
-      {/* 🔄 CA-046 Q6 = A (Ewa, 2026-09-16). Copy-register row 32e: row 32c added
-          this sentence to `/membership` and nothing carried it across, so `/demo`
-          rendered the same benefit twice to the same cold visitor with no
-          qualifier at all. Carried VERBATIM from the approved `/membership`
-          wording; not a new sentence, a placement change. `site-funnel-model.md`
-          §2 is the rule behind it: an acquisition surface may not imply clinical
-          services are live. */}
-      <p className="ap-notice__foot">
-        Clinician answers are general and published to every member; they are not individual medical
-        advice and they do not replace your GP.
-      </p>
+      {/* 🔄 CA-046 Q6'S SENTENCE IS REMOVED, AND THE THING IT MITIGATED IS WHY.
+          Q6 = A (Ewa, 2026-09-16) added this qualifier because `/demo` was
+          rendering "Ask the clinician" to a cold visitor with nothing to weight it.
+          On 2026-09-17 she ruled that benefit off public surfaces outright
+          (item 5 = B), so the list here is now `MEMBERSHIP_INCLUDES_PUBLIC` and the
+          qualifier has nothing left to qualify: kept, it would assert a clinical
+          service on a screen that no longer names one.
+
+          🔴 THIS DELETES COPY EWA APPROVED, so it is recorded rather than tidied
+          away. Her later ruling removes the NEED for Q6's mitigation; it does not
+          overturn Q6, and the two are consistent. ⚠ Extending item 5 from
+          `/membership` to `/demo` is KEITH's decision of 2026-09-17, not her words
+          — she was shown `/membership` — so if the extension is ever revisited,
+          this sentence comes back with the line it was written for.
+
+          ⚠ Also note `components/app/AppShell.tsx` is a DIFFERENT file serving the
+          real app; it renders no includes list and is untouched, which is what
+          keeps the benefit visible to members. */}
       <button type="button" className="ap-btn" data-variant="ghost">
         Manage membership
       </button>

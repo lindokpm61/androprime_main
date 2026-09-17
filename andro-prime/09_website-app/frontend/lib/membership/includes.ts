@@ -36,6 +36,45 @@ export const MEMBERSHIP_INCLUDES: readonly string[] = [
 ] as const
 
 /**
+ * 🔴 THE LIST A PUBLIC SURFACE MAY RENDER. Ewa, 2026-09-17, item 5 = B.
+ *
+ * She was asked whether *"Ask the clinician"* may be named on a page a visitor
+ * can read without ever having tested, given the live member screen has so far
+ * only ever rendered that block EMPTY. Her answer was **no: keep it inside the
+ * app**. So the clinician line is removed from the two surfaces a cold reader
+ * reaches — `/membership` and `/demo` — and stays on the in-app member screen and
+ * on `/subscription/confirmed`, which are read after a purchase.
+ *
+ * ⚠ SHE WAS ASKED ABOUT `/membership`. Extending it to `/demo` is **Keith's
+ * decision of 2026-09-17**, not her words: `/demo` is equally public and ungated
+ * and its reader is precisely the cold visitor her reasoning names, but stating
+ * that as her ruling would be the compressed-citation failure `03_compliance/`
+ * warns about, where a citation keeps the authority of what it cites and loses
+ * the scope.
+ *
+ * 🔴 DERIVED BY FILTER, NEVER RETYPED, for the reason row 30a records: a second
+ * hand-maintained copy of this list is how a fourth bullet appeared on `/demo`
+ * in the first place. The assertion below is the load-bearing half — a filter
+ * that silently matches nothing would publish the exact line this exists to
+ * remove, and would do it quietly, on the surface where it is least wanted.
+ */
+const PUBLIC_EXCLUDED_PREFIX = 'Ask the clinician'
+
+export const MEMBERSHIP_INCLUDES_PUBLIC: readonly string[] = MEMBERSHIP_INCLUDES.filter(
+  (line) => !line.startsWith(PUBLIC_EXCLUDED_PREFIX)
+)
+
+if (MEMBERSHIP_INCLUDES_PUBLIC.length !== MEMBERSHIP_INCLUDES.length - 1) {
+  throw new Error(
+    `MEMBERSHIP_INCLUDES_PUBLIC removed ${MEMBERSHIP_INCLUDES.length - MEMBERSHIP_INCLUDES_PUBLIC.length} ` +
+      `line(s); exactly 1 was expected. The clinician line starting "${PUBLIC_EXCLUDED_PREFIX}" is ` +
+      `either gone, reworded, or duplicated in MEMBERSHIP_INCLUDES. Fix the filter deliberately: ` +
+      `failing here is the point, because the alternative is publishing that line to a cold reader ` +
+      `on /membership and /demo against Ewa's ruling of 2026-09-17.`
+  )
+}
+
+/**
  * The retest sentence, verbatim from the in-app paywall, where it sits under
  * the projected retest date. It is here rather than typed twice for the same
  * reason as the list above: `/subscription/confirmed` states the date and owes
