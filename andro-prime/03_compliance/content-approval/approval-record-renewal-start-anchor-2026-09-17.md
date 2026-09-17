@@ -102,7 +102,7 @@ CODE-COMMENT on both payloads**, unit of scan the extracted copy rather than the
 
 | Ref | Where | The item | Why it is here | Signer |
 |---|---|---|---|---|
-| **N-1** | `c1Paragraphs[0]`, the `/kits` money block | C1 loses *"that card is charged"* and gains *"it becomes"* | 🔵 **THE ONE DECISION.** C1 said *"On day 31 that card is charged GBP 47 a month"* while the homepage said *"it becomes"*. **Keeping both would put one fact in two vocabularies inside one payload, which is the exact defect Keith ruled on as F4 on 2026-09-17**, so one had to go, and the anchored homepage version is the one carrying the fix. **What that costs is C1's concrete card language**, which is the more vivid way to say money is leaving a card, on the block that takes the money. **The alternative:** `It starts when your first result lands, and on day 31 that card is charged GBP 47 a month.` everywhere — still a recombination of approved fragments, but it is a wording change to the homepage sentence CA-050 already signed, so it costs more than it looks. | **Keith** |
+| **N-1** ✅ **RULED: NO CHANGE, Keith 2026-09-17.** The built version stands and no code moved on the ruling. **The alternative is recorded as considered and refused**, not never raised: keeping *"that card is charged"* everywhere would have changed the homepage sentence CA-050 already signed, which is a wider change than the wording suggests. | `c1Paragraphs[0]`, the `/kits` money block | C1 loses *"that card is charged"* and gains *"it becomes"* | 🔵 **THE ONE DECISION.** C1 said *"On day 31 that card is charged GBP 47 a month"* while the homepage said *"it becomes"*. **Keeping both would put one fact in two vocabularies inside one payload, which is the exact defect Keith ruled on as F4 on 2026-09-17**, so one had to go, and the anchored homepage version is the one carrying the fix. **What that costs is C1's concrete card language**, which is the more vivid way to say money is leaving a card, on the block that takes the money. **The alternative:** `It starts when your first result lands, and on day 31 that card is charged GBP 47 a month.` everywhere — still a recombination of approved fragments, but it is a wording change to the homepage sentence CA-050 already signed, so it costs more than it looks. | **Keith** |
 | **N-2** | The new clause, all four renderings | *"It starts when your first result lands"* is unconditional | 🟠 **SAME SHAPE AS CA-050's K-1, AND THIS ADDS A CALL SITE.** `startOnResult.ts` returns `low-t-routes-to-gp` before anything else for a confirmed testosterone under `BORDERLINE_T_FLOOR` (12 nmol/L), Keith's ruling of 2026-09-17, so for that cohort the membership starts **never**, not when the result lands. K-1 said the identical thing about *"included in the price of every kit"*. **This record neither creates the issue nor worsens it**, but the two sentences now describe the same exception and must move together: **if K-1 gets a scope word, this clause needs the same one.** Naming the exception outright puts a clinical routing fact on a buy page and pulls Ewa in; a scope word would not. | **Keith** |
 | **N-3** | `faqTestosterone`, `faqHormoneRecovery` | Both answers get ~38 characters longer | ⚠ Noted rather than flagged. The clause is a sentence rather than a subordinate phrase. No layout consequence: these are accordion answers, not chips or footnotes. | — |
 
@@ -115,10 +115,9 @@ everything (`01_strategy/2026-09-07-anchor-everything-to-the-result.md`).
 
 ## 3. Conditions of approval
 
-1. 🔵 **N-1 must be answered**, because both options are implementable and only one is
-   implemented. If Keith prefers the card verb, the change is to `RENEWAL_CLAUSE` alone and
-   it reaches all four surfaces — but it then also alters the homepage sentence CA-050
-   approved, so it is a wider change than it appears.
+1. ✅ **DISCHARGED 2026-09-17. N-1 is ruled no-change**, so the condition recorded here —
+   that both options were implementable and only one was implemented — is satisfied by the
+   ruling rather than by a change. **Nothing was built on the back of it.**
 2. 🟠 **N-2 binds this record to K-1.** Neither sentence may take a scope word without the
    other.
 3. 🔴 **Inherited from CA-050 and unchanged:** `STRIPE_PRICE_MEMBERSHIP` is unset, so the
@@ -151,7 +150,7 @@ this block and has not.
 
 ## 5. Outcome
 
-- Final decision: **PENDING.** One decision (N-1) and one signature.
+- Final decision: **PENDING signature, and nothing is owed before it.** ✅ **N-1 is RULED (Keith, 2026-09-17): no change, the built version stands**, and no code moved on the ruling. N-2 is a standing flag tying this record to CA-050's K-1 rather than a decision, and N-3 is a note.
 - Register updated: 2026-09-17, row CA-052, PENDING.
 - Notes: supersedes CA-050's C1 paragraph and two FAQ answers on approval; the rest of
   CA-050 stands and its homepage sentence is unchanged. **Nothing currently live changes:

@@ -163,8 +163,11 @@ design with the flag on; rebuild flag-off afterwards to restore the shipping art
    mechanised); 10c reads the anchor out of the approved draft. ⚠ **10b failed mutation-testing the
    first time**: it derived its expected clause from the first mention, so breaking that mention made
    all four assertions pass. **A check that reads its expected value out of the data it is checking
-   cannot fail when the first row is the wrong one.** 🔵 **N-1 is Keith's:** C1 loses *"that card
-   is charged"*, because keeping it beside the homepage's *"it becomes"* would be F4 again. 🟠
+   cannot fail when the first row is the wrong one.** ✅ **N-1 RULED NO-CHANGE (Keith, 2026-09-17): the built version stands**, C1 loses *"that card
+   is charged"* because keeping it beside the homepage's *"it becomes"* would be F4 again, and **no
+   code moved on the ruling**. The alternative is recorded as considered and refused rather than
+   never raised: it would have changed the homepage sentence CA-050 already signed.
+   ⚠ **CA-052 is now waiting on the signature alone.** 🟠
    **N-2 binds CA-052 to CA-050's K-1:** the new clause is unconditional while `startOnResult.ts`
    refuses a membership under 12, so if K-1 gets a scope word this clause needs the same one.
    Superseded on approval: CA-050's C1 paragraph and two FAQ answers only.

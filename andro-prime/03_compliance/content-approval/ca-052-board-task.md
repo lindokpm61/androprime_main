@@ -4,7 +4,7 @@ can be diffed. The BOARD is the hub and outranks this file; this is the mirror.
 Written by `09_website-app/frontend/scripts/clickup-approval-task.ts`.
 -->
 
-**You owe one decision and one signature.** Nobody else is required. Ewa is not a signer, on the same tested condition as CA-050 and CA-051.
+✅ **N-1 IS RULED (Keith, 2026-09-17, in his words "N-1: no change"): the built version stands.** Nothing further to build. **You owe the signature and nothing else.** Nobody else is required. Ewa is not a signer, on the same tested condition as CA-050 and CA-051.
 
 **This is H-A**, the one HARD finding that survived CA-050's signature. That record's condition 1 said so in its own words: it holds *"whether or not this record is signed first"*.
 
@@ -33,7 +33,11 @@ Written by `09_website-app/frontend/scripts/clickup-approval-task.ts`.
 - **Flag ON: three fields** changed, the C1 paragraph and the two FAQ answers.
 - **The homepage sentence is byte-identical.** It reads the constant instead of spelling the clause out, and the output is character for character what CA-050 approved.
 
-## The one decision
+## The decision, ruled
+
+- ✅ **N-1 RULED: NO CHANGE, Keith 2026-09-17.** The built version stands: C1 states the fact in the same words as the homepage, the two kit-LP FAQs and the constant they all read. **No code moved on the ruling.** The alternative, keeping *"that card is charged"* everywhere, is recorded as considered and refused rather than never raised, and it would have changed the homepage sentence CA-050 already signed. Original framing kept below.
+
+### The original framing, kept because the reasoning is the record
 
 - 🔵 **N-1: C1 loses *"that card is charged"*.** The old C1 said *"On day 31 that card is charged GBP 47 a month"* while the homepage said *"it becomes GBP 47 a month"*. **Keeping both would put one fact in two vocabularies within the payload, which is the exact defect you ruled on as F4 on 2026-09-17**, so one had to go and the anchored homepage version is the one that carries the fix. **What that costs is C1's concrete card language**, which is the more vivid way to say money is leaving a card, and C1 is the money block. **The alternative** is `It starts when your first result lands, and on day 31 that card is charged GBP 47 a month.` everywhere, which keeps the card verb and is still a recombination of approved fragments, but it is a wording change on the homepage sentence you already signed. Your call.
 
@@ -62,6 +66,6 @@ Written by `09_website-app/frontend/scripts/clickup-approval-task.ts`.
 
 ---
 
-⚠ **Claude created this at `pending` and did not move it.** Only you set it to approved.
+⚠ **Claude created this at `pending` and did not move it, and has not moved it now.** Recording your ruling and performing the approval are two different acts; only you set it to approved. **Nothing is owed before you can:** N-1 is answered and needed no build, N-2 is a flag rather than a decision, and N-3 is a note.
 
 ⚠ **Board first this time, then the repo.** The record was written after this task existed, which is the order the convention asks for and the opposite of what happened on CA-050.
