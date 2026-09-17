@@ -4,7 +4,7 @@ can be diffed. The BOARD is the hub and outranks this file; this is the mirror.
 Written by `09_website-app/frontend/scripts/clickup-approval-task.ts`.
 -->
 
-✅ **TWO OF THE THREE COPY DECISIONS ARE RULED (Keith, 2026-09-17). J-3 is the one still open, and it does NOT block your signature.** Nobody else is required. Ewa is not a signer on this one, for the same reason and on the same tested condition as CA-050.
+✅ **ALL THREE COPY DECISIONS ARE RULED (Keith, 2026-09-17). Nothing is owed: sign it.** Nobody else is required. Ewa is not a signer on this one, for the same reason and on the same tested condition as CA-050.
 
 ⚠ **The task NAME still reads "four decisions" and cannot be edited by the repo script, which writes content only.** The body is authoritative. Same one-fact-in-two-places shape the README warns about for PENDING/APPROVED in task names.
 
@@ -33,7 +33,8 @@ A1's third sentence is the conflict-free GP claim and is the only part in her re
 
 - ✅ **J-1 RULED: OPTION A, Keith 2026-09-17.** The chip stays, carrying CA-050's approved flag-on heading. **This is what was already implemented, so no code changed on the ruling** and the trust strip keeps four rows in both flag states. The alternative, dropping the chip, is recorded as considered and refused rather than never raised. Original framing kept below.
 - ✅ **J-2 RULED: YES, Keith 2026-09-17.** The two homepage share-card descriptions lose *"One price,"* unconditionally. **Already applied on the branch in `c364f6f`**, so nothing further is built; this converts it from an applied-but-unapproved change into an approved one. It remains the only item here that ships at the **merge** rather than at the flip.
-- 🔵 **J-3 IS STILL OPEN, AND THE DISTINCTION MATTERS: it does not block this signature, it blocks the FLIP.** The line is not part of this record's payload; it is an existing line the widened detector now reports. But `verify-subscription-claims.js` fails whenever `MEMBERSHIP_ENABLED` is true while any claim stands, so **that one line is currently enough to stop the flag going on.** It is the only line the gate reports: 1 sentence on 1 page.
+- ✅ **J-3 RULED: LEAVE IT, Keith 2026-09-17.** The line stays as written, which is the false-positive call, the same one `BundleChoice`'s chip got on 2026-09-16. The context settles it: the paragraph directly under the heading prices the comparison, *"Separately, those two kits cost £218. Kit 3 gives you all nine markers for £179"*, so it counts **kits against kits**, never payments over time. A dated `CLAIMS_ALLOW` entry now names the file and the phrase, and the file is still scanned for every other claim. **The interlock reads 0 sentences on 0 pages, so no copy line is holding the flip any more.**
+- ⚠ **AND THE EXEMPTION IS GUARDED, BECAUSE AN EXEMPTION IS A CLAIM ABOUT A LINE AND NOTHING WAS CHECKING THE LINE.** Its reasoning is true of the current sentence and of nothing else. **Mutation-verified:** rewriting that heading into a genuine single-price claim left the detector still reporting **0 on 0**, because a file-and-phrase exemption silently inherits whatever the line becomes. `test-standing-claim.ts` case 9 asserts the heading AND its pricing paragraph still read what they read when this was granted, and it was the only thing that caught the mutation. Change either and the suite fails, which forces the exemption to be re-argued rather than quietly inherited.
 
 ### The original framing, kept because the reasoning is the record
 
@@ -56,10 +57,10 @@ The record states the judgement pass as **thin rather than claiming an independe
 
 ## Conditions recorded against approval
 
-`STRIPE_PRICE_MEMBERSHIP` is still unset, inherited from CA-050. ✅ **J-1 is answered**, so the condition that used to sit here is discharged. J-2 is on the merge gate rather than the flip gate and is now approved. 🔵 **J-3 remains a condition on the flip**, because the interlock fails with the flag on while that line stands. J-4 is engineering and is recorded rather than signed.
+`STRIPE_PRICE_MEMBERSHIP` is still unset, inherited from CA-050. ✅ **J-1 is answered**, so the condition that used to sit here is discharged. J-2 is on the merge gate rather than the flip gate and is now approved. ✅ **J-3 is answered and its exemption is written and guarded**, so no copy line holds the flip. J-4 is engineering and is recorded rather than signed.
 
 ---
 
-⚠ **Claude created this at `pending` and did not move it, and has not moved it now.** Recording your two rulings and performing the approval are two different acts; only you set it to approved. **Nothing is owed before you can:** J-1 and J-2 are answered and both were already built, and J-3 is a condition on the flip rather than on this record.
+⚠ **Claude created this at `pending` and did not move it, and has not moved it now.** Recording your two rulings and performing the approval are two different acts; only you set it to approved. **Nothing is owed before you can:** all three copy items are answered. J-1 and J-2 were already built, and J-3's exemption is written, dated in your words, and guarded by a test.
 
 ⚠ **The record file was written about a minute before this task, and the guard caught it.** `.claude/hooks/approvals-board-guard.js`, added after CA-050 went into the register with no task at all, blocked the write and named the fix. The ordering is recorded here rather than tidied away, because a guard that fires and gets quietly worked around is worse than no guard.

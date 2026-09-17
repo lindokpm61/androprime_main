@@ -115,7 +115,7 @@ decision for Keith rather than reported as cleared.**
 |---|---|---|---|---|
 | **J-1** ✅ **RULED: OPTION A, Keith 2026-09-17.** The chip stays, carrying CA-050's approved flag-on heading. **No code changed on the ruling**, because option A is what was already implemented; the trust strip keeps four rows in both flag states. **The alternative is recorded as considered and refused rather than never raised.** | `/about`, the fourth trust chip | Flag-off: `{ 'One price', 'For the test, and nothing after it' }`. Flag-on, as implemented: `{ 'Nothing hidden', 'Not even the renewal' }` | 🔵 **THE ONE REAL DECISION, AND IT IS THE ONLY PLACE IN THIS PAYLOAD WITH NO PURE-DELETION FORM.** Both halves of the chip die together: "One price" is false on its own and "nothing after it" is the false half, so deleting the false half deletes the chip and leaves the trust strip with three rows instead of four. What is implemented **introduces no new word**: it is CA-050's approved flag-on `c1Heading` with the full stops dropped to match the chip row's convention, and the suite asserts that equality so the two cannot drift. ⚠ **The judgement it needs is about REGISTER, not wording:** those five words were approved as a money-block heading and are being asked to work as a trust-strip fact beside "UKAS ISO 15189" and "GMC-registered", which are credentials. **The alternative is dropping the chip.** | **Keith** |
 | **J-2** ✅ **RULED: YES, Keith 2026-09-17.** The cut stands. **Already applied in `c364f6f`**, so nothing further is built; the ruling converts an applied-but-unapproved change into an approved one. **It remains the only item here that ships at the MERGE rather than the flip.** | `app/(marketing)/page.tsx`, `openGraph` and `twitter` descriptions | *"One price, nothing hidden."* removed, leaving *"Nothing hidden."* | 🟠 **THIS IS THE ONLY PART OF THIS RECORD THAT SHIPS AT THE MERGE RATHER THAN AT THE FLIP.** `export const metadata` is evaluated at module scope and cannot read the flag per request, so it takes the deletion unconditionally, the same handling and the same reason as `public/llms.txt`. *"Nothing hidden."* is true in both states. ⚠ **It is not a new item: it is copy-register row 48's owed item extended.** That row already recorded the homepage meta `description` dropping this exact string as owed to Keith on 2026-09-14; the `openGraph` and `twitter` fields three lines below it kept it for three more days. **One fact, three call sites, and fixing the one the report named made the other two a contradiction rather than a duplicate.** | **Keith** |
-| **J-3** 🔵 **STILL OPEN, and the distinction matters: it does not block this SIGNATURE, it blocks the FLIP.** The line is not part of this record's payload; it is an existing line the widened detector now reports. But the interlock fails whenever `MEMBERSHIP_ENABLED` is true while any claim stands, so **this one line is currently enough to stop the flag going on.** | `app/lp/hormone-recovery/page.tsx:353` | *"One test instead of two. One price instead of two."* | 🟠 **LEFT IN PLACE AND DELIBERATELY NOT EXEMPTED.** It counts **prices in a bundle comparison** (Kit 3 against Kit 1 plus Kit 2), not payments over time, so it is very probably a false positive of exactly the shape Keith ruled on for `BundleChoice`'s "One-off test" chip on 2026-09-16. It is left unexempted so it surfaces for the same explicit ruling rather than being quietly exempted by the person who widened the detector. **It is the only line the gate still reports: 1 sentence on 1 page.** | **Keith** |
+| **J-3** ✅ **RULED: LEAVE IT, Keith 2026-09-17.** The line stays as written: the false-positive call, same as `BundleChoice` on 2026-09-16. The paragraph under the heading prices the comparison (*"Separately, those two kits cost £218. Kit 3 gives you all nine markers for £179"*), so it counts **kits against kits**. A dated `CLAIMS_ALLOW` entry names the file and the phrase; the file is still scanned for every other claim. **The interlock now reads 0 sentences on 0 pages.** ⚠ **The exemption is GUARDED and that was not optional:** mutation-verified, rewriting the heading into a genuine single-price claim left the detector reporting **0 on 0**, because a file-and-phrase exemption inherits whatever the line becomes. Case 9 caught it and was the only thing that did. | `app/lp/hormone-recovery/page.tsx:353` | *"One test instead of two. One price instead of two."* | 🟠 **LEFT IN PLACE AND DELIBERATELY NOT EXEMPTED.** It counts **prices in a bundle comparison** (Kit 3 against Kit 1 plus Kit 2), not payments over time, so it is very probably a false positive of exactly the shape Keith ruled on for `BundleChoice`'s "One-off test" chip on 2026-09-16. It is left unexempted so it surfaces for the same explicit ruling rather than being quietly exempted by the person who widened the detector. **It is the only line the gate still reports: 1 sentence on 1 page.** | **Keith** |
 | **J-4** | The interlock as a whole | Six of nine module consumers are statically prerendered | 🔴 **NOT COPY, AND IT GATES THE FLIP.** `isMembershipEnabled()` is evaluated at **build** time on `/`, `/kits`, `/about`, `/how-it-works` and the five `/lp/*` routes, so the module's "call it per request" rule is necessary and not sufficient. **Measured:** with the flag true and the server restarted but not rebuilt, `/kits` served the flag-OFF heading *"One price."* while `/kits/testosterone` served flag-ON copy. **Two states, one site, one click apart, on the page that takes the money.** Recorded here because it is a condition on this copy rendering correctly, not because it is a copy question. **It predates this record and applies to CA-050's payload too.** | Keith / engineering |
 
 **Previously adjudicated, recorded so nobody reopens them:** business rather than clinical
@@ -136,12 +136,12 @@ flag (applied, `1475c75`); `BundleChoice`'s "One-off test" chip ruled a false po
 2. ✅ **DISCHARGED 2026-09-17. J-2 is ruled yes** and was already applied in `c364f6f`. It
    remains **the one item here that ships at the MERGE rather than the flip**, so it is now an
    approved part of the Gate B payload rather than something to revert before it.
-2a. 🔵 **J-3 IS NOW THE ONLY COPY CONDITION LEFT ON THE FLIP.** It is not part of this
-   record's payload and does not block this signature, but `verify-subscription-claims.js`
-   fails with the flag on while any claim stands, and that line is the only one it still
-   reports. **One ruling clears it either way:** a false positive gets a dated `CLAIMS_ALLOW`
-   entry naming the file and the phrase, exactly as `BundleChoice`'s chip did on 2026-09-16;
-   anything else is a copy change and needs its own record.
+2a. ✅ **DISCHARGED 2026-09-17. J-3 is ruled leave-it**, the exemption is written with his
+   words in its `why`, and it is **guarded** by `test-standing-claim.ts` case 9 rather than
+   left to widen silently. **No copy line holds the flip any more:** the interlock reads 0
+   sentences on 0 pages. ⚠ That verdict string is the same one it printed this morning over
+   seven live instances; what makes it mean something now is that the vocabulary axis is armed
+   and the single remaining match is an explicit, dated, tested exemption instead of a gap.
 3. 🔴 **This copy may not render until the mechanic behind it exists**, inherited from
    CA-050 condition 2 and unchanged: `STRIPE_PRICE_MEMBERSHIP` is unset, so the start
    hook refuses and every buyer would get no membership while the pages describe one.
@@ -180,10 +180,11 @@ this block and has not.
 
 ## 5. Outcome
 
-- Final decision: **PENDING signature.** ✅ **Two of the three copy items are RULED (Keith,
-  2026-09-17): J-1 option A, J-2 yes.** Neither required a code change, because both were
-  already what is built. **Nothing is owed before the signature**: J-3 is a condition on the
-  flip rather than on this record, and J-4 is engineering.
+- Final decision: **PENDING signature, and nothing is owed before it.** ✅ **All three copy
+  items are RULED (Keith, 2026-09-17): J-1 option A, J-2 yes, J-3 leave it.** J-1 and J-2
+  required no code change because both were already what is built; J-3 produced a dated,
+  guarded `CLAIMS_ALLOW` entry rather than a copy change. J-4 is engineering and is recorded
+  rather than signed.
 - ⚠ **The board task NAME still reads "four decisions" and the repo script writes content
   only, so it cannot be corrected from here.** The body is authoritative. This is the same
   one-fact-in-two-places shape `README.md` warns about for PENDING/APPROVED in task names,

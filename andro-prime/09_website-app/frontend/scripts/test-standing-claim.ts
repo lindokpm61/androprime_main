@@ -177,6 +177,32 @@ const metaStart = home.indexOf('export const metadata')
 const metaBlock = home.slice(metaStart, home.indexOf('\n}', metaStart))
 ok('no "one price" in title/description/openGraph/twitter', !/one\s+price/i.test(metaBlock), metaBlock.slice(0, 300))
 
+// ── 9. THE EXEMPTION'S JUSTIFICATION, NOT JUST THE EXEMPTION ─────────────────
+// 🔴 AN EXEMPTION IS A CLAIM ABOUT A LINE, AND NOTHING WAS CHECKING THE LINE.
+// CA-051 item J-3: `verify-subscription-claims.js` now exempts "one price" on
+// `/lp/hormone-recovery`, because there it means Kit 3 against Kit 1 plus Kit 2
+// rather than payments over time. That reasoning is true of the CURRENT sentence
+// and of nothing else. Without this case, rewriting that heading into a real
+// single-price claim would inherit an exemption granted for a different sentence,
+// and the gate would report clean over it — an exemption that widens silently is
+// worse than no exemption, because it looks like a decision someone took.
+//
+// So the exemption is guarded by its own evidence: the heading AND the paragraph
+// that prices the comparison. Change either and this fails, which forces the
+// exemption to be re-argued rather than quietly inherited.
+console.log('\n9 · The J-3 exemption still describes the line it was granted for')
+const hormoneLp = strippedSource('app/lp/hormone-recovery/page.tsx')
+ok(
+  'the heading is still the two-kits comparison',
+  /One test instead of two\.[\s\S]{0,80}One price instead of two\./.test(hormoneLp),
+  'the heading changed: re-argue the CLAIMS_ALLOW entry for this file',
+)
+ok(
+  'and the paragraph under it still prices that comparison',
+  /those two kits cost\s*&pound;218/.test(hormoneLp) && /nine markers for\s*&pound;179/.test(hormoneLp),
+  'the pricing paragraph changed: the exemption rested on it',
+)
+
 console.log(`\n${checks - failures}/${checks} assertions passed`)
 if (failures > 0) {
   console.error(`\n${failures} FAILED`)

@@ -172,14 +172,17 @@ design with the flag on; rebuild flag-off afterwards to restore the shipping art
    heading (*Nothing hidden / Not even the renewal*), and the two homepage share-card descriptions
    keep the unconditional cut. The alternative on J-1, dropping the chip, is recorded as considered
    and refused rather than never raised. Both rulings are on the board task and in the record.
-   🔵 **J-3 is the only copy item left, and the distinction matters: it does NOT block the
-   signature, it blocks the FLIP.** `lp/hormone-recovery:353`, *"One test instead of two. One price
-   instead of two."* is not part of CA-051's payload — it is an existing line the widened detector
-   now reports — but `verify-subscription-claims.js` fails with the flag on while any claim stands,
-   so **that one line is currently enough to stop the flag going on.** It is the only line the gate
-   reports: 1 sentence on 1 page. **One ruling clears it either way:** a false positive gets a dated
-   `CLAIMS_ALLOW` entry naming the file and the phrase, exactly as `BundleChoice`'s chip did on
-   2026-09-16; anything else is a copy change and needs its own record. ⚠ **Nothing is owed before
+   ✅ **J-3 RULED LEAVE-IT, Keith 2026-09-17** — the false-positive call, same as `BundleChoice`
+   on 2026-09-16. The paragraph under that heading prices the comparison (*"Separately, those two
+   kits cost £218. Kit 3 gives you all nine markers for £179"*), so it counts **kits against kits**,
+   never payments over time. A dated `CLAIMS_ALLOW` entry names the file and the phrase; the file is
+   still scanned for every other claim. **The interlock now reads 0 sentences on 0 pages, so no copy
+   line holds the flip.** ⚠ **AND THE EXEMPTION IS GUARDED, WHICH WAS NOT OPTIONAL.** An exemption
+   is a claim about a line and nothing was checking the line. **Mutation-verified:** rewriting that
+   heading into a genuine single-price claim left the detector still reporting **0 on 0**, because a
+   file-and-phrase exemption silently inherits whatever the line becomes. `test-standing-claim.ts`
+   case 9 asserts the heading AND its pricing paragraph still read what they read when the exemption
+   was granted, and it was the only thing that caught the mutation. ⚠ **Nothing is owed before
    Keith signs CA-051.**
 3. 🟠 **The two homepage metadata fields ship at the MERGE**, not at the flip, so they are the
    only part of 42b that is not flag-protected. They are **row 48's owed item extended**: that row

@@ -221,6 +221,20 @@ const CLAIMS_ALLOW = [
        + 'bundle, so it counts tests rather than payments and stays true under the '
        + 'auto-renew ruling. The file is still scanned for every other claim.',
   },
+  {
+    file: 'app/lp/hormone-recovery/page.tsx',
+    claim: 'one price',
+    why: 'Ruled a FALSE POSITIVE by Keith on 2026-09-17, in his words "J-3 leave it": the line '
+       + 'stays as written. It is the Kit 3 heading "One test instead of two. One price instead '
+       + 'of two.", and the paragraph directly beneath it prices that comparison - "Separately, '
+       + 'those two kits cost GBP 218. Kit 3 gives you all nine markers for GBP 179" - so it '
+       + 'counts KITS against KITS, never payments over time, and stays true under the auto-renew '
+       + 'ruling. Same shape and same call as BundleChoice\'s "One-off test" chip on 2026-09-16. '
+       + 'CA-051 item J-3. The file is still scanned for every other claim. '
+       + 'GUARDED: scripts/test-standing-claim.ts case 9 asserts the heading and its pricing '
+       + 'paragraph still read what they read when this was granted, so the exemption FAILS rather '
+       + 'than silently widening if that line is ever rewritten into a real single-price claim.',
+  },
 ]
 
 const claimExempt = (file, claim) =>
