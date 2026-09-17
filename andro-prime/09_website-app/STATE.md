@@ -4,6 +4,54 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## 🟢 2026-09-18 — GATE A IS CLOSED, AND THE SCREENSHOT TOOL WAS LYING
+
+**A5 ran overnight 17/18 Sept. 30 captures at 1320 and 390, in `shots/a5/`, no production writes.**
+Every route an anonymous sweep cannot reach is now measured: the `(app)` routes on a real session,
+the two flag-gated ones on a flag-on build, both internal boards, `/blog/preview/[slug]`, and all
+three error boundaries by deliberate throw. **A4 was then re-run on Keith's instruction and holds.**
+
+✅ **GATE A IS CLOSED — all five items.** A2 turned out to have closed on 2026-09-17 and to have been
+carried as open ever since: Ewa answered the seven-item packet fifteen minutes after Keith sent it
+(**`1: A 2: A 3: A 4: A 5: B 6: A 7: A`**), the one `B` was built the same evening, and the board
+click was done nine minutes before her reply arrived. **The next thing that happens is Gate B, the
+merge.** Detail in `10_launch-ops/implementation-checklists/direction-f-go-live.md`, which is the
+status store.
+
+🔴 **The finding that outlives A5: `shot.js` was capturing the middle of every tall page.** Its walk
+ended `window.scrollTo(0, 0)` then paused 200ms, while `<html>` carries Tailwind's `scroll-smooth`
+(`app/layout.tsx:177`) **with no `prefers-reduced-motion` override**, so the scroll animated and the
+capture happened mid-flight. Measured `scrollY` at the moment of capture: **`/` 4676 · `/faq` 6538 ·
+`/kits` 2768 · `/about` 2565 · `/blog` 1486 · `/results-dashboard` 733.** Exit 0, no warning, file
+written — a mid-page screenshot of a long page looks exactly like a screenshot of a long page. It
+surfaced only because two captures of one screen disagreed about a banner and the disagreement was
+chased rather than averaged. **Fixed** (walk forces `scroll-behavior: auto`, restores it, returns
+`scrollY`, warns if not at rest). 🟠 The CSS gap is separately a live accessibility defect
+(WCAG 2.3.3) and is **not** fixed.
+
+✅ **A4 RE-RUN 2026-09-18 ON KEITH'S INSTRUCTION, AND IT HOLDS.** Captures in `shots/a4-rerun/`,
+against a shipping-state build rebuilt from the current tree. **60 captures, 59 passed their
+source-derived assertion; the one failure was a transient `http.request` error in the runner reading
+`/not-found`'s status, which re-tested 404 three times by `curl`. No page defect.** 🟢 **All 60 came
+to rest at the top of the page**, asserted per capture. Machine gate reproduced exactly:
+`audit-viewport-sweep` at 390 and 1320, 96 of 100 cells, no overflow and no sub-AA light-ground text,
+with its own positive control. 🔵 **Two counting errors corrected in A4's account:** `/activate` and
+`/founding-member` are bare `redirect()`s that render no markup — measured as redirects (307 to
+`/how-to-sample` and `/kits`) rather than photographed. **That is the third instance of a route
+inventory built from `page.tsx` files failing to tell a page from a redirect**, after
+`/founding-member-status`. 🟢 **And the sweep's declared blind spot was measured for the first time
+and passes:** it reads `backgroundColor` only, so text over an image is invisible to it — which is
+what the homepage headline is. Measured at the glyph pixels, the headline is **3.78:1 at 1320 and
+3.67:1 at 390 against a 3.0 requirement**; six further pages at both widths gave 0 failures.
+
+🟢 **One page defect found and fixed:** `/results-dashboard/handoff` scrolled horizontally at 390
+because the `<h1>` is `{fullName || user.email}` and an email is one unbreakable token at 30px
+display serif. `overflow-wrap: anywhere`; `test:design` and `typecheck` both exit 0.
+🔵 **And one question that is not ours:** that same page identifies the patient to a GP **by email
+address, with "Date of birth: Not recorded"**.
+
+---
+
 ## 🟢 2026-09-17 — THE COPY ROWS 42a/12a ARE APPLIED BEHIND THE FLAG, AND THE MECHANIC BEHIND THEM NOW EXISTS
 
 **The handoff below still stands**: the go-live plan is the place to work from. This entry records
@@ -93,10 +141,20 @@ screenshot. Both are gated, a session is needed, and the only documented seeder 
 
 ## ▶️ PICK UP HERE — handoff, 2026-09-17 (final close: A2 and A3 are done, A5 is next)
 
-### 🟢 GATE A IS DOWN TO ONE ITEM, AND IT IS A5
+### ✅ GATE A IS CLOSED. ALL FIVE ITEMS.
 
-**A2 ✅ · A3 ✅ · A4 ✅ (bar the flag-gated routes) · A5 🔴 outstanding.** Everything below is the
-detail; this line is the state.
+**A1 ✅ 2026-09-16 · A2 ✅ 2026-09-17 · A3 ✅ · A4 ✅ (re-run 2026-09-18, holds) · A5 ✅ 2026-09-17/18.**
+Everything below is the detail; this line is the state. **The next thing that happens is Gate B, the
+merge.**
+
+🔴 **A2 was carried as open for a day after it closed.** The go-live checklist said Ewa's four rows
+and ruling 6 were owed and that the packet was *"validated and NOT SENT"*. It was sent at 21:35 on
+2026-09-17 and **answered fifteen minutes later — `1: A 2: A 3: A 4: A 5: B 6: A 7: A`, seven asked
+and seven answered** — and every ruling that created work was built in `9a7c9d4` the same evening.
+The commit updated the sign-off packet but not the checklist, which is the status store. On
+2026-09-18 that stale line was read as current and repeated into this file before anyone opened the
+inbox. **A "still owed" is a negative claim and those decay fastest; re-test one before repeating
+it, not only before acting on it.**
 
 **A2 closed in full on 2026-09-17.** The figure it had been quoting — *"26 rows needing sign-off and
 5 needing a ruling"* — was **eight items out of date**, correct only as at 2026-09-15, because the
@@ -105,25 +163,58 @@ figure was 18 and 2. Keith then answered all fourteen of his (thirteen signed, r
 "fix it" ruling) plus ruling 38a; Ewa answered all seven of hers in one pass; and the board click on
 `869f1wwch` is done. Work it from `10_launch-ops/implementation-checklists/a2-signoff-packet-2026-09-17.md`.
 
-**A4 ran clean.** `audit-viewport-sweep` at 390 and 1320: **no overflow and no sub-AA light-ground
-text across 96 cells**, with a positive control proving both probes can fail. 62 captures, 56 clean,
-6 flagged and **none a page defect** — four are the two internal boards (they 307 to `/auth/login`,
-so they are A5's, not A4's) and two are one bad derived expect-string. All five homepage findings in
-the 2026-09-03 `impeccable` critique verify as **closed**, not carried.
+**A4's machine gate ran clean; its VISUAL half did not measure what it said it did.**
+`audit-viewport-sweep` at 390 and 1320 — **no overflow and no sub-AA light-ground text across 96
+cells**, with a positive control proving both probes can fail — is a different script and stands.
+All five homepage findings in the 2026-09-03 `impeccable` critique verify as **closed**, not carried.
+
+🔴 **A4's 62 `shot.js` captures were taken mid-scroll, not at the top of the page.** Found by A5 on
+2026-09-17: the walk ended with `window.scrollTo(0, 0)` and a 200ms pause, while `<html>` carries
+Tailwind's `scroll-smooth` (`app/layout.tsx:177`) **with no `prefers-reduced-motion` override**, so
+the scroll animated and the pause expired mid-flight. Measured `scrollY` at capture: **`/` 4676 ·
+`/faq` 6538 · `/kits` 2768 · `/about` 2565 · `/blog` 1486 · `/results-dashboard` 733**, all settling
+to 0 a second later. **The homepage hero was never in frame.** The same walk defect made the tool's
+`diag.hidden` reveal check a false-positive generator, because an animated downward step meant the
+walk could stop short of the bottom.
+
+✅ **`shot.js` is fixed and A4 WAS RE-RUN on 2026-09-18 — it holds.** 60 captures in
+`shots/a4-rerun/`, 59 passing their source-derived assertion, the single failure a transient error in
+the runner rather than a page defect, and **every capture came to rest at the top of its page**. So
+A4's verdict survives; what did not survive is two of its route counts (`/activate` and
+`/founding-member` are redirects, not screens) and the assumption that its text-over-image blind spot
+was safe — now measured, and it is.
 ⚠ **What A4 did NOT cover:** `/membership`, `/account/membership` and `/results-dashboard/handoff`
 are flag-gated, so they are unmeasured in the shipping state. Covering them needs a second pass on a
 **flag-on build** — see the rebuild rule below, a restart will not do it.
 
-### 🔴 A5 IS THE WHOLE OF WHAT IS LEFT ON GATE A, and it is bigger than the checklist says
+### ✅ A5 RAN OVERNIGHT 2026-09-17/18 — 30 captures, one defect found and fixed, no production writes
 
-The seven `(app)` routes with a real session via `shot.js --cookie`, all three error boundaries
-(they have no route, so no sweep built from a route list has ever reached one), `/blog/preview/[slug]`
-and — **added 2026-09-17** — the two internal boards `/admin/dashboard` and `/ops/content`, which the
-A4 sweep found redirect anonymously and therefore were never A4's to measure.
+Every gated route reached: the `(app)` routes on a real session (login form driven by a scratchpad
+helper that prints the `sb-*` cookies for `--cookie`), the two flag-gated ones on a **flag-on build**,
+both internal boards, `/blog/preview/[slug]` with its token, and **all three error boundaries by
+deliberate throw**. Captures in `shots/a5/`. Detail lives in
+`10_launch-ops/implementation-checklists/direction-f-go-live.md`, which is the status store.
 
-🔵 **One decision is Keith's and blocks a third of it:** `npm run db:seed` writes **ten fake
-customers with fake health results into the PRODUCTION database**. Approve it or skip it. Skipping
-means nine of the ten results states ship having never been looked at.
+**Every capture carries two assertions and the pair is the point.** `"Log Out"` proves the
+authenticated shell rendered; a page string proves the right page. Neither alone works —
+`/auth/login`'s title is *"Access Your Results"*, so the dashboard's own `metadata.title` passes on
+the login bounce. Verified positively: `"Log Out"` occurs 0 times on the login page.
+
+- 🟢 **FIXED: `/results-dashboard/handoff` overflowed at 390** (438px of content in a 390px
+  viewport). `handoff/page.tsx:115` renders `{fullName || user.email}` as the `<h1>`, so with no
+  profile name it is an email address — one unbreakable token at 30px display serif.
+  `overflow-wrap: anywhere` on `.f-handoff-head h1`; re-measured clean, `test:design` and
+  `typecheck` both exit 0.
+- 🔵 **The GP handoff identifies the patient by EMAIL, with "Date of birth: Not recorded".** Keith
+  and probably Ewa. It is the one screen a customer is told to hand to a clinician, and a GP cannot
+  safely match it to a record. Content decision, not fixed.
+- 🔵 **`/founding-member-status` is not a screen.** Measured with a real session: it 307s to
+  `/account` and renders no markup. Third time it has been scheduled for design work it cannot take.
+- 🔵 **Keith decided 2026-09-17: no production seeding.** Four scenario accounts already existed, so
+  four result states were captured at zero cost. **Ten of the fourteen registry scenarios ship
+  unlooked-at** — a known gap, not a passed check; they are named in the checklist.
+- 🔵 **The two internal boards were reached by temporarily allowlisting a fixture address in
+  `lib/auth/isAdmin.ts`** — Keith's call, never committed, reverted and the revert verified by grep.
 
 ### 🟠 Live on `main` and NOT blocking the merge, but both are real
 

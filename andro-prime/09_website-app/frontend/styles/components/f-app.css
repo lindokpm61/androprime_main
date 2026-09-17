@@ -992,6 +992,17 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 10px 0 0;
+  /* 🔴 THIS HEADING IS NOT ALWAYS A NAME. `handoff/page.tsx:115` renders
+     `{fullName || user.email}`, so with no profile name the H1 is an email
+     address — one unbreakable token, at 30px display serif, inside a 390px
+     viewport. Found by the A5 capture pass on 2026-09-17: the page overflowed
+     to 438px wide at 390 and the body scrolled horizontally, on the one screen
+     in the product a customer is expected to hand to a clinician.
+     `anywhere` rather than `break-word` because the token has no break
+     opportunity at all, and `break-word` only helps where one exists. A long
+     hyphenless surname reaches the same state, so this is not an artefact of
+     the test account. */
+  overflow-wrap: anywhere;
 }
 .f-handoff-id { margin-top: 12px; font-size: 14px; color: #3F444B; }
 .f-handoff-id p { margin: 0 0 3px; }

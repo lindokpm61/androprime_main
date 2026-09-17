@@ -42,8 +42,31 @@ value of this document.
 
 ## Gate A — before the merge
 
-**Five items. Nothing else blocks.** 🔄 **A1 is CLOSED as of 2026-09-16 and A3 as of 2026-09-17,
-so three remain: A2 signatures, A4 the screenshot pass, A5 the session-carried sweep.**
+**Five items. Nothing else blocks.** ✅ **GATE A IS CLOSED. A1 2026-09-16 · A2, A3 and A4
+2026-09-17 · A5 overnight 2026-09-17/18 · A4 re-run and re-confirmed 2026-09-18. Nothing on this
+gate is outstanding.** The next thing that happens is Gate B, the merge.
+
+🔴 **A2 WAS RECORDED HERE AS OPEN FOR A DAY AFTER IT CLOSED, AND THE CORRECTION IS WORTH MORE THAN
+THE TICK.** This section said Ewa's four rows plus ruling 6 were owed and that the packet was
+*"validated and NOT SENT"*. **It was sent at 21:35 on 2026-09-17 and answered at 21:50**; the board
+click it also lists was done at 21:41; every ruling that created work was built in `9a7c9d4` at
+23:03. That commit updated the packet and **not this file, which is the status store** — so the one
+document that says at the top *"tick the boxes HERE, do not record progress elsewhere"* is the one
+document the execution did not tick. On 2026-09-18 the stale claim was then read as current and
+copied into two STATE files and this gate's header before anyone checked the inbox. **A negative
+claim — "not sent", "still owed", "nobody has answered" — decays faster than any other kind of
+recorded fact, and the check is a grep, not a judgement.**
+
+✅ **A5 re-opened a question about A4, and the re-run answered it: A4 HOLDS.** A5 found that
+`shot.js`'s scroll walk captured mid-animation, so A4's 62 screenshots were taken hundreds to
+thousands of pixels down each tall page — the homepage's at 4676px, `/faq`'s at 6538px. **Re-run on
+2026-09-18 with the fixed tool against a freshly rebuilt shipping-state build: 60 captures, 59 passed
+their source-derived assertion, the single failure was a transient error in the runner itself, and
+no page defect was found.** Every capture came to rest at the top of its page, asserted rather than
+assumed. The machine gate reproduced its earlier result exactly. Two counting errors in A4's own
+account were corrected — `/activate` and `/founding-member` are redirects, not screens — and the
+sweep's declared text-over-image blind spot was measured for the first time and passes. Detail at
+the end of A5.
 
 ### A1 · ✅ CLOSED 2026-09-16 BY OPTION 1. CA-046 IS APPROVED, BOTH SIGNERS, AND THE BUILD IS DONE.
 
@@ -100,7 +123,7 @@ route is not shipped.
 
 </details>
 
-### A2 · 🟡 The copy register's owed signatures — KEITH'S HALF IS DONE, Ewa's is not
+### A2 · ✅ CLOSED 2026-09-17. Both signers in, the one B is built, and the board click is done.
 
 The pre-flight itself is **done** (Phase 4, ran 2026-09-15, first time ever; the Closed section
 is written and every one of the 78 rows carries a disposition and an owner). What is left is
@@ -125,18 +148,37 @@ re-quoted.
 - [x] ✅ **1 ruling — Keith. BUILT 2026-09-17.** Row `38a`, ruled "build it": `/supplement-waitlist`
       now has the product control its FAQ has always promised. ⚠ One clause of that answer, *"You can
       change your mind later"*, is **not** built and is not recorded as built
-- [ ] 🟡 **Row 32 is signed by Keith and is NOT approved**, because it carries **two** required
-      signers: its own cell says *"Ewa + Keith for anything read as a clinical cadence claim"*, and
-      `content-approval/README.md` approves a submission only when all required signers have signed.
-      Her half is item 6 of the sign-off email. **Do not read the row as cleared on his signature**
-- [ ] 🔴 **4 rows plus 1 ruling — Ewa.** Rows 22, 23, 32c, 33 and ruling 6, plus the cadence half of
-      row 32. ⚠ The old wording said the 26 were Keith's; **the register's own by-owner split says
-      otherwise**. ✉️ **Drafted 2026-09-17 as a seven-item letter-reply email, Gmail draft
-      `r74807119575631549`, validated and NOT SENT.** It rides the citation swap already owed to her
-      from 2026-08-21 (`869e9fr6x`). **Sending is Keith's act.** When the letters come back, count
-      them against the seven and treat any gap as unanswered rather than closing it by inference
-- [ ] **1 click, no copy decision:** ClickUp `869f1wwch` → `approved`. Row 48d, the M7 SEO commission
-      Keith approved on 2026-09-14; that list admits only a named human
+- [x] ✅ **Row 32 has BOTH required signers and is approved.** Keith signed his half on 2026-09-17;
+      Ewa's half is item 6 of the packet, answered **A** — the 90-day and 365-day intervals may be
+      stated on a marketing page as written. Its cell required *"Ewa + Keith for anything read as a
+      clinical cadence claim"* and both are now in
+- [x] ✅ **4 rows plus 1 ruling — Ewa. ANSWERED 2026-09-17 21:50 UTC, SEVEN ASKED AND SEVEN
+      ANSWERED.** The packet went at 21:35 and came back fifteen minutes later:
+      **`1: A  2: A  3: A  4: A  5: B  6: A  7: A`**. Counted against the seven rather than inferred.
+      Mapping, because the email numbers and the register rows are not the same index:
+
+      | Item | Register | Answer | What it means |
+      |---|---|---|---|
+      | 1 | ruling 6 | A | *"Reported"* is the FAI word |
+      | 2 | row 22 | A | the four Energy & Recovery values and verdicts stand |
+      | 3 | row 22 (new row) | A | the hs-CRP row stands as drawn |
+      | 4 | row 23 | A | Kit 3's milder demonstration stands |
+      | 5 | **row 32c** | **B** | 🔴 *"Ask the clinician"* may **NOT** be named on a public page |
+      | 6 | row 32 (cadence) | A | 90/365 may be stated publicly as written |
+      | 7 | row 33 | A | the `img-9` calendar photograph and its caption are fine |
+
+- [x] ✅ **The one B is built.** `MEMBERSHIP_INCLUDES_PUBLIC` now serves `/membership` and `/demo`
+      while the canonical list keeps serving the in-app screen, **derived by filter and never
+      retyped** (row 30a's lesson), and it throws at module load if the filter stops removing exactly
+      one line — because a filter that silently matched nothing would publish the exact line it
+      exists to remove, on the surface where it is least wanted. Built in `9a7c9d4`
+- [x] ✅ **Item 1 should not have been asked, and the register is why.** Row 6 reads as a live
+      clinical contradiction owed to Ewa; it stopped being one on 2026-09-15. Resolved as **Keith's**
+      decision — one word, *"Reported"*, everywhere, superseding his own ruling K1 of 2026-08-12 —
+      with her answer retained as input rather than as authority. **The email was built from the
+      register row without re-testing it against the code**
+- [x] ✅ **1 click, no copy decision: DONE.** ClickUp `869f1wwch` set to `approved` at
+      **2026-09-17 21:41 UTC**, by Keith, nine minutes before Ewa's reply landed
 - [x] Register row 45 is `P5`'s four new sentences on `/subscription/confirmed`. Inside the 14, signed with them; do not track it twice
 
 ✅ **Read the headline before deciding how heavy this is: the merge REMOVES fifteen HARD
@@ -214,21 +256,128 @@ correctly does not render.
 **This phase carries more weight than it would in a cutover**, because the next thing that happens
 after this merge is the first real customer arriving. The bar is *correct on first contact*.
 
-### A5 · 🔴 THE LAST ITEM ON GATE A — the routes no anonymous sweep can reach
+### A5 · ✅ RAN OVERNIGHT 2026-09-17/18 — every gated route captured, one defect found and fixed
 
-⚠ **It grew on 2026-09-17.** The A4 sweep found `/admin/dashboard` and `/ops/content` **307 to
-`/auth/login`**, so the two internal boards were never A4's to measure and belong here. That is
-measured, not assumed: both were captured, both failed, and the redirect target was read back.
+**30 captures at 1320 and 390, `--theme light`, in `shots/a5/`.** Every one carries **two**
+assertions, and the pair is the point. `"Log Out"` proves the **authenticated shell** rendered — a
+bounce to `/auth/login` serves 200 and would otherwise be measured as the page. A page-specific
+string proves the **right page**. Neither alone is sufficient: `/auth/login`'s title is *"Access Your
+Results"*, so the dashboard's own `metadata.title` passes on the login page. The login page was
+fetched and `"Log Out"` counted on it — 0 occurrences — rather than assumed absent.
 
-- [ ] The seven `(app)` routes, with a **real session** carried by `shot.js --cookie`. Anonymously
-      they 307 to `/auth/login`, so their conformance is genuinely unknown rather than zero
-- [ ] Both internal boards (`isAdmin()` allowlist of one address) and `/blog/preview/[slug]`
-- [ ] **Render all three error boundaries.** They have no route, so no sweep built from a route list
-      has ever reached one. Needs a deliberate throw. The structural half is already verified
-- [ ] 🔵 **Keith's decision:** the 10 fixture scenarios on the results dashboard need
-      `npm run db:seed`, which writes to **PRODUCTION** — ten fake customers with fake health
-      results in the live database. Skip, or approve. **Not doing it means nine of the ten results
-      states ship having never been looked at**
+- [x] **The seven `(app)` routes.** Session minted by driving the real login form with a scratchpad
+      helper that prints the `sb-*` cookies as ready-made `--cookie` arguments; obtaining the cookie
+      is deliberately not `shot.js`'s job. Four on the shipping build: `/results-dashboard`,
+      `/account`, `/subscriptions`, `/supplement-waitlist-status`. Two on a **flag-on build**:
+      `/account/membership` (`MEMBERSHIP_ENABLED`) and `/results-dashboard/handoff`
+      (**`GP_HANDOFF_ENABLED`, not `MEMBERSHIP_ENABLED`** — `scripts/route-list.js:81` is the source
+      of truth and the two are routinely conflated). Both 404 on the shipping build, as designed.
+      🔵 **The seventh is not a screen.** `/founding-member-status` renders no markup at all and
+      **307s to `/account`** — measured with a real session, not inferred from the header comment
+      that says so. It is the third time this route has been scheduled for design work it cannot
+      receive; `route-conformance`'s "no F markers in source" should read "renders no markup"
+- [x] **Both internal boards and `/blog/preview/[slug]`.** `/admin/dashboard` and `/ops/content`
+      reached by temporarily allowlisting a fixture address in `lib/auth/isAdmin.ts` — **Keith's
+      call, taken 2026-09-17, never committed, reverted and the revert verified by grep.** Both
+      render correctly and neither overflows at 390. `/blog/preview/[slug]` captured with
+      `?token=<PREVIEW_SECRET>`
+- [x] **All three error boundaries rendered, by deliberate throw, and all three are correct.**
+      `app/error.tsx` and `app/(app)/error.tsx` reached by throwing routes built into a throwaway
+      `.next-probe`; `global-error.tsx` only fires when the ROOT LAYOUT throws, so it needed a
+      cookie-switched throw inside the layout's own tree. All probe code is deleted. The `(app)` one
+      is the best of the three — it names the likely cause, offers *Sign in again* and *Try again*,
+      and prints a support reference. ⚠ **`global-error.tsx` offers no control at all**: its copy
+      says *"try again or refresh the page"* and there is nothing to press. Last-resort boundary,
+      low priority, but it is the one a customer meets when everything else has failed
+- [x] 🔵 **Keith's decision, taken 2026-09-17: capture what is already seeded, write nothing to
+      production.** The checklist said ten fake customers were needed; **four scenario accounts
+      already existed** in the live database (`low-testosterone`, `low-vitamin-d`, `low-ferritin`,
+      `demo-kit3-baseline`), so four result states were captured at zero cost and **no row was
+      written**. 🔴 **Ten of the fourteen registry scenarios therefore ship having never been looked
+      at** — `normal-testosterone-energy`, `normal-testosterone-no-energy`, `optimal-testosterone`,
+      `elevated-crp`, `high-crp`, `low-b12`, `multi-deficiency`, `multi-deficiency-energy`,
+      `kit3-low-t-plus-vitamin-d-and-b12`, `demo-kit3-retest`. That is a **known** gap, not a passed
+      check. (The checklist said ten scenarios; the registry holds fourteen.)
+
+#### What A5 found
+
+- 🟢 **FIXED — `/results-dashboard/handoff` overflowed horizontally at 390.** Content measured 438px
+      wide in a 390px viewport. Cause: `handoff/page.tsx:115` renders `{fullName || user.email}` as
+      the `<h1>`, and with no profile name that is an **email address — one unbreakable token at
+      30px display serif**. `overflow-wrap: anywhere` added to `.f-handoff-head h1`; re-measured
+      clean. A long hyphenless surname reaches the same state, so this is not an artefact of the
+      test account. `npm run test:design` and `npm run typecheck` both exit 0 with the change
+- 🔵 **NOT FIXED, needs Keith and probably Ewa — the GP handoff identifies the patient by email
+      address, with "Date of birth: Not recorded".** That is the one screen in the product a customer
+      is told to hand to a clinician. A GP receiving a summary whose patient identifier is an email
+      and whose DOB is blank has no safe way to match it to a record. This is a content decision, not
+      a layout one, so it is not fixed here
+- 🟠 **`/subscriptions` and `/supplement-waitlist-status` leave roughly 60% of the viewport empty in
+      their empty states**, at both widths. Not a defect; worth a look before first contact
+- 🟠 **Two support addresses on adjacent screens.** `/account` says *Contact support ·
+      support@andro-prime.com*; `/supplement-waitlist-status` says *Email hello@andro-prime.com*
+
+#### 🔴 A5 found a hole in A4, and it is not A4's fault
+
+`shot.js`'s scroll walk ended with `window.scrollTo(0, 0)`, a 200ms pause, and then the capture. The
+site sets `scroll-behavior: smooth` on `<html>` (Tailwind's `scroll-smooth`, `app/layout.tsx:177`)
+and **does not relax it under `prefers-reduced-motion`**, which `shot.js` emulates by default. So
+that final scroll *animated*, the pause expired mid-flight, and the PNG was taken wherever the
+animation had reached. Measured at 1320x1100 on the shipping build, `scrollY` at the moment of
+capture: **`/` 4676 · `/faq` 6538 · `/kits` 2768 · `/about` 2565 · `/blog` 1486 ·
+`/results-dashboard` 733**, every one settling to 0 about a second later.
+
+**A4's 62 captures were walked.** Its machine gate — `audit-viewport-sweep.js`, 96 cells, no overflow
+and no sub-AA text — is a different script and is unaffected. But **the human visual half of A4 did
+not look at the top of any tall page, including the homepage hero**, and nothing in the output could
+have said so: no error, no warning, exit 0, and a mid-page screenshot of a long page looks exactly
+like a screenshot of a long page.
+
+- [x] **Fixed in `shot.js`**: the walk forces `scroll-behavior: auto` for its duration, restores it
+      in a `finally`, returns `window.scrollY`, and prints a loud warning naming the offset if the
+      page did not come to rest at the top. The downward walk had the same disease one step earlier —
+      a 120ms pause against an animated step means the walk may never reach the bottom, so reveal
+      elements below the fold never entered the viewport and the tool's own `diag.hidden` check
+      reported them as defects, which is a **false-positive** generator
+- [x] **Positive control run, to A4's own standard.** A copy of the tool with the neutralisation
+      removed was pointed at `/faq`: it printed *"the walk did not return to the top: scrollY 6417"*.
+      The fixed tool on the same page printed nothing and captured the top. **The new check's silence
+      is the check working, not the check being absent** — which is the distinction the original
+      defect existed inside for months. The control copy was deleted
+- [x] ✅ **RE-RUN 2026-09-18 ON KEITH'S INSTRUCTION. A4 HOLDS.** Shipping-state build rebuilt from the
+      current tree first, so the thing measured is the thing in the tree. **60 captures, 59 passed
+      their source-derived assertion, and the one failure was my own harness** — a transient
+      `http.request` error reading `/not-found`'s status, which re-tested 404 three times out of
+      three by `curl`, on a route whose 390 capture passed in the same run. **No page defect.**
+      🟢 **And the fix holds: every one of the 60 walked captures came to rest at the top of its
+      page**, asserted per capture rather than assumed. The machine gate reproduces A4 exactly —
+      `audit-viewport-sweep` at 390 and 1320, **96 of 100 cells measured, no overflow and no sub-AA
+      light-ground text**, with its own positive control finding a planted overflow and a planted
+      1.9:1 node. The four unmeasured cells are `/membership` and `/blog/preview/[slug]`, both of
+      which A5 covered
+- [x] **What the re-run corrected in A4's own account of itself, both counting errors rather than
+      defects.** `/activate` and `/founding-member` are **not screens**: each is a bare `redirect()`
+      that renders no markup, so a capture of one is a capture of its destination. They are measured
+      as redirects now (307 to `/how-to-sample` and `/kits`, both confirmed) rather than
+      photographed. That is the same error as `/founding-member-status`, one layer out — **a route
+      inventory built from `page.tsx` files cannot tell a page from a redirect**, and this repo now
+      has three instances of it
+- [x] 🟢 **The sweep's declared blind spot was measured, and it passes.** `audit-viewport-sweep`
+      prints on every run that it reads `backgroundColor` only, so **text over an image is not
+      measured** — and the site's primary headline is grey type over a photographic hero, which is
+      to say the most important text on the site has never been checked by anything. Measured
+      directly at the glyph pixels (render twice, diff to find the glyphs, sample the background
+      only there): the headline is **3.78:1 at 1320 and 3.67:1 at 390 against a 3.0 requirement**,
+      and the standfirst 6.79 / 5.08 against 4.5. Six further pages at both widths: **0 failures.**
+      ⚠ The first version of that probe sampled the whole bounding box and reported five failures
+      including white button text at 1.00:1 on white — the box contains the page *around* the
+      element, so it was measuring the pill's edge. An impossible result is evidence about the
+      instrument, not a finding
+- [ ] 🟠 **Separately, `scroll-behavior: smooth` with no reduced-motion override is an accessibility
+      defect in its own right** (WCAG 2.3.3). Not fixed here because it is a design-system change on
+      a branch heading for merge. The `test:design` suite cannot see it: it verifies tokens, class
+      vocabulary and specificity, none of which can catch a property that is correct in isolation and
+      wrong under a media query
 
 ---
 

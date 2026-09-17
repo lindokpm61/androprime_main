@@ -426,7 +426,7 @@ function findChrome() {
       // whose capture looks broken. Walking costs a second and removes the
       // ambiguity, so it runs unless explicitly disabled.
       if (walk) {
-        await page.evaluate(async () => {
+        const restedAt = await page.evaluate(async () => {
           const pause = (ms) => new Promise((r) => setTimeout(r, ms));
           const frame = () => new Promise((r) => requestAnimationFrame(() => r()));
           // The page height is recomputed every step: a reveal can add height,
@@ -437,27 +437,77 @@ function findChrome() {
             document.body ? document.body.scrollHeight : 0
           );
           const step = Math.max(1, Math.round(window.innerHeight * 0.7));
-          // Down. An observer with a negative bottom rootMargin needs the
-          // element well inside the viewport, so overshoot past the end.
-          for (let y = 0; y <= full(); y += step) {
-            window.scrollTo(0, y);
+          /* 🔴 SMOOTH SCROLLING TURNS EVERY `scrollTo` BELOW INTO AN ANIMATION,
+             and the walk was written as though each one lands instantly. Added
+             2026-09-17 after measuring it, not after suspecting it.
+
+             `styles/base/globals.css` sets `scroll-behavior: smooth` on <html>
+             and does NOT relax it under `prefers-reduced-motion`, so emulating
+             reduce — which this tool does by default — does not disarm it. The
+             final `scrollTo(0, 0)` then animates, the 200ms pause below expires
+             mid-flight, and the PNG is taken WHEREVER THE ANIMATION HAD GOT TO.
+
+             Measured on the shipping build at 1320x1100, scrollY at the moment
+             of capture: / 4676, /faq 6538, /kits 2768, /about 2565, /blog 1486,
+             /results-dashboard 733. Every one settles to 0 about a second later.
+             So every walked capture of a page taller than a viewport or two was
+             a capture of the MIDDLE of that page, and no caller could tell:
+             there is no error, the file is written, and a mid-page screenshot of
+             a long page looks exactly like a screenshot of a long page.
+
+             The downward walk has the same disease one step earlier — a 120ms
+             pause against an animated step means the walk may never reach the
+             bottom, so reveal elements below the fold never enter the viewport
+             and the `diag.hidden` check reports them as defects. That is a FALSE
+             POSITIVE generator, which is worse than a missed one.
+
+             So the walk runs with scroll behaviour forced to `auto` and restores
+             it afterwards. The fix belongs here rather than in the site's CSS
+             because a capture tool must not depend on the page's scroll
+             preferences to land where it says it landed — though the CSS gap is
+             a real accessibility defect in its own right and is reported
+             separately. */
+          const docEl = document.documentElement;
+          const prevDocBehavior = docEl.style.scrollBehavior;
+          const prevBodyBehavior = document.body ? document.body.style.scrollBehavior : '';
+          docEl.style.scrollBehavior = 'auto';
+          if (document.body) document.body.style.scrollBehavior = 'auto';
+          try {
+            // Down. An observer with a negative bottom rootMargin needs the
+            // element well inside the viewport, so overshoot past the end.
+            for (let y = 0; y <= full(); y += step) {
+              window.scrollTo(0, y);
+              await frame();
+              await pause(120);
+            }
+            window.scrollTo(0, full());
             await frame();
-            await pause(120);
-          }
-          window.scrollTo(0, full());
-          await frame();
-          await pause(200);
-          // Up. Some observers only fire on an element entering from the other
-          // edge, and the return trip is free.
-          for (let y = full(); y >= 0; y -= step) {
-            window.scrollTo(0, y);
+            await pause(200);
+            // Up. Some observers only fire on an element entering from the other
+            // edge, and the return trip is free.
+            for (let y = full(); y >= 0; y -= step) {
+              window.scrollTo(0, y);
+              await frame();
+              await pause(60);
+            }
+            window.scrollTo(0, 0);
             await frame();
-            await pause(60);
+            await pause(200);
+          } finally {
+            docEl.style.scrollBehavior = prevDocBehavior;
+            if (document.body) document.body.style.scrollBehavior = prevBodyBehavior;
           }
-          window.scrollTo(0, 0);
-          await frame();
-          await pause(200);
-        }).catch(() => {});
+          return window.scrollY;
+        }).catch(() => null);
+        /* Report the rest position rather than assume it. The whole defect
+           above was invisible because nothing ever checked; a number printed
+           beside the capture is what makes a recurrence cost one glance. */
+        if (restedAt !== null && restedAt > 1) {
+          console.error(
+            `  ⚠ the walk did not return to the top: scrollY ${restedAt}. This capture is of a ` +
+            `region ${restedAt}px down the page, NOT of the top. Re-run with --no-walk to compare.`
+          );
+        }
       }
 
       // After the walk, so hiding the nav cannot affect what the observers saw.
