@@ -91,7 +91,93 @@ screenshot. Both are gated, a session is needed, and the only documented seeder 
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-17 (late)
+## ▶️ PICK UP HERE — handoff, 2026-09-17 (session close)
+
+**The sequencing home is unchanged: `10_launch-ops/implementation-checklists/direction-f-go-live.md`.**
+Work Gate A and tick the boxes in that file. **This session did not touch Gate A.** It closed the
+copy half of Gate E instead, so the go-live list is exactly as long as it was this morning.
+
+### 🟢 What closed: every copy record gating the flag flip
+
+| | |
+|---|---|
+| **CA-050** | Membership renewal copy, the CA-026 C1 re-record. **APPROVED**, board `869f3guna`. |
+| **CA-051** | The A1 standing claim under the flag (defect **H2b**). **APPROVED**, board `869f3m9hx`. J-1 option A, J-2 yes, J-3 leave it, all ruled before signature. |
+| **CA-052** | The renewal start-date anchor (defect **H-A**). **APPROVED**, board `869f3mqwj`. N-1 ruled no-change before signature; no code moved on the ruling. |
+
+`verify-subscription-claims.js` reads **0 sentences on 0 pages**, and **nothing still outstanding on
+`MEMBERSHIP_ENABLED` is a copy question.** ⚠ **That 0-on-0 is the same verdict string the gate
+printed at the start of this session over seven live instances it could not see.** Its phrase list
+greps *"no subscription"*, *"one-off"* and *"pay once"*; the standing claim says it as *"one price"*.
+It had been widened three times along its **directory** axis and never once along its **vocabulary**
+axis, so it reported **completion**, not an undercount. The one remaining match is now a dated
+`CLAIMS_ALLOW` exemption, guarded by a test that fails if the sentence it was granted for changes.
+
+### 🔴 The finding that is not copy and changes what the flip MEANS
+
+**The flip is a rebuild and redeploy, never an env change and a restart.** Six of the nine consumers
+of `subscriptionCopy.ts` are `○ (Static)` — `/`, `/kits`, `/about`, `/how-it-works` and the
+`/lp/*` pages — so `isMembershipEnabled()` is read at **build** time there, however correct the call
+site is. **Measured, not reasoned about:** with the flag true and the server restarted but not
+rebuilt, `/kits` served the flag-OFF heading *"One price."* while `/kits/testosterone` served flag-ON
+copy. Two states, one site, on the page that takes the money. Set it as a Coolify **build argument**,
+redeploy, and verify one static and one dynamic consumer agree. Commented onto ClickUp `869eqavre`
+and `869f1bbxn`; written into the module header, Gate E and copy-register row 42b.
+
+### What the next session picks up, in order
+
+1. **🟢 Gate A, unchanged and still the go-live path.** Four items:
+   **A2** — 26 rows needing sign-off plus 5 needing a ruling (Keith, and Keith + Ewa);
+   **A3** — two one-line fixes, `lib/activate/sendActivationLink.ts:29` (a `http://localhost:3000`
+   fallback inside an emailed link) and `lib/supabase/env.ts:1-3` (a real project ref and anon key as
+   silent fallbacks); **A4** — the screenshot pass, never started; **A5** — the seven `(app)`
+   routes, both internal boards, `/blog/preview/[slug]` and all three error boundaries, none of which
+   an anonymous sweep can reach.
+2. **🟠 THE STANDING TIE, and it is the one thing on Gate E that can still go wrong quietly.**
+   CA-050's **K-1** and CA-052's **N-2** are the same exception stated on two surfaces:
+   *"your first 30 days are included in the price of every kit"* and *"it starts when your first
+   result lands"* are both unconditional, while `lib/membership/startOnResult.ts` refuses a
+   membership outright for a confirmed testosterone under 12 nmol/L. **If either sentence takes a
+   scope word the other needs the same one, and neither may move alone.** Naming the exception
+   outright puts a clinical routing fact on a buy surface and pulls Ewa back in; a scope word would
+   not. Substance in the two approval records under `03_compliance/content-approval/`.
+3. **🔴 Gate E's remainder, none of it copy:** `STRIPE_PRICE_MEMBERSHIP` unset (ClickUp
+   `869epxzt1`), the v1.3 terms Membership section still DRAFT (`869epxzpx`), the Phase-0 compliance
+   read that `lib/flags.ts` names as its own gate and which has never been recorded as done
+   (`869epxzpd`), and a cancellation nobody has ever clicked end to end.
+4. **⚠ Unchanged from the morning handoff below:** the two board defects from
+   `reconcile-approvals.js` are **not** the ones that handoff named. `CA-037` and `CA-043` are both
+   `approved` on the board today. What the reconciler reports is CA-003, CA-026 and CA-045 carrying
+   **two tasks each**, which is the missing notion of a **primary task per CA** — an amendment task
+   or a superseded duplicate legitimately shares a CA number, and the checker compares against the
+   wrong one of the pair. Its "missing" bucket is exact and reads zero.
+
+### Tooling this session changed, so the next one does not rebuild it
+
+- **`scripts/test-standing-claim.ts`** — 41 assertions, in `npm test`. Both copy fixtures are read
+  from **other files** (the approved wording pack, `public/llms.txt`, the 2026-09-11 draft) rather
+  than typed into the test, so it cannot pass by agreeing with its author. Carries the anti-re-import
+  case, the exemption guard, and the charge-day anchor rule.
+- **`scripts/dump-subscription-copy.ts`** — now **exhaustive by construction**. It enumerated its
+  eleven fields by hand, and three new fields would have been absent, so the pre-flight would have
+  returned **0 HARD with zero delta about a payload with the strings under review removed from it**.
+  It walks the returned object now.
+- **`verify-subscription-claims.js`** — gained `one price` in `CLAIMS`, a second `LINKED_COPY`
+  entry for A1, and the guarded `lp/hormone-recovery` exemption.
+- 🔴 **`.claude/hooks/approvals-board-guard.js` had a cwd bug and the fix is LOCAL-ONLY.**
+  Detail and the reapply instruction are in the tooling list further down this file. It also sees
+  `Write`/`Edit`/`MultiEdit` only, and **every register edit this session made went through a script
+  via Bash**, so the guard saw none of them.
+
+### Skill observations
+
+**Nine logged, 888 to 896**, all mirrored to board list `901220039345`; `reconcile-observations.js`
+exits 0 with 896 on both sides. The cluster worth reading together is 888, 891, 892 and 893: four
+different checks in this repo that could not distinguish the states they claimed to report.
+
+---
+
+## ▶️ Handoff, 2026-09-17 (mid-session, kept for the H2b detail)
 
 **The sequencing home is unchanged: `10_launch-ops/implementation-checklists/direction-f-go-live.md`.**
 Work Gate A and tick the boxes in that file. This block records what moved late on 2026-09-17.
