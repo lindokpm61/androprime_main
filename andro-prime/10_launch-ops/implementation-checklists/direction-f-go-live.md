@@ -186,15 +186,28 @@ after this merge is the first real customer arriving. The bar is *correct on fir
 
 ## Gate B — the merge
 
-- [ ] `MEMBERSHIP_ENABLED=false` in the shell and in `.env.local`. It is the shipping state. With
-      it `true`, `npm test` and `npm run build` **fail** — that is the `P9` interlock working, not
-      a regression
+- [ ] `MEMBERSHIP_ENABLED=false` in the shell and in `.env.local`. It is the shipping state.
+      🔴 **CORRECTED 2026-09-17, AND THIS IS A LOST SAFETY PROPERTY, NOT A WORDING FIX.** This line
+      used to read *"with it `true`, `npm test` and `npm run build` **fail** — that is the `P9`
+      interlock working, not a regression."* **Measured today, both exit 0 with the flag true.**
+      Nothing broke the interlock: it failed a flag-on build because `STRIPE_PRICE_MEMBERSHIP` was
+      unset, and **that price now exists and is set**, so the only thing making a flag-on build fail
+      has gone. The gate never asserted *"the flag must be off to ship"*; it asserted *"a flag-on
+      build must have a price"*, and the two coincided only while the price was missing.
+      ⚠ **So a flag left `true` here will now sail through the build and deploy.** Set it false and
+      verify it by reading it back — do not rely on the build to catch you, which is what this line
+      told you to do for as long as it was true
 - [ ] `npm test`, `npm run typecheck`, `npm run build` all exit 0, read from a redirected log and
       never through a pipe (`npm test` is an `&&` chain; the first failure hides everything after it)
 - [ ] Record the current production SHA. `main` @ `4a43864` as at 2026-09-16 — **re-read it, do not
       copy this number**
 - [ ] Confirm the Coolify **build arguments** match `.env.example`. Every `NEXT_PUBLIC_*` is baked at
-      compile time; a wrong one ships and **cannot be fixed by restarting the container**
+      compile time; a wrong one ships and **cannot be fixed by restarting the container**.
+      🔄 **And it is no longer only the `NEXT_PUBLIC_*` ones.** `MEMBERSHIP_ENABLED` was added to the
+      Dockerfile's mount list on 2026-09-17: six of the nine consumers of `subscriptionCopy.ts` are
+      `○ (Static)`, so the flag is read at **build** time there. The prefix governs client exposure,
+      not when a value is needed — `verify-env-contract.js` assertion H now holds every flag in
+      `lib/flags.ts` to being mounted or recorded runtime-only with its evidence
 - [ ] Confirm the GitHub repo webhook is registered in Coolify. Auto-deploy does nothing without it,
       **and its absence looks exactly like a slow build**
 - [ ] Merge to `main` by **explicit path staging, no PR**, and push. **The push is the deploy**

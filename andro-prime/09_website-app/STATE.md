@@ -117,6 +117,32 @@ at 0. `typecheck`, the full `npm test` chain and `npm run build` all exit 0.
 throw unconditionally and rebuilding — the only form of the test `.env.local` cannot mask — passed
 with the probe string absent. No build-time path reaches it.
 
+### 🔴 Gate E, 2026-09-17 (late): the flip could not have worked, and the interlock has lost its teeth
+
+**`MEMBERSHIP_ENABLED` was in the Dockerfile's mount list nowhere**, so *"set it as a Coolify build
+argument"* had nothing to land in. Six of the nine `subscriptionCopy.ts` consumers are `○ (Static)`,
+so the flag is read at **build** time there: the three dynamic surfaces would have flipped and the
+other six would not. Mounted now, and `verify-env-contract.js` **assertion H** holds every flag in
+`lib/flags.ts` to being mounted or recorded runtime-only **with its evidence** — A, B and E all key
+off the `NEXT_PUBLIC_` prefix or off `next.config.ts`, and a feature flag is neither.
+
+🔴 **The Gate B safety line is now FALSE and it is a lost property, not a wording slip.** *"With the
+flag `true`, `npm test` and `npm run build` fail"* — both exit **0** today. The interlock failed a
+flag-on build because `STRIPE_PRICE_MEMBERSHIP` was unset; **that price now exists and is set**
+(`price_1U8VKRLU0SDiIplTUnr5cyWJ`, £47/month, confirmed by a live read), so the only thing making a
+flag-on build fail has gone. **A flag left true will now sail through.** Corrected in the go-live
+checklist.
+
+🟢 **New: `scripts/verify-flag-parity.ts --base <url>`** reads the served bytes of one static and one
+dynamic consumer and reports whether they agree, deriving its markers from `subscriptionCopy()`
+itself rather than typing them. Proven on all three cases: consistent build passes; a flag-ON build
+served flag-OFF fails and names the rebuild as the repair; **production reports both surfaces OFF**,
+so no customer is seeing membership copy whatever Coolify holds.
+
+⚠ **Two artifact items are STALE against this.** The Gate E artifact's **ENV** item says
+*"`STRIPE_PRICE_MEMBERSHIP` is still unset … the one thing still red"* — it is set and the gate now
+prints `✓`. Its **FLAG** item reasons from a prebuild failure that no longer happens.
+
 ### 🟢 What closed earlier the same day: every copy record gating the flag flip
 
 | | |

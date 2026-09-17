@@ -33,6 +33,22 @@ COPY . .
 #
 # ⚠ A mount is not a value. Every name below must also exist in Coolify, or it
 # still arrives as the empty string and nothing here can tell.
+#
+# 🔴 THE LIST IS NOT ONLY ABOUT `NEXT_PUBLIC_*`, AND ASSUMING IT WAS COST A DAY.
+# The prefix governs CLIENT EXPOSURE, not WHEN a value is needed. Anything read
+# while `next build` runs is build-time input whatever it is called — and a
+# feature flag read by a statically prerendered page is read exactly then.
+# `MEMBERSHIP_ENABLED` is the case in point: six of the nine consumers of
+# `subscriptionCopy.ts` are `○ (Static)` — `/`, `/kits`, `/about`,
+# `/how-it-works` and the `/lp/*` pages — so `isMembershipEnabled()` is
+# evaluated during the build there, however correctly the call site reads it per
+# request. Until 2026-09-17 this list omitted it, which means **setting it in
+# Coolify could not have flipped those six pages at all**: with no mount there
+# is nothing for a build argument to flow into, so the build baked flag-OFF copy
+# and the runtime variable only ever reached the three dynamic consumers.
+# Measured, not reasoned about: built with the flag on, `/kits` bakes `£47` and
+# drops "One price."; with the flag off it bakes "One price." Two states of one
+# site, decided here rather than in Coolify.
 RUN --mount=type=secret,id=NEXT_PUBLIC_SITE_URL \
     --mount=type=secret,id=NEXT_PUBLIC_APP_URL \
     --mount=type=secret,id=NEXT_PUBLIC_SUPABASE_URL \
@@ -41,6 +57,7 @@ RUN --mount=type=secret,id=NEXT_PUBLIC_SITE_URL \
     --mount=type=secret,id=NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID \
     --mount=type=secret,id=NEXT_PUBLIC_GA4_MEASUREMENT_ID \
     --mount=type=secret,id=NEXT_PUBLIC_SENTRY_DSN \
+    --mount=type=secret,id=MEMBERSHIP_ENABLED \
     export NEXT_PUBLIC_SITE_URL=$(cat /run/secrets/NEXT_PUBLIC_SITE_URL 2>/dev/null || echo '') && \
     export NEXT_PUBLIC_APP_URL=$(cat /run/secrets/NEXT_PUBLIC_APP_URL 2>/dev/null || echo '') && \
     export NEXT_PUBLIC_SUPABASE_URL=$(cat /run/secrets/NEXT_PUBLIC_SUPABASE_URL 2>/dev/null || echo '') && \
@@ -49,6 +66,7 @@ RUN --mount=type=secret,id=NEXT_PUBLIC_SITE_URL \
     export NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID=$(cat /run/secrets/NEXT_PUBLIC_FIRSTPROMOTER_TRACKING_ID 2>/dev/null || echo '') && \
     export NEXT_PUBLIC_GA4_MEASUREMENT_ID=$(cat /run/secrets/NEXT_PUBLIC_GA4_MEASUREMENT_ID 2>/dev/null || echo '') && \
     export NEXT_PUBLIC_SENTRY_DSN=$(cat /run/secrets/NEXT_PUBLIC_SENTRY_DSN 2>/dev/null || echo '') && \
+    export MEMBERSHIP_ENABLED=$(cat /run/secrets/MEMBERSHIP_ENABLED 2>/dev/null || echo '') && \
     npm run build
 
 # ── Stage 3: production runtime ────────────────────────────────────────────

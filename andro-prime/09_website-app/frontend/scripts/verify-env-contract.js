@@ -57,6 +57,11 @@
  *      instead of an error — and the supabase one was invisible because the
  *      fallback ref and the live project happened to be the same, so production
  *      was correct by coincidence rather than by configuration.
+ *   H. Every flag in `lib/flags.ts` is mounted, or recorded in FLAG_RUNTIME_ONLY
+ *      with the routes that read it and how they render. A, B and E all key off
+ *      the `NEXT_PUBLIC_` prefix or off `next.config.ts`, and a feature flag is
+ *      neither — yet a flag read by a prerendered page is decided at BUILD time
+ *      just the same. `MEMBERSHIP_ENABLED` sat outside all three for months.
  *
  * ⚠ A AND B ARE BOTH ESCAPABLE, DELIBERATELY, VIA THE TABLES BELOW — with a
  * reason recorded next to each escape. The point is not that the two lists can
@@ -114,6 +119,51 @@ const BUILD_TIME_NOT_MOUNTED = {
     'qa/direction-f-migration-audit.md.',
   SENTRY_ORG: 'Only used alongside SENTRY_AUTH_TOKEN; unmounted for the same reason.',
   SENTRY_PROJECT: 'Only used alongside SENTRY_AUTH_TOKEN; unmounted for the same reason.',
+}
+
+/* A FLAG read while `next build` runs is build-time input, so it has to be
+   mounted like any other. Every flag in `lib/flags.ts` must appear either in the
+   Dockerfile's mount list or in this table, and each entry must record the
+   EVIDENCE that it is runtime-only — which routes read it and how they render —
+   rather than merely asserting it.
+
+   🔴 MEMBERSHIP_ENABLED is why this exists. It is absent from this table because
+   it is mounted, and it was mounted on 2026-09-17 after sitting in neither for
+   months: six of the nine consumers of `subscriptionCopy.ts` are `○ (Static)`,
+   so the flag was read at BUILD time there while the deploy instruction said to
+   set it in Coolify and restart. The flag was correct, the call sites were
+   correct, and the value could not reach six of the nine surfaces.
+
+   ⚠ The render modes below are READ OFF A BUILD, not reasoned about from the
+   directory name: `app/(marketing)/kits/*` looks like the most static thing in
+   the repo and is `ƒ (Dynamic)`, which is exactly why BUNDLES_ENABLED is safe
+   and MEMBERSHIP_ENABLED was not. Re-read them from `next build` output when
+   changing an entry; a route can move between modes without its file moving. */
+const FLAG_RUNTIME_ONLY = {
+  ACCOUNT_DATA_CONTROLS_ENABLED:
+    'Read from app/(app)/account/page.tsx, app/(app)/layout.tsx and two /api/account ' +
+    'routes. Every (app) route is ƒ (Dynamic) — auth-gated, so it cannot prerender.',
+  GP_HANDOFF_ENABLED:
+    'Read from app/(app)/results-dashboard/{,handoff/}page.tsx, both ƒ (Dynamic).',
+  KIT_SCOPE_NOTE_ENABLED: 'Read from app/(app)/results-dashboard/page.tsx, ƒ (Dynamic).',
+  RETEST_REMINDER_ENABLED:
+    'Read from lib/results/processResult.ts, which runs from the /api/jobs/process-result ' +
+    'handler. No page reads it, so there is nothing to prerender.',
+  BUNDLES_ENABLED:
+    'Read from the three app/(marketing)/kits/*/page.tsx detail pages and two /api routes. ' +
+    'The detail pages read as static and are ƒ (Dynamic) in the build output — the ' +
+    'distinction that makes this one safe while MEMBERSHIP_ENABLED was not, since /kits ' +
+    'itself IS ○ (Static).',
+  ACCOUNT_ADDRESS_ENABLED:
+    'Read from app/(app)/account/page.tsx and /api/account/address, both ƒ (Dynamic).',
+  EVIDENCE_DISCLOSURE_ENABLED:
+    'Read from components/results-engine/{KitTabs,MarkerCard}.tsx, which render on /demo ' +
+    'and /results-dashboard, both ƒ (Dynamic). Checked 2026-09-17 that no ○ (Static) page ' +
+    'reaches them: the two marketing pages matching "results-engine" match it in PROSE, ' +
+    'citing the 04_products/results-engine docs directory, and import nothing from it.',
+  SYMPTOM_OVERLAY_ENABLED:
+    'Read from lib/results/symptomOverlay.ts, reached only from the results rendering path ' +
+    'on ƒ (Dynamic) routes.',
 }
 
 /* `process.env[someVariable]` defeats a grep for `process.env.NAME`. Each site
@@ -434,6 +484,50 @@ function main() {
     }
   }
 
+  /* H. Every flag is mounted or recorded as runtime-only, and the table mirrors
+     lib/flags.ts exactly. The mirror check is the half that matters: without it a
+     NEW flag is simply absent from both lists, which is silence rather than a
+     decision — and silence is what shipped MEMBERSHIP_ENABLED unmounted. */
+  const flagsPath = path.join(ROOT, 'lib/flags.ts')
+  if (!fs.existsSync(flagsPath)) {
+    fail('lib/flags.ts not found, so the flag mount contract cannot be checked at all.')
+  } else {
+    const flagSrc = stripComments(fs.readFileSync(flagsPath, 'utf8'))
+    const declared = new Set([...flagSrc.matchAll(/process\.env\.([A-Z0-9_]+)/g)].map((m) => m[1]))
+    if (declared.size === 0) {
+      fail(
+        'lib/flags.ts declares no flags by the `process.env.NAME` pattern. The pattern has ' +
+          'gone stale, so every flag is now invisible to this check.'
+      )
+    }
+    for (const name of [...declared].sort()) {
+      const mounted = mounts.has(name)
+      const excused = name in FLAG_RUNTIME_ONLY
+      if (mounted && excused) {
+        fail(
+          `${name} is both mounted by the Dockerfile and listed in FLAG_RUNTIME_ONLY. ` +
+            `One of the two is a leftover, and while they disagree neither describes the build.`
+        )
+      } else if (!mounted && !excused) {
+        fail(
+          `${name} is a flag in lib/flags.ts that the Dockerfile never mounts and ` +
+            `FLAG_RUNTIME_ONLY does not excuse. If any page reading it is prerendered, the ` +
+            `flag is read at BUILD time there and setting it in Coolify will not move that ` +
+            `page — silently, and in the same direction as "off". Mount it, or record which ` +
+            `routes read it and how they render.`
+        )
+      }
+    }
+    for (const name of Object.keys(FLAG_RUNTIME_ONLY)) {
+      if (!declared.has(name)) {
+        fail(
+          `FLAG_RUNTIME_ONLY lists ${name}, which lib/flags.ts no longer declares. Remove it, ` +
+            `so the table keeps describing the code.`
+        )
+      }
+    }
+  }
+
   report(publicRead.length, allRead.size, configReads.size, files.length)
 }
 
@@ -448,10 +542,12 @@ function report(publicCount, totalCount, configCount, moduleCount) {
     process.exit(1)
   }
   const excused = Object.keys(BUILD_TIME_NOT_MOUNTED).length
+  const runtimeFlags = Object.keys(FLAG_RUNTIME_ONLY).length
   console.log(
     `verify-env-contract: OK — ${publicCount} NEXT_PUBLIC_ variables mounted and exported, ` +
       `${totalCount} variables documented, ${configCount} build-time reads in next.config.ts ` +
-      `(${excused} deliberately unmounted), ${moduleCount} modules clean of hardcoded credentials.`
+      `(${excused} deliberately unmounted), ${moduleCount} modules clean of hardcoded credentials, ` +
+      `${runtimeFlags} flags recorded runtime-only.`
   )
 }
 

@@ -93,6 +93,42 @@ environment. That is one variable, and it is item 2.
     cookie is host-only to the app host, which produced an infinite redirect
     during the A1 work.
 
+  🟢 **PARTIALLY CLOSED 2026-09-17 for the FLAG, though not for the price.**
+  `npx tsx scripts/verify-flag-parity.ts --base https://andro-prime.com` reads the
+  **served bytes** of one `○ (Static)` consumer and one `ƒ (Dynamic)` one and
+  reports which state each is in. It needs no shell access and no new route, and
+  it answers the question this section is really asking — *what is the deployed
+  environment actually serving* — from outside. **Run against production on
+  2026-09-17 it reports both surfaces OFF**, so whatever `MEMBERSHIP_ENABLED`
+  holds in Coolify, no customer is being shown membership copy today.
+  ⚠ **That is an answer about COPY, not about the variable.** A build predating
+  the flag-gated module also serves OFF. It cannot tell you the price is set, and
+  it cannot tell you the variable is false — only that nothing membership-shaped
+  is reaching a customer.
+
+### 2b · 🔴 The flip is a REBUILD, and until 2026-09-17 it could not have worked at all
+
+- [x] **`MEMBERSHIP_ENABLED` is mounted in the Dockerfile.** Added 2026-09-17.
+      It was in neither the mount list nor any checker, so **setting it in Coolify
+      could not have flipped six of the nine copy surfaces**: `/`, `/kits`,
+      `/about`, `/how-it-works` and the `/lp/*` pages are `○ (Static)`, so
+      `isMembershipEnabled()` is evaluated during `next build` there, and with no
+      mount there was nothing for a build argument to flow into. The three
+      `ƒ (Dynamic)` consumers would have flipped and the other six would not.
+- [ ] **Set it as a Coolify BUILD ARGUMENT and redeploy — not a runtime variable
+      and a restart.** A mount is not a value; the mount only gives the value
+      somewhere to land.
+- [ ] **Then run the parity check against production and require exit 0.** It is
+      the acceptance test for this item: two surfaces, one built and one served
+      per request, agreeing about the same flag.
+
+  ⚠ **Measured, not reasoned about.** Built with the flag on and served with it
+  **off** — the exact shape of an env-change-and-restart — `/kits` served flag-ON
+  copy while `/kits/testosterone` served flag-OFF, and the parity check caught it
+  and named the rebuild as the repair. Built and served consistently, it passes.
+  **Nothing that reads source can see this**, because in source every call site is
+  already correct; the defect lives in when the value was read, not in where.
+
 - [x] **`main` does read this variable**, so setting it is meaningful rather
       than inert: `lib/subscriptions/products.ts` on `main` carries the
       membership entry with `stripePriceEnv: 'STRIPE_PRICE_MEMBERSHIP'`, and
