@@ -4,6 +4,51 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## 🟢 2026-09-17 — THE COPY ROWS 42a/12a ARE APPLIED BEHIND THE FLAG, AND THE MECHANIC BEHIND THEM NOW EXISTS
+
+**The handoff below still stands**: the go-live plan is the place to work from. This entry records
+what moved under it across 2026-09-16/17.
+
+✅ **Rows 42a and 12a applied.** Eighteen sentences plus the homepage line now come from one module,
+`lib/membership/subscriptionCopy.ts`, gated on `MEMBERSHIP_ENABLED`: flag off renders the
+original approved wording byte for byte (CA-026 C1 included), flag on renders Keith's approved
+rewrite. The gating answers the 2026-09-11 pre-flight's HARD #2 — a page promising thirty included
+days in front of a checkout that bills immediately is worse than saying nothing.
+
+✅ **H1 and H3 closed as ONE piece of work**, because the obvious fix for H1 would have made H3
+permanent: a `mode: 'subscription'` kit checkout starts the included days at CHECKOUT, the anchor
+the 2026-09-07 result ruling overturned. So the kit checkout stays `mode: 'payment'` and only KEEPS
+THE CARD; `lib/membership/startOnResult.ts` opens the subscription when the result LANDS, with the
+included days as a real Stripe trial and `started_at` stamped at the result. 37 assertions,
+mutation-verified.
+
+✅ **A result under 12 starts no membership** (Keith, 2026-09-17), the first guard in that module.
+Worth £58.50 a head: without it a low-T customer turns from +£38.02 to −£20.47 and never pays the
+£47, because the confirmation lands inside the included 30 days and he cancels on day 29.
+
+✅ **The interlock gained a MECHANIC GATE.** It had been widened four times along its directory axis
+and never once along its subject axis, so with the copy sweep done it would have gone green over a
+checkout that creates no subscription. It now asserts the promise-keeping code is present and wired,
+and prints what it cannot prove. 🔴 **It is currently RED on one thing: `STRIPE_PRICE_MEMBERSHIP`
+is unset**, which is exactly what it exists to catch.
+
+✅ **Account labels follow the flag** (`lib/subscriptions/labels.ts`). With the flag ON the surface
+is called **Billing**; with it off every string is byte-identical to what shipped, because with no
+membership the only rows `/subscriptions` can return ARE supplement subscriptions.
+
+✅ **Bundles are held dark by a check**, `scripts/verify-bundles-dark.js` in `npm test`. It
+asserts the flag is not on AND that every kit page still gates its bundle, because a flag only
+protects what checks it. `/terms` is outside its reach and is handled in 03_compliance.
+
+🔴 **STILL OPEN after the independent pre-flight (3 HARD, 6 flagged):** H2, `public/llms.txt:7`
+reads *"You pay one price for the test"*, which no flag can gate — **Keith's call**. Plus F1 to F6,
+all business or Ewa. The full list with owners is on the page linked from the go-live plan.
+
+⚠ **NOT verified by eye:** `/subscriptions` and `/account/membership` have no rendered
+screenshot. Both are gated, a session is needed, and the only documented seeder writes to production.
+
+---
+
 ## ▶️ PICK UP HERE — handoff, 2026-09-16 — THERE IS ONE GO-LIVE PLAN NOW, AND IT IS IN THE REPO
 
 ### ▶️ WHERE THE NEXT SESSION STARTS

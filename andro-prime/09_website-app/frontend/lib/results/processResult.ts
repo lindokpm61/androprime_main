@@ -8,6 +8,7 @@ import { isTestosteroneAllClear } from './classifier'
 import { isRetestReminderEnabled, isBundlesEnabled, isMembershipEnabled } from '@/lib/flags'
 import { resolveConfirmationOutcome } from '@/lib/bundles/confirmation'
 import { resetMembershipClockOnPaidResult } from '@/lib/membership/clockReset'
+import { startMembershipOnResult } from '@/lib/membership/startOnResult'
 import { hasHealthProcessingConsent } from './healthProcessingConsent'
 import type { VitallWebhookPayload } from '@/lib/vitall/types'
 import type { NormalisedBiomarker, KitType } from './types'
@@ -363,6 +364,58 @@ export async function processVitallResult(
         `[process-result] confirmation bundle hook error (order ${orderId}):`,
         message,
       )
+    }
+  }
+
+  // --- Membership START, on the result rather than at checkout (H1 + H3, 2026-09-17) ---
+  // The independent pre-flight found that `MEMBERSHIP_ENABLED` gated the COPY
+  // and not the MECHANIC: the kit checkout is `mode: 'payment'` and creates no
+  // subscription, so flipping the flag would have rendered "on day 31 that card
+  // is charged" in front of a checkout that charges nothing again. And
+  // `created_at`-anchored membership contradicted the 2026-09-07 ruling that
+  // every date anchors to the RESULT.
+  //
+  // Both close here, together: this is the result landing, so it is both the
+  // moment the mechanic should fire and the anchor the ruling names. The card
+  // was saved at kit checkout; the included days are a Stripe trial; day 31
+  // charges by itself. See lib/membership/startOnResult.ts for why the obvious
+  // fix for H1 would have made H3 permanent.
+  //
+  // 🔴 IT RUNS BEFORE THE CLOCK RESET BELOW, AND THE ORDER IS LOAD-BEARING.
+  // The reset moves an EXISTING member's retest date; this creates the
+  // membership whose date that is. Reversed, a man's first result would start a
+  // membership the reset had already declined to find.
+  //
+  // Failure here never touches the customer's result: same try/catch discipline
+  // and same placement as the hook below, after the biomarker insert and before
+  // the CIO emit. Every guard inside fails closed.
+  if (isMembershipEnabled()) {
+    try {
+      // Null where the panel carries no testosterone, which is the energy-recovery
+      // kit. The guard treats null as "not low" rather than as low; inferring low
+      // T from Kit 2's markers is a named red flag, not a fallback.
+      const tValue = biomarkers.find((b) => b.markerName === 'Testosterone')?.value ?? null
+      const outcome = await startMembershipOnResult(supabase, userId, orderId, new Date(), tValue)
+      if (outcome.started) {
+        console.log(
+          `[process-result] membership started on result (order ${orderId}, ` +
+            `membership ${outcome.membershipId})`,
+        )
+      } else if (
+        outcome.reason !== 'kit-was-not-paid-for' &&
+        outcome.reason !== 'already-a-member' &&
+        outcome.reason !== 'low-t-routes-to-gp'
+      ) {
+        // Those three are the ordinary cases: an included retest coming back, a
+        // man who is already a member, and a low result routed to his GP.
+        // Anything else is a condition.
+        console.error(
+          `[process-result] membership NOT started (order ${orderId}): ${outcome.reason}`,
+        )
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err)
+      console.error(`[process-result] membership start hook error (order ${orderId}):`, message)
     }
   }
 

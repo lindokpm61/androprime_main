@@ -42,9 +42,12 @@ import { READOUT_KIT_1 } from '@/lib/kits/sampleReadout'
  * three `/lp/` kit pages undecided. It is flag-gated and renders nothing while
  * `MEMBERSHIP_ENABLED` is off.
  *
- * ⚠ **The closing block still reads "One-off purchase. Includes lab fees and
- * delivery. No subscription." (line 428) and ONE FAQ answer still says "This is
- * a one-off purchase." (line 63).**
+ * ✅ BOTH WERE REWRITTEN 2026-09-16 and now come from
+ * `lib/membership/subscriptionCopy.ts` rather than from this file, so neither
+ * carries a line number here any more. Keith approved the 2026-09-11 draft in
+ * full. With `MEMBERSHIP_ENABLED` off both render their original approved
+ * wording byte for byte; with it on the closing block drops its false half and
+ * the FAQ answer states the renewal. **Do not re-type either string here.**
  *
  * ⚠ Count corrected 2026-09-15: this said "two FAQ answers"; there is one.
  * Register row 42a says "an FAQ answer" and was right. Recorded rather than
@@ -60,17 +63,20 @@ import { READOUT_KIT_1 } from '@/lib/kits/sampleReadout'
  * while any of them remains.
  */
 
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
+
 const BASE_URL = 'https://andro-prime.com'
 
-const FAQ_ITEMS = [
+const faqItemsFor = (coverEverything: string) => [
   { question: 'Do I need to fast before taking the test?', answer: 'Yes. For the most accurate hormone baseline, you must take the sample fasted (water is fine) before 10 AM. Testosterone levels peak in the morning and decline throughout the day, and eating can suppress them temporarily.' },
   { question: 'Does taking the sample hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets in the kit just in case to ensure you can collect enough blood easily at home." },
   { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
-  { question: 'Does the £99 cover everything?', answer: 'Yes. The kit, the lab analysis, and the prepaid return postage are all included. No hidden fees. This is a one-off purchase.' },
+  { question: 'Does the £99 cover everything?', answer: coverEverything },
   { question: 'Is my data private?', answer: 'Your results sit in your private dashboard, yours to share with whoever you choose. We do not sell your data, and we do not share it for advertising.' },
 ]
 
-const lpSchema = {
+const lpSchemaFor = (faqItems: { question: string; answer: string }[]) => ({
   '@context': 'https://schema.org',
   '@graph': [
     {
@@ -99,14 +105,14 @@ const lpSchema = {
     },
     {
       '@type': 'FAQPage',
-      mainEntity: FAQ_ITEMS.map(({ question, answer }) => ({
+      mainEntity: faqItems.map(({ question, answer }) => ({
         '@type': 'Question',
         name: question,
         acceptedAnswer: { '@type': 'Answer', text: answer },
       })),
     },
   ],
-}
+})
 
 export const metadata: Metadata = {
   title: 'Testosterone Blood Test UK | At-Home Kit £99',
@@ -156,9 +162,13 @@ const OUTCOMES = [
 const TRUST = ['UKAS ISO 15189 Lab', 'Free Next-Day Delivery', 'GMC-Registered Doctor', 'Results in 2 to 5 working days']
 
 export default function TestosteroneLpPage() {
+  /* Read per request. The JSON-LD is built from the SAME call as the rendered
+     answer, or the structured data stops matching the visible content. */
+  const copy = subscriptionCopy(isMembershipEnabled())
+  const faqItems = faqItemsFor(copy.faqTestosterone)
   return (
     <FPage>
-      <JsonLd data={lpSchema} />
+      <JsonLd data={lpSchemaFor(faqItems)} />
 
       <FHero
         aside={
@@ -391,7 +401,7 @@ export default function TestosteroneLpPage() {
         <p className="f-blab">Common questions</p>
         <h2 className="f-h2">Frequently asked.</h2>
         <div className="f-faqgrid f-rise" style={{ marginTop: 22 }}>
-          {FAQ_ITEMS.map(({ question, answer }) => (
+          {faqItems.map(({ question, answer }) => (
             <div key={question}>
               <h3>{question}</h3>
               <p>{answer}</p>
@@ -431,7 +441,7 @@ export default function TestosteroneLpPage() {
                 not a restyle's. `verify-subscription-claims.js` fails the build if
                 the membership flag is on while this sentence is still here. */}
             <p className="f-fine" style={{ marginTop: 12 }}>
-              One-off purchase. Includes lab fees &amp; delivery. No subscription.
+              {copy.lpTestosteroneFootnote}
             </p>
           </div>
         </div>

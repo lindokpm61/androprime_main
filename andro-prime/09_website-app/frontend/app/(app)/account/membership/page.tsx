@@ -198,7 +198,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
            * screen already uses, so no fresh sign-off, CA-001 / CA-003 precedent.
            * Caught by the independent pre-flight, 2026-09-11.
            */
-          intro="Your dated retest, the trend behind your number, and the daily loop you log against. Manage or cancel from your subscriptions at any time."
+          intro="Your dated retest, the trend behind your number, and the daily loop you log against. Manage or cancel from Billing at any time."
         >
           {/*
             * THE ORDER, DECIDED 2026-09-12, and it is the first time anybody has
@@ -310,7 +310,7 @@ export default async function MembershipPage({ searchParams }: PageProps) {
           <p className="f-fine">
             Manage or cancel your membership from{' '}
             <Link href="/subscriptions" className="f-tlink">
-              your subscriptions
+              Billing
             </Link>
             .
           </p>

@@ -7,6 +7,8 @@ import { BundleChoice } from '@/components/commerce/BundleChoice'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { READOUT_KIT_3 } from '@/lib/kits/sampleReadout'
 import { MembershipDisclosure } from '@/components/commerce/MembershipDisclosure'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 import { RelatedArticles } from '@/components/marketing/RelatedArticles'
 import { isBundlesEnabled } from '@/lib/flags'
 import { KIT_NAMES } from '@/lib/kits/names'
@@ -826,7 +828,7 @@ export default function KitHormoneRecoveryPage() {
               ctaLabel="Order Kit 3 + Retest: £259"
             />
           </div>
-          <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>One-off purchase. Results in your personal dashboard. No GP needed.</p>
+          <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>{subscriptionCopy(isMembershipEnabled()).kitFootnote}</p>
         </FClose>
       ) : (
         <>
@@ -845,7 +847,7 @@ export default function KitHormoneRecoveryPage() {
             <KitCheckoutButton kitType="hormone-recovery" className="f-btn">
               Order the kit: £179 {ARROW}
             </KitCheckoutButton>
-            <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>One-off purchase. Results in your personal dashboard. No GP needed.</p>
+            <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>{subscriptionCopy(isMembershipEnabled()).kitFootnote}</p>
           </FClose>
         </>
       )}

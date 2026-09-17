@@ -2,6 +2,32 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
+## 🟢 2026-09-17 — THE TEST BUNDLES SECTION IS OUT OF THE PUBLISHED TERMS, AND NOBODY LOST A RIGHT
+
+**Terms move to v1.4 and are SYNCED live.** Keith retired the two-kit bundles on 2026-09-17
+(`../01_strategy/2026-09-17-a-low-result-starts-no-membership.md` §4). The
+**Test Bundles (Two-Kit Purchases)** section is removed from `canonical-site/terms/index.html`
+and retained in `terms-and-conditions.md` under a SUPERSEDED banner: the published document
+loses it, the repo keeps the record. Bundle mentions on the served page go **21 → 1**, the survivor
+being the Complete Men's Stack, which is a supplement and stays.
+
+🔴 **CHECKED RATHER THAN ASSUMED: `bundle_dispatches` holds 0 rows all time in production.**
+No customer has ever bought a bundle, holds a prepaid second kit, or holds a banked retest. One row
+and the section would have stayed, scoped to existing purchases.
+
+⚠ **Ewa ratified that section on 2026-07-25 and that is NOT being reinterpreted.** What is withdrawn
+is a description of a product no longer sold. Her clinical positions stand untouched: the sub-12 GP
+referral (CA-014) and her 2026-07-26 sign-off on the immediate recheck. **The recheck's retirement is
+owed to her** on the citation-swap pass already outstanding from 2026-08-21, as one numbered item.
+
+**One edit, not two.** `/terms` reads the canonical file at runtime and `verify-legal-text.js`
+asserts the served text matches byte for byte, so the app route followed automatically. Re-run green.
+
+⚠ **Still DRAFT and NOT synced: the v1.3 Membership section**, held behind `MEMBERSHIP_ENABLED`
+and owed at the flag flip (go-live P1/P2). The live document still describes no membership at all.
+
+---
+
 ## 🔴 2026-09-16 — CA-049 IS APPROVED BY BOTH SIGNERS, AND THE BREACH ONE OF ITS ANSWERS EXPOSED IS STILL LIVE ON PRODUCTION
 
 **`1: A 2: A 3: B 4: B 5: A`**, Ewa, 02:03 UTC, thread `1a0a7e88d3e90ab6`. ✅ **APPROVED, BOTH

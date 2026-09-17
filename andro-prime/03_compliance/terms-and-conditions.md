@@ -2,7 +2,7 @@
 
 **Page URL:** `/terms/`
 **Last updated:** September 2026
-**Version:** 1.3 (DRAFT, not synced live)
+**Version:** 1.4 (Test Bundles removed and SYNCED live; the Membership section remains DRAFT and is NOT synced)
 
 <!--
 Change log:
@@ -25,6 +25,22 @@ Change log:
   voluntarily adopts its expected duties so commencement is a review, not a
   rewrite. Residual solicitor items are named in the Membership banner.
   PENDING Keith's business sign-off. Live page NOT synced.
+- v1.3 DRAFT amendment (2026-09-16): one paragraph added under "What membership is",
+  mapping the two names. Keith clarified that "subscription" is the SUPPLEMENT product
+  (deferred out of Phase 0a on 2026-05-23) and that membership is what a kit buyer gets;
+  customer-facing copy now says membership throughout. Q1 of
+  `../01_strategy/2026-09-16-membership-is-not-a-subscription.md` asked whether to strip
+  "subscription" from this section to match. **Keith ruled KEEP**: the word is what pulls
+  the 30-day price-change notice and the cancellation duty onto membership, and removing it
+  would re-open those protections for no commercial gain. No other clause changed, and the
+  protective reading is unchanged.
+- v1.4 (2026-09-17): the **Test Bundles** section is REMOVED from the published
+  document on both sites and retained in this file under a SUPERSEDED banner. The
+  two-kit bundles were retired the same day; `bundle_dispatches` is empty all time,
+  so no customer right is withdrawn. Ewa's 2026-07-25 ratification of that section is
+  recorded as untouched rather than reinterpreted: no clinical position moves. The
+  live page moves 1.2 -> 1.4; v1.3's Membership section is still held back behind
+  MEMBERSHIP_ENABLED and is NOT part of this sync.
 - v1.2 and earlier: see `2026-07-25-terms-privacy-legal-review.md` and the
   Test Bundles section banner.
 -->
@@ -243,6 +259,17 @@ Once your product has shipped, your pre-order becomes a standard subscription. T
 
 ## Test Bundles (Two-Kit Purchases)
 
+> 🔴 **SUPERSEDED 2026-09-17 — REMOVED FROM THE PUBLISHED TERMS ON BOTH SITES. The text below is retained as the record of what was approved, and is no longer served to anyone.**
+>
+> **Why.** Keith retired the two-kit bundles on 2026-09-17 (`../01_strategy/2026-09-17-a-low-result-starts-no-membership.md` §4). Prove-It and Full-Picture sell a day-90 retest the membership's included retest already gives, which is worse than redundant; the Recheck went with them the same day. `BUNDLES_ENABLED` is held false by `../09_website-app/frontend/scripts/verify-bundles-dark.js` in `npm test`.
+>
+> **Nobody loses anything, and that was checked rather than assumed.** `bundle_dispatches` holds **0 rows all time** in production, so no customer has ever bought a bundle or holds a prepaid second kit or a banked retest. Had there been a single row, this section would have stayed and been scoped to existing purchases instead.
+>
+> ⚠ **This section carried Ewa's clinical ratification of 2026-07-25 alongside Keith's, and that is not being reinterpreted.** What is withdrawn is a description of a product that is no longer sold. No clinical position moves: the sub-12 GP referral (CA-014) and her 2026-07-26 sign-off on the immediate recheck both stand untouched, and the recheck's retirement is recorded for the pass she is already owed.
+>
+> **Removing it took one edit, not two.** `/terms` reads `canonical-site/terms/index.html` at runtime and `verify-legal-text.js` asserts the served text matches it byte for byte, so the app route followed automatically.
+
+
 > **[APPROVED 2026-07-25 — ratified by Keith (business) and Dr Ewa Lindo (clinical, on Keith's in-session relay; written countersignature recommended for the clinical record). In-house drafted; no external solicitor review this round, by Keith's decision. This section is now part of the Andro Prime Terms & Conditions.]**
 >
 > **Live-publish coupling:** **SYNCED to the live `/terms` page (`canonical-site/terms/index.html`) on 2026-07-26** at the `BUNDLES_ENABLED` flag-flip (customer-facing content only; the approval banners above stay internal). Originally held out until the flip so the live page never described an unpurchasable bundle.
@@ -305,7 +332,11 @@ Everything else in these terms (the medical disclaimer, eligibility, delivery, s
 
 ### What membership is
 
-Andro Prime Membership is an ongoing monthly subscription. It includes:
+Andro Prime Membership is an ongoing monthly subscription.
+
+We call it a **membership** everywhere else on this site, and that is the same thing. The word "subscription" is used here because that is what an ongoing monthly contract is called in consumer law, and it is what brings the protections in this section with it. **Supplement subscriptions are a separate product**, described under "Supplement Subscriptions" above; holding a membership does not give you one, and you can hold either without the other.
+
+Membership includes:
 
 - **A retest, included.** A kit sent to you at your next recommended retest point, at no extra charge. See "Your included retest" below, which sets out exactly what you are and are not entitled to.
 - **A daily check-in.** A short set of questions in your account, tied to the marker your results suggest is worth watching. Logging them builds the trend you see on your dashboard.

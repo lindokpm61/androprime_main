@@ -10,6 +10,8 @@ import { Marginalia } from '@/components/marketing/SectionRule'
 import { HeroField } from '@/components/marketing/HeroField'
 import { SIZES_BENTO_3, SIZES_BENTO_5, SIZES_BENTO_6 } from '@/lib/ui/image-sizes'
 import { FPage, FSection, FClose } from '@/components/marketing/FPage'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 
 /*
  * REBUILT IN DIRECTION F, 2026-08-31.
@@ -314,6 +316,7 @@ export const metadata: Metadata = {
 const ARROW = <span className="f-pip" aria-hidden="true">&rarr;</span>
 
 export default function HomePage() {
+  const copy = subscriptionCopy(isMembershipEnabled())
   return (
     <FPage>
       <JsonLd data={homeSchema} />
@@ -682,25 +685,28 @@ export default function HomePage() {
             one"); this is the homepage's equivalent and it is deliberately the
             same shape: a negation, not an offer.
 
-            🔴 WHAT THIS LINE MAY NOT BECOME. No price, no CTA, no benefit list,
-            no "join". Membership cannot be bought standalone and no acquisition
-            surface may sell or price it
-            (`01_strategy/2026-08-26-membership-offer-window.md` §5,
-            `07_sales/funnel/site-funnel-model.md` §2). It also may not lead on
-            the trend or the series (§1b, the cold-start constraint): this says
-            WHEN the offer exists, never what it is worth.
+            🔴 WHAT THIS LINE MAY NOT BECOME. No CTA, no benefit list, no "join".
+            Membership cannot be bought standalone and no surface may SELL it. It
+            also may not lead on the trend or the series (§1b, the cold-start
+            constraint).
 
-            The 30-day width of the window is deliberately absent. That is a
-            term, and terms belong on the terms page, not in homepage fine
-            print. "Never before" is the shape; the window is the detail.
+            ✅ THE PRICE PROHIBITION WAS NARROWED BY KEITH ON 2026-09-16 AND THIS
+            COMMENT USED TO STATE THE SUPERSEDED ABSOLUTE. `site-funnel-model.md`
+            §146 now reads: *"A surface may not SELL the membership, ever. A surface
+            MUST price it where it can take money for a kit, and MAY price it where
+            it demonstrably cannot take money at all."* This page mounts no checkout
+            component at all, so it sits on the MAY limb, the same one `/demo` and
+            `/membership` were ruled onto. **The line therefore carries the price
+            and the renewal date with the flag on**, and the 30-day width is no
+            longer absent: the charge is the thing that must not be hidden, which
+            is the whole of row 12a.
 
-            ⚠ NEW COPY, NOT A PORT. Registered as item 9 in
-            `redesign-copy-register.md` and owed to the final pre-flight. It
-            also describes a route that is currently dark: `/membership` is
-            behind MEMBERSHIP_ENABLED and 404s with the flag off, so this line
-            must not ship ahead of the flag. */}
+            ⚠ STILL TRUE: this describes a route that is dark with the flag off,
+            so the line must not ship ahead of it. Both wordings now come from
+            `lib/membership/subscriptionCopy.ts`, which is what enforces that.
+            Registered as item 9 and row 12a in `redesign-copy-register.md`. */}
         <p className="f-fine mt-4">
-          Holding that record over time is an optional membership. It is offered once your first result is back, never before, and you never need it to buy a kit or to read your own results.
+          {copy.homepageMembership}
         </p>
       </FSection>
       <div className="f-wrap">

@@ -11,8 +11,8 @@
  * subscriber. The ruling also specifies the disclosure that ships with it, and on
  * 2026-09-11 extended that line to the three `/lp/` kit landing pages.
  *
- * 🔴 WHAT NOBODY SWEPT IS THE COPY THAT SAYS THE OPPOSITE. Thirteen sentences
- * across seven surfaces still assert a one-off purchase with no subscription,
+ * 🔴 WHAT NOBODY SWEPT IS THE COPY THAT SAYS THE OPPOSITE. Copy across the kit
+ * and landing-page surfaces still asserts a one-off purchase with no subscription,
  * including **CA-026 C1 on `/kits`**, which is approved, pre-flighted copy
  * rendered verbatim inside the inverted panel: *"no subscription unless you
  * choose one"*. Under the adopted model nobody chooses one; it arrives with the
@@ -40,19 +40,32 @@
  * record. Record the replacement wording in `redesign-copy-register.md` and
  * update `CLAIMS` below in the same change.
  *
- * ── HOW TO READ THE COUNT (changed 2026-09-13) ────────────────────────────
- * It now reports **13 sentences on 7 pages, plus 1 non-page surface**, with the
- * raw figures in brackets. Before this it printed a bare `16`, because a line
- * matching two CLAIMS was pushed twice and `public/llms.txt` was counted in with
- * the pages. Thirteen-across-seven is also what this header and
- * `redesign-copy-register.md` row 46 say, so the two now reconcile.
+ * ── HOW TO READ THE COUNT (rewritten 2026-09-16) ────────────────────────────
+ * 🔴 THIS HEADER NO LONGER STATES WHAT THE COUNT IS, DELIBERATELY.
  *
- * That mattered more than a tidy number: a reader comparing the register's 13 to
- * the tool's 16 would reasonably conclude three sentences had crept in since, and
- * go looking for copy that does not exist. **A count that cannot be reconciled
- * with the record it enforces sends the reader hunting for a phantom discrepancy
- * instead of fixing the defect**, which is worse than saying nothing, because it
- * looks like information.
+ * It used to say "13 sentences on 7 pages, plus 1 non-page surface". That was
+ * true on 2026-09-13 and false two days later: `CLAIMS` gained `pay once`,
+ * `one-off test` and `all-in, one-off` on 2026-09-15, each of them rendering on a
+ * live buy surface, and the figure moved to 16 + 2 while THREE records went on
+ * saying thirteen: this header, `redesign-copy-register.md` row 42a, and the
+ * `P6` gate in `10_launch-ops/implementation-checklists/direction-f-go-live.md`.
+ *
+ * The 2026-09-13 change had reconciled two numbers BY HAND. That did not remove
+ * the duplication, it added a third place to update. **A figure written into
+ * prose beside the code that computes it is a second call site for one fact, and
+ * the copy that cannot be executed is the one that goes stale.** So the count now
+ * lives in the output and nowhere else. What the output means:
+ *
+ *   - `N sentence(s) on M page(s)` counts DISTINCT LINES under `app/`, once each
+ *     however many CLAIMS entries a line matches;
+ *   - `plus X on Y non-page surface(s)` is everything outside `app/`, currently
+ *     `public/llms.txt` and shared components: copy a reader sees that no route
+ *     file contains;
+ *   - the bracketed raw figures are match counts and are always the larger.
+ *
+ * ⚠ IF THIS OUTPUT AND ROW 42a DISAGREE, THE ROW IS WHAT NEEDS FIXING, and the
+ * likely cause is a `CLAIMS` widening that was never swept into the record. The
+ * row is the record; this script is only the measurement.
  */
 'use strict'
 
@@ -81,8 +94,16 @@ const ROOT = path.resolve(__dirname, '..')
    A shared component is the highest-leverage place for a claim to hide, because a
    single instance reaches every page that mounts it and no page's own file
    contains the string. */
-const SCOPE = [path.join(ROOT, 'app'), path.join(ROOT, 'public'), path.join(ROOT, 'components')]
-const EXT = ['.tsx', '.txt', '.md']
+/* 🔴 `lib` ADDED 2026-09-16, AND IT IS THE FOURTH AXIS OF THE SAME DEFECT.
+   The approved rewrite moved all eighteen sentences out of the page files and
+   into `lib/membership/subscriptionCopy.ts`, so the scope that had been widened
+   three times would have reported GREEN over the only file that now contains
+   any of them. Centralising copy is the right move and it silently walks the
+   copy out of a scanner scoped to where the copy used to be. `.ts` joins the
+   extension list for the same reason: every previous widening was a directory,
+   and a directory is no use if the file type is not read. */
+const SCOPE = [path.join(ROOT, 'app'), path.join(ROOT, 'public'), path.join(ROOT, 'components'), path.join(ROOT, 'lib')]
+const EXT = ['.tsx', '.ts', '.txt', '.md']
 
 /* The phrases that assert the absence of a subscription or the one-off nature of
    the purchase. Matched case-insensitively against rendered text only: a JSX
@@ -145,6 +166,38 @@ const RENEWAL_CLAIMS = [
   'charged £47',
 ]
 
+/* 🔴 CLAIMS-SIDE EXEMPTIONS. TWO ENTRIES, BOTH DATED, BOTH NARROW.
+
+   An exemption is how a check stops being trusted, so each one names a file, a
+   phrase where a phrase is enough, and the decision that put it here. A `claim`
+   of null exempts the whole file and is reserved for the interlock's own
+   machinery; anything else names the single phrase, so the file stays scanned
+   for every other claim.
+
+   They are PRINTED on every run. An exemption nobody sees is indistinguishable
+   from a gap, which is the failure this script has already had three times in
+   its directory scope. */
+const CLAIMS_ALLOW = [
+  {
+    file: 'lib/membership/subscriptionCopy.ts',
+    claim: null,
+    why: 'The interlock itself. It holds BOTH wordings by design, one per flag state, '
+       + 'the same way MembershipDisclosure and disclosure.ts hold the renewal line. '
+       + 'Approved copy, Keith 2026-09-16.',
+  },
+  {
+    file: 'components/commerce/BundleChoice.tsx',
+    claim: 'one-off test',
+    why: 'Ruled a FALSE POSITIVE by Keith on 2026-09-16. The chip sits above '
+       + '"Just this test. One sample, one result." and contrasts with a two-test '
+       + 'bundle, so it counts tests rather than payments and stays true under the '
+       + 'auto-renew ruling. The file is still scanned for every other claim.',
+  },
+]
+
+const claimExempt = (file, claim) =>
+  CLAIMS_ALLOW.some((a) => a.file === file && (a.claim === null || a.claim === claim))
+
 /* Surfaces allowed to state the renewal with the flag off, because they are the
    flag's own machinery or never render to a customer while it is off.
    `/membership` calls `notFound()` when the flag is off; the disclosure component
@@ -153,6 +206,10 @@ const RENEWAL_ALLOW = [
   'app/(marketing)/membership/page.tsx',
   'components/commerce/MembershipDisclosure.tsx',
   'lib/membership/disclosure.ts',
+  // Added 2026-09-16 with the approved rewrite: this file states the renewal in
+  // its flag-ON branch and the old wording in its flag-OFF branch, which is what
+  // an interlock looks like from the inside.
+  'lib/membership/subscriptionCopy.ts',
 ]
 
 /* 🔴 SENTENCES THAT LIVE IN MORE THAN ONE STORE, AND THE GREP THAT WILL NOT FIND
@@ -242,6 +299,61 @@ if (files.length < 20) die(`found only ${files.length} route files. The layout c
 require('dotenv').config({ path: path.resolve(process.cwd(), '.env.local') })
 
 const flagOn = process.env.MEMBERSHIP_ENABLED === 'true'
+
+/* THE MECHANIC GATE, ADDED 2026-09-17, AND IT IS A DIFFERENT AXIS FROM
+   EVERYTHING ELSE IN THIS FILE.
+
+   The independent pre-flight's H1: this script has been widened four times
+   along its DIRECTORY axis and never once along its SUBJECT axis. It checks
+   sentences, and it has never checked the mechanic those sentences describe. So
+   with the copy sweep complete it would go green with MEMBERSHIP_ENABLED on,
+   over a kit checkout that creates no subscription at all, certifying exactly
+   the state the flag gating was built to prevent, and certifying it MORE
+   confidently than before, because the sentences now all pass.
+
+   WHAT THIS CAN AND CANNOT PROVE. It proves the code that keeps the promise is
+   PRESENT and WIRED. It cannot prove Stripe accepts the subscription, that the
+   saved card is chargeable, or that the first charge actually lands. That is an
+   exercised test against a real price. STRIPE_PRICE_MEMBERSHIP is checked here
+   precisely because it is the one part of that chain a static read can see.
+   Presence is the floor, never the clearance. */
+const MECHANIC = [
+  {
+    what: 'the kit checkout keeps the card',
+    file: 'app/api/checkout/kit/route.ts',
+    needle: 'setup_future_usage',
+    why: 'Without a saved card and a Customer there is nothing to charge when the included days end.',
+  },
+  {
+    what: 'the membership starts on the result',
+    file: 'lib/results/processResult.ts',
+    needle: 'startMembershipOnResult',
+    why: 'The hook that opens the subscription, anchored to the result per the 2026-09-07 ruling rather than to the checkout.',
+  },
+  {
+    what: 'the included days are a real Stripe trial',
+    file: 'lib/membership/startOnResult.ts',
+    needle: 'trial_period_days',
+    why: 'The included month has to exist in Stripe, or the first charge date is just a sentence.',
+  },
+]
+
+const mechanicMissing = []
+if (flagOn) {
+  for (const m of MECHANIC) {
+    const p = path.join(ROOT, m.file)
+    const present = fs.existsSync(p) && read(p).includes(m.needle)
+    if (!present) mechanicMissing.push(m)
+  }
+  if (!process.env.STRIPE_PRICE_MEMBERSHIP) {
+    mechanicMissing.push({
+      what: 'STRIPE_PRICE_MEMBERSHIP is set',
+      file: '.env.local',
+      needle: 'STRIPE_PRICE_MEMBERSHIP',
+      why: 'With no price id the start hook refuses, so every buyer silently gets no membership while the pages promise one.',
+    })
+  }
+}
 const found = []
 const renewal = []
 
@@ -252,7 +364,9 @@ for (const f of files) {
   lines.forEach((line, i) => {
     const hay = line.toLowerCase()
     for (const claim of CLAIMS) {
-      if (hay.includes(claim)) found.push({ file: rel(f), line: i + 1, claim, text: line.trim().slice(0, 120) })
+      if (hay.includes(claim) && !claimExempt(rel(f), claim)) {
+        found.push({ file: rel(f), line: i + 1, claim, text: line.trim().slice(0, 120) })
+      }
     }
     if (allowed) return
     for (const claim of RENEWAL_CLAIMS) {
@@ -298,6 +412,18 @@ console.log(
     (otherHits.length ? `, plus ${otherHits.length} on ${new Set(otherHits.map((c) => c.file)).size} non-page surface(s)` : '') +
     `  [${found.length} raw matches, ${locations.length} distinct lines]\n`,
 )
+
+/* THE EXEMPTIONS, PRINTED EVERY RUN. An exemption nobody sees is
+   indistinguishable from a gap, and this script has had that exact failure three
+   times in its directory scope. Showing them keeps each one arguable. */
+if (CLAIMS_ALLOW.length) {
+  console.log('  EXEMPT, and each one is a decision rather than an oversight:')
+  for (const a of CLAIMS_ALLOW) {
+    console.log(`    ${a.file}${a.claim ? `  ("${a.claim}" only)` : '  (whole file)'}`)
+    console.log(`      ${a.why}`)
+  }
+  console.log('')
+}
 
 const byFile = new Map()
 for (const c of locations) {
@@ -348,6 +474,24 @@ if (renewal.length) {
 `)
     process.exit(1)
   }
+}
+
+if (flagOn) {
+  if (mechanicMissing.length) {
+    console.error('\n  FAIL MEMBERSHIP_ENABLED is TRUE and the mechanic the copy describes is not all there.')
+    console.error('       The sentences can be perfect and still be a promise nothing keeps.\n')
+    for (const m of mechanicMissing) {
+      console.error(`    MISSING  ${m.what}`)
+      console.error(`             expected \u2018${m.needle}\u2019 in ${m.file}`)
+      console.error(`             ${m.why}`)
+    }
+    console.error('')
+    process.exit(1)
+  }
+  console.log('  MECHANIC ok, and this is presence rather than proof:')
+  for (const m of MECHANIC) console.log(`    \u2713 ${m.what}  (${m.file})`)
+  console.log('    \u2713 STRIPE_PRICE_MEMBERSHIP is set')
+  console.log('    \u26a0 none of the above exercises Stripe. The first real charge is still untested.\n')
 }
 
 if (!found.length) {

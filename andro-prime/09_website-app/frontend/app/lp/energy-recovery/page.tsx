@@ -3,6 +3,8 @@ import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FHero } from '@/components/marketing/FPage'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { MembershipDisclosure } from '@/components/commerce/MembershipDisclosure'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 import { READOUT_KIT_2 } from '@/lib/kits/sampleReadout'
 
 /**
@@ -32,12 +34,13 @@ import { READOUT_KIT_2 } from '@/lib/kits/sampleReadout'
  * from `lib/results/resultSeverity.ts` rather than a second hand-typed set. A
  * redesign may not re-type a clinical verdict.
  *
- * ⚠ THE CLOSING BLOCK STILL READS "Secure checkout. No subscription." Under the
- * 2026-09-07 auto-renew ruling every kit buyer starts a subscription on day 31,
- * so that sentence is false the moment `MEMBERSHIP_ENABLED` goes on. It is
- * rendered UNCHANGED because rewriting approved copy is a pre-flight decision.
- * Registered; `scripts/verify-subscription-claims.js` fails the build if the flag
- * is on while it remains. **Owed to Keith, then pre-flight.**
+ * ✅ THE CLOSING BLOCK AND THE PRICE CHIP WERE REWRITTEN 2026-09-16 and now come
+ * from `lib/membership/subscriptionCopy.ts`. Under the 2026-09-07 auto-renew
+ * ruling every kit buyer starts a membership on day 31, so "Secure checkout. No
+ * subscription." and "all-in, one-off" are false the moment
+ * `MEMBERSHIP_ENABLED` goes on. With the flag on they are "Secure checkout." and
+ * "all-in"; with it off both are unchanged, byte for byte.
+ * `scripts/verify-subscription-claims.js` is green in both states.
  */
 
 const BASE_URL = 'https://andro-prime.com'
@@ -140,6 +143,7 @@ const INCLUDED = [
 const TRUST = ['UKAS ISO 15189 Lab', 'Free Next-Day Delivery', 'GMC-Registered Doctor', 'Results in 2 to 5 working days']
 
 export default function EnergyRecoveryLpPage() {
+  const copy = subscriptionCopy(isMembershipEnabled())
   return (
     <FPage>
       <JsonLd data={lpSchema} />
@@ -373,7 +377,7 @@ export default function EnergyRecoveryLpPage() {
             <h2 className="f-h2" style={{ marginTop: 10 }}>Energy &amp; Recovery Check</h2>
             <div className="f-btns" style={{ marginTop: 12, alignItems: 'baseline' }}>
               <span className="f-price">&pound;119</span>
-              <span className="f-kchip">all-in, one-off</span>
+              <span className="f-kchip">{copy.allInChip}</span>
             </div>
 
             <div className="f-bios" style={{ gridTemplateColumns: '1fr', marginTop: 18 }}>
@@ -390,10 +394,8 @@ export default function EnergyRecoveryLpPage() {
 
             <MembershipDisclosure />
 
-            {/* ⚠ FALSE UNDER THE AUTO-RENEW RULING AND RENDERED UNCHANGED. See
-                the file header. */}
             <p className="f-fine" style={{ marginTop: 12 }}>
-              Secure checkout. No subscription.
+              {copy.secureCheckout}
             </p>
           </div>
         </div>

@@ -7,10 +7,17 @@ import { BillingPortalButton } from '@/components/commerce/BillingPortalButton'
 import { AppStrip, AppShell } from '@/components/app/AppShell'
 import { urlFor } from '@/lib/hosts'
 import { formatLongDate } from '@/lib/date/format'
+import { isMembershipEnabled } from '@/lib/flags'
+import { recurringLabels } from '@/lib/subscriptions/labels'
 
-export const metadata: Metadata = {
-  title: 'Your Subscriptions',
-  robots: { index: false, follow: false },
+/* The title follows `MEMBERSHIP_ENABLED` like every other label on this
+   screen (see lib/subscriptions/labels.ts), so it has to be a function
+   rather than a module constant. Ruling: 2026-09-16, Keith. */
+export function generateMetadata(): Metadata {
+  return {
+    title: recurringLabels(isMembershipEnabled()).pageTitle,
+    robots: { index: false, follow: false },
+  }
 }
 
 /*
@@ -147,11 +154,12 @@ export default async function SubscriptionsPage() {
   ])
 
   const activeCount = subscriptions.filter((s) => ACTIVE_FOR_COUNT.has(s.status)).length
+  const labels = recurringLabels(isMembershipEnabled())
 
   return (
     <>
       <AppStrip
-        label="Your subscriptions"
+        label={labels.strip}
         right={
           subscriptions.length === 0
             ? 'None'
@@ -166,8 +174,8 @@ export default async function SubscriptionsPage() {
         {subscriptions.length === 0 ? (
           <div className="f-tray f-rise">
             <div className="f-core">
-              <p className="f-blab">Your subscriptions</p>
-              <p className="f-sub">You do not have an active subscription.</p>
+              <p className="f-blab">{labels.emptyHeading}</p>
+              <p className="f-sub">{labels.emptySentence}</p>
               {/* Cross-host: /supplements is MARKETING on the apex. */}
               <a href={urlFor('/supplements')} className="f-btn" style={{ marginTop: 20 }}>
                 Browse supplements <span aria-hidden="true">&rarr;</span>

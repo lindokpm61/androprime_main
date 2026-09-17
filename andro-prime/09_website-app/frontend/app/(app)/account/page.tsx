@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getAccountData } from '@/lib/account/getAccountData'
 import type { KitOrderSummary, OrderStatus } from '@/lib/account/getAccountData'
-import { isAccountDataControlsEnabled, isAccountAddressEnabled } from '@/lib/flags'
+import { isAccountDataControlsEnabled, isAccountAddressEnabled, isMembershipEnabled } from '@/lib/flags'
+import { recurringLabels } from '@/lib/subscriptions/labels'
 import { DataPrivacySection } from '@/components/account/DataPrivacySection'
 import { AddressSection } from '@/components/account/AddressSection'
 import { AppStrip, AppShell } from '@/components/app/AppShell'
@@ -312,7 +313,9 @@ export default async function AccountPage() {
                 take-down: low-T routing decision); account.isOnFoundingMemberList
                 still resolves if the list reopens. */}
             <Link href="/subscriptions" className="f-qlink">
-              {account.hasActiveSubscription ? 'Your subscriptions' : 'Browse supplements'}
+              {account.hasActiveSubscription
+                ? recurringLabels(isMembershipEnabled()).linkText
+                : 'Browse supplements'}
               <span aria-hidden="true">&rarr;</span>
             </Link>
             <a href="mailto:support@andro-prime.com" className="f-qlink">

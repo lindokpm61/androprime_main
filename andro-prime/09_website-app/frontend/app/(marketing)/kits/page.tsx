@@ -17,6 +17,8 @@ import {
 import type { KitType } from '@/lib/results/types'
 import { JsonLd } from '@/components/shared/JsonLd'
 import { MembershipDisclosure } from '@/components/commerce/MembershipDisclosure'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 
 /**
  * /kits, rebuilt in Direction F on 2026-08-30 from
@@ -197,8 +199,10 @@ const KITS: KitCard[] = [
   },
 ]
 
-const STEPS = [
-  { n: '01', h: 'Order online', p: 'Choose your kit. Pay once. Kit dispatched the same working day.', metaK: 'Dispatch', metaV: 'Same day' },
+/* Step 01 states the shape of the payment, so it moves with the flag like
+   every other sentence on this page. See lib/membership/subscriptionCopy.ts. */
+const stepsFor = (orderStep01: string) => [
+  { n: '01', h: 'Order online', p: orderStep01, metaK: 'Dispatch', metaV: 'Same day' },
   { n: '02', h: 'Collect at home', p: 'Five minutes. Finger-prick. Return with the pre-paid label in your kit.', metaK: 'Time required', metaV: '5 mins' },
   { n: '03', h: 'Lab processes it', p: 'UKAS ISO 15189 accredited lab. Results ready within 2 to 5 working days of receipt.', metaK: 'Lab', metaV: 'UKAS 15189' },
   { n: '04', h: 'Plain-English results', p: 'Your numbers in your dashboard. What they mean. What to do next. Specific to your data.', metaK: 'Turnaround', metaV: '2 to 5 days' },
@@ -264,6 +268,9 @@ function markerLabel(id: PanelMarkerId): string {
 }
 
 export default function KitsPage() {
+  /* Read per request, never at module scope: see subscriptionCopy.ts. */
+  const copy = subscriptionCopy(isMembershipEnabled())
+  const steps = stepsFor(copy.orderStep01)
   return (
     <FPage>
       <JsonLd data={kitsSchema} />
@@ -590,16 +597,17 @@ export default function KitsPage() {
           page. Logged in redesign-copy-register.md item 3. */}
       <FSection>
         <div className="f-invert f-rise">
-          <p className="f-blab f-blab-lg f-invert-lab">What you pay</p>
+          <p className="f-blab f-blab-lg f-invert-lab">{copy.c1Kicker}</p>
           <h2 className="f-h2 f-invert-h">
-            One price.<br />
-            Nothing hidden.
+            {copy.c1Heading[0]}<br />
+            {copy.c1Heading[1]}
           </h2>
-          <p className="f-sub f-invert-p">
-            The price on the card is everything you pay. No charge to see your own results, no
-            surprise second test, no subscription unless you choose one. If a result needs action,
-            the next step is a GP conversation, and we earn nothing from it.
-          </p>
+          {/* Two paragraphs with the flag on, one with it off. The GP sentence
+              separates out and is byte-identical either way, which is what keeps
+              CA-026 C1's clinical clause out of this rewrite. */}
+          {copy.c1Paragraphs.map((para) => (
+            <p key={para.slice(0, 24)} className="f-sub f-invert-p">{para}</p>
+          ))}
         </div>
       </FSection>
 
@@ -609,7 +617,7 @@ export default function KitsPage() {
         <h2 className="f-h2">Order to results in under a week.</h2>
 
         <div className="f-steps" style={{ marginTop: 22 }}>
-          {STEPS.map((s) => (
+          {steps.map((s) => (
             <div className="f-step" key={s.n}>
               <span className="f-no">{s.n}</span>
               <h3 className="f-h4 mt-2.5 mb-2">{s.h}</h3>

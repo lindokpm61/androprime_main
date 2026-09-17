@@ -4,6 +4,8 @@ import { JsonLd } from '@/components/shared/JsonLd'
 import { FPage, FSection, FClose, FHero } from '@/components/marketing/FPage'
 import { KitCheckoutButton } from '@/components/commerce/KitCheckoutButton'
 import { MembershipDisclosure } from '@/components/commerce/MembershipDisclosure'
+import { isMembershipEnabled } from '@/lib/flags'
+import { subscriptionCopy } from '@/lib/membership/subscriptionCopy'
 import { READOUT_KIT_3 } from '@/lib/kits/sampleReadout'
 import { PANEL_MARKERS } from '@/lib/kits/panel'
 import { PRICING } from '@/lib/pricing'
@@ -41,27 +43,27 @@ import { PRICING } from '@/lib/pricing'
  * so the consolidation question stays visible. Its prices already derive from
  * `lib/pricing.ts` and still do.
  *
- * ⚠ BOTH CLOSING BLOCKS STILL ASSERT A ONE-OFF PURCHASE. The order block reads
- * "Secure checkout. No subscription.", the closing strip reads "One-off
- * purchase.", and FAQ 3 reads "It is a one-off payment, not a subscription."
- * All three are false under the 2026-09-07 auto-renew ruling and all three are
- * rendered UNCHANGED, because rewriting approved copy is a pre-flight decision.
- * **Owed to Keith, then pre-flight.** `scripts/verify-subscription-claims.js`
- * fails the build if `MEMBERSHIP_ENABLED` is on while they remain.
+ * ✅ ALL FOUR WERE REWRITTEN 2026-09-16 and now come from
+ * `lib/membership/subscriptionCopy.ts`: the order block, the closing strip, the
+ * price chip and FAQ 3. Each was false under the 2026-09-07 auto-renew ruling
+ * the moment `MEMBERSHIP_ENABLED` went on. With the flag on the first three drop
+ * their false half and FAQ 3 states the renewal; with it off all four are
+ * unchanged, byte for byte. `scripts/verify-subscription-claims.js` is green in
+ * both states.
  */
 
 const BASE_URL = 'https://andro-prime.com'
 
-const FAQ_ITEMS = [
+const faqItemsFor = (coverEverything: string) => [
   { question: 'Does it hurt?', answer: "It's a quick prick on the fingertip. Most men say it's completely painless. We include extra lancets just in case." },
   { question: 'How long do results take?', answer: 'Most results are ready within 2 to 5 working days of the lab receiving your sample. Some can take a little longer, depending on sample quality, postal transit and lab workload.' },
-  { question: 'Does the £179 cover everything?', answer: 'Yes. The kit, the lab analysis for all nine biomarkers, the prepaid return postage, and access to your results dashboard are all included. It is a one-off payment, not a subscription.' },
+  { question: 'Does the £179 cover everything?', answer: coverEverything },
   { question: 'Is my data private?', answer: 'Your results sit in your private dashboard, yours to share with whoever you choose. We do not sell your data, and we do not share it for advertising.' },
   { question: 'Why not just buy Kit 1 and Kit 2 separately?', answer: 'You could. They\'d cost £218 combined. Kit 3 gives you all nine markers for £179, with one sample instead of two. And testing everything together gives a more complete picture, which means better recommendations.' },
   { question: 'What if my testosterone comes back low?', answer: 'Your report will explain exactly what your level means and what to consider next. If your results indicate low testosterone, your next step is a conversation with a GP. That result earns us nothing.' },
 ]
 
-const lpSchema = {
+const lpSchemaFor = (faqItems: { question: string; answer: string }[]) => ({
   '@context': 'https://schema.org',
   '@graph': [
     {
@@ -90,14 +92,14 @@ const lpSchema = {
     },
     {
       '@type': 'FAQPage',
-      mainEntity: FAQ_ITEMS.map(({ question, answer }) => ({
+      mainEntity: faqItems.map(({ question, answer }) => ({
         '@type': 'Question',
         name: question,
         acceptedAnswer: { '@type': 'Answer', text: answer },
       })),
     },
   ],
-}
+})
 
 export const metadata: Metadata = {
   title: "Men's Health Blood Test UK | 9 Biomarkers £179",
@@ -189,9 +191,12 @@ const INCLUDED = [
 const TRUST = ['UKAS ISO 15189 Lab', 'Free Next-Day Delivery', 'GMC-Registered Doctor', 'Results in 2 to 5 working days']
 
 export default function HormoneRecoveryLpPage() {
+  /* Read per request. JSON-LD from the same call as the rendered answer. */
+  const copy = subscriptionCopy(isMembershipEnabled())
+  const faqItems = faqItemsFor(copy.faqHormoneRecovery)
   return (
     <FPage>
-      <JsonLd data={lpSchema} />
+      <JsonLd data={lpSchemaFor(faqItems)} />
 
       <FHero
         aside={
@@ -513,7 +518,7 @@ export default function HormoneRecoveryLpPage() {
         <p className="f-blab">Common questions</p>
         <h2 className="f-h2">Frequently asked.</h2>
         <div className="f-faqgrid f-rise" style={{ marginTop: 22 }}>
-          {FAQ_ITEMS.map(({ question, answer }) => (
+          {faqItems.map(({ question, answer }) => (
             <div key={question}>
               <h3>{question}</h3>
               <p>{answer}</p>
@@ -533,7 +538,7 @@ export default function HormoneRecoveryLpPage() {
             <h2 className="f-h2" style={{ marginTop: 10 }}>Hormone &amp; Recovery Check</h2>
             <div className="f-btns" style={{ marginTop: 12, alignItems: 'baseline' }}>
               <span className="f-price">&pound;179</span>
-              <span className="f-kchip">all-in, one-off</span>
+              <span className="f-kchip">{copy.allInChip}</span>
             </div>
 
             <div className="f-bios" style={{ gridTemplateColumns: '1fr', marginTop: 18 }}>
@@ -550,9 +555,8 @@ export default function HormoneRecoveryLpPage() {
 
             <MembershipDisclosure />
 
-            {/* ⚠ FALSE UNDER THE AUTO-RENEW RULING AND RENDERED UNCHANGED. */}
             <p className="f-fine" style={{ marginTop: 12 }}>
-              Secure checkout. No subscription.
+              {copy.secureCheckout}
             </p>
           </div>
         </div>
@@ -571,10 +575,10 @@ export default function HormoneRecoveryLpPage() {
               Order the Kit: &pound;179 {ARROW}
             </a>
           </div>
-          {/* ⚠ "One-off purchase." is false under the auto-renew ruling and is
-              rendered unchanged. See the file header. */}
+          {/* Module-sourced since 2026-09-16: "One-off purchase." drops with the
+              flag on and is unchanged with it off. See the file header. */}
           <p className="f-fine" style={{ margin: '14px auto 0' }}>
-            One-off purchase. Results in your personal dashboard. No GP needed.
+            {copy.kitFootnote}
           </p>
         </FClose>
       </section>

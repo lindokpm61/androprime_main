@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Logo } from './Logo'
 import { hrefFor, isCrossHost } from '@/lib/hosts'
 import { lpCtaFor } from '@/lib/lp/cta'
+import { recurringLabels } from '@/lib/subscriptions/labels'
 
 type NavVariant = 'marketing' | 'lp' | 'app'
 
@@ -95,9 +96,15 @@ const marketingLinks = [
   { label: 'Blog', href: '/blog' },
 ]
 
-const appLinks = [
+/* 🔴 THE MIDDLE ITEM IS NAMED AFTER THE FLAG, NOT AFTER THE TABLE (Keith,
+   2026-09-16). With MEMBERSHIP_ENABLED on it read "Subscriptions" while
+   sitting one item away from "Membership", which is the same recurring
+   charge under two names, and it was the route a member took to cancel.
+   Flag off, "Subscriptions" is still correct and still what ships.
+   Ruling: 01_strategy/2026-09-16-membership-is-not-a-subscription.md */
+const appLinksFor = (membershipEnabled: boolean) => [
   { label: 'Results', href: '/results-dashboard' },
-  { label: 'Subscriptions', href: '/subscriptions' },
+  { label: recurringLabels(membershipEnabled).navItem, href: '/subscriptions' },
   { label: 'Account', href: '/account' },
 ]
 
@@ -161,8 +168,8 @@ export function Nav({
   const links =
     variant === 'app'
       ? membershipEnabled
-        ? [...appLinks, { label: 'Membership', href: '/account/membership' }]
-        : appLinks
+        ? [...appLinksFor(true), { label: 'Membership', href: '/account/membership' }]
+        : appLinksFor(false)
       : marketingLinks
   const showLinks = variant !== 'lp'
 

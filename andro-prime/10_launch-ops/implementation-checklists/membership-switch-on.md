@@ -110,7 +110,7 @@ environment. That is one variable, and it is item 2.
 - [ ] The build passes with `MEMBERSHIP_ENABLED=true`.
 
 `scripts/verify-subscription-claims.js` fails the build whenever the membership
-flag is true while any of the **thirteen sentences** telling a buyer there is no
+flag is true while any of the **eighteen sentences** (thirteen until the 2026-09-15 `CLAIMS` widening) telling a buyer there is no
 subscription remains. That is **P6**, so this line is a confirmation rather than
 a judgement: if the build passes, the sweep happened.
 

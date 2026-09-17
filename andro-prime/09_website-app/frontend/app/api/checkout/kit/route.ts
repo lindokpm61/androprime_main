@@ -261,11 +261,36 @@ export async function POST(request: NextRequest) {
   const couponId = codeCoupon?.id
   if (codeCoupon) metadata.discount_code = discount!.trim().toUpperCase()
 
+  /* 🔴 THE ONE THING THE KIT CHECKOUT DOES FOR MEMBERSHIP, AND IT IS NOT A
+     SUBSCRIPTION (H1, 2026-09-17). It stays `mode: 'payment'` deliberately: a
+     subscription here would start the included 30 days at CHECKOUT, which is the
+     anchor the 2026-09-07 result ruling overturned and which the homepage now
+     contradicts in writing. What it does instead is KEEP THE CARD, so that when
+     the result lands `lib/membership/startOnResult.ts` can open the subscription
+     with the included days as a trial and day 31 charges by itself.
+
+     `customer_creation: 'always'` is required for the saved card to belong to
+     anyone: without a Customer, `setup_future_usage` has nothing to attach the
+     payment method to and the later `subscriptions.create` has no customer to
+     bill. The two are one change, not two.
+
+     ⚠ FLAG-GATED, so with `MEMBERSHIP_ENABLED` off this call is byte-identical
+     to what it has always been: no Customer, no saved card, no mandate taken.
+     Taking a mandate for a recurring charge nobody can yet be enrolled in would
+     be collecting a permission we have no use for. */
+  const keepCardForMembership = isMembershipEnabled()
+
   let session
   try {
     session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
+      ...(keepCardForMembership
+        ? {
+            customer_creation: 'always' as const,
+            payment_intent_data: { setup_future_usage: 'off_session' as const },
+          }
+        : {}),
       customer_email: user?.email ?? undefined,
       metadata,
       line_items: [{ price: priceId, quantity: 1 }],
