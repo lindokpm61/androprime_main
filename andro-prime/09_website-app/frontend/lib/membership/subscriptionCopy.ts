@@ -98,9 +98,43 @@ const MEMBERSHIP_PRICE = PRODUCT_MAP.membership.price.replace('/mo', '')
  * Part 4 prominence function. Every surface now states the cancel right in the
  * ruled words, so the disclosure line and the prose beside it agree.
  */
+/**
+ * 🔴 THE CHARGE DATE MAY NOT BE STATED WITHOUT ITS STARTING POINT. CA-052,
+ * defect H-A, the one HARD finding that survived CA-050's signature.
+ *
+ * The independent pre-flight of 2026-09-17 read the old wording as a priced
+ * representation with no clock in it: *"On day 31 that card is charged GBP 47 a
+ * month"* sits in a paragraph that anchors on **today**, so a buyer counts 31
+ * days from checkout. **Day 1 is the day the RESULT LANDS**, and the real gap
+ * adds dispatch, sampling, return post and lab turnaround, so the true first
+ * charge is weeks later than the sentence implies.
+ *
+ * ✅ **THIS INTRODUCES NO NEW WORDING.** The clause below is byte-identical to
+ * the one CA-050 already approved inside `homepageMembership`, which is why the
+ * finding said the fact was *"sayable in the house voice and inside the sentence
+ * budget"*: the homepage was already saying it correctly while `/kits` and both
+ * kit-LP FAQs were not. It is lifted into a constant rather than retyped, so the
+ * homepage string is unchanged byte for byte and the other two inherit it.
+ *
+ * ⚠ **ONE FACT, ONE WORDING — the F4 rule applied before it could be broken.**
+ * C1 previously said *"that card is charged"* where the homepage said *"it
+ * becomes"*. Keeping both would have put one fact in two vocabularies, which is
+ * exactly the defect Keith ruled on as F4 on 2026-09-17. **What that costs is
+ * C1's concrete card language**, and that is the one item CA-052 puts to him.
+ *
+ * 🔴 **THE ANCHOR IS ENFORCED, NOT JUST WRITTEN.**
+ * `scripts/test-standing-claim.ts` case 10 asserts that **no string in the
+ * flag-on payload may name the charge day without also naming the starting
+ * point.** A rule stated only in prose is how H-A happened: the homepage obeyed
+ * it and three other surfaces did not, and nothing could tell.
+ */
+const RENEWAL_CLAUSE =
+  `It starts when your first result lands, and on day ${MEMBERSHIP_FIRST_CHARGE_DAY} ` +
+  `it becomes ${MEMBERSHIP_PRICE} a month. Cancel anytime.`
+
 const RENEWAL_SENTENCE =
-  `The price also includes your first ${MEMBERSHIP_INCLUDED_DAYS} days of membership, ` +
-  `and on day ${MEMBERSHIP_FIRST_CHARGE_DAY} it becomes ${MEMBERSHIP_PRICE} a month. Cancel anytime.`
+  `The price also includes your first ${MEMBERSHIP_INCLUDED_DAYS} days of membership. ` +
+  RENEWAL_CLAUSE
 
 export interface SubscriptionCopy {
   /** `/kits` inverted panel, CA-026 C1. Kicker is unchanged in both states. */
@@ -208,10 +242,13 @@ export function subscriptionCopy(membershipEnabled: boolean): SubscriptionCopy {
        and it was the weakest sentence on the page. "Nothing hidden" is kept and
        is now doing real work, because the renewal is the thing being un-hidden. */
     c1Heading: ['Nothing hidden.', 'Not even the renewal.'],
+    /* CA-052 / H-A: the second sentence was `On day N that card is charged X a
+       month. Cancel anytime.` — a charge date with no starting point. It now
+       renders the shared `RENEWAL_CLAUSE`, so `/kits`, both kit-LP FAQs and the
+       homepage state the fact in one wording. */
     c1Paragraphs: [
       `The price on the card is everything you pay today, and it includes your first ` +
-        `${MEMBERSHIP_INCLUDED_DAYS} days of membership. On day ${MEMBERSHIP_FIRST_CHARGE_DAY} ` +
-        `that card is charged ${MEMBERSHIP_PRICE} a month. Cancel anytime. ` +
+        `${MEMBERSHIP_INCLUDED_DAYS} days of membership. ` + RENEWAL_CLAUSE + ` ` +
         `No charge to see your own results, and no surprise second test.`,
       GP_SENTENCE,
     ],
@@ -233,10 +270,14 @@ export function subscriptionCopy(membershipEnabled: boolean): SubscriptionCopy {
     /* "You never need it to buy a kit" is dropped because it is now nonsense: it
        comes WITH the kit. "You never need it to read your own results" is kept
        because it is still true and is the thing worth saying. */
+    /* ⚠ UNCHANGED OUTPUT, DIFFERENT SOURCE. This sentence was already correct —
+       it is where `RENEWAL_CLAUSE` was lifted FROM — and it now reads the
+       constant instead of spelling the clause out, so the three surfaces cannot
+       drift apart later. `test-standing-claim.ts` case 10b asserts this string
+       is byte-identical to what CA-050 approved. */
     homepageMembership:
       `Holding that record over time is a membership, and your first ${MEMBERSHIP_INCLUDED_DAYS} ` +
-      `days are included in the price of every kit. It starts when your first result lands, and on ` +
-      `day ${MEMBERSHIP_FIRST_CHARGE_DAY} it becomes ${MEMBERSHIP_PRICE} a month. Cancel anytime. ` +
+      `days are included in the price of every kit. ` + RENEWAL_CLAUSE + ` ` +
       `You never need it to read your own results.`,
     /* Pure deletion of the middle sentence. The result is byte-identical to
        `public/llms.txt:7`, which took the same cut on 2026-09-17. */

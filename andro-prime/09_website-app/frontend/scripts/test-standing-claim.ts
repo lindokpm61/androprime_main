@@ -31,6 +31,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { subscriptionCopy } from '../lib/membership/subscriptionCopy'
+import { MEMBERSHIP_FIRST_CHARGE_DAY } from '../lib/membership/disclosure'
 
 let failures = 0
 let checks = 0
@@ -202,6 +203,86 @@ ok(
   /those two kits cost\s*&pound;218/.test(hormoneLp) && /nine markers for\s*&pound;179/.test(hormoneLp),
   'the pricing paragraph changed: the exemption rested on it',
 )
+
+// ── 10. H-A: A CHARGE DATE MAY NOT BE STATED WITHOUT ITS STARTING POINT ───
+// 🔴 THIS IS THE RULE H-A BROKE, AND IT BROKE BECAUSE IT WAS ONLY PROSE.
+// CA-052. The independent pre-flight found `On day 31 that card is charged GBP
+// 47 a month` sitting in a paragraph anchored on *today*, while day 1 is the day
+// the RESULT lands. The homepage sentence in the very same payload already said
+// it correctly. So the rule was known, written down, and obeyed by one surface
+// out of four — and nothing could tell the difference, which is the whole
+// argument for asserting it instead of restating it.
+//
+// The test is over the WHOLE flag-on payload rather than a list of fields, so a
+// new sentence that names the charge day inherits the rule automatically. That
+// is the same reason `dump-subscription-copy.ts` walks the object instead of
+// enumerating it.
+console.log('\n10 · No flag-on string names the charge day without the starting point')
+const ANCHOR = 'It starts when your first result lands'
+const chargeDayMentions: string[] = []
+for (const value of Object.values(on) as unknown[]) {
+  for (const str of (Array.isArray(value) ? value : [value]) as unknown[]) {
+    if (typeof str === 'string' && str.includes(`day ${MEMBERSHIP_FIRST_CHARGE_DAY}`)) {
+      chargeDayMentions.push(str)
+    }
+  }
+}
+ok(
+  `the payload states the charge day somewhere (found ${chargeDayMentions.length})`,
+  chargeDayMentions.length > 0,
+  'nothing mentions the charge day: this test would pass vacuously',
+)
+for (const str of chargeDayMentions) {
+  ok(
+    `anchored: "${str.slice(0, 46)}…"`,
+    str.includes(ANCHOR),
+    'states the charge day with no starting point — this is defect H-A',
+  )
+}
+
+// ── 10b. ONE FACT, ONE WORDING ─ the F4 rule, mechanised ───────────────
+// Keith ruled F4 on 2026-09-17 because one fact was rendering in two
+// vocabularies within a screen. C1 used to say "that card is charged" where the
+// homepage said "it becomes". Both are true; having both is the defect.
+//
+// ⚠ THE FIRST VERSION OF THIS CASE WENT VACUOUS UNDER EXACTLY THE CONDITION IT
+// EXISTS FOR, and it was caught by mutation-testing rather than by reading it.
+// It derived the reference clause from `chargeDayMentions[0]` and compared the
+// others against it. Revert the FIRST surface to the un-anchored wording and
+// `indexOf(ANCHOR)` returns -1, `slice(-1)` yields one character, and every
+// string contains one character — so all four assertions passed while the
+// defect was present. **A check that reads its own expected value out of the
+// data it is checking cannot fail when the data is wrong in the first row.**
+// It now derives nothing: it requires every mention to yield a clause, and
+// requires the set of clauses to have exactly one member.
+const CANCEL = 'Cancel anytime.'
+const clauses = chargeDayMentions
+  .filter((str) => str.includes(ANCHOR) && str.includes(CANCEL))
+  .map((str) => str.slice(str.indexOf(ANCHOR), str.indexOf(CANCEL) + CANCEL.length))
+console.log('\n10b · Every surface states it in the SAME wording')
+ok(
+  `every charge-day mention yielded a clause (${clauses.length} of ${chargeDayMentions.length})`,
+  clauses.length === chargeDayMentions.length && clauses.length > 0,
+  'a mention states the charge day without the anchored clause',
+)
+ok(
+  `and they are all the same one (${new Set(clauses).size} distinct)`,
+  new Set(clauses).size === 1,
+  'a second vocabulary for the renewal fact — this is what F4 ruled against:\n      '
+    + [...new Set(clauses)].join('\n      '),
+)
+
+// ── 10c. THE ANCHOR WORDING IS ATTESTED, NOT INVENTED ────────────────
+// Same discipline as cases 1 and 2: the phrase is read out of the approved
+// draft rather than typed here. ⚠ Only the ANCHOR is asserted, not the whole
+// sentence: F4 later replaced that draft's cancel clause ("unless you stop it")
+// and the draft writes GBP rather than the symbol, so a whole-string comparison
+// would be asserting against a superseded artefact. The scope of the fixture is
+// the scope of what the draft still governs.
+console.log('\n10c · The anchor phrase comes from the approved draft, not from this test')
+const draft = readFileSync(join(ROOT, '..', '2026-09-11-subscription-copy-rewrite-draft.md'), 'utf8')
+ok('the 2026-09-11 draft still carries the anchor phrase', draft.includes(ANCHOR),
+   'the draft changed: re-derive the wording rather than keeping this literal')
 
 console.log(`\n${checks - failures}/${checks} assertions passed`)
 if (failures > 0) {

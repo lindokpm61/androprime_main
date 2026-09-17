@@ -151,7 +151,26 @@ design with the flag on; rebuild flag-off afterwards to restore the shipping art
 
 ### What it left owed, in the order it matters
 
-1. 🔴 **H-A, still first, and it is now UNBLOCKED rather than blocked.** ✅ **CA-050 was
+1. ✅ **H-A IS BUILT AND IS CA-052, board `869f3mqwj` at `pending`.** One decision (N-1) and
+   one signature. The clause is **lifted verbatim from CA-050's own approved homepage sentence**,
+   so it introduces no new wording; it is now one constant, `RENEWAL_CLAUSE`, with four consumers.
+   **Delta measured field by field against the approved baseline rather than described: flag OFF
+   no field changed, flag ON three fields, and the homepage sentence byte-identical.**
+   🔴 **The rule is ENFORCED now, not restated, and that is the whole point** — H-A existed
+   because it was prose, obeyed by one surface of four, with nothing able to tell the difference.
+   Case 10 asserts no flag-on string may name the charge day without the starting point, walking the
+   whole payload so a new sentence inherits the rule; 10b asserts one wording everywhere (F4,
+   mechanised); 10c reads the anchor out of the approved draft. ⚠ **10b failed mutation-testing the
+   first time**: it derived its expected clause from the first mention, so breaking that mention made
+   all four assertions pass. **A check that reads its expected value out of the data it is checking
+   cannot fail when the first row is the wrong one.** 🔵 **N-1 is Keith's:** C1 loses *"that card
+   is charged"*, because keeping it beside the homepage's *"it becomes"* would be F4 again. 🟠
+   **N-2 binds CA-052 to CA-050's K-1:** the new clause is unconditional while `startOnResult.ts`
+   refuses a membership under 12, so if K-1 gets a scope word this clause needs the same one.
+   Superseded on approval: CA-050's C1 paragraph and two FAQ answers only.
+
+   *The original framing, kept because it is why this took a new number:*
+   🔴 **H-A was UNBLOCKED rather than blocked.** ✅ **CA-050 was
    APPROVED by Keith on 2026-09-17** (board `869f3guna`, read back at `approved`; register row and
    record both mirrored). Its condition 1 says the HARD item survives the signature *"whether or not
    this record is signed first"*, so H-A is the one item of the eight that still gates the flip.
