@@ -184,22 +184,41 @@ Making that getter throw *unconditionally* and rebuilding — the only version o
 be masked by `.env.local` — passed, with the probe string absent from the output. No build-time path
 reaches it.
 
-### A4 · 🔴 Look at it — plan Phase 6, never started
+### A4 · ✅ RAN 2026-09-17, CLEAN — bar the flag-gated routes
 
-- [ ] Every route at **1320 and 390**, `--theme light` only (`DESIGN.md` gap 1: dark mode is not
-      implemented, so a dark capture proves nothing)
-- [ ] Use `andro-prime/12_operations/automation/shot.js`. It is the only sanctioned path, and it
-      **returns a verdict as well as a picture** — it caught two horizontal-overflow defects on
-      2026-09-16 that the source could not show
-- [ ] `--expect-text` on every shot: a screenshot cannot tell *"my change did not apply"* from
-      *"the server served stale HTML"*
-- [ ] Re-read the two `impeccable` critiques in `frontend/.impeccable/critique/` and confirm the
-      homepage's 2 P0s and 3 P1s are closed or knowingly carried
+- [x] Every route at **1320 and 390**, `--theme light` only (`DESIGN.md` gap 1: dark mode is not
+      implemented, so a dark capture proves nothing). **33 anonymously reachable routes, 62 captures**,
+      route set taken from `scripts/route-list.js` rather than a second hand-written list
+- [x] Used `andro-prime/12_operations/automation/shot.js`, plus `audit-viewport-sweep.js` as the
+      machine gate: 🟢 **no overflow and no sub-AA light-ground text across 96 cells**, and it ran a
+      **positive control first** — both probes found a planted overflow and a planted 1.9:1 text node,
+      so the green is the probes working rather than the probes being silent
+- [x] `--expect-text` on every shot, **derived from SOURCE** rather than from the rendered page:
+      taking the string off the served page and asserting it is on the served page proves nothing,
+      because a stale build hands you its own stale string and passes
+- [x] Re-read both `impeccable` critiques. **All five homepage findings are CLOSED, not carried** —
+      `.f-invert` 0→6 on each kit page, price objects 0→4, `RelatedArticles` now takes a `variant`
+      prop, the dead hover lift fixed by a native `@layer reveal` (so unlayered interaction beats the
+      reveal by construction rather than by a fifth higher-specificity modifier), and `.f-steps-open`
+      deleted with its seven orphaned rules
+
+**62 captures, 56 clean, 6 flagged, none a page defect.** Four are `/admin/dashboard` and
+`/ops/content`, which 307 to `/auth/login` and are therefore **A5's, not A4's**; two are one bad
+derived expect-string, where the deriver picked `/authors/[slug]`'s *empty-state* sentence, which
+correctly does not render.
+
+🔴 **NOT COVERED, and it needs its own pass:** `/membership`, `/account/membership` and
+`/results-dashboard/handoff` are flag-gated and 404 in the shipping state. Measuring them needs a
+**flag-on BUILD** — a restart will not do it, per the rebuild rule in Gate B and Gate E.
 
 **This phase carries more weight than it would in a cutover**, because the next thing that happens
 after this merge is the first real customer arriving. The bar is *correct on first contact*.
 
-### A5 · 🟡 The routes no anonymous sweep can reach — plan Phase 3 remainder
+### A5 · 🔴 THE LAST ITEM ON GATE A — the routes no anonymous sweep can reach
+
+⚠ **It grew on 2026-09-17.** The A4 sweep found `/admin/dashboard` and `/ops/content` **307 to
+`/auth/login`**, so the two internal boards were never A4's to measure and belong here. That is
+measured, not assumed: both were captured, both failed, and the redirect target was read back.
 
 - [ ] The seven `(app)` routes, with a **real session** carried by `shot.js --cookie`. Anonymously
       they 307 to `/auth/login`, so their conformance is genuinely unknown rather than zero

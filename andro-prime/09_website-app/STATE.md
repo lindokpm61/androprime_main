@@ -91,7 +91,55 @@ screenshot. Both are gated, a session is needed, and the only documented seeder 
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-17 (session close, amended late for A3)
+## ▶️ PICK UP HERE — handoff, 2026-09-17 (final close: A2 and A3 are done, A5 is next)
+
+### 🟢 GATE A IS DOWN TO ONE ITEM, AND IT IS A5
+
+**A2 ✅ · A3 ✅ · A4 ✅ (bar the flag-gated routes) · A5 🔴 outstanding.** Everything below is the
+detail; this line is the state.
+
+**A2 closed in full on 2026-09-17.** The figure it had been quoting — *"26 rows needing sign-off and
+5 needing a ruling"* — was **eight items out of date**, correct only as at 2026-09-15, because the
+disposition pass that writes it runs once and nothing decrements it. Re-tested row by row, the real
+figure was 18 and 2. Keith then answered all fourteen of his (thirteen signed, row 7 fixed on his
+"fix it" ruling) plus ruling 38a; Ewa answered all seven of hers in one pass; and the board click on
+`869f1wwch` is done. Work it from `10_launch-ops/implementation-checklists/a2-signoff-packet-2026-09-17.md`.
+
+**A4 ran clean.** `audit-viewport-sweep` at 390 and 1320: **no overflow and no sub-AA light-ground
+text across 96 cells**, with a positive control proving both probes can fail. 62 captures, 56 clean,
+6 flagged and **none a page defect** — four are the two internal boards (they 307 to `/auth/login`,
+so they are A5's, not A4's) and two are one bad derived expect-string. All five homepage findings in
+the 2026-09-03 `impeccable` critique verify as **closed**, not carried.
+⚠ **What A4 did NOT cover:** `/membership`, `/account/membership` and `/results-dashboard/handoff`
+are flag-gated, so they are unmeasured in the shipping state. Covering them needs a second pass on a
+**flag-on build** — see the rebuild rule below, a restart will not do it.
+
+### 🔴 A5 IS THE WHOLE OF WHAT IS LEFT ON GATE A, and it is bigger than the checklist says
+
+The seven `(app)` routes with a real session via `shot.js --cookie`, all three error boundaries
+(they have no route, so no sweep built from a route list has ever reached one), `/blog/preview/[slug]`
+and — **added 2026-09-17** — the two internal boards `/admin/dashboard` and `/ops/content`, which the
+A4 sweep found redirect anonymously and therefore were never A4's to measure.
+
+🔵 **One decision is Keith's and blocks a third of it:** `npm run db:seed` writes **ten fake
+customers with fake health results into the PRODUCTION database**. Approve it or skip it. Skipping
+means nine of the ten results states ship having never been looked at.
+
+### 🟠 Live on `main` and NOT blocking the merge, but both are real
+
+- **`/faq` sells a marker its own page contradicts.** Line 82 offers *"the markers that matter for
+  men, including **free testosterone via FAI**"*; line 128 on the same page says of FAI *"in men we
+  draw no conclusion from it: it tracks calculated free testosterone poorly... Read your Free T
+  instead"*, and lines 129-130 say free testosterone is calculated from Total T, SHBG and Albumin.
+  Re-tested 2026-09-17, still true. It is approved CA-026 wording, so the fix is the **amendment**
+  ClickUp `869erh22k` names, not a copy edit. Standardising the FAI badge to "Reported" the same day
+  makes it harder to defend, not easier.
+- **CA-044**, ClickUp `869eqnga8`: two live states rendering unapproved copy — the card wording for
+  `high-testosterone` and `high-vitamin-d`. Copy-register row 23 names the same thing.
+
+---
+
+## ▶️ Earlier the same day — handoff, 2026-09-17 (session close, amended late for A3)
 
 **The sequencing home is unchanged: `10_launch-ops/implementation-checklists/direction-f-go-live.md`.**
 Work Gate A and tick the boxes in that file. The session that wrote this block closed the copy half
@@ -172,13 +220,13 @@ and `869f1bbxn`; written into the module header, Gate E and copy-register row 42
 
 ### What the next session picks up, in order
 
-1. **🟢 Gate A, still the go-live path. ✅ A3 CLOSED 2026-09-17, so THREE items remain:**
-   **A2** — 26 rows needing sign-off plus 5 needing a ruling (Keith, and Keith + Ewa);
-   **A4** — the screenshot pass, never started; **A5** — the seven `(app)`
-   routes, both internal boards, `/blog/preview/[slug]` and all three error boundaries, none of which
-   an anonymous sweep can reach.
-   **A2 is the only one of the three that needs a person who is not at a terminal**, so it is the
-   one to start, and A4 is the largest.
+1. **🟢 Gate A. ✅ A2, A3 and A4 all closed 2026-09-17 — ONE item remains, A5.**
+   ⚠ **This numbered list is superseded by the block at the top of this file**, which is the current
+   state; it is kept because items 2 to 4 below are still live and unchanged. A5 is the seven `(app)`
+   routes with a real session, all three error boundaries, `/blog/preview/[slug]`, and the two
+   internal boards that moved here from A4 when the sweep found they redirect anonymously.
+   🔵 **Keith's `db:seed` decision gates a third of it** — ten fake customers into the production
+   database, approve or skip.
 2. **🟠 THE STANDING TIE, and it is the one thing on Gate E that can still go wrong quietly.**
    CA-050's **K-1** and CA-052's **N-2** are the same exception stated on two surfaces:
    *"your first 30 days are included in the price of every kit"* and *"it starts when your first
@@ -187,10 +235,25 @@ and `869f1bbxn`; written into the module header, Gate E and copy-register row 42
    scope word the other needs the same one, and neither may move alone.** Naming the exception
    outright puts a clinical routing fact on a buy surface and pulls Ewa back in; a scope word would
    not. Substance in the two approval records under `03_compliance/content-approval/`.
-3. **🔴 Gate E's remainder, none of it copy:** `STRIPE_PRICE_MEMBERSHIP` unset (ClickUp
-   `869epxzt1`), the v1.3 terms Membership section still DRAFT (`869epxzpx`), the Phase-0 compliance
-   read that `lib/flags.ts` names as its own gate and which has never been recorded as done
-   (`869epxzpd`), and a cancellation nobody has ever clicked end to end.
+3. **🔴 Gate E's remainder, none of it copy.** ⚠ **Two of the four items this bullet used to list
+   were stale and are corrected here, 2026-09-17:**
+   - ~~`STRIPE_PRICE_MEMBERSHIP` unset (ClickUp `869epxzt1`)~~ **It is SET.** A live read against
+     Stripe returns `price_1U8VKRLU0SDiIplTUnr5cyWJ`, £47.00/month, existing and correct, and the
+     mechanic gate prints `✓`. Keith set it in Coolify on 2026-09-13; the switch-on checklist already
+     recorded that, so this bullet and that checklist had drifted apart.
+     🔴 **And closing it cost the interlock its teeth** — see the Gate E block above. A flag-on
+     `npm test` and `npm run build` now both exit 0 where the plan says they fail, because the unset
+     price was the only thing making them fail.
+   - ~~the v1.3 terms Membership section still DRAFT~~ **It is DRAFTED, not missing** (`869epxzpx`):
+     a full `## Membership` section written to the law in force, voluntarily adopting the DMCCA
+     Part 4 duties. What is owed is sign-off and the flip-day sync, not writing.
+   - **Still true:** the Phase-0 compliance read that `lib/flags.ts` names as its own gate and which
+     has never been recorded as done (`869epxzpd`), and a cancellation nobody has ever clicked end
+     to end.
+   - **Added 2026-09-17:** `MEMBERSHIP_ENABLED` must be set as a Coolify **build argument** and the
+     site redeployed — it is mounted in the Dockerfile now, and it was mounted nowhere before, so
+     the flip could not previously have moved six of the nine copy surfaces at all. Verify with
+     `npx tsx scripts/verify-flag-parity.ts --base https://andro-prime.com` and require exit 0.
 4. **⚠ Unchanged from the morning handoff below:** the two board defects from
    `reconcile-approvals.js` are **not** the ones that handoff named. `CA-037` and `CA-043` are both
    `approved` on the board today. What the reconciler reports is CA-003, CA-026 and CA-045 carrying
