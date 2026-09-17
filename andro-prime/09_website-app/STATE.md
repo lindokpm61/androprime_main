@@ -269,7 +269,23 @@ where to start; this block records what moved on 2026-09-17 and what it left owe
   the run denied as credential exploration.
 - `.claude/skills/wrap/reconcile-approvals.js` — register versus both boards, read-only, exit 2 on drift.
 - `.claude/hooks/approvals-board-guard.js` — wired `PostToolUse`, blocks a new CA row in the register
-  that has no board task. Delta-scoped, 9-case suite, proven firing through the harness.
+  that has no board task.
+  🔴 **IT HAD A CWD BUG AND IT IS FIXED LOCALLY ONLY, SO REAPPLY THE FIX WITH THE HOOK.**
+  It resolved its credentials file as `path.join(evt.cwd, 'andro-prime/09_website-app/frontend/.env.local')`,
+  and **`evt.cwd` is the SESSION's directory, not the repo root**. On 2026-09-17 the shell was inside
+  `frontend/` when the CA-052 record was written, so it looked for the env file nested inside itself,
+  could not read the token, and emitted its degraded *"the board could NOT be checked"* block. **The
+  board had the task.** It now walks up for a `.git` marker. Two things make that worse than an
+  ordinary bug: `AGENT.md` states this exact rule about relative paths and the persisting shell
+  directory **in bold**, and the guard was written to enforce discipline in the same repo; and the
+  degraded branch was **word-identical to a real finding**, so *"I could not check"* and *"you failed
+  to check"* arrived as one message. The message now names which it is and how to verify by hand.
+  ⚠ **SECOND GAP, from its own header and demonstrated all session:** it sees `Write`/`Edit`/
+  `MultiEdit` only. **Every register edit this session went through a Python script via Bash and the
+  guard never saw one of them** — it fired only on the two `Write` calls that created record files.
+  The scripted path is the normal path here, so the enforcement covers the minority of writes.
+  Closing that needs a `PreToolUse` match on the Bash command string, or moving the check to
+  `reconcile-approvals.js` at wrap, which does travel. Delta-scoped, 9-case suite, proven firing through the harness.
   🔴 **IT IS GITIGNORED AND LOCAL-ONLY, along with `.claude/settings.json`, so it does NOT travel with
   the repo and has to be reapplied on another machine.** Same limitation as the em-dash guard. The
   reconciler under `.claude/skills/wrap/` DOES travel, so **the detector is portable and the
