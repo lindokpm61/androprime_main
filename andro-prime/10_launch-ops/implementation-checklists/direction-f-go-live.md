@@ -100,7 +100,7 @@ route is not shipped.
 
 </details>
 
-### A2 · 🔴 The copy register's owed signatures — 18 rows and 2 rulings
+### A2 · 🟡 The copy register's owed signatures — KEITH'S HALF IS DONE, Ewa's is not
 
 The pre-flight itself is **done** (Phase 4, ran 2026-09-15, first time ever; the Closed section
 is written and every one of the 78 rows carries a disposition and an owner). What is left is
@@ -118,17 +118,26 @@ since** — by CA-046 on the 16th, by CA-050/051/052 on the 17th, and by two rul
 it and it runs once. Each was re-tested against the register and the approval records rather than
 re-quoted.
 
-- [ ] **14 rows needing sign-off — Keith.** Five of the fourteen are section labels with no claim in
-      them and go as one batch; three need real attention (rows 32, 45, 7)
-- [ ] **1 ruling — Keith.** Row `38a`: `/supplement-waitlist` FAQ 4 promises a product selector the
-      form has never had
-- [ ] **4 rows plus 1 ruling — Ewa**, and they are hers alone, not joint. Rows 22, 23, 32c, 33 and
-      ruling 6. ⚠ The old wording said the 26 were Keith's; **the register's own by-owner split says
-      otherwise**, and the packet routes them. She is already owed a citation swap from 2026-08-21
-      (`869e9fr6x`), so they should ride that pass
+- [x] ✅ **14 rows needing sign-off — Keith. ALL RESOLVED 2026-09-17:** thirteen signed (13, 24, 25,
+      14, 35f; 4, 27, 31, 44, 35d, 35e; 45; 32) and row `7` fixed on his "fix it" ruling. ⚠ **Row 7
+      was FIVE instances, and the row names two surfaces** — the same false count was live on
+      `/test-selector` itself and on `/go`, neither of which row 7 lists
+- [x] ✅ **1 ruling — Keith. BUILT 2026-09-17.** Row `38a`, ruled "build it": `/supplement-waitlist`
+      now has the product control its FAQ has always promised. ⚠ One clause of that answer, *"You can
+      change your mind later"*, is **not** built and is not recorded as built
+- [ ] 🟡 **Row 32 is signed by Keith and is NOT approved**, because it carries **two** required
+      signers: its own cell says *"Ewa + Keith for anything read as a clinical cadence claim"*, and
+      `content-approval/README.md` approves a submission only when all required signers have signed.
+      Her half is item 6 of the sign-off email. **Do not read the row as cleared on his signature**
+- [ ] 🔴 **4 rows plus 1 ruling — Ewa.** Rows 22, 23, 32c, 33 and ruling 6, plus the cadence half of
+      row 32. ⚠ The old wording said the 26 were Keith's; **the register's own by-owner split says
+      otherwise**. ✉️ **Drafted 2026-09-17 as a seven-item letter-reply email, Gmail draft
+      `r74807119575631549`, validated and NOT SENT.** It rides the citation swap already owed to her
+      from 2026-08-21 (`869e9fr6x`). **Sending is Keith's act.** When the letters come back, count
+      them against the seven and treat any gap as unanswered rather than closing it by inference
 - [ ] **1 click, no copy decision:** ClickUp `869f1wwch` → `approved`. Row 48d, the M7 SEO commission
       Keith approved on 2026-09-14; that list admits only a named human
-- [ ] Register row 45 is `P5`'s four new sentences on `/subscription/confirmed`. It is inside the 14; do not track it twice
+- [x] Register row 45 is `P5`'s four new sentences on `/subscription/confirmed`. Inside the 14, signed with them; do not track it twice
 
 ✅ **Read the headline before deciding how heavy this is: the merge REMOVES fifteen HARD
 compliance findings and adds none** — 18 on `main` today against 3 on the branch, and sixteen

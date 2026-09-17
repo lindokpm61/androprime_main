@@ -393,7 +393,7 @@ block is the record of what has been decided since. Read them together, newest f
 | ✅ **SIGNED — a rewrite of unregistered copy** | **45** | `/subscription/confirmed`. It was confirming a product that cannot be bought; the replacement is assembled from approved strings wherever one exists. |
 | 🔧 **RULED "FIX IT", and it is fixed** | **7** | See below — and it was **five instances, not two**. |
 | 🔧 **RULED "build it", and it is built** | **38a** | See below. |
-| 🔴 **NOT ANSWERED, and not inferred** | **32** | `/membership`, the largest single block of new copy on the branch. It was not in the decision list and **nothing here should be read as approving it.** |
+| 🟡 **SIGNED BY KEITH, still owed by Ewa** | **32** | `/membership`, the largest single block of new copy on the branch. Keith signed it separately, after it was raised as missing from his first answer rather than inferred from the parts either side of it. ⚠ **This row has TWO required signers and is therefore NOT approved yet** — see below. |
 
 🔴 **ROW 7 WAS FIVE INSTANCES, AND THE ROW NAMES TWO SURFACES.** Row 7 says `/kits` and
 `/test-selector`. The false count was live in **five** places: `/kits` twice (*"answer 3 questions"*
@@ -405,6 +405,17 @@ duration are REMOVED rather than corrected**: the five-step version has never be
 replacement number would be a new and unverified claim, and a corrected count has to be re-checked
 every time the selector changes. Fixing only the two named surfaces would have been worse than
 fixing none, because a duplicated claim is invisible while the copies agree.
+
+🟡 **ROW 32 HAS TWO REQUIRED SIGNERS AND KEITH IS ONE OF THEM, SO IT IS NOT APPROVED YET.** Its own
+"Owed to" cell says *"**Ewa + Keith** for anything read as a clinical cadence claim"*: the 90-day and
+365-day retest intervals are stated to a customer on a marketing page for the first time on this
+page, though both are already customer-facing inside the app. `README.md` is explicit that a
+submission *"is APPROVED only when **all required signers** have signed"*. **Keith's signature
+discharges the business half and nothing else.** The cadence question is item 6 of the 2026-09-17
+sign-off email to Ewa (Gmail draft `r74807119575631549`), alongside row 32c's Phase 0 question about
+the same page. ⚠ **Do not read this row as cleared until her letter is recorded**, and do not infer
+her answer from Keith's: this row was already nearly cleared by inference once, when it was absent
+from his first answer and sat between two approved items.
 
 🔧 **ROW 38a: THE CONTROL IS BUILT.** `/supplement-waitlist`'s FAQ 4 promised a product choice the
 form never had. `SupplementWaitlistForm` now renders one **only where the host declares no product**

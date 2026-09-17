@@ -23,16 +23,27 @@
 |---|---|---|
 | **1** — batch, section labels and names (13, 24, 25, 14, 35f) | **Approved** | ✅ Recorded |
 | **2** — new short copy (4, 27, 31, 44, 35d, 35e) | **Approved** | ✅ Recorded |
-| **3.1** — row 32, `/membership` | 🔴 **NOT ANSWERED** | See below |
+| **3.1** — row 32, `/membership` | **Approved** | 🟡 Keith's half only, see below |
 | **3.2** — row 45, `/subscription/confirmed` | **Approved** | ✅ Recorded |
 | **3.3** — row 7, the selector claim | **"fix it"** | 🔧 Fixed, **five** instances |
 | **4** — row 38a ruling | **(a) build it** | 🔧 Built |
 | **5** — Ewa's packet | **Draft it** | ✉️ Gmail draft `r74807119575631549`, **not sent** |
 
-🔴 **PART 3.1 WAS NOT IN THE ANSWER AND HAS NOT BEEN INFERRED FROM THE PARTS EITHER SIDE OF IT.**
-Row 32 is the largest single block of new copy on the branch and it remains **unsigned**. Inferring
-it from adjacent answers is the exact failure the sign-off process exists to prevent, and it is
-invisible afterwards because the list looks complete. It is still owed.
+🟡 **PART 3.1 IS SIGNED BY KEITH AND IS STILL NOT APPROVED, BECAUSE ROW 32 HAS TWO SIGNERS.** Its
+"Owed to" cell reads *"Ewa + Keith for anything read as a clinical cadence claim"* — the 90-day and
+365-day retest intervals, stated to a customer on a marketing page for the first time. The README is
+explicit that a submission is approved only when **all required signers** have signed, so Keith's
+signature discharges the business half and nothing else. Her half is **item 6** of the sign-off email
+(Gmail draft `r74807119575631549`), next to row 32c's Phase 0 question about the same page.
+
+⚠ **It was absent from the first answer and sat between two approved items, which is exactly the
+shape an inferred approval takes.** It was raised as missing rather than assumed, and answered
+separately. Worth recording because the same hazard now applies to Ewa's half: **do not read her
+letter on item 6 as covering anything but the cadence.**
+
+✅ **With 3.1 answered, every one of Keith's fourteen sign-off rows is resolved** — thirteen signed,
+row 7 fixed on his "fix it" ruling — plus his one ruling, 38a, built. **What remains on A2 is not
+his:** Ewa's four rows and one ruling (with him as co-signer on 32), and one board click.
 
 🔧 **3.3 was five instances, not the two row 7 names.** The false count was also live on
 `/test-selector` itself, the page the claim describes, and on `/go`. Every count and the timing claim
