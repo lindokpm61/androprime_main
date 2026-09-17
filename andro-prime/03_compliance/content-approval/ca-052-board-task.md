@@ -4,7 +4,7 @@ can be diffed. The BOARD is the hub and outranks this file; this is the mirror.
 Written by `09_website-app/frontend/scripts/clickup-approval-task.ts`.
 -->
 
-✅ **N-1 IS RULED (Keith, 2026-09-17, in his words "N-1: no change"): the built version stands.** Nothing further to build. **You owe the signature and nothing else.** Nobody else is required. Ewa is not a signer, on the same tested condition as CA-050 and CA-051.
+🟢 **APPROVED — Keith, 2026-09-17. Nothing is owed.** N-1 was ruled before the signature, in his words *"N-1: no change"*: the built version stands, and no code moved on the ruling. 🟢 **This was the last copy record gating the flag flip** — CA-050, CA-051 and CA-052 are all signed, the interlock reads 0 sentences on 0 pages, and nothing still outstanding on `MEMBERSHIP_ENABLED` is a copy question. Nobody else is required. Ewa is not a signer, on the same tested condition as CA-050 and CA-051.
 
 **This is H-A**, the one HARD finding that survived CA-050's signature. That record's condition 1 said so in its own words: it holds *"whether or not this record is signed first"*.
 
@@ -66,6 +66,8 @@ Written by `09_website-app/frontend/scripts/clickup-approval-task.ts`.
 
 ---
 
-⚠ **Claude created this at `pending` and did not move it, and has not moved it now.** Recording your ruling and performing the approval are two different acts; only you set it to approved. **Nothing is owed before you can:** N-1 is answered and needed no build, N-2 is a flag rather than a decision, and N-3 is a note.
+✅ **SIGNED 2026-09-17.** Claude created this at `pending` and never moved it; Keith did. Recording a ruling and performing the approval stayed two separate acts.
+
+⚠ **N-2 SURVIVES THE SIGNATURE AS A STANDING TIE, not as an owed item.** The clause is unconditional while `startOnResult.ts` refuses a membership for a confirmed testosterone under 12, the same shape as CA-050's K-1. **If K-1 ever takes a scope word, this clause needs the same one**, or the two sentences will disagree about the same exception.
 
 ⚠ **Board first this time, then the repo.** The record was written after this task existed, which is the order the convention asks for and the opposite of what happened on CA-050.

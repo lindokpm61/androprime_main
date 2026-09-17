@@ -4,7 +4,7 @@ can be diffed. The BOARD is the hub and outranks this file; this is the mirror.
 Written by `09_website-app/frontend/scripts/clickup-approval-task.ts`.
 -->
 
-✅ **ALL THREE COPY DECISIONS ARE RULED (Keith, 2026-09-17). Nothing is owed: sign it.** Nobody else is required. Ewa is not a signer on this one, for the same reason and on the same tested condition as CA-050.
+🟢 **APPROVED — Keith, 2026-09-17. Nothing is owed and nothing is outstanding.** All three copy decisions were ruled before the signature. Nobody else is required. Ewa is not a signer on this one, for the same reason and on the same tested condition as CA-050.
 
 ⚠ **The task NAME still reads "four decisions" and cannot be edited by the repo script, which writes content only.** The body is authoritative. Same one-fact-in-two-places shape the README warns about for PENDING/APPROVED in task names.
 
@@ -61,6 +61,8 @@ The record states the judgement pass as **thin rather than claiming an independe
 
 ---
 
-⚠ **Claude created this at `pending` and did not move it, and has not moved it now.** Recording your two rulings and performing the approval are two different acts; only you set it to approved. **Nothing is owed before you can:** all three copy items are answered. J-1 and J-2 were already built, and J-3's exemption is written, dated in your words, and guarded by a test.
+✅ **SIGNED 2026-09-17.** Claude created this at `pending` and never moved it; Keith did, which is the only way this status changes. Recording a ruling and performing the approval stayed two separate acts throughout.
+
+⚠ **This body said "sign it" for a while after the signature landed, and that was caught at wrap rather than at the time.** The task STATUS was correct and the task BODY was stale: one record, two layers, and the skimmable one was the wrong one. That is the failure the approvals README describes for PENDING/APPROVED in task NAMES, arriving instead through the description. **When a status changes, the body that describes what is owed has to move with it.**
 
 ⚠ **The record file was written about a minute before this task, and the guard caught it.** `.claude/hooks/approvals-board-guard.js`, added after CA-050 went into the register with no task at all, blocked the write and named the fix. The ordering is recorded here rather than tidied away, because a guard that fires and gets quietly worked around is worse than no guard.
