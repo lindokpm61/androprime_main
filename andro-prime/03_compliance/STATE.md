@@ -2,6 +2,111 @@
 
 Volatile status for the compliance workspace. Durable rules, the Pre-Flight Checklist, EFSA claims, and red-flag language are in `CONTEXT.md`. **The decision ledger is ClickUp list `901219880207` (Approvals & Sign-offs); `content-approval/content-approval-register.md` is its mirror.** This file is the at-a-glance live status. Update the date on each change.
 
+## 🟠 2026-09-17: CA-050, THE CA-026 C1 RE-RECORD IS WRITTEN AND PENDING KEITH
+
+**Record:** `content-approval/approval-record-membership-renewal-copy-c1-2026-09-17.md`.
+**Register:** row CA-050, 🟠 PENDING (Keith). Not approved, and Claude did not write in the
+signature block.
+
+**Scope, stated as a decision rather than an inventory.** It re-records **item C1 of CA-026
+only**, the `/kits` money block, and supersedes that one item on approval. Every other item of
+CA-026 stands, and **the flag-off branch keeps rendering the approved C1 text byte for byte**,
+so nothing currently live changes when this is signed. The record is written to the module
+(`lib/membership/subscriptionCopy.ts`, flag-on branch) rather than to a list of routes, so a new
+consumer of the same module inherits it; a new surface stating the renewal in its own words does
+not.
+
+**Ewa is NOT a required signer, and the ruling that says so was tested rather than quoted.**
+Keith ruled the rewrite business rather than clinical on 2026-09-11 (CA-021 precedent). That
+holds only while C1's fourth sentence, the conflict-free GP clause, is untouched. Verified as a
+re-runnable script, not by eye: byte-identical in both flag states, held in one shared
+`GP_SENTENCE` constant, and with the flag on it renders as its own paragraph, so it is **more**
+structurally separate than it was.
+
+**Pre-flight: 0 HARD and 0 REVIEW on both payloads, delta zero** against the approved baseline.
+The unit of scan was the extracted copy, dumped by `scripts/dump-subscription-copy.ts`, never the
+module, which is roughly seventy per cent commentary naming the regulated vocabulary on purpose.
+
+🔴 **The judgement pass was run by an INDEPENDENT session, under pre-flight invariant 7**, because
+the session running the pre-flight had authored the cancel clause earlier the same day and may not
+clear its own copy. It returned **1 HARD and 6 flagged**, and the pre-flight session added a
+seventh:
+
+- 🔴 **The charge date is stated with no starting point.** *"On day 31 that card is charged GBP 47
+  a month"*, while day 1 is **the day the result lands**, not the day of purchase
+  (`startOnResult.ts`, `trial_period_days` opened at the result, under the 2026-09-07
+  anchor-to-the-result ruling). A buyer counts 31 days from checkout; the real gap adds dispatch,
+  sampling, return post and lab time. **A condition on the flag flip, not on the signature.** The
+  homepage sentence already states it correctly, so the fact is sayable in the house voice.
+- 🟠 ***"Your first 30 days are included in the price of every kit"* is unconditional**, while
+  `startOnResult.ts` refuses a membership outright for a confirmed testosterone under 12 nmol/L
+  (Keith's own ruling of 2026-09-17, consistent with CA-014). A Kit 1 or Kit 3 buyer in that
+  cohort receives no membership and no included days. Kit 2 yields null rather than low and
+  enrols normally, correctly. Direction favours the customer; the claim is still about what he
+  bought. ⚠ Naming the exception would put a clinical routing fact on an acquisition surface and
+  pull Ewa back in; a scope word would not.
+
+⚠ **Two flagged items are routed to the citation-swap pass already owed to Ewa from 2026-08-21,
+not raised as a new packet.** That pass now carries **three** numbered items: the §P clause 2
+citation swap, the recheck retirement recorded above, and the §P clause 1 substantiation note
+under auto-renew (the absolute *"earns us nothing"* now sits one paragraph below a recurring
+charge; words unchanged, world changed).
+
+✅ **THE BOARD CARRIES IT: `869f3guna` at `pending`**, created 2026-09-17 and read back to
+confirm, addressed to Keith in second person per the rule added 2026-09-16 from CA-049. Claude
+created it at `pending` and did not move it.
+
+🔴 **IT WAS CREATED AFTER THE RECORD RATHER THAN BEFORE IT, AND THE CAUSE IS WORTH KEEPING.** The
+repo-wired ClickUp MCP server refuses every call without a licence key, **reads included**, so the
+hub was unreachable through the route this file, `CONTEXT.md` and the pre-flight skill all assume.
+`CLICKUP_API_TOKEN` was in `frontend/.env.local` the whole time and
+`scripts/content-engine/clickup.ts` has called the API directly for months: **the account was never
+locked, one client was.** A convention with one implementation degrades to "write the repo and move
+on" the moment that implementation fails, and the skip is invisible from the repo side, which is the
+side you are standing on. **There is now a repo path:**
+`09_website-app/frontend/scripts/clickup-approval-task.ts`, which reads the board before it writes,
+refuses a second task for a CA that already has one, and refuses to set `approved` at all.
+
+🔴 **A CLAIM THAT STOOD IN THIS ENTRY FOR AN HOUR WAS WRONG, AND HOW IT WAS WRONG IS THE USEFUL
+PART.** It said the board held **15 tasks against 50 CA rows** and that 41 approved CAs existed only
+in the repo. **The board holds 49 of the 50.** The listing that produced the figure used
+`getListTasks`, which requests `archived=false&subtasks=false` and passes **no `include_closed`**, so
+ClickUp's default dropped every CLOSED task — and an approved CA is a closed task. A follow-up check
+for archived tasks came back empty and was read as confirming the gap, when it had ruled out one of
+the **three** exclusions in that query.
+
+**The rule that falls out: a listing used to decide whether something EXISTS must name every
+exclusion in its query.** A filter you did not write is still a filter you applied, and its absence
+is indistinguishable from the thing genuinely not being there. Checking one exclusion and inferring
+the rest is what turned a healthy mirror into a reported 41-row failure.
+
+⚠ **AND THE SAME MISTAKE THEN HAPPENED TWICE MORE, WHICH IS THE ACTUAL FINDING.** A second pass
+reported `CA-039` as having no task anywhere. It has one, `869ek4a8y`, **on the other board**:
+`content-approval/README.md` states that the CA sequence runs across TWO boards, Approvals &
+Sign-offs and the Keith-only Rules & Procedures list, and names CA-039 as its illustration. The
+checker read one list. Three false absences in one session, all one shape: **a scoped enumeration
+reported as a property of the world.** First a grep over suspected files, then a listing with unwritten
+default filters, then a listing of one board of two.
+
+✅ **What the comparison actually says**, from `node .claude/skills/wrap/reconcile-approvals.js`
+(read-only, now reading both boards): **50 register rows, 50 with a task. Nothing is missing.**
+61 tasks across the two lists. Seven items remain and most are the checker being crude rather than
+real drift:
+
+| Item | Read |
+|---|---|
+| `CA-037` | 🔴 **Real.** `869ejbmb9` reads *"CA-037 … APPROVED"* in its name while its status is `pending` — the name-versus-status drift the README already warns about. |
+| `CA-043` | 🟠 Register APPROVED, board `pending`. Worth a look. |
+| `CA-026` ×2 | ⚪ Its approved task plus a separate open **amendment** task. Two different items sharing a number, not a duplicate. |
+| `CA-045` ×2 | ⚪ The approved one plus a task explicitly labelled SUPERSEDED duplicate. Already handled. |
+| `CA-003` ×2 | ⚪ Its own task plus an Ewa countersignature-backlog task naming *"CA-003→027"*. Matched on the range, not a duplicate. |
+
+⚠ **So the reconciler needs a notion of a PRIMARY task per CA** before its output is worth acting on
+line by line. Until then read the "missing" bucket, which is exact, and treat the other two as leads.
+A check whose false positives land on correct work gets switched off within a week.
+
+---
+
 ## 🟢 2026-09-17 — THE TEST BUNDLES SECTION IS OUT OF THE PUBLISHED TERMS, AND NOBODY LOST A RIGHT
 
 **Terms move to v1.4 and are SYNCED live.** Keith retired the two-kit bundles on 2026-09-17

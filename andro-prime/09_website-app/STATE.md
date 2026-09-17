@@ -40,16 +40,113 @@ membership the only rows `/subscriptions` can return ARE supplement subscription
 asserts the flag is not on AND that every kit page still gates its bundle, because a flag only
 protects what checks it. `/terms` is outside its reach and is handled in 03_compliance.
 
-🔴 **STILL OPEN after the independent pre-flight (3 HARD, 6 flagged):** H2, `public/llms.txt:7`
-reads *"You pay one price for the test"*, which no flag can gate — **Keith's call**. Plus F1 to F6,
-all business or Ewa. The full list with owners is on the page linked from the go-live plan.
+🔴 **STILL OPEN after the independent pre-flight (3 HARD, 6 flagged):** F3, F5 and F6.
+**F2 is retired with the bundles it asked about.** The full list with owners is on the page linked
+from the go-live plan.
+
+✅ **The CA-026 C1 re-record is WRITTEN, 2026-09-17, and is CA-050, PENDING Keith.**
+`03_compliance/content-approval/approval-record-membership-renewal-copy-c1-2026-09-17.md`, register
+row added. It re-records **item C1 only** and supersedes it on approval; the flag-off branch keeps
+rendering the approved CA-026 text byte for byte, so nothing live changes when it is signed. Ewa is
+not a required signer, and the ruling that says so was tested rather than quoted: the GP clause is
+byte-identical in both flag states, held in one `GP_SENTENCE` constant, and now its own paragraph.
+**This also re-ran the pre-flight rather than inheriting it:** 0 HARD / 0 REVIEW on both payloads,
+delta zero, with the judgement pass handed to an independent session under invariant 7 because this
+one had written the cancel clause the same morning. It came back with **one HARD, and it is a
+condition on the flip rather than on the signature**: *"On day 31 that card is charged £47 a month"*
+states a charge date with no starting point, and day 1 is the day the result lands. Plus one more
+this session found: *"your first 30 days are included in the price of every kit"* is unconditional
+while `startOnResult.ts` refuses a membership outright for a confirmed testosterone under 12.
+✅ **ClickUp carries it:** `869f3guna` at `pending`, created and read back 2026-09-17. The
+repo-wired MCP connector refuses every call without a licence key, reads included, so the board was
+written through a new repo path instead, `frontend/scripts/clickup-approval-task.ts`, which reads
+before it writes and will not set `approved`.
+
+✅ **F1 closed 2026-09-17: the obligation follows the buy button.** The disclosure was mounted once
+per route, in the hero, and each `/kits/*` page ends on a second buy button in its `#order` block
+where nothing said anything about billing, because slot 2's deletion took the last mention out of
+that footnote. Six mounts added, both close branches on all three pages, one component. Verified
+rendered at 1320 and 390 with the flag on, and verified rendering **nothing** with the flag off.
+`2026-09-07-auto-renew-at-day-30.md` §4 now states the scope as a rule rather than a list of routes,
+and `MembershipDisclosure`'s header no longer states a call-site count it cannot keep true.
+
+✅ **H2 and F4 closed 2026-09-17.** H2: `public/llms.txt:7` no longer carries *"You pay one price
+for the test"* (`1475c75`), **on this branch only — `main` still serves the old line**. F4: Keith
+ruled the cancel clause **"Cancel anytime"**, which is the wording `disclosure.ts` already used and
+the 2026-09-07 ruling specified; the draft's *"unless you stop it first"* is gone from
+`subscriptionCopy.ts`, from two sites on `/membership`, and from the interlock's `RENEWAL_CLAIMS`,
+which had to move with the copy or it would have guarded a retired string. `01_strategy/2026-09-16-
+membership-is-not-a-subscription.md` §8 carries the ruling.
+
+🔴 **H2b is what H2 left behind, and it is bigger than H2 was.** The same claim survives on **five
+files, seven times**: `about:114` (the `STANDING_CLAIM` constant) and `about:88` (*"One price. For
+the test, and nothing after it"*), `how-it-works:492`, `lp/collagen:254`, `lp/daily-stack:294`, and
+the homepage `openGraph` and `twitter` descriptions. **None is flag-gated and none is in `CLAIMS`**,
+which greps for "no subscription", "one-off" and "pay once", never "one price". The approved source,
+`02_brand/2026-07-22-conflict-free-wording-pack.md:24`, still reads with the middle sentence in it,
+so `llms.txt` has diverged from its own source and the next surface to import A1 re-imports it.
 
 ⚠ **NOT verified by eye:** `/subscriptions` and `/account/membership` have no rendered
 screenshot. Both are gated, a session is needed, and the only documented seeder writes to production.
 
 ---
 
-## ▶️ PICK UP HERE — handoff, 2026-09-16 — THERE IS ONE GO-LIVE PLAN NOW, AND IT IS IN THE REPO
+## ▶️ PICK UP HERE — handoff, 2026-09-17
+
+**The sequencing home is unchanged: `10_launch-ops/implementation-checklists/direction-f-go-live.md`.**
+Work Gate A and tick the boxes in that file. The 2026-09-16 handoff below is still accurate about
+where to start; this block records what moved on 2026-09-17 and what it left owed.
+
+### What closed
+
+| | |
+|---|---|
+| **H2** | `llms.txt:7` fixed, **on this branch only**. `main` still serves the old line. |
+| **F4** | Cancel clause ruled **"Cancel anytime"**. Applied to 3 strings in `subscriptionCopy.ts`, 2 on `/membership`, and to `RENEWAL_CLAIMS` in the interlock. |
+| **F1** | The obligation follows the buy button. 6 mounts added across the three `/kits/*` close blocks, both branches each. |
+| **CA-050** | The CA-026 C1 re-record is written, on the board as `869f3guna` at `pending`, **awaiting Keith's signature**. |
+
+### What it left owed, in the order it matters
+
+1. 🔴 **H-A gates the flag flip, and it is not on the go-live plan yet.** *"On day 31 that card is
+   charged £47 a month"* states a charge date with no starting point, and **day 1 is the day the
+   result lands**, not the day of purchase. The homepage sentence already says it correctly; `/kits`
+   and both kit-LP FAQs do not. Detail in section 2 of
+   `03_compliance/content-approval/approval-record-membership-renewal-copy-c1-2026-09-17.md`.
+2. 🔴 **H2b is still open and is bigger than H2 was.** The same conflict-free claim survives on
+   **five files, seven times**, none flag-gated and none matched by `CLAIMS`. The approved source,
+   `02_brand/2026-07-22-conflict-free-wording-pack.md:24`, still reads with the middle sentence, so a
+   page-only sweep re-imports it. Enumerated in the STATE entry above.
+3. 🟠 **"Included in the price of every kit" is unconditional** while `startOnResult.ts` refuses a
+   membership for a confirmed testosterone under 12. Keith's call; a scope word fixes it, naming the
+   exception pulls Ewa in.
+4. 🟠 **Two board defects**, from `node .claude/skills/wrap/reconcile-approvals.js`: `869ejbmb9`
+   reads *"CA-037 … APPROVED"* against a `pending` status, and `CA-043` is APPROVED in the register
+   but `pending` on the board. **The board leads.**
+5. ⚠ **The independent pre-flight is NOT discharged.** It returned 3 HARD and 6 flagged against this
+   copy. Closing the items it raised is not re-running it.
+6. ⚠ **The approvals reconciler needs a notion of a PRIMARY task per CA** before its duplicate and
+   status buckets are worth acting on line by line. Its "missing" bucket is exact and reads zero.
+
+### New tooling this session, so the next one does not rebuild it
+
+- `frontend/scripts/clickup-approval-task.ts` — read the approvals boards, create a CA task. Refuses
+  duplicates, refuses to set `approved`. **Pass `--body` a path inside the repo**; a temp path gets
+  the run denied as credential exploration.
+- `.claude/skills/wrap/reconcile-approvals.js` — register versus both boards, read-only, exit 2 on drift.
+- `.claude/hooks/approvals-board-guard.js` — wired `PostToolUse`, blocks a new CA row in the register
+  that has no board task. Delta-scoped, 9-case suite, proven firing through the harness.
+  🔴 **IT IS GITIGNORED AND LOCAL-ONLY, along with `.claude/settings.json`, so it does NOT travel with
+  the repo and has to be reapplied on another machine.** Same limitation as the em-dash guard. The
+  reconciler under `.claude/skills/wrap/` DOES travel, so **the detector is portable and the
+  enforcement is not** — on any other machine the wrap-time reconcile is the only thing standing.
+- 🔴 **The ClickUp MCP server is licence-locked on every call including reads. That is one client,
+  never the account.** `CLICKUP_API_TOKEN` is in `frontend/.env.local` and the repo has talked to the
+  API directly for months. Do not record ClickUp as unreachable again.
+
+---
+
+## ▶️ Handoff, 2026-09-16 — THERE IS ONE GO-LIVE PLAN NOW, AND IT IS IN THE REPO
 
 ### ▶️ WHERE THE NEXT SESSION STARTS
 

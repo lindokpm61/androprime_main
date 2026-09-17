@@ -89,6 +89,17 @@ onto the four `/kits/` routes on 2026-09-07 and, checked on 2026-09-11, existed 
 `components/` or `lib/` except as a private constant inside `/membership`, which 404s while the flag is
 off. All seven surfaces have it now.
 
+✅ **DECIDED 2026-09-17 (Keith), item F1: THE OBLIGATION FOLLOWS THE BUY BUTTON, so the scope of this
+section is a rule and not a list of routes.** Seven routes had the line and every one of them mounted it
+once, in the hero. The three `/kits/*` product pages each end on a **second** buy button, in the `#order`
+close block that every "Order the kit" CTA on the page scrolls to, and a hero-mounted line is nowhere
+near it. §7.1's own test is *"near the price and the CTA"*, and it was being read as "near the first CTA".
+**What made it urgent rather than tidy:** slot 2 of the copy rewrite was pure deletion, so that block's
+footnote had stopped mentioning billing at all, leaving a price, a button and nothing in view about a
+recurring charge, on the last thing a man reads before paying. Six mounts added, both close branches on
+all three pages, from the same `MembershipDisclosure`. The `/lp/` pages already complied, because their
+one CTA lives inside `#order`. **Read the scope as: every kit buy button, wherever it is.**
+
 🔴 **THIRTEEN SENTENCES ACROSS SEVEN SURFACES STILL SAY THE OPPOSITE, AND ONE OF THEM IS CA-026 C1.**
 `/kits` renders *"no subscription unless you choose one"* verbatim inside its inverted panel; the three
 kit pages and the three kit LPs carry "One-off purchase" or "No subscription" lines and two FAQ answers

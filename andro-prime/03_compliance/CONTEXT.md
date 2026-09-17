@@ -6,6 +6,24 @@
 **Live status:** the dated approval tally, approved-but-gated items, DPIA outstanding actions, and open compliance-doc gaps are in `STATE.md`; read it alongside this file.
 
 > **Approvals: check ClickUp FIRST, then the repo (decided 2026-07-31).** ClickUp is the central hub for sign-offs and the repo is the copy. Before answering any "is this approved / signed off / still owed" question, read the hub: **list `901219880207`** (Approvals & Sign-offs, one task per CA-NNN, status carries APPROVED / PENDING) for numbered approvals, and **list `901218140081`** (the blog-article Content Review list, where completing the task IS the approval) for articles and webpages. Workspace `90121729875`. Only then read `content-approval/content-approval-register.md` and the `approval-record-*.md` files, which hold the detail and the pre-flight evidence the board cannot carry. **Never infer sign-off state from a marker inside the artefact** (a `TODO`, a "pending Ewa" note, an unticked box): those go stale the moment the reviewer acts and have already caused false escalations to Ewa. This reverses the 2026-07-26 line that made the repo register the source of truth.
+>
+> 🔴 **HOW TO ACTUALLY READ AND WRITE IT, added 2026-09-17 because the rule above had no executable form and therefore stopped running.** Use the repo's own path, **not** the `clickup` MCP server:
+>
+> ```bash
+> cd andro-prime/09_website-app/frontend
+> npx tsx scripts/clickup-approval-task.ts --list                  # what the hub says, before you answer anything
+> npx tsx scripts/clickup-approval-task.ts --ca CA-0NN --dry-run   # does this CA have a task?
+> npx tsx scripts/clickup-approval-task.ts --ca CA-0NN --name "<artefact>" \
+>   --owes "<who>: <the one action left>" --body <file> --status pending
+> ```
+>
+> It reads the board before it writes, refuses a second task for a CA that already has one, and **refuses to set `approved` at all** (hard rule 2: only a named human approves, and the drag IS the signature). It authenticates with `CLICKUP_API_TOKEN` from `frontend/.env.local` through `scripts/content-engine/clickup.ts`, which has called the API directly for months.
+>
+> **To compare the two stores rather than one row:** `node .claude/skills/wrap/reconcile-approvals.js` from the repo root. Read-only, exit 0 agree / 2 drift / **1 could not run, which is never a pass**. It lists both closed and archived tasks, because an APPROVED CA is a CLOSED task and a listing that drops it reports a signed approval as missing. Run it at wrap, and before reporting any CA as outstanding.
+>
+> ⚠ **The repo-wired `clickup` MCP server refuses every call without a licence key, READS INCLUDED.** That is a lock on one client, never on the account, and mistaking the two is what produced CA-050: on 2026-09-17 a record and a register row were written with no board task, because the only route anyone knew about returned a licence error. **A convention with one implementation degrades to "skip it and write the repo" the moment that implementation fails, and the skip is invisible from the repo side, which is the side you are standing on.**
+>
+> 🔴 **Degraded mode, and it is not "carry on".** If the hub genuinely cannot be reached: (a) proceed with the repo work, (b) write a dated line into **every** artefact you produce saying the hub was not consulted and why, (c) name the owed hub action concretely, and (d) **assert nothing about sign-off state in either direction**. Skipping the step silently is the defect; proceeding while saying so is not.
 
 This workspace governs wording risk, privacy, data governance, and regulatory boundary checks for Andro Prime. Two operating modes exist in parallel. Do not conflate them.
 

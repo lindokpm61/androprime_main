@@ -596,6 +596,15 @@ export default function KitTestosteronePage() {
               mechanic="Your second test ships only if your first result comes back low. If your result is not low, your second test is banked for your recheck window, refundable on request."
             />
           </div>
+          {/* F1, ruled by Keith 2026-09-17: the obligation follows the buy button.
+              The hero carried this line and the closing block did not, and slot 2 was
+              pure deletion, so this block's footnote had stopped saying anything about
+              billing at all. It goes in BOTH close branches, because the fact is true of
+              the bundle and the single test alike, and it is the component rather than
+              the sentence that is duplicated: one string, one flag check, one register.
+              Renders nothing while `MEMBERSHIP_ENABLED` is off. */}
+          <MembershipDisclosure style={{ marginInline: 'auto', maxWidth: '44ch' }} />
+
           <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>{subscriptionCopy(isMembershipEnabled()).kitFootnote}</p>
         </FClose>
       ) : (
@@ -617,6 +626,15 @@ export default function KitTestosteronePage() {
             <KitCheckoutButton kitType="testosterone" className="f-btn">
               Order the kit: £99 {ARROW}
             </KitCheckoutButton>
+            {/* F1, ruled by Keith 2026-09-17: the obligation follows the buy button.
+                The hero carried this line and the closing block did not, and slot 2 was
+                pure deletion, so this block's footnote had stopped saying anything about
+                billing at all. It goes in BOTH close branches, because the fact is true of
+                the bundle and the single test alike, and it is the component rather than
+                the sentence that is duplicated: one string, one flag check, one register.
+                Renders nothing while `MEMBERSHIP_ENABLED` is off. */}
+            <MembershipDisclosure style={{ marginInline: 'auto', maxWidth: '44ch' }} />
+
             <p className="f-fine mx-auto mt-5" style={{ maxWidth: '44ch' }}>{subscriptionCopy(isMembershipEnabled()).kitFootnote}</p>
           </FClose>
 

@@ -61,10 +61,19 @@ const MEMBERSHIP_PRICE = PRODUCT_MAP.membership.price.replace('/mo', '')
  * The sentence every surface with room for it carries, word for word. Three
  * consumers, one wording: that was a deliberate choice in the draft, so a man
  * comparing two pages sees the same fact stated the same way.
+ *
+ * 🔴 THE CANCEL CLAUSE IS RULED AND IS NOT A WRITING CHOICE (Keith, 2026-09-17,
+ * register item F4). The draft said "unless you stop it first" while
+ * `MEMBERSHIP_DISCLOSURE` said "Cancel anytime", and both rendered on `/kits`
+ * and all three kit landing pages: one fact, two vocabularies, one screen.
+ * Keith ruled for **"Cancel anytime"**, which is the wording the 2026-09-07
+ * auto-renew ruling already specified and the one carrying the DMCC Act 2024
+ * Part 4 prominence function. Every surface now states the cancel right in the
+ * ruled words, so the disclosure line and the prose beside it agree.
  */
 const RENEWAL_SENTENCE =
   `The price also includes your first ${MEMBERSHIP_INCLUDED_DAYS} days of membership, ` +
-  `and on day ${MEMBERSHIP_FIRST_CHARGE_DAY} it becomes ${MEMBERSHIP_PRICE} a month unless you stop it first.`
+  `and on day ${MEMBERSHIP_FIRST_CHARGE_DAY} it becomes ${MEMBERSHIP_PRICE} a month. Cancel anytime.`
 
 export interface SubscriptionCopy {
   /** `/kits` inverted panel, CA-026 C1. Kicker is unchanged in both states. */
@@ -138,7 +147,7 @@ export function subscriptionCopy(membershipEnabled: boolean): SubscriptionCopy {
     c1Paragraphs: [
       `The price on the card is everything you pay today, and it includes your first ` +
         `${MEMBERSHIP_INCLUDED_DAYS} days of membership. On day ${MEMBERSHIP_FIRST_CHARGE_DAY} ` +
-        `that card is charged ${MEMBERSHIP_PRICE} a month unless you stop it first. ` +
+        `that card is charged ${MEMBERSHIP_PRICE} a month. Cancel anytime. ` +
         `No charge to see your own results, and no surprise second test.`,
       GP_SENTENCE,
     ],
@@ -163,7 +172,7 @@ export function subscriptionCopy(membershipEnabled: boolean): SubscriptionCopy {
     homepageMembership:
       `Holding that record over time is a membership, and your first ${MEMBERSHIP_INCLUDED_DAYS} ` +
       `days are included in the price of every kit. It starts when your first result lands, and on ` +
-      `day ${MEMBERSHIP_FIRST_CHARGE_DAY} it becomes ${MEMBERSHIP_PRICE} a month unless you stop it. ` +
+      `day ${MEMBERSHIP_FIRST_CHARGE_DAY} it becomes ${MEMBERSHIP_PRICE} a month. Cancel anytime. ` +
       `You never need it to read your own results.`,
   }
 }

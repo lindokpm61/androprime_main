@@ -216,7 +216,7 @@ const timeline = [
   {
     num: '04',
     title: `Day ${FIRST_CHARGE_DAY}`,
-    body: `Your card is charged ${MEMBERSHIP_PRICE.replace('/mo', '')} a month, automatically, and it keeps running until you stop it. We email you before that happens, with the date and the amount, while there is still time to decide.`,
+    body: `Your card is charged ${MEMBERSHIP_PRICE.replace('/mo', '')} a month, automatically, and it keeps running until you cancel. We email you before that happens, with the date and the amount, while there is still time to decide.`,
     footer: ['Then', MEMBERSHIP_PRICE],
   },
 ]
@@ -354,7 +354,7 @@ export default function MembershipPage() {
               </h1>
               <p className="f-stand" style={{ marginTop: 20 }}>
                 Buy any kit and you are a member from the day your result lands, at no extra cost. On
-                day {FIRST_CHARGE_DAY} it becomes {MEMBERSHIP_PRICE.replace('/mo', '')} a month unless you stop it. This page is the whole
+                day {FIRST_CHARGE_DAY} it becomes {MEMBERSHIP_PRICE.replace('/mo', '')} a month unless you cancel. This page is the whole
                 of it.
               </p>
               {/* The disclosure sentence itself, at the top of the page rather

@@ -1,6 +1,15 @@
 # Draft: the subscription copy rewrite, fourteen slots from one sentence
 
-**Status:** DRAFT, for Keith. Nothing is approved and nothing has been applied to the site.
+**Status:** ✅ **APPROVED in full by Keith on 2026-09-16 and APPLIED behind `MEMBERSHIP_ENABLED`**
+on 2026-09-16/17, through `frontend/lib/membership/subscriptionCopy.ts`. It has not shipped: the
+flag is off, and with it off every string is byte-identical to what was live before.
+⚠ **SUPERSEDED IN ONE CLAUSE, 2026-09-17.** Every *"unless you stop it first"* / *"unless you stop
+it"* below is **historical draft text and is not what the code says**. Keith ruled item F4 that day
+for **"Cancel anytime"**, the wording `lib/membership/disclosure.ts` already carried and the
+2026-09-07 ruling specified, because the two were rendering within one screen of each other. The
+quotes below are left exactly as he approved them, because a record of what was approved is not
+improved by being rewritten afterwards; read `01_strategy/2026-09-16-membership-is-not-a-subscription.md`
+§8 for the change and `subscriptionCopy.ts` for the shipped words.
 **Owner:** Keith. **Business, not clinical** (his ruling, 2026-09-11).
 **Why:** `01_strategy/2026-09-07-auto-renew-at-day-30.md` made fourteen live sentences false.
 **Register:** rows 42a and 12a. **Interlock:** `frontend/scripts/verify-subscription-claims.js`.

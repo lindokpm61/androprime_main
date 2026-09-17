@@ -18,6 +18,26 @@ answered by reading ClickUp, and only then by reading the repo for the detail.
 | A blog article or webpage | ClickUp list **`901218140081`** (the blog-article Content Review list, Phase 0 Launch folder). **Completing the task IS the approval**; change requests are comments. | usually nothing; a blog row here is the exception |
 | An internal RULE or PROCEDURE that needs Keith alone (no clinical content, not customer copy) | ClickUp list **`901220442060`** (Rules & Procedures, in the *Keith-Only Sign-offs* folder `901213093318`). **Moving the task to `approved` IS the approval**, same model as the blog Content Review list. Added 2026-08-17. | same as a CA: a row in `content-approval-register.md` + an `approval-record-*.md` |
 
+### The route to the board is a repo script, not the MCP server
+
+```bash
+cd andro-prime/09_website-app/frontend
+npx tsx scripts/clickup-approval-task.ts --list                  # what the hub says
+npx tsx scripts/clickup-approval-task.ts --ca CA-0NN --dry-run   # does this CA have a task?
+npx tsx scripts/clickup-approval-task.ts --ca CA-0NN --name "<artefact>" \
+  --owes "<who>: <the one action left>" --body <file> --status pending
+```
+
+Reads before it writes, refuses a duplicate task for a CA that already has one, and
+**refuses to set `approved`** (hard rule 2 below). Token: `CLICKUP_API_TOKEN` in
+`frontend/.env.local`, via `scripts/content-engine/clickup.ts`.
+
+⚠️ **The repo-wired `clickup` MCP server refuses every call without a licence key,
+reads included.** One client is locked; the account never was. Added 2026-09-17, after
+CA-050 was written into this register with no board task because the licence error was
+read as "ClickUp is unavailable". **If the board genuinely cannot be reached, say so in
+every artefact you produce and name the owed action. Never proceed silently.**
+
 **On the Keith-only list the COLUMN is the signature, and the task name carries the
 artefact only.** `approved` is a closed-type status, so ClickUp stamps who moved it
 and when, and that timestamp is the approval date the register mirrors — nothing has

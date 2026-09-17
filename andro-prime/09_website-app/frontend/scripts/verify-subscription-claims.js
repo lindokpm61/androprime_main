@@ -161,7 +161,15 @@ const CLAIMS = [
 const RENEWAL_CLAIMS = [
   'days of membership',
   '/month after',
-  'a month unless you stop it',
+  /* ⚠ WAS 'a month unless you stop it' UNTIL 2026-09-17. Keith ruled F4 that
+     day: the cancel right is stated "Cancel anytime" everywhere, which is the
+     wording the 2026-09-07 auto-renew ruling already specified, and the "stop
+     it first" phrasing was swept out of `subscriptionCopy.ts` in the same
+     change. The phrase had to move WITH the copy or this mirror entry would
+     have gone on guarding a string nothing produces any more, which is a gate
+     that reports green because its detector retired, not because the surface
+     is clean. */
+  'cancel anytime',
   'becomes £47',
   'charged £47',
 ]

@@ -5,6 +5,10 @@
 **Status:** 🟢 DECIDED 2026-09-16. Keith ruled the same day: **Q1 = keep the terms and
 add the mapping sentence, Q2 = labels only.** Built and swept the same day; §6 records what
 changed. Q3 is noted as out of scope rather than answered, which is itself the ruling.
+**Extended 2026-09-17 (§8):** Keith ruled item F4, the cancel clause, for **"Cancel
+anytime"**. Applied to three strings in `subscriptionCopy.ts`, two on `/membership`,
+and to the interlock's detector, which had to move with the copy. §7's claim that
+`/membership` was "already correct throughout" was wrong on this point and §8 says so.
 **Clarification, verbatim (Keith, 2026-09-16):** *"I think the first thing we need to
 clarify is that subscriptions don't exist anymore. Actually, membership. The
 subscription model was attributed to the supplements."*
@@ -182,3 +186,48 @@ which added a third place to update rather than removing the duplication.
   the reason the word is reserved rather than retired.
 - **The `MEMBERSHIP_ENABLED` interlock.** Still the thing that makes the flag safe
   to flip, and still red until the copy is swept.
+
+## 8. Addendum, 2026-09-17: one verb for cancelling (item F4)
+
+**Keith ruled: "Cancel anytime".** The wording question was raised as item F4 of the
+`redesign/direction-f` register and is settled here because it is a vocabulary
+ruling and this is where the vocabulary rulings live.
+
+**What was wrong.** `lib/membership/disclosure.ts` states the cancel right as
+*"Cancel anytime"*, which the 2026-09-07 auto-renew ruling specified and which
+carries the DMCC Act 2024 Part 4 prominence function. The approved 2026-09-11
+copy rewrite stated the same right as *"unless you stop it first"*. Both wordings
+rendered on `/kits` and all three kit landing pages, within one screen of each
+other: one fact, two vocabularies, and no check could see the disagreement
+because a gate that matches phrases cannot notice that two phrases mean the same
+thing.
+
+**What changed.** Three strings in `lib/membership/subscriptionCopy.ts` now end
+*"a month. Cancel anytime."*: `RENEWAL_SENTENCE` (the two kit-page FAQs), the
+flag-on CA-026 C1 paragraph, and the homepage membership sentence. No other
+clause moved, and the GP sentence is untouched, so this stays business-only under
+the 2026-09-11 ruling and Ewa does not re-enter.
+
+⚠ **Two sites on `/membership` moved as well, and they were outside F4's stated
+scope.** §7 above records that page as *"the one page already correct
+throughout"*, and on the wording it was not: its hero said *"unless you stop
+it"* directly above the ruled line saying *"Cancel anytime"*, which is the
+adjacency F4 describes, at its worst. Step 04 of the sequence said *"it keeps
+running until you stop it"*. Both now use the ruled verb. The hero keeps *"unless
+you cancel"* rather than *"Cancel anytime"* so it does not stutter the disclosure
+line printed immediately beneath it. **Reverse this half if F4 was meant narrowly.**
+
+🔴 **And the interlock's detector had to move with the copy.**
+`scripts/verify-subscription-claims.js` carried `'a month unless you stop it'` in
+`RENEWAL_CLAIMS`, the mirror set that catches renewal copy shipping while the
+flag is off. Left alone it would have gone on guarding a string nothing produces
+any more: green because its detector retired, not because the surface is clean.
+It now reads `'cancel anytime'`. **A copy ruling that changes a sentence a gate
+matches is a change to the gate, and the two have to land in the same commit.**
+
+**Verified as rendered, flag on, not from source:** `/kits` C1 panel, the
+`/membership` hero with the disclosure line beneath it, and the homepage
+sentence. `npm test` exit 0, `typecheck` exit 0, `build` exit 0, and the
+interlock green with the flag off. With the flag on it still fails on
+`STRIPE_PRICE_MEMBERSHIP`, which is the pre-existing `ENV` blocker and not this
+change.
