@@ -1,7 +1,20 @@
 # Direction F go-live: the single plan
 
-**Created:** 2026-09-16 · **Owner:** Keith · **Branch:** `redesign/direction-f` (183 commits
-ahead of `main`) · **Production:** `main` @ `4a43864`, built by Coolify
+**Created:** 2026-09-16 · **Owner:** Keith · **Branch:** `redesign/direction-f` (**215** commits
+ahead of `origin/main`) · **Production:** `origin/main` @ **`7ecad99`**, built by Coolify
+
+> 🔴 **BOTH NUMBERS ON THIS LINE WERE WRONG UNTIL 2026-09-18, AND THE SHA IS THE ROLLBACK POINT.**
+> It read *"183 commits ahead"* and *"`main` @ `4a43864`"*. **`4a43864` is not deployed and is not on
+> `origin/main` at all** — it sits on the **local** `main`, which is **3 commits ahead of
+> `origin/main` and has never been pushed** (`4a43864`, `2bea2ea`, `089f93f`, all 2026-08-29:
+> a brand-token propagation and an FAI report-only sweep). Coolify builds what GitHub holds, so
+> production has been serving `7ecad99` since 29 August.
+>
+> ⚠ **The consequence is for Gate B, not for this line.** Whoever merges and pushes `main` will ship
+> those three August commits in the same push, because they are already sitting on the local branch
+> the merge lands on. They are not in anyone's account of what this deploy contains. **Decide
+> deliberately whether they go: push them first and verify, or reset local `main` to `origin/main`
+> before merging.** Recorded 2026-09-18; not acted on, because pushing `main` is a deploy.
 
 > **THIS FILE IS ITS OWN STATUS STORE.** Tick the boxes here. Do not record progress in a
 > session note, a handoff or a ClickUp comment and expect this to know about it.
@@ -396,8 +409,14 @@ like a screenshot of a long page.
       told you to do for as long as it was true
 - [ ] `npm test`, `npm run typecheck`, `npm run build` all exit 0, read from a redirected log and
       never through a pipe (`npm test` is an `&&` chain; the first failure hides everything after it)
-- [ ] Record the current production SHA. `main` @ `4a43864` as at 2026-09-16 — **re-read it, do not
-      copy this number**
+- [ ] Record the current production SHA. **Re-read it, do not copy this number** — and the reason is
+      now a worked example rather than a caution. ✅ **Re-read 2026-09-18: `origin/main` @ `7ecad99`,
+      29 August.** This line used to say `4a43864`, which **is not deployed and is not on
+      `origin/main` at all**: it is the tip of the **local** `main`, 3 unpushed commits ahead
+      (`4a43864`, `2bea2ea`, `089f93f`). Coolify builds what GitHub holds. 🔴 **So the rollback point
+      recorded here was a commit that has never been in production** — and the merge, which lands on
+      that same local `main`, would carry those three August commits into the push unless someone
+      decides otherwise first. See the header block
 - [ ] Confirm the Coolify **build arguments** match `.env.example`. Every `NEXT_PUBLIC_*` is baked at
       compile time; a wrong one ships and **cannot be fixed by restarting the container**.
       🔄 **And it is no longer only the `NEXT_PUBLIC_*` ones.** `MEMBERSHIP_ENABLED` was added to the
