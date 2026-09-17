@@ -180,6 +180,27 @@ flag should not flip while any of them is open.
 
 - [ ] **P1 / P2** — the membership terms are signed off by Keith. Drafted
       2026-09-13 as `terms-and-conditions.md` v1.3, unapproved.
+      ⚠ **It is DRAFTED, not missing.** Checked 2026-09-17: `## Membership` is a
+      full section written to the law in force, voluntarily adopting the DMCCA
+      Part 4 duties, with three residual items flagged for a solicitor. The work
+      left is sign-off and the flip-day sync, **not writing it** — the published
+      `canonical-site/terms/index.html` carries zero occurrences of the word
+      because v1.4 deliberately held the section back, which is correct while the
+      flag is off.
+- [ ] 🟠 **F3 — the terms never say what DAY 1 is, and silence there is not
+      neutral. BLOCKED ON A DECISION, deferred 2026-09-17 by Keith.** The section
+      says *"On day 31 we charge the card you used"* and *"your first 30 days"*,
+      and never names the start. Read plainly that implies **day 1 = purchase**,
+      while `lib/membership/startOnResult.ts` anchors the clock to the **result** —
+      so a customer could compute a different charge date from the terms than the
+      one he is actually charged on, and the voluntarily-adopted reminder duty is
+      computed from that same anchor.
+      🔴 **Why it is not just a drafting job:** the anchor is already stated
+      **unconditionally** on two approved surfaces (CA-050 **K-1**, CA-052 **N-2**)
+      while the code refuses a membership under 12 nmol/L. The terms would be a
+      **third** surface of that same tied claim, so writing it either extends the
+      tie to three records or breaks step with the other two. **Answer it in the
+      same sitting as K-1/N-2** — deferred deliberately, not overlooked.
 - [ ] **P2** — the terms and privacy notice are **synced to the canonical HTML**
       (`canonical-site/terms/index.html`, `canonical-site/privacy/index.html`).
       The markdown is not what the site serves.
