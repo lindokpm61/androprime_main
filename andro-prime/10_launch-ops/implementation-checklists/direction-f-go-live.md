@@ -93,12 +93,23 @@ the end of A5.
       Record: `03_compliance/content-approval/ewa-packet-ca-046-public-demo-2026-09-16.md`.
 - [ ] ~~**Option 2 — decouple, and merge without the demo.**~~ **Not needed. Not taken.**
 
-> 🔴 **A1 CLOSING LEAVES ONE UNACTIONED LINE IN THE CODE, AND IT IS NOT A TICKBOX ON THIS GATE.**
-> `app/(demo)/demo/page.tsx:90` still sets `robots: { index: false, follow: false }`, and the comment
-> above it at line 24 says it stands *"UNTIL THE COMPLIANCE GATE CLEARS"*. **The gate has cleared and
-> that line has not moved**, so as things stand the demo ships hidden from Google. **Lifting it is a
-> separate, deliberate act from closing this gate** and it is the one that actually makes the page
-> public; it is Keith's, and nothing here should be read as having taken it.
+> ✅ **A1 LEFT ONE UNACTIONED LINE IN THE CODE, AND KEITH TOOK IT 2026-09-19. THE `noindex` IS
+> LIFTED.** `app/(demo)/demo/page.tsx` no longer sets `robots: { index: false, follow: false }`; the
+> comment that said the line stood *"UNTIL THE COMPLIANCE GATE CLEARS"* now records what cleared it
+> (CA-046, both signers, 2026-09-16) and that **lifting it was a separate act three days later**, not
+> a consequence of closing the gate. `verify-metadata.js` now scores `/demo` under the indexable
+> rules and passes: 43 exports clean.
+>
+> 🔄 **AND IT WAS TWO CALL SITES, NOT ONE.** A self-referencing canonical went on in the same change,
+> because this route takes a journey-state parameter and an indexable parameterised page with no
+> canonical is a duplicate-URL generator. Lifting the `robots` line alone would have made the page
+> findable and simultaneously split its ranking across every `?` variant.
+>
+> 🔴 **INDEXABLE IS NOT SUBMITTED, AND `/demo` IS STILL NOT IN `app/sitemap.ts`.** The homepage CTA
+> gives a crawler a path to it, so it will be found; nothing publishes it. **Adding the sitemap entry
+> is a third deliberate act and it is Keith's** — deliberately not taken here, because submitting a
+> page to Search Console is a louder act than making it crawlable and the row 32c question below is
+> still open.
 >
 > ⚠ **One condition survives the approval, the same way two survived CA-045.** Copy-register row 32c's
 > underlying question reaches `/demo` and has never been put to anyone: whether the *"Ask the
@@ -564,7 +575,7 @@ The defect rows it depends on, none of which blocks go-live:
 | Plan | Phase 7 | **E** |
 | Plan | Phase 8 | **B** |
 | Plan | Phase 9 | **C3** |
-| Plan | CA-046 | ✅ **approved 2026-09-16, both signers, three rounds (8/8, 8/8, 1/1), all build work done. A1 CLOSED by option 1.** ⚠ Two things it does not carry: `page.tsx:90` still sets `robots: noindex` and lifting it is a separate act; and copy-register row 32c's Phase 0 question survives the approval, unasked |
+| Plan | CA-046 | ✅ **approved 2026-09-16, both signers, three rounds (8/8, 8/8, 1/1), all build work done. A1 CLOSED by option 1.** ⚠ Two things it did not carry: the `robots: noindex`, **lifted separately by Keith 2026-09-19** (with a canonical, and `/demo` still not in the sitemap); and copy-register row 32c's Phase 0 question, which survives the approval, unasked |
 | Plan | CA-045 | ✅ approved 2026-09-15, both signers. **The audit's Go/no-go table has not caught up** |
 | Plan | Register row 6 (FAI wording) | ✅ resolved — a mis-citation, not clinical. **Was never on the defects artefact** |
 | Plan | Nine undocumented flags | ✅ now in `.env.example`. **Was never on the defects artefact** |
@@ -584,9 +595,12 @@ discharged by the merge itself, or is a membership switch-on that ships with its
 already live on `main` and no worse for waiting.
 
 **A1 closed by option 1 on 2026-09-16**: CA-046 approved by both signers, three rounds answered the
-same evening (8/8, 8/8, 1/1), every ruling built, tested and rendered. ⚠ **Closing the gate did not
-lift the `noindex`**, which is still at `app/(demo)/demo/page.tsx:90` and is a separate deliberate
-act; and **copy-register row 32c's Phase 0 question survives the approval**, unasked.
+same evening (8/8, 8/8, 1/1), every ruling built, tested and rendered. ✅ **Closing the gate did not
+lift the `noindex`; Keith lifted it separately on 2026-09-19**, three days later, with a
+self-referencing canonical added in the same change because the route is parameterised. **`/demo` is
+still absent from `app/sitemap.ts`** — crawlable via the homepage CTA, not submitted, and that third
+act is unmade. ⚠ **Copy-register row 32c's Phase 0 question survives the approval**, unasked, and
+making the page indexable raises the stakes on it rather than settling it.
 
 🔴 **And one of them has an ongoing cost while it waits.** Two result cards are selling a
 retest two clinical rulings forbid, to real customers, today. Merging is the only thing that

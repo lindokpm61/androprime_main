@@ -4,6 +4,36 @@ Volatile, dated status: what is live / verified / owed **right now**. Durable ar
 
 ---
 
+## 🟢 2026-09-19 — `/demo` IS INDEXABLE. KEITH LIFTED THE `noindex`, AND IT WAS TWO CALL SITES
+
+**`app/(demo)/demo/page.tsx` no longer sets `robots: { index: false, follow: false }`.** The line had
+stood since the page was built on 2026-09-06 under a comment saying it held *"until the compliance
+gate clears"*. CA-046 cleared it on 2026-09-16 (Ewa 8/8 across three rounds, Keith's business
+sign-off as a separate act, ClickUp `869exuphq`) and the membership price on the page was ruled the
+same day by the pricing carve-out (`869f34uaj`: a surface may PRICE membership where it demonstrably
+cannot take money). **Closing the gate did not move the line. Keith moved it, three days later, and
+the interval is the point** — the gate governs shipping, lifting a `noindex` is what actually makes a
+page public, and the two were deliberately kept as separate acts.
+
+🔄 **A self-referencing canonical went on in the same change, and that is the half that would have
+been missed.** `/demo` takes a journey-state parameter, so an indexable parameterised page with no
+canonical splits its own ranking across every `?` variant. Removing the `robots` line alone is the
+change that looks complete and is not. `BASE_URL` is declared locally, matching the 27 other pages
+that do it, rather than importing `lib/site-url.ts`, which is the redirect/webhook helper.
+
+🔴 **INDEXABLE IS NOT SUBMITTED. `/demo` is still absent from `app/sitemap.ts`, deliberately.** The
+homepage CTA gives a crawler a path, so the page will be found; nothing publishes it to Search
+Console. Adding that entry is a third act and it is Keith's, unmade. ⚠ **Copy-register row 32c is
+still open and this change raises its stakes**: whether the *"Ask the clinician"* benefit may be named
+on a public surface at all, given the live member screen has only ever rendered that block EMPTY.
+CA-046 Q6 added the approved Phase 0 qualifier, which is a mitigation, not an answer. Ewa + Keith.
+
+✅ Verified: `verify-metadata.js` now scores `/demo` under the **indexable** rules (title and
+description were previously exempt from the length ratchet because a `noindex` page is read by
+nothing) and passes — 43 exports clean. `typecheck` exit 0.
+
+---
+
 ## 🟢 2026-09-18 — GATE A IS CLOSED, AND THE SCREENSHOT TOOL WAS LYING
 
 **A5 ran overnight 17/18 Sept. 30 captures at 1320 and 390, in `shots/a5/`, no production writes.**

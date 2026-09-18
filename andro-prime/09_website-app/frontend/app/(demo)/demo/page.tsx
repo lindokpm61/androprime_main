@@ -21,13 +21,30 @@ import { resolveDemoJourney, getDemoEngineInput, getDemoDates } from '@/lib/resu
  * property of the code rather than a policy someone has to remember. Do not add a
  * call here that takes a user id, and do not widen the set to read the URL.
  *
- * 🔴 `robots: noindex` UNTIL THE COMPLIANCE GATE CLEARS. This is the first time a
- * full results report -- verdict badges, action bands, recommendation copy -- is
- * rendered on an ungated public surface, and since 2026-09-07 it also carries a
- * membership PRICE. `biomarker-copy.ts` was signed for a logged-in customer
- * reading his own result, which is a different context from a stranger reading a
- * fabricated one, and the price is a second question that CA-046 never asked.
- * Both must clear before this line changes.
+ * ✅ `robots: noindex` LIFTED 2026-09-19, ON KEITH'S INSTRUCTION, AND IT IS A
+ * SEPARATE ACT FROM CLOSING THE GATE. The line stood because this is the first
+ * time a full results report -- verdict badges, action bands, recommendation
+ * copy -- is rendered on an ungated public surface, and since 2026-09-07 it also
+ * carries a membership PRICE. `biomarker-copy.ts` was signed for a logged-in
+ * customer reading his own result, which is a different context from a stranger
+ * reading a fabricated one. Both questions are now answered: CA-046 approved
+ * 2026-09-16, Ewa 8/8 across three rounds plus Keith's separate business
+ * sign-off (`ewa-packet-ca-046-public-demo-2026-09-16.md`, ClickUp `869exuphq`),
+ * and the price was ruled separately the same day -- a surface may PRICE the
+ * membership where it demonstrably cannot take money, which is this page
+ * (ClickUp `869f34uaj`). Closing the gate did NOT move this line; Keith did, and
+ * the interval between the two is deliberate.
+ *
+ * ⚠ ONE QUESTION SURVIVES THE APPROVAL AND IS NOT DISCHARGED BY THIS CHANGE.
+ * Copy-register row 32c: whether the "Ask the clinician" benefit may be named on
+ * a public surface AT ALL, given the live member screen has only ever rendered
+ * that block EMPTY. CA-046 Q6 added the approved Phase 0 qualifier, which is a
+ * mitigation and not an answer. Ewa + Keith. Making the page indexable raises the
+ * stakes on that question rather than settling it.
+ *
+ * 🔴 `/demo` IS NOT IN `app/sitemap.ts`. Indexable and submitted are two acts:
+ * the homepage CTA gives crawlers a path here, so it will be found, but nothing
+ * publishes it. Adding the entry is a further deliberate act and it is Keith's.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * 🔄 2026-09-07, THREE CORRECTIONS IN ONE DAY, and the last two were Keith's.
@@ -83,11 +100,15 @@ import { resolveDemoJourney, getDemoEngineInput, getDemoDates } from '@/lib/resu
  * reason to stop him SEEING one.
  */
 
+const BASE_URL = 'https://andro-prime.com'
+
 export const metadata: Metadata = {
   title: 'See a real result before you buy',
   description:
     'A working demonstration of the Andro Prime results dashboard, loaded with sample results. No account, no email, nothing to buy.',
-  robots: { index: false, follow: false },
+  // Self-referencing canonical. This route takes a journey-state parameter, so
+  // without it every variant is a separate indexable URL of the same page.
+  alternates: { canonical: `${BASE_URL}/demo` },
 }
 
 /*
