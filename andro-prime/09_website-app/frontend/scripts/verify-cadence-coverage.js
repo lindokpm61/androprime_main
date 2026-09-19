@@ -94,7 +94,7 @@ if (states.length < 20) fail([`parsed only ${states.length} states; the regex is
 const ROW_BEARING = /^### (Bucket [ABC]|Outside the three buckets)/
 const tableRows = []
 let inSection = false
-for (const line of fs.readFileSync(TABLE, 'utf8').split('\n')) {
+for (const line of fs.readFileSync(TABLE, 'utf8').split(/\r?\n/)) {
   if (/^#{2,3} /.test(line)) inSection = ROW_BEARING.test(line)
   if (inSection && /^\| [a-z]/.test(line)) tableRows.push(line.split('|')[1].trim())
 }
@@ -109,9 +109,22 @@ const namedInTable = (s) =>
 // the shape of self-certifying claim this script exists to stop. So: only rows
 // inside a kind section count, and a section can opt itself out by saying so in
 // its heading.
+// 🔴 SPLIT ON `/\r?\n/`, NOT `'\n'`, AND THE FAILURE IT PREVENTS LOOKS CLINICAL.
+// Found 2026-09-19. This repo sets `core.autocrlf=true` and ships no
+// `.gitattributes`, so a checkout rewrites these documents as CRLF. Splitting on
+// `'\n'` then leaves a trailing `\r` on every line, and `\r` is a LINE
+// TERMINATOR in JavaScript regexes: `.` will not match it, so `/^### (.*)$/`
+// matches NOTHING and `kindSection` is never set. Every state then reports as
+// missing from the map. The output reads as fifty unsigned clinical states — a
+// catastrophic, entirely false finding produced by a line ending. It passed on
+// one branch and failed on the next purely because a `git checkout` had
+// rewritten the file in between. `verify-env-contract.js` already splits the
+// tolerant way; this one did not, and 25 scripts here still split on `'\n'`.
+// The root fix is a `.gitattributes` pinning LF, which is a separate deliberate
+// change because it renormalises the whole working tree.
 const mappedStates = new Set()
 let kindSection = null
-for (const line of fs.readFileSync(MAP, 'utf8').split('\n')) {
+for (const line of fs.readFileSync(MAP, 'utf8').split(/\r?\n/)) {
   const h = line.match(/^### (.*)$/)
   if (h) kindSection = /NO CELL/.test(h[1]) ? null : h[1]
   else if (/^## /.test(line)) kindSection = null

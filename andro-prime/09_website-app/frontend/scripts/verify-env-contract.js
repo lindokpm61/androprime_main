@@ -312,7 +312,37 @@ function harvestDynamicKeys() {
   return keys
 }
 
-/** The `id=` list from the Dockerfile's build-secret mounts. */
+/** The `id=` list from the Dockerfile's build-secret mounts.
+ *
+ * 🔴 COOLIFY REWRITES THIS DOCKERFILE BEFORE BUILDING IT, AND THAT BROKE THIS
+ * CHECK IN THE ONLY ENVIRONMENT IT EXISTS FOR. Found 2026-09-19 by the merge
+ * deploy of `017b942`, which failed here with 61 problems after passing
+ * `npm test` and a local `npm run build` clean.
+ *
+ * Coolify injects `--mount=type=secret,id=X,env=X` onto the `RUN npm ci` line
+ * for EVERY variable in its environment — around fifty of them, including its
+ * own `COOLIFY_URL`, `COOLIFY_FQDN`, `COOLIFY_BRANCH`, `COOLIFY_RESOURCE_UUID`
+ * and `COOLIFY_BUILD_SECRETS_HASH`. Reading the file naively then produced
+ * three families of false failure at once: every injected name "mounted but
+ * never exported" (they use the `env=` form, which needs no `export`), every
+ * Coolify-internal name "mounted but nothing reads it", and six flags "both
+ * mounted and in FLAG_RUNTIME_ONLY".
+ *
+ * ⚠ THE SHAPE OF THE BUG IS THE PART WORTH REMEMBERING. This script's header
+ * says it runs in `prebuild` so it fails inside the real build rather than in a
+ * later audit — and it did exactly that, for a false reason, because it had
+ * only ever been run against the Dockerfile as written. A guard that reads a
+ * file the platform edits under it is testing a file that does not exist at the
+ * moment that matters.
+ *
+ * THE DISCRIMINATOR IS `env=`. Our mounts are written `id=NAME` and pair with an
+ * explicit `export NAME=$(cat /run/secrets/NAME …)` in the RUN body. Coolify's
+ * are written `id=NAME,env=NAME`, which BuildKit places in the environment
+ * directly. So a mount carrying `env=` is not ours and none of the assertions
+ * below apply to it. If Coolify ever stops emitting `env=`, this returns to
+ * over-reporting rather than under-reporting, which is the safe direction: the
+ * build fails loudly instead of skipping a check.
+ */
 function harvestDockerfileMounts() {
   const full = path.join(ROOT, 'Dockerfile')
   if (!fs.existsSync(full)) {
@@ -321,7 +351,8 @@ function harvestDockerfileMounts() {
   }
   const src = fs.readFileSync(full, 'utf8')
   const mounts = new Set()
-  for (const m of src.matchAll(/--mount=type=secret,id=([A-Z0-9_]+)/g)) {
+  for (const m of src.matchAll(/--mount=type=secret,id=([A-Z0-9_]+)(,env=[A-Z0-9_]+)?/g)) {
+    if (m[2]) continue // platform-injected, not ours; see the block comment
     mounts.add(m[1])
   }
   if (mounts.size === 0) {
